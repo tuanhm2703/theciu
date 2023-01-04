@@ -1,0 +1,1 @@
+{{$product->sale_price}}

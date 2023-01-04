@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Traits\Scopes;
+
+use App\Enums\StatusType;
+
+trait CustomScope {
+    public function scopeSearch($query, $column, $value, $mode = '') {
+        if ($value == null || $value == '') return $query;
+        return $query->where(function ($q) use ($column, $value, $mode) {
+            $q->whereRaw("lower($column) like $mode '$value'")
+                ->orWhereRaw("lower($column) like $mode '$value%'")
+                ->orWhereRaw("lower($column) like $mode '%$value%'")
+                ->orWhereRaw("lower($column) like $mode '%$value'");
+        });
+    }
+
+    public function scopeActive($q) {
+        return $q->where('status', StatusType::ACTIVE);
+    }
+}

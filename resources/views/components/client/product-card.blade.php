@@ -1,0 +1,47 @@
+<div class="product product-7 text-center">
+    <figure class="product-media">
+        <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}">
+            @foreach ($product->images as $index => $image)
+                <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}"
+                    class="{{ $index == 0 ? 'product-image' : 'product-image-hover' }} lazy"
+                    style="background: url({{ $image->path_with_domain }});"></a>
+            @endforeach
+        </a>
+
+        <div class="product-action-vertical">
+            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                    wishlist</span></a>
+        </div><!-- End .product-action-vertical -->
+
+        <div class="product-action">
+            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+        </div><!-- End .product-action -->
+    </figure><!-- End .product-media -->
+
+    <div class="product-body">
+        <div class="product-cat">
+            <a href="#">{{ $product->categories->first()->name }}</a>
+        </div><!-- End .product-cat -->
+        <h3 class="product-title"><a href="product.html">{{ $product->name }}</a></h3>
+        <!-- End .product-title -->
+        @component('components.product-price-label', compact('product'))
+        @endcomponent
+
+        <div class="product-nav product-nav-thumbs intro-slider owl-carousel owl-theme owl-nav-inside owl-light"
+            data-toggle="owl"
+            data-owl-options='{
+            "items": 4,
+            "loop": false,
+            "nav": false
+        }'>
+            @foreach ($product->inventories as $index => $inventory)
+                @if ($inventory->image)
+                    <a href="{{ optional($inventory->image)->path_with_domain }}" class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
+                        style="background: url({{ optional($inventory->image)->path_with_domain }});">
+                        {{-- <img src="{{ optional($inventory->image)->path_with_domain }}" alt="{{ $product->snake_name }}"> --}}
+                    </a>
+                @endif
+            @endforeach
+        </div><!-- End .product-nav -->
+    </div><!-- End .product-body -->
+</div><!-- End .product -->

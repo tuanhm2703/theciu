@@ -1,0 +1,64 @@
+{
+    "maxValue": "Giá trị phải nhỏ hơn hoặc bằng %s.",
+    "minValue": "Giá trị phải lớn hơn hoặc bằng %s.",
+    "maxLength": "Vui lòng kéo dài văn bản này thành %s ký tự hoặc ít hơn (bạn hiện đang sử dụng ký tự %s).",
+    "minLength": "Vui lòng kéo dài văn bản này thành %s ký tự trở lên (bạn hiện đang sử dụng ký tự %s).",
+    "minSelectOption": "Vui lòng chọn ít nhất %s tùy chọn.",
+    "maxSelectOption": "Vui lòng chọn ở hầu hết các tùy chọn %s.",
+    "groupCheckBox": "Vui lòng chọn ít nhất %s tùy chọn.",
+    "equal": "Trường này không khớp với trường %s.",
+    "fileMinSize": "Kích thước tệp không được nhỏ hơn %s byte.",
+    "fileMaxSize": "Kích thước tệp không được lớn hơn %s byte.",
+    "number": "Vui lòng nhập một số.",
+    "isNotBefore": "Thời gian phải trước ngày %s",
+    "isNotAfter": "Thời gian phải sau ngày %s",
+    "HTML5": {
+        "valueMissing": {
+            "INPUT": {
+                "default": "Vui lòng điền vào trường này.",
+                "checkbox": "Vui lòng chọn hộp này.",
+                "radio": "Vui lòng chọn một trong các tùy chọn này.",
+                "file": "Vui lòng chọn một tập tin."
+            },
+            "TEXTAREA": "Vui lòng điền vào trường này.",
+            "SELECT": "Vui lòng chọn một mục trong danh sách."
+        },
+        "typeMismatch": {
+            "email": "Vui lòng nhập địa chỉ e-mail.",
+            "url": "Vui lòng nhập URL."
+        },
+        "rangeUnderflow": {
+            "date": "Giá trị phải là %s trở lên.",
+            "month": "Giá trị phải là %s trở lên.",
+            "week": "Giá trị phải là %s trở lên.",
+            "time": "Giá trị phải là %s trở lên.",
+            "datetimeLocale": "Giá trị phải là %s trở lên.",
+            "number": "Giá trị phải lớn hơn hoặc bằng %s.",
+            "range": "Giá trị phải lớn hơn hoặc bằng %s."
+        },
+        "rangeOverflow": {
+            "date": "Giá trị phải là %s hoặc cũ hơn.",
+            "month": "Giá trị phải là %s hoặc cũ hơn.",
+            "week": "Giá trị phải là %s hoặc cũ hơn.",
+            "time": "Giá trị phải là %s hoặc cũ hơn.",
+            "datetimeLocale": "Giá trị phải là %s hoặc cũ hơn.",
+            "number": "Giá trị phải nhỏ hơn hoặc bằng %s.",
+            "range": "Giá trị phải nhỏ hơn hoặc bằng %s."
+        },
+        "stepMismatch": {
+            "date": "Bạn chỉ có thể chọn mỗi %s. ngày trong lịch ngày.",
+            "month": "Bạn chỉ có thể chọn mọi %s. tháng trong lịch ngày.",
+            "week": "Bạn chỉ có thể chọn mỗi %s. tuần trong lịch ngày.",
+            "time": "Bạn chỉ có thể chọn mọi %s. giây trong bộ chọn thời gian.",
+            "datetimeLocale": "Bạn chỉ có thể chọn mọi %s. giây trong bộ chọn thời gian.",
+            "number": "Vui lòng nhập giá trị hợp lệ.",
+            "range": "Vui lòng nhập giá trị hợp lệ. Chỉ %s và bội số của %s."
+        },
+        "tooLong": "Vui lòng kéo dài văn bản này thành %s ký tự hoặc ít hơn (bạn hiện đang sử dụng ký tự %s).",
+        "tooShort": "Vui lòng kéo dài văn bản này thành %s ký tự trở lên (bạn hiện đang sử dụng ký tự %s).",
+        "patternMismatch": "Vui lòng khớp với định dạng yêu cầu. %s",
+        "badInput": {
+            "number": "Vui lòng nhập một số."
+        }
+    }
+}
