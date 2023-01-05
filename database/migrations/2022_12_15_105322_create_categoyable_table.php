@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categorizbles', function (Blueprint $table) {
+        Schema::create('categorizables', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('category_id')->unsigned();
             $table->bigInteger('categorizable_id');

@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Services\BatchService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider {
@@ -23,7 +24,9 @@ class AppServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        // \URL::forceScheme('https');
+        if(env('APP_ENV') != 'local') {
+            URL::forceScheme('https');
+        }
         Carbon::setLocale(App::getLocale());
         $this->app->singleton(BatchService::class);
     }
