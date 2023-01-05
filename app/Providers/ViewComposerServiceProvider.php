@@ -6,6 +6,7 @@ use App\Enums\CategoryType;
 use App\Enums\PromotionType;
 use App\Models\Banner;
 use App\Models\Blog;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Promotion;
@@ -73,6 +74,40 @@ class ViewComposerServiceProvider extends ServiceProvider {
                 $view->with(['product_categories' => $product_categories, 'shop_categories' => $shop_categories, 'promotions' => $promotions, 'blog_categories' => $blog_categories]);
             }
         );
+
+        View::composer(
+            'landingpage.layouts.components.navs.cart',
+            function ($view) {
+                $cart = null;
+                if (auth('customer')->check()) {
+                    $customer = auth('customer')->user();
+                    $cart = Cart::with(['inventories' => function ($q) {
+                        return $q->with('image:path,imageable_id', 'product:id,slug,name');
+                    }])->firstOrCreate([
+                        'customer_id' => $customer->id
+                    ]);
+                }
+                $view->with(['cart' => $cart]);
+            }
+        );
+
+        View::composer(
+            'landingpage.layouts.pages.cart.index',
+            function($view) {
+                $cart = null;
+                if (auth('customer')->check()) {
+                    $customer = auth('customer')->user();
+                    $cart = Cart::with(['inventories' => function ($q) {
+                        return $q->with('image:path,imageable_id', 'product:id,slug,name');
+                    }])->firstOrCreate([
+                        'customer_id' => $customer->id
+                    ]);
+                }
+                $view->with(['cart' => $cart]);
+            }
+        );
+
+
 
         View::composer(
             'landingpage.layouts.pages.home.components.slide_category',

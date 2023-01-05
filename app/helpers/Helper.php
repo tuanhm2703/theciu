@@ -281,3 +281,11 @@ function getLocaleWithCountryCode() {
 function isEmail($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
+
+function isPhone($phone) {
+    return preg_match('/(84|0[3|5|7|8|9])+([0-9]{8})\b/', $phone) > 0;
+}
+
+function format_currency($value) {
+    return number_format($value, 0, ',', '.');
+}

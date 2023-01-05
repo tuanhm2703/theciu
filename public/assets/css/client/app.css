@@ -48,3 +48,6 @@
 .social-link {
     word-spacing: 1rem;
 }
+.invalid-feedback {
+    font-size: 100%;
+}

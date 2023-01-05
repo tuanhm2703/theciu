@@ -1,12 +1,10 @@
 <div class="product product-7 text-center">
     <figure class="product-media">
-        <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}">
-            @foreach ($product->images as $index => $image)
-                <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}"
-                    class="{{ $index == 0 ? 'product-image' : 'product-image-hover' }} lazy"
-                    style="background: url({{ $image->path_with_domain }});"></a>
-            @endforeach
-        </a>
+        @foreach ($product->images as $index => $image)
+            <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}"
+                class="{{ $index == 0 ? 'product-image' : 'product-image-hover' }} lazy"
+                style="background: url({{ $image->path_with_domain }});"></a>
+        @endforeach
 
         <div class="product-action-vertical">
             <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
@@ -14,7 +12,7 @@
         </div><!-- End .product-action-vertical -->
 
         <div class="product-action">
-            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+            <a href="#" class="btn-product btn-cart add-to-cart-btn"><span>add to cart</span></a>
         </div><!-- End .product-action -->
     </figure><!-- End .product-media -->
 
@@ -36,7 +34,9 @@
         }'>
             @foreach ($product->inventories as $index => $inventory)
                 @if ($inventory->image)
-                    <a href="{{ optional($inventory->image)->path_with_domain }}" class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
+                    <a href="{{ optional($inventory->image)->path_with_domain }}"
+                        class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
+                        data-inventory-id="{{ $inventory->id }}"
                         style="background: url({{ optional($inventory->image)->path_with_domain }});">
                         {{-- <img src="{{ optional($inventory->image)->path_with_domain }}" alt="{{ $product->snake_name }}"> --}}
                     </a>

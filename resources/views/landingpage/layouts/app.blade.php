@@ -11,6 +11,8 @@
     <meta name="description"
         content="{{ isset($metaDescription) ? $metaDescription : 'Thời trang nữ THE CIU mang phong cách trẻ trung, năng động. Chuyên sản phẩm kết hợp đi học, đi chơi như áo thun, áo khoác, quần jean, đầm, chân váy.' }}">
     <meta name="author" content="p-themes">
+    <meta name="locale" content="{{ App::getLocale() }}">
+
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180"
         href="{{ asset('assets/landingpage/images/icons/apple-touch-icon.png') }}">
@@ -133,14 +135,25 @@
     <script src="{{ asset('assets/landingpage/js/jquery.plugin.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/jquery.countdown.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jbvalidator.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.form.min.js') }}"></script>
     <!-- Main JS File -->
     <script src="{{ asset('assets/landingpage/js/main.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/demos/demo-6.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/jquery.elevateZoom.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.lazyload.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/api-service.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/cart.js') }}"></script>
     @stack('js')
     <script>
         $('.lazy').lazyload();
+        // $(document).ajaxError(function(event, request, settings) {
+        //     if (request.status === 401) {
+        //         if (settings.url != @json(route('client.auth.login'))) {
+        //             $('#signin-modal').modal('show')
+        //         }
+        //     }
+        // });
     </script>
 </body>
 

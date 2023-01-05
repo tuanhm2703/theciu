@@ -64,9 +64,18 @@ return [
     'product_category' => 'Product category',
     'phone_or_email' => 'Phone or email',
     'password' => 'Password',
+    'password_confirmation' => 'Password confirmation',
     'login' => 'Login',
     'signin' => 'Sign in',
     'register' => 'Register',
     'forgot_password' => 'Forgot password',
-    'or_signin_with' => 'Or sign in with'
+    'or_signin_with' => 'Or sign in with',
+    'view_cart' => 'View cart',
+    'checkout' => 'Checkout',
+    'quantity' => 'Quantity',
+    'total' => 'Total',
+    'continue_shopping' => 'Continue shopping',
+    'change_address' => 'Change address',
+    'subtotal' => 'Subtotal',
+    'shipping' => 'Shipping'
 ];

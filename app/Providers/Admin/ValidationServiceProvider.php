@@ -22,5 +22,8 @@ class ValidationServiceProvider extends ServiceProvider {
     public function boot() {
         Validator::extend('valid_promotion_inventory','App\Services\ValidationService@validPromotionInventory');
         Validator::extend('username_exists','App\Services\ValidationService@validPromotionInventory');
+        Validator::extend('phone_number','App\Services\ValidationService@phoneNumber');
+        Validator::extend('valid_username', 'App\Services\ValidationService@isValidUsername', trans('validation.invalid_username'));
+        Validator::extend('username_have_not_been_used', 'App\Services\ValidationService@usernameHaveNotBeenUsed', trans('validation.username_have_been_used'));
     }
 }

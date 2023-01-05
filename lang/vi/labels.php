@@ -64,9 +64,18 @@ return [
     'product_category' => 'Danh mục ngành hàng',
     'phone_or_email' => 'Số điện thoại hoặc email',
     'password' => 'Mật khẩu',
+    'password_confirmation' => 'Xác nhận mật khẩu',
     'login' => 'Đăng nhập',
     'signin' => 'Đăng nhập',
     'register' => 'Đăng ký',
     'forgot_password' => 'Quên mật khẩu',
-    'or_signin_with' => 'Hoặc đăng nhập với'
+    'or_signin_with' => 'Hoặc đăng nhập với',
+    'view_cart' => 'Xem giỏ hàng',
+    'checkout' => 'Thanh toán',
+    'quantity' => 'Số lượng',
+    'total' => 'Tổng cộng',
+    'continue_shopping' => 'Tiếp tục mua sắm',
+    'change_address' => 'Thay đổi địa chỉ',
+    'subtotal' => 'Tổng tiền hàng',
+    'shipping' => 'Vận chuyển'
 ];

@@ -20,8 +20,13 @@
         </div><!-- End .header-left -->
 
         <div class="header-right">
-            <i class="la la-lightbulb-o"></i>
-            <p>Clearance Up to 30% Off</span></p>
+            <a href="wishlist.html" class="wishlist-link">
+                <i class="icon-heart-o"></i>
+                <span class="wishlist-count">3</span>
+                <span class="wishlist-txt">My Wishlist</span>
+            </a>
+
+            @include('landingpage.layouts.components.navs.cart')
         </div>
     </div><!-- End .container -->
 </div><!-- End .header-bottom -->

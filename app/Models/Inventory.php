@@ -83,4 +83,8 @@ class Inventory extends Model {
         if($this->has_promotion && $this->promotion_status === 1) return $this->promotion_price;
         return $this->price;
     }
+
+    public function getFormattedSalePriceAttribute() {
+        return format_currency($this->sale_price);
+    }
 }
