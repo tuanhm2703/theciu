@@ -12,27 +12,28 @@
         content="{{ isset($metaDescription) ? $metaDescription : 'Thời trang nữ THE CIU mang phong cách trẻ trung, năng động. Chuyên sản phẩm kết hợp đi học, đi chơi như áo thun, áo khoác, quần jean, đầm, chân váy.' }}">
     <meta name="author" content="p-themes">
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/landingpage/images/icons/apple-touch-icon.png">
-    <link rel="manifest" href="/assets/landingpage/images/icons/site.webmanifest">
-    <link rel="mask-icon" href="/assets/landingpage/images/icons/safari-pinned-tab.svg" color="#666666">
-    <link rel="icon" type="image/png" href="/img/ciu-favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="{{ asset('assets/landingpage/images/icons/apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ asset('assets/landingpage/images/icons/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ asset('assets/landingpage/images/icons/safari-pinned-tab.svg') }}" color="#666666">
+    <link rel="icon" type="image/png" href="{{ asset('img/ciu-favicon.png') }}">
     <meta name="apple-mobile-web-app-title" content="THE C.I.U">
     <meta name="application-name" content="THE C.I.U">
     <meta name="locale" content="{{ App::getLocale() }}">
     <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="/assets/landingpage/images/icons/browserconfig.xml">
+    <meta name="msapplication-config" content="{{ asset('assets/landingpage/images/icons/browserconfig.xml') }}">
     <meta name="theme-color" content="#ffffff">
     <link rel="stylesheet"
-        href="/assets/landingpage/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
+        href="{{ asset('assets/landingpage/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css') }}">
     <!-- Plugins CSS File -->
-    <link rel="stylesheet" href="/assets/landingpage/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/landingpage/css/plugins/owl-carousel/owl.carousel.css">
-    <link rel="stylesheet" href="/assets/landingpage/css/plugins/magnific-popup/magnific-popup.css">
-    <link rel="stylesheet" href="/assets/landingpage/css/plugins/jquery.countdown.css">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/plugins/owl-carousel/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/plugins/magnific-popup/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/plugins/jquery.countdown.css') }}">
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="/assets/landingpage/css/style.css">
-    <link rel="stylesheet" href="/assets/landingpage/css/skins/skin-demo-6.css">
-    <link rel="stylesheet" href="/assets/landingpage/css/demos/demo-6.css">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/skins/skin-demo-6.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/demos/demo-6.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/client/app.css') }}">
     @stack('css')
 </head>
@@ -77,7 +78,7 @@
                                         aria-selected="false">{{ trans('labels.register') }}</a>
                                 </li>
                             </ul>
-                           @include('landingpage.layouts.components.login')
+                            @include('landingpage.layouts.components.login')
                         </div><!-- End .form-tab -->
                     </div><!-- End .form-box -->
                 </div><!-- End .modal-body -->
@@ -91,8 +92,8 @@
                 <div class="row no-gutters bg-white newsletter-popup-content">
                     <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
                         <div class="banner-content text-center">
-                            <img src="/assets/landingpage/images/popup/newsletter/logo.png" class="logo"
-                                alt="logo" width="60" height="15">
+                            <img src="{{ asset('assets/landingpage/images/popup/newsletter/logo.png') }}"
+                                class="logo" alt="logo" width="60" height="15">
                             <h2 class="banner-title">get <span>25<light>%</light></span> off</h2>
                             <p>Subscribe to the THE C.I.U eCommerce newsletter to receive timely updates from your
                                 favorite
@@ -114,27 +115,27 @@
                         </div>
                     </div>
                     <div class="col-xl-2-5col col-lg-5 ">
-                        <img src="/assets/landingpage/images/popup/newsletter/img-1.jpg" class="newsletter-img"
-                            alt="newsletter">
+                        <img src="{{ asset('assets/landingpage/images/popup/newsletter/img-1.jpg') }}"
+                            class="newsletter-img" alt="newsletter">
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- Plugins JS File -->
-    <script src="/assets/landingpage/js/jquery.min.js"></script>
-    <script src="/assets/landingpage/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/landingpage/js/jquery.hoverIntent.min.js"></script>
-    <script src="/assets/landingpage/js/jquery.waypoints.min.js"></script>
-    <script src="/assets/landingpage/js/superfish.min.js"></script>
-    <script src="/assets/landingpage/js/owl.carousel.min.js"></script>
-    <script src="/assets/landingpage/js/bootstrap-input-spinner.js"></script>
-    <script src="/assets/landingpage/js/jquery.plugin.min.js"></script>
-    <script src="/assets/landingpage/js/jquery.magnific-popup.min.js"></script>
-    <script src="/assets/landingpage/js/jquery.countdown.min.js"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery.hoverIntent.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/superfish.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/bootstrap-input-spinner.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery.plugin.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/jquery.countdown.min.js') }}"></script>
     <!-- Main JS File -->
-    <script src="/assets/landingpage/js/main.js"></script>
-    <script src="/assets/landingpage/js/demos/demo-6.js"></script>
+    <script src="{{ asset('assets/landingpage/js/main.js') }}"></script>
+    <script src="{{ asset('assets/landingpage/js/demos/demo-6.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/jquery.elevateZoom.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.lazyload.js') }}"></script>
     @stack('js')

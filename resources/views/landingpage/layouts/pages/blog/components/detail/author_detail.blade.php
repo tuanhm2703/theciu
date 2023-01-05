@@ -1,7 +1,7 @@
 <div class="entry-author-details">
     <figure class="author-media">
         <a href="#">
-            <img src="/assets/images/blog/single/author.jpg" alt="User name">
+            <img src="{{ asset('assets/images/blog/single/author.jpg') }}" alt="User name">
         </a>
     </figure><!-- End .author-media -->
 

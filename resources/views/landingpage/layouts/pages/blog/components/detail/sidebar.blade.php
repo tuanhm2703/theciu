@@ -20,7 +20,7 @@
 
             <div class="banner-sidebar">
                 <a href="#">
-                    <img src="/assets/images/blog/sidebar/banner.jpg" alt="banner">
+                    <img src="{{ asset('assets/images/blog/sidebar/banner.jpg') }}" alt="banner">
                 </a>
             </div><!-- End .banner-ad -->
         </div><!-- End .widget -->

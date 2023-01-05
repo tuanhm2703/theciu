@@ -10,7 +10,7 @@
                 aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html "
                 target="_blank">
-                <img src="/img/logo-ct-dark.png" class="navbar-brand-img h-100" alt="main_logo">
+                <img src="{{ asset('img/logo-ct-dark.png') }}" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="me-1 font-weight-bold">Argon Dashboard 2</span>
             </a>
         </div>
@@ -96,7 +96,7 @@
         </div>
         <div class="sidenav-footer mx-3 ">
             <div class="card card-plain shadow-none" id="sidenavCard">
-                <img class="w-50 mx-auto" src="/img/illustrations/icon-documentation.svg"
+                <img class="w-50 mx-auto" src="{{ asset('img/illustrations/icon-documentation.svg') }}"
                     alt="sidebar_illustration">
                 <div class="card-body text-center p-3 w-100 pt-0">
                     <div class="docs-info">
@@ -164,7 +164,7 @@
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
-                                                <img src="/img/team-2.jpg" class="avatar avatar-sm  ms-3 ">
+                                                <img src="{{ asset('img/team-2.jpg') }}" class="avatar avatar-sm  ms-3 ">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm font-weight-normal mb-1">
@@ -182,7 +182,7 @@
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
-                                                <img src="/img/small-logos/logo-spotify.svg"
+                                                <img src="{{ asset('img/small-logos/logo-spotify.svg') }}"
                                                     class="avatar avatar-sm bg-gradient-dark  ms-3 ">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
@@ -205,7 +205,8 @@
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
                                                     <title>credit-card</title>
-                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <g stroke="none" stroke-width="1" fill="none"
+                                                        fill-rule="evenodd">
                                                         <g transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF"
                                                             fill-rule="nonzero">
                                                             <g transform="translate(1716.000000, 291.000000)">
@@ -406,11 +407,11 @@
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
                                                     <title>document</title>
-                                                    <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none"
-                                                        fill-rule="evenodd">
+                                                    <g id="Basic-Elements" stroke="none" stroke-width="1"
+                                                        fill="none" fill-rule="evenodd">
                                                         <g id="Rounded-Icons"
-                                                            transform="translate(-1870.000000, -591.000000)" fill="#FFFFFF"
-                                                            fill-rule="nonzero">
+                                                            transform="translate(-1870.000000, -591.000000)"
+                                                            fill="#FFFFFF" fill-rule="nonzero">
                                                             <g id="Icons-with-opacity"
                                                                 transform="translate(1716.000000, 291.000000)">
                                                                 <g id="document"
@@ -443,11 +444,11 @@
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
                                                     <title>spaceship</title>
-                                                    <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none"
-                                                        fill-rule="evenodd">
+                                                    <g id="Basic-Elements" stroke="none" stroke-width="1"
+                                                        fill="none" fill-rule="evenodd">
                                                         <g id="Rounded-Icons"
-                                                            transform="translate(-1720.000000, -592.000000)" fill="#FFFFFF"
-                                                            fill-rule="nonzero">
+                                                            transform="translate(-1720.000000, -592.000000)"
+                                                            fill="#FFFFFF" fill-rule="nonzero">
                                                             <g id="Icons-with-opacity"
                                                                 transform="translate(1716.000000, 291.000000)">
                                                                 <g id="spaceship"
@@ -486,11 +487,11 @@
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
                                                     <title>credit-card</title>
-                                                    <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none"
-                                                        fill-rule="evenodd">
+                                                    <g id="Basic-Elements" stroke="none" stroke-width="1"
+                                                        fill="none" fill-rule="evenodd">
                                                         <g id="Rounded-Icons"
-                                                            transform="translate(-2169.000000, -745.000000)" fill="#FFFFFF"
-                                                            fill-rule="nonzero">
+                                                            transform="translate(-2169.000000, -745.000000)"
+                                                            fill="#FFFFFF" fill-rule="nonzero">
                                                             <g id="Icons-with-opacity"
                                                                 transform="translate(1716.000000, 291.000000)">
                                                                 <g id="credit-card"
@@ -523,11 +524,11 @@
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     xmlns:xlink="http://www.w3.org/1999/xlink">
                                                     <title>settings</title>
-                                                    <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none"
-                                                        fill-rule="evenodd">
+                                                    <g id="Basic-Elements" stroke="none" stroke-width="1"
+                                                        fill="none" fill-rule="evenodd">
                                                         <g id="Rounded-Icons"
-                                                            transform="translate(-2020.000000, -442.000000)" fill="#FFFFFF"
-                                                            fill-rule="nonzero">
+                                                            transform="translate(-2020.000000, -442.000000)"
+                                                            fill="#FFFFFF" fill-rule="nonzero">
                                                             <g id="Icons-with-opacity"
                                                                 transform="translate(1716.000000, 291.000000)">
                                                                 <g id="settings"
@@ -675,7 +676,8 @@
                                                     </div>
                                                     <div class="progress">
                                                         <div class="progress-bar bg-gradient-info w-60" role="progressbar"
-                                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -718,7 +720,8 @@
                                                     </div>
                                                     <div class="progress">
                                                         <div class="progress-bar bg-gradient-info w-10" role="progressbar"
-                                                            aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                                            aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -855,7 +858,8 @@
                                                     </div>
                                                     <div class="progress">
                                                         <div class="progress-bar bg-gradient-info w-25" role="progressbar"
-                                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="25"></div>
+                                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="25">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -898,7 +902,8 @@
                                                     </div>
                                                     <div class="progress">
                                                         <div class="progress-bar bg-gradient-info w-40" role="progressbar"
-                                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="40"></div>
+                                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="40">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -1047,8 +1052,10 @@
                     <div class="badge-colors my-2 text-end">
                         <span class="badge filter bg-gradient-primary active" data-color="primary"
                             onclick="sidebarColor(this)"></span>
-                        <span class="badge filter bg-gradient-dark" data-color="dark" onclick="sidebarColor(this)"></span>
-                        <span class="badge filter bg-gradient-info" data-color="info" onclick="sidebarColor(this)"></span>
+                        <span class="badge filter bg-gradient-dark" data-color="dark"
+                            onclick="sidebarColor(this)"></span>
+                        <span class="badge filter bg-gradient-info" data-color="info"
+                            onclick="sidebarColor(this)"></span>
                         <span class="badge filter bg-gradient-success" data-color="success"
                             onclick="sidebarColor(this)"></span>
                         <span class="badge filter bg-gradient-warning" data-color="warning"

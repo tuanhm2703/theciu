@@ -83,11 +83,9 @@
 
     <div class="footer-bottom">
         <div class="container">
-            {{-- <figure class="footer-payments">
-                <img src="/assets/landingpage/images/payments.png" alt="Payment methods" width="272" height="20">
-            </figure><!-- End .footer-payments --> --}}
             <div class="logo">
-                <img src="/img/logo-white.png" alt="THE CIU - LOGO" class="m-auto" width="82" height="25">
+                <img src="{{ asset('img/logo-white.png') }}" alt="THE CIU - LOGO" class="m-auto" width="82"
+                    height="25">
             </div>
             <p class="footer-copyright">Copyright © 2019 THE C.I.U Store. All Rights Reserved.</p>
             <!-- End .footer-copyright -->
