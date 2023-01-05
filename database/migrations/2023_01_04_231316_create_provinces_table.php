@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('provinces', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('name');
-            $table->text('slug');
-            $table->text("name_with_type");
-            $table->text("code");
-            $table->text("type");
+            $table->string('name');
+            $table->string('slug');
+            $table->string("name_with_type");
+            $table->string("code");
+            $table->string("type");
             $table->boolean("status");
             $table->index('code');
             $table->string('domain_code');

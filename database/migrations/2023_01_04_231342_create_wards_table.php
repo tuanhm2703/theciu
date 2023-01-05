@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::create('wards', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text("name");
-            $table->text("slug");
-            $table->text("name_with_type");
-            $table->text("path");
-            $table->text("path_with_type");
-            $table->text("code")->nullable();
+            $table->string("name");
+            $table->string("slug");
+            $table->string("name_with_type");
+            $table->string("path");
+            $table->string("path_with_type");
+            $table->string("code")->nullable();
             $table->bigInteger('parent_id')->unsigned();
-            $table->text("type");
+            $table->string("type");
             $table->boolean("sttus");
             $table->integer("support_type")->default(0);
             $table->foreign('parent_id')->on('districts')->references('id');
