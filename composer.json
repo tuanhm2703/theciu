@@ -38,7 +38,7 @@
             "LaravelFrontendPresets\\ArgonPreset\\": "presets/argon/src"
         },
         "files": [
-            "app/Helpers/Helper.php"
+            "app/helpers/Helper.php"
         ]
     },
     "autoload-dev": {

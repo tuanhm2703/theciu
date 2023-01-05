@@ -13,19 +13,15 @@
 
         <div class="header-right">
             <div class="social-icons social-icons-color">
-                <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                <a href="#" class="social-icon social-pinterest" title="Instagram" target="_blank"><i class="icon-pinterest-p"></i></a>
-                <a href="#" class="social-icon social-instagram" title="Pinterest" target="_blank"><i class="icon-instagram"></i></a>
+                <a href="#" class="social-icon social-facebook" title="Facebook" target="_blank"><i
+                        class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i
+                        class="icon-twitter"></i></a>
+                <a href="#" class="social-icon social-pinterest" title="Instagram" target="_blank"><i
+                        class="icon-pinterest-p"></i></a>
+                <a href="#" class="social-icon social-instagram" title="Pinterest" target="_blank"><i
+                        class="icon-instagram"></i></a>
             </div><!-- End .soial-icons -->
-            <ul class="top-menu top-link-menu">
-                <li>
-                    <a href="#">Links</a>
-                    <ul>
-                        <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
-                    </ul>
-                </li>
-            </ul><!-- End .top-menu -->
 
             <div class="header-dropdown">
                 <a href="#">USD</a>
@@ -47,6 +43,33 @@
                     </ul>
                 </div><!-- End .header-menu -->
             </div><!-- End .header-dropdown -->
+
+            @if (auth('customer')->check())
+                <div class="header-dropdown">
+                    <a class="pr-4" href="{{ route('client.auth.profile.index') }}"><i class="icon-user"></i></a>
+                    <div class="header-menu">
+                        <ul>
+                            <li>
+                                {!! Form::open([
+                                    'url' => route('client.auth.logout'),
+                                    'method' => 'POST'
+                                ]) !!}
+                                <button type="submit" class="btn btn-primary" href="#">Đăng xuất</button>
+                                {!! Form::close() !!}
+                            </li>
+                        </ul>
+                    </div><!-- End .header-menu -->
+                </div><!-- End .header-dropdown -->
+            @else
+                <ul class="top-menu top-link-menu">
+                    <li>
+                        <a href="#">Links</a>
+                        <ul>
+                            <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
+                        </ul>
+                    </li>
+                </ul><!-- End .top-menu -->
+            @endif
         </div><!-- End .header-right -->
     </div>
 </div>

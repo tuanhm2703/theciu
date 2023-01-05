@@ -278,3 +278,6 @@ function getLocaleWithCountryCode() {
         'zu' => 'ZA',
     ];
 }
+function isEmail($email) {
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}

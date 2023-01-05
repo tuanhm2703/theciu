@@ -49,8 +49,4 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     });
 });
 
-Route::group(['as' => 'client.'], function() {
-    include('client/Home.php');
-    include('client/product/Product.php');
-    include('client/blog/Blog.php');
-});
+include('client/Client.php');

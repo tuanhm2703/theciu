@@ -2,12 +2,12 @@
     margin: auto;
 }
 
-a.product-image {
+.product-media a.product-image {
     height: 375px;
     background-position: center !important;
     background-size: cover !important;
 }
-a.product-image-hover {
+.product-media  a.product-image-hover {
     height: 375px;
     background-position: center !important;
     background-size: cover !important;

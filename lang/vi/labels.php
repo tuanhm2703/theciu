@@ -61,5 +61,12 @@ return [
     'active' => 'Kích hoạt',
     'inactive' => 'Huỷ kích hoạt',
     'pause' => 'Tạm dừng',
-    'product_category' => 'Danh mục ngành hàng'
+    'product_category' => 'Danh mục ngành hàng',
+    'phone_or_email' => 'Số điện thoại hoặc email',
+    'password' => 'Mật khẩu',
+    'login' => 'Đăng nhập',
+    'signin' => 'Đăng nhập',
+    'register' => 'Đăng ký',
+    'forgot_password' => 'Quên mật khẩu',
+    'or_signin_with' => 'Hoặc đăng nhập với'
 ];

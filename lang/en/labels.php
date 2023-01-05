@@ -61,5 +61,12 @@ return [
     'active' => 'Active',
     'inactive' => 'Inactive',
     'pause' => 'Pause',
-    'product_category' => 'Product category'
+    'product_category' => 'Product category',
+    'phone_or_email' => 'Phone or email',
+    'password' => 'Password',
+    'login' => 'Login',
+    'signin' => 'Sign in',
+    'register' => 'Register',
+    'forgot_password' => 'Forgot password',
+    'or_signin_with' => 'Or sign in with'
 ];
