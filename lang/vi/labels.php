@@ -77,5 +77,6 @@ return [
     'continue_shopping' => 'Tiếp tục mua sắm',
     'change_address' => 'Thay đổi địa chỉ',
     'subtotal' => 'Tổng tiền hàng',
-    'shipping' => 'Vận chuyển'
+    'shipping' => 'Vận chuyển',
+    'fullname' => 'Họ và tên'
 ];

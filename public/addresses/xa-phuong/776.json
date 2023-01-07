@@ -1,0 +1,162 @@
+{
+    "27388": {
+        "name": "8",
+        "type": "phuong",
+        "slug": "08",
+        "name_with_type": "Phường 8",
+        "path": "08, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 8, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27388",
+        "parent_code": "776"
+    },
+    "27391": {
+        "name": "2",
+        "type": "phuong",
+        "slug": "02",
+        "name_with_type": "Phường 2",
+        "path": "02, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 2, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27391",
+        "parent_code": "776"
+    },
+    "27394": {
+        "name": "1",
+        "type": "phuong",
+        "slug": "01",
+        "name_with_type": "Phường 1",
+        "path": "01, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 1, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27394",
+        "parent_code": "776"
+    },
+    "27397": {
+        "name": "3",
+        "type": "phuong",
+        "slug": "03",
+        "name_with_type": "Phường 3",
+        "path": "03, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 3, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27397",
+        "parent_code": "776"
+    },
+    "27400": {
+        "name": "11",
+        "type": "phuong",
+        "slug": "11",
+        "name_with_type": "Phường 11",
+        "path": "11, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 11, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27400",
+        "parent_code": "776"
+    },
+    "27403": {
+        "name": "9",
+        "type": "phuong",
+        "slug": "09",
+        "name_with_type": "Phường 9",
+        "path": "09, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 9, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27403",
+        "parent_code": "776"
+    },
+    "27406": {
+        "name": "10",
+        "type": "phuong",
+        "slug": "10",
+        "name_with_type": "Phường 10",
+        "path": "10, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 10, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27406",
+        "parent_code": "776"
+    },
+    "27409": {
+        "name": "4",
+        "type": "phuong",
+        "slug": "04",
+        "name_with_type": "Phường 4",
+        "path": "04, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 4, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27409",
+        "parent_code": "776"
+    },
+    "27412": {
+        "name": "13",
+        "type": "phuong",
+        "slug": "13",
+        "name_with_type": "Phường 13",
+        "path": "13, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 13, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27412",
+        "parent_code": "776"
+    },
+    "27415": {
+        "name": "12",
+        "type": "phuong",
+        "slug": "12",
+        "name_with_type": "Phường 12",
+        "path": "12, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 12, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27415",
+        "parent_code": "776"
+    },
+    "27418": {
+        "name": "5",
+        "type": "phuong",
+        "slug": "05",
+        "name_with_type": "Phường 5",
+        "path": "05, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 5, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27418",
+        "parent_code": "776"
+    },
+    "27421": {
+        "name": "14",
+        "type": "phuong",
+        "slug": "14",
+        "name_with_type": "Phường 14",
+        "path": "14, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 14, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27421",
+        "parent_code": "776"
+    },
+    "27424": {
+        "name": "6",
+        "type": "phuong",
+        "slug": "06",
+        "name_with_type": "Phường 6",
+        "path": "06, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 6, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27424",
+        "parent_code": "776"
+    },
+    "27427": {
+        "name": "15",
+        "type": "phuong",
+        "slug": "15",
+        "name_with_type": "Phường 15",
+        "path": "15, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 15, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27427",
+        "parent_code": "776"
+    },
+    "27430": {
+        "name": "16",
+        "type": "phuong",
+        "slug": "16",
+        "name_with_type": "Phường 16",
+        "path": "16, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 16, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27430",
+        "parent_code": "776"
+    },
+    "27433": {
+        "name": "7",
+        "type": "phuong",
+        "slug": "07",
+        "name_with_type": "Phường 7",
+        "path": "07, 8, Hồ Chí Minh",
+        "path_with_type": "Phường 7, Quận 8, Thành phố Hồ Chí Minh",
+        "code": "27433",
+        "parent_code": "776"
+    }
+}

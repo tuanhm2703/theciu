@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Livewire\AddressSelectComponent;
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     include('admin/Auth.php');

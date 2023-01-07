@@ -164,5 +164,6 @@ return [
         'year'                  => 'năm',
     ],
     'username_have_been_used' => 'Thông tin tài khoản tồn tại',
-    'invalid_username'          => 'Tên tài khoản không hợp lệ'
+    'invalid_username'          => 'Tên tài khoản không hợp lệ',
+    'phone_number'              => 'Số điện thoại không hợp lệ'
 ];

@@ -77,5 +77,6 @@ return [
     'continue_shopping' => 'Continue shopping',
     'change_address' => 'Change address',
     'subtotal' => 'Subtotal',
-    'shipping' => 'Shipping'
+    'shipping' => 'Shipping',
+    'fullname' => 'Fullname'
 ];

@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string("code")->nullable();
             $table->bigInteger('parent_id')->unsigned();
             $table->string("type");
-            $table->boolean("sttus");
             $table->integer("support_type")->default(0);
             $table->foreign('parent_id')->on('districts')->references('id');
             $table->timestamps();

@@ -173,5 +173,6 @@ return [
 
     'attributes' => [],
     'username_have_been_used' => 'Account information have been used',
-    'invalid_username'          => 'Invalid username'
+    'invalid_username'          => 'Invalid username',
+    'phone_number'              => 'Phone number is invalid'
 ];

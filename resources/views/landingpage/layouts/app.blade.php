@@ -37,7 +37,10 @@
     <link rel="stylesheet" href="{{ asset('assets/landingpage/css/skins/skin-demo-6.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/landingpage/css/demos/demo-6.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/client/app.css') }}">
+    <link rel="stylesheet" href="{{asset('assets/landingpage/vendor/font-awesome/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/landingpage/css/floating-labels.css')}}">
     @stack('css')
+    @livewireStyles
 </head>
 
 <body>
@@ -124,6 +127,8 @@
             </div>
         </div>
     </div>
+    <x-dynamic-modal></x-dynamic-modal>
+    <livewire:scripts />
     <!-- Plugins JS File -->
     <script src="{{ asset('assets/landingpage/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/bootstrap.bundle.min.js') }}"></script>

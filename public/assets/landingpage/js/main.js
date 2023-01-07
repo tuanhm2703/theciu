@@ -1,12 +1,64 @@
 // Main Js File
 const openLoginModal = () => {
-    $('#signin-modal').modal('show')
-}
+    $("#signin-modal").modal("show");
+};
 const reRenderCartDropdown = (html) => {
-    $('.header-bottom .header-right .cart-dropdown').remove()
-    $('.header-bottom .header-right').append(html)
+    $(".header-bottom .header-right .cart-dropdown").remove();
+    $(".header-bottom .header-right").append(html);
     $(".cart-dropdown").addClass("show");
+};
+function setInputFilter(textbox, inputFilter, errMsg) {
+    [
+        "input",
+        "keydown",
+        "keyup",
+        "mousedown",
+        "mouseup",
+        "select",
+        "contextmenu",
+        "drop",
+        "focusout",
+    ].forEach(function (event) {
+        Array.from(textbox).forEach((element) => {
+            element.addEventListener(event, function (e) {
+                if (inputFilter(this.value)) {
+                    // Accepted value.
+                    if (
+                        ["keydown", "mousedown", "focusout"].indexOf(e.type) >=
+                        0
+                    ) {
+                        this.classList.remove("input-error");
+                        this.setCustomValidity("");
+                    }
+
+                    this.oldValue = this.value;
+                    this.oldSelectionStart = this.selectionStart;
+                    this.oldSelectionEnd = this.selectionEnd;
+                } else if (this.hasOwnProperty("oldValue")) {
+                    // Rejected value: restore the previous one.
+                    this.classList.add("input-error");
+                    this.setCustomValidity(errMsg);
+                    this.reportValidity();
+                    this.value = this.oldValue;
+                    this.setSelectionRange(
+                        this.oldSelectionStart,
+                        this.oldSelectionEnd
+                    );
+                } else {
+                    // Rejected value: nothing to restore.
+                    this.value = "";
+                }
+            });
+        });
+    });
 }
+setInputFilter(
+    document.getElementsByClassName("number-input"),
+    function (value) {
+        return /^\d*\.?\d*$/.test(value); // Allow digits and '.' only, using a RegExp.
+    },
+    "Vui lòng nhập số"
+);
 $(document).ready(function () {
     "use strict";
 
@@ -523,6 +575,45 @@ $(document).ready(function () {
         });
     }
 
+    $("body").on("click", ".ajax-modal-btn", function (e) {
+        e.preventDefault();
+        console.log($(".modal.show").modal("hide"));
+        const btn = $(this);
+        const modalSize = $(this).data().modalSize ?? "modal-lg";
+        $(this).loading();
+        var url = $(this).data("link");
+        const callback = $(this).data("callback");
+        var ajaxElement = this;
+        if (url.indexOf("#") == 0) {
+            $(url).modal("open");
+        } else {
+            $.get(url, function (data) {
+                $("#myDynamicModal .modal-body").html(data);
+                $("#myDynamicModal .modal-dialog").addClass(modalSize);
+                $("#myDynamicModal").modal("show");
+                $(".modal-body input:text:visible:first").focus();
+                //Initialize application plugins after ajax load the content
+                if (
+                    typeof initAppPlugins == "function" &&
+                    $(ajaxElement).attr("data-init-app") == null
+                ) {
+                    $(ajaxElement).attr("data-init-app") == null;
+                    initAppPlugins();
+                }
+                if (callback) eval(callback);
+            })
+                .done(function () {
+                    $(btn).loading(false);
+                })
+                .fail(function (response) {
+                    $(btn).loading(false);
+                    if (401 === response.status) {
+                        window.location = "{{ route('admin.login') }}";
+                    }
+                });
+        }
+    });
+
     // Checkout discount input - toggle label if input is empty etc...
     $("#checkout-discount-input")
         .on("focus", function () {
@@ -958,12 +1049,16 @@ $(document).ready(function () {
             .find("a")
             .removeClass("active");
         $(e.currentTarget).addClass("active");
-        const image = $(e.currentTarget).attr('href')
-        let productImageElement = $(e.currentTarget).parents('.product').find('.product-media>a.product-image-hover')
-        if(productImageElement.length == 0) {
-            productImageElement = $(e.currentTarget).parents('.product').find('.product-media>a.product-image')
+        const image = $(e.currentTarget).attr("href");
+        let productImageElement = $(e.currentTarget)
+            .parents(".product")
+            .find(".product-media>a.product-image-hover");
+        if (productImageElement.length == 0) {
+            productImageElement = $(e.currentTarget)
+                .parents(".product")
+                .find(".product-media>a.product-image");
         }
-        productImageElement.css('background', `url(${image})`)
+        productImageElement.css("background", `url(${image})`);
     });
 
     const registerFormValidator = $("#register-form").initValidator();

@@ -25,8 +25,7 @@
                 <span class="wishlist-count">3</span>
                 <span class="wishlist-txt">My Wishlist</span>
             </a>
-
-            @include('landingpage.layouts.components.navs.cart')
+            <livewire:header-cart-component></livewire:header-cart-component>
         </div>
     </div><!-- End .container -->
 </div><!-- End .header-bottom -->

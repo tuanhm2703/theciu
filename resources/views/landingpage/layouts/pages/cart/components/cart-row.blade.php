@@ -15,10 +15,12 @@
     <td class="price-col">{{ $inventory->formatted_sale_price }}</td>
     <td class="quantity-col">
         <div class="cart-product-quantity">
-            <input type="number" class="form-control" value="{{ $inventory->pivot->quantity }}" min="1"
-                max="{{ $inventory->stock_quantity }}" step="1" data-decimals="0" required>
+            <input class="number-input form-control inventory-quantity-input" data-inventory-id="{{ $inventory->id }}"
+                wire:change="$emit('cart:itemAdded', {{ $inventory->id }}, $event.target.value)"
+                value="{{ $inventory->pivot->quantity }}" required>
         </div><!-- End .cart-product-quantity -->
     </td>
     <td class="total-col">{{ format_currency($inventory->sale_price * $inventory->pivot->quantity) }}</td>
-    <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+    <td class="remove-col" wire:click="$emit('cart:itemDeleted', {{ $inventory->id }})"><button class="btn-remove"><i
+                class="icon-close"></i></button></td>
 </tr>

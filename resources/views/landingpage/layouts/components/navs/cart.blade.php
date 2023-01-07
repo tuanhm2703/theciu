@@ -50,3 +50,5 @@
         </div><!-- End .dropdown-menu -->
     @endif
 </div><!-- End .cart-dropdown -->
+
+@yield('header-cart')

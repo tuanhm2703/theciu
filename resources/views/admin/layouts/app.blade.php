@@ -36,7 +36,7 @@
                     <span class="mask bg-primary opacity-6"></span>
                 </div>
             @endif
-            <x-admin.dynamic-modal></x-admin.dynamic-modal>
+            <x-dynamic-modal></x-dynamic-modal>
             @include('admin.layouts.navbars.auth.sidenav')
             <main class="main-content border-radius-lg">
                 @yield('content')

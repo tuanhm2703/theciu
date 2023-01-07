@@ -3,6 +3,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body p-0">
+                <livewire:address-select-component></livewire:address-select-component>
             </div>
         </div>
     </div>
