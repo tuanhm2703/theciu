@@ -8,7 +8,8 @@
                     <hr class="my-2">
                     {!! Form::open([
                         'url' => route('client.auth.profile.address.store'),
-                        'method' => 'POST'
+                        'method' => 'POST',
+                        'id' => 'create-address-form'
                     ]) !!}
                     @include('landingpage.layouts.pages.profile.address.form')
                     <div class="text-right"
@@ -17,7 +18,7 @@
                     right: 0;
                     padding: 1rem;">
                         <hr class="my-3">
-                        <a class="ajax-modal-btn btn" data-modal-size="modal-md" data-link="http://localhost:4000/auth/profile/address/view/change"><i class="fas fa-undo"></i> Quay lại</a>
+                        <a class="ajax-modal-btn btn" id="return-address-list-btn" data-modal-size="modal-md" data-link="http://localhost:4000/auth/profile/address/view/change"><i class="fas fa-undo"></i> Quay lại</a>
                         {!! Form::submit('Thêm địa chỉ', ['class' => 'btn btn-primary']) !!}
                     </div>
                     {!! Form::close() !!}

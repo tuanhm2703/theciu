@@ -13,14 +13,21 @@ class Address extends Model {
         'type',
         'details',
         'province_id',
-        'distict_id',
+        'district_id',
         'ward_id',
         'full_address',
+        'featured',
         'fullname',
         'phone',
     ];
 
     public function ward() {
         return $this->belongsTo(Ward::class);
+    }
+    public function province() {
+        return $this->belongsTo(Province::class);
+    }
+    public function district() {
+        return $this->belongsTo(District::class);
     }
 }

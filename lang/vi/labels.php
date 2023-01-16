@@ -78,5 +78,16 @@ return [
     'change_address' => 'Thay đổi địa chỉ',
     'subtotal' => 'Tổng tiền hàng',
     'shipping' => 'Vận chuyển',
-    'fullname' => 'Họ và tên'
+    'fullname' => 'Họ và tên',
+    'phone' => 'Số điện thoại',
+    'order_list' => 'Danh sách đơn hàng',
+    'address' => 'Địa chỉ',
+    'account_info' => 'Thông tin tài khoản',
+    'my_account' => 'Tài khoản của tôi',
+    'first_name' => 'Tên',
+    'last_name' => 'Họ',
+    'email_address' => 'Địa chỉ Email',
+    'address_list' => 'Danh sách địa chỉ',
+    'momo' => 'Momo',
+    'cod' => 'Thanh toán khi nhận hàng'
 ];

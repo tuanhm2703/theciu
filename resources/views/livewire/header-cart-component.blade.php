@@ -2,14 +2,14 @@
     <a href="{{ route('client.auth.cart.index') }}" class="dropdown-toggle" role="button" data-toggle="dropdown"
         aria-haspopup="true" aria-expanded="false" data-display="static">
         <i class="icon-shopping-cart"></i>
-        <span class="cart-count">{{ $cart ? $inventories->count() : 0 }}</span>
+        <span class="cart-count">{{ $cart ? $cart->inventories->count() : 0 }}</span>
         <span class="cart-txt">{{ $cart ? $cart->formatted_total : 0 }}</span>
     </a>
 
     @if ($cart)
         <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-cart-products">
-                @foreach ($inventories as $inventory)
+                @foreach ($cart->inventories as $inventory)
                     <div class="product">
                         <div class="product-cart-details">
                             <h4 class="product-title">
@@ -30,8 +30,9 @@
                             </a>
                         </figure>
                         <a href="#" class="btn-remove remove-cart-item-btn"
-                            wire:click="deleteInventory({{ $inventory->id }})" data-inventory-id="{{ $inventory->id }}"
-                            title="Remove Product"><i class="icon-close"></i></a>
+                            wire:click.prevent="deleteInventory({{ $inventory->id }})"
+                            data-inventory-id="{{ $inventory->id }}" title="Remove Product"><i
+                                class="icon-close"></i></a>
                     </div><!-- End .product -->
                 @endforeach
             </div><!-- End .cart-product -->

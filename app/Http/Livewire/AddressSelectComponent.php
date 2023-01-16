@@ -17,13 +17,15 @@ class AddressSelectComponent extends Component {
     public $ward_id;
     public $wards = [];
 
+    public $address;
+
     public function mount() {
         $this->provinces = Province::select('name', 'id')->get();
-        $this->province_id = $this->provinces->first()->id;
+        $this->province_id = $this->address ? $this->address->province_id : $this->provinces->first()->id;
         $this->districts = District::where('parent_id', $this->province_id)->select('name', 'id')->get();
-        $this->district_id = $this->districts->first()->id;
+        $this->district_id = $this->address ? $this->address->district_id : $this->districts->first()->id;
         $this->wards = Ward::where('parent_id', $this->district_id)->select('name', 'id')->get();
-        $this->ward_id = $this->wards->first()->id;
+        $this->ward_id = $this->address ? $this->address->ward_id : $this->wards->first()->id;
     }
 
     public function changeProvince() {

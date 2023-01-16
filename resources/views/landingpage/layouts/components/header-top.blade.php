@@ -52,10 +52,13 @@
                             <li>
                                 {!! Form::open([
                                     'url' => route('client.auth.logout'),
-                                    'method' => 'POST'
+                                    'method' => 'POST',
                                 ]) !!}
-                                <button type="submit" class="btn btn-primary" href="#">Đăng xuất</button>
+                                <button type="submit" class="btn justify-content-start" href="#">Đăng xuất</button>
                                 {!! Form::close() !!}
+                            </li>
+                            <li>
+                                <a href="{{ route('client.auth.profile.index')."?tab=order-list" }}">Đơn đã mua</a>
                             </li>
                         </ul>
                     </div><!-- End .header-menu -->

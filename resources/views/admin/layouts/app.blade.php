@@ -46,12 +46,13 @@
     @endauth
 
     <!--   Core JS Files   -->
-   @include('admin.layouts.js-plugins')
+    @include('admin.layouts.js-plugins')
     @include('admin.layouts.script')
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     @stack('js');
+    <livewire:scripts />
 </body>
 
 </html>

@@ -78,5 +78,16 @@ return [
     'change_address' => 'Change address',
     'subtotal' => 'Subtotal',
     'shipping' => 'Shipping',
-    'fullname' => 'Fullname'
+    'fullname' => 'Fullname',
+    'phone' => 'Phone',
+    'order_list' => 'Order list',
+    'address' => 'Address',
+    'account_info' => 'Account information',
+    'my_account' => 'My account',
+    'first_name' => 'First name',
+    'last_name' => 'Last name',
+    'email_address' => 'Email address',
+    'address_list' => 'Address list',
+    'momo' => 'Momo',
+    'cod' => 'Cash on delivery'
 ];

@@ -18,7 +18,7 @@ class CartService {
                     if (err.status === 401) {
                         openLoginModal();
                     }
-                    reject()
+                    resolve(false)
                 },
             });
         });
@@ -43,5 +43,13 @@ class CartService {
                 },
             });
         })
+    }
+}
+
+//
+
+class CheckoutService {
+    static checkout() {
+
     }
 }

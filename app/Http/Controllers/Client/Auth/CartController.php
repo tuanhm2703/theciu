@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller {
     public function index() {
-        return view('landingpage.layouts.pages.cart.index');
+        return view('landingpage.layouts.pages.cart.checkout');
     }
 
     public function addToCart(Request $request) {

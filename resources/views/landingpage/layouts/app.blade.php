@@ -37,8 +37,11 @@
     <link rel="stylesheet" href="{{ asset('assets/landingpage/css/skins/skin-demo-6.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/landingpage/css/demos/demo-6.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/client/app.css') }}">
-    <link rel="stylesheet" href="{{asset('assets/landingpage/vendor/font-awesome/css/all.min.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/landingpage/css/floating-labels.css')}}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/vendor/font-awesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/floating-labels.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bs4Toast.css') }}">
+    <script src="{{ asset('assets/landingpage/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.form.min.js') }}"></script>
     @stack('css')
     @livewireStyles
 </head>
@@ -128,9 +131,7 @@
         </div>
     </div>
     <x-dynamic-modal></x-dynamic-modal>
-    <livewire:scripts />
     <!-- Plugins JS File -->
-    <script src="{{ asset('assets/landingpage/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/jquery.hoverIntent.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/jquery.waypoints.min.js') }}"></script>
@@ -141,7 +142,6 @@
     <script src="{{ asset('assets/landingpage/js/jquery.magnific-popup.min.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/jquery.countdown.min.js') }}"></script>
     <script src="{{ asset('assets/js/jbvalidator.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.form.min.js') }}"></script>
     <!-- Main JS File -->
     <script src="{{ asset('assets/landingpage/js/main.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/demos/demo-6.js') }}"></script>
@@ -149,17 +149,20 @@
     <script src="{{ asset('assets/js/jquery.lazyload.js') }}"></script>
     <script src="{{ asset('assets/landingpage/api-service.js') }}"></script>
     <script src="{{ asset('assets/landingpage/cart.js') }}"></script>
+    <script src="{{ asset('assets/js/bs4Toast.js') }}"></script>
     @stack('js')
     <script>
         $('.lazy').lazyload();
-        // $(document).ajaxError(function(event, request, settings) {
-        //     if (request.status === 401) {
-        //         if (settings.url != @json(route('client.auth.login'))) {
-        //             $('#signin-modal').modal('show')
-        //         }
-        //     }
-        // });
+        $(function() {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+        document.addEventListener("DOMContentLoaded", () => {
+            Livewire.hook('message.processed', (message, component) => {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
+        })
     </script>
+    <livewire:scripts />
 </body>
 
 </html>

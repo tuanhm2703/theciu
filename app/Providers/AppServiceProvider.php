@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Services\Momo\MomoService;
 use App\Services\BatchService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -29,5 +30,6 @@ class AppServiceProvider extends ServiceProvider {
         }
         Carbon::setLocale(App::getLocale());
         $this->app->singleton(BatchService::class);
+        $this->app->singleton(MomoService::class);
     }
 }

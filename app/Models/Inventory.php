@@ -80,11 +80,19 @@ class Inventory extends Model {
      * @return Float The sale price of the product.
      */
     public function getSalePriceAttribute() {
-        if($this->has_promotion && $this->promotion_status === 1) return $this->promotion_price;
+        if ($this->has_promotion && $this->promotion_status === 1) return $this->promotion_price;
         return $this->price;
     }
 
     public function getFormattedSalePriceAttribute() {
         return format_currency($this->sale_price);
+    }
+
+    public function getPackageInfoAttribute() {
+        return $this->product->package_info;
+    }
+
+    public function getNameAttribute() {
+        return $this->product->name . " - " . $this->title;
     }
 }

@@ -12,7 +12,7 @@
     @endphp
     <div class="product-nav product-nav-thumbs">
         @foreach ($imgPaths as $path)
-            <a href="#" class="active">
+            <a href="#">
                 <img src="{{ $path }}" alt="product desc">
             </a>
         @endforeach

@@ -27,4 +27,10 @@ class CreateAddressRequest extends FormRequest {
             'phone' => 'required|phone_number'
         ];
     }
+
+    public function attributes() {
+        return [
+            'details' => 'địa chỉ chi tiết'
+        ];
+    }
 }

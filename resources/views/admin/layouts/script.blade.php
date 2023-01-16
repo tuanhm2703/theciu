@@ -121,6 +121,7 @@
             e.preventDefault();
             const btn = $(this)
             const modalSize = $(this).data().modalSize ?? 'modal-lg'
+            const modalId = $(this).data().modalId ?? 'myDynamicModal'
             $(this).loading()
             var url = $(this).data('link');
             const callback = $(this).data('callback')
@@ -129,9 +130,9 @@
                 $(url).modal('open');
             } else {
                 $.get(url, function(data) {
-                        $('#myDynamicModal .modal-body').html(data);
-                        $('#myDynamicModal .modal-dialog').addClass(modalSize)
-                        $('#myDynamicModal').modal('show');
+                        $(`#${modalId} .modal-body`).html(data);
+                        $(`#${modalId} .modal-dialog`).addClass(modalSize)
+                        $(`#${modalId}`).modal('show');
                         $('.modal-body input:text:visible:first').focus();
                         //Initialize application plugins after ajax load the content
                         if (typeof initAppPlugins == 'function' && $(ajaxElement).attr(

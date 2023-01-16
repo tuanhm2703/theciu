@@ -7,11 +7,9 @@
                 .parents(".product")
                 .find(".inventory-img-btn.active")
                 .data("inventoryId");
-            Livewire.emit("cart:itemAdded", inventoryId);
+            await CartService.addToCart(inventoryId)
+            Livewire.emit("cart:refresh");
             $(e.currentTarget).loading(false);
-            setTimeout(() => {
-                $(".cart-dropdown").addClass("show");
-            }, 500)
         });
     });
 })();

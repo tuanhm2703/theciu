@@ -172,14 +172,16 @@ div.dataTables_processing > div:last-child > div {
 .form-control:disabled {
     cursor: not-allowed;
 }
-.select2-container--default .select2-selection--multiple, .select2-dropdown {
+.select2-container--default .select2-selection--multiple,
+.select2-dropdown {
     border: 1px solid #d2d6da !important;
 }
 
 .product-price {
     justify-content: center;
 }
-.deal-product .new-price, .deal-product .old-price {
+.deal-product .new-price,
+.deal-product .old-price {
     font-size: 1.4rem;
     letter-spacing: 0;
     text-decoration: none;
@@ -192,7 +194,9 @@ div.dataTables_processing > div:last-child > div {
     color: #cccccc;
     text-decoration: line-through;
 }
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
+.select2-container--default
+    .select2-selection--multiple
+    .select2-selection__choice {
     font-size: 14px;
     line-height: 1.3rem;
     background-color: #fafafa;
@@ -211,6 +215,7 @@ div.dataTables_processing > div:last-child > div {
     background-position: center !important;
     background-size: contain !important;
     padding: 3px;
+    display: block;
 }
 .absolute-center {
     margin: 0;
@@ -233,4 +238,9 @@ div.dataTables_processing > div:last-child > div {
 .treeview .list-group-item {
     padding: 0 1rem;
     font-size: 15px;
+}
+.cut-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }

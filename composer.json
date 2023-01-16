@@ -17,6 +17,7 @@
         "laravelcollective/html": "^6.3",
         "livewire/livewire": "^2.10",
         "maatwebsite/excel": "^3.1",
+        "mservice/payment": "*",
         "phpoffice/phpexcel": "^1.8",
         "phpoffice/phpspreadsheet": "^1.26",
         "psr/simple-cache": "^2.0",
@@ -36,7 +37,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "LaravelFrontendPresets\\ArgonPreset\\": "presets/argon/src"
+            "LaravelFrontendPresets\\ArgonPreset\\": "presets/argon/src",
+            "MService\\Payment\\": "app/Http/Services/Momo/MService/Payment"
         },
         "files": [
             "app/helpers/Helper.php"

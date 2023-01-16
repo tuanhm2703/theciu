@@ -15,4 +15,9 @@ return [
     'banner_list' => 'Banner list',
     'promotion_list' => 'Promotion list',
     'blog_list' => 'Blog list',
+    'setting' => 'Setting',
+    'address' => 'Address',
+    'pickup_address' => 'Pickup address',
+    'order' => 'Order',
+    'order_list' => 'Order list'
 ];

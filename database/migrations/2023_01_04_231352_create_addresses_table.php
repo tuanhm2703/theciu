@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('details');
             $table->bigInteger('province_id');
-            $table->bigInteger('distict_id');
+            $table->bigInteger('district_id');
             $table->bigInteger('ward_id');
             $table->string('full_address');
             $table->string('fullname');

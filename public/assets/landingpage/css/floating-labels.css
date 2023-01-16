@@ -1,117 +1,61 @@
-
-
-.form-label-group {
-  position: relative;
-  margin-bottom: 1rem;
+.has-float-label {
+    display: block;
+    position: relative;
 }
-
-.form-label-group input,
-.form-label-group select,
-.form-label-group textarea,
-.form-label-group label {
-  height: 4rem;
-  padding: .75rem;
+.has-float-label label,
+.has-float-label > span {
+    position: absolute;
+    cursor: text;
+    font-size: 12px;
+    opacity: 1;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
+    top: -0.5em;
+    left: 0.75rem;
+    z-index: 3;
+    line-height: 1;
+    padding: 0 1px;
 }
-
-.form-label-group label {
-  position: absolute;
-  top: 0;
-  font-weight: 500;
-  left: 0;
-  display: block;
-  width: 100%;
-  margin-bottom: 0; /* Override default `<label>` margin */
-  line-height: 1.5;
-  color: #495057;
-  pointer-events: none;
-  cursor: text; /* Match the input under the label */
-  border: 1px solid transparent;
-  border-radius: .25rem;
-  transition: all .1s ease-in-out;
+.has-float-label label::after,
+.has-float-label > span::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    background: #fff;
+    height: 2px;
+    top: 50%;
+    left: -0.2em;
+    right: -0.2em;
+    z-index: -1;
 }
-
-.form-label-group input::-webkit-input-placeholder {
-  color: transparent;
+.has-float-label .form-control::-webkit-input-placeholder {
+    opacity: 1;
+    -webkit-transition: all 0.2s;
+    transition: all 0.2s;
 }
-
-.form-label-group input::-moz-placeholder {
-  color: transparent;
+.has-float-label
+    .form-control:placeholder-shown:not(:focus)::-webkit-input-placeholder {
+    opacity: 0;
 }
-
-.form-label-group input:-ms-input-placeholder {
-  color: transparent;
+.has-float-label .form-control:placeholder-shown:not(:focus) + * {
+    font-size: 120%;
+    opacity: 0.5;
+    top: 33%;
 }
-
-.form-label-group input::-ms-input-placeholder {
-  color: transparent;
+.input-group .has-float-label {
+    display: table-cell;
 }
-
-.form-label-group input::placeholder {
-  color: transparent;
+.input-group .has-float-label .form-control {
+    border-radius: 0.25rem;
 }
-
-.form-label-group input:not(:-moz-placeholder-shown) {
-  padding-top: 1.25rem;
-  padding-bottom: .25rem;
+.input-group .has-float-label:not(:last-child),
+.input-group .has-float-label:not(:last-child) .form-control {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-right: 0;
 }
-
-.form-label-group input:not(:-ms-input-placeholder) {
-  padding-top: 1.25rem;
-  padding-bottom: .25rem;
-}
-
-
-.form-label-group input:not(:-moz-placeholder-shown) ~ label {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  font-size: 12px;
-  color: #777;
-}
-
-.form-label-group input:not(:-ms-input-placeholder) ~ label {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  font-size: 12px;
-  color: #777;
-}
-
-.form-label-group input:not(:placeholder-shown) ~ label,
-.form-label-group select:not(:placeholder-shown) ~ label,
-.form-label-group textarea:not(:placeholder-shown) ~ label {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  font-size: 12px;
-  color: #777;
-  margin-top: -1.2rem;
-  background: white;
-  width: fit-content;
-  padding-left: 0;
-  margin-left: 1rem;
-  height: fit-content;
-}
-
-.form-label-group input:-webkit-autofill ~ label {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-  font-size: 12px;
-  color: #777;
-}
-
-/* Fallback for Edge
--------------------------------------------------- */
-@supports (-ms-ime-align: auto) {
-  .form-label-group {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column-reverse;
-    flex-direction: column-reverse;
-  }
-
-  .form-label-group label {
-    position: static;
-  }
-
-  .form-label-group input::-ms-input-placeholder {
-    color: #777;
-  }
+.input-group .has-float-label:not(:first-child),
+.input-group .has-float-label:not(:first-child) .form-control {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
 }

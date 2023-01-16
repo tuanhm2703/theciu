@@ -8,7 +8,11 @@
             </figure>
 
             <h3 class="product-title">
-                <a href="#">{{ $inventory->product->name }}</a>
+                <a href="#" class="{{$inventory->pivot->quantity > $inventory->stock_quantity ? 'text-danger' : ''}}">{{ $inventory->product->name }}</a>
+                @if($inventory->pivot->quantity > $inventory->stock_quantity)
+                    <br>
+                    <small><i class="text-danger">Không đủ số lượng</i></small>
+                @endif
             </h3><!-- End .product-title -->
         </div><!-- End .product -->
     </td>
@@ -16,7 +20,7 @@
     <td class="quantity-col">
         <div class="cart-product-quantity">
             <input class="number-input form-control inventory-quantity-input" data-inventory-id="{{ $inventory->id }}"
-                wire:change="$emit('cart:itemAdded', {{ $inventory->id }}, $event.target.value)"
+                wire:change="itemAdded({{ $inventory->id }}, $event.target.value)"
                 value="{{ $inventory->pivot->quantity }}" required>
         </div><!-- End .cart-product-quantity -->
     </td>

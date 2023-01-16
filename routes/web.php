@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\TestController;
 use App\Http\Livewire\AddressSelectComponent;
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
@@ -37,6 +38,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         include('admin/Category.php');
         include('admin/Promotion.php');
         include('admin/Appearance.php');
+        include('admin/Setting.php');
+        include('admin/Order.php');
         Route::get('/{page}', [PageController::class, 'index'])->name('page');
         Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
             include('admin/ajax/Category.php');
@@ -46,8 +49,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
             include('admin/ajax/Promotion.php');
             include('admin/ajax/Appearance.php');
             include('admin/ajax/Image.php');
+            include('admin/ajax/Order.php');
         });
     });
 });
 
 include('client/Client.php');
+Route::get('test', [TestController::class, 'test']);

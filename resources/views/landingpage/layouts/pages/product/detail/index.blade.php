@@ -7,8 +7,8 @@
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Products</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Default</li>
+                <li class="breadcrumb-item"><a href="#">{{ trans('labels.product') }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $product->name }}</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
@@ -59,9 +59,8 @@
                             <div class="product-content">
                                 <p>{{ $product->short_description }}</p>
                             </div><!-- End .product-content -->
-
-                            @include('landingpage.layouts.pages.product.detail.first_attribute_select')
-                            @include('landingpage.layouts.pages.product.detail.second_attribute_select')
+                            <livewire:product-pick-item-component :product={{ $product }}>
+                            </livewire:product-pick-item-component>
 
 
                             <div class="details-filter-row details-row-size">
@@ -126,7 +125,8 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab"
-                            role="tab" aria-controls="product-shipping-tab" aria-selected="false">Vận chuyển và trả hàng</a>
+                            role="tab" aria-controls="product-shipping-tab" aria-selected="false">Vận chuyển và trả
+                            hàng</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"
@@ -249,7 +249,6 @@
                 }'>
                 @foreach ($other_products as $o_product)
                     @component('components.client.product-card', ['product' => $o_product])
-
                     @endcomponent
                 @endforeach
             </div><!-- End .owl-carousel -->

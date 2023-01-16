@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class AddressController extends Controller {
     public function viewChangeAddress(Request $request) {
-        $addresses = auth('customer')->user()->addresses()->with('ward.district.province')->orderBy('type')->get();
+        $addresses = auth('customer')->user()->shipping_addresses()->with('ward.district.province')->orderBy('type')->get();
         return view('landingpage.layouts.pages.profile.address.change', compact('addresses'));
     }
 
@@ -25,11 +25,33 @@ class AddressController extends Controller {
         $ward = Ward::with('district.province')->find($request->input('ward_id'));
         $request->merge([
             'district_id' => $ward->district->id,
-            'province_id' => $ward->district->province->id
+            'province_id' => $ward->district->province->id,
+            'featured' => $request->input('featured') == 'on' ? 1 : '0'
         ]);
-        Address::create($request->all());
+        $customer = auth('customer')->user();
+        if($request->input('featured') == 1) {
+            $customer->shipping_addresses()->update(['featured' => 0]);
+        }
+        $customer->addresses()->create($request->all());
         return BaseResponse::success([
             'message' => 'Thêm địa chỉ thành công'
+        ]);
+    }
+
+    public function update(Address $address, Request $request) {
+        $ward = Ward::with('district.province')->find($request->input('ward_id'));
+        $request->merge([
+            'district_id' => $ward->district->id,
+            'province_id' => $ward->district->province->id,
+            'featured' => $request->input('featured') == 'on' ? 1 : '0'
+        ]);
+        $customer = auth('customer')->user();
+        if($request->input('featured') == 1) {
+            $customer->shipping_addresses()->where('addresses.id', '!=', $address->id)->update(['featured' => 0]);
+        }
+        $address->update($request->all());
+        return BaseResponse::success([
+            'message' => 'Cập nhật địa chỉ thành công'
         ]);
     }
 }

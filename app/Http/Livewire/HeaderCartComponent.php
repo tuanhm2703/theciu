@@ -15,7 +15,7 @@ class HeaderCartComponent extends Component {
 
     public $deletedInventory;
 
-    protected $listeners = ['cart:itemDeleted' => 'deleteInventory', 'cart:itemAdded' => 'addInventory'];
+    protected $listeners = ['cart:itemDeleted' => 'deleteInventory', 'cart:itemAdded' => 'addInventory', 'cart:refresh' => '$refresh'];
 
     public function mount() {
         if (auth('customer')->check()) {
@@ -24,7 +24,6 @@ class HeaderCartComponent extends Component {
             }])->firstOrCreate([
                 'customer_id' => auth('customer')->user()->id
             ]);
-            $this->inventories = $this->cart->inventories;
         }
     }
 
@@ -35,15 +34,16 @@ class HeaderCartComponent extends Component {
         } else {
             $this->cart->inventories()->sync([$inventory->id => ['quantity' => $quantity ? $quantity : 1, 'customer_id' => $customer->id]], false);
         }
-        $this->inventories = $this->cart->inventories()->with('image:path,imageable_id', 'product:id,slug,name')->get();
-        $this->cart->inventories = $this->inventories;
         $this->emit('cart:refreshComponent');
     }
 
     public function deleteInventory(Inventory $inventory) {
         $this->cart->inventories()->detach($inventory->id);
-        $this->inventories = $this->cart->inventories()->with('image:path,imageable_id', 'product:id,slug,name')->get();
-        $this->cart->inventories = $this->inventories;
+        $this->cart =  Cart::with(['inventories' => function ($q) {
+            return $q->with('image:path,imageable_id', 'product:id,slug,name');
+        }])->firstOrCreate([
+            'customer_id' => auth('customer')->user()->id
+        ]);
         $this->emit('cart:refreshComponent');
     }
 

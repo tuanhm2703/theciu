@@ -15,6 +15,8 @@
             @include('admin.layouts.navbars.auth.nav-group.module')
             @include('admin.layouts.navbars.auth.nav-group.promotion')
             @include('admin.layouts.navbars.auth.nav-group.appearance')
+            @include('admin.layouts.navbars.auth.nav-group.setting')
+            @include('admin.layouts.navbars.auth.nav-group.order')
         </ul>
     </div>
 </aside>

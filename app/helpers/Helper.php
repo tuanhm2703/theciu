@@ -289,3 +289,52 @@ function isPhone($phone) {
 function format_currency($value) {
     return number_format($value, 0, ',', '.');
 }
+
+function isRomanNumber($roman) {
+    $roman_characters = [
+        'M',
+        'CM',
+        'D',
+        'CD',
+        'C',
+        'XC',
+        'L',
+        'XL',
+        'X',
+        'IX',
+        'V',
+        'IV',
+        'I',
+    ];
+    for ($i = 0; $i < strlen($roman); $i++) {
+        if (!in_array($roman[$i], $roman_characters)) return false;
+    }
+    return true;
+}
+
+function convertRomanToInteger($roman) {
+    if (isRomanNumber($roman) == false) return 0;
+    $romans = array(
+        'M' => 1000,
+        'CM' => 900,
+        'D' => 500,
+        'CD' => 400,
+        'C' => 100,
+        'XC' => 90,
+        'L' => 50,
+        'XL' => 40,
+        'X' => 10,
+        'IX' => 9,
+        'V' => 5,
+        'IV' => 4,
+        'I' => 1,
+    );
+    $result = 0;
+    foreach ($romans as $key => $value) {
+        while (strpos($roman, $key) === 0) {
+            $result += $value;
+            $roman = substr($roman, strlen($key));
+        }
+    }
+    return $result;
+}

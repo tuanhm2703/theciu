@@ -7,6 +7,7 @@ use App\Enums\MediaType;
 use App\Enums\PromotionStatusType;
 use App\Enums\PromotionType;
 use App\Enums\StatusType;
+use App\Http\Services\Shipping\Models\PackageInfo;
 use App\Traits\Common\CommonFunc;
 use App\Traits\Common\Imageable;
 use App\Traits\Scopes\CustomScope;
@@ -172,4 +173,7 @@ class Product extends Model {
         }
     }
 
+    public function getPackageInfoAttribute() {
+        return new PackageInfo($this->weight, $this->length, $this->height, $this->width);
+    }
 }

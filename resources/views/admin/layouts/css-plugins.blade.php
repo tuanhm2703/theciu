@@ -23,4 +23,5 @@
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('assets/landingpage/css/plugins/magnific-popup/magnific-popup.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-treeview.min.css') }}">
-
+<link rel="stylesheet" href="{{asset('assets/landingpage/css/floating-labels.css')}}">
+@livewireStyles

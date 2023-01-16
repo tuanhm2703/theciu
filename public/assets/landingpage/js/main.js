@@ -59,34 +59,34 @@ setInputFilter(
     },
     "Vui lòng nhập số"
 );
+$.fn.initValidator = function (options) {
+    const locale = $("meta[name=locale]")[0].content;
+    let defaults = {
+        language: `/lang/validate/${locale}.json`,
+        successClass: true,
+    };
+
+    options = $.extend({}, defaults, options);
+    return $(this).jbvalidator(options);
+};
+
+$.fn.loading = function (status = true, options) {
+    var elemRef = $.extend({}, options);
+    $(this).attr("disabled", status);
+    if (status) {
+        $(this).prepend(
+            ` <span class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>`
+        );
+    } else {
+        $(this).find(`.spinner-border`).remove();
+    }
+};
+
 $(document).ready(function () {
     "use strict";
 
     owlCarousels();
     quantityInputs();
-    $.fn.initValidator = function (options) {
-        const locale = $("meta[name=locale]")[0].content;
-        let defaults = {
-            language: `/lang/validate/${locale}.json`,
-            successClass: true,
-        };
-
-        options = $.extend({}, defaults, options);
-        return $(this).jbvalidator(options);
-    };
-
-    $.fn.loading = function (status = true, options) {
-        var elemRef = $.extend({}, options);
-        $(this).attr("disabled", status);
-        if (status) {
-            $(this).prepend(
-                ` <span class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>`
-            );
-        } else {
-            $(this).find(`.spinner-border`).remove();
-        }
-    };
-
     // Header Search Toggle
 
     var $searchWrapper = $(".header-search-wrapper"),
@@ -577,7 +577,7 @@ $(document).ready(function () {
 
     $("body").on("click", ".ajax-modal-btn", function (e) {
         e.preventDefault();
-        console.log($(".modal.show").modal("hide"));
+        $("#myDynamicModal").modal("hide");
         const btn = $(this);
         const modalSize = $(this).data().modalSize ?? "modal-lg";
         $(this).loading();
