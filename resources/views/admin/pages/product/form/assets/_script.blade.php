@@ -20,12 +20,36 @@
     var productFormValidator
     $(document).ready(() => {
         initProductDetailsInfoSelector()
+        const updateImageOrder = (sources) => {
+            $.ajax({
+                url: @json(route('admin.ajax.image.update.order')),
+                type: 'PUT',
+                data: {
+                    paths: sources
+                },
+                success: (res) => {
+                    tata.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                }
+            })
+        }
         $('.img-gallery').miv({
             dragBtn: '.img-drag',
             inputName: 'images',
             maxFile: 9,
+            sortable: true,
             multiple: true,
             required: true,
+            showThumb: true,
+            sortableOptions: {
+                update: function(event, ui) {
+                    let sources = [];
+                    $('.img-gallery img').each((index, e) => {
+                        sources.push(e.src)
+                    })
+                    updateImageOrder(sources)
+                    console.log(ui);
+                }
+            },
             initSrc: productImgSrc,
             onDeleted: (element) => {
                 element = $(element).parent().find('img')[0]
@@ -244,8 +268,8 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="row mt-3">
-                                <div class="col-md-3">
+                            <div class="row">
+                                <div class="col-md-3 mt-3">
                                     <label class="custom-control-label">Phân loại hàng</label>
                                 </div>
                                 <div class="col-md-9">
@@ -268,12 +292,12 @@
     const renderAttributeValue = (attribute) => {
         let output = ''
         if (attribute.values.length == 0) {
-            return output += `<div class="col-md-4">
+            return output += `<div class="col-md-4 mt-3">
                                     <input class="form-control required attribute-value-input" placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
                                 </div>`;
         }
         attribute.values.forEach((value, index) => {
-            output += `<div class="col-md-4 ${index > 2 ? 'mt-3' : ''}">
+            output += `<div class="col-md-4 mt-3">
                         <div class="d-flex align-items-center">
                             <input required class="form-control attribute-value-input" ${value.value ? `value="${value.value}"` : ''} accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
                                     <i class="fas fa-arrows-alt p-1 attribute-action-btn" style="color: lightgrey; font-size: 15px"></i>
@@ -281,9 +305,9 @@
                                     </div>
                                 </div>`
         })
-        output += `<div class="col-md-4 ${attribute.values.length > 2 ? 'mt-3' : ''}">
+        output += `<div class="col-md-4 mt-3">
                         <div class="d-flex align-items-center">
-                            <input required class="form-control attribute-value-input" accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
+                            <input class="form-control attribute-value-input" accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
                                     <i class="fas fa-arrows-alt p-1 d-none attribute-action-btn" style="color: lightgrey; font-size: 15px"></i>
                                     <i class="delete-attribute-value-btn far fa-trash-alt p-1 d-none attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
                                     </div>
@@ -306,8 +330,9 @@
             }
         }
         if (attributes[attributeIndex].values.length == valueIndex + 1) {
-            $('.attribute-action-btn').removeClass('d-none')
-            $(element).parents('.attribute-value-wrapper').append(`<div class="col-md-4 ${valueIndex >= 2 ? 'mt-3' : ''}">
+            $(element).parents('.attribute-value-wrapper').find('.attribute-action-btn').removeClass('d-none')
+            $(element).parents('.attribute-value-wrapper').find('.attribute-value-input').prop('required', true)
+            $(element).parents('.attribute-value-wrapper').append(`<div class="col-md-4 mt-3">
                                     <div class="d-flex align-items-center"><input class="form-control required attribute-value-input" placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
                                         <i class="fas fa-arrows-alt p-1 attribute-action-btn d-none" style="color: lightgrey; font-size: 15px"></i>
                                         <i class="delete-attribute-value-btn far fa-trash-alt p-1 d-none attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
@@ -437,6 +462,12 @@
 
     const renderAttributeTable = () => {
         $('#attribute-table tbody').html('')
+        $('.attribute-value-wrapper').sortable({
+            items: "> .col-md-4:not(:last)",
+            update: (event, ui) => {
+                console.log($(event.target).index());
+            }
+        })
         attributes[0].values.forEach((value, i) => {
             const inventories = []
             if (value.value || i != attributes[0].values.length - 1 || i == 0) {

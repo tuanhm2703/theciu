@@ -10,33 +10,64 @@
                 initSrc: [],
                 required: false,
                 acceptedExtensions: null,
+                sortable: false,
+                sortableOptions: {},
                 onUploaded: (files) => {},
                 onDeleted: (element) => {},
+                showThumb: false,
             },
             options
         );
-        const requiredMessage = elemRef.type == "img" ? "Vui lòng chọn ít nhất 1 ảnh" : "Vui lòng chọn ít nhất 1 video";
-        const inputElement = `<div class="miv-validate-label"><input type="text" data-v-message="${requiredMessage}" ${elemRef.initSrc.length == 0 ? '' : 'value="true"'} name="${this[0].className}-label" ${elemRef.required ? 'data-v-required' : ''} class="d-none"/></div>`
+        const requiredMessage =
+            elemRef.type == "img"
+                ? "Vui lòng chọn ít nhất 1 ảnh"
+                : "Vui lòng chọn ít nhất 1 video";
+        const inputElement = `<div class="miv-validate-label"><input type="text" data-v-message="${requiredMessage}" ${
+            elemRef.initSrc.length == 0 ? "" : 'value="true"'
+        } name="${this[0].className}-label" ${
+            elemRef.required ? "data-v-required" : ""
+        } class="d-none"/></div>`;
         $(this).parent().prepend(inputElement);
-        const labelInput = $(`input[name="${this[0].className}-label"]`)
+        const labelInput = $(`input[name="${this[0].className}-label"]`);
         if (!elemRef.acceptedExtensions) {
             elemRef.acceptedExtensions =
                 elemRef.type === "img" ? "image/*" : "video/*";
         }
         const className = `.${this[0].className}`;
+        const initThumb = () => {
+            $(this).find('.thumb-label').remove()
+            $($(this).find('.apnd-img')[0]).append(`<div class="p-1 w-100 position-absolute fixed-bottom thumb-label" style="background-color: rgba(0,0,0,.3); font-size: 0.8em; font-weight: bold;">
+            <span class="text-danger">*</span>
+            <span class="text-white">Ảnh bìa</span>
+            </div>`)
+        }
         const printPreview = (preview, index) => {
             if (elemRef.type == "img") {
                 $(className).append(
-                    `<div class='apnd-img'><img src='${preview}' id='img${index}' class='img-responsive'><i class='fa fa-close delfile'></i></div>`
+                    `<div class='apnd-img'>
+                    <img src='${preview}' id='img${index}' class='img-responsive'><i class='fa fa-close delfile'></i>
+                    </div>`
                 );
             } else {
                 $(className).append(
-                    `<div class='apnd-img'><iframe width='50' height='50' src='${preview}' id='vid${index}' frameborder='0' allowfullscreen></iframe><i class='fa fa-close delfile'></i></div>`
+                    `<div class='apnd-img'>
+                        <iframe width='50' height='50' src='${preview}' id='vid${index}' frameborder='0' allowfullscreen></iframe><i class='fa fa-close delfile'></i>
+                    </div>`
                 );
             }
+            if(elemRef.showThumb) initThumb()
+            if (elemRef.sortable) {
+                $(this).sortable({
+                    update: (event, ui) => {
+                        initThumb()
+                        elemRef.sortableOptions.update(event, ui)
+                    }
+                })
+            };
         };
+
         var i = 0;
-        elemRef.initSrc.forEach((src) => {
+        elemRef.initSrc.forEach((src, index) => {
             if (typeof src === "string") {
                 printPreview(src, i);
             } else {
@@ -81,9 +112,11 @@
                         }
                     }
                     elemRef.onUploaded(event);
-                    labelInput.val('true')
-                    labelInput.trigger('input')
-                    $(`${elemRef.dragBtn} .drag-area-description`).text(`(${i}/${elemRef.maxFile})`)
+                    labelInput.val("true");
+                    labelInput.trigger("input");
+                    $(`${elemRef.dragBtn} .drag-area-description`).text(
+                        `(${i}/${elemRef.maxFile})`
+                    );
                 });
             }
         });
@@ -99,10 +132,14 @@
             $(elemRef.dragBtn).css("display", "flex");
             i--;
             elemRef.onDeleted(this);
-            labelInput.val(i == 0 ? '' : 'true')
-            labelInput.trigger('input')
-            $(`${elemRef.dragBtn} .drag-area-description`).text(`(${i}/${elemRef.maxFile})`)
+            labelInput.val(i == 0 ? "" : "true");
+            labelInput.trigger("input");
+            $(`${elemRef.dragBtn} .drag-area-description`).text(
+                `(${i}/${elemRef.maxFile})`
+            );
         });
-        $(`${elemRef.dragBtn} .drag-area-description`).text(`(${i}/${elemRef.maxFile})`)
+        $(`${elemRef.dragBtn} .drag-area-description`).text(
+            `(${i}/${elemRef.maxFile})`
+        );
     };
 })(jQuery);
