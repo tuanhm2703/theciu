@@ -19,7 +19,7 @@ class ShippingServiceSeeder extends Seeder {
             'name' => 'Giao hàng tiết kiệm',
             'alias' => ShippingServiceType::GIAO_HANG_TIET_KIEM_ALIAS,
             'token' => env('APP_ENV') == 'prod' ? '01e068467D24942a3b79b6881257f7E4334019fa' : 'e98546066d9C895Aabdf65f367984E536d3e57b8',
-            'domain' => env('APP_ENV') == 'prod' ? 'https://services.giaohangtietkiem.vn' : 'https://services.ghtklab.com',
+            'domain' => env('APP_ENV') == 'prod' ? 'https://services.giaohangtietkiem.vn' : 'https://services-staging.ghtklab.com',
             'logo_address' => 'https://img.decloset.vn/dec-prod/images/origins/giao-hang-tiet-kiem.jpg',
             'default' => 0,
             'active' => 1,

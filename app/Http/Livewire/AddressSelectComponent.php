@@ -20,22 +20,22 @@ class AddressSelectComponent extends Component {
     public $address;
 
     public function mount() {
-        $this->provinces = Province::select('name', 'id')->get();
+        $this->provinces = Province::select('name', 'id')->orderBy('name', 'desc')->get();
         $this->province_id = $this->address ? $this->address->province_id : $this->provinces->first()->id;
-        $this->districts = District::where('parent_id', $this->province_id)->select('name', 'id')->get();
+        $this->districts = District::where('parent_id', $this->province_id)->select('name', 'id')->orderBy('name', 'desc')->get();
         $this->district_id = $this->address ? $this->address->district_id : $this->districts->first()->id;
-        $this->wards = Ward::where('parent_id', $this->district_id)->select('name', 'id')->get();
+        $this->wards = Ward::where('parent_id', $this->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
         $this->ward_id = $this->address ? $this->address->ward_id : $this->wards->first()->id;
     }
 
     public function changeProvince() {
-        $this->districts = District::where('parent_id', $this->province_id)->select('name', 'id')->get();
+        $this->districts = District::where('parent_id', $this->province_id)->select('name', 'id')->orderBy('name', 'desc')->get();
         $this->district_id = $this->districts->first()->id;
         $this->changeDistrict();
     }
 
     public function changeDistrict() {
-        $this->wards = Ward::where('parent_id', $this->district_id)->select('name', 'id')->get();
+        $this->wards = Ward::where('parent_id', $this->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
     }
 
     public function render() {

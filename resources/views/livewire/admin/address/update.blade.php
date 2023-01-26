@@ -3,7 +3,7 @@
         <h6>{{ trans('labels.update') }}</h6>
     </div>
     <div class="card-body pt-0">
-        @isset($address)
+        @if(!empty($address))
             {!! Form::model($address, [
                 'url' => route('admin.setting.address.update', $address->id),
                 'method' => 'PUT',
@@ -14,6 +14,6 @@
                 <button class="btn btn-primary address-submit-btn">{{ trans('labels.update') }}</button>
             </div>
             {!! Form::close() !!}
-        @endisset
+        @endif
     </div>
 </div>

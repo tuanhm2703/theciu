@@ -42,6 +42,8 @@
             Livewire.emit('address:edit', addressId)
         })
         $('.address-modal').on('shown.bs.modal', (e) => {
+            $('.address-form').trigger('reset')
+            $('.address-submit-btn').loading(false)
             $('.address-form').ajaxForm({
                 beforeSend: () => {
                     $('.address-submit-btn').loading()

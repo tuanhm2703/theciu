@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Enums\AddressType;
 use App\Enums\OrderStatus;
 use App\Http\Services\Shipping\GHTKService;
 use App\Traits\Common\Addressable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
 
 class Order extends Model {
@@ -25,6 +27,10 @@ class Order extends Model {
         'canceled_by',
         'sub_status'
     ];
+
+    public function pickup_address() {
+        return $this->morphOne(Address::class, 'addressable')->where('type', AddressType::PICKUP)->withTrashed();
+    }
 
     public function inventories() {
         return $this->belongsToMany(Inventory::class, 'order_items')->withTrashed()->withPivot([
