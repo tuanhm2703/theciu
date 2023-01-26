@@ -59,8 +59,7 @@
                             <div class="product-content">
                                 <p>{{ $product->short_description }}</p>
                             </div><!-- End .product-content -->
-                            <livewire:product-pick-item-component :product={{ $product }}>
-                            </livewire:product-pick-item-component>
+                            <livewire:product-pick-item-component :product="$product"></livewire:product-pick-item-component>
 
 
                             <div class="details-filter-row details-row-size">
