@@ -103,7 +103,7 @@
                     </tr><!-- End .summary-total -->
                 </tbody>
             </table><!-- End .table table-summary -->
-            <button href="#" wire:click.prevent="checkout" @disabled(empty($this->payment_method_id)) class="btn btn-outline-primary-2 btn-order btn-block">
+            <button href="#" wire:click.prevent="checkout" @disabled(empty($this->payment_method_id) || empty($address)) class="btn btn-outline-primary-2 btn-order btn-block">
                 <span wire:loading.remove wire:target="checkout">{{ trans('labels.checkout') }}</span>
                 <span wire:loading wire:target="checkout">Đang tiến hành thanh toán..</span>
             </button>

@@ -29,7 +29,7 @@ class CartComponent extends Component {
     ];
     public $address;
     public $estimateDeliveryFee = 0;
-    public $shipping_service_types;
+    public $shipping_service_types = [];
     public $service_id;
     private GHTKService $shipping_service;
     public $shipping_fee = 0;
@@ -47,14 +47,16 @@ class CartComponent extends Component {
         $this->address = auth('customer')->user()->shipping_address;
         $this->shipping_service = App::make(GHTKService::class);
         $this->shipping_service_id = $this->shipping_service->shipping_service->id;
-        $this->shipping_service_types = $this->shipping_service->getShipServices($this->address);
-        foreach ($this->shipping_service_types as $index => $shipping_service_type) {
-            $data = $this->calculateShippingInfo($shipping_service_type);
-            $shipping_service_type->fee = $data['fee'];
-            $shipping_service_type->delivery_date = $data['date'];
+        if ($this->address) {
+            $this->shipping_service_types = $this->shipping_service->getShipServices($this->address);
+            foreach ($this->shipping_service_types as $index => $shipping_service_type) {
+                $data = $this->calculateShippingInfo($shipping_service_type);
+                $shipping_service_type->fee = $data['fee'];
+                $shipping_service_type->delivery_date = $data['date'];
+            }
+            $this->service_id = $this->shipping_service_types[0]->service_id;
+            $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
-        $this->service_id = $this->shipping_service_types[0]->service_id;
-        $this->shipping_fee = $this->shipping_service_types[0]->fee;
         $this->payment_methods = PaymentMethod::active()->with('image:imageable_id,path')->get();
     }
 
