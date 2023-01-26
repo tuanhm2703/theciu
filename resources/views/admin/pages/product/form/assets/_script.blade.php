@@ -276,11 +276,18 @@
             output += `<div class="col-md-4 ${index > 2 ? 'mt-3' : ''}">
                         <div class="d-flex align-items-center">
                             <input required class="form-control attribute-value-input" ${value.value ? `value="${value.value}"` : ''} accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
-                                    <i class="fas fa-arrows-alt p-1" style="color: lightgrey; font-size: 15px"></i>
-                                    <i class="delete-attribute-value-btn far fa-trash-alt p-1" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
+                                    <i class="fas fa-arrows-alt p-1 attribute-action-btn" style="color: lightgrey; font-size: 15px"></i>
+                                    <i class="delete-attribute-value-btn far fa-trash-alt p-1 attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
                                     </div>
                                 </div>`
         })
+        output += `<div class="col-md-4 ${attribute.values.length > 2 ? 'mt-3' : ''}">
+                        <div class="d-flex align-items-center">
+                            <input required class="form-control attribute-value-input" accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
+                                    <i class="fas fa-arrows-alt p-1 d-none attribute-action-btn" style="color: lightgrey; font-size: 15px"></i>
+                                    <i class="delete-attribute-value-btn far fa-trash-alt p-1 d-none attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
+                                    </div>
+                                </div>`
         return output;
     }
 
@@ -299,10 +306,11 @@
             }
         }
         if (attributes[attributeIndex].values.length == valueIndex + 1) {
+            $('.attribute-action-btn').removeClass('d-none')
             $(element).parents('.attribute-value-wrapper').append(`<div class="col-md-4 ${valueIndex >= 2 ? 'mt-3' : ''}">
                                     <div class="d-flex align-items-center"><input class="form-control required attribute-value-input" placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
-                                        <i class="fas fa-arrows-alt p-1" style="color: lightgrey; font-size: 15px"></i>
-                                        <i class="delete-attribute-value-btn far fa-trash-alt p-1" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
+                                        <i class="fas fa-arrows-alt p-1 attribute-action-btn d-none" style="color: lightgrey; font-size: 15px"></i>
+                                        <i class="delete-attribute-value-btn far fa-trash-alt p-1 d-none attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
                                     </div>
                                 </div>`)
             attributes[attributeIndex].values.push({

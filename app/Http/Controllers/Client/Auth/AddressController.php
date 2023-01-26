@@ -21,7 +21,7 @@ class AddressController extends Controller {
         return view('landingpage.layouts.pages.profile.address.create', compact('provinces'));
     }
 
-    public function store(CreateAddressRequest $request) {
+    public function store(Request $request) {
         $ward = Ward::with('district.province')->find($request->input('ward_id'));
         $request->merge([
             'district_id' => $ward->district->id,
