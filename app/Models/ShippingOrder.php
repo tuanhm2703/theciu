@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Http\Services\Shipping\GHTKService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class ShippingOrder extends Model
 {
@@ -30,5 +32,9 @@ class ShippingOrder extends Model
 
     public function shipping_service() {
         return $this->belongsTo(ShippingService::class);
+    }
+
+    public function getShipServiceName() {
+        return App::make(GHTKService::class)->getShipServiceNameById($this->shipping_service_code);
     }
 }

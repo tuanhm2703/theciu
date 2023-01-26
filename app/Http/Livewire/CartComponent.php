@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\AddressType;
 use App\Enums\OrderStatus;
 use App\Exceptions\InventoryOutOfStockException;
 use App\Http\Services\Momo\MomoService;
@@ -86,6 +87,17 @@ class CartComponent extends Component {
                 'order_status' => OrderStatus::WAIT_TO_ACCEPT,
                 'payment_method_id' => $this->payment_method_id
             ]);
+            $order->addresses()->create([
+                'type' => AddressType::SHIPPING,
+                'details' => $this->address->details,
+                'province_id' => $this->address->province_id,
+                'district_id' => $this->address->district_id,
+                'ward_id' => $this->address->ward_id,
+                'full_address' => $this->address->full_address,
+                'fullname' => $this->address->fullname,
+                'phone' => $this->address->phone,
+                'featured' => 1
+            ]);
             foreach ($this->cart->inventories as $inventory) {
                 $order->inventories()->attach([
                     $inventory->id => [
@@ -96,7 +108,6 @@ class CartComponent extends Component {
                         'total' => $inventory->sale_price * $inventory->pivot->quantity,
                         'title' => $inventory->title,
                         'name' => $inventory->name
-
                     ]
                 ]);
                 if ($inventory->stock_quantity  - $inventory->pivot->quantity < 0)

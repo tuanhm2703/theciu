@@ -1,4 +1,20 @@
 @extends('admin.layouts.app')
+@push('style')
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+        .order-shipping-info-label {
+            display: flex;
+        }
+        .order-shipping-info-label label {
+            width: 30%;
+        }
+        .order-shipping-info-label span {
+            width: 70%;
+        }
+    </style>
+@endpush
 @section('content')
     @include('admin.layouts.navbars.auth.topnav', ['title' => trans('nav.order_list')])
     <div class="container-fluid">
@@ -34,7 +50,7 @@
                 </li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active mt-3"  id="order-list" role="tabpanel">
+                <div class="tab-pane active mt-3" id="order-list" role="tabpanel">
                     <div class="table-responsive">
                         <table class="table order-table w-100">
                             <thead>
@@ -42,7 +58,7 @@
                                     <th>Sản phẩm</th>
                                     <th>Doanh thu đơn hàng</th>
                                     <th>Trạng thái</th>
-                                    <th>Đơn vị vận chuyển</th>
+                                    {{-- <th>Đơn vị vận chuyển</th> --}}
                                     <th>Thời gian tạo</th>
                                     <th>Ngày giao hàng</th>
                                     <th>Thao tác</th>
@@ -71,9 +87,9 @@
                 {
                     data: "status",
                 },
-                {
-                    data: 'shipping_service',
-                },
+                // {
+                //     data: 'shipping_service'
+                // },
                 {
                     data: 'created_at'
                 },

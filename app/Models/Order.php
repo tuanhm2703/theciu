@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
+use App\Http\Services\Shipping\GHTKService;
 use App\Traits\Common\Addressable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 
 class Order extends Model {
     use HasFactory, Addressable;
@@ -20,10 +23,11 @@ class Order extends Model {
         'cancel_reason',
         'payment_method_id',
         'canceled_by',
+        'sub_status'
     ];
 
     public function inventories() {
-        return $this->belongsToMany(Inventory::class, 'order_items')->withPivot([
+        return $this->belongsToMany(Inventory::class, 'order_items')->withTrashed()->withPivot([
             'total',
             'quantity',
             'origin_price',
@@ -43,5 +47,29 @@ class Order extends Model {
 
     public function payment_method() {
         return $this->belongsTo(PaymentMethod::class);
+    }
+
+    public function pushShippingOrder() {
+        $shipping_service = App::make(GHTKService::class);
+        return $shipping_service->pushShippingOrder($this);
+    }
+
+    public function getCurrentStatusLabel() {
+        switch ($this->order_status) {
+            case OrderStatus::WAIT_TO_ACCEPT:
+                return trans('order.order_status.wait_to_accept');
+            case OrderStatus::WAITING_TO_PICK:
+                return trans('order.order_status.waiting_to_pick');
+            case OrderStatus::PICKING:
+                return trans('order.order_status.picking');
+            case OrderStatus::DELIVERING:
+                return trans('order.order_status.delivering');
+            case OrderStatus::DELIVERED:
+                return trans('order.order_status.delivered');
+            case OrderStatus::CANCELED:
+                return trans('order.order_status.canceled');
+            case OrderStatus::RETURN:
+                return trans('order.order_status.return');
+        }
     }
 }

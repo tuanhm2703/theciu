@@ -17,4 +17,17 @@ class ShippingServiceType extends Enum {
     const FAST_SHIPPING_SERVICE_NAME = 'Nhanh';
     const STANDARD_SHIPPING_SERVICE_NAME = 'Tiêu chuẩn';
     const SAVE_SHIPPING_SERVICE_NAME = 'Tiết kiệm';
+
+    public function getShippingServiceNameById($shipping_service_id) {
+        switch ($shipping_service_id) {
+            case 'value':
+                # code...
+                break;
+
+            default:
+                # code...
+                break;
+        }
+    }
 }
+

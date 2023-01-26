@@ -89,5 +89,13 @@ return [
     'email_address' => 'Email address',
     'address_list' => 'Address list',
     'momo' => 'Momo',
-    'cod' => 'Cash on delivery'
+    'cod' => 'Cash on delivery',
+    'preparing' => 'Preparing',
+    'packaging' => 'Packaging',
+    'finish_packaging' => 'Finish packaging',
+    'waiting_to_pick' => 'Waiting to pick',
+    'pickup_shift' => 'Pickup shift',
+    'pickup_address' => 'Pickup address',
+    'shipping_info' => 'Shipping information',
+    'accept' => 'Accept'
 ];

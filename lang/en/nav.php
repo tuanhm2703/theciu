@@ -19,5 +19,6 @@ return [
     'address' => 'Address',
     'pickup_address' => 'Pickup address',
     'order' => 'Order',
-    'order_list' => 'Order list'
+    'order_list' => 'Order list',
+    'order_details' => "Order's details"
 ];

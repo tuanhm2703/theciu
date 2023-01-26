@@ -244,3 +244,11 @@ div.dataTables_processing > div:last-child > div {
     overflow: hidden;
     white-space: nowrap;
 }
+.raw-a-button {
+    border: none;
+    background: none;
+    padding: 0;
+}
+.raw-a-button:hover {
+    color: #fb6340;
+}

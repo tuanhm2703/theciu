@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Config;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -337,4 +338,9 @@ function convertRomanToInteger($roman) {
         }
     }
     return $result;
+}
+
+function pickUpAddressOptions() {
+    $config = Config::select('id')->first();
+    return $config->pickup_addresses()->pluck('full_address', 'id')->toArray();
 }

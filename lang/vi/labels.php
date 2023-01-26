@@ -89,5 +89,13 @@ return [
     'email_address' => 'Địa chỉ Email',
     'address_list' => 'Danh sách địa chỉ',
     'momo' => 'Momo',
-    'cod' => 'Thanh toán khi nhận hàng'
+    'cod' => 'Thanh toán khi nhận hàng',
+    'preparing' => 'Chuẩn bị hàng',
+    'packaging' => 'Đóng gói',
+    'finish_packaging' => 'Hoàn tất đóng gói',
+    'waiting_to_pick' => 'Waiting to pick',
+    'pickup_shift' => 'Ca lấy hàng',
+    'pickup_address' => 'Địa chỉ lấy hàng',
+    'shipping_info' => 'Thông tin vận chuyển',
+    'accept' => 'Xác nhận'
 ];

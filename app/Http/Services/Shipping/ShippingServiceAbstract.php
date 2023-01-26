@@ -44,6 +44,7 @@ abstract class ShippingServiceAbstract {
     protected $update_order_reason_code;
     protected $morning_pickup_shift_time;
     protected $afternoon_pickup_shift_time;
+    protected $picking_status;
     const MORNING_PICKUP_SHIFT_CODE = 1;
     const AFTERNOON_PICKUP_SHIFT_CODE = 2;
     const TOMORROW_MORNING_PICKUP_SHIFT_CODE = 3;
@@ -156,11 +157,14 @@ abstract class ShippingServiceAbstract {
      *
      * @return A JSON object containing the order details.
      */
-    public function pushShippingOrder($data) {
-        $response = $this->post($this->create_order_path, $data);
+    public function pushShippingOrder($order) {
+        $order_data = $this->renderShippingOrderDataFromOrder($order->id);
+        $response = $this->post($this->create_order_path, $order_data);
         if ($response->getStatusCode() == 200) {
-            Log::info("Create shipping order successfully for order with order number: " . $data['order_number']);
-            return json_decode((string) $response->getBody());
+            $result = json_decode((string) $response->getBody());
+            Log::info("Create shipping order successfully for order with order number: " . $order->order_number);
+            $this->storeShippingOrder($result, $order);
+            return $result;
         } else {
             return null;
         }
@@ -343,6 +347,13 @@ abstract class ShippingServiceAbstract {
         return new PickupShift("Ca lấy $date ($time_shift)", $id, $date, $soonest, $latest);
     }
     public function convertTimeToPickupShift($time) {
+    }
+
+    public function storeShippingOrder($data, $order) {
+
+    }
+
+    public function renderShippingOrderDataFromOrder(int $order_id) {
 
     }
 }

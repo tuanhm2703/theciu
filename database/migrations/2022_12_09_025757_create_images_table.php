@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('imageable_id');
             $table->string('imageable_type');
-            $table->string('type');
+            $table->string('type')->nullable();
             $table->string('path');
             $table->string('name');
             $table->string('size')->nullable();

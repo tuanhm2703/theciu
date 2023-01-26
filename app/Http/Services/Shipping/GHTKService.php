@@ -56,6 +56,10 @@ class GHTKService extends ShippingServiceAbstract {
     const OUTER_DOMAIN_ROUTE_CODE = 4;
     const SUCCESS_ORDER_STATUS = '5';
 
+    const SHIP_SERVICE_LIST = [
+        'road' => 'Tiêu chuẩn',
+        'fly' => 'Nhanh'
+    ];
 
     public function __construct() {
         parent::__construct(ShippingServiceType::GIAO_HANG_TIET_KIEM_ALIAS);
@@ -100,6 +104,7 @@ class GHTKService extends ShippingServiceAbstract {
         ];
         $this->update_order_reason_code = [];
         $this->max_order_value = 20000000;
+        $this->picking_status = ['12'];
         $this->picked_status = [
             '3',
             '4'
@@ -173,7 +178,7 @@ class GHTKService extends ShippingServiceAbstract {
                 /* The name of the sender. */
                 "pick_name" => $order->pickup_address->fullname,
                 /* The address of the sender. */
-                "pick_address" => $order->pickup_address->address_line_1,
+                "pick_address" => $order->pickup_address->details,
                 /* The province of the sender. */
                 "pick_province" => $order->pickup_address->province->name_with_type,
                 /* The district of the sender. */
@@ -187,7 +192,7 @@ class GHTKService extends ShippingServiceAbstract {
                 /* Setting the name of the receiver. */
                 "name" => $order->shipping_address->fullname,
                 /* Setting the address of the receiver. */
-                "address" => $order->shipping_address->address_line_1,
+                "address" => $order->shipping_address->details,
                 /* Setting the province of the receiver. */
                 "province" => $order->shipping_address->province->name_with_type,
                 /* Getting the district of the receiver. */
@@ -262,7 +267,7 @@ class GHTKService extends ShippingServiceAbstract {
         return $data ? $data->order : null;
     }
     public function storeShippingOrder($data_after_created_response, $order) {
-        $service_order = $this->getOrder($data_after_created_response->label);
+        $service_order = $this->getOrder($data_after_created_response->order->label);
         $shipping_order = $order->shipping_order;
         if ($service_order) {
             $shipping_order->fill([
@@ -274,7 +279,7 @@ class GHTKService extends ShippingServiceAbstract {
                 "service_fee" => $service_order->ship_money,
                 "insurance_fee" => $service_order->insurance,
                 "order_value" => $order->total,
-                "to_address" => $order->shippingAddress->address_line_1 . ", " . $order->shippingAddress->address_title,
+                "to_address" => $service_order->address,
                 "total_fee" => $service_order->ship_money + $service_order->insurance,
                 "order_value" => $order->total,
                 "shop_id" => $order->shop_id,
@@ -288,8 +293,9 @@ class GHTKService extends ShippingServiceAbstract {
     public function post($path, $data = [], $headers = []) {
         $response = parent::post($path, $data, $headers);
         if ($response->getStatusCode() >= 400) {
+
             Log::error((string) $response->getBody());
-            throw new Exception(json_decode((string) $response->getBody())->message, $response->getStatusCode());
+            // throw new Exception(json_decode((string) $response->getBody())->message, $response->getStatusCode());
         }
         $data = json_decode((string) $response->getBody());
         if (!$data->success || $data->success === false) {
@@ -322,9 +328,11 @@ class GHTKService extends ShippingServiceAbstract {
         $response = $this->get("/services/label/$code");
         return response((string) $response->getBody())->header('Content-Type', 'application/pdf');
     }
-    public function pushShippingOrder($data) {
-        $data = parent::pushShippingOrder($data);
-        return $data->order;
+    public function pushShippingOrder($order) {
+        $order_id = $order->id;
+        $result = parent::pushShippingOrder($order);
+        ShippingOrder::where('order_id', $order_id)->update(['code' => $result->order->label]);
+        return $result->order;
     }
     public function createShippingOrderHistory($data) {
         $order = ShippingOrder::where('code', DB::raw("'" . $data['label_id'] . "'"))->firstOrFail();
@@ -369,6 +377,12 @@ class GHTKService extends ShippingServiceAbstract {
         // }
         return [];
     }
+
+    public function getShipServiceNameById($id) {
+        return self::SHIP_SERVICE_LIST[$id];
+    }
+
+
     public function estimatePickTime() {
         $now = Carbon::now();
         /* Checking if the current time is less than 10:30am. */
@@ -386,7 +400,7 @@ class GHTKService extends ShippingServiceAbstract {
         return new PickupShift($title, $id);
     }
     public function getListPickupTime() {
-        $now = Carbon::now();
+        $now = now();
         $pickup_shifts = [];
         /* Checking if the current time is less than 10:30am. */
         if ($now < Carbon::createFromTime(10, 30)) {
@@ -451,4 +465,6 @@ class GHTKService extends ShippingServiceAbstract {
                 return Carbon::now()->addHours(self::PICKUP_TIME_ESTIMATE + $hours);
         }
     }
+
+
 }
