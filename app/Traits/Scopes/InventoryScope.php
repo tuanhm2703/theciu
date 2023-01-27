@@ -23,4 +23,8 @@ trait InventoryScope {
         $now = now();
         return $q->whereNotNull('from')->whereNotNull('to')->whereRaw("'$now' > from and to > from");
     }
+
+    public function scopeHaveStock($q) {
+        return $q->where('stock_quantity', '>', 0);
+    }
 }

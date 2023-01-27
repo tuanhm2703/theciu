@@ -1,4 +1,25 @@
 <div>
     @include('landingpage.layouts.pages.product.detail.first_attribute_select')
     @include('landingpage.layouts.pages.product.detail.second_attribute_select')
+    <div class="details-filter-row details-row-size">
+        <label for="qty">Qty:</label>
+        <div class="product-details-quantity">
+            <input type="number" id="qty" class="form-control" value="1" min="1"
+                max="10" step="1" data-decimals="0" required>
+        </div><!-- End .product-details-quantity -->
+    </div><!-- End .details-filter-row -->
+
+    <div class="product-details-action">
+        <a href="#" wire:click.prevent="addToCart" class="btn-product btn-cart">
+            <span wire:loading.remove>{{ trans('labels.add_to_cart') }}</span>
+            <span wire:loading wire:target="addToCart">Đang thực hiện...</span>
+        </a>
+
+        <div class="details-action-wrapper">
+            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
+                    Wishlist</span></a>
+            <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to
+                    Compare</span></a>
+        </div><!-- End .details-action-wrapper -->
+    </div><!-- End .product-details-action -->
 </div>

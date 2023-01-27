@@ -97,5 +97,6 @@ return [
     'pickup_shift' => 'Pickup shift',
     'pickup_address' => 'Pickup address',
     'shipping_info' => 'Shipping information',
-    'accept' => 'Accept'
+    'accept' => 'Accept',
+    'add_to_cart' => 'Add to cart'
 ];

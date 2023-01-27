@@ -81,6 +81,7 @@ class ProductController extends Controller {
             $product->categories()->detach($product->category->id);
             $product->categories()->attach($request->input('category_id'));
             $inventory_ids = [];
+            $inventory_image = null;
             foreach ($attributes[0]->values as $index => $value) {
                 foreach ($value->inventories as $inventory) {
                     $newInventory = $product->inventories()->updateOrCreate([
@@ -95,8 +96,10 @@ class ProductController extends Controller {
                         ]);
                         $newInventory->attributes()->attach([$newAttribute->id], ['value' => $attribute->value]);
                         if ($request->hasFile("attribute-image-$index")) {
-                            $file = $request->file("attribute-image-$index");
-                            $newInventory->createImages([$file]);
+                            $inventory_image = $request->file("attribute-image-$index");
+                        }
+                        if($inventory_image) {
+                            $newInventory->createImages([$inventory_image]);
                         }
                     }
                 }

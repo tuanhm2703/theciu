@@ -51,3 +51,6 @@
 .invalid-feedback {
     font-size: 100%;
 }
+.btn-product:hover span, .btn-product:focus span {
+    color: white !important;
+}

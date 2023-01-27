@@ -97,5 +97,6 @@ return [
     'pickup_shift' => 'Ca lấy hàng',
     'pickup_address' => 'Địa chỉ lấy hàng',
     'shipping_info' => 'Thông tin vận chuyển',
-    'accept' => 'Xác nhận'
+    'accept' => 'Xác nhận',
+    'add_to_cart' => 'Thêm vào giỏ hàng'
 ];

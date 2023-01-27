@@ -35,7 +35,16 @@ class Inventory extends Model {
     ];
 
     public function attributes() {
-        return $this->belongsToMany(Attribute::class)->withPivot('value');
+        return $this->belongsToMany(Attribute::class)->orderBy('attribute_inventory.created_at')->withPivot('value')->withTimestamps();
+    }
+
+    public function firstAttribute() {
+        return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
+        ->orderBy('attribute_inventory.created_at');
+    }
+    public function secondAttribute() {
+        return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
+        ->orderBy('attribute_inventory.created_at', 'desc');
     }
 
     public function product() {

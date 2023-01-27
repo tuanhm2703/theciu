@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\Momo\MomoService;
 use App\Http\Services\Shipping\GHTKService;
+use App\Models\Inventory;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use MService\Payment\AllInOne\Processors\CaptureIPN;
@@ -19,13 +20,8 @@ class TestController extends Controller {
     }
 
     public function test() {
-        $env = MomoService::selectEnv('dev');
-        $orderId = time() . "";
-        $requestId = time() . "";
-        $partnerCode = env('DEV_PARTNER_CODE');
-        $accessKey = env('DEV_ACCESS_KEY');
-        // dd(CaptureIPN::process($env, $data));
-        dd(MomoService::checkout(Order::latest()->first()));
+        $inventory = Inventory::find(93);
+        return $inventory->firstAttribute()->addSelect('*', 'attribute_inventory.value')->first();
     }
 
     public function ship() {
