@@ -13,12 +13,12 @@ trait Imageable {
     public function images() {
         return $this->morphMany(Image::class, 'imageable')->where(function($q) {
             $q->where('type', '!=', MediaType::VIDEO)->orWhere('type', null);
-        });
+        })->orderBy('order', 'desc');
     }
     public function image() {
         return $this->morphOne(Image::class, 'imageable')->where(function($q) {
             $q->where('type', '!=', MediaType::VIDEO)->orWhere('type', null);
-        });
+        })->orderBy('order', 'desc');
     }
 
     public function createImages($images, $type = null, $folder = 'images') {
