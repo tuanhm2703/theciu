@@ -58,6 +58,11 @@ class Product extends Model {
             $q->where('type', MediaType::IMAGE)->orWhere('type', null);
         })->orderBy('order');
     }
+    public function image() {
+        return $this->morphOne(Image::class, 'imageable')->where(function ($q) {
+            $q->where('type', MediaType::IMAGE)->orWhere('type', null);
+        })->orderBy('order');
+    }
     public function category() {
         return $this->hasOneThrough(Category::class, Categorizable::class, 'categorizable_id', 'id', 'id', 'category_id')->where(function ($q) {
             $q->where('type', CategoryType::PRODUCT)->orWhere('type', null);
