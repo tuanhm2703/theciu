@@ -23,7 +23,7 @@
         const updateImageOrder = (sources) => {
             $.ajax({
                 url: @json(route('admin.ajax.image.update.order')),
-                type: 'PUT',
+                type: 'POST',
                 data: {
                     paths: sources
                 },
