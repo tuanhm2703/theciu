@@ -161,6 +161,9 @@
                 $('[data-toggle="tooltip"]').tooltip()
             })
         })
+        window.addEventListener('openLoginForm', (e) => {
+            openLoginModal()
+        });
     </script>
     <livewire:scripts />
 </body>

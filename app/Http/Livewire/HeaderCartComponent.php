@@ -28,13 +28,17 @@ class HeaderCartComponent extends Component {
     }
 
     public function addInventory(Inventory $inventory, $quantity = null) {
-        $customer = auth('customer')->user();
-        if ($this->cart->inventories()->where('inventories.id', $inventory->id)->exists()) {
-            $this->cart->inventories()->sync([$inventory->id => ['quantity' => $quantity ? $quantity : DB::raw("cart_items.quantity + 1")]], false);
+        if(!auth('customer')->check()) {
+            $this->dispatchBrowserEvent('openLoginForm');
         } else {
-            $this->cart->inventories()->sync([$inventory->id => ['quantity' => $quantity ? $quantity : 1, 'customer_id' => $customer->id]], false);
+            $customer = auth('customer')->user();
+            if ($this->cart->inventories()->where('inventories.id', $inventory->id)->exists()) {
+                $this->cart->inventories()->sync([$inventory->id => ['quantity' => $quantity ? $quantity : DB::raw("cart_items.quantity + 1")]], false);
+            } else {
+                $this->cart->inventories()->sync([$inventory->id => ['quantity' => $quantity ? $quantity : 1, 'customer_id' => $customer->id]], false);
+            }
+            $this->emit('cart:refreshComponent');
         }
-        $this->emit('cart:refreshComponent');
     }
 
     public function deleteInventory(Inventory $inventory) {
