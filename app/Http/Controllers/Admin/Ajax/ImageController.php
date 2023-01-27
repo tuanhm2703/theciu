@@ -24,8 +24,7 @@ class ImageController extends Controller {
     public function updateOrder(Request $request) {
         $paths = $request->paths;
         foreach ($paths as $index => $path) {
-            $path = parse_url($path);
-            $path = str_replace(StorageService::url(''), '', $path['path']);
+            $path = str_replace(StorageService::url(''), '', $path);
             Image::where('path', $path)->update(['order' => $index]);
         }
         return BaseResponse::success([
