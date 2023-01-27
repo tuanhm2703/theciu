@@ -56,7 +56,7 @@ class Product extends Model {
     public function images() {
         return $this->morphMany(Image::class, 'imageable')->where(function ($q) {
             $q->where('type', MediaType::IMAGE)->orWhere('type', null);
-        });
+        })->orderBy('order');
     }
     public function category() {
         return $this->hasOneThrough(Category::class, Categorizable::class, 'categorizable_id', 'id', 'id', 'category_id')->where(function ($q) {
