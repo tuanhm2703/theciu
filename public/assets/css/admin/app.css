@@ -252,3 +252,79 @@ div.dataTables_processing > div:last-child > div {
 .raw-a-button:hover {
     color: #fb6340;
 }
+.link-button {
+    color: #2673dd;
+}
+.link-button:hover {
+    color: #0046ab;
+}
+
+.timeline__row {
+	display: flex;
+	position: relative;
+}
+.timeline__row_icon {
+	width: 30px;
+	margin-right: 20px;
+	z-index: 1;
+}
+.timeline__row_content {
+	width: calc(100% - 30px);
+	margin-bottom: 20px;
+}
+.timeline__row_content .badge {
+	margin-bottom: 10px;
+}
+.timeline__row_content_desc {
+	padding: 15px;
+    padding-top: 0px;
+}
+.timeline__row:nth-last-child(1) .timeline__row_content {
+	border: none;
+	padding-bottom: 0;
+	margin-bottom: 10px;
+}
+.timeline__row:nth-last-child(1):before {
+	height: 0;
+}
+.timeline__row:before {
+	content: "";
+	position: absolute;
+	width: 1px;
+	height: 100%;
+	left: 15px;
+	background: #d5d5d5;
+}
+
+.timeline .timeline-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 30px;
+	width: 30px;
+	border-radius: 30px;
+	background: #fff;
+    font-size: 1.3em;
+}
+.timeline .timeline-icon.success {
+	color: #4caf50;
+	border-color: #4caf50;
+}
+.timeline .timeline-icon.warning {
+	color: #ff9800;
+	border-color: #ff9800;
+}
+.timeline .timeline-icon.danger {
+	color: #f44336;
+	border-color: #f44336;
+}
+.log-info-wrapper {
+    line-height: 1.5em;
+}
+.log-description {
+    color: #8c8c8c;
+    font-size: 0.95em;
+}
+.log-time {
+    color: #bababa;
+}

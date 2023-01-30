@@ -10,8 +10,6 @@ class CategoryType extends Enum {
     const TRENDING = 'trending';
     const NEW_ARRIVAL = 'new_arrival';
     const BLOG = 'blog';
-    const PROMOTION = 'promotion';
-    const FLASH_SALE = 'flash_sale';
 
     public static function categoryTypeOptions() {
         return [

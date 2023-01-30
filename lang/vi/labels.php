@@ -1,5 +1,7 @@
 <?php
 
+use function PHPSTORM_META\map;
+
 return [
     'product_name' => 'Tên sản phẩm',
     'classify_sku' => 'Sku phân loại',
@@ -98,5 +100,11 @@ return [
     'pickup_address' => 'Địa chỉ lấy hàng',
     'shipping_info' => 'Thông tin vận chuyển',
     'accept' => 'Xác nhận',
-    'add_to_cart' => 'Thêm vào giỏ hàng'
+    'add_to_cart' => 'Thêm vào giỏ hàng',
+    'cancel_order' => 'Huỷ đơn hàng',
+    'cancel_reason' => 'Lý do huỷ',
+    'shipping_info' => 'Thông tin vận chuyển',
+    'customer' => 'Khách hàng',
+    'shop' => 'Cửa hàng',
+    'system' => 'Hệ thống'
 ];

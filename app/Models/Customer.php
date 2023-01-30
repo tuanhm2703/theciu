@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatus;
 use App\Traits\Common\Addressable;
 use App\Traits\Common\Imageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,5 +28,18 @@ class Customer extends User {
 
     public function orders() {
         return $this->hasMany(Order::class);
+    }
+
+    public function delivered_orders() {
+        return $this->hasMany(Order::class)->where('order_status', OrderStatus::DELIVERED);
+    }
+
+    public function canceled_orders() {
+        return $this->hasMany(Order::class)->where('order_status', OrderStatus::CANCELED);
+    }
+
+    public function order_success_percentage() {
+        $percent = $this->delivered_orders()->count() / $this->orders()->count() * 100;
+        return (int) round($percent, 0);
     }
 }

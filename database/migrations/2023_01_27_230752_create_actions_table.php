@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('actionable', function (Blueprint $table) {
+        Schema::create('actions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->string('actionable_type');
-            $table->string('actionable_id');
-            $table->string('icon');
+            $table->string('description')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('slug');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actionable');
+        Schema::dropIfExists('actions');
     }
 };

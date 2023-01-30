@@ -48,7 +48,7 @@
         const pickup_addresses = @json($pickup_addresses);
         const initPickUpAddressInfo = (pickup_address_id) => {
             const pickup_address = pickup_addresses.find(e => {
-                return e.id = pickup_address_id
+                return e.id == pickup_address_id
             })
             $('.address-fullname').text(pickup_address.fullname)
             $('.address-phone').text(pickup_address.phone)
@@ -56,7 +56,7 @@
         }
         $('select[name=pickup_address_id]').on('change', (e) => {
             const pickup_address_id = e.target.value;
-            initPickUpAddressInfo(initPickUpAddressInfo(pickup_address_id));
+            initPickUpAddressInfo(pickup_address_id)
         })
         initPickUpAddressInfo($('select[name=pickup_address_id]').val())
         $('.accept-order-form').ajaxForm({
@@ -66,7 +66,11 @@
             success: (res) => {
                 tata.success(`{{trans('toast.action_successful')}}`, res.data.message)
                 $('.modal.show').modal('hide')
-                orderTable.ajax.reload()
+                if (typeof orderTable !== 'undefined') {
+                    orderTable.ajax.reload()
+                } else {
+                    window.location.reload()
+                }
             },
             error: (err) => {
                 tata.error(`{{trans('toast.action_failed')}}`, err.responseJSON.message);

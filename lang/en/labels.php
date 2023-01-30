@@ -98,5 +98,9 @@ return [
     'pickup_address' => 'Pickup address',
     'shipping_info' => 'Shipping information',
     'accept' => 'Accept',
-    'add_to_cart' => 'Add to cart'
+    'add_to_cart' => 'Add to cart',
+    'cancel_order' => 'Cancel order',
+    'cancel_reason' => 'Cancel reason',
+    'shipping_info' => 'Shipping info',
+    'customer' => 'Customer'
 ];

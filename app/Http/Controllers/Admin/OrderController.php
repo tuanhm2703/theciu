@@ -13,6 +13,7 @@ use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller {
     public function index() {
@@ -65,6 +66,39 @@ class OrderController extends Controller {
     }
 
     public function details(Order $order) {
-        return view('admin.pages.order.details', compact('order'));
+        $total_delivered_orders = $order->customer->delivered_orders()->count();
+        $order_success_percentage = $order->customer->order_success_percentage();
+        return view('admin.pages.order.details', compact('order', 'total_delivered_orders', 'order_success_percentage'));
+    }
+
+    public function viewCancelForm(Order $order) {
+        return view('admin.pages.order.components.cancel_form', compact('order'));
+    }
+
+    public function cancelOrder(Order $order, Request $request) {
+        DB::beginTransaction();
+        try {
+            if($request->other_reason) {
+                $order->cancel_reason = $request->other_reason;
+            } else {
+                $order->cancel_reason = $request->cancel_reason;
+            }
+            $order->order_status = OrderStatus::CANCELED;
+            $order->save();
+        } catch (\Throwable $th) {
+            Log::error($th);
+            DB::rollBack();
+            return BaseResponse::error([
+                'message' => $th->getMessage()
+            ], $th->getCode());
+        }
+        DB::commit();
+        return BaseResponse::success([
+            'message' => 'Huỷ đơn hàng thành công'
+        ]);
+    }
+
+    public function getShippingInfo(Order $order) {
+        return view('admin.pages.order.components.details.shipping_order_info', compact('order'));
     }
 }

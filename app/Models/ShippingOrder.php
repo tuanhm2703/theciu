@@ -30,6 +30,10 @@ class ShippingOrder extends Model
         'pickup_shift_id',
     ];
 
+    protected $casts = [
+        'estimated_pick_time' => 'datetime'
+    ];
+
     public function shipping_service() {
         return $this->belongsTo(ShippingService::class);
     }

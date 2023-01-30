@@ -55,4 +55,4 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
 });
 
 include('client/Client.php');
-Route::get('test', [TestController::class, 'test']);
+include('Webhook.php');

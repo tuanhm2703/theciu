@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('order_histories', function (Blueprint $table) {
             $table->id();
-            $table->string('executor_type');
-            $table->bigInteger('executor_id')->nullable(false)->unsigned(true);
+            $table->string('executable_type');
+            $table->bigInteger('executable_id')->nullable(false)->unsigned(true);
             $table->text('description');
+            $table->integer('order_status');
             $table->bigInteger('order_id')->unsigned(true);
             $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();

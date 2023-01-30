@@ -9,7 +9,7 @@
                 @endforeach
             </select>
         </div><!-- End .select-custom -->
-        <a class="size-guide" id="size-rule-gallery" href="{{ optional($product->size_rule_image)->path_with_domain }}"><i
-                class="icon-th-list"></i>Hướng dẫn chọn size</a>
     </div><!-- End .details-filter-row -->
 @endif
+<a class="size-guide" id="size-rule-gallery" href="{{ optional($product->size_rule_image)->path_with_domain }}"><i
+    class="icon-th-list"></i>Hướng dẫn chọn size</a>

@@ -58,7 +58,7 @@
                                     <th>Sản phẩm</th>
                                     <th>Doanh thu đơn hàng</th>
                                     <th>Trạng thái</th>
-                                    {{-- <th>Đơn vị vận chuyển</th> --}}
+                                    <th>Đơn vị vận chuyển</th>
                                     <th>Thời gian tạo</th>
                                     <th>Ngày giao hàng</th>
                                     <th>Thao tác</th>
@@ -78,7 +78,8 @@
             "processing": true,
             "serverSide": true,
             "ajax": "{{ route('admin.ajax.order.paginate') }}",
-            "columns": [{
+            "columns": [
+                {
                     data: "items",
                 },
                 {
@@ -87,9 +88,9 @@
                 {
                     data: "status",
                 },
-                // {
-                //     data: 'shipping_service'
-                // },
+                {
+                    data: 'shipping_service'
+                },
                 {
                     data: 'created_at'
                 },
