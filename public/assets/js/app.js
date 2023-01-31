@@ -67,7 +67,7 @@ const uploadSummernoteImage = (data, element) => {
             res.data.paths.forEach((path) => {
                 $img = $("<img>").attr({
                     src: path,
-                    style: "width: 25%",
+                    style: "width: 100%",
                     class: "img-from-server",
                 });
                 $(element).summernote("insertNode", $img[0]);

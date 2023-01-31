@@ -113,5 +113,6 @@ return [
     'type' => 'Kiểu',
     'ship_from' => 'Gửi từ',
     'product_description' => 'Mô tả sản phẩm',
-    'shipping_and_return' => 'Vận chuyển và trả hàng'
+    'shipping_and_return' => 'Vận chuyển và trả hàng',
+    'additional_information' => 'Thông tin bổ sung'
 ];

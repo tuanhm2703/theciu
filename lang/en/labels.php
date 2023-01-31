@@ -109,5 +109,6 @@ return [
     'type' => 'Type',
     'ship_from' => 'Ship from',
     'product_description' => 'Product description',
-    'shipping_and_return' => 'Shipping and return'
+    'shipping_and_return' => 'Shipping and return',
+    'additional_information' => 'Additional information'
 ];

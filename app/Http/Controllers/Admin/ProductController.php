@@ -18,6 +18,7 @@ class ProductController extends Controller {
     public function store(Request $request) {
         $attributes = json_decode($request->input('attributes'));
         $input = $request->all();
+        $input['description'] = $request->input('short_description');
         DB::beginTransaction();
         try {
             $product = new Product($input);
@@ -66,6 +67,7 @@ class ProductController extends Controller {
     public function update(Request $request, Product $product) {
         $attributes = json_decode($request->input('attributes'));
         $input = $request->all();
+        $input['description'] = $request->input('short_description');
         $deleteImages = json_decode($request->input('deleteImages'));
         DB::beginTransaction();
         try {

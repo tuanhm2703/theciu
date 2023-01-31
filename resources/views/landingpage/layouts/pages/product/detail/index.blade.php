@@ -150,9 +150,9 @@
                 </div>
             </div>
             <div class="bg-light p-5 mb-3">
-                <h6 class="text-uppercase mb-3">{{ trans('labels.product_description') }}</h6>
+                <h6 class="text-uppercase mb-3">{{ trans('labels.additional_information') }}</h6>
                 <div>
-                    {!! $product->description !!}
+                    {!! $product->additional_information !!}
                 </div>
             </div>
             <div class="bg-light p-5 mb-3">
