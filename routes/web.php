@@ -56,3 +56,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
 
 include('client/Client.php');
 include('Webhook.php');
+
+Route::get('test', [TestController::class, 'test']);
