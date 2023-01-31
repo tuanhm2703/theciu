@@ -41,4 +41,8 @@ class ShippingOrder extends Model
     public function getShipServiceName() {
         return App::make(GHTKService::class)->getShipServiceNameById($this->shipping_service_code);
     }
+
+    public function order() {
+        return $this->belongsTo(Order::class);
+    }
 }
