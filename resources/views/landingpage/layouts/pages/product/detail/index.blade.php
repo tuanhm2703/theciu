@@ -151,11 +151,15 @@
             </div>
             <div class="bg-light p-5 mb-3">
                 <h6 class="text-uppercase mb-3">{{ trans('labels.product_description') }}</h6>
-                {!! $product->description !!}
+                <div>
+                    {!! $product->description !!}
+                </div>
             </div>
             <div class="bg-light p-5 mb-3">
                 <h6 class="text-uppercase mb-3">{{ trans('labels.shipping_and_return') }}</h6>
-                {!! $product->shipping_and_return !!}
+                <div>
+                    {!! $product->shipping_and_return !!}
+                </div>
             </div>
 
             <h2 class="title text-center mb-4">Sản phẩm tương tự</h2><!-- End .title text-center -->
