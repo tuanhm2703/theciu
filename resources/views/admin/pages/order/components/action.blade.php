@@ -8,7 +8,8 @@
         @case(App\Enums\OrderStatus::WAIT_TO_ACCEPT)
             <input type="hidden" name="order_status" value="{{ App\Enums\OrderStatus::WAITING_TO_PICK }}">
             <input type="hidden" name="sub_status" value="{{ App\Enums\OrderSubStatus::PREPARING }}">
-            <button type="submit" class="raw-a-button link-button"><i class="opacity-6 fas fa-truck"></i> {{trans('labels.preparing')}}</button>
+            <button type="submit" class="raw-a-button link-button"><i class="opacity-6 fas fa-truck"></i>
+                {{ trans('labels.preparing') }}</button>
         @break
 
         @case(App\Enums\OrderStatus::WAITING_TO_PICK)
@@ -17,6 +18,14 @@
                     <a class="ajax-modal-btn" href="javascript:;" data-modal-size="sm"
                         data-link="{{ route('admin.order.pickup_address.list', ['order' => $order->id]) }}">
                         {{ trans('labels.finish_packaging') }}</a>
+                @break
+
+                @case(App\Enums\OrderSubStatus::FINISH_PACKAGING)
+                    <a class="d-block link-button ajax-modal-btn m-0" href="javascript:;"
+                        data-link="{{ route('admin.order.shipping_order', ['order' => $order->id]) }}">{{ trans('labels.shipping_info') }}</a>
+                        <a class="link-button" target="_blank" href="{{ route('admin.order.shipping_order.print', $order->id) }}">
+                            In phiếu giao
+                        </a>
                 @break
 
                 @default

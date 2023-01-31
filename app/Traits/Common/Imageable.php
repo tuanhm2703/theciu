@@ -53,4 +53,8 @@ trait Imageable {
     public function video() {
         return $this->morphOne(Image::class, 'imageable')->where('type', MediaType::VIDEO);
     }
+
+    public function avatar() {
+        return $this->morphOne(Image::class, 'imageable')->where('type', MediaType::AVATAR);
+    }
 }

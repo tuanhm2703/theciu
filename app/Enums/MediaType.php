@@ -8,4 +8,5 @@ class MediaType extends Enum {
     const VIDEO = 'video';
     const IMAGE = 'image';
     const SIZE_RULE = 'size_rule';
+    const AVATAR = 'avatar';
 }

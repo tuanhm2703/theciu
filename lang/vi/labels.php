@@ -90,7 +90,7 @@ return [
     'last_name' => 'Họ',
     'email_address' => 'Địa chỉ Email',
     'address_list' => 'Danh sách địa chỉ',
-    'momo' => 'Momo',
+    'momo' => 'Ví Momo',
     'cod' => 'Thanh toán khi nhận hàng',
     'preparing' => 'Chuẩn bị hàng',
     'packaging' => 'Đóng gói',

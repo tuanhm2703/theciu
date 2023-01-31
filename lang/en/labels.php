@@ -88,7 +88,7 @@ return [
     'last_name' => 'Last name',
     'email_address' => 'Email address',
     'address_list' => 'Address list',
-    'momo' => 'Momo',
+    'momo' => 'Momo Wallet',
     'cod' => 'Cash on delivery',
     'preparing' => 'Preparing',
     'packaging' => 'Packaging',

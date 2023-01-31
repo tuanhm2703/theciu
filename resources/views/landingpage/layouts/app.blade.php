@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="{{ asset('assets/landingpage/vendor/font-awesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/landingpage/css/floating-labels.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bs4Toast.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin/tata.css') }}">
     <script src="{{ asset('assets/landingpage/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.form.min.js') }}"></script>
     @stack('css')
@@ -150,6 +151,7 @@
     <script src="{{ asset('assets/landingpage/api-service.js') }}"></script>
     <script src="{{ asset('assets/landingpage/cart.js') }}"></script>
     <script src="{{ asset('assets/js/bs4Toast.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/tata/tata.js') }}"></script>
     @stack('js')
     <script>
         $('.lazy').lazyload();

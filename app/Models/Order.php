@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use App\Enums\OrderCanceler;
+use App\Enums\PaymentStatus;
 
 class Order extends Model {
     use HasFactory, Addressable;
@@ -130,19 +131,19 @@ class Order extends Model {
                 break;
         }
         if (auth('customer')->check()) {
-            $order_history->executable_type = 'App\Models\Customer';
+            $order_history->executable_type = Customer::class;
             $order_history->executable_id = auth()->user()->id;
             if ($this->order_status == OrderStatus::CANCELED) {
                 $this->canceled_by = OrderCanceler::CUSTOMER;
             }
         } else if (auth('web')->check()) {
-            $order_history->executable_type = 'App\Models\User';
+            $order_history->executable_type = User::class;
             $order_history->executable_id = auth()->user()->id;
             if ($this->order_status == OrderStatus::CANCELED) {
                 $this->canceled_by = OrderCanceler::SHOP;
             }
         }  else if (Request::route() != null && Request::route()->getName() == 'shipping.webhook') {
-            $order_history->executable_type = 'App\Models\ShippingService';
+            $order_history->executable_type = ShippingService::class;
             $order_history->executable_id = $this->shipping_service->id;
             if ($this->order_status == OrderStatus::CANCELED) {
                 $this->canceler = OrderCanceler::SHIPPING_SERVICE;
@@ -159,5 +160,12 @@ class Order extends Model {
         $order_history->order_status = $this->order_status;
         $order_history->order_id = $this->id;
         $order_history->save();
+    }
+    public function isPaid() {
+        return $this->payment_status == PaymentStatus::PAID;
+    }
+
+    public function getCancelerLabel() {
+        return OrderCanceler::getCancelerLabel($this->canceled_by);
     }
 }

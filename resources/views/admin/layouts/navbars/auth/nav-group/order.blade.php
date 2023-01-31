@@ -8,7 +8,7 @@
         </div>
         <div class="collapse {{ isNavActive('admin.order') ? 'show' : 'hide' }}" id="order-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <a class="nav-link {{ isNavActive('admin.order.details') ? 'active' : '' }}"
+                <a class="nav-link {{ isNavActive('admin.order.index') ? 'active' : '' }}"
                     href="{{ route('admin.order.index') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">

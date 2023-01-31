@@ -16,6 +16,9 @@ class OrderController extends Controller {
         }]);
         if($order_status != OrderStatus::ALL) $orders->where('order_status', $order_status);
         return DataTables::of($orders)
+        ->addColumn('header', function($order) {
+            return view('admin.pages.order.components.order_header', compact('order'));
+        })
         ->editColumn('created_at', function($order) {
             return view('admin.pages.order.components.created-date', compact('order'));
         })

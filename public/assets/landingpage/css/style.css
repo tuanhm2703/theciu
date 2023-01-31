@@ -61,7 +61,6 @@ sub {
     bottom: -0.25em;
 }
 img {
-    display: block;
     max-width: 100%;
     height: auto;
 }

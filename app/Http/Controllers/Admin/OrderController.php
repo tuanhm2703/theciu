@@ -101,4 +101,8 @@ class OrderController extends Controller {
     public function getShippingInfo(Order $order) {
         return view('admin.pages.order.components.details.shipping_order_info', compact('order'));
     }
+
+    public function printShippingOrderInfo(Order $order) {
+        return App::make(GHTKService::class)->printOrder($order->shipping_order->code);
+    }
 }

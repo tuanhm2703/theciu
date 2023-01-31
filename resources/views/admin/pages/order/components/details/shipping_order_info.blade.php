@@ -4,8 +4,7 @@
     </div>
     <div class="card-body pt-2">
         <div class="text-center">
-            <img class="d-inline product-img mx-1"
-                src="{{ $order->shipping_order->shipping_service->logo_address }}">
+            <img class="d-inline product-img mx-1" src="{{ $order->shipping_order->shipping_service->logo_address }}">
             <b>{{ $order->shipping_order->code }}</b>
         </div>
     </div>
@@ -41,6 +40,11 @@
                     </p>
                 </div>
             </div>
+        </div>
+        <div class="text-end mt-3">
+            <a class="btn btn-primary" target="_blank" href="{{ route('admin.order.shipping_order.print', $order->id) }}">
+                In phiếu giao
+            </a>
         </div>
     </div>
 </div>

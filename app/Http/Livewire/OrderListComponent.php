@@ -13,7 +13,7 @@ class OrderListComponent extends Component {
 
     public $pageSize = 2;
 
-    public $status = 0;
+    public $status = OrderStatus::ALL;
 
     public function mount() {
         $this->page = 1;
@@ -35,10 +35,22 @@ class OrderListComponent extends Component {
         $orders = auth('customer')->user()->orders()->with(['inventories' => function ($q) {
             $q->with('image:path,imageable_id', 'product:id,name,slug', 'attributes:id,name');
         }])->latest()->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize);
-        if($this->status != 0) {
+        if($this->status != OrderStatus::ALL) {
             $orders->where('order_status', $this->status);
         }
         $orders = $orders->get();
         $this->orders = $this->orders->merge($orders);
+    }
+
+    public function changeOrderStatus($status) {
+        $this->status = $status;
+        $this->page = 1;
+        $this->orders = auth('customer')->user()->orders()->with(['inventories' => function ($q) {
+            $q->with('image:path,imageable_id', 'product:id,name,slug', 'attributes:id,name');
+        }])->latest()->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize);
+        if($this->status != OrderStatus::ALL) {
+            $this->orders->where('order_status', $this->status);
+        }
+        $this->orders = $this->orders->get();
     }
 }

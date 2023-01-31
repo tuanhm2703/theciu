@@ -328,3 +328,17 @@ div.dataTables_processing > div:last-child > div {
 .log-time {
     color: #bababa;
 }
+.profile-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-position: center !important;
+    background-size: cover !important;
+    display: inline-block;
+}
+.order-header-row {
+    width: 100%;
+    height: 40px;
+    border-bottom: 1px solid #e8e8e8;
+    background-color: hsla(0,0%,96%,.5) !important;
+}

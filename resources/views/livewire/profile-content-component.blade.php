@@ -1,5 +1,5 @@
 <div class="row">
-    <aside class="col-md-4 col-lg-3">
+    <aside class="col-md-3 col-lg-2">
         <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
             <li class="nav-item">
                 <a class="nav-link {{ $content == 'order-list' ? 'active' : '' }}" wire:click="setContent('order-list')"
@@ -21,11 +21,11 @@
             </li>
         </ul>
     </aside><!-- End .col-lg-3 -->
-    <div class="col-md-8 col-lg-9">
+    <div class="col-md-9 col-lg-10">
         <div class="tab-content">
-            <div class="tab-pane active" id="tab-content" role="tabpanel" aria-labelledby="tab-orders-link" style="min-height: 50vh">
-                <div wire:loading>Loading...</div>
-                <div class="page-content container" wire:loading.remove>
+            <div class="tab-pane active pr-3" id="tab-content" role="tabpanel" aria-labelledby="tab-orders-link" style="min-height: 50vh">
+                <div class="text-center" wire:loading>Loading...</div>
+                <div class="page-content container w-100" wire:loading.remove>
                     @switch($content)
                         @case('order-list')
                             <livewire:order-list-component></livewire:order-list-component>

@@ -206,7 +206,7 @@ class GHTKService extends ShippingServiceAbstract {
                 /* Pickup date. */
                 // "pick_date" => "2016-09-30",
                 /* The money that the receiver will pay to the sender. */
-                "pick_money" => doubleval($order->total),
+                "pick_money" => $order->isPaid() ? doubleval(0) :  doubleval($order->total),
                 /* Checking if the pickup shift is not null, then it will return the session. */
                 "pick_work_shift" => optional($pickup_shift)->session,
                 /* Checking if the pickup_shift->date is not empty, if it is not empty, it will format
@@ -235,7 +235,7 @@ class GHTKService extends ShippingServiceAbstract {
         }])->get();
         foreach ($inventories as $item) {
             array_push($items,  [
-                "name" => $item->pivot->title,
+                "name" => $item->pivot->name,
                 "weight" => $item->package_info->weight / 1000,
                 "quantity" => $item->pivot->quantity,
                 "product_code" => $item->id

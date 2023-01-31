@@ -4,17 +4,16 @@
     <div class="details-filter-row details-row-size">
         <label for="qty">Qty:</label>
         <div class="product-details-quantity">
-            <input type="number" id="qty" class="form-control" value="1" min="1"
-                max="10" step="1" data-decimals="0" required>
+            <input type="number" id="qty" class="form-control" value="1" min="1" max="10"
+                step="1" data-decimals="0" required>
         </div><!-- End .product-details-quantity -->
     </div><!-- End .details-filter-row -->
 
     <div class="product-details-action">
-        <a href="#" wire:click.prevent="addToCart" class="btn-product btn-cart">
-            <span wire:loading.remove>{{ trans('labels.add_to_cart') }}</span>
+        <button @disabled(!$first_attribute_value || (!$second_attribute_value && $second_attributes->count() > 0)) wire:click.prevent="addToCart" class="btn-product btn-cart btn">
+            <span wire:loading.remove wire:target="addToCart">{{ trans('labels.add_to_cart') }}</span>
             <span wire:loading wire:target="addToCart">Đang thực hiện...</span>
-        </a>
-
+        </button>
         <div class="details-action-wrapper">
             <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
                     Wishlist</span></a>

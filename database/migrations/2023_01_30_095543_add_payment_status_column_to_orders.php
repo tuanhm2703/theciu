@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->enum('payment_status', [PaymentStatus::PENDING, PaymentStatus::WAIT])->nullable()->default(PaymentStatus::PENDING);
+            $table->enum('payment_status', [PaymentStatus::PENDING, PaymentStatus::PAID])->nullable()->default(PaymentStatus::PENDING);
         });
     }
 

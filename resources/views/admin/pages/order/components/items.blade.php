@@ -1,5 +1,5 @@
 @foreach ($order->inventories as $inventory)
-<div class="row">
+<div class="row mb-2">
     <div class="col-2">
         <a href="#" class="magnifig-img product-img img-thumbnail mx-1" style="background: url({{$inventory->image->path_with_domain}})"></a>
     </div>

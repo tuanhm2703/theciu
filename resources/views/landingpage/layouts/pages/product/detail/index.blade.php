@@ -32,7 +32,7 @@
 
                                 <div id="product-zoom-gallery" class="product-image-gallery d-block">
                                     @foreach ($product->images as $image)
-                                        <a class="product-gallery-item active" href="#"
+                                        <a class="product-gallery-item product-image-check active" href="#"
                                             data-image="{{ $image->path_with_domain }}"
                                             data-zoom-image="{{ $image->path_with_domain }}">
                                             <img src="{{ $image->path_with_domain }}" alt="product side">

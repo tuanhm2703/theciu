@@ -12,7 +12,7 @@
         </div><!-- End .product-action-vertical -->
 
         <div class="product-action">
-            <a href="#" class="btn-product btn-cart add-to-cart-btn"><span>add to cart</span></a>
+            <a href="#" class="btn-product btn-cart add-to-cart-btn"><span>{{trans('labels.add_to_cart')}}</span></a>
         </div><!-- End .product-action -->
     </figure><!-- End .product-media -->
 
