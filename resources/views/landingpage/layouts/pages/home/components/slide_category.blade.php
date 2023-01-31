@@ -8,6 +8,8 @@
             "autoplay": true,
             "autoplayTimeout": 3000,
             "items": 3,
+            "loop": false,
+            "center": true,
             "responsive": {
                 "992": {
                     "nav": true
