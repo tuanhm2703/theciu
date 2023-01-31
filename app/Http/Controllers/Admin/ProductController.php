@@ -32,12 +32,12 @@ class ProductController extends Controller {
                 $product->createImages([$request->file('size-rule-img')], MediaType::SIZE_RULE);
             }
             $product->categories()->attach($request->input('category_id'));
-            $order = 0;
             foreach ($attributes[0]->values as $index => $value) {
-                $order++;
                 foreach ($value->inventories as $inventory) {
                     $newInventory = $product->inventories()->create((array) $inventory);
+                    $order = 0;
                     foreach ($inventory->attributes as $attribute) {
+                        $order++;
                         $newAttribute = Attribute::firstOrCreate([
                             'id' => $attribute->id,
                             'name' => $attribute->name
@@ -84,16 +84,16 @@ class ProductController extends Controller {
             $product->categories()->attach($request->input('category_id'));
             $inventory_ids = [];
             $inventory_image = null;
-            $order = 0;
             foreach ($attributes[0]->values as $index => $value) {
-                $order++;
                 foreach ($value->inventories as $inventory) {
                     $newInventory = $product->inventories()->updateOrCreate([
                         'id' => $inventory->id
                     ], (array) $inventory);
                     $inventory_ids[] = $newInventory->id;
                     $newInventory->attributes()->detach();
+                    $order = 0;
                     foreach ($inventory->attributes as $attribute) {
+                        $order++;
                         $newAttribute = Attribute::firstOrCreate([
                             'id' => $attribute->id,
                             'name' => $attribute->name
