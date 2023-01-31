@@ -20,25 +20,28 @@
                     <div class="col-md-6">
                         <div class="product-gallery product-gallery-vertical">
                             <div class="row">
-                                <figure class="product-main-image">
-                                    <img id="product-zoom" src="{{ $product->images->first()->path_with_domain }}"
-                                        data-zoom-image="{{ $product->images->first()->path_with_domain }}"
-                                        alt="product image">
+                                <div class="col-2">
+                                    <div id="product-zoom-gallery" class="product-image-gallery d-block w-100">
+                                        @foreach ($product->images as $image)
+                                            <a class="product-gallery-item product-image-check active w-100" href="#"
+                                                data-image="{{ $image->path_with_domain }}"
+                                                data-zoom-image="{{ $image->path_with_domain }}">
+                                                <img src="{{ $image->path_with_domain }}" alt="product side">
+                                            </a>
+                                        @endforeach
+                                    </div><!-- End .product-image-gallery -->
+                                </div>
+                                <div class="col-10">
+                                    <figure class="product-main-image">
+                                        <img id="product-zoom" src="{{ $product->images->first()->path_with_domain }}"
+                                            data-zoom-image="{{ $product->images->first()->path_with_domain }}"
+                                            alt="product image">
 
-                                    <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                        <i class="icon-arrows"></i>
-                                    </a>
-                                </figure><!-- End .product-main-image -->
-
-                                <div id="product-zoom-gallery" class="product-image-gallery d-block">
-                                    @foreach ($product->images as $image)
-                                        <a class="product-gallery-item product-image-check active" href="#"
-                                            data-image="{{ $image->path_with_domain }}"
-                                            data-zoom-image="{{ $image->path_with_domain }}">
-                                            <img src="{{ $image->path_with_domain }}" alt="product side">
+                                        <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                            <i class="icon-arrows"></i>
                                         </a>
-                                    @endforeach
-                                </div><!-- End .product-image-gallery -->
+                                    </figure><!-- End .product-main-image -->
+                                </div>
                             </div><!-- End .row -->
                         </div><!-- End .product-gallery -->
                     </div><!-- End .col-md-6 -->
@@ -98,19 +101,19 @@
                         <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab"
                             role="tab" aria-controls="product-desc-tab" aria-selected="true">Mô tả</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab"
-                            role="tab" aria-controls="product-info-tab" aria-selected="false">Thông tin bổ sung</a>
-                    </li>
+                    {{-- <li class="nav-item">
+                        <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab"
+                            aria-controls="product-info-tab" aria-selected="false">Thông tin bổ sung</a>
+                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab"
                             role="tab" aria-controls="product-shipping-tab" aria-selected="false">Vận chuyển và trả
                             hàng</a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"
                             role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
-                    </li>
+                    </li> --}}
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel"
@@ -119,19 +122,19 @@
                             {!! $product->description !!}
                         </div><!-- End .product-desc-content -->
                     </div><!-- .End .tab-pane -->
-                    <div class="tab-pane fade" id="product-info-tab" role="tabpanel"
+                    {{-- <div class="tab-pane fade" id="product-info-tab" role="tabpanel"
                         aria-labelledby="product-info-link">
                         <div class="product-desc-content">
                             {!! $product->additional_information !!}
                         </div><!-- End .product-desc-content -->
-                    </div><!-- .End .tab-pane -->
+                    </div><!-- .End .tab-pane --> --}}
                     <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
                         aria-labelledby="product-shipping-link">
                         <div class="product-desc-content">
                             {!! $product->shipping_and_return !!}
                         </div><!-- End .product-desc-content -->
                     </div><!-- .End .tab-pane -->
-                    <div class="tab-pane fade" id="product-review-tab" role="tabpanel"
+                    {{-- <div class="tab-pane fade" id="product-review-tab" role="tabpanel"
                         aria-labelledby="product-review-link">
                         <div class="reviews">
                             <h3>Reviews (2)</h3>
@@ -194,7 +197,7 @@
                                 </div><!-- End .row -->
                             </div><!-- End .review -->
                         </div><!-- End .reviews -->
-                    </div><!-- .End .tab-pane -->
+                    </div><!-- .End .tab-pane --> --}}
                 </div><!-- End .tab-content -->
             </div><!-- End .product-details-tab -->
 

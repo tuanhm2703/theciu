@@ -40,11 +40,11 @@ class Inventory extends Model {
 
     public function firstAttribute() {
         return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
-        ->orderBy('attribute_inventory.created_at');
+        ->orderBy('attribute_inventory.order');
     }
     public function secondAttribute() {
         return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
-        ->orderBy('attribute_inventory.created_at', 'desc');
+        ->orderBy('attribute_inventory.order', 'desc');
     }
 
     public function product() {

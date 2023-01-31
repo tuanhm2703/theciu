@@ -32,7 +32,9 @@ class ProductController extends Controller {
                 $product->createImages([$request->file('size-rule-img')], MediaType::SIZE_RULE);
             }
             $product->categories()->attach($request->input('category_id'));
+            $order = 0;
             foreach ($attributes[0]->values as $index => $value) {
+                $order++;
                 foreach ($value->inventories as $inventory) {
                     $newInventory = $product->inventories()->create((array) $inventory);
                     foreach ($inventory->attributes as $attribute) {
@@ -40,7 +42,7 @@ class ProductController extends Controller {
                             'id' => $attribute->id,
                             'name' => $attribute->name
                         ]);
-                        $newInventory->attributes()->attach($newAttribute->id, ['value' => $attribute->value]);
+                        $newInventory->attributes()->attach($newAttribute->id, ['value' => $attribute->value, 'order' => $order]);
                         if ($request->hasFile("attribute-image-$index")) {
                             $file = $request->file("attribute-image-$index");
                             $newInventory->createImages([$file]);
@@ -82,7 +84,9 @@ class ProductController extends Controller {
             $product->categories()->attach($request->input('category_id'));
             $inventory_ids = [];
             $inventory_image = null;
+            $order = 0;
             foreach ($attributes[0]->values as $index => $value) {
+                $order++;
                 foreach ($value->inventories as $inventory) {
                     $newInventory = $product->inventories()->updateOrCreate([
                         'id' => $inventory->id
@@ -94,7 +98,7 @@ class ProductController extends Controller {
                             'id' => $attribute->id,
                             'name' => $attribute->name
                         ]);
-                        $newInventory->attributes()->attach([$newAttribute->id], ['value' => $attribute->value]);
+                        $newInventory->attributes()->attach([$newAttribute->id], ['value' => $attribute->value, 'order' => $order]);
                         if ($request->hasFile("attribute-image-$index")) {
                             $inventory_image = $request->file("attribute-image-$index");
                         }
