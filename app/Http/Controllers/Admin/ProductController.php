@@ -110,8 +110,7 @@ class ProductController extends Controller {
             }
             $product->inventories()->whereNotIn('inventories.id', $inventory_ids)->delete();
             foreach ($deleteImages as $index => $path) {
-                $path = parse_url($path);
-                $deleteImages[$index] = str_replace(StorageService::url(''), '', $path['path']);
+                $deleteImages[$index] = str_replace(StorageService::url(''), '', $path);
             }
             Image::whereIn('path', $deleteImages)->delete();
             DB::commit();
