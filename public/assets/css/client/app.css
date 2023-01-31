@@ -141,3 +141,29 @@
     color: #c96;
     border-color: #c96;
 }
+.product-detail-label {
+    color: rgba(0,0,0,.4);
+    box-sizing: border-box;
+    width: 12rem;
+    padding-right: 0.75rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.label {
+    font-weight: 400;
+}
+.svg-right-arrow-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    position: relative;
+}
+.product-detail-content {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.product-detail-info-wrapper {
+    line-height: 3.5em;
+}

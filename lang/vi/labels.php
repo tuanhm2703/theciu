@@ -106,5 +106,12 @@ return [
     'shipping_info' => 'Thông tin vận chuyển',
     'customer' => 'Khách hàng',
     'shop' => 'Cửa hàng',
-    'system' => 'Hệ thống'
+    'system' => 'Hệ thống',
+    'material' => 'Chất liệu',
+    'style' => 'Phong cách',
+    'model' => 'Mẫu',
+    'type' => 'Kiểu',
+    'ship_from' => 'Gửi từ',
+    'product_description' => 'Mô tả sản phẩm',
+    'shipping_and_return' => 'Vận chuyển và trả hàng'
 ];

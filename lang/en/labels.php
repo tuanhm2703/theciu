@@ -102,5 +102,12 @@ return [
     'cancel_order' => 'Cancel order',
     'cancel_reason' => 'Cancel reason',
     'shipping_info' => 'Shipping info',
-    'customer' => 'Customer'
+    'customer' => 'Customer',
+    'material' => 'Material',
+    'style' => 'Style',
+    'model' => 'Model',
+    'type' => 'Type',
+    'ship_from' => 'Ship from',
+    'product_description' => 'Product description',
+    'shipping_and_return' => 'Shipping and return'
 ];

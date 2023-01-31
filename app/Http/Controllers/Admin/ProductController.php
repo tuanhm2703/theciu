@@ -80,7 +80,7 @@ class ProductController extends Controller {
             if ($request->hasFile('size-rule-img')) {
                 $product->createImages([$request->file('size-rule-img')], MediaType::SIZE_RULE);
             }
-            $product->categories()->detach($product->category->id);
+            $product->categories()->detach(optional($product->category)->id);
             $product->categories()->attach($request->input('category_id'));
             $inventory_ids = [];
             $inventory_image = null;

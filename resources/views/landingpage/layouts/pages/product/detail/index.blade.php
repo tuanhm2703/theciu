@@ -71,7 +71,8 @@
                                         $category = $product->category;
                                         $arr = [];
                                         while ($category) {
-                                            $arr[] = "<a href='#''>$category->name</a>";
+                                            $route = route('client.product.index', ['category' => $category->slug]);
+                                            $arr[] = "<a href='$route'>$category->name</a>";
                                             $category = $category->category;
                                         }
                                     @endphp
@@ -95,111 +96,67 @@
                 </div><!-- End .row -->
             </div><!-- End .product-details-top -->
 
-            <div class="product-details-tab">
-                <ul class="nav nav-pills justify-content-center" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab"
-                            role="tab" aria-controls="product-desc-tab" aria-selected="true">Mô tả</a>
-                    </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab"
-                            aria-controls="product-info-tab" aria-selected="false">Thông tin bổ sung</a>
-                    </li> --}}
-                    <li class="nav-item">
-                        <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab"
-                            role="tab" aria-controls="product-shipping-tab" aria-selected="false">Vận chuyển và trả
-                            hàng</a>
-                    </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab"
-                            role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
-                    </li> --}}
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel"
-                        aria-labelledby="product-desc-link">
-                        <div class="product-desc-content">
-                            {!! $product->description !!}
-                        </div><!-- End .product-desc-content -->
-                    </div><!-- .End .tab-pane -->
-                    {{-- <div class="tab-pane fade" id="product-info-tab" role="tabpanel"
-                        aria-labelledby="product-info-link">
-                        <div class="product-desc-content">
-                            {!! $product->additional_information !!}
-                        </div><!-- End .product-desc-content -->
-                    </div><!-- .End .tab-pane --> --}}
-                    <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
-                        aria-labelledby="product-shipping-link">
-                        <div class="product-desc-content">
-                            {!! $product->shipping_and_return !!}
-                        </div><!-- End .product-desc-content -->
-                    </div><!-- .End .tab-pane -->
-                    {{-- <div class="tab-pane fade" id="product-review-tab" role="tabpanel"
-                        aria-labelledby="product-review-link">
-                        <div class="reviews">
-                            <h3>Reviews (2)</h3>
-                            <div class="review">
-                                <div class="row no-gutters">
-                                    <div class="col-auto">
-                                        <h4><a href="#">Samanta J.</a></h4>
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 80%;"></div>
-                                                <!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                        </div><!-- End .rating-container -->
-                                        <span class="review-date">6 days ago</span>
-                                    </div><!-- End .col -->
-                                    <div class="col">
-                                        <h4>Good, perfect size</h4>
+            <div class="bg-light p-5 mb-3">
+                <h6 class="mb-3">CHI TIẾT SẢN PHẨM</h6>
+                <div class="product-detail-info-wrapper">
+                    @php
+                        $category = $product->category;
+                        $arr = ['<a href="/">THE CIU</a>'];
+                        while ($category) {
+                            $route = route('client.product.index', ['category' => $category->slug]);
+                            $arr[] = "<a href='$route'>$category->name</a>";
+                            $category = $category->category;
+                        }
+                    @endphp
+                    <div class="d-flex">
+                        <label class="product-detail-label w-20 m-0"
+                            for="">{{ trans('labels.category') }}</label>
+                        <div class="d-flex align-items-center product-detail-content">
+                            {!! implode('<span class="px-3"> > </span>', $arr) !!}
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <label class="product-detail-label w-20 m-0"
+                            for="">{{ trans('labels.material') }}</label>
+                        <div class="d-flex align-items-center product-detail-content">
+                            {{ $product->material }}
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.style') }}</label>
+                        <div class="d-flex align-items-center product-detail-content">
+                            {{ $product->style }}
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.model') }}</label>
+                        <div class="d-flex align-items-center product-detail-content">
+                            {{ $product->model }}
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.type') }}</label>
+                        <div class="d-flex align-items-center product-detail-content">
+                            {{ $product->type }}
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.ship_from') }}</label>
+                        <div class="d-flex align-items-center product-detail-content">
+                            {{ App\Models\Config::first()->pickup_address->province->name }}
+                        </div>
+                    </div>
 
-                                        <div class="review-content">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus cum dolores
-                                                assumenda asperiores facilis porro reprehenderit animi culpa atque
-                                                blanditiis commodi perspiciatis doloremque, possimus, explicabo, autem fugit
-                                                beatae quae voluptas!</p>
-                                        </div><!-- End .review-content -->
-
-                                        <div class="review-action">
-                                            <a href="#"><i class="icon-thumbs-up"></i>Helpful (2)</a>
-                                            <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                        </div><!-- End .review-action -->
-                                    </div><!-- End .col-auto -->
-                                </div><!-- End .row -->
-                            </div><!-- End .review -->
-
-                            <div class="review">
-                                <div class="row no-gutters">
-                                    <div class="col-auto">
-                                        <h4><a href="#">John Doe</a></h4>
-                                        <div class="ratings-container">
-                                            <div class="ratings">
-                                                <div class="ratings-val" style="width: 100%;"></div>
-                                                <!-- End .ratings-val -->
-                                            </div><!-- End .ratings -->
-                                        </div><!-- End .rating-container -->
-                                        <span class="review-date">5 days ago</span>
-                                    </div><!-- End .col -->
-                                    <div class="col">
-                                        <h4>Very good</h4>
-
-                                        <div class="review-content">
-                                            <p>Sed, molestias, tempore? Ex dolor esse iure hic veniam laborum blanditiis
-                                                laudantium iste amet. Cum non voluptate eos enim, ab cumque nam, modi, quas
-                                                iure illum repellendus, blanditiis perspiciatis beatae!</p>
-                                        </div><!-- End .review-content -->
-
-                                        <div class="review-action">
-                                            <a href="#"><i class="icon-thumbs-up"></i>Helpful (0)</a>
-                                            <a href="#"><i class="icon-thumbs-down"></i>Unhelpful (0)</a>
-                                        </div><!-- End .review-action -->
-                                    </div><!-- End .col-auto -->
-                                </div><!-- End .row -->
-                            </div><!-- End .review -->
-                        </div><!-- End .reviews -->
-                    </div><!-- .End .tab-pane --> --}}
-                </div><!-- End .tab-content -->
-            </div><!-- End .product-details-tab -->
+                </div>
+            </div>
+            <div class="bg-light p-5 mb-3">
+                <h6 class="text-uppercase mb-3">{{ trans('labels.product_description') }}</h6>
+                {!! $product->description !!}
+            </div>
+            <div class="bg-light p-5 mb-3">
+                <h6 class="text-uppercase mb-3">{{ trans('labels.shipping_and_return') }}</h6>
+                {!! $product->shipping_and_return !!}
+            </div>
 
             <h2 class="title text-center mb-4">Sản phẩm tương tự</h2><!-- End .title text-center -->
 

@@ -32,12 +32,7 @@ class ProductPickItemComponent extends Component {
 
         $this->first_attribute_id = $this->first_attributes->first()->id;
         $this->second_attributes = collect();
-        $inventories = $this->product->inventories()
-            ->haveStock()
-            ->withCount('attributes')
-            ->with(['secondAttribute' => function ($q) {
-                return $q->addSelect('*', 'attribute_inventory.value');
-            }])
+        $inventories = $this->product->inventories()->haveStock()->withCount('attributes')->with(['secondAttribute' => function ($q) {return $q->addSelect('*', 'attribute_inventory.value');}])
             ->whereHas('attributes', function ($q) {
                 return $q->where('attributes.id', $this->first_attribute_id);
             })->get();
