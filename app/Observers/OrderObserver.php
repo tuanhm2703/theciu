@@ -26,7 +26,7 @@ class OrderObserver {
     }
 
     public function updated(Order $order) {
-        if ($order->isDirty('order_status')) {
+        // if ($order->isDirty('order_status')) {
             switch ($order->order_status_id) {
                 case OrderStatus::CANCELED:
                     // $order->executeActionsAfterOrderCancelled();
@@ -44,7 +44,7 @@ class OrderObserver {
                     // $order->shop->createCodConsolidation();
                     break;
             }
-        }
+        // }
         if($order->isDirty('sub_status') && $order->sub_status == OrderSubStatus::FINISH_PACKAGING) {
             $order->pushShippingOrder();
         }

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use App\Enums\OrderCanceler;
 use App\Enums\PaymentStatus;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Order extends Model {
     use HasFactory, Addressable;
@@ -103,6 +104,12 @@ class Order extends Model {
                     array('description' => 'Khách hàng tạo đơn hàng', 'icon' => ActionIcon::ORDER_OREDRED),
                 );
                 break;
+            case OrderStatus::PICKING:
+                $action = Action::firstOrCreate(
+                    array('name' => 'Đang lấy hàng'),
+                    array('description' => 'Đơn vị vận chuyển đang lấy hàng', 'icon' => ActionIcon::ORDER_PICKING_UP),
+                );
+                break;
             case OrderStatus::CANCELED:
                 $action = Action::firstOrCreate(
                     array('name' => 'Đã hủy'),
@@ -142,7 +149,7 @@ class Order extends Model {
             if ($this->order_status == OrderStatus::CANCELED) {
                 $this->canceled_by = OrderCanceler::SHOP;
             }
-        }  else if (Request::route() != null && Request::route()->getName() == 'shipping.webhook') {
+        } else if (Request::route() != null && Request::route()->getName() == 'webhook.shipping.webhook') {
             $order_history->executable_type = ShippingService::class;
             $order_history->executable_id = $this->shipping_service->id;
             if ($this->order_status == OrderStatus::CANCELED) {
@@ -153,7 +160,6 @@ class Order extends Model {
                 $this->canceler = OrderCanceler::SYSTEM;
             }
         }
-        $executor = $order_history->executable;
         $executor_label = $order_history->executorLabel();
         $order_history->description =  "$executor_label " . strtolower($action->name) . " đơn hàng $this->order_number";
         $order_history->action_id = $action->id;
@@ -167,5 +173,9 @@ class Order extends Model {
 
     public function getCancelerLabel() {
         return OrderCanceler::getCancelerLabel($this->canceled_by);
+    }
+
+    public function payment() {
+        return $this->hasOne(Payment::class);
     }
 }

@@ -6,7 +6,7 @@ return [
         'wait_to_accept' => 'Chờ xác nhận',
         'picking' => 'Đang lấy hàng',
         'delivering' => 'Đang vận chuyển',
-        'deliverd' => 'Đã chuyển hàng',
+        'delivered' => 'Đã giao',
         'canceled' => 'Đã huỷ',
         'return' => 'Trả hàng',
     ],

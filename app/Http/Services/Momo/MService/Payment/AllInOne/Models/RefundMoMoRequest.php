@@ -20,7 +20,7 @@ class RefundMoMoRequest extends AIORequest
             }
         }
 
-        $this->setRequestType(RequestType::REFUND_MOMO_WALLET);
+        // $this->setRequestType(RequestType::REFUND_MOMO_WALLET);
     }
 
     /**

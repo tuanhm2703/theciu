@@ -19,12 +19,20 @@ class TestController extends Controller {
         $this->shipping_service =  $shipping_service;
     }
 
-    public function test() {
-        $inventory = Inventory::find(93);
-        return $inventory->firstAttribute()->addSelect('*', 'attribute_inventory.value')->first();
+    public function test(Request $request) {
+        $body = MomoService::checkout(Order::first());
+        return redirect($body);
+        // return redirect()->to($body->payUrl);
+        // return response()->json([
+        //     'message' => 'success'
+        // ], 204);
     }
 
     public function ship() {
         return $this->shipping_service->getListPickupTime();
+    }
+
+    public function refundMomo() {
+        return  MomoService::refund();
     }
 }

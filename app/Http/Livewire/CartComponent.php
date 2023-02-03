@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Enums\AddressType;
 use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
 use App\Exceptions\InventoryOutOfStockException;
 use App\Http\Services\Momo\MomoService;
 use App\Http\Services\Payment\PaymentService;
@@ -133,10 +134,16 @@ class CartComponent extends Component {
                 "total_fee" => $order->subtotal,
                 'ship_at_office_hour' => 0,
             ]);
+            $order->payment()->create([
+                'customer_id' => $customer->id,
+                'payment_method_id' => $this->payment_method_id,
+                'amount' => $order->total,
+                'order_number' => $order->order_number,
+                'payment_status' => PaymentStatus::PENDING
+            ]);
             $this->cart->inventories()->sync([]);
             $url = PaymentService::checkout($order);
             DB::commit();
-            $this->refresh();
             return redirect()->to($url);
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -199,7 +206,8 @@ class CartComponent extends Component {
             'customer_id' => auth('customer')->user()->id
         ]);
         $this->updateOrderInfo();
-        $this->emit('cart:refresh');
+        $this->dispatchBrowserEvent('initQuantityInput');
+        $this->emitTo('header-cart-component', 'cart:refresh');
     }
 
     public function updateOrderInfo() {

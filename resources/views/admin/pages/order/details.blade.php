@@ -44,13 +44,13 @@
                         </div>
                         <div class="col-6">
                             <div class="d-flex">
-                                <div class="w-10" style="min-width: 60px">
+                                <div style="min-width: 70px; max-width: 30%">
                                     <div class="d-flex align-items-center justify-content-center"
                                         style="width: 50px; height: 50px; background: #f1f1f1; border-radius: 50px">
                                         <span class="text-danger text-bold text-sm">{{ $order_success_percentage }}%</span>
                                     </div>
                                 </div>
-                                <div class="w-90 text-sm d-flex align-items-center">
+                                <div class="text-sm align-items-center">
                                     @if ($order->customer->canceled_orders()->count() == 0 && $total_delivered_orders == 0)
                                         <span>Khách hàng chưa có đơn hàng nào</span>
                                     @else

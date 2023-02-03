@@ -45,4 +45,8 @@ class ShippingOrder extends Model
     public function order() {
         return $this->belongsTo(Order::class);
     }
+
+    public function shipping_order_histories() {
+        return $this->belongsTo(ShippingOrderHistory::class);
+    }
 }

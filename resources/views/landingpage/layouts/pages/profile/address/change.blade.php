@@ -1,4 +1,4 @@
-<div class="form-box p-5 position-relative" style="height: 600px; overflow: scroll">
+<div class="form-box p-5 position-relative" style="height: 600px; overflow: auto">
     <h5>Thay đổi địa chỉ</h5>
     <hr class="my-2">
     <div>
@@ -29,16 +29,13 @@
             <hr class="my-2">
         @endforeach
     </div>
-    <div class="text-left mt-2">
-        <a class="btn border ajax-modal-btn" data-toggle="modal" data-target="#createAddressModal"><i
-                class="icon-plus"></i>Thêm Địa Chỉ
-            Mới</a>
-    </div>
     <div class="text-right" style="position: absolute; bottom: 0;
     width: 100%;
     right: 0;
     padding: 1rem;">
-        <hr class="my-3">
+        <a class="btn border ajax-modal-btn" data-toggle="modal" data-target="#createAddressModal"><i
+            class="icon-plus"></i>Thêm Địa Chỉ
+        Mới</a>
         <a href="#" class="btn btn-primary submit-change-address-btn">Xác nhận</a>
     </div>
 </div>

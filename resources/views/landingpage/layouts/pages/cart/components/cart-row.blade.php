@@ -18,7 +18,7 @@
         </div><!-- End .product -->
     </td>
     <td class="price-col">{{ $inventory->formatted_sale_price }}</td>
-    <td class="quantity-col" wire:ignore>
+    <td class="quantity-col">
         <div class="cart-product-quantity">
             <input type="number" class="form-control" min="1" max="10" step="1"
                 data-decimals="0" wire:change="itemAdded({{ $inventory->id }}, $event.target.value)" data-inventory-id="{{ $inventory->id }}"

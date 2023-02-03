@@ -430,10 +430,10 @@ $(document).ready(function () {
 
     // Product Image Zoom plugin - product pages
     if ($.fn.elevateZoom) {
-        $('body').on('click', '.check-product-thumb-image', (e) => {
-            $('#product-zoom').removeData('elevateZoom')
-            $('#product-zoom').attr('src', $(e.target).data('image'))
-            $('#product-zoom').data('zoom-image', $(e.target).data('image'))
+        $("body").on("click", ".check-product-thumb-image", (e) => {
+            $("#product-zoom").removeData("elevateZoom");
+            $("#product-zoom").attr("src", $(e.target).data("image"));
+            $("#product-zoom").data("zoom-image", $(e.target).data("image"));
             $("#product-zoom").elevateZoom({
                 gallery: "product-zoom-gallery",
                 galleryActiveClass: "active",
@@ -443,7 +443,7 @@ $(document).ready(function () {
                 zoomWindowFadeOut: 400,
                 responsive: true,
             });
-        })
+        });
         $("#product-zoom").elevateZoom({
             gallery: "product-zoom-gallery",
             galleryActiveClass: "active",

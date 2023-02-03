@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('shipping_order_id')->unsigned();
             $table->string('status')->nullable();
             $table->string('status_code')->nullable();
-            $table->integer('order_status_id');
+            $table->integer('order_status');
             $table->timestamp('time');
             $table->string('reason')->nullable();
             $table->double('fee');

@@ -39,11 +39,11 @@ class QueryStatusTransaction extends Process
     public function createQueryStatusRequest($orderId, $requestId): QueryStatusRequest
     {
 
-        $rawData = Parameter::PARTNER_CODE . "=" . $this->getPartnerInfo()->getPartnerCode() .
-            "&" . Parameter::ACCESS_KEY . "=" . $this->getPartnerInfo()->getAccessKey() .
-            "&" . Parameter::REQUEST_ID . "=" . $requestId .
+        $rawData =
+            Parameter::ACCESS_KEY . "=" . $this->getPartnerInfo()->getAccessKey() .
             "&" . Parameter::ORDER_ID . "=" . $orderId .
-            "&" . Parameter::REQUEST_TYPE . "=" . RequestType::TRANSACTION_STATUS;
+            "&" . Parameter::PARTNER_CODE . "=" . $this->getPartnerInfo()->getPartnerCode() .
+            "&" . Parameter::REQUEST_ID . "=" . $requestId;
 
         $signature = Encoder::hashSha256($rawData, $this->getPartnerInfo()->getSecretKey());
 
@@ -66,7 +66,6 @@ class QueryStatusTransaction extends Process
         try {
             $data = Converter::objectToJsonStrNoNull($queryStatusRequest);
             $response = HttpClient::HTTPPost($this->getEnvironment()->getMomoEndpoint(), $data, $this->getLogger());
-
             if ($response->getStatusCode() != 200) {
                 throw new MoMoException('[CaptureMoMoIPNRequest][' . $queryStatusRequest->getOrderId() . '] -> Error API');
             }

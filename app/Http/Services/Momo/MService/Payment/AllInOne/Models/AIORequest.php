@@ -13,10 +13,13 @@ class AIORequest
     private $signature;
     private $extraData;
     private $requestId;
-
+    private $description;
     private $notifyUrl;
+    private $ipnUrl;
+    private $redirectUrl;
     private $returnUrl;
     private $requestType;
+    private $lang;
 
     /**
      * AIORequest constructor.
@@ -209,4 +212,48 @@ class AIORequest
         $this->requestType = $requestType;
     }
 
+    public function setDescription($description): void {
+        $this->description = $description;
+    }
+
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function setLang($lang): void {
+        $this->lang = $lang;
+    }
+
+    public function getLang() {
+        return $this->lang;
+    }
+
+    public function seetIpnUrl($ipnUrl): void {
+        $this->ipnUrl = $ipnUrl;
+    }
+
+    public function getIpnUrl() {
+        return $this->ipnUrl;
+    }
+
+
+    /**
+     * Get the value of redirectUrl
+     */
+    public function getRedirectUrl()
+    {
+        return $this->redirectUrl;
+    }
+
+    /**
+     * Set the value of redirectUrl
+     *
+     * @return  self
+     */
+    public function setRedirectUrl($redirectUrl)
+    {
+        $this->redirectUrl = $redirectUrl;
+
+        return $this;
+    }
 }

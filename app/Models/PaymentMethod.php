@@ -15,4 +15,8 @@ class PaymentMethod extends Model {
         $max_value = $this->max_value == null ? INF : $this->max_value;
         return ($min_value <= $value && $max_value >= $value);
     }
+
+    public function payments() {
+        return $this->hasMany(Payment::class);
+    }
 }

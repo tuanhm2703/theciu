@@ -23,6 +23,8 @@ class OrderHistory extends Model {
                 return 'Khách hàng';
             case User::class:
                 return 'Cửa hàng';
+            case ShippingService::class:
+                return 'Dịch vụ vận chuyển';
             default:
                 return 'Hệ thống';
         }

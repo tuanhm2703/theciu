@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Webhook;
 
+use App\Http\Controllers\Controller;
 use App\Http\Services\Shipping\GHTKService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,7 @@ class ShippingWebhookController extends Controller {
     public function postWebhook(Request $request, $service_alias) {
         Log::info($request->all());
         DB::beginTransaction();
+
         try {
             try {
                 $this->shipping_service->createShippingOrderHistory($request->all());

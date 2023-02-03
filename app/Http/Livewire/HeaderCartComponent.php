@@ -37,7 +37,7 @@ class HeaderCartComponent extends Component {
             } else {
                 $this->cart->inventories()->sync([$inventory->id => ['quantity' => $quantity ? $quantity : 1, 'customer_id' => $customer->id]], false);
             }
-            $this->emit('cart:refreshComponent');
+            $this->emit('cart:refresh');
         }
     }
 
@@ -48,7 +48,7 @@ class HeaderCartComponent extends Component {
         }])->firstOrCreate([
             'customer_id' => auth('customer')->user()->id
         ]);
-        $this->emit('cart:refreshComponent');
+        $this->emit('cart:refresh');
     }
 
     public function render() {

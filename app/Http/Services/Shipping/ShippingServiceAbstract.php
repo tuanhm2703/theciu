@@ -2,6 +2,7 @@
 
 namespace App\Http\Services\Shipping;
 
+use App\Enums\OrderCanceler;
 use App\Enums\OrderStatus;
 use App\Models\Address;
 use App\Models\District;
@@ -45,6 +46,7 @@ abstract class ShippingServiceAbstract {
     protected $morning_pickup_shift_time;
     protected $afternoon_pickup_shift_time;
     protected $picking_status;
+    protected $delivered_status;
     const MORNING_PICKUP_SHIFT_CODE = 1;
     const AFTERNOON_PICKUP_SHIFT_CODE = 2;
     const TOMORROW_MORNING_PICKUP_SHIFT_CODE = 3;
@@ -229,17 +231,17 @@ abstract class ShippingServiceAbstract {
         $order_status = $this->getOrderStatusByShippingOrderStatus($shipping_order_data->status_code, $shipping_order_data->reason_code);
         $shipping_order = ShippingOrder::with('shipping_service', 'order')->findOrFail($shipping_order_data->shipping_order_id);
         if ($order_status != null) {
-            if ($order_status == OrderStatus::STATUS_CANCELLED) {
+            if ($order_status == OrderStatus::CANCELED) {
                 $shipping_order->order->reason_cancel = $shipping_order_data->reason;
-                $shipping_order->order->canceler = OrderStatus::CANCELER_SHIPPING_SERVICE;
+                $shipping_order->order->canceled_by = OrderCanceler::SHIPPING_SERVICE;
             }
-            if ($order_status != $shipping_order->order->order_status_id) {
-                $shipping_order->order->order_status_id = $order_status;
+            if ($order_status != $shipping_order->order->order_status) {
+                $shipping_order->order->order_status = $order_status;
                 $shipping_order->order->save();
             }
         }
 
-        $shipping_order_data->order_status_id = $shipping_order->order->order_status_id;
+        $shipping_order_data->order_status = $shipping_order->order->order_status;
         // dd($shipping_order_data->toArray());
         $shipping_order->shipping_order_histories()->create($shipping_order_data->toArray());
     }
@@ -278,9 +280,11 @@ abstract class ShippingServiceAbstract {
     public function getOrderStatusByShippingOrderStatus($shipping_order_status, $reason_code = null) {
         if (in_array($shipping_order_status, $this->fail_order_status)) {
             if (in_array($reason_code, $this->update_order_reason_code)) return null;
-            return OrderStatus::STATUS_CANCELLED;
+            return OrderStatus::CANCELED;
         }
-        if (in_array($shipping_order_status, $this->picked_status)) return OrderStatus::STATUS_DELIVERING;
+        if (in_array($shipping_order_status, $this->picking_status)) return OrderStatus::PICKING;
+        if (in_array($shipping_order_status, $this->picked_status)) return OrderStatus::DELIVERING;
+        if ($shipping_order_status == $this->delivered_status) return OrderStatus::DELIVERED;
         return null;
     }
 
@@ -350,10 +354,8 @@ abstract class ShippingServiceAbstract {
     }
 
     public function storeShippingOrder($data, $order) {
-
     }
 
     public function renderShippingOrderDataFromOrder(int $order_id) {
-
     }
 }

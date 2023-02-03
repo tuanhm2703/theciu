@@ -3,6 +3,7 @@
 
 namespace MService\Payment\AllInOne\Processors;
 
+use Illuminate\Support\Facades\App;
 use MService\Payment\AllInOne\Models\RefundMoMoRequest;
 use MService\Payment\AllInOne\Models\RefundMoMoResponse;
 use MService\Payment\Shared\Constants\Parameter;
@@ -14,15 +15,12 @@ use MService\Payment\Shared\Utils\HttpClient;
 use MService\Payment\Shared\Utils\MoMoException;
 use MService\Payment\Shared\Utils\Process;
 
-class RefundMoMo extends Process
-{
-    public function __construct(Environment $environment)
-    {
+class RefundMoMo extends Process {
+    public function __construct(Environment $environment) {
         parent::__construct($environment);
     }
 
-    public static function process(Environment $env, $orderId, $requestId, string $amount, $transId)
-    {
+    public static function process(Environment $env, $orderId, $requestId, string $amount, $transId) {
         $refundMoMo = new RefundMoMo($env);
 
         try {
@@ -30,61 +28,52 @@ class RefundMoMo extends Process
             $refundMoMoResponse = $refundMoMo->execute($refundMoMoRequest);
 
             return $refundMoMoResponse;
-
         } catch (MoMoException $exception) {
             $refundMoMo->logger->error($exception->getErrorMessage());
         }
     }
 
-    public function createRefundMoMoRequest($orderId, $requestId, string $amount, $transId): RefundMoMoRequest
-    {
-
-        $rawData = Parameter::PARTNER_CODE . "=" . $this->getPartnerInfo()->getPartnerCode() .
-            "&" . Parameter::ACCESS_KEY . "=" . $this->getPartnerInfo()->getAccessKey() .
-            "&" . Parameter::REQUEST_ID . "=" . $requestId .
-            "&" . Parameter::AMOUNT . "=" . $amount .
-            "&" . Parameter::ORDER_ID . "=" . $orderId .
-            "&" . Parameter::TRANS_ID . "=" . $transId .
-            "&" . Parameter::REQUEST_TYPE . "=" . RequestType::REFUND_MOMO_WALLET;
+    public function createRefundMoMoRequest($orderId, $requestId, string $amount, $transId): RefundMoMoRequest {
+        $partnerCode = $this->getPartnerInfo()->getPartnerCode();
+        $accessKey = $this->getPartnerInfo()->getAccessKey();
+        $description = "hello";
+        $rawData = "accessKey=$accessKey&amount=$amount&description=$description&orderId=$orderId&partnerCode=$partnerCode&requestId=$requestId&transId=$transId";
 
         $signature = Encoder::hashSha256($rawData, $this->getPartnerInfo()->getSecretKey());
         $this->logger->debug("[RefundMoMoRequest] rawData: " . $rawData
             . ", [Signature] -> " . $signature);
         $arr = array(
             Parameter::PARTNER_CODE => $this->getPartnerInfo()->getPartnerCode(),
-            Parameter::ACCESS_KEY => $this->getPartnerInfo()->getAccessKey(),
+            Parameter::ORDER_ID => $orderId,
             Parameter::REQUEST_ID => $requestId,
             Parameter::AMOUNT => $amount,
-            Parameter::ORDER_ID => $orderId,
             Parameter::TRANS_ID => $transId,
+            Parameter::LANG => App::getLocale(),
+            Parameter::DESCRIPTION => $description,
             Parameter::SIGNATURE => $signature,
         );
 
         return new RefundMoMoRequest($arr);
     }
 
-    public function execute($refundMoMoRequest)
-    {
+    public function execute($refundMoMoRequest) {
         try {
             $data = Converter::objectToJsonStrNoNull($refundMoMoRequest);
             $response = HttpClient::HTTPPost($this->getEnvironment()->getMomoEndpoint(), $data, $this->getLogger());
-
             if ($response->getStatusCode() != 200) {
                 throw new MoMoException('[RefundMoMoRequest][' . $refundMoMoRequest->getOrderId() . '] -> Error API');
             }
 
             $refundMoMoResponse = new RefundMoMoResponse(json_decode($response->getBody(), true));
-
+            $response = $this->checkResponse($refundMoMoResponse);
             return $this->checkResponse($refundMoMoResponse);
-
         } catch (MoMoException $exception) {
             $this->logger->error($exception->getErrorMessage());
         }
         return null;
     }
 
-    public function checkResponse(RefundMoMoResponse $refundMoMoResponse)
-    {
+    public function checkResponse(RefundMoMoResponse $refundMoMoResponse) {
         try {
 
             //check signature

@@ -166,6 +166,15 @@
         window.addEventListener('openLoginForm', (e) => {
             openLoginModal()
         });
+        window.addEventListener("initQuantityInput", (e) => {
+            $("input[type='number']").inputSpinner({
+                decrementButton: '<i class="icon-minus"></i>',
+                incrementButton: '<i class="icon-plus"></i>',
+                groupClass: "input-spinner",
+                buttonsClass: "btn-spinner",
+                buttonsWidth: "26px",
+            });
+        });
     </script>
     <livewire:scripts />
 </body>

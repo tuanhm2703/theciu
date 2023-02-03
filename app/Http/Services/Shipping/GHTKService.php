@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 use stdClass;
 
 class GHTKService extends ShippingServiceAbstract {
@@ -109,6 +110,8 @@ class GHTKService extends ShippingServiceAbstract {
             '3',
             '4'
         ];
+        $this->delivered_status = '5';
+
         $this->reason_code = [
             100 => 'Nhà cung cấp (NCC) hẹn lấy vào ca tiếp theo',
             101 => 'GHTK không liên lạc được với NCC',
@@ -338,7 +341,7 @@ class GHTKService extends ShippingServiceAbstract {
         $order = ShippingOrder::where('code', DB::raw("'" . $data['label_id'] . "'"))->firstOrFail();
         $shipping_order_history_data = new ShippingOrderHistoryData();
         $shipping_order_history_data->shipping_order_id = $order->id;
-        $shipping_order_history_data->status = $this->status_string_array[strval($data['status_id'])];
+        $shipping_order_history_data->status_code = $this->status_string_array[strval($data['status_id'])];
         $shipping_order_history_data->time = $data['action_time'];
         $shipping_order_history_data->description = $data['reason'];
         if (empty($data['reason'])) {

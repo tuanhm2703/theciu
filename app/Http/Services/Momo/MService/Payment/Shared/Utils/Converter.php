@@ -41,7 +41,7 @@ class Converter
     {
 /*        Object must be serializable
         $array = json_decode(json_encode($object), true);
-        return $array;
+        return $array
 */
         $arr = [];
         try {

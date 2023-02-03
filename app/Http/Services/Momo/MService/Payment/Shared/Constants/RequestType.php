@@ -9,7 +9,7 @@ class RequestType
      * ======================= USING FOR MERCHANT/PARTNER PUBLIC =================
      */
     const UN_SUPPORT = "UN_SUPPORT";
-    const CAPTURE_MOMO_WALLET = "captureMoMoWallet";
+    const CAPTURE_MOMO_WALLET = "captureWallet";
     const TRANSACTION_STATUS = "transactionStatus";
     const REFUND_MOMO_WALLET = "refundMoMoWallet";
     const QUERY_REFUND = "refundStatus"; //

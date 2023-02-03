@@ -8,6 +8,8 @@ use MService\Payment\Shared\Constants\RequestType;
 class CaptureMoMoResponse extends AIOResponse
 {
     private $payUrl;
+    private $partnerCode;
+    private $resultCode;
     private $deeplink;
     private $deeplinkWebInApp;
     private $qrCodeUrl;
@@ -91,4 +93,32 @@ class CaptureMoMoResponse extends AIOResponse
         $this->qrCodeUrl = $qrCodeUrl;
     }
 
+
+    /**
+     * Get the value of partnerCode
+     */
+    public function getPartnerCode()
+    {
+        return $this->partnerCode;
+    }
+
+    /**
+     * Get the value of resultCode
+     */
+    public function getResultCode()
+    {
+        return $this->resultCode;
+    }
+
+    /**
+     * Set the value of resultCode
+     *
+     * @return  self
+     */
+    public function setResultCode($resultCode)
+    {
+        $this->resultCode = $resultCode;
+
+        return $this;
+    }
 }

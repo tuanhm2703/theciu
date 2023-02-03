@@ -12,7 +12,7 @@
                         wire:model="second_attribute_value" value="{{ $attribute->value }}">
                     <label for="second-attribute-{{ $attribute->value }}" class="radio">{{ $attribute->value }}</label>
                 </div>
-            @endforeach
+        @endforeach
             {{-- <select name="size" id="size" class="form-control" wire:model="second_attribute_id">
                 @foreach ($second_attributes as $index => $attribute)
                     <option value="{{ ((object) $attribute)->id }}">

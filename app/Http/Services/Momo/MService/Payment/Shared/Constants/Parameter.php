@@ -15,6 +15,8 @@ class Parameter
 
     public const RETURN_URL = "returnUrl";
     public const NOTIFY_URL = "notifyUrl";
+    public const IPN_URL = "ipnUrl";
+    public const REDIRECT_URL = 'redirectUrl';
 
     public const REQUEST_TYPE = "requestType";
     public const EXTRA_DATA = "extraData";
@@ -49,6 +51,7 @@ class Parameter
     public const PARTNER_NAME = "partnerName";
     public const STORE_ID = "storeId";
     public const STORE_NAME = "storeName";
+    public const LANG = 'lang';
 
     //URI for different processes in MOMO payment system:
     public const PAY_GATE_URI = "/gw_payment/transactionProcessor";
