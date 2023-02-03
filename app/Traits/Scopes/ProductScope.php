@@ -21,4 +21,10 @@ trait ProductScope {
         $now = now();
         return $q->whereRaw("TIMESTAMPDIFF(DAY, updated_at, '$now') <= $dayForNewArrival");
     }
+
+    public function scopeAvailable($q) {
+        return $q->whereHas('inventories', function($q) {
+            $q->where('stock_quantity', '>', 0);
+        });
+    }
 }

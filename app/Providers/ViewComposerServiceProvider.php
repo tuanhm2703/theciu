@@ -68,7 +68,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
                 $product_categories = Category::getMenuCategories();
                 $shop_categories = Category::whereHas('products')->with('image:imageable_id,path')->whereType(CategoryType::SHOP)->get();
                 $promotions = Promotion::available()->whereHas('products')->with(['products' => function ($q) {
-                    $q->with('image:path,imageable_id')->select('id', 'slug', 'name');
+                    $q->available()->with('image:path,imageable_id')->select('id', 'slug', 'name');
                 }])->get();
                 $blog_categories = Category::allActiveBlogCategories();
                 $view->with(['product_categories' => $product_categories, 'shop_categories' => $shop_categories, 'promotions' => $promotions, 'blog_categories' => $blog_categories]);
@@ -119,7 +119,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
         View::composer(
             'landingpage.layouts.pages.home.components.deal_of_day',
             function ($view) {
-                $flash_sale_products = Product::whereHas('flash_sales', function ($q) {
+                $flash_sale_products = Product::available()->whereHas('flash_sales', function ($q) {
                     return $q->available();
                 })->with('inventories.image', 'images:path,imageable_id', 'flash_sale')->select('products.id', 'products.name', 'products.slug')->get();
                 $view->with(['flash_sale_products' => $flash_sale_products]);
@@ -138,7 +138,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
             'landingpage.layouts.pages.home.components.trending',
             function ($view) {
                 $trending_categories = Category::trending()->with(['products' => function ($q) {
-                    $q->with('images', 'inventories.image', 'categories')->select('products.id', 'products.name', 'slug')->groupBy('products.id');
+                    $q->available()->with('images', 'inventories.image', 'categories')->select('products.id', 'products.name', 'slug')->groupBy('products.id');
                 }])->active()->get();
                 $view->with(['trending_categories' => $trending_categories]);
             }
@@ -147,7 +147,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
         View::composer(
             'landingpage.layouts.pages.home.components.new_arrival',
             function ($view) {
-                $new_arrival_products = Product::newArrival()
+                $new_arrival_products = Product::available()->newArrival()
                     ->with('inventories', 'images:path,imageable_id')
                     ->select('products.id', 'products.name', 'products.slug')->get();
                 $view->with(['new_arrival_products' => $new_arrival_products]);
