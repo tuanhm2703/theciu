@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use App\Enums\OrderCanceler;
 use App\Enums\PaymentStatus;
+use App\Http\Services\Payment\PaymentService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Order extends Model {
@@ -51,6 +52,10 @@ class Order extends Model {
             'title',
             'name'
         ]);
+    }
+
+    public function payment() {
+        return $this->hasOne(Payment::class);
     }
 
     public function order_histories() {
@@ -175,7 +180,7 @@ class Order extends Model {
         return OrderCanceler::getCancelerLabel($this->canceled_by);
     }
 
-    public function payment() {
-        return $this->hasOne(Payment::class);
+    public function refund() {
+        return PaymentService::refund($this);
     }
 }

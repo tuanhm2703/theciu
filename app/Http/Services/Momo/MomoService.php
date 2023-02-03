@@ -19,7 +19,7 @@ class MomoService {
         switch ($target) {
             case "dev":
                 $devInfo = new PartnerInfo(env('DEV_ACCESS_KEY'), env('DEV_PARTNER_CODE'), env('DEV_SECRET_KEY'));
-                $dev = new Environment("https://test-payment.momo.vn".$endpoint, $devInfo, env('DEV'), handlers: [new StreamHandler(storage_path('log/momo.log'), Logger::DEBUG)]);
+                $dev = new Environment("https://test-payment.momo.vn" . $endpoint, $devInfo, env('DEV'), handlers: [new StreamHandler(storage_path('log/momo.log'), Logger::DEBUG)]);
                 return $dev;
 
             case "prod":
@@ -39,11 +39,11 @@ class MomoService {
         return CaptureMoMo::process($env, $order->order_number, "Pay With MoMo", $order->total, base64_encode("theciu"), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
     }
 
-    public static function refund() {
+    public static function refund($order) {
         $env = MomoService::selectEnv('dev', MomoEndpoints::REFUND);
-        $requestId = time() + 60;
-        $orderId = time();
-        return RefundMoMo::process($env, $orderId, $requestId, 30000, 2841554570);
+        $requestId = $order->payment->requestId;
+        $orderId = $order->order_number;
+        return RefundMoMo::process($env, $orderId, $requestId, $order->payment->amount, $order->payment->trans_id);
     }
 
     public static function queryStatusTransaction() {
