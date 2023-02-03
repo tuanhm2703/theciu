@@ -11,7 +11,7 @@ use MService\Payment\Pay\Models\ResultCode;
 
 class PaymentWebhookController extends Controller {
     public function momoWebhook(Order $order, Request $request) {
-        if ($order->order_number === $request->orderId) {
+        if ($order->order_number == $request->orderId) {
             $resultCode = $request->resultCode;
             if ($resultCode == ResultCode::SUCCESS) {
                 $order->payment->data = $request->except(['partnerCode']);
