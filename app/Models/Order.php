@@ -183,4 +183,9 @@ class Order extends Model {
     public function refund() {
         return PaymentService::refund($this);
     }
+
+    public function getRefundDescription() {
+        $app_name = getAppName();
+        return "Hoàn tiền cho đơn hàng $app_name: $this->order_number";
+    }
 }
