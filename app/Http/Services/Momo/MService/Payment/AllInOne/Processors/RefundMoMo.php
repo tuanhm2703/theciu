@@ -20,11 +20,11 @@ class RefundMoMo extends Process {
         parent::__construct($environment);
     }
 
-    public static function process(Environment $env, $orderId, $requestId, string $amount, $transId, $description) {
+    public static function process(Environment $env, $orderId, $requestId, string $amount, $transId) {
         $refundMoMo = new RefundMoMo($env);
 
         try {
-            $refundMoMoRequest = $refundMoMo->createRefundMoMoRequest($orderId, $requestId, $amount, $transId, $description);
+            $refundMoMoRequest = $refundMoMo->createRefundMoMoRequest($orderId, $requestId, $amount, $transId);
             $refundMoMoResponse = $refundMoMo->execute($refundMoMoRequest);
 
             return $refundMoMoResponse;
@@ -33,9 +33,10 @@ class RefundMoMo extends Process {
         }
     }
 
-    public function createRefundMoMoRequest($orderId, $requestId, string $amount, $transId, $description): RefundMoMoRequest {
+    public function createRefundMoMoRequest($orderId, $requestId, string $amount, $transId): RefundMoMoRequest {
         $partnerCode = $this->getPartnerInfo()->getPartnerCode();
         $accessKey = $this->getPartnerInfo()->getAccessKey();
+        $description = "hello";
         $rawData = "accessKey=$accessKey&amount=$amount&description=$description&orderId=$orderId&partnerCode=$partnerCode&requestId=$requestId&transId=$transId";
 
         $signature = Encoder::hashSha256($rawData, $this->getPartnerInfo()->getSecretKey());
