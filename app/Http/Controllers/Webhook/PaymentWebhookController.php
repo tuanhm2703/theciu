@@ -17,7 +17,7 @@ class PaymentWebhookController extends Controller {
                 $order->payment->data = $request->except(['partnerCode']);
                 $order->payment->payment_status = PaymentStatus::PAID;
                 $order->payment->note = $request->message;
-                $order->payment->transId = $request->transId;
+                $order->payment->trans_id = $request->transId;
                 $order->payment->save();
             }
         } else {
