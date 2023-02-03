@@ -8,5 +8,4 @@ class PaymentMethodType {
     const EBANK = 3;
 
     const MOMO = 'momo';
-    const COD = 'cod';
 }

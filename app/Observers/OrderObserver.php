@@ -27,7 +27,7 @@ class OrderObserver {
 
     public function updated(Order $order) {
         // if ($order->isDirty('order_status')) {
-            switch ($order->order_status_id) {
+            switch ($order->order_status) {
                 case OrderStatus::CANCELED:
                     $order->refund();
                     // $order->executeActionsAfterOrderCancelled();
