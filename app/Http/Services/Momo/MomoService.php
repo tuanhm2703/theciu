@@ -41,8 +41,8 @@ class MomoService {
 
     public static function refund($order) {
         $env = MomoService::selectEnv('dev', MomoEndpoints::REFUND);
-        $requestId = $order->payment->requestId;
-        $orderId = $order->order_number;
+        $requestId = time() + 60;
+        $orderId = time();
         return RefundMoMo::process($env, $orderId, $requestId, $order->payment->amount, $order->payment->trans_id);
     }
 

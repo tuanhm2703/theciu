@@ -14,6 +14,7 @@ class Payment extends Model {
         'trans_id',
         'order_number',
         'data',
+        'request_id',
         'payment_method_id',
         'order_id',
         'customer_id',
