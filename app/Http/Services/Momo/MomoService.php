@@ -36,7 +36,7 @@ class MomoService {
         $env = MomoService::selectEnv('dev');
         $requestId = time() . "";
         $redirectUrl = route('client.auth.profile.index', ['tab' => 'order-list']);
-        return CaptureMoMo::process($env, time(), "Pay With MoMo", $order->total, base64_encode("theciu"), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
+        return CaptureMoMo::process($env, $order->order_number, "Pay With MoMo", $order->total, base64_encode("theciu"), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
     }
 
     public static function refund() {
