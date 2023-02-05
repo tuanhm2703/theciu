@@ -10,14 +10,15 @@ class CategoryType extends Enum {
     const TRENDING = 'trending';
     const NEW_ARRIVAL = 'new_arrival';
     const BLOG = 'blog';
+    const FEATURED = 'featured';
 
     public static function categoryTypeOptions() {
         return [
-            self::PRODUCT => trans("labels.".self::PRODUCT),
             self::SHOP => trans("labels.".self::SHOP),
             self::TRENDING => trans("labels.".self::TRENDING),
             self::NEW_ARRIVAL => trans("labels.".self::NEW_ARRIVAL),
             self::BLOG => trans("labels.".self::BLOG),
+            self::FEATURED => trans("labels.".self::FEATURED),
         ];
     }
 }

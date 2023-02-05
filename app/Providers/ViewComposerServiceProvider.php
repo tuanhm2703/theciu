@@ -112,8 +112,8 @@ class ViewComposerServiceProvider extends ServiceProvider {
         View::composer(
             'landingpage.layouts.pages.home.components.slide_category',
             function ($view) {
-                $slide_categories = Category::whereHas('image')->whereNotIn('type', [CategoryType::PRODUCT, CategoryType::BLOG])->active()->get();
-                $view->with(['slide_categories' => $slide_categories]);
+                $featured_categories = Category::whereHas('image')->where('type', CategoryType::FEATURED)->active()->get();
+                $view->with(['featured_categories' => $featured_categories]);
             }
         );
         View::composer(
@@ -164,5 +164,10 @@ class ViewComposerServiceProvider extends ServiceProvider {
                 $view->with(['related_blogs' => $related_blogs]);
             }
         );
+        View::composer('landingpage.layouts.meta', function($view) {
+            $keywords = Category::whereType(CategoryType::PRODUCT)->pluck('name')->toArray();
+            $mKeywords = implode(', ', $keywords);
+            $view->with(['mKeywords' => $mKeywords]);
+        });
     }
 }

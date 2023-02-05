@@ -7,7 +7,7 @@
             "margin": 30,
             "autoplay": true,
             "autoplayTimeout": 3000,
-            "items": 3,
+            "items": 4,
             "loop": false,
             "center": true,
             "responsive": {
@@ -16,12 +16,12 @@
                 }
             }
         }'>
-            @foreach ($slide_categories as $c)
+            @foreach ($featured_categories as $c)
                 <div class="banner banner-overlay h-100">
                     <a href="{{ route('client.product.index', ['category' => $c->slug]) }}" class="category-card-img"
                         style="background: url({{ $c->image->path_with_domain }})">
                     </a>
-
+                    <div class="bg-overlay"></div>
                     <div class="banner-content banner-content-center">
                         {{-- <h4 class="banner-subtitle text-white"><a href="#">Danh mục THE CIU</a></h4> --}}
                         <!-- End .banner-subtitle -->

@@ -2,7 +2,7 @@
 @section('content')
     <main class="main">
         @include('landingpage.layouts.components.banner-slider')
-        @include('landingpage.layouts.pages.home.components.slide_category')
+        @include('landingpage.layouts.pages.home.components.featured_category')
         <div class="mb-5"></div><!-- End .mb-5 -->
         <div class="container">
             @include('landingpage.layouts.pages.home.components.trending')
