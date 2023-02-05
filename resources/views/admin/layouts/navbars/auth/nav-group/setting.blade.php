@@ -15,6 +15,13 @@
                     </div>
                     <span class="nav-link-text ms-1">{{ trans('nav.pickup_address') }}</span>
                 </a>
+                <a class="nav-link {{ isNavActive('admin.setting.seo.index') ? 'active' : '' }}"
+                    href="{{ route('admin.setting.seo.index') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                    </div>
+                    <span class="nav-link-text ms-1">{{ trans('nav.seo_management') }}</span>
+                </a>
             </ul>
         </div>
     </li>

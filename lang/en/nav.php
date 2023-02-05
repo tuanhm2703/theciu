@@ -20,5 +20,6 @@ return [
     'pickup_address' => 'Pickup address',
     'order' => 'Order',
     'order_list' => 'Order list',
-    'order_details' => "Order's details"
+    'order_details' => "Order's details",
+    'seo_management' => 'Order management'
 ];

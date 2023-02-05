@@ -87,6 +87,7 @@ $(document).ready(function () {
 
     owlCarousels();
     quantityInputs();
+
     // Header Search Toggle
 
     var $searchWrapper = $(".header-search-wrapper"),
@@ -589,6 +590,7 @@ $(document).ready(function () {
     }
 
     $("body").on("click", ".ajax-modal-btn", function (e) {
+        e.stopPropagation();
         e.preventDefault();
         $("#myDynamicModal").modal("hide");
         const btn = $(this);
@@ -1130,4 +1132,7 @@ $(document).ready(function () {
             }
         },
     });
+    $('body').on('click', '.show-detail-order', (e) => {
+        window.location.href = $(e.currentTarget).data('orderLink')
+    })
 });

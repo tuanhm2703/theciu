@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class ProfileController extends Controller {
     public function index() {
         $user = auth('customer')->user();
-        return view('landingpage.layouts.pages.profile.index', compact('user'));
+        return view('landingpage.layouts.pages.profile.profile', compact('user'));
     }
 }

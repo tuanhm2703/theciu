@@ -20,5 +20,6 @@ return [
     'pickup_address' => 'Địa chỉ lấy hàng',
     'order' => 'Đơn hàng',
     'order_list' => 'Danh sách đơn hàng',
-    'order_details' => "Chi tiết đơn hàng"
+    'order_details' => "Chi tiết đơn hàng",
+    'seo_management' => 'Quản lý SEO'
 ];

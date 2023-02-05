@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Enums\OrderStatus;
 use App\Enums\OrderSubStatus;
+use App\Events\OrderCanceled;
 use App\Models\Order;
 use Exception;
 
@@ -29,7 +30,7 @@ class OrderObserver {
         // if ($order->isDirty('order_status')) {
             switch ($order->order_status) {
                 case OrderStatus::CANCELED:
-                    $order->refund();
+                    event(new OrderCanceled($order));
                     // $order->executeActionsAfterOrderCancelled();
                     // $order->sendInformationToCustomerAfterCancelled();
                     break;

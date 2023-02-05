@@ -6,5 +6,4 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.', 'middleware' => 'auth:custome
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     include('Profile.php');
     include('Cart.php');
-    include('Order.php');
 });

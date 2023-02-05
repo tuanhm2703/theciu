@@ -54,4 +54,8 @@ class AddressController extends Controller {
             'message' => 'Cập nhật địa chỉ thành công'
         ]);
     }
+
+    public function index() {
+        return view('landingpage.layouts.pages.profile.address');
+    }
 }

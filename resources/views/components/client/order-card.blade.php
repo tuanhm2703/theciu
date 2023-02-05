@@ -1,4 +1,5 @@
-<div class="order-card px-3 pt-3 mb-3">
+<div class="order-card px-3 pt-3 mb-3 show-detail-order"
+    data-order-link="{{ route('client.auth.profile.order.details', $order->id) }}">
     <div class="text-right border-bottom">
         <h6 class="text-uppercase text-danger">{{ $order->getCurrentStatusLabel() }}</h6>
     </div>
@@ -52,7 +53,7 @@
                 @case(App\Enums\OrderStatus::WAIT_TO_ACCEPT)
                     <div class="mb-3 d-flex" style="justify-content: right">
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
-                            data-link="{{ route('client.auth.order.cancel.show', ['order' => $order->id]) }}">
+                            data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">
                             Huỷ đơn hàng
                         </button>
                     </div>
@@ -61,7 +62,7 @@
                 @case(App\Enums\OrderStatus::WAITING_TO_PICK)
                     <div class="mb-3 d-flex" style="justify-content: right">
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
-                            data-link="{{ route('client.auth.order.cancel.show', ['order' => $order->id]) }}">Huỷ đơn
+                            data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">Huỷ đơn
                             hàng</button>
                     </div>
                 @break

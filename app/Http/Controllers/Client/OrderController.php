@@ -10,8 +10,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller {
     public function index() {
-        $orders = auth('customer')->user()->orders()->with('inventories.image')->get();
-        return view('landingpage.layouts.pages.order.index', compact('orders'));
+        return view('landingpage.layouts.pages.profile.order');
     }
 
     public function pay() {
@@ -29,5 +28,9 @@ class OrderController extends Controller {
     }
     public function showCancelForm(Order $order) {
         return view('landingpage.layouts.pages.profile.components.order-cancel-form', compact('order'));
+    }
+
+    public function details(Order $order) {
+        return view('landingpage.layouts.pages.order.details', compact('order'));
     }
 }

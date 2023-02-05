@@ -2,19 +2,20 @@
     <aside class="col-md-3 col-lg-2">
         <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
             <li class="nav-item">
-                <a class="nav-link {{ $content == 'order-list' ? 'active' : '' }}" wire:click="setContent('order-list')"
+
+                <a class="nav-link {{ $content == 'order-list' ? 'active' : '' }}"
                     id="content-tab" data-toggle="tab" href="#tab-content" role="tab" aria-controls="tab-orders"
                     aria-selected="false"><i class="fas fa-shopping-cart text-light"></i>
                     {{ trans('labels.order_list') }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ $content == 'address' ? 'active' : '' }}" wire:click="setContent('address')" id="content-tab" data-toggle="tab"
+                <a class="nav-link {{ $content == 'address' ? 'active' : '' }}"  id="content-tab" data-toggle="tab"
                     href="#tab-content" role="tab" role="tab" aria-controls="tab-address"
                     aria-selected="false"><i class="fa fa-location-arrow text-light" aria-hidden="true"></i>
                     {{ trans('labels.address') }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ $content == 'profile' ? 'active' : '' }}" wire:click="setContent('profile')" id="content-tab" data-toggle="tab"
+                <a class="nav-link {{ $content == 'profile' ? 'active' : '' }}" id="content-tab" data-toggle="tab"
                     href="#tab-content" role="tab" role="tab" aria-controls="tab-account"
                     aria-selected="false"><i class="fa fa-user text-light" aria-hidden="true"></i>
                     {{ trans('labels.account_info') }}</a>
@@ -37,6 +38,9 @@
 
                         @case('profile')
                             <livewire:profile-info-component></livewire:profile-info-component>
+                        @break
+                        @case('order-details')
+                            <livewire:client.order-details :orde="$order"></livewire:client.order-details>
                         @break
                     @endswitch
                 </div><!-- End .page-content -->
