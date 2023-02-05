@@ -12,15 +12,18 @@
         </div><!-- End .product-action-vertical -->
 
         <div class="product-action">
-            <a href="#" class="btn-product btn-cart add-to-cart-btn"><span>{{trans('labels.add_to_cart')}}</span></a>
+            <a href="#"
+                class="btn-product btn-cart add-to-cart-btn"><span>{{ trans('labels.add_to_cart') }}</span></a>
         </div><!-- End .product-action -->
     </figure><!-- End .product-media -->
 
     <div class="product-body">
         <div class="product-cat">
-            <a href="#">{{ $product->categories->first()->name }}</a>
+            <a
+                href="{{ route('client.product.details', ['slug' => $product->slug]) }}">{{ $product->categories->first()->name }}</a>
         </div><!-- End .product-cat -->
-        <h3 class="product-title"><a href="product.html">{{ $product->name }}</a></h3>
+        <h3 class="product-title"><a
+                href="{{ route('client.product.details', ['slug' => $product->slug]) }}">{{ $product->name }}</a></h3>
         <!-- End .product-title -->
         @component('components.product-price-label', compact('product'))
         @endcomponent
