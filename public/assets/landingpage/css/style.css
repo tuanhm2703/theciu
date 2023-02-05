@@ -1,7 +1,7 @@
 ﻿@import url("https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800");
 @font-face {
     font-family: 'VietPoppinsRegular';
-    src: url('/assets/fonts/poppins-regular.ttf') format('ttf');
+    src: url('/assets/fonts/poppins-regular.ttf');
     font-weight: 400;
     font-style: normal;
 }
