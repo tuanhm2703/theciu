@@ -22,7 +22,7 @@
             <div class="card card-dashboard">
                 <div class="card-body">
                     <h3 class="card-title">Địa chỉ giao hàng</h3><!-- End .card-title -->
-                    <div class="d-flex">
+                    <div class="d-flex flex-column">
                         @foreach ($shipping_addresses as $address)
                             <p>{{ $address->full_address }} <a href="#">{{ trans('labels.update') }} <i
                                         class="icon-edit"></i></a></p>
