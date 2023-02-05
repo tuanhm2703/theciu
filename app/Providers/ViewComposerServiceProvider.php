@@ -145,16 +145,6 @@ class ViewComposerServiceProvider extends ServiceProvider {
         );
 
         View::composer(
-            'landingpage.layouts.pages.home.components.new_arrival',
-            function ($view) {
-                $new_arrival_products = Product::available()->newArrival()
-                    ->with('inventories', 'images:path,imageable_id')
-                    ->select('products.id', 'products.name', 'products.slug')->get();
-                $view->with(['new_arrival_products' => $new_arrival_products]);
-            }
-        );
-
-        View::composer(
             'landingpage.layouts.pages.blog.components.detail.related_posts',
             function ($view) {
                 $blog = $view->getData()['blog'];

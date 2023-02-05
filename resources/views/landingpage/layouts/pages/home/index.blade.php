@@ -67,8 +67,7 @@
         </div><!-- End .bg-light pt-2 pb-2 -->
 
         <div class="mb-6"></div><!-- End .mb-5 -->
-
-        @include('landingpage.layouts.pages.home.components.new_arrival')
+        <livewire:new-arrival-component></livewire:new-arrival-component>
         <div class="mb-2"></div><!-- End .mb-5 -->
 
         <div class="container">
