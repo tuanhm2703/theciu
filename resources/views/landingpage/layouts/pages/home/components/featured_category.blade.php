@@ -1,4 +1,7 @@
-<div class="pt-2 pb-3">
+<div class="pt-2 pb-3 mt-3">
+    <div class="heading heading-center mb-3">
+        <h2 class="title">Danh mục nổi bật</h2><!-- End .title -->
+    </div>
     <div class="container">
         <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
             data-owl-options='{
