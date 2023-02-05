@@ -110,7 +110,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
 
 
         View::composer(
-            'landingpage.layouts.pages.home.components.slide_category',
+            'landingpage.layouts.pages.home.components.featured_category',
             function ($view) {
                 $featured_categories = Category::whereHas('image')->where('type', CategoryType::FEATURED)->active()->get();
                 $view->with(['featured_categories' => $featured_categories]);
