@@ -11,6 +11,7 @@
         "laravel/framework": "^9.19",
         "laravel/sail": "^1.16",
         "laravel/sanctum": "^3.0",
+        "laravel/socialite": "^5.6",
         "laravel/telescope": "^4.10",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.1",

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ActionIcon;
 use App\Enums\AddressType;
+use App\Enums\CancelOrderRequestStatus;
 use App\Enums\OrderStatus;
 use App\Http\Services\Shipping\GHTKService;
 use App\Traits\Common\Addressable;
@@ -98,7 +99,7 @@ class Order extends Model {
         }
     }
     public function createOrderHistory() {
-        if ($this->order_status == OrderStatus::CANCELED && ($this->cancel_order_request != null && $this->cancel_order_request->status == CancelOrderRequest::REQUEST_ACCEPTED)) {
+        if ($this->order_status == OrderStatus::CANCELED && ($this->cancel_order_request != null && $this->cancel_order_request->status == CancelOrderRequestStatus::ACCEPTED)) {
             return;
         }
         $order_history = new OrderHistory();

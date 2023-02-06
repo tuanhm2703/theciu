@@ -1,4 +1,6 @@
-@extends('landingpage.layouts.app', ['headTitle' => $product->name])
+@extends('landingpage.layouts.app', [
+    'metaTags' => $product->getMetaTags()
+])
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/nouislider/nouislider.css') }}">
 @endpush

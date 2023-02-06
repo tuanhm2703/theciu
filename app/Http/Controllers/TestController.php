@@ -6,6 +6,7 @@ use App\Http\Services\Momo\MomoService;
 use App\Http\Services\Shipping\GHTKService;
 use App\Models\Inventory;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use MService\Payment\AllInOne\Processors\CaptureIPN;
 use MService\Payment\AllInOne\Processors\CaptureMoMo;
@@ -20,12 +21,8 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-        $body = MomoService::checkout(Order::first());
-        return redirect($body);
-        // return redirect()->to($body->payUrl);
-        // return response()->json([
-        //     'message' => 'success'
-        // ], 204);
+        $product = Product::first();
+        dd($product->getMetaTags());
     }
 
     public function ship() {

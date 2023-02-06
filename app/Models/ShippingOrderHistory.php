@@ -19,4 +19,8 @@ class ShippingOrderHistory extends Model
         'fee',
         'cod_amount',
     ];
+
+    protected $casts = [
+        'time' => 'datetime'
+    ];
 }

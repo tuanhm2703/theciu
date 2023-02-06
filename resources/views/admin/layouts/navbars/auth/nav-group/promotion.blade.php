@@ -3,7 +3,9 @@
         <div class="btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
             data-bs-target="#promotion-collapse" aria-expanded="{{ isNavActive('admin.promotion') ? 'true' : 'false'}}">
             <i class="opacity-6 far fas fa-tags"></i>
-            <h6 class="ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">
+            <h6 class="ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0"
+            data-bs-toggle="tooltip" data-bs-placement="top" title='{{ trans('nav.promotion_manager') }}'>
+
                 {{ trans('nav.promotion_manager') }}</h6>
         </div>
         <div class="collapse {{ isNavActive('admin.promotion') ? 'show' : 'hide' }}" id="promotion-collapse">

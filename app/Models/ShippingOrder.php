@@ -47,6 +47,6 @@ class ShippingOrder extends Model
     }
 
     public function shipping_order_histories() {
-        return $this->belongsTo(ShippingOrderHistory::class);
+        return $this->hasMany(ShippingOrderHistory::class);
     }
 }

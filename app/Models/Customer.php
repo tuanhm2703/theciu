@@ -20,6 +20,7 @@ class Customer extends User {
         'email',
         'status',
         'provider',
+        'socialite_account_id'
     ];
 
     public function cart() {

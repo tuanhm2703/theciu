@@ -31,6 +31,10 @@ class OrderController extends Controller {
     }
 
     public function details(Order $order) {
+        $order->setRelation('order_histories', $order->order_histories()->with('action')->reorder()->orderBy('created_at', 'asc')->get());
+        $order->setRelation('shipping_order', $order->shipping_order()->with(['shipping_order_histories' => function($q) {
+            return $q->orderBy('shipping_order_histories.created_at', 'desc');
+        }])->first());
         return view('landingpage.layouts.pages.order.details', compact('order'));
     }
 }

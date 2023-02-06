@@ -41,6 +41,14 @@ class Product extends Model {
         'code'
     ];
 
+    public function unique_attribute_inventories() {
+        return $this->inventories()->leftJoin('attribute_inventory', function($q) {
+            $q->on('attribute_inventory.inventory_id', 'inventories.id');
+        })->where('attribute_inventory.order', 1)->groupBy('attribute_inventory.value');
+    }
+
+
+
     public function inventories() {
         return $this->hasMany(Inventory::class);
     }
@@ -148,16 +156,16 @@ class Product extends Model {
 
     public function getPromotionStatusAttribute() {
         $status = PromotionStatusType::STOPPED;
-        if($this->promotion && $this->promotion->from && $this->promotion->to) {
-            if(now()->isBetween($this->promotion->from, $this->promotion->to)) {
+        if ($this->promotion && $this->promotion->from && $this->promotion->to) {
+            if (now()->isBetween($this->promotion->from, $this->promotion->to)) {
                 $status = PromotionStatusType::HAPPENDING;
-            } else if(now()->isBefore($this->promotion->from)) {
+            } else if (now()->isBefore($this->promotion->from)) {
                 $status = PromotionStatusType::COMMING;
             } else {
                 $status = PromotionStatusType::STOPPED;
             }
         }
-        if(in_array($status, [PromotionStatusType::COMMING, PromotionStatusType::HAPPENDING]) && optional($this->promotion)->isInactive()) {
+        if (in_array($status, [PromotionStatusType::COMMING, PromotionStatusType::HAPPENDING]) && optional($this->promotion)->isInactive()) {
             return PromotionStatusType::PAUSE;
         }
         return $status;
@@ -180,5 +188,71 @@ class Product extends Model {
 
     public function getPackageInfoAttribute() {
         return new PackageInfo($this->weight, $this->length, $this->height, $this->width);
+    }
+
+    public function getMetaTags() {
+        $tags = array(
+            array(
+                "name" => "description",
+                "content" =>  "$this->short_description"
+            ),
+            array(
+                "name" => "keywords",
+                "content" => implode(', ', $this->categories()->pluck('name')->toArray())
+            ),
+            array(
+                "property" => "og:title",
+                "content" => getAppName() . " - $this->name"
+            ),
+            array(
+                "property" => "og:description",
+                "content" => "$this->short_description"
+            ),
+            array(
+                "property" => "og:image",
+                "content" => $this->image->path_with_domain
+            ),
+            array(
+                "property" => "og:url",
+                "content" => route('client.product.details', $this->slug)
+            ),
+            array(
+                "property" => "og:type",
+                "content" => "website"
+            ),
+            array(
+                'property' => 'o:price:amount',
+                'content' => $this->sale_price,
+            ),
+            array(
+                'property' => 'o:availability',
+                'content' => $this->inventories()->sum('stock_quantity')
+            ),
+            array(
+                "name" => "twitter:card",
+                "content" => "summary"
+            ),
+            array(
+                "name" => "twitter:title",
+                "content" => "$this->name"
+            ),
+            array(
+                "name" => "twitter:description",
+                "content" => "$this->short_description"
+            ),
+            array(
+                "name" => "twitter:image",
+                "content" => $this->image->path_with_domain
+            )
+        );
+        $output = '';
+        foreach ($tags as $tag) {
+            $content = [];
+            foreach ($tag as $key => $meta) {
+                $content[] = "$key='$meta'";
+            }
+            $output .= "<meta " . implode(" ", $content) . ">";
+        }
+        return $output;
     }
 }

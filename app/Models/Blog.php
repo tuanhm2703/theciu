@@ -22,8 +22,67 @@ class Blog extends Model {
         'created_by',
         'updated_by',
         'deletd_by',
+        'slug'
     ];
     protected $casts = [
         'publish_date' => 'datetime'
     ];
+
+    public function getMetaTags() {
+        $tags = array(
+            array(
+                "name" => "description",
+                "content" =>  "$this->description"
+            ),
+            array(
+                "name" => "keywords",
+                "content" => implode(', ', $this->categories()->pluck('name')->toArray())
+            ),
+            array(
+                "property" => "og:title",
+                "content" => getAppName() . " - $this->title"
+            ),
+            array(
+                "property" => "og:description",
+                "content" => "$this->description"
+            ),
+            array(
+                "property" => "og:image",
+                "content" => $this->image->path_with_domain
+            ),
+            array(
+                "property" => "og:url",
+                "content" => route('client.blog.details', $this->slug)
+            ),
+            array(
+                "property" => "og:type",
+                "content" => "article"
+            ),
+            array(
+                "name" => "twitter:card",
+                "content" => "summary"
+            ),
+            array(
+                "name" => "twitter:title",
+                "content" => "$this->name"
+            ),
+            array(
+                "name" => "twitter:description",
+                "content" => "$this->description"
+            ),
+            array(
+                "name" => "twitter:image",
+                "content" => $this->image->path_with_domain
+            )
+        );
+        $output = '';
+        foreach ($tags as $tag) {
+            $content = [];
+            foreach ($tag as $key => $meta) {
+                $content[] = "$key='$meta'";
+            }
+            $output .= "<meta " . implode(" ", $content) . ">";
+        }
+        return $output;
+    }
 }

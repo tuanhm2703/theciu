@@ -44,14 +44,15 @@
                 @endcomponent
             @endforeach
             <div>
-                <div class="text-center" wire:loading>
-                    <div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </div>
                 <div class="text-center">
                     @if ($orders->count() > 0)
-                        <button class="btn" wire:loading.remove wire:click.prevent="nextPage()">Xem thêm</button>
+                        <button class="btn" wire:click.prevent="nextPage()">
+                            <div class="text-center" wire:loading>
+                                <div class="spinner-border" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                            <span wire:loading.remove>Xem thêm</span></button>
                     @else
                         Không có đơn hàng nào
                     @endif

@@ -3,7 +3,7 @@
         {!! Form::open([
             'url' => route('client.auth.login'),
             'method' => 'POST',
-            'id' => 'login-form'
+            'id' => 'login-form',
         ]) !!}
         <div class="form-group">
             {!! Form::label('username', trans('labels.phone_or_email') . '*', []) !!}
@@ -35,13 +35,13 @@
             <p class="text-center">{{ trans('labels.or_signin_with') }}</p>
             <div class="row">
                 <div class="col-sm-6">
-                    <a href="#" class="btn btn-login btn-g">
+                    <a href="{{ route('client.auth.google.login') }}" class="btn btn-login btn-g">
                         <i class="icon-google"></i>
                         Login With Google
                     </a>
                 </div><!-- End .col-6 -->
                 <div class="col-sm-6">
-                    <a href="#" class="btn btn-login btn-f">
+                    <a href="{{ route('client.auth.facebook.login') }}" class="btn btn-login btn-f">
                         <i class="icon-facebook-f"></i>
                         Login With Facebook
                     </a>
@@ -53,7 +53,7 @@
         {!! Form::open([
             'url' => route('client.auth.register'),
             'method' => 'POST',
-            'id' => 'register-form'
+            'id' => 'register-form',
         ]) !!}
         <div class="form-group">
             {!! Form::label('username', trans('labels.phone_or_email') . '*', []) !!}
@@ -88,13 +88,13 @@
             <p class="text-center">or sign in with</p>
             <div class="row">
                 <div class="col-sm-6">
-                    <a href="#" class="btn btn-login btn-g">
+                    <a href="{{ route('client.auth.google.login') }}" class="btn btn-login btn-g">
                         <i class="icon-google"></i>
                         Login With Google
                     </a>
                 </div><!-- End .col-6 -->
                 <div class="col-sm-6">
-                    <a href="#" class="btn btn-login  btn-f">
+                    <a href="{{ route('client.auth.facebook.login') }}" class="btn btn-login btn-f">
                         <i class="icon-facebook-f"></i>
                         Login With Facebook
                     </a>

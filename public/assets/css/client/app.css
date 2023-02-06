@@ -177,3 +177,222 @@
 .show-detail-order {
     cursor: pointer;
 }
+/* #timeline */
+.stepper {
+    position: relative;
+    justify-content: space-between;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+    display: flex;
+}
+.stepper__step {
+    width: 140px;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    cursor: default;
+    z-index: 1;
+}
+
+.stepper__step-icon {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: auto;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 1.875rem;
+    border: 4px solid #e0e0e0;
+    color: #e0e0e0;
+    background-color: #fff;
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.7s,
+        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.7s,
+        color 0.3s cubic-bezier(0.4, 0, 0.2, 1) 0.7s;
+}
+
+.stepper__step-icon--finish {
+    border-color: #2dc258;
+    color: #2dc258;
+}
+
+.stepper__step-text {
+    text-transform: capitalize;
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.8);
+    line-height: 1.25rem;
+    margin: 1.25rem 0 0.25rem;
+}
+
+.stepper__step-date {
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.26);
+    height: 0.875rem;
+}
+.stepper__line {
+    position: absolute;
+    top: 29px;
+    height: 4px;
+    width: 100%;
+}
+
+.stepper__line-background,
+.stepper__line-foreground {
+    position: absolute;
+    width: calc(100% - 140px);
+    margin: 0 70px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.stepper__line-foreground {
+    background: #2dc258;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.stepper__line-background,
+.stepper__line-foreground {
+    position: absolute;
+    width: calc(100% - 140px);
+    margin: 0 70px;
+    height: 100%;
+    box-sizing: border-box;
+}
+.order-header {
+    font-size: 1.3em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.border-color-gradient {
+    height: 0.1875rem;
+    width: 100%;
+    background-position-x: -1.875rem;
+    background-size: 7.25rem 0.1875rem;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #6fa6d6,
+        #6fa6d6 33px,
+        transparent 0,
+        transparent 41px,
+        #f18d9b 0,
+        #f18d9b 74px,
+        transparent 0,
+        transparent 82px
+    );
+}
+.shipping-address-label {
+    padding: 0 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.shipping-address-service-info {
+    max-width: 50%;
+    text-align: right;
+    font-size: 12px;
+    line-height: 14px;
+    word-wrap: break-word;
+    color: rgba(0, 0, 0, 0.54);
+}
+.customer-address-info {
+    max-width: 100%;
+    padding: 10px 24px 0 0;
+    line-height: 22px;
+    flex: 1;
+}
+.customer-address-name {
+    max-width: 100%;
+    margin: 0 0 7px;
+    overflow: hidden;
+    font-size: 1.4em;
+    text-overflow: ellipsis;
+    color: rgba(0, 0, 0, 0.8);
+}
+.customer-detail-address {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 12px;
+}
+.shipping-order-history-wrapper {
+    width: 620px;
+    padding: 4px 0 0 12px;
+    border-left: 1px solid rgba(0, 0, 0, 0.09);
+}
+.shipping-order-history-row {
+    line-height: 1;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    padding: 0;
+    grid-gap: 12px;
+    gap: 12px;
+}
+.history-line {
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #d8d8d8;
+}
+.last-row .shipping-order-history-content, .last-row .shipping-order-history-status {
+    color: #26aa99;
+}
+.shipping-order-history-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    width: 100%;
+    color: rgba(0,0,0,.54);
+    font-size: 14px;
+}
+
+.shipping-order-history-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 12px;
+    border-radius: 50%;
+    background: grey;
+    width: 12px;
+    min-width: 12px;
+    margin-top: 3px;
+    margin-left: 6px;
+    z-index: 1;
+}
+
+.last-row .shipping-order-history-icon {
+    background: #26aa99;
+}
+
+.shipping-order-history-time {
+    width: 120px;
+    margin-top: 3px;
+    flex-shrink: 0;
+    color: rgba(0,0,0,.8);
+    padding: 0 12px;
+    width: fit-content;
+    vertical-align: text-top;
+}
+.shipping-order-history-status {
+    font-weight: 700;
+    margin-bottom: -2px;
+}
+.shipping-order-history-description p {
+    word-wrap: break-word;
+    line-height: 20px;
+    margin: 1px 0 8px;
+}
+.order-detail-action-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background-color: #fffcf5;
+    border-top: 1px dotted rgba(0,0,0,.09);
+    padding: 1rem;
+}

@@ -1,4 +1,4 @@
-@extends('landingpage.layouts.app', ['headTitle' => $blog->title])
+@extends('landingpage.layouts.app', ['metaTags' => $blog->getMetaTags()])
 @section('content')
     <div class="page-header text-center" style="background-image: url('/assets/images/page-header-bg.jpg')">
         <div class="container">
@@ -10,7 +10,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Blog</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $blog->title }}</li>
             </ol>

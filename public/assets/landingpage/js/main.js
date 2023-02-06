@@ -1057,7 +1057,8 @@ $(document).ready(function () {
     $("#size-rule-gallery").magnificPopup({
         type: "image",
     });
-    $(".inventory-img-btn").on("click", (e) => {
+
+    $("body").on("click", ".inventory-img-btn", (e) => {
         e.preventDefault();
         $(e.currentTarget)
             .parents(".product-nav")
@@ -1132,7 +1133,7 @@ $(document).ready(function () {
             }
         },
     });
-    $('body').on('click', '.show-detail-order', (e) => {
-        window.location.href = $(e.currentTarget).data('orderLink')
-    })
+    $("body").on("click", ".show-detail-order", (e) => {
+        window.location.href = $(e.currentTarget).data("orderLink");
+    });
 });

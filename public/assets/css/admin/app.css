@@ -342,3 +342,9 @@ div.dataTables_processing > div:last-child > div {
     border-bottom: 1px solid #e8e8e8;
     background-color: hsla(0,0%,96%,.5) !important;
 }
+#sidenav-collapse-main h6 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 70%;
+    white-space: nowrap;
+}

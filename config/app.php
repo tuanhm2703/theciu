@@ -202,7 +202,8 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         App\Providers\ObserverServiceProvider::class,
         App\Providers\Admin\ValidationServiceProvider::class,
-        App\Providers\ViewComposerServiceProvider::class
+        App\Providers\ViewComposerServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
     ],
 
     /*
@@ -218,6 +219,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ])->toArray(),
 
 ];
