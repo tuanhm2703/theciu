@@ -16,7 +16,9 @@ class NewArrivalComponent extends Component {
 
     public function mount() {
         $this->products = Product::available()->newArrival()
-            ->with('inventories', 'images:path,imageable_id')
+            ->with(['inventories', 'images:path,imageable_id', 'unique_attribute_inventories' => function($q) {
+                $q->with('image');
+            }])
             ->select('products.id', 'products.name', 'products.slug')->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize)->get();
         $this->hasNext = $this->products->count() < Product::available()->newArrival()->count();
     }
@@ -28,8 +30,9 @@ class NewArrivalComponent extends Component {
     public function loadMore() {
         $this->page++;
         $products = Product::available()->newArrival()
-            ->with('inventories', 'images:path,imageable_id')
-            ->select('products.id', 'products.name', 'products.slug')->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize)->get();
+        ->with(['inventories', 'images:path,imageable_id', 'unique_attribute_inventories' => function($q) {
+            $q->with('image');
+        }])->select('products.id', 'products.name', 'products.slug')->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize)->get();
         $this->products = $this->products->merge($products);
         $this->hasNext = $this->products->count() < Product::available()->newArrival()->count();
     }
