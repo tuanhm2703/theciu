@@ -2,7 +2,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>{{ isset($headTitle) ? env('APP_NAME') . " - $headTitle" : env('APP_NAME') }}</title>
-<meta property="og:image" content="/img/logo-dark.png" />
 <meta name="robots" content="index,follow">
 
 <meta name="author" content="p-themes">
@@ -24,6 +23,7 @@
 @else
     <meta name="description"
         content="Thời trang nữ THE CIU mang phong cách trẻ trung, năng động. Chuyên sản phẩm kết hợp đi học, đi chơi như áo thun, áo khoác, quần jean, đầm, chân váy.">
+    <meta property="og:image" content="/img/logo-dark.png" />
 @endif
 <meta proterty="o:locale" content="{{ App::getLocale() }}">
 <meta proterty="o:price:currency" content="VN">
