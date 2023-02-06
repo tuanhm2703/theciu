@@ -44,7 +44,7 @@ class Product extends Model {
     public function unique_attribute_inventories() {
         return $this->inventories()->leftJoin('attribute_inventory', function($q) {
             $q->on('attribute_inventory.inventory_id', 'inventories.id');
-        })->where('attribute_inventory.order', 1)->groupBy('attribute_inventory.value');
+        })->where('attribute_inventory.order', 1)->groupBy('attribute_inventory.value', 'inventories.product_id');
     }
 
 
