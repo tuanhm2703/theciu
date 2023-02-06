@@ -21143,7 +21143,7 @@ hr.horizontal.gray-light {
   overflow-y: auto;
   padding: 0;
   box-shadow: none;
-  z-index: 999;
+  z-index: 1031;
 }
 .navbar-vertical.navbar-expand-xs .navbar-collapse {
   display: block;
@@ -21845,7 +21845,7 @@ hr.horizontal.gray-light {
   opacity: 1;
 }
 
-@media (max-width: 1199.98px) {
+@media (max-width: 1399.98px) {
   .g-sidenav-show.rtl .sidenav {
     transform: translateX(17.125rem);
   }

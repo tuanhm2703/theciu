@@ -251,7 +251,6 @@
             name: null,
             id: null,
         })
-
         $('.attribute-group').html('')
         attributes.forEach((element, index) => {
             $('.attribute-group').append(`
@@ -451,12 +450,28 @@
 
     const deleteAttributeValue = (element) => {
         let index = $(element).index('.delete-attribute-value-btn')
+        let deletedValue
         if (attributes[0].values.length - 1 < index) {
-            index = attributes[0].values.length - index - 1;
+            index = index - attributes[0].values.length - 1;
+            deletedValue = attributes[1].values[index].value
             attributes[1].values.splice(index, 1)
         } else {
+            deletedValue = attributes[0].values[index].value
             attributes[0].values.splice(index, 1)
         }
+        attributes[0].values.forEach((value, index) => {
+            if (value.value == deletedValue) {
+                attributes[0].values.splice(index, 1)
+            } else {
+                value.inventories.forEach((inventory, i) => {
+                    inventory.attributes.forEach((attribute) => {
+                        if (attribute.value == deletedValue) {
+                            value.inventories.splice(i, 1)
+                        }
+                    })
+                })
+            }
+        })
         renderAttributeForm(false)
     }
 
@@ -464,8 +479,12 @@
         $('#attribute-table tbody').html('')
         $('.attribute-value-wrapper').sortable({
             items: "> .col-md-4:not(:last)",
+            start: function(e, ui) {
+                $(ui.item).attr('data-previndex', ui.item.index());
+            },
             update: (event, ui) => {
-                console.log($(event.target).index());
+                var newIndex = ui.item.index();
+                var oldIndex = $(ui.item).attr('data-previndex')
             }
         })
         attributes[0].values.forEach((value, i) => {

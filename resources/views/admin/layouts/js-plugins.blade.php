@@ -28,6 +28,7 @@
 <script
     src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-{{ App::getLocale() }}-{{ getLocaleWithCountryCode()[App::getLocale()] }}.min.js">
 </script>
+<script src="{{asset('assets/js/argon-dashboard.js')}}"></script>
 <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -36,4 +37,5 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
+
 </script>
