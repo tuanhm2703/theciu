@@ -135,6 +135,14 @@
         $('.lazy').lazyload();
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
+            $('body').on('click', 'a[data-toggle=modal]', (e) => {
+                e.preventDefault();
+                $($(e.target).data('target')).modal('show')
+            })
+            $('body').on('click', 'button[data-toggle=modal]', (e) => {
+                e.preventDefault();
+                $($(e.target).data('target')).modal('show')
+            })
         })
         document.addEventListener("DOMContentLoaded", () => {
             Livewire.hook('message.processed', (message, component) => {

@@ -599,7 +599,7 @@ $(document).ready(function () {
         var url = $(this).data("link");
         const callback = $(this).data("callback");
         var ajaxElement = this;
-        if (url.indexOf("#") == 0) {
+        if (!url || url.indexOf("#") == 0) {
             $(url).modal("open");
         } else {
             $.get(url, function (data) {

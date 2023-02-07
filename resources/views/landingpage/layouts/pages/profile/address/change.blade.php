@@ -33,9 +33,9 @@
     width: 100%;
     right: 0;
     padding: 1rem;">
-        <a class="btn border ajax-modal-btn" data-toggle="modal" data-target="#createAddressModal"><i
+        <button class="btn border ajax-modal-btn" data-toggle="modal" data-target="#createAddressModal"><i
             class="icon-plus"></i>Thêm Địa Chỉ
-        Mới</a>
+        Mới</button>
         <a href="#" class="btn btn-primary submit-change-address-btn">Xác nhận</a>
     </div>
 </div>
