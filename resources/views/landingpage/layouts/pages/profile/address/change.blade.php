@@ -5,7 +5,7 @@
         @foreach ($addresses as $address)
             <div class="custom-control custom-radio py-2">
                 <input type="radio" value="{{ $address->id }}" id="address-{{ $address->id }}"
-                    @checked(!$selected_address_id ? $address->featured == 1 : $selected_address_id == $address->id) name="shipping-address" class="custom-control-input">
+                    @checked(empty($selected_address_id) ? $address->featured == 1 : $selected_address_id == $address->id) name="shipping-address" class="custom-control-input">
                 <label for="address-{{ $address->id }}" class="custom-control-label d-inline-blox w-100">
                     <div style="line-height: 2rem">
                         <div class="text-md d-flex justify-content-between">

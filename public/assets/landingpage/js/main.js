@@ -596,7 +596,7 @@ $(document).ready(function () {
         const btn = $(this);
         const modalSize = $(this).data().modalSize ?? "modal-lg";
         $(this).loading();
-        var url = $(this).data("link");
+        var url = $(this).attr('data-link');
         const callback = $(this).data("callback");
         var ajaxElement = this;
         if (!url || url.indexOf("#") == 0) {
