@@ -13,8 +13,7 @@
                                 <h6 class="d-inline">{{ $address->fullname }}</h6> | {{ $address->phone }}
                             </div>
                             <div>
-                                <a href="#" data-address-id="{{ $address->id }}" class="update-address-btn">Cập
-                                    nhật</a>
+                                <a href="#" data-address-id="{{ $address->id }}" class="update-address-btn">Cập nhật</a>
                             </div>
                         </div>
                         <p>{{ $address->details }}</p>
@@ -29,7 +28,9 @@
             <hr class="my-2">
         @endforeach
     </div>
-    <div class="text-right" style="position: absolute; bottom: 0;
+    <div class="text-right" style="background: white;
+    position: sticky;
+    bottom: -3rem;
     width: 100%;
     right: 0;
     padding: 1rem;">

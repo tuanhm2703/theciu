@@ -12,8 +12,9 @@ use Illuminate\Http\Request;
 
 class AddressController extends Controller {
     public function viewChangeAddress(Request $request) {
+        $selected_address_id = $request->selected_address_id;
         $addresses = auth('customer')->user()->shipping_addresses()->with('ward.district.province')->orderBy('type')->get();
-        return view('landingpage.layouts.pages.profile.address.change', compact('addresses'));
+        return view('landingpage.layouts.pages.profile.address.change', compact('addresses', 'selected_address_id'));
     }
 
     public function viewCreate(Request $request) {
