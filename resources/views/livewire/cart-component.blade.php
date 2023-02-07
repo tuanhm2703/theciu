@@ -79,7 +79,7 @@
                             <span>{{ optional($address)->full_address }}</span>
                             <br>
                             <a class="ajax-modal-btn" data-modal-size="modal-md"
-                                data-link="{{ route('client.auth.profile.address.view.change') }}">{{ trans('labels.change_address') }}</a>
+                                data-link="{{ route('client.auth.profile.address.view.change', ['selected_address_id' => $address ? $address->id : null]) }}">{{ trans('labels.change_address') }}</a>
                         </td>
                     </tr><!-- End .summary-shipping-estimate -->
                     <tr>
@@ -89,9 +89,13 @@
                                     <input type="radio" name="payment_method" wire:model="payment_method_id" required
                                         value="{{ $pm->id }}" id="payment-method-{{ $pm->id }}"
                                         @disabled($pm->canUse($cart->total()) === false) class="custom-control-input">
-                                    <label for="payment-method-{{ $pm->id }}" class="custom-control-label d-flex align-items-center">
-                                        <img src="{{ $pm->image->path_with_domain }}" width="10%" class="mr-3"alt="">
-                                        <span>{{ trans("labels.$pm->code") }} <i wire:ignore class="fa fa-question-circle" data-toggle="tooltip" data-placement="top" title="{{ $pm->description }}"></i></span></label>
+                                    <label for="payment-method-{{ $pm->id }}"
+                                        class="custom-control-label d-flex align-items-center">
+                                        <img src="{{ $pm->image->path_with_domain }}" width="10%"
+                                            class="mr-3"alt="">
+                                        <span>{{ trans("labels.$pm->code") }} <i wire:ignore
+                                                class="fa fa-question-circle" data-toggle="tooltip" data-placement="top"
+                                                title="{{ $pm->description }}"></i></span></label>
                                 </div><!-- End .custom-control -->
                             @endforeach
                         </td>
@@ -103,7 +107,8 @@
                     </tr><!-- End .summary-total -->
                 </tbody>
             </table><!-- End .table table-summary -->
-            <button href="#" wire:click.prevent="checkout" @disabled(empty($this->payment_method_id) || empty($address)) class="btn btn-outline-primary-2 btn-order btn-block">
+            <button href="#" wire:click.prevent="checkout" @disabled(empty($this->payment_method_id) || empty($address))
+                class="btn btn-outline-primary-2 btn-order btn-block">
                 <span wire:loading.remove wire:target="checkout">{{ trans('labels.checkout') }}</span>
                 <span wire:loading wire:target="checkout">Đang tiến hành thanh toán..</span>
             </button>
