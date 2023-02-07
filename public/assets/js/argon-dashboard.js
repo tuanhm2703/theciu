@@ -2693,48 +2693,50 @@ var total = document.querySelectorAll('.nav-pills');
 total.forEach(function (item, i) {
   var moving_div = document.createElement('div');
   var first_li = item.querySelector('li:first-child .nav-link');
-  var tab = first_li.cloneNode();
-  tab.innerHTML = "-";
-  moving_div.classList.add('moving-tab', 'position-absolute', 'nav-link');
-  moving_div.appendChild(tab);
-  item.appendChild(moving_div);
-  var list_length = item.getElementsByTagName("li").length;
-  moving_div.style.padding = '0px';
-  moving_div.style.width = item.querySelector('li:nth-child(1)').offsetWidth + 'px';
-  moving_div.style.transform = 'translate3d(0px, 0px, 0px)';
-  moving_div.style.transition = '.5s ease';
+  if(first_li) {
+    var tab = first_li.cloneNode();
+    tab.innerHTML = "-";
+    moving_div.classList.add('moving-tab', 'position-absolute', 'nav-link');
+    moving_div.appendChild(tab);
+    item.appendChild(moving_div);
+    var list_length = item.getElementsByTagName("li").length;
+    moving_div.style.padding = '0px';
+    moving_div.style.width = item.querySelector('li:nth-child(1)').offsetWidth + 'px';
+    moving_div.style.transform = 'translate3d(0px, 0px, 0px)';
+    moving_div.style.transition = '.5s ease';
 
-  item.onmouseover = function (event) {
-    var target = getEventTarget(event);
-    var li = target.closest('li'); // get reference
+    item.onmouseover = function (event) {
+        var target = getEventTarget(event);
+        var li = target.closest('li'); // get reference
 
-    if (li) {
-      var nodes = Array.from(li.closest('ul').children); // get array
+        if (li) {
+        var nodes = Array.from(li.closest('ul').children); // get array
 
-      var index = nodes.indexOf(li) + 1;
+        var index = nodes.indexOf(li) + 1;
 
-      item.querySelector('li:nth-child(' + index + ') .nav-link').onclick = function () {
-        moving_div = item.querySelector('.moving-tab');
-        var sum = 0;
+        item.querySelector('li:nth-child(' + index + ') .nav-link').onclick = function () {
+            moving_div = item.querySelector('.moving-tab');
+            var sum = 0;
 
-        if (item.classList.contains('flex-column')) {
-          for (var j = 1; j <= nodes.indexOf(li); j++) {
-            sum += item.querySelector('li:nth-child(' + j + ')').offsetHeight;
-          }
+            if (item.classList.contains('flex-column')) {
+            for (var j = 1; j <= nodes.indexOf(li); j++) {
+                sum += item.querySelector('li:nth-child(' + j + ')').offsetHeight;
+            }
 
-          moving_div.style.transform = 'translate3d(0px,' + sum + 'px, 0px)';
-          moving_div.style.height = item.querySelector('li:nth-child(' + j + ')').offsetHeight;
-        } else {
-          for (var j = 1; j <= nodes.indexOf(li); j++) {
-            sum += item.querySelector('li:nth-child(' + j + ')').offsetWidth;
-          }
+            moving_div.style.transform = 'translate3d(0px,' + sum + 'px, 0px)';
+            moving_div.style.height = item.querySelector('li:nth-child(' + j + ')').offsetHeight;
+            } else {
+            for (var j = 1; j <= nodes.indexOf(li); j++) {
+                sum += item.querySelector('li:nth-child(' + j + ')').offsetWidth;
+            }
 
-          moving_div.style.transform = 'translate3d(' + sum + 'px, 0px, 0px)';
-          moving_div.style.width = item.querySelector('li:nth-child(' + index + ')').offsetWidth + 'px';
+            moving_div.style.transform = 'translate3d(' + sum + 'px, 0px, 0px)';
+            moving_div.style.width = item.querySelector('li:nth-child(' + index + ')').offsetWidth + 'px';
+            }
+        };
         }
-      };
-    }
-  };
+    };
+  }
 }); // Tabs navigation resize
 
 window.addEventListener('resize', function (event) {
@@ -21810,7 +21812,7 @@ process.umask = function() { return 0; };
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -21824,20 +21826,20 @@ process.umask = function() { return 0; };
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/chunk loaded */
 /******/ 	(() => {
@@ -21870,7 +21872,7 @@ process.umask = function() { return 0; };
 /******/ 			return result;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -21882,7 +21884,7 @@ process.umask = function() { return 0; };
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -21894,12 +21896,12 @@ process.umask = function() { return 0; };
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -21910,7 +21912,7 @@ process.umask = function() { return 0; };
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -21919,11 +21921,11 @@ process.umask = function() { return 0; };
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
-/******/ 		
+/******/
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
@@ -21931,19 +21933,19 @@ process.umask = function() { return 0; };
 /******/ 			"/assets/js/argon-dashboard": 0,
 /******/ 			"assets/css/argon-dashboard": 0
 /******/ 		};
-/******/ 		
+/******/
 /******/ 		// no chunk on demand loading
-/******/ 		
+/******/
 /******/ 		// no prefetching
-/******/ 		
+/******/
 /******/ 		// no preloaded
-/******/ 		
+/******/
 /******/ 		// no HMR
-/******/ 		
+/******/
 /******/ 		// no HMR manifest
-/******/ 		
+/******/
 /******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/ 		
+/******/
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime] = data;
@@ -21968,20 +21970,20 @@ process.umask = function() { return 0; };
 /******/ 			}
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
-/******/ 		
+/******/
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["assets/css/argon-dashboard"], () => (__webpack_require__("./resources/js/app.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/css/argon-dashboard"], () => (__webpack_require__("./resources/scss/argon-dashboard.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/ 	
+/******/
 /******/ })()
 ;

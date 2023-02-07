@@ -47,7 +47,6 @@
                         sources.push(e.src)
                     })
                     updateImageOrder(sources)
-                    console.log(ui);
                 }
             },
             initSrc: productImgSrc,
