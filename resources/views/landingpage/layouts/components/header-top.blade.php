@@ -58,7 +58,7 @@
                                 {!! Form::close() !!}
                             </li>
                             <li>
-                                <a href="{{ route('client.auth.profile.index')."?tab=order-list" }}">Đơn đã mua</a>
+                                <a href="{{ route('client.auth.profile.order.index') }}">Đơn đã mua</a>
                             </li>
                         </ul>
                     </div><!-- End .header-menu -->

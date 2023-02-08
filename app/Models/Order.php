@@ -173,8 +173,24 @@ class Order extends Model {
         $order_history->order_id = $this->id;
         $order_history->save();
     }
+
+    public function createPaymentOrderHistory() {
+        $action = Action::firstOrCreate(
+            array('name' => 'Thanh toán'),
+            array('description' => 'Thanh toán đơn hàng', 'icon' => ActionIcon::ORDER_PAID)
+        );
+        $order_history = new OrderHistory();
+        $order_history->executable_type = Customer::class;
+        $order_history->executable_id = auth()->user()->id;
+        $executor_label = $order_history->executorLabel();
+        $order_history->description =  "$executor_label " . strtolower($action->name) . " đơn hàng $this->order_number";
+        $order_history->action_id = $action->id;
+        $order_history->order_status = $this->order_status;
+        $order_history->order_id = $this->id;
+        $order_history->save();
+    }
     public function isPaid() {
-        return $this->payment_status == PaymentStatus::PAID;
+        return $this->payment && $this->payment->payment_status == PaymentStatus::PAID;
     }
 
     public function getCancelerLabel() {

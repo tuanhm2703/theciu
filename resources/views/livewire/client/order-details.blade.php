@@ -34,12 +34,18 @@
                 @break
 
                 @case(App\Enums\OrderStatus::WAIT_TO_ACCEPT)
-                <span></span>
+                    <span></span>
                     <div class="d-flex" style="justify-content: right">
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
                             data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">
                             Huỷ đơn hàng
                         </button>
+                        @if (!$order->isPaid())
+                            <button wire:click.prevent="pay()" class="d-block btn btn-primary text-white ml-2">
+                                <span wire:loading.remove>Thanh toán</span>
+                                <span wire:loading wire:target="pay">Đang triển khai...</span>
+                            </button>
+                        @endif
                     </div>
                 @break
 

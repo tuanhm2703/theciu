@@ -15,7 +15,7 @@ class RequestType
     const QUERY_REFUND = "refundStatus"; //
     const REFUND_ATM = "refundMoMoATM"; //
     const WALLET_BALANCE = "walletBalance";
-    const PAY_WITH_ATM = "payWithMoMoATM";
+    const PAY_WITH_ATM = "payWithATM";
     const TOPUP_MOBILE = "topUpMoMo";
     const BUY_CARD_PHONE = "buyCardMoMo";
     const SUBSCRIBE = "subscribeMoMo";

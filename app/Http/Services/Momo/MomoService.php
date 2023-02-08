@@ -6,9 +6,11 @@ use App\Models\Order;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use MService\Payment\AllInOne\Processors\CaptureMoMo;
+use MService\Payment\AllInOne\Processors\PayATM;
 use MService\Payment\AllInOne\Processors\QueryStatusTransaction;
 use MService\Payment\AllInOne\Processors\RefundMoMo;
 use MService\Payment\AllInOne\Processors\RefundStatus;
+use MService\Payment\Shared\Constants\RequestType;
 use MService\Payment\Shared\SharedModels\Environment;
 use MService\Payment\Shared\SharedModels\MomoEndpoints;
 use MService\Payment\Shared\SharedModels\PartnerInfo;
@@ -32,11 +34,19 @@ class MomoService {
         }
     }
 
-    public static function checkout(Order $order) {
+    public static function checkout(Order $order, $requestType = RequestType::PAY_WITH_ATM) {
         $env = MomoService::selectEnv('dev');
-        $requestId = time() . "";
-        $redirectUrl = route('client.auth.profile.index', ['tab' => 'order-list']);
-        return CaptureMoMo::process($env, $order->order_number, "Pay With MoMo", $order->total, base64_encode("theciu"), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
+        $requestId = time() + 60;
+        $orderId = time();
+        $redirectUrl = route('client.auth.profile.order.details', $order->id);
+        switch ($requestType) {
+            case RequestType::CAPTURE_MOMO_WALLET:
+                return CaptureMoMo::process($env, $orderId, "Pay With MoMo", $order->total, base64_encode("theciu"), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
+                break;
+            case RequestType::PAY_WITH_ATM:
+                return PayATM::process($env, $orderId, "Pay With MoMo", $order->total, base64_encode("theciu"), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
+                break;
+        }
     }
 
     public static function refund($order) {

@@ -19,6 +19,7 @@ class PaymentWebhookController extends Controller {
                 $order->payment->note = $request->message;
                 $order->payment->trans_id = $request->transId;
                 $order->payment->save();
+                $order->createPaymentOrderHistory();
             }
         } else {
             throw new Exception('Order id not match with platform order', 409);

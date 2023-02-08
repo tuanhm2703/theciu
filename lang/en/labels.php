@@ -113,5 +113,10 @@ return [
     'additional_information' => 'Additional information',
     'seo_management' => 'SEO management',
     'featured' => 'Featured',
-    'pick_address' => 'Pick address'
+    'pick_address' => 'Pick address',
+    'payment_methods' => [
+        'momo' => 'Momo Wallet',
+        'ebank' => 'E-Banking',
+        'cod' => 'Cash on delivery',
+    ],
 ];

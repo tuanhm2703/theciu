@@ -117,5 +117,10 @@ return [
     'additional_information' => 'Thông tin bổ sung',
     'seo_management' => 'Quản lý SEO',
     'featured' => 'Nổi bật',
-    'pick_address' => 'Chọn địa chỉ'
+    'pick_address' => 'Chọn địa chỉ',
+    'payment_methods' => [
+        'momo' => 'Ví Momo',
+        'cod' => 'Thanh toán khi nhận hàng',
+        'ebank' => 'E-Banking'
+    ],
 ];

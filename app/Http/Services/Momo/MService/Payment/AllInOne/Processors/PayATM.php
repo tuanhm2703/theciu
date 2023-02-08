@@ -3,6 +3,7 @@
 
 namespace MService\Payment\AllInOne\Processors;
 
+use Illuminate\Support\Facades\App;
 use MService\Payment\AllInOne\Models\PayATMRequest;
 use MService\Payment\AllInOne\Models\PayATMResponse;
 use MService\Payment\Shared\Constants\Parameter;
@@ -22,12 +23,12 @@ class PayATM extends Process
         parent::__construct($environment);
     }
 
-    public static function process(Environment $env, $orderId, $orderInfo, string $amount, $extraData, $requestId, $notifyUrl, $returnUrl, $bankCode)
+    public static function process(Environment $env, $orderId, $orderInfo, string $amount, $extraData, $requestId, $ipnUrl, $redirectUrl)
     {
         $payATM = new PayATM($env);
 
         try {
-            $payATMRequest = $payATM->createPayATMRequest($orderId, $orderInfo, $amount, $extraData, $requestId, $notifyUrl, $returnUrl, $bankCode);
+            $payATMRequest = $payATM->createPayATMRequest($orderId, $orderInfo, $amount, $extraData, $requestId, $ipnUrl, $redirectUrl);
             $payATMResponse = $payATM->execute($payATMRequest);
 
             return $payATMResponse;
@@ -37,20 +38,12 @@ class PayATM extends Process
         }
     }
 
-    public function createPayATMRequest($orderId, $orderInfo, string $amount, $extraData, $requestId, $notifyUrl, $returnUrl, $bankCode): PayATMRequest
+    public function createPayATMRequest($orderId, $orderInfo, string $amount, $extraData, $requestId, $ipnUrl, $redirectUrl): PayATMRequest
     {
-
-        $rawData = Parameter::PARTNER_CODE . "=" . $this->getPartnerInfo()->getPartnerCode() .
-            "&" . Parameter::ACCESS_KEY . "=" . $this->getPartnerInfo()->getAccessKey() .
-            "&" . Parameter::REQUEST_ID . "=" . $requestId .
-            "&" . Parameter::BANK_CODE . "=" . $bankCode .
-            "&" . Parameter::AMOUNT . "=" . $amount .
-            "&" . Parameter::ORDER_ID . "=" . $orderId .
-            "&" . Parameter::ORDER_INFO . "=" . $orderInfo .
-            "&" . Parameter::RETURN_URL . "=" . $returnUrl .
-            "&" . Parameter::NOTIFY_URL . "=" . $notifyUrl .
-            "&" . Parameter::EXTRA_DATA . "=" . $extraData .
-            "&" . Parameter::REQUEST_TYPE . "=" . RequestType::PAY_WITH_ATM;
+        $accessKey = $this->getPartnerInfo()->getAccessKey();
+        $partnerCode = $this->getPartnerInfo()->getPartnerCode();
+        $requestType = RequestType::PAY_WITH_ATM;
+        $rawData = "accessKey=$accessKey&amount=$amount&extraData=$extraData&ipnUrl=$ipnUrl&orderId=$orderId&orderInfo=$orderInfo&partnerCode=$partnerCode&redirectUrl=$redirectUrl&requestId=$requestId&requestType=$requestType";
 
         $signature = Encoder::hashSha256($rawData, $this->getPartnerInfo()->getSecretKey());
 
@@ -59,16 +52,16 @@ class PayATM extends Process
 
         $arr = array(
             Parameter::PARTNER_CODE => $this->getPartnerInfo()->getPartnerCode(),
-            Parameter::ACCESS_KEY => $this->getPartnerInfo()->getAccessKey(),
-            Parameter::REQUEST_ID => $requestId,
-            Parameter::AMOUNT => $amount,
+            Parameter::REQUEST_TYPE => $requestType,
+            Parameter::IPN_URL => $ipnUrl,
+            Parameter::REDIRECT_URL => $redirectUrl,
             Parameter::ORDER_ID => $orderId,
+            Parameter::AMOUNT => $amount,
+            Parameter::LANG => App::getLocale(),
             Parameter::ORDER_INFO => $orderInfo,
-            Parameter::RETURN_URL => $returnUrl,
-            Parameter::NOTIFY_URL => $notifyUrl,
-            Parameter::BANK_CODE => $bankCode,
-            Parameter::SIGNATURE => $signature,
+            Parameter::REQUEST_ID => $requestId,
             Parameter::EXTRA_DATA => $extraData,
+            Parameter::SIGNATURE => $signature,
         );
 
         return new PayATMRequest($arr);

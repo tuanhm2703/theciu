@@ -15,7 +15,7 @@ class PaymentMethodSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        $cod = PaymentMethod::firstOrCreate([
+        $cod = PaymentMethod::updateOrCreate([
             'name' => 'Cash on delivery',
         ], [
             'status' => StatusType::ACTIVE,
@@ -27,7 +27,7 @@ class PaymentMethodSeeder extends Seeder {
         ]);
         $cod->images()->delete();
         $cod->createImagesFromUrls(['https://cdn-icons-png.flaticon.com/512/5229/5229335.png']);
-        $momo = PaymentMethod::firstOrCreate([
+        $momo = PaymentMethod::updateOrCreate([
             'name' => 'Momo'
         ], [
             'status' => StatusType::ACTIVE,
@@ -39,5 +39,19 @@ class PaymentMethodSeeder extends Seeder {
         ]);
         $momo->images()->delete();
         $momo->createImagesFromUrls(['https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png']);
+
+        $atm = PaymentMethod::updateOrCreate([
+            'name' => 'ATM'
+        ], [
+            'status' => StatusType::ACTIVE,
+            'code' => 'ebank',
+            'description' => 'Thanh toán banking thông qua ví điện tử Momo',
+            'type' => PaymentMethodType::EBANK,
+            'min_value' => null,
+            'max_value' => null,
+        ]);
+        $atm->images()->delete();
+        $atm->createImagesFromUrls(['https://cdn-icons-png.flaticon.com/512/6519/6519443.png']);
+
     }
 }

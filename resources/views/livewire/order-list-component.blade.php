@@ -37,11 +37,9 @@
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane active mt-3" id="order-list" role="tabpanel"
-            aria-labelledby="order-list-tab">
+        <div class="tab-pane active mt-3" id="order-list" role="tabpanel" aria-labelledby="order-list-tab">
             @foreach ($orders as $order)
-                @component('components.client.order-card', compact('order'))
-                @endcomponent
+                <livewire:client.order-card-component :order="$order"></livewire:client.order-card-component>
             @endforeach
             <div>
                 <div class="text-center">
@@ -52,7 +50,8 @@
                                     <span class="sr-only">Loading...</span>
                                 </div>
                             </div>
-                            <span wire:loading.remove>Xem thêm</span></button>
+                            <span wire:loading.remove>Xem thêm</span>
+                        </button>
                     @else
                         Không có đơn hàng nào
                     @endif

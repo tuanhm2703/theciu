@@ -94,7 +94,7 @@
                                         class="custom-control-label d-flex align-items-center">
                                         <img src="{{ $pm->image->path_with_domain }}" width="10%"
                                             class="mr-3"alt="">
-                                        <span>{{ trans("labels.$pm->code") }} <i wire:ignore
+                                        <span>{{ trans("labels.payment_methods.$pm->code") }} <i wire:ignore
                                                 class="fa fa-question-circle" data-toggle="tooltip" data-placement="top"
                                                 title="{{ $pm->description }}"></i></span></label>
                                 </div><!-- End .custom-control -->

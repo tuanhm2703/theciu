@@ -18,4 +18,5 @@ class ActionIcon extends Enum {
     const COD_CONSOLIDATION_CHECKED = 'fa-solid fa-file-circle-check';
     const COD_CONSOLIDATION_TRANSFERED = 'fa-solid fa-money-bill-transfer';
     const COD_CONSOLIDATION_NOTE_UPDATED = 'fa-solid fa-pen-to-square';
+    const ORDER_PAID = "fas fa-money-check-alt";
 }
