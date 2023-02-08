@@ -1,19 +1,5 @@
 <div class="heading heading-center mb-3">
     <h2 class="title">Trending</h2><!-- End .title -->
-
-    <ul class="nav nav-pills justify-content-center" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="trending-all-link" data-toggle="tab" href="#trending-all-tab" role="tab"
-                aria-controls="trending-all-tab" aria-selected="true">Tất cả</a>
-        </li>
-        @foreach ($trending_categories as $category)
-            <li class="nav-item">
-                <a class="nav-link" id="category-{{ $category->id }}-link" data-toggle="tab"
-                    href="#category-{{ $category->id }}-tab" role="tab"
-                    aria-controls="category-{{ $category->id }}-tab" aria-selected="false">{{ $category->name }}</a>
-            </li>
-        @endforeach
-    </ul>
 </div><!-- End .heading -->
 <div class="tab-content tab-content-carousel trending-carousel">
     <div class="tab-pane p-0 fade show active" id="trending-all-tab" role="tabpanel"

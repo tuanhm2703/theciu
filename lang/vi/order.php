@@ -19,5 +19,9 @@ return [
         'cannot_prepare_in_time' => 'Không chuẩn bị kịp hàng',
         'shipping_address_invalid' => 'Địa điểm giao hàng không đúng',
         'other' => 'Khác'
+    ],
+    'description' => [
+        'checkout_description' => 'Thanh toán đơn hàng :appName - Mã đơn hàng :orderNumber',
+        'refund_description' => "Hoàn tiền cho đơn hàng :appName :orderNumber"
     ]
 ];

@@ -19,5 +19,9 @@ return [
         'cannot_prepare_in_time' => 'Cannot prepare in time',
         'shipping_address_invalid' => 'Shipping address invalid',
         'other' => 'Other'
+    ],
+    'description' => [
+        'checkout_description' => 'Payment order :appName - Order code :orderNumber',
+        'refund_description' => "Refund order :appName - Order code :orderNumber"
     ]
 ];

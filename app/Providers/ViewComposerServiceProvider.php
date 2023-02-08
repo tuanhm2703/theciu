@@ -52,7 +52,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
         View::composer(
             'landingpage.layouts.pages.blog.components.detail.popular_blogs',
             function ($view) {
-                $blog = $view->getData()['blog'];
+                $blog = isset($view->getData()['blog']) ? $view->getData()['blog'] : null;
                 $popular_blogs = Blog::available()->orderBy('created_at', 'desc')->with('image', 'categories')->limit(4);
                 if ($blog) {
                     $popular_blogs->where('id', '!=', $blog->id);

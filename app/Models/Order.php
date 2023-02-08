@@ -203,6 +203,11 @@ class Order extends Model {
 
     public function getRefundDescription() {
         $app_name = getAppName();
-        return "Hoàn tiền cho đơn hàng $app_name: $this->order_number";
+        return trans('order.description.refund_description', ['appName' => $app_name, 'orderNumber' => $this->order_number]);
+    }
+
+    public function getCheckoutDescription() {
+        $app_name = getAppName();
+        return trans('order.description.checkout_description', ['appName' => $app_name, 'orderNumber' => $this->order_number]);
     }
 }
