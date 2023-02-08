@@ -41,10 +41,10 @@ class MomoService {
         $redirectUrl = route('client.auth.profile.order.details', $order->id);
         switch ($requestType) {
             case RequestType::CAPTURE_MOMO_WALLET:
-                return CaptureMoMo::process($env, $orderId, $order->getCheckoutDescription(), $order->total + $order->shipping_fee, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
+                return CaptureMoMo::process($env, $orderId, $order->getCheckoutDescription(), $order->total, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
                 break;
             case RequestType::PAY_WITH_ATM:
-                return PayATM::process($env, $orderId, $order->getCheckoutDescription(), $order->total + $order->shipping_fee, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
+                return PayATM::process($env, $orderId, $order->getCheckoutDescription(), $order->total, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
                 break;
         }
     }

@@ -4,7 +4,7 @@
 <div class="tab-content tab-content-carousel trending-carousel">
     <div class="tab-pane p-0 fade show active" id="trending-all-tab" role="tabpanel"
         aria-labelledby="trending-all-link">
-        <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+    <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
             data-owl-options='{
                 "nav": false,
                 "dots": true,

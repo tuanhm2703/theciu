@@ -1,4 +1,4 @@
-<div class="header-top">
+{{-- <div class="header-top">
     <div class="container">
         <div class="header-left">
             <ul class="top-menu top-link-menu d-none d-md-block">
@@ -75,4 +75,4 @@
             @endif
         </div><!-- End .header-right -->
     </div>
-</div>
+</div> --}}

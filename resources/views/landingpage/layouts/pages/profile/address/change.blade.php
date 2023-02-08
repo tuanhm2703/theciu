@@ -13,7 +13,8 @@
                                 <h6 class="d-inline">{{ $address->fullname }}</h6> | {{ $address->phone }}
                             </div>
                             <div>
-                                <a href="#" data-address-id="{{ $address->id }}" class="update-address-btn">Cập nhật</a>
+                                <a href="#" data-address-id="{{ $address->id }}" class="update-address-btn">Cập
+                                    nhật</a>
                             </div>
                         </div>
                         <p>{{ $address->details }}</p>
@@ -28,23 +29,26 @@
             <hr class="my-2">
         @endforeach
     </div>
-    <div class="text-right" style="background: white;
+    <div class="text-right"
+        style="background: white;
     position: sticky;
     bottom: -3rem;
     width: 100%;
     right: 0;
     padding: 1rem;">
         <button class="btn border ajax-modal-btn" data-toggle="modal" data-target="#createAddressModal"><i
-            class="icon-plus"></i>Thêm Địa Chỉ
-        Mới</button>
+                class="icon-plus"></i>Thêm Địa Chỉ
+            Mới</button>
         <a href="#" class="btn btn-primary submit-change-address-btn">Xác nhận</a>
     </div>
 </div>
 <script>
     $('.submit-change-address-btn').on('click', (e) => {
         e.preventDefault()
-        Livewire.emit('cart:changeAddress', $('input[name=shipping-address]:checked').val())
-        $('.modal.show').modal('hide')
+        if ($('input[name=shipping-address]:checked').val()) {
+            Livewire.emit('cart:changeAddress', $('input[name=shipping-address]:checked').val())
+            $('.modal.show').modal('hide')
+        }
     })
     $('.update-address-btn').on('click', (e) => {
         e.preventDefault()

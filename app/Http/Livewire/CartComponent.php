@@ -107,7 +107,7 @@ class CartComponent extends Component {
                 'total' => 0,
                 'subtotal' => 0,
                 'origin_subtotal' => 0,
-                'shipping_fee' => 0,
+                'shipping_fee' => $this->shipping_fee,
                 'order_status' => OrderStatus::WAIT_TO_ACCEPT,
                 'payment_method_id' => $this->payment_method_id
             ]);
@@ -120,7 +120,6 @@ class CartComponent extends Component {
                 'full_address' => $this->address->full_address,
                 'fullname' => $this->address->fullname,
                 'phone' => $this->address->phone,
-                'shipping_fee' => $this->shipping_fee,
                 'featured' => 1
             ]);
             foreach ($this->cart->inventories as $inventory) {

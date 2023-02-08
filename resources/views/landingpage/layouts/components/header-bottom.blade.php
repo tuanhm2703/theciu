@@ -25,6 +25,7 @@
                 <span class="wishlist-txt"></span>
             </a>
             <livewire:header-cart-component></livewire:header-cart-component>
+            @include('landingpage.layouts.components.navs.auth')
         </div>
     </div><!-- End .container -->
 </div><!-- End .header-bottom -->

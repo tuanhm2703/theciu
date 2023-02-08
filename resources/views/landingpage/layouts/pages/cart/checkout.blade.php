@@ -50,7 +50,6 @@
             }
         })
         $('#updateAddressModal').on('shown.bs.modal', (e) => {
-            console.log('hello');
             $('#update-address-form').ajaxForm({
                 beforeSend: () => {
                     $('.address-update-btn').loading()
