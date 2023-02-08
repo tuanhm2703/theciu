@@ -39,6 +39,25 @@ class CartComponent extends Component {
     public $payment_methods;
     public $payment_method_id;
 
+    protected $rules = [
+        'service_id' => 'required',
+        'payment_method_id' => 'required',
+        'address' => 'required'
+    ];
+
+    protected $messages = [
+        'service_id.required' =>  'Vui lòng chọn :attribute',
+        'payment_method_id.required' => 'Vui lòng chọn :attribute',
+        'address.required' => 'Vui lòng chọn :attribute '
+    ];
+
+
+    protected $validationAttributes = [
+        'service_id' => 'dịch vụ vận chuyển',
+        'payment_method_id' => 'phương thức thanh toán',
+        'address' => 'địa chỉ giao hàng'
+    ];
+
     public function mount() {
         $this->cart =  Cart::with(['inventories' => function ($q) {
             return $q->with('image:path,imageable_id', 'product:id,slug,name');
@@ -50,7 +69,7 @@ class CartComponent extends Component {
         $this->shipping_service_id = $this->shipping_service->shipping_service->id;
         if ($this->address) {
             $this->shipping_service_types = $this->shipping_service->getShipServices($this->address);
-            foreach ($this->shipping_service_types as $index => $shipping_service_type) {
+            foreach ($this->shipping_service_types as $shipping_service_type) {
                 $data = $this->calculateShippingInfo($shipping_service_type);
                 $shipping_service_type->fee = $data['fee'];
                 $shipping_service_type->delivery_date = $data['date'];
@@ -78,6 +97,7 @@ class CartComponent extends Component {
     }
 
     public function checkout() {
+        $this->validate();
         $this->error = '';
         DB::beginTransaction();
         $customer = auth('customer')->user();
@@ -158,7 +178,7 @@ class CartComponent extends Component {
 
     public function changeAddress(Address $address) {
         $this->address = $address;
-        $this->updateOrderInfo();
+        $this->updateOrderInfo($address);
     }
 
     public function updatedServiceId($value) {
@@ -173,7 +193,7 @@ class CartComponent extends Component {
     private function calculateShippingInfo($shipping_service_type) {
         $shipping_service_type = (object) $shipping_service_type;
         $deliveryData = new DeliveryData(
-            auth()->user()->shipping_address,
+            $this->address,
             $shipping_service_type->service_id,
             $shipping_service_type->service_type_id,
             $this->cart->total(),
@@ -189,6 +209,9 @@ class CartComponent extends Component {
             'date' => $date
         ];
     }
+
+
+
 
     public function itemAdded(Inventory $inventory, $quantity) {
         if ($this->cart->inventories()->where('inventories.id', $inventory->id)->exists()) {
@@ -210,14 +233,14 @@ class CartComponent extends Component {
         $this->emitTo('header-cart-component', 'cart:refresh');
     }
 
-    public function updateOrderInfo() {
-        foreach ($this->shipping_service_types as $index => $shipping_service_type) {
-            $data = $this->calculateShippingInfo($shipping_service_type);
-            $this->shipping_service_types[$index]['fee'] = $data['fee'];
-            $this->shipping_service_types[$index]['delivery_date'] = $data['date'];
-            if ($this->shipping_service_types[$index]['service_id'] == $this->service_id) {
-                $this->shipping_fee = $this->shipping_service_types[$index]['fee'];
+    private function updateOrderInfo(Address $address = null) {
+         $this->shipping_service_types = App::make(GHTKService::class)->getShipServices($this->address);
+            foreach ($this->shipping_service_types as $shipping_service_type) {
+                $data = $this->calculateShippingInfo($shipping_service_type);
+                $shipping_service_type->fee = $data['fee'];
+                $shipping_service_type->delivery_date = $data['date'];
             }
-        }
+            $this->service_id = $this->shipping_service_types[0]->service_id;
+            $this->shipping_fee = $this->shipping_service_types[0]->fee;
     }
 }

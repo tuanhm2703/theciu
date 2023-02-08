@@ -112,5 +112,6 @@ return [
     'shipping_and_return' => 'Shipping and return',
     'additional_information' => 'Additional information',
     'seo_management' => 'SEO management',
-    'featured' => 'Featured'
+    'featured' => 'Featured',
+    'pick_address' => 'Pick address'
 ];

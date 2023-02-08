@@ -45,8 +45,8 @@
                         <td>{{ trans('labels.subtotal') }}:</td>
                         <td>{{ $cart->formatted_total }}</td>
                     </tr><!-- End .summary-subtotal -->
-                    <tr class="summary-shipping">
-                        <td>{{ trans('labels.shipping') }}:</td>
+                    <tr class="summary-shipping position-relative">
+                        <td>{{ trans('labels.shipping') }}: <span wire:loading class="spinner-border spinner-border-sm mr-3 position-absolute ml-3" style="top: 50%;" role="status" aria-hidden="true"></span></td>
                         <td>&nbsp;</td>
                     </tr>
                     @foreach ($shipping_service_types as $type)
@@ -79,7 +79,8 @@
                             <span>{{ optional($address)->full_address }}</span>
                             <br>
                             <a class="ajax-modal-btn" data-modal-size="modal-md"
-                                data-link="{{ route('client.auth.profile.address.view.change', ['selected_address_id' => $address ? $address->id : null]) }}">{{ trans('labels.change_address') }}</a>
+                                data-link="{{ route('client.auth.profile.address.view.change', ['selected_address_id' => $address ? $address->id : null]) }}">
+                                  {{ $address ? trans('labels.change_address') : trans('labels.pick_address') }}</a>
                         </td>
                     </tr><!-- End .summary-shipping-estimate -->
                     <tr>
@@ -107,12 +108,15 @@
                     </tr><!-- End .summary-total -->
                 </tbody>
             </table><!-- End .table table-summary -->
-            <button href="#" wire:click.prevent="checkout" @disabled(empty($this->payment_method_id) || empty($address))
-                class="btn btn-outline-primary-2 btn-order btn-block">
+            <button href="#" wire:click.prevent="checkout" class="btn btn-outline-primary-2 btn-order btn-block">
                 <span wire:loading.remove wire:target="checkout">{{ trans('labels.checkout') }}</span>
                 <span wire:loading wire:target="checkout">Đang tiến hành thanh toán..</span>
             </button>
-            <span class="text-danger text-center d-block mt-1">{{ $error }}</span>
+            <div class="d-flex flex-column mt-1">
+                @error('payment_method_id') <span class="text-danger">{{ $message }}</span> @enderror
+                @error('service_id') <span class="text-danger">{{ $message }}</span> @enderror
+                @error('address') <span class="text-danger">{{ $message }}</span> @enderror
+            </div>
         </div><!-- End .summary -->
 
         <a href="/"

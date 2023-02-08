@@ -116,5 +116,6 @@ return [
     'shipping_and_return' => 'Vận chuyển và trả hàng',
     'additional_information' => 'Thông tin bổ sung',
     'seo_management' => 'Quản lý SEO',
-    'featured' => 'Nổi bật'
+    'featured' => 'Nổi bật',
+    'pick_address' => 'Chọn địa chỉ'
 ];
