@@ -19,10 +19,10 @@ class CaptureMoMo extends Process {
         parent::__construct($environment);
     }
 
-    public static function process(Environment $env, $orderId, $orderInfo, string $amount, $extraData, $requestId, $notifyUrl, $returnUrl) {
+    public static function process(Environment $env, $orderId, $orderInfo, string $amount, $extraData, $requestId, $ipnUrl, $redirectUrl) {
         $captureMoMoWallet = new CaptureMoMo($env);
         try {
-            $captureMoMoRequest = $captureMoMoWallet->createCaptureMoMoRequest($orderId, $orderInfo, $amount, $extraData, $requestId, $notifyUrl, $returnUrl);
+            $captureMoMoRequest = $captureMoMoWallet->createCaptureMoMoRequest($orderId, $orderInfo, $amount, $extraData, $requestId, $ipnUrl, $redirectUrl);
             $captureMoMoResponse = $captureMoMoWallet->execute($captureMoMoRequest);
             return $captureMoMoResponse;
         } catch (MoMoException $exception) {
@@ -47,8 +47,6 @@ class CaptureMoMo extends Process {
             Parameter::ORDER_INFO => $orderInfo,
             Parameter::IPN_URL => $ipnUrl,
             Parameter::REDIRECT_URL => $redirectUrl,
-            Parameter::RETURN_URL => $ipnUrl,
-            Parameter::NOTIFY_URL => $redirectUrl,
             Parameter::EXTRA_DATA => $extraData,
             Parameter::SIGNATURE => $signature,
             Parameter::LANG => App::getLocale(),

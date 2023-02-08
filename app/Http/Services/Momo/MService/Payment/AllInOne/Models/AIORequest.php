@@ -14,10 +14,8 @@ class AIORequest
     private $extraData;
     private $requestId;
     private $description;
-    private $notifyUrl;
     private $ipnUrl;
     private $redirectUrl;
-    private $returnUrl;
     private $requestType;
     private $lang;
 
@@ -167,34 +165,6 @@ class AIORequest
     /**
      * @return mixed
      */
-    public function getNotifyUrl()
-    {
-        return $this->notifyUrl;
-    }
-
-    /**
-     * @param mixed $notifyUrl
-     */
-    public function setNotifyUrl($notifyUrl): void
-    {
-        $this->notifyUrl = $notifyUrl;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getReturnUrl()
-    {
-        return $this->returnUrl;
-    }
-
-    /**
-     * @param mixed $returnUrl
-     */
-    public function setReturnUrl($returnUrl): void
-    {
-        $this->returnUrl = $returnUrl;
-    }
 
     /**
      * @return mixed

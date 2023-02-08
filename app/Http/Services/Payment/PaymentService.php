@@ -27,7 +27,7 @@ class PaymentService {
     public static function refund($order) {
         if ($order->payment && $order->payment->payment_status == PaymentStatus::PAID) {
             $payment_method = $order->payment->payment_method;
-            if ($payment_method->code == PaymentMethodType::MOMO) {
+            if (in_array($payment_method->code, PaymentMethodType::REFUNDABLE_METHODS)) {
                 MomoService::refund($order);
                 return true;
             }
