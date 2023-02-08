@@ -181,7 +181,7 @@ class Order extends Model {
         );
         $order_history = new OrderHistory();
         $order_history->executable_type = Customer::class;
-        $order_history->executable_id = auth()->user()->id;
+        $order_history->executable_id = $this->customer_id;
         $executor_label = $order_history->executorLabel();
         $order_history->description =  "$executor_label " . strtolower($action->name) . " đơn hàng $this->order_number";
         $order_history->action_id = $action->id;

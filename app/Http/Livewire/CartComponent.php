@@ -120,6 +120,7 @@ class CartComponent extends Component {
                 'full_address' => $this->address->full_address,
                 'fullname' => $this->address->fullname,
                 'phone' => $this->address->phone,
+                'shipping_fee' => $this->shipping_fee,
                 'featured' => 1
             ]);
             foreach ($this->cart->inventories as $inventory) {
