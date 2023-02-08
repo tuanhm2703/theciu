@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="{{ asset('assets/landingpage/css/floating-labels.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bs4Toast.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/admin/tata.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Mulish:wght@500&family=Roboto:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <script src="{{ asset('assets/landingpage/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.form.min.js') }}"></script>
     @stack('css')

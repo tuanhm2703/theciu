@@ -30,7 +30,8 @@
                             <li><a href="about.html">About THE C.I.U</a></li>
                             <li><a href="#">Sản phẩm mới nhất</a></li>
                             <li><a href="#">Trending</a></li>
-                            <li><a href="contact.html">Liên hệ</a></li>
+                            <li><a href="#">Liên hệ</a></li>
+                            <li><a href="{{ route('client.blog.index') }}" class="sf-with-ul">Blog</a></li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->

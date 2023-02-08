@@ -1,10 +1,10 @@
 ﻿@import url("https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800");
-@font-face {
-    font-family: 'VietPoppinsRegular';
+/* @font-face {
+    font-family: 'Mulish';
     src: url('/assets/fonts/poppins-regular.ttf');
     font-weight: 400;
-    font-style: normal;
-}
+    font-style: normal; */
+/* } */
 html {
     font-size: 62.5%;
     -webkit-text-size-adjust: 100%;
@@ -16,8 +16,8 @@ body {
     height: 100%;
 }
 body {
-    /* font: normal 300 1.4rem/1.86 'VietPoppinsRegular', sans-serif"Poppins", sans-serif; */
-    font-family: 'VietPoppinsRegular', sans-serif;
+    /* font: normal 300 1.4rem/1.86 'Mulish', sans-serif"Poppins", sans-serif; */
+    font-family: 'Mulish', sans-serif;
     color: #666;
     background-color: #fff;
     -webkit-font-smoothing: antialiased;
@@ -2657,13 +2657,13 @@ blockquote.text-white cite span {
     color: #333;
 }
 a {
-    font-family: 'VietPoppinsRegular', sans-serif;
+    font-family: 'Mulish', sans-serif;
 }
 p {
     margin-bottom: 0;
     font-size: 1.4rem;
     font-weight: 300;
-    font-family: 'VietPoppinsRegular', sans-serif"Poppins";
+    font-family: 'Mulish', sans-serif"Poppins";
     letter-spacing: 0;
     color: #777;
 }
@@ -2684,7 +2684,7 @@ p {
 }
 .header-2 .header-search-extended .form-control {
     padding: 1.2rem 2.4rem 1rem 2rem;
-    font-family: 'VietPoppinsRegular', sans-serif"Poppins";
+    font-family: 'Mulish', sans-serif"Poppins";
     letter-spacing: -0.01em;
 }
 .header-2 .header-search-extended .btn {
@@ -5075,7 +5075,7 @@ p {
 }
 .page-header h1 {
     color: #333;
-    font: normal 400 3.2rem/1.1 'VietPoppinsRegular', sans-serif"Poppins", sans-serif;
+    font: normal 400 3.2rem/1.1 'Mulish', sans-serif"Poppins", sans-serif;
     letter-spacing: -0.025em;
     margin-bottom: 0;
 }
@@ -5795,7 +5795,7 @@ p {
     letter-spacing: 0;
     font-size: 1.4rem;
     min-width: 0;
-    font-family: 'VietPoppinsRegular', sans-serif"Poppins", sans-serif;
+    font-family: 'Mulish', sans-serif"Poppins", sans-serif;
 }
 .btn-link.btn-link-dark {
     color: #333;
@@ -7483,7 +7483,7 @@ p {
 .product.product-10 .product-title a {
     font-size: 1.3rem;
     font-weight: 400;
-    font-family: 'VietPoppinsRegular', sans-serif"Poppins";
+    font-family: 'Mulish', sans-serif"Poppins";
     letter-spacing: 0;
     color: #333;
 }
@@ -7495,20 +7495,20 @@ p {
     margin-top: 0.8rem;
     font-size: 1.3rem;
     font-weight: 700;
-    font-family: 'VietPoppinsRegular', sans-serif"Poppins";
+    font-family: 'Mulish', sans-serif"Poppins";
     letter-spacing: 0;
     color: #333333;
 }
 .product.product-10 .new-price {
     font-size: 1.3rem;
     font-weight: 700;
-    font-family: 'VietPoppinsRegular', sans-serif"Poppins";
+    font-family: 'Mulish', sans-serif"Poppins";
     letter-spacing: 0;
 }
 .product.product-10 .old-price {
     font-size: 1.3rem;
     font-weight: 400;
-    font-family: 'VietPoppinsRegular', sans-serif"Poppins";
+    font-family: 'Mulish', sans-serif"Poppins";
     letter-spacing: 0;
     text-decoration: none;
 }
@@ -7517,7 +7517,7 @@ p {
     text-transform: uppercase;
     font-size: 1.3rem;
     font-weight: 700;
-    font-family: 'VietPoppinsRegular', sans-serif"Poppins";
+    font-family: 'Mulish', sans-serif"Poppins";
     letter-spacing: -0.01em;
 }
 .product.product-10 .product-label.label-deal {
@@ -9351,7 +9351,7 @@ small.form-text {
 .element-type {
     font-size: 1.3rem;
     font-weight: 400;
-    font-family: 'VietPoppinsRegular', sans-serif"Poppins";
+    font-family: 'Mulish', sans-serif"Poppins";
     letter-spacing: 0.01em;
     color: #666;
     text-transform: uppercase;
