@@ -316,6 +316,7 @@
     const fillAttributeValue = (element, event) => {
         const attributeIndex = $(element).parents('.card.attribute-info-form').data().attributeIndex - 1
         let valueIndex = $(element).index('.attribute-value-input')
+        if(attributeIndex == 1) valueIndex -= attributes[attributeIndex].values.length;
         attributes.forEach((attribute, index) => {
             if (index < attributeIndex) valueIndex -= attribute.values.length
         })
