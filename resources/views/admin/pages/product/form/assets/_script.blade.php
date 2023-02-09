@@ -305,9 +305,9 @@
         })
         output += `<div class="col-md-4 mt-3">
                         <div class="d-flex align-items-center">
-                            <input class="form-control attribute-value-input" accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
-                                    <i class="fas fa-arrows-alt p-1 d-none attribute-action-btn" style="color: lightgrey; font-size: 15px"></i>
-                                    <i class="delete-attribute-value-btn far fa-trash-alt p-1 d-none attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
+                            <input class="form-control attribute-value-input last-value" accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
+                                    <i class="fas fa-arrows-alt p-1 invisible attribute-action-btn" style="color: lightgrey; font-size: 15px"></i>
+                                    <i class="last-delete-btn delete-attribute-value-btn far fa-trash-alt p-1 invisible attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
                                     </div>
                                 </div>`
         return output;
@@ -315,10 +315,14 @@
 
     const fillAttributeValue = (element, event) => {
         const attributeIndex = $(element).parents('.card.attribute-info-form').data().attributeIndex - 1
-        let valueIndex = $(element).index('.attribute-value-input')
-        if(attributeIndex == 1) valueIndex -= attributes[attributeIndex].values.length;
+        const isLastValue = $(element).hasClass('last-value')
+        $(element).removeClass('last-value')
+        let valueIndex = $(element).index('.attribute-value-input:not(.last-value)')
+        console.log(valueIndex);
         attributes.forEach((attribute, index) => {
-            if (index < attributeIndex) valueIndex -= attribute.values.length
+            if (index < attributeIndex) {
+                valueIndex = valueIndex - attribute.values.length
+            }
         })
         if (attributes[attributeIndex].values[valueIndex]) {
             attributes[attributeIndex].values[valueIndex].value = event.target.value
@@ -328,19 +332,17 @@
                 inventories: []
             }
         }
-        if (attributes[attributeIndex].values.length == valueIndex + 1) {
-            $(element).parents('.attribute-value-wrapper').find('.attribute-action-btn').removeClass('d-none')
+        if (isLastValue) {
+            $(element).parents('.attribute-value-wrapper').find('.attribute-action-btn').removeClass('invisible')
+            $(element).parents('.attribute-value-wrapper').find('.attribute-action-btn').removeClass(
+                'last-delete-btn')
             $(element).parents('.attribute-value-wrapper').find('.attribute-value-input').prop('required', true)
             $(element).parents('.attribute-value-wrapper').append(`<div class="col-md-4 mt-3">
-                                    <div class="d-flex align-items-center"><input class="form-control required attribute-value-input" placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
-                                        <i class="fas fa-arrows-alt p-1 attribute-action-btn d-none" style="color: lightgrey; font-size: 15px"></i>
-                                        <i class="delete-attribute-value-btn far fa-trash-alt p-1 d-none attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
+                                    <div class="d-flex align-items-center"><input class="form-control required attribute-value-input last-value" placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
+                                        <i class="fas fa-arrows-alt p-1 attribute-action-btn invisible" style="color: lightgrey; font-size: 15px"></i>
+                                        <i class="last-delete-btn delete-attribute-value-btn far fa-trash-alt p-1 invisible attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
                                     </div>
                                 </div>`)
-            attributes[attributeIndex].values.push({
-                value: null,
-                inventories: []
-            })
         }
         renderAttributeTable()
     }
@@ -449,28 +451,22 @@
     }
 
     const deleteAttributeValue = (element) => {
-        let index = $(element).index('.delete-attribute-value-btn')
-        let deletedValue
-        if (attributes[0].values.length - 1 < index) {
-            index = index - attributes[0].values.length - 1;
-            deletedValue = attributes[1].values[index].value
-            attributes[1].values.splice(index, 1)
-        } else {
-            deletedValue = attributes[0].values[index].value
-            attributes[0].values.splice(index, 1)
-        }
-        attributes[0].values.forEach((value, index) => {
-            if (value.value == deletedValue) {
-                attributes[0].values.splice(index, 1)
-            } else {
-                value.inventories.forEach((inventory, i) => {
-                    inventory.attributes.forEach((attribute) => {
-                        if (attribute.value == deletedValue) {
-                            value.inventories.splice(i, 1)
-                        }
-                    })
-                })
+        const attributeIndex = $(element).parents('.card.attribute-info-form').data().attributeIndex - 1
+        $(element).removeClass('last-delete-btn')
+        let deletedIndex = $(element).index('.delete-attribute-value-btn:not(.last-delete-btn)')
+        attributes.forEach((attribute, index) => {
+            if (index < attributeIndex) {
+                deletedIndex = deletedIndex - attribute.values.length
             }
+        })
+        let deletedValue = attributes[attributeIndex].values[deletedIndex].value
+        attributes[attributeIndex].values.splice(deletedIndex, 1)
+        attributes[0].values.forEach((value, index) => {
+            value.inventories.forEach((inventory, i) => {
+                inventory.attributes.forEach((a) => {
+                    if(a.value == deletedValue) value.inventories.splice(i, 1)
+                })
+            })
         })
         renderAttributeForm(false)
     }
