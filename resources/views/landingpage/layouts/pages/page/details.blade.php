@@ -6,7 +6,7 @@
             background: white;
         }
         .page-content * {
-            max-width: fit-content !important;
+            max-width: 100% !important;
         }
     </style>
 @endpush
