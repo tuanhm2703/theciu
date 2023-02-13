@@ -351,3 +351,9 @@ div.dataTables_processing > div:last-child > div {
 .sidenav-hidden {
     transform: translateX(-17.125rem) !important;
 }
+.note-editable {
+    background: white;
+}
+.note-editable #footer {
+    width: 100% !important;
+}

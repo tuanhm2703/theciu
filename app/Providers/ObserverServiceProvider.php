@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\Page;
 use App\Models\Product;
 use App\Models\Promotion;
 use App\Observers\AddressObserver;
@@ -13,6 +14,7 @@ use App\Observers\BlogObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\EditByObserver;
 use App\Observers\OrderObserver;
+use App\Observers\PageObserver;
 use App\Observers\ProductObserver;
 use App\Observers\PromotionObserver;
 use Illuminate\Support\ServiceProvider;
@@ -40,5 +42,6 @@ class ObserverServiceProvider extends ServiceProvider {
         Promotion::observe(PromotionObserver::class);
         Address::observe(AddressObserver::class);
         Order::observe(OrderObserver::class);
+        Page::observe(PageObserver::class);
     }
 }

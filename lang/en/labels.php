@@ -119,4 +119,7 @@ return [
         'ebank' => 'E-Banking',
         'cod' => 'Cash on delivery',
     ],
+    'page_list' => 'Page list',
+    'create_page' => 'Create page',
+    'edit_page' => 'Edit page'
 ];

@@ -21,5 +21,6 @@ return [
     'order' => 'Order',
     'order_list' => 'Order list',
     'order_details' => "Order's details",
-    'seo_management' => 'Order management'
+    'seo_management' => 'Order management',
+    'page_management' => 'Page management'
 ];

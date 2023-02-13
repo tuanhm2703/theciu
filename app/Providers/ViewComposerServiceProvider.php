@@ -8,6 +8,7 @@ use App\Models\Banner;
 use App\Models\Blog;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Product;
 use App\Models\Promotion;
 use Illuminate\Support\Facades\View;
@@ -158,6 +159,10 @@ class ViewComposerServiceProvider extends ServiceProvider {
             $keywords = Category::whereType(CategoryType::PRODUCT)->pluck('name')->toArray();
             $mKeywords = implode(', ', $keywords);
             $view->with(['mKeywords' => $mKeywords]);
+        });
+        View::composer('landingpage.layouts.footer', function($view) {
+            $pages = Page::select('title', 'slug')->get();
+            $view->with(['pages' => $pages]);
         });
     }
 }

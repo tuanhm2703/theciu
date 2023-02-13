@@ -32,6 +32,10 @@
                             <li><a href="#">Trending</a></li>
                             <li><a href="#">Liên hệ</a></li>
                             <li><a href="{{ route('client.blog.index') }}" class="sf-with-ul">Blog</a></li>
+                            @foreach ($pages as $page)
+                                <li><a href="{{ route('client.page.details', $page->slug) }}"
+                                        class="sf-with-ul">{{ $page->title }}</a></li>
+                            @endforeach
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->

@@ -123,4 +123,7 @@ return [
         'cod' => 'Thanh toán khi nhận hàng',
         'ebank' => 'E-Banking'
     ],
+    'page_list' => 'Danh sách trang',
+    'create_page' => 'Tạo trang',
+    'edit_page' => 'Cập nhật trang'
 ];

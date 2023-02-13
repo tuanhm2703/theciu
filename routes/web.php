@@ -40,6 +40,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         include('admin/Appearance.php');
         include('admin/Setting.php');
         include('admin/Order.php');
+        include('admin/Page.php');
         Route::get('/{page}', [PageController::class, 'index'])->name('page');
         Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
             include('admin/ajax/Category.php');
@@ -50,6 +51,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
             include('admin/ajax/Appearance.php');
             include('admin/ajax/Image.php');
             include('admin/ajax/Order.php');
+            include('admin/ajax/Page.php');
         });
     });
 });
