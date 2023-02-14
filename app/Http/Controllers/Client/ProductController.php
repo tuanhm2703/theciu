@@ -56,4 +56,11 @@ class ProductController extends Controller {
         $products = $products->select('products.name', 'products.slug', 'products.id')->with(['inventories.image:path,imageable_id', 'images:path,imageable_id'])->paginate($pageSize);
         return view('landingpage.layouts.pages.product.index', compact('products', 'category', 'title', 'type'));
     }
+
+    public function saleOff() {
+        return view('landingpage.layouts.pages.product.sale-off.index');
+    }
+    public function myWishlist() {
+        return view('landingpage.layouts.pages.product.wishlist.index');
+    }
 }

@@ -7,18 +7,25 @@ use App\Enums\MediaType;
 use App\Enums\PromotionStatusType;
 use App\Enums\PromotionType;
 use App\Enums\StatusType;
+use App\Exceptions\InventoryOutOfStockException;
 use App\Http\Services\Shipping\Models\PackageInfo;
 use App\Traits\Common\CommonFunc;
 use App\Traits\Common\Imageable;
+use App\Traits\Common\Wishlistable;
 use App\Traits\Scopes\CustomScope;
 use App\Traits\Scopes\ProductScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use VienThuong\KiotVietClient\Client;
+use VienThuong\KiotVietClient\Collection\InventoryCollection;
+use VienThuong\KiotVietClient\Resource\ProductResource;
 
 class Product extends Model {
-    use HasFactory, SoftDeletes, Imageable, CustomScope, ProductScope, CommonFunc;
+    use HasFactory, SoftDeletes, Imageable, CustomScope, ProductScope, CommonFunc, Wishlistable;
 
     protected $fillable = [
         'name',
@@ -38,11 +45,12 @@ class Product extends Model {
         'short_description',
         'additional_information',
         'shipping_and_return',
-        'code'
+        'code',
+        'reorder_days'
     ];
 
     public function unique_attribute_inventories() {
-        return $this->inventories()->leftJoin('attribute_inventory', function($q) {
+        return $this->inventories()->leftJoin('attribute_inventory', function ($q) {
             $q->on('attribute_inventory.inventory_id', 'inventories.id');
         })->where('attribute_inventory.order', 1)->groupBy('attribute_inventory.value', 'inventories.product_id');
     }
@@ -190,6 +198,13 @@ class Product extends Model {
         return new PackageInfo($this->weight, $this->length, $this->height, $this->width);
     }
 
+    public function getIsOnCustomerWishlistAttribute() {
+        if (auth('customer')->check()) {
+            return $this->wishlists()->where('customer_id', auth('customer')->user()->id)->exists();
+        }
+        return false;
+    }
+
     public function getMetaTags() {
         $tags = array(
             array(
@@ -254,5 +269,48 @@ class Product extends Model {
             $output .= "<meta " . implode(" ", $content) . ">";
         }
         return $output;
+    }
+
+    public function syncKiotWarehouse() {
+        $productSource = new ProductResource(App::make(Client::class));
+        $kiotSetting = App::get('KiotConfig');
+        if ($kiotSetting->data['branchId']) {
+            $kiotProduct = $productSource->getByCode($this->sku);
+            $inventories = $kiotProduct->getModelData()['inventories'];
+            foreach ($inventories as $inventory) {
+                if ($inventory['branchId'] == $kiotSetting->data['branchId']) {
+                    $this->inventories()->update([
+                        'stock_quantity' => $inventory['onHand']
+                    ]);
+                }
+            }
+        }
+    }
+
+    public function putKiotWarehouse($decrease = true) {
+        $productResource = new ProductResource(App::make(Client::class));
+        $kiotSetting = App::get('KiotConfig');
+        if ($kiotSetting->data['branchId']) {
+            $client = App::make(Client::class);
+            $productResource = new ProductResource($client);
+            try {
+                $product = $productResource->getByCode($this->sku);
+            } catch (\Throwable $th) {
+                Log::error($th);
+                return;
+            }
+            $inventories = $product->getInventories()->getItems();
+            foreach ($inventories as $inventory) {
+                if ($inventory->getBranchId() == $kiotSetting->data['branchId']) {
+                    $quantity = $decrease ? $inventory->getOnHand() - 1 : $inventory->getOnHand() + 1;
+                    if ($quantity < 0) {
+                        throw new InventoryOutOfStockException();
+                    }
+                    $inventory->setOnHand($quantity);
+                }
+            }
+            $product->setInventories(new InventoryCollection($inventories));
+            $productResource->update($product);
+        }
     }
 }

@@ -23,8 +23,7 @@
                                     </div><!-- End .deal-countdown -->
                                 </div><!-- End .deal-content -->
                                 <div class="row deal-products">
-                                    @component('components.client.flash-sale-product-card', compact('product'))
-                                    @endcomponent
+                                    <livewire:client.product-card-component :product="$product"></livewire:client.product-card-component>
                                 </div>
                             </div>
                         @endforeach

@@ -28,4 +28,10 @@ class LoginRequest extends FormRequest
             'password' => 'required'
         ];
     }
+
+    public function messages() {
+        return [
+            'username.username_exists' => 'Tài khoản không tồn tại'
+        ];
+    }
 }

@@ -1,19 +1,21 @@
 <aside class="col-lg-3">
     <div class="sidebar">
         <div class="widget widget-search">
-            <h3 class="widget-title">Search</h3><!-- End .widget-title -->
+            <h3 class="widget-title">{{ trans('labels.search') }}</h3><!-- End .widget-title -->
 
             <form action="#">
-                <label for="ws" class="sr-only">Search in blog</label>
-                <input type="search" class="form-control" name="ws" id="ws" placeholder="Search in blog"
-                    required>
+                <label for="ws" class="sr-only">{{ trans('labels.search_in_blog') }}</label>
+                <input type="search" class="form-control" name="ws" id="ws"
+                    placeholder="{{ trans('labels.search_in_blog') }}" required>
                 <button type="submit" class="btn"><i class="icon-search"></i><span
-                        class="sr-only">Search</span></button>
+                        class="sr-only">{{ trans('labels.search') }}</span></button>
             </form>
         </div><!-- End .widget -->
-        @include('landingpage.layouts.pages.blog.components.detail.category_list')
-
-        @include('landingpage.layouts.pages.blog.components.detail.popular_blogs')
+        @php
+            $blog = isset($blog) ? $blog : null;
+        @endphp
+        <livewire:client.blog-category-list-component></livewire:client.blog-category-list-component>
+        <livewire:client.popular-post-component :blog="$blog"></livewire:client.popular-post-component>
 
         <div class="widget widget-banner-sidebar">
             <div class="banner-sidebar-title">ad box 280 x 280</div><!-- End .ad-title -->

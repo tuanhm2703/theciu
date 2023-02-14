@@ -5,12 +5,13 @@ namespace App\Observers;
 use App\Enums\OrderStatus;
 use App\Enums\OrderSubStatus;
 use App\Events\OrderCanceled;
+use App\Events\OrderCreatedEvent;
 use App\Models\Order;
 use Exception;
 
 class OrderObserver {
     public function created(Order $order) {
-        $order->createOrderHistory();
+        event(new OrderCreatedEvent($order));
     }
     public function creating(Order $order) {
         $order->order_number = (time() + (10 * 24 * 60 * 60))."";

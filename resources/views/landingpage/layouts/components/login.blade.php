@@ -17,14 +17,13 @@
 
         <div class="form-footer">
             <button type="submit" class="btn btn-outline-primary-2">
-                <span>LOG IN</span>
+                <span>{{ trans('labels.login') }}</span>
                 <i class="icon-long-arrow-right"></i>
             </button>
 
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="signin-remember">
-                <label class="custom-control-label" for="signin-remember">Remember
-                    Me</label>
+                <label class="custom-control-label" for="signin-remember">{{ trans('labels.remember_me') }}</label>
             </div><!-- End .custom-checkbox -->
 
             <a href="#" class="forgot-link">{{ trans('labels.forgot_password') }}
@@ -37,13 +36,13 @@
                 <div class="col-sm-6">
                     <a href="{{ route('client.auth.google.login') }}" class="btn btn-login btn-g">
                         <i class="icon-google"></i>
-                        Login With Google
+                        {{ trans('labels.login_with_google') }}
                     </a>
                 </div><!-- End .col-6 -->
                 <div class="col-sm-6">
                     <a href="{{ route('client.auth.facebook.login') }}" class="btn btn-login btn-f">
                         <i class="icon-facebook-f"></i>
-                        Login With Facebook
+                        {{ trans('labels.login_with_facebook') }}
                     </a>
                 </div><!-- End .col-6 -->
             </div><!-- End .row -->
@@ -70,33 +69,31 @@
         </div><!-- End .form-group -->
         <div class="form-footer">
             <button type="submit" class="btn btn-outline-primary-2">
-                <span>LOG IN</span>
+                <span>{{ trans('labels.signin') }}</span>
                 <i class="icon-long-arrow-right"></i>
             </button>
 
             <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="signin-remember">
-                <label class="custom-control-label" for="signin-remember">Remember
-                    Me</label>
+                <label class="custom-control-label" for="signin-remember">{{ trans('labels.remember_me') }}</label>
             </div><!-- End .custom-checkbox -->
 
-            <a href="#" class="forgot-link">{{ trans('labels.forgot_password') }}
-                ?</a>
+            <a href="#" class="forgot-link">{{ trans('labels.forgot_password') }} ?</a>
         </div><!-- End .form-footer -->
         {!! Form::close() !!}
         <div class="form-choice">
-            <p class="text-center">or sign in with</p>
+            <p class="text-center">{{ trans('labels.or_signin_with') }}</p>
             <div class="row">
                 <div class="col-sm-6">
                     <a href="{{ route('client.auth.google.login') }}" class="btn btn-login btn-g">
                         <i class="icon-google"></i>
-                        Login With Google
+                        {{ trans('labels.login_with_google') }}
                     </a>
                 </div><!-- End .col-6 -->
                 <div class="col-sm-6">
                     <a href="{{ route('client.auth.facebook.login') }}" class="btn btn-login btn-f">
                         <i class="icon-facebook-f"></i>
-                        Login With Facebook
+                        {{ trans('labels.login_with_facebook') }}
                     </a>
                 </div><!-- End .col-6 -->
             </div><!-- End .row -->

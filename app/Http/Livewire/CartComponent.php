@@ -2,24 +2,19 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\AddressType;
-use App\Enums\OrderStatus;
-use App\Enums\PaymentStatus;
-use App\Exceptions\InventoryOutOfStockException;
-use App\Http\Services\Momo\MomoService;
-use App\Http\Services\Payment\PaymentService;
+use App\Http\Services\Checkout\CheckoutModel;
+use App\Http\Services\Checkout\CheckoutService;
 use App\Http\Services\Shipping\GHTKService;
 use App\Http\Services\Shipping\Models\DeliveryData;
 use App\Models\Address;
 use App\Models\Cart;
-use App\Models\Config;
 use App\Models\Inventory;
 use App\Models\PaymentMethod;
+use App\Models\Voucher;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
-use MService\Payment\Shared\Constants\RequestType;
 
 class CartComponent extends Component {
     public $cart;
@@ -39,17 +34,30 @@ class CartComponent extends Component {
     public $shipping_service_id;
     public $payment_methods;
     public $payment_method_id;
+    public $item_selected = [];
+    public $total;
+
+    public $freeship_vouchers;
+
+    public $order_vouchers;
+
+    public $order_voucher_id;
+
+    public $vouchers;
+    public $order_voucher;
 
     protected $rules = [
         'service_id' => 'required',
         'payment_method_id' => 'required',
-        'address' => 'required'
+        'address' => 'required',
+        'item_selected' => 'array|min:1'
     ];
 
     protected $messages = [
         'service_id.required' =>  'Vui lòng chọn :attribute',
         'payment_method_id.required' => 'Vui lòng chọn :attribute',
-        'address.required' => 'Vui lòng chọn :attribute '
+        'address.required' => 'Vui lòng chọn :attribute',
+        'item_selected.min' => 'Vui lòng chọn ít nhất 1 sản phẩm'
     ];
 
 
@@ -79,6 +87,18 @@ class CartComponent extends Component {
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
         $this->payment_methods = PaymentMethod::active()->with('image:imageable_id,path')->get();
+        $this->vouchers = Voucher::available()->get();
+        $this->updateVoucherDisableStatus();
+    }
+
+    private function updateVoucherDisableStatus() {
+        foreach($this->vouchers as $voucher) {
+            if($voucher->canApplyForCustomer(customer()) && count($this->item_selected) > 0) {
+                $voucher->disabled = false;
+            } else {
+                $voucher->disabled = true;
+            }
+        }
     }
 
     public function render() {
@@ -100,74 +120,19 @@ class CartComponent extends Component {
     public function checkout() {
         $this->validate();
         $this->error = '';
-        DB::beginTransaction();
-        $customer = auth('customer')->user();
+        $checkoutModel = new CheckoutModel([
+            'address' => $this->address,
+            'cart' => $this->cart,
+            'shipping_fee' => $this->shipping_fee,
+            'payment_method_id' => $this->payment_method_id,
+            'shipping_service_id' => $this->shipping_service_id,
+            'item_selected' => $this->item_selected,
+            'order_voucher_id' => $this->order_voucher_id
+        ]);
         try {
-            $order = $customer->orders()->create([
-                'total' => 0,
-                'subtotal' => 0,
-                'origin_subtotal' => 0,
-                'shipping_fee' => $this->shipping_fee,
-                'order_status' => OrderStatus::WAIT_TO_ACCEPT,
-                'payment_method_id' => $this->payment_method_id
-            ]);
-            $order->addresses()->create([
-                'type' => AddressType::SHIPPING,
-                'details' => $this->address->details,
-                'province_id' => $this->address->province_id,
-                'district_id' => $this->address->district_id,
-                'ward_id' => $this->address->ward_id,
-                'full_address' => $this->address->full_address,
-                'fullname' => $this->address->fullname,
-                'phone' => $this->address->phone,
-                'featured' => 1
-            ]);
-            foreach ($this->cart->inventories as $inventory) {
-                $order->inventories()->attach([
-                    $inventory->id => [
-                        'product_id' => $inventory->product_id,
-                        'quantity' => $inventory->pivot->quantity,
-                        'origin_price' => $inventory->price,
-                        'promotion_price' => $inventory->sale_price,
-                        'total' => $inventory->sale_price * $inventory->pivot->quantity,
-                        'title' => $inventory->title,
-                        'name' => $inventory->name
-                    ]
-                ]);
-                if ($inventory->stock_quantity  - $inventory->pivot->quantity < 0)
-                    throw new InventoryOutOfStockException("Sản phẩm $inventory->name không đủ số lượng", 409);
-                $inventory->update([
-                    'stock_quantity' => DB::raw("stock_quantity - " . $inventory->pivot->quantity)
-                ]);
-            }
-            $order->update([
-                'total' => $order->inventories()->sum('order_items.total') + $order->shipping_fee,
-                'subtotal' => $order->inventories()->sum('order_items.total'),
-                'origin_subtotal' => $order->inventories()->sum(DB::raw('order_items.origin_price * order_items.quantity')),
-            ]);
-            $order->shipping_order()->create([
-                'shipping_service_id' => $this->shipping_service_id,
-                'to_address' => $this->address->full_address,
-                'shipping_service_code' => $this->service_id,
-                "order_value" => $order->subtotal,
-                'pickup_address_id' => Config::first()->pickup_address->id,
-                "cod_amount" => $order->subtotal,
-                "total_fee" => $order->subtotal,
-                'ship_at_office_hour' => 0,
-            ]);
-            $order->payment()->create([
-                'customer_id' => $customer->id,
-                'payment_method_id' => $this->payment_method_id,
-                'amount' => $order->total,
-                'order_number' => $order->order_number,
-                'payment_status' => PaymentStatus::PENDING
-            ]);
-            $this->cart->inventories()->sync([]);
-            $url = PaymentService::checkout($order);
-            DB::commit();
-            return redirect()->to($url);
+            $redirectUrl = CheckoutService::checkout($checkoutModel);
+            return redirect()->to($redirectUrl);
         } catch (\Throwable $th) {
-            DB::rollBack();
             Log::error($th);
             if ($th->getCode() !== 500) {
                 $this->error = $th->getMessage();
@@ -193,15 +158,16 @@ class CartComponent extends Component {
 
     private function calculateShippingInfo($shipping_service_type) {
         $shipping_service_type = (object) $shipping_service_type;
+        $package_info = $this->cart->getPackageInfoBySelectedItems($this->item_selected);
         $deliveryData = new DeliveryData(
             $this->address,
             $shipping_service_type->service_id,
             $shipping_service_type->service_type_id,
-            $this->cart->total(),
-            $this->cart->package_info->weight,
-            $this->cart->package_info->length,
-            $this->cart->package_info->width,
-            $this->cart->package_info->height
+            $this->cart->getTotalWithSelectedItems($this->item_selected),
+            $package_info->weight,
+            $package_info->length,
+            $package_info->width,
+            $package_info->height
         );
         $fee = App::make(GHTKService::class)->calculateDeliveryFee($deliveryData)->total;
         $date = App::make(GHTKService::class)->calculateDeliveryTime($deliveryData)->format('d/m/Y');
@@ -234,14 +200,24 @@ class CartComponent extends Component {
         $this->emitTo('header-cart-component', 'cart:refresh');
     }
 
-    private function updateOrderInfo(Address $address = null) {
-         $this->shipping_service_types = App::make(GHTKService::class)->getShipServices($this->address);
-            foreach ($this->shipping_service_types as $shipping_service_type) {
-                $data = $this->calculateShippingInfo($shipping_service_type);
-                $shipping_service_type->fee = $data['fee'];
-                $shipping_service_type->delivery_date = $data['date'];
-            }
+    public function updateOrderInfo(Address $address = null) {
+        $this->shipping_service_types = $this->address ? App::make(GHTKService::class)->getShipServices($this->address) : [];
+        foreach ($this->shipping_service_types as $shipping_service_type) {
+            $data = $this->calculateShippingInfo($shipping_service_type);
+            $shipping_service_type->fee = $data['fee'];
+            $shipping_service_type->delivery_date = $data['date'];
+        }
+        if(count($this->shipping_service_types) > 0) {
             $this->service_id = $this->shipping_service_types[0]->service_id;
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
+        }
+        $this->updateVoucherDisableStatus();
+    }
+
+    public function updated($name, $value) {
+        if($name == 'order_voucher_id') {
+            $this->order_voucher = Voucher::find($value);
+            $this->updateOrderInfo($this->address);
+        }
     }
 }

@@ -85,5 +85,15 @@
 </div>
 @push('js')
     @include('admin.pages.product.form.assets._script')
-    <script></script>
+    <script>
+        if($('input[name=is_reorder]:checked').val() == 1) {
+            $('#reorder-day-selector').removeClass('d-none')
+        }
+        $('input[name=is_reorder]').on('change', (e) => {
+            $('#reorder-day-selector').addClass('d-none')
+            if(e.target.value == 1) {
+                $('#reorder-day-selector').removeClass('d-none')
+            }
+        })
+    </script>
 @endpush

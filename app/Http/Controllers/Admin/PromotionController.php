@@ -186,4 +186,11 @@ class PromotionController extends Controller {
             'message' => 'Cập nhật danh sách sản phẩm khuyến mãi thành công'
         ]);
     }
+
+    public function destroy(Promotion $promotion) {
+        $promotion->delete();
+        return BaseResponse::success([
+            'message' => 'Xoá chương trình thành công'
+        ]);
+    }
 }

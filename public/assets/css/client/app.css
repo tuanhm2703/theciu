@@ -339,7 +339,8 @@
     left: 12px;
     background: #d8d8d8;
 }
-.last-row .shipping-order-history-content, .last-row .shipping-order-history-status {
+.last-row .shipping-order-history-content,
+.last-row .shipping-order-history-status {
     color: #26aa99;
 }
 .shipping-order-history-content {
@@ -348,7 +349,7 @@
     justify-content: flex-start;
     flex-wrap: nowrap;
     width: 100%;
-    color: rgba(0,0,0,.54);
+    color: rgba(0, 0, 0, 0.54);
     font-size: 14px;
 }
 
@@ -374,7 +375,7 @@
     width: 120px;
     margin-top: 3px;
     flex-shrink: 0;
-    color: rgba(0,0,0,.8);
+    color: rgba(0, 0, 0, 0.8);
     padding: 0 12px;
     width: fit-content;
     vertical-align: text-top;
@@ -395,6 +396,115 @@
     justify-content: space-between;
     box-sizing: border-box;
     background-color: #fffcf5;
-    border-top: 1px dotted rgba(0,0,0,.09);
+    border-top: 1px dotted rgba(0, 0, 0, 0.09);
+    padding: 1rem;
+}
+@media screen and (max-width: 768px) {
+    .product-media a.product-image {
+        height: 30vh;
+    }
+}
+
+.product-detail-content a {
+    line-height: 1.2rem;
+}
+.social-link i {
+    width: 10%;
+    display: inline-block;
+}
+.social-link svg {
+    width: 1rem;
+}
+.btn-product-icon.on-wishlist {
+    color: #fff !important;
+    background-color: #c96 !important;
+}
+.custom-checkbox:checked {
+    accent-color: indianred;
+}
+.summary-title div {
+    border-left: 2px solid #333;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.payment-method-row {
+    line-height: 3rem;
+}
+.product-video-item {
+    cursor: pointer;
+}
+
+.voucher-radio .custom-control-label {
+    height: 12vh;
+    border: 0.0625rem solid transparent;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 1px 4px 0px;
+    border-left: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 0 !important;
+    margin: 0 !important;
+}
+
+.voucher-radio .custom-control-label::before {
+    border-radius: 50%;
+    top: 50% !important;
+    transform: translate(0, -50%);
+    left: 96%;
+}
+.voucher-radio .custom-control-label::after {
+    top: 50% !important;
+    left: 96.9% !important;
+    transform: translate(0, -50%);
+}
+.voucher-radio .voucher-label-disabled {
+    opacity: 0.4;
+}
+
+.voucher-radio {
+    padding: 0 !important;
+}
+.voucher-type-label {
+    width: 21%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    border-left-style: dashed;
+    margin-right: 1rem;
+}
+.order-voucher-label {
+    background: #ee4d2d;
+}
+.shipping-voucher-label {
+    background: #00bfa5;
+}
+.voucher-name {
+    font-weight: 600;
+}
+.voucher-description {
+    margin-top: 0.875rem;
+    padding: 2px;
+    color: red;
+    border: 1px solid red;
+    border-radius: 4px;
+}
+.order-payment-info td {
+    font-size: 1.35rem;
+    border: none !important;
+    height: 3rem !important;
+}
+.order-voucher-discount-tag {
+    position: relative;
+}
+.order-voucher-discount-tag svg {
+    position: absolute;
+    width: 100%;
+}
+.order-voucher-discount-tag span {
+    color: rgb(249, 58, 58);
+    font-size: 1.3rem;
     padding: 1rem;
 }

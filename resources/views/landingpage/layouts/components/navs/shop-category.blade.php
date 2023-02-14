@@ -1,12 +1,12 @@
 <li>
-    <a href="#" class="sf-with-ul">New</a>
+    <a href="#">New</a>
 
     <div class="megamenu megamenu-sm">
         <div class="row no-gutters">
             <div class="col-md-6">
                 <div class="menu-col">
                     <ul>
-                        @foreach ($shop_categories as $c)
+                        @foreach ($new_arrival_categories as $c)
                             <li>
                                 <a href="{{ route('client.product.index', ['category' => $c->slug]) }}">{{ $c->name }}</a>
                             </li>
@@ -22,7 +22,7 @@
                         "autoplay": true,
                         "autoplayTimeout": 3000
                     }'>
-                    @foreach ($shop_categories as $c)
+                    @foreach ($new_arrival_categories as $c)
                         <a href="{{ route('client.product.index', ['category' => $c->slug]) }}">
                             <img src="{{ optional($c->image)->path_with_domain }}" alt="Banner">
                             <div class="banner-content banner-content-bottom">

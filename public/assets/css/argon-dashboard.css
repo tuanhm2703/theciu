@@ -3545,7 +3545,7 @@ textarea.form-control-lg {
   box-shadow: 0 0 0 0.2rem rgba(38, 175, 116, 0.5);
 }
 .btn-success:disabled, .btn-success.disabled {
-  color: #000;
+  color: #fff;
   background-color: #2dce89;
   border-color: #2dce89;
 }

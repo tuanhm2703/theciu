@@ -74,6 +74,34 @@
     </div>
     <div class="card-body pt-0">
         <div class="promotion-setting-header row">
+            <div class="col-3">
+                <h6>Thiết lập hàng loạt</h6>
+                <div><strong>0</strong> Sản phẩm đã chọn</div>
+            </div>
+            <div class="col-2">
+                <label for="">Khuyến mãi</label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="col-2">
+                <label for="">
+                    Số lượng sản phẩm khuyến mãi
+                  </label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="col-2">
+                <label for="">
+                    Giới hạn mua tối đa của mỗi khách hàng
+                  </label>
+                <input type="text" class="form-control">
+            </div>
+            <div class="col-2 d-flex justify-content-center align-items-center">
+                <button class="btn btn-default">Cập nhật hàng loạt</button>
+            </div>
+            <div class="col-1 d-flex justify-content-center align-items-center">
+                <button class="btn btn-default">Xoá</button>
+            </div>
+        </div>
+        <div class="promotion-setting-header row mt-3">
             @include('admin.pages.promotion.product.components.promotion-table-header')
         </div>
         <div class="promotion-setting-wrapper">

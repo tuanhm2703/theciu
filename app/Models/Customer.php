@@ -23,6 +23,10 @@ class Customer extends User {
         'socialite_account_id'
     ];
 
+    public function product_wishlists() {
+        return $this->hasMany(Wishlist::class)->where('wishlistable_type', (new Product)->getMorphClass());
+    }
+
     public function cart() {
         return $this->hasOne(Cart::class);
     }

@@ -72,36 +72,5 @@
 
         <div class="container">
         </div><!-- End .container -->
-
-        <div class="blog-posts mb-5">
-            <div class="container">
-                <h2 class="title text-center mb-4">Bài viết</h2><!-- End .title text-center -->
-
-                <div class="owl-carousel owl-simple mb-3" data-toggle="owl"
-                    data-owl-options='{
-                            "nav": false,
-                            "dots": true,
-                            "items": 3,
-                            "margin": 20,
-                            "loop": false,
-                            "responsive": {
-                                "0": {
-                                    "items":1
-                                },
-                                "600": {
-                                    "items":2
-                                },
-                                "992": {
-                                    "items":3
-                                }
-                            }
-                        }'>
-                    @foreach ($blogs as $blog)
-                        @component('components.client.blog-card', compact('blog'))
-                        @endcomponent
-                    @endforeach
-                </div><!-- End .owl-carousel -->
-            </div><!-- End .container -->
-        </div><!-- End .blog-posts -->
     </main><!-- End .main -->
 @endsection

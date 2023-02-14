@@ -22,5 +22,6 @@ return [
     'order_list' => 'Order list',
     'order_details' => "Order's details",
     'seo_management' => 'Order management',
-    'page_management' => 'Page management'
+    'page_management' => 'Page management',
+    'sync_warehouse' => 'Sync warehouse'
 ];

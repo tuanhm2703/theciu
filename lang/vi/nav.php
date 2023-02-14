@@ -22,5 +22,6 @@ return [
     'order_list' => 'Danh sách đơn hàng',
     'order_details' => "Chi tiết đơn hàng",
     'seo_management' => 'Quản lý SEO',
-    'page_management' => 'Quản lý trang'
+    'page_management' => 'Quản lý trang',
+    'sync_warehouse' => 'Đồng bộ tồn kho'
 ];

@@ -39,7 +39,8 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "LaravelFrontendPresets\\ArgonPreset\\": "presets/argon/src",
-            "MService\\Payment\\": "app/Http/Services/Momo/MService/Payment"
+            "MService\\Payment\\": "app/Http/Services/Momo/MService/Payment",
+            "VienThuong\\KiotVietClient\\": "app/Http/Services/kiotviet-master/src"
         },
         "files": [
             "app/helpers/Helper.php"

@@ -19,11 +19,7 @@
         </div><!-- End .header-left -->
 
         <div class="header-right">
-            <a href="wishlist.html" class="wishlist-link">
-                <i class="icon-heart-o"></i>
-                <span class="wishlist-count">3</span>
-                <span class="wishlist-txt"></span>
-            </a>
+            <livewire:client.header-wishlist-component></livewire:client.header-wishlist-component>
             <livewire:header-cart-component></livewire:header-cart-component>
             @include('landingpage.layouts.components.navs.auth')
         </div>

@@ -3359,7 +3359,7 @@ p {
 .header-6 .btn-primary:not(:disabled):not(.disabled):active,
 .header-6 .btn-primary:not(:disabled):not(.disabled).active,
 .header-6 .show > .btn-primary.dropdown-toggle {
-  color: #c15454;
+  color: #ee4d2d;
   background-color: transparent;
 }
 @media screen and (min-width: 992px) {

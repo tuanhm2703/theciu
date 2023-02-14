@@ -40,4 +40,9 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
+    'kiotviet' => [
+        'client_id' => env('KIOTVIET_CLIENT_ID'),
+        'client_secret' => env('KIOTVIET_CLIENT_SECRET'),
+        'retailer' => env('KIOTVIET_RETAILER')
+    ]
 ];

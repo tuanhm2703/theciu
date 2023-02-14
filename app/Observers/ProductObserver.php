@@ -14,6 +14,7 @@ class ProductObserver
         $product->slug = Str::snake(stripVN($product->name), '-');
     }
 
+
     public function updating(Product $product) {
         if($product->isDirty('name')) {
             $product->slug = Str::snake(stripVN($product->name), '-');

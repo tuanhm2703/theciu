@@ -1,5 +1,5 @@
 <li>
-    <a href="#" class="sf-with-ul">Sale off</a>
+    <a href="{{ route('client.product.sale_off') }}">Sale off</a>
 
     <div class="megamenu megamenu-sm">
         <div class="row no-gutters">

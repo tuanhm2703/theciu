@@ -1,5 +1,5 @@
 <li>
-    <a href="#" class="sf-with-ul">Sản phẩm</a>
+    <a href="#">Sản phẩm</a>
 
     <ul>
         @foreach ($product_categories as $c)

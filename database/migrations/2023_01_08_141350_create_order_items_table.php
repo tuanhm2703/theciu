@@ -23,6 +23,7 @@ return new class extends Migration
             $table->float('origin_price', 20);
             $table->float('promotion_price', 20);
             $table->float('total', 20);
+            $table->boolean('is_reorder')->default(0);
             $table->foreign('inventory_id')->references('id')->on('inventories');
             $table->foreign('product_id')->references('id')->on('products');
             $table->foreign('order_id')->references('id')->on('orders');

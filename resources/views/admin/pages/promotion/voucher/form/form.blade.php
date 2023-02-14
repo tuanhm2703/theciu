@@ -129,6 +129,9 @@
         .selection {
             height: 100%;
         }
+        .custom-control-label {
+            line-height: 1rem;
+        }
     </style>
 @endpush
 <div class="card mb-4 container">
@@ -139,10 +142,10 @@
     </div>
     <div class="card-body px-0 pt-0 pb-2">
         <div class="row">
-            <div class="col-md-2 d-flex align-items-center justify-content-end">
+            <div class="col-4 col-lg-2 d-flex align-items-center justify-content-end">
                 {!! Form::label('voucher_type_id', 'Loại khuyến mãi:', ['class' => 'custom-control-label']) !!}
             </div>
-            <div class="col-md-10">
+            <div class="col-8 col-lg-10">
                 @foreach ($voucher_types as $type)
                     <article class="feature1">
                         {!! Form::radio('voucher_type_id', $type->id, true, ['id' => "radio-btn-$type->id"]) !!}
@@ -163,26 +166,26 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-2 vertical-align-center justify-content-end">
+            <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
                 {!! Form::label('name', 'Tên chương trình:', ['class' => 'm-0 custom-control-label']) !!}
             </div>
-            <div class="col-md-4">
+            <div class="col-8 col-lg-4">
                 {!! Form::text('name', null, ['class' => 'form-control', 'required']) !!}
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-2 vertical-align-center justify-content-end">
+            <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
                 {!! Form::label('code', 'Mã voucher:', ['class' => 'custom-control-label m-0']) !!}
             </div>
-            <div class="col-md-4">
+            <div class="col-8 col-lg-4">
                 {!! Form::text('code', null, ['class' => 'form-control', 'required']) !!}
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-2 vertical-align-center justify-content-end">
+            <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
                 {!! Form::label('begin', 'Thời gian sử dụng mã', ['class' => 'm-0 custom-control-label']) !!}
             </div>
-            <div class="col-md-4 d-flex">
+            <div class="col-8 col-lg-4 d-flex">
                 {!! Form::date('begin', null, ['class' => 'form-control datepicker me-3', 'required', 'placeholder' => 'Chọn ngày bắt đầu']) !!}
                 {!! Form::date('end', null, ['class' => 'form-control datepicker', 'required', 'placeholder' => 'Chọn ngày kết thúc']) !!}
             </div>
@@ -195,13 +198,13 @@
     </div>
     <div class="card-body px-0 pt-0 pb-2">
         <div class="row">
-            <div class="col-md-2 vertical-align-center justify-content-end">
-                {!! Form::label('discount_type', 'Loại giảm giá | Mức giảm:', ['class' => 'm-0 custom-control-label']) !!}
+            <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
+                {!! Form::label('discount_type', 'Loại giảm giá | Mức giảm:', ['class' => 'm-0 custom-control-label text-end']) !!}
             </div>
-            <div class="col-md-4 d-flex">
+            <div class="col-8 col-lg-4 d-flex">
                 {!! Form::select(
                     'discount_type',
-                    ['percentage' => 'Phần trăm', 'amount' => 'Giảm tiền'],
+                    App\Enums\VoucherDiscountType::getDiscountTypeOptions(),
                     [],
                     ['class' => 'select2 form-control'],
                 ) !!}
@@ -209,10 +212,10 @@
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-2 text-end">
+            <div class="col-4 col-lg-2 text-end">
                 {!! Form::label('max_discount', 'Mức giảm tối đa:', ['class' => 'm-0 custom-control-label']) !!}
             </div>
-            <div class="col-md-3 d-flex justify-content-between">
+            <div class="col-6 col-lg-3 d-flex justify-content-between">
                 <div class="form-check mb-3">
                     {!! Form::radio('is_limit_max_discount', 1, true, ['class' => 'form-check-input']) !!}
                     {!! Form::label('is_limit_max_discount', 'Giới hạn', ['class' => 'custom-control-label']) !!}
@@ -225,33 +228,33 @@
             </div>
         </div>
         <div class="row">
-            <div class="offset-md-2 col-md-4">
+            <div class="offset-4 offset-lg-2 col-8 col-lg-4">
                 {!! Form::text('max_discount_amount', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào']) !!}
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-2 vertical-align-center justify-content-end">
+            <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
                 {!! Form::label('min_order_value', 'Giá trị đơn hàng tối thiểu:', ['class' => 'custom-control-label m-0']) !!}
             </div>
-            <div class="col-md-4">
+            <div class="col-8 col-lg-4">
                 {!! Form::number('min_order_value', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required']) !!}
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-2 vertical-align-center justify-content-end">
+            <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
                 {!! Form::label('quantity', 'Lượt sử dụng tối đa:', ['class' => 'custom-control-label m-0']) !!}
             </div>
-            <div class="col-md-4">
+            <div class="col-8 col-lg-4">
                 {!! Form::number('quantity', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required']) !!}
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-2 vertical-align-center justify-content-end">
+            <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
                 {!! Form::label('customer_limit', 'Lượt sử dụng tối đa/Người mua:', [
                     'class' => 'custom-control-label m-0 text-end',
                 ]) !!}
             </div>
-            <div class="col-md-4">
+            <div class="col-8 col-lg-4">
                 {!! Form::number('customer_limit', 1, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required']) !!}
             </div>
         </div>

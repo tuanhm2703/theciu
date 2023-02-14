@@ -287,8 +287,8 @@ function isPhone($phone) {
     return preg_match('/(84|0[3|5|7|8|9])+([0-9]{8})\b/', $phone) > 0;
 }
 
-function format_currency($value) {
-    return number_format($value, 0, ',', '.');
+function format_currency($value, $decimal = 0) {
+    return number_format($value, $decimal, ',', '.');
 }
 
 function isRomanNumber($roman) {
@@ -369,4 +369,10 @@ function gen_uuid() {
 
 function getAppName() {
     return env('APP_NAME');
+}
+function checkAuthCustomer() {
+    return auth('customer')->check();
+}
+function customer() {
+    return checkAuthCustomer() ? auth('customer')->user() : null;
 }

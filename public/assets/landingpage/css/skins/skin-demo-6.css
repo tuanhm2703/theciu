@@ -8,7 +8,7 @@
     background-color: #c96 !important;
 }
 .bg-secondary {
-    background-color: #c15454 !important;
+    background-color: #ee4d2d !important;
 }
 a {
     color: #c96;
@@ -24,7 +24,7 @@ a:focus {
     color: #c96 !important;
 }
 .text-secondary {
-    color: #c15454 !important;
+    color: #ee4d2d !important;
 }
 .alert-primary {
     background-color: #c96;
@@ -49,7 +49,7 @@ a:focus {
 }
 .btn-video:hover,
 .btn-video:focus {
-    background-color: #c15454;
+    background-color: #ee4d2d;
 }
 .breadcrumb-item a:hover,
 .breadcrumb-item a:focus {
@@ -78,8 +78,8 @@ a:focus {
 .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #c15454;
-    border-color: #c15454;
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
     box-shadow: none;
 }
 .btn-primary.disabled,
@@ -90,8 +90,8 @@ a:focus {
 }
 .btn-secondary {
     color: #fff;
-    background-color: #c15454;
-    border-color: #c15454;
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
     box-shadow: none;
 }
 .btn-secondary:hover,
@@ -108,8 +108,8 @@ a:focus {
 .btn-secondary.disabled,
 .btn-secondary:disabled {
     color: #fff;
-    background-color: #c15454;
-    border-color: #c15454;
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
 }
 .btn-white {
     color: #333;
@@ -147,8 +147,8 @@ a:focus {
 .btn-white-2:not(:disabled):not(.disabled).active,
 .show > .btn-white-2.dropdown-toggle {
     color: #fff;
-    background-color: #c15454;
-    border-color: #c15454;
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
     box-shadow: none;
 }
 .btn-white-2.disabled,
@@ -493,8 +493,8 @@ a:focus {
 .btn-outline-white-2:not(:disabled):not(.disabled).active,
 .show > .btn-outline-white-2.dropdown-toggle {
     color: #fff;
-    background-color: #c15454;
-    border-color: #c15454;
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
     box-shadow: none;
 }
 .btn-outline-white-2.disabled,
@@ -653,7 +653,7 @@ a:focus {
     background-color: #c96;
 }
 .product-label.label-secondary {
-    background-color: #c15454;
+    background-color: #ee4d2d;
 }
 .product-label-text {
     color: #c96;
@@ -689,7 +689,7 @@ a:focus {
 }
 .product.product-4 .btn-product:hover,
 .product.product-4 .btn-product:focus {
-    background-color: #c15454;
+    background-color: #ee4d2d;
 }
 .product.product-5 .btn-product {
     color: #c96;

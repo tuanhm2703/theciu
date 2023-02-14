@@ -28,5 +28,11 @@ class OrderCanceledListener
     {
         $order = $event->order;
         $order->refund();
+        foreach($order->vouchers as $voucher) {
+            $voucher->increaseQuantity();
+        }
+        $order->restock();
+        $order->putKiotWarehouse(false);
+
     }
 }

@@ -14,6 +14,14 @@
             </div>
         </div>
     </div>
+    <div class="row d-none" id="reorder-day-selector">
+        <div class="offset-md-2">
+            <div>Tôi cần
+                {!! Form::number('reorder_days', null, ['class' => 'form-control d-inline', 'style' => 'width: 60px', 'min' => 7, 'max' => 15]) !!}
+                thời gian chuẩn bị hàng (tối thiểu: 7 ngày - tối đa: 15 ngày)
+            </div>
+        </div>
+    </div>
     <div class="row mt-3">
         <div class="col-md-2">
             {!! Form::label('condition', 'Tình trạng:', ['class' => 'custom-control-label']) !!}

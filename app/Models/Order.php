@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Request;
 use App\Enums\OrderCanceler;
 use App\Enums\PaymentStatus;
 use App\Http\Services\Payment\PaymentService;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Order extends Model {
@@ -51,7 +52,8 @@ class Order extends Model {
             'origin_price',
             'promotion_price',
             'title',
-            'name'
+            'name',
+            'is_reorder'
         ]);
     }
 
@@ -73,6 +75,13 @@ class Order extends Model {
 
     public function payment_method() {
         return $this->belongsTo(PaymentMethod::class);
+    }
+
+    public function vouchers() {
+        return $this->belongsToMany(Voucher::class, 'order_vouchers')->withPivot([
+            'amount',
+            'type'
+        ]);
     }
 
     public function pushShippingOrder() {
@@ -209,5 +218,29 @@ class Order extends Model {
     public function getCheckoutDescription() {
         $app_name = getAppName();
         return trans('order.description.checkout_description', ['appName' => $app_name, 'orderNumber' => $this->order_number]);
+    }
+
+    public function restock() {
+        $inventories = $this->inventories()->with('product')->get();
+        foreach ($inventories as $inventory) {
+            if ($inventory->pivot->is_reorder == 0) {
+                $inventory->update([
+                    'stock_quantity' => DB::raw("stock_quantity + " . $inventory->pivot->quantity)
+                ]);
+                $inventory->product->putKiotWarehouse(false);
+            }
+        }
+    }
+
+    public function removeStock() {
+        $inventories = $this->inventories()->with('product')->get();
+        foreach ($inventories as $inventory) {
+            if ($inventory->product->is_reorder == 0 || ($inventory->product->is_reorder == 1 && $inventory->stock_quantity  - $inventory->pivot->quantity < 0)) {
+                $inventory->update([
+                    'stock_quantity' => DB::raw("stock_quantity - " . $inventory->pivot->quantity)
+                ]);
+                $inventory->product->putKiotWarehouse(true);
+            }
+        }
     }
 }

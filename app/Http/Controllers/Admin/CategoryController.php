@@ -45,6 +45,13 @@ class CategoryController extends Controller {
         ]);
     }
 
+    public function destroy(Category $category) {
+        $category->delete();
+        return BaseResponse::success([
+            'message' => 'Xoá danh mục thành công'
+        ]);
+    }
+
     public function createProductCategory() {
         return view('admin.pages.product-category.form.create');
     }

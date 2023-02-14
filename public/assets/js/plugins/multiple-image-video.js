@@ -35,12 +35,13 @@
         }
         const className = `.${this[0].className}`;
         const initThumb = () => {
-            $(this).find('.thumb-label').remove()
-            $($(this).find('.apnd-img')[0]).append(`<div class="p-1 w-100 position-absolute fixed-bottom thumb-label" style="background-color: rgba(0,0,0,.3); font-size: 0.8em; font-weight: bold;">
+            $(this).find(".thumb-label").remove();
+            $($(this).find(".apnd-img")[0])
+                .append(`<div class="p-1 w-100 position-absolute fixed-bottom thumb-label" style="background-color: rgba(0,0,0,.3); font-size: 0.8em; font-weight: bold;">
             <span class="text-danger">*</span>
             <span class="text-white">Ảnh bìa</span>
-            </div>`)
-        }
+            </div>`);
+        };
         const printPreview = (preview, index) => {
             if (elemRef.type == "img") {
                 $(className).append(
@@ -51,19 +52,21 @@
             } else {
                 $(className).append(
                     `<div class='apnd-img'>
-                        <iframe width='50' height='50' src='${preview}' id='vid${index}' frameborder='0' allowfullscreen></iframe><i class='fa fa-close delfile'></i>
+                    <video width="100%"  id='vid${index}' controls>
+                        <source src="${preview}" type="video/mp4">
+                    </video><i class='fa fa-close delfile'></i>
                     </div>`
                 );
             }
-            if(elemRef.showThumb) initThumb()
+            if (elemRef.showThumb) initThumb();
             if (elemRef.sortable) {
                 $(this).sortable({
                     update: (event, ui) => {
-                        initThumb()
-                        elemRef.sortableOptions.update(event, ui)
-                    }
-                })
-            };
+                        initThumb();
+                        elemRef.sortableOptions.update(event, ui);
+                    },
+                });
+            }
         };
 
         var i = 0;

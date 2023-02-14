@@ -6,6 +6,7 @@
     font-style: normal; */
 /* } */
 html {
+    overflow-x: hidden;
     font-size: 62.5%;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -3218,7 +3219,7 @@ p {
 }
 .header-6 .header-middle {
     display: flex;
-    min-height: 84px;
+    height: 8vh;
     color: #777;
     font-weight: 400;
     font-size: 1.6rem;
@@ -3365,7 +3366,7 @@ p {
 .header-6 .btn-primary:not(:disabled):not(.disabled):active,
 .header-6 .btn-primary:not(:disabled):not(.disabled).active,
 .header-6 .show > .btn-primary.dropdown-toggle {
-    color: #c15454;
+    color: #ee4d2d;
     background-color: transparent;
 }
 @media screen and (min-width: 992px) {
@@ -3408,10 +3409,14 @@ p {
     .header-6 .logo {
         position: absolute;
         top: 50%;
-        left: 1rem;
-        transform: translate(0, -50%);
+        left: 50%;
+        transform: translate(-50%, -50%);
         margin-top: 0;
         margin-bottom: 0;
+        justify-content: center;
+    }
+    .header-6 .header-middle {
+        min-height: 50px;
     }
 }
 .header-7 .header-top {
@@ -5186,7 +5191,7 @@ p {
 }
 .title-lg {
     font-weight: 600;
-    font-size: 2.6rem;
+    font-size: 2;
     letter-spacing: -0.01em;
 }
 .title-sm {
@@ -6788,6 +6793,7 @@ p {
     border-radius: 50%;
     color: #c96;
     background-color: #fff;
+    border: none;
 }
 .btn-product-icon:before {
     font-family: "molla";

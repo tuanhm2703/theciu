@@ -96,7 +96,7 @@
                         </a>
                     </nav><!-- End .pager-nav --> --}}
 
-                    @include('landingpage.layouts.pages.blog.components.detail.related_posts')
+                    <livewire:client.related-blog-component :blog="$blog"></livewire:client.related-blog-component>
                     {{-- @include('landingpage.layouts.pages.blog.components.detail.comments')
                     @include('landingpage.layouts.pages.blog.components.detail.reply') --}}
                 </div><!-- End .col-lg-9 -->

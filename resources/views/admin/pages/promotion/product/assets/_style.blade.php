@@ -60,4 +60,7 @@
         border-radius: 5px;
         overflow: hidden;
     }
+    .promotion-setting-header label {
+        line-height: 1rem;
+    }
 </style>

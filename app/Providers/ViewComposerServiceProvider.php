@@ -31,16 +31,6 @@ class ViewComposerServiceProvider extends ServiceProvider {
      */
     public function boot() {
         View::composer(
-            'landingpage.layouts.pages.blog.components.detail.sidebar',
-            function ($view) {
-                $categories = Category::whereHas('blogs', function ($q) {
-                    $q->available();
-                })->withCount('blogs')->orderBy('blogs_count', 'desc')->get();
-                $popular_blogs = Blog::available()->orderBy('created_at', 'desc')->with('image', 'categories')->limit(4)->get();
-                $view->with(['categories' => $categories, 'popular_blogs' => $popular_blogs]);
-            }
-        );
-        View::composer(
             'landingpage.layouts.pages.blog.components.detail.category_list',
             function ($view) {
                 $categories = Category::whereHas('blogs', function ($q) {
@@ -67,12 +57,12 @@ class ViewComposerServiceProvider extends ServiceProvider {
             'landingpage.layouts.components.header-bottom',
             function ($view) {
                 $product_categories = Category::getMenuCategories();
-                $shop_categories = Category::whereHas('products')->with('image:imageable_id,path')->whereType(CategoryType::SHOP)->get();
+                $new_arrival_categories = Category::with('image:imageable_id,path')->whereType(CategoryType::TRENDING)->get();
                 $promotions = Promotion::available()->whereHas('products')->with(['products' => function ($q) {
-                    $q->available()->with('image:path,imageable_id')->select('id', 'slug', 'name');
+                    $q->withNeededProductCardData();
                 }])->get();
                 $blog_categories = Category::allActiveBlogCategories();
-                $view->with(['product_categories' => $product_categories, 'shop_categories' => $shop_categories, 'promotions' => $promotions, 'blog_categories' => $blog_categories]);
+                $view->with(['product_categories' => $product_categories, 'new_arrival_categories' => $new_arrival_categories, 'promotions' => $promotions, 'blog_categories' => $blog_categories]);
             }
         );
 
@@ -145,16 +135,6 @@ class ViewComposerServiceProvider extends ServiceProvider {
             }
         );
 
-        View::composer(
-            'landingpage.layouts.pages.blog.components.detail.related_posts',
-            function ($view) {
-                $blog = $view->getData()['blog'];
-                $related_blogs = Blog::whereHas('categories', function ($q) use ($blog) {
-                    $q->whereIn('categories.id', $blog->categories->pluck('id')->toArray());
-                })->with('image', 'categories')->where('blogs.id', '!=', $blog->id)->get();
-                $view->with(['related_blogs' => $related_blogs]);
-            }
-        );
         View::composer('landingpage.layouts.meta', function($view) {
             $keywords = Category::whereType(CategoryType::PRODUCT)->pluck('name')->toArray();
             $mKeywords = implode(', ', $keywords);

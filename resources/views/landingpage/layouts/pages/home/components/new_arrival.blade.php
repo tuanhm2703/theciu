@@ -4,9 +4,8 @@
     <div class="products">
         <div class="row justify-content-center">
             @foreach ($new_arrival_products as $product)
-                <div class="col-12 col-md-4 col-lg-3">
-                    @component('components.client.product-card', compact('product'))
-                    @endcomponent
+                <div class="col-6 col-md-4 col-lg-3">
+                    <livewire:client.product-card-component :product="$product"></livewire:client.product-card-component>
                 </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
             @endforeach
         </div><!-- End .row -->

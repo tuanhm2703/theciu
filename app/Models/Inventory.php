@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Inventory extends Model {
     use HasFactory, SoftDeletes, Imageable, InventoryScope;
@@ -103,5 +104,17 @@ class Inventory extends Model {
 
     public function getNameAttribute() {
         return $this->product->name . " - " . $this->title;
+    }
+
+    public function decreaseQuantity() {
+        $this->update([
+            'stock_quantity' => DB::raw('stock_quantity - 1')
+        ]);
+    }
+
+    public function increaseQuantity() {
+        $this->update([
+            'stock_quantity' => DB::raw('stock_quantity - +')
+        ]);
     }
 }

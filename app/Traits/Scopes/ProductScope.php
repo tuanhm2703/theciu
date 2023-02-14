@@ -23,8 +23,20 @@ trait ProductScope {
     }
 
     public function scopeAvailable($q) {
-        return $q->whereHas('inventories', function($q) {
-            $q->where('stock_quantity', '>', 0);
+        return $q->where(function ($q) {
+            $q->whereHas('inventories', function ($q) {
+                $q->where('stock_quantity', '>', 0);
+            })->orWhere('products.is_reorder', 1);
         });
+    }
+
+    public function scopeHasAvailablePromotions($q) {
+        return $q->whereHas('promotions', function ($q) {
+            $q->available();
+        });
+    }
+
+    public function scopeWithNeededProductCardData($q) {
+        return $q->available()->with('image:path,imageable_id')->select('id', 'slug', 'name');
     }
 }

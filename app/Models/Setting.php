@@ -8,7 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Setting extends Model {
     use HasFactory;
 
-    protected $casts [
+    protected $fillable = [
+        'name',
+        'data'
+    ];
+
+    protected $casts = [
         'data' => 'json'
     ];
+
+    public static function getKiotSetting() {
+        return Setting::firstOrCreate([
+            'name' => 'kiotviet_config'
+        ], [
+            'data' => [
+                'branchId' => null
+            ]
+        ]);
+    }
 }

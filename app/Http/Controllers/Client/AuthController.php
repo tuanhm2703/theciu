@@ -22,13 +22,19 @@ class AuthController extends Controller {
             'password'
         ]);
         if (isEmail($credentials['username'])) {
-            if (auth('customer')->attempt(['email' => $credentials['username'], 'password' => $credentials['password']])) {
-                return redirect()->back();
-            }
+            $customer = Customer::whereEmail($credentials['username'])->whereNull('provider')->first();
         } else {
-            if (auth('customer')->attempt(['phone' => $credentials['username'], 'password' => $credentials['password']])) {
-                return redirect()->back();
-            }
+            $customer = Customer::wherePhone($credentials['username'])->whereNull('provider')->first();
+        }
+        if (Hash::check($credentials['password'], $customer->password)) {
+            auth('customer')->login($customer);
+            return redirect()->back();
+        } else {
+            return BaseResponse::error([
+                'errors' => [
+                    'password' => ['Mật khẩu không đúng']
+                ]
+            ], 422);
         }
         return BaseResponse::error([
             'message' => 'Tài khoản hoặc mật khẩu không đúng'

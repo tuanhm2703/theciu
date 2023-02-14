@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\MediaType;
+use App\Events\ProductCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\Image;
@@ -51,6 +52,7 @@ class ProductController extends Controller {
                     }
                 }
             }
+            event(new ProductCreated($product));
             DB::commit();
             return BaseResponse::success([
                 'message' => "Tạo sản phẩm thành công"

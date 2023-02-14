@@ -21,11 +21,11 @@ return new class extends Migration
             $table->boolean('status')->default(1);
             $table->bigInteger('voucher_type_id')->unsigned();
             $table->foreign('voucher_type_id')->references('id')->on('voucher_types');
-            $table->float('value')->comment('discount_value');
-            $table->float('min_order_value')->comment('Minimum value of order to apply the voucher');
+            $table->float('value', 20)->comment('discount_value');
+            $table->float('min_order_value', 20)->comment('Minimum value of order to apply the voucher');
             $table->integer('customer_limit')->comment('Maximum times of a customer to use the voucher');
-            $table->integer('quantity');
-            $table->float('max_discount_amount')->comment('Max discount amount for voucher');
+            $table->integer('quantity')->unsigned();
+            $table->float('max_discount_amount', 20)->comment('Max discount amount for voucher');
             $table->dateTime('begin');
             $table->dateTime('end');
             $table->softDeletes();

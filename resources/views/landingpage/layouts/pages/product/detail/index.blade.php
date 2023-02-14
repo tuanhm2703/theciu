@@ -1,5 +1,5 @@
 @extends('landingpage.layouts.app', [
-    'metaTags' => $product->getMetaTags()
+    'metaTags' => $product->getMetaTags(),
 ])
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/nouislider/nouislider.css') }}">
@@ -20,28 +20,50 @@
             <div class="product-details-top">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="product-gallery product-gallery-vertical">
-                            <div class="row">
-                                <div class="col-2">
+                        <div class="product-gallery product-gallery-vertical h-100">
+                            <div class="row h-100">
+                                <div class="col-2 p-0">
                                     <div id="product-zoom-gallery" class="product-image-gallery d-block w-100">
+                                        @if ($product->video)
+                                            <video class="product-video-item"
+                                                data-video="{{ $product->video->path_with_domain }}" width="100%"
+                                                src="{{ $product->video->path_with_domain }}"></video>
+                                        @endif
                                         @foreach ($product->images as $image)
-                                            <a class="product-gallery-item product-image-check active w-100" href="#"
-                                                data-image="{{ $image->path_with_domain }}"
+                                            <a class="product-gallery-item product-image-check active w-100 p-0"
+                                                href="#" data-image="{{ $image->path_with_domain }}"
                                                 data-zoom-image="{{ $image->path_with_domain }}">
                                                 <img src="{{ $image->path_with_domain }}" alt="product side">
                                             </a>
                                         @endforeach
                                     </div><!-- End .product-image-gallery -->
                                 </div>
-                                <div class="col-10">
+                                <div class="col-10 h-100 d-flex align-items-center bg-light">
                                     <figure class="product-main-image">
-                                        <img id="product-zoom" src="{{ $product->images->first()->path_with_domain }}"
-                                            data-zoom-image="{{ $product->images->first()->path_with_domain }}"
-                                            alt="product image">
+                                        @if ($product->video)
+                                            <video id="video-previewer" width="100%" controls autoplay muted>
+                                                <source src="{{ $product->video->path_with_domain }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                            <div class="d-none">
+                                                <img id="product-zoom"
+                                                    src="{{ $product->images->first()->path_with_domain }}"
+                                                    data-zoom-image="{{ $product->images->first()->path_with_domain }}"
+                                                    alt="product image">
 
-                                        <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                            <i class="icon-arrows"></i>
-                                        </a>
+                                                <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                                    <i class="icon-arrows"></i>
+                                                </a>
+                                            </div>
+                                        @else
+                                            <img id="product-zoom" src="{{ $product->images->first()->path_with_domain }}"
+                                                data-zoom-image="{{ $product->images->first()->path_with_domain }}"
+                                                alt="product image">
+
+                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                                <i class="icon-arrows"></i>
+                                            </a>
+                                        @endif
                                     </figure><!-- End .product-main-image -->
                                 </div>
                             </div><!-- End .row -->
@@ -111,15 +133,13 @@
                         }
                     @endphp
                     <div class="d-flex">
-                        <label class="product-detail-label w-20 m-0"
-                            for="">{{ trans('labels.category') }}</label>
+                        <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.category') }}</label>
                         <div class="d-flex align-items-center product-detail-content">
                             {!! implode('<span class="px-3"> > </span>', $arr) !!}
                         </div>
                     </div>
                     <div class="d-flex">
-                        <label class="product-detail-label w-20 m-0"
-                            for="">{{ trans('labels.material') }}</label>
+                        <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.material') }}</label>
                         <div class="d-flex align-items-center product-detail-content">
                             {{ $product->material }}
                         </div>
@@ -143,7 +163,8 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.ship_from') }}</label>
+                        <label class="product-detail-label w-20 m-0"
+                            for="">{{ trans('labels.ship_from') }}</label>
                         <div class="d-flex align-items-center product-detail-content">
                             {{ App\Models\Config::first()->pickup_address->province->name }}
                         </div>
@@ -166,40 +187,9 @@
 
             <h2 class="title text-center mb-4">Sản phẩm tương tự</h2><!-- End .title text-center -->
 
-            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-                data-owl-options='{
-                    "nav": false,
-                    "dots": true,
-                    "margin": 20,
-                    "loop": false,
-                    "responsive": {
-                        "0": {
-                            "items":1
-                        },
-                        "480": {
-                            "items":2
-                        },
-                        "768": {
-                            "items":3
-                        },
-                        "992": {
-                            "items":4
-                        },
-                        "1200": {
-                            "items":4,
-                            "nav": true,
-                            "dots": false
-                        }
-                    }
-                }'>
-                @foreach ($other_products as $o_product)
-                    @component('components.client.product-card', ['product' => $o_product])
-                    @endcomponent
-                @endforeach
-            </div><!-- End .owl-carousel -->
+            <livewire:client.other-product-component :product="$product"></livewire:client.other-product-component>
         </div><!-- End .container -->
     </div><!-- End .page-content -->
 @endsection
 @push('js')
-    {{-- <script src="{{asset('assets/landingpage/js/product-detail.js')}}"></script> --}}
 @endpush

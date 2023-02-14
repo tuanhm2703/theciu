@@ -17,7 +17,7 @@
                 <li>
                     <a href="#">New</a>
                     <ul>
-                        @foreach ($shop_categories as $c)
+                        @foreach ($new_arrival_categories as $c)
                             <li>
                                 <a
                                     href="{{ route('client.product.index', ['category' => $c->slug]) }}">{{ $c->name }}</a>

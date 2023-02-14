@@ -7,8 +7,7 @@ use App\Models\Banner;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
 
-class BannerController extends Controller
-{
+class BannerController extends Controller {
     public function index() {
         return view('admin.pages.appearance.banner.index');
     }
@@ -19,7 +18,7 @@ class BannerController extends Controller
 
     public function store(Request $request) {
         $banner = Banner::create($request->all());
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $banner->createImages([$request->file('image')]);
         }
         return BaseResponse::success([
@@ -33,7 +32,7 @@ class BannerController extends Controller
 
     public function update(Banner $banner, Request $request) {
         $banner->update($request->all());
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $banner->image()->delete();
             $banner->createImages([$request->file('image')]);
         }

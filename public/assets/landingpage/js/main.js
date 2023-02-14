@@ -432,6 +432,8 @@ $(document).ready(function () {
     // Product Image Zoom plugin - product pages
     if ($.fn.elevateZoom) {
         $("body").on("click", ".check-product-thumb-image", (e) => {
+            $("#video-previewer").addClass('d-none')
+            $('.product-main-image div').removeClass('d-none')
             $("#product-zoom").removeData("elevateZoom");
             $("#product-zoom").attr("src", $(e.target).data("image"));
             $("#product-zoom").data("zoom-image", $(e.target).data("image"));
@@ -445,6 +447,11 @@ $(document).ready(function () {
                 responsive: true,
             });
         });
+        $("body").on("click", ".product-video-item", (e) => {
+            $("#video-previewer").removeClass('d-none')
+            $('.product-main-image div').addClass('d-none')
+            $('#video-previewer').attr('src', $(e.target).data('video'));
+        })
         $("#product-zoom").elevateZoom({
             gallery: "product-zoom-gallery",
             galleryActiveClass: "active",
@@ -457,6 +464,8 @@ $(document).ready(function () {
 
         // On click change thumbs active item
         $(".product-gallery-item").on("click", function (e) {
+            $("#video-previewer").addClass('d-none')
+            $('.product-main-image div').removeClass('d-none')
             $("#product-zoom-gallery").find("a").removeClass("active");
             $(this).addClass("active");
 

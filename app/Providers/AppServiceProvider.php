@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Http\Services\Momo\MomoService;
+use App\Models\Setting;
 use App\Services\BatchService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use VienThuong\KiotVietClient\Client;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -31,5 +33,13 @@ class AppServiceProvider extends ServiceProvider {
         Carbon::setLocale(App::getLocale());
         $this->app->singleton(BatchService::class);
         $this->app->singleton(MomoService::class);
+        $this->app->singleton(Client::class, function() {
+            $client = new Client(config('services.kiotviet.client_id'), config('services.kiotviet.client_secret'), [], config('services.kiotviet.retailer'));
+            $client->fetchAccessToken();
+            return $client;
+        });
+        $this->app->singleton('KiotConfig', function() {
+            return Setting::getKiotSetting();
+        });
     }
 }

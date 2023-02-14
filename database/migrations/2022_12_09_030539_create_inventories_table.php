@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('product_id');
-            $table->integer('stock_quantity');
+            $table->integer('stock_quantity')->unsigned();
             $table->string('sku')->nullable();
-            $table->float('price');
-            $table->float('promotion_price')->nullable();
+            $table->float('price', 20);
+            $table->float('promotion_price', 20)->nullable();
             $table->text('promotion_type')->nullable();
             $table->timestamp('promotion_from')->nullable();
             $table->timestamp('promotion_to')->nullable();

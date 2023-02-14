@@ -62,7 +62,7 @@
             required: false,
             initSrc: productVideoSrc !== '' ? [productVideoSrc] : [],
             onDeleted: (element) => {
-                element = $(element).parent().find('iframe')[0]
+                element = $(element).parent().find('source')[0]
                 deleteImages.push($(element).attr('src'))
             }
         })
@@ -242,7 +242,7 @@
     }
     const renderAttributeForm = (isNew = true) => {
         const maxNumberOfAttributes = 2;
-        if (isNew) attributes.push({
+        if (isNew && attributes.length < 2) attributes.push({
             values: [{
                 value: null,
                 inventories: []
@@ -291,13 +291,13 @@
         let output = ''
         if (attribute.values.length == 0) {
             return output += `<div class="col-md-4 mt-3">
-                                    <input class="form-control required attribute-value-input" placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
+                                    <input class="form-control required attribute-value-input" placeholder="Ví dụ: Trắng, đỏ, v.v" onChange="fillAttributeValue(this, event)"/>
                                 </div>`;
         }
         attribute.values.forEach((value, index) => {
             output += `<div class="col-md-4 mt-3">
                         <div class="d-flex align-items-center">
-                            <input required class="form-control attribute-value-input" ${value.value ? `value="${value.value}"` : ''} accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
+                            <input required class="form-control attribute-value-input" ${value.value ? `value="${value.value}"` : ''} accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onChange="fillAttributeValue(this, event)"/>
                                     <i class="fas fa-arrows-alt p-1 attribute-action-btn" style="color: lightgrey; font-size: 15px"></i>
                                     <i class="delete-attribute-value-btn far fa-trash-alt p-1 attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
                                     </div>
@@ -305,7 +305,7 @@
         })
         output += `<div class="col-md-4 mt-3">
                         <div class="d-flex align-items-center">
-                            <input class="form-control attribute-value-input last-value" accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
+                            <input class="form-control attribute-value-input last-value" accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onChange="fillAttributeValue(this, event)"/>
                                     <i class="fas fa-arrows-alt p-1 invisible attribute-action-btn" style="color: lightgrey; font-size: 15px"></i>
                                     <i class="last-delete-btn delete-attribute-value-btn far fa-trash-alt p-1 invisible attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
                                     </div>
@@ -338,7 +338,7 @@
                 'last-delete-btn')
             $(element).parents('.attribute-value-wrapper').find('.attribute-value-input').prop('required', true)
             $(element).parents('.attribute-value-wrapper').append(`<div class="col-md-4 mt-3">
-                                    <div class="d-flex align-items-center"><input class="form-control required attribute-value-input last-value" placeholder="Ví dụ: Trắng, đỏ, v.v" onkeyup="fillAttributeValue(this, event)"/>
+                                    <div class="d-flex align-items-center"><input class="form-control required attribute-value-input last-value" placeholder="Ví dụ: Trắng, đỏ, v.v" onChange="fillAttributeValue(this, event)"/>
                                         <i class="fas fa-arrows-alt p-1 attribute-action-btn invisible" style="color: lightgrey; font-size: 15px"></i>
                                         <i class="last-delete-btn delete-attribute-value-btn far fa-trash-alt p-1 invisible attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
                                     </div>
