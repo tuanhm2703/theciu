@@ -38,11 +38,11 @@ class TestController extends Controller {
             }
         }
         $product->setInventories(new InventoryCollection($inventories));
-        dd($productResource->update($product));
+        // dd($productResource->update($product));
         // return dd($productResource->getByCode('SP080974')->getInventories()->getItems());
         $webhookResource = new WebhookResource($client);
-        return $webhookResource->registerWebhook(WebhookType::STOCK_UPDATE, 'https://f4b1-14-187-167-156.ap.ngrok.io/webhook/warehouse/kiotviet', true, 'The ciu cập nhật tồn kho')->getModelData();
-        return $webhookResource->removeWebhook(500122358);
+        // return $webhookResource->registerWebhook(WebhookType::STOCK_UPDATE, 'https://f4b1-14-187-167-156.ap.ngrok.io/webhook/warehouse/kiotviet', true, 'The ciu cập nhật tồn kho')->getModelData();
+        // return $webhookResource->removeWebhook(500122358);
         return $webhookResource->listWebhook()->toArray();
     }
 

@@ -13,7 +13,7 @@ Route::group(['prefix' => 'webhook', 'as' => 'webhook.'], function() {
         Route::post('/{order}', [PaymentWebhookController::class, 'momoWebhook'])->name('momo');
     });
 
-    Route::group(['as' => 'warehousee.', 'prefix' => 'warehouse'], function() {
+    Route::group(['as' => 'warehouse.', 'prefix' => 'warehouse'], function() {
         Route::post('/kiotviet', [WarehouseWebhookController::class, 'updateKiotProduct'])->name('kiotviet');
     });
 });
