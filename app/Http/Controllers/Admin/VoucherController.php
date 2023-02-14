@@ -15,7 +15,7 @@ class VoucherController extends Controller {
     }
 
     public function create() {
-        $voucher_types = VoucherType::all();
+        $voucher_types = VoucherType::active()->get();
         return view('admin.pages.promotion.voucher.create', compact('voucher_types'));
     }
 
