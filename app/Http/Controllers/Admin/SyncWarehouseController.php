@@ -8,8 +8,11 @@ use App\Models\Setting;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Resource\BranchResource;
+use VienThuong\KiotVietClient\Resource\WebhookResource;
+use VienThuong\KiotVietClient\WebhookType;
 
 class SyncWarehouseController extends Controller {
     public function index() {
@@ -28,6 +31,13 @@ class SyncWarehouseController extends Controller {
         ]);
         $kiotSetting->data = $data;
         $kiotSetting->save();
+        $client = App::make(Client::class);
+        $webhookResource = new WebhookResource($client);
+        try {
+            $webhookResource->registerWebhook(WebhookType::STOCK_UPDATE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật tồn kho');
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
         return BaseResponse::success([
             'message' => 'Cập nhật cấu hình KiotViet thành công'
         ]);
