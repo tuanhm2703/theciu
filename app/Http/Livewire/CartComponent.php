@@ -125,7 +125,7 @@ class CartComponent extends Component {
             'cart' => $this->cart,
             'shipping_fee' => $this->shipping_fee,
             'payment_method_id' => $this->payment_method_id,
-            'shipping_service_id' => $this->shipping_service_id,
+            'shipping_service_id' => $this->service_id,
             'item_selected' => $this->item_selected,
             'order_voucher_id' => $this->order_voucher_id
         ]);
