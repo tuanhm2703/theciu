@@ -14,6 +14,7 @@ class CheckoutModel {
     private $item_selected;
     private $order_voucher_id;
     private $order_voucher;
+    private $service_id;
 
     public function __construct($properties) {
         $this->mapProperties($properties);
@@ -167,5 +168,25 @@ class CheckoutModel {
         if(!$this->order_voucher_id) return $this->order_voucher;
         $this->order_voucher = Voucher::find($this->order_voucher_id);
         return $this->order_voucher;
+    }
+
+    /**
+     * Get the value of service_id
+     */
+    public function getServiceId()
+    {
+        return $this->service_id;
+    }
+
+    /**
+     * Set the value of service_id
+     *
+     * @return  self
+     */
+    public function setServiceId($service_id)
+    {
+        $this->service_id = $service_id;
+
+        return $this;
     }
 }

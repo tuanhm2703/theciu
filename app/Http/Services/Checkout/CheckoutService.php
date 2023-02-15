@@ -70,7 +70,7 @@ class CheckoutService {
             $order->shipping_order()->create([
                 'shipping_service_id' => $checkoutModel->getShippingServiceId(),
                 'to_address' => $checkoutModel->getAddress()->full_address,
-                'shipping_service_code' => $checkoutModel->getShippingServiceId(),
+                'shipping_service_code' => $checkoutModel->getServiceId(),
                 "order_value" => $order->subtotal,
                 'pickup_address_id' => Config::first()->pickup_address->id,
                 "cod_amount" => $order->subtotal,
