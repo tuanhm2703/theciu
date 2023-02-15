@@ -51,4 +51,4 @@
         </div>
     </div>
 </div>
-{!! Form::hidden('type', App\Enums\AddressType::SHIPPING, []) !!}
+{!! Form::hidden('type', $address_type, []) !!}

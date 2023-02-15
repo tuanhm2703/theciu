@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Customer;
+use Illuminate\Support\Facades\Hash;
 
 class ValidationService {
     public static function validPromotionInventory($attribute, $value, $parameters) {
@@ -23,6 +24,16 @@ class ValidationService {
 
     public static function usernameHaveNotBeenUsed($attribute, $value, $parameters) {
         return Customer::where('phone', $value)->orWhere('email', $value)->doesntExist();
+    }
+
+    public static function matchPassword($attribute, $value, $parameters) {
+        $oldPassword = $parameters[0];
+        return Hash::check($value, $oldPassword);
+    }
+
+    public static function passwordNotNew($attribute, $value, $parameters) {
+        $oldPassword = $parameters[0];
+        return !Hash::check($value, $oldPassword);
     }
 
 }

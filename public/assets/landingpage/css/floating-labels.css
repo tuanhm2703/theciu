@@ -40,7 +40,7 @@
 .has-float-label .form-control:placeholder-shown:not(:focus) + * {
     font-size: 120%;
     opacity: 0.5;
-    top: 33%;
+    top: 25%;
 }
 .input-group .has-float-label {
     display: table-cell;

@@ -70,10 +70,6 @@
 
             <table class="table table-summary">
                 <tbody>
-                    <tr class="summary-subtotal">
-                        <td>{{ trans('labels.subtotal') }}:</td>
-                        <td>{{ format_currency($cart->getTotalWithSelectedItems($item_selected, $order_voucher)) }}</td>
-                    </tr><!-- End .summary-subtotal -->
                     <tr class="summary-shipping position-relative">
                         <td>{{ trans('labels.shipping') }}: <span wire:loading
                                 class="spinner-border spinner-border-sm mr-3 position-absolute ml-3" style="top: 50%;"
@@ -137,10 +133,6 @@
                         <td>{{ format_currency($cart->getTotalWithSelectedItems($item_selected, $order_voucher)) }}
                         </td>
                     </tr>
-                    <tr class="order-payment-info">
-                        <td>{{ trans('labels.shipping_fee') }}</td>
-                        <td>{{ format_currency($shipping_fee) }}</td>
-                    </tr>
                     @if ($order_voucher)
                         <tr class="order-payment-info">
                             <td>{{ trans('labels.order_discount_amount') }}</td>
@@ -148,6 +140,10 @@
                             </td>
                         </tr>
                     @endif
+                    <tr class="order-payment-info">
+                        <td>{{ trans('labels.shipping_fee') }}</td>
+                        <td>{{ format_currency($shipping_fee) }}</td>
+                    </tr>
                     <tr class="summary-total">
                         <td>{{ trans('labels.total') }}:</td>
                         <td>{{ format_currency($cart->getTotalWithSelectedItems($item_selected, $order_voucher) + $shipping_fee) }}

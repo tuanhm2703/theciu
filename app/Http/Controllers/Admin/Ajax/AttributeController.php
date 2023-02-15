@@ -15,7 +15,7 @@ class AttributeController extends Controller {
         if($q) {
             $attributes->search('name', $q);
         }
-        $attributes = $attributes->select('name as text', 'id')->distinct()->paginate(8);
+        $attributes = $attributes->select('name as text', 'id')->groupBy('name')->paginate(8);
         return BaseResponse::success($attributes->toArray()['data']);
     }
 }

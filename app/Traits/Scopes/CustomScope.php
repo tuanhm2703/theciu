@@ -15,6 +15,13 @@ trait CustomScope {
         });
     }
 
+    public function scopeGetPage($q, $page, $pageSize, $total = false) {
+        if(!$total) {
+            $q->skip(($page - 1) * $pageSize);
+        }
+        return $q->take($pageSize);
+    }
+
     public function scopeActive($q) {
         return $q->where('status', StatusType::ACTIVE);
     }

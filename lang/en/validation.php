@@ -174,5 +174,7 @@ return [
     'attributes' => [],
     'username_have_been_used' => 'Account information have been used',
     'invalid_username'          => 'Invalid username',
-    'phone_number'              => 'Phone number is invalid'
+    'phone_number'              => 'Phone number is invalid',
+    'password_match'            => 'Password is not match',
+    'password_new'            => 'Password is being used'
 ];

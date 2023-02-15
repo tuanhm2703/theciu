@@ -508,3 +508,23 @@
     font-size: 1.3rem;
     padding: 1rem;
 }
+.justify-content-center {
+    justify-content: center;
+}
+.error {
+    color: red;
+}
+.absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.toolbox-center .search-wrapper-wide {
+    font-size: 2.5rem;
+    color: #666;
+}
+.toolbox-center input[type=search] {
+    color: #666;
+    border: none;
+}

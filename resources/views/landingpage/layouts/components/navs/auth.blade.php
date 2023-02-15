@@ -7,17 +7,19 @@
 
         <div class="dropdown-menu p-0" style="width: fit-content !important;">
             <div>
+                <a class="btn justify-content-start" href="{{ route('client.auth.profile.index') }}">{{ trans('labels.profile') }}</a>
+            </div>
+            <div>
+                <a class="btn justify-content-start" href="{{ route('client.auth.profile.order.index') }}">{{ trans('labels.order_placed') }}</a>
+            </div>
+            <div>
                 {!! Form::open([
                     'url' => route('client.auth.logout'),
                     'method' => 'POST',
                 ]) !!}
-                <button type="submit" class="btn justify-content-start" href="#">Đăng xuất</button>
+                <button type="submit" class="btn justify-content-start" href="#">{{ trans('labels.logout') }}</button>
                 {!! Form::close() !!}
             </div>
-            <div>
-                <a class="btn justify-content-start" href="{{ route('client.auth.profile.order.index') }}">Đơn đã mua</a>
-            </div>
-
         </div><!-- End .dropdown-menu -->
     </div>
 @else

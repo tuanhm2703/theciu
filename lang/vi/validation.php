@@ -165,5 +165,7 @@ return [
     ],
     'username_have_been_used' => 'Thông tin tài khoản tồn tại',
     'invalid_username'          => 'Tên tài khoản không hợp lệ',
-    'phone_number'              => 'Số điện thoại không hợp lệ'
+    'phone_number'              => 'Số điện thoại không hợp lệ',
+    'password_match'            => 'Mật khẩu không khớp',
+    'password_new'            => 'Mật khẩu trùng với mật khẩu cũ'
 ];

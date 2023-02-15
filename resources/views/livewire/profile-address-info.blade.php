@@ -7,11 +7,21 @@
                     @if ($address)
                         <p>
                             <span>{{ $address->full_address }}</span>
-                            <a href="#"><br>{{ trans('labels.update') }} <i class="icon-edit"></i></a>
+                            <a wire:click="openUpdateAddress({{ $address->id }})" data-toggle="modal"
+                                data-target="#updateAddressModal" href="#"><br>{{ trans('labels.update_address') }}
+                                <i class="icon-edit"></i></a>
+                            {{-- <a wire:click="openUpdateAddress({{ $address->id }})" data-toggle="modal"
+                                data-target="#updateAddressModel">
+                                <br>
+                                {{ trans('labels.update_address') }} <i class="icon-edit"></i>
+                            </a> --}}
                         </p>
                     @else
-                        <p>Bạn chưa có địa chỉ cá nhân, vui lòng cập nhật  <br>
-                            <a href="#"><br>{{ trans('labels.update') }} <i class="icon-edit"></i></a></p>
+                        <p>Bạn chưa có địa chỉ cá nhân, vui lòng cập nhật <br>
+                            <a wire:click="updateAddressType('{{ App\Enums\AddressType::PRIMARY }}')" data-toggle="modal"
+                                data-target="#createAddressModal"
+                                href="#"><br>{{ trans('labels.create_address') }} <i class="icon-edit"></i></a>
+                        </p>
                     @endif
 
                 </div><!-- End .card-body -->
@@ -24,15 +34,23 @@
                     <h3 class="card-title">Địa chỉ giao hàng</h3><!-- End .card-title -->
                     <div class="d-flex flex-column">
                         @foreach ($shipping_addresses as $address)
-                            <p>{{ $address->full_address }} <a href="#">{{ trans('labels.update') }} <i
-                                        class="icon-edit"></i></a></p>
+                            <p>{{ $address->full_address }}
+                                <a wire:click="openUpdateAddress({{ $address->id }})" data-toggle="modal"
+                                    data-target="#updateAddressModal"
+                                    href="#"><br>{{ trans('labels.update_address') }}
+                                    <i class="icon-edit"></i></a>
+                            </p>
                         @endforeach
+                        @if ($shipping_addresses->count() < 10)
+                        @endif
                     </div>
-                    {{-- <p>You have not set up this type of address yet.<br>
-                        <a href="#">Edit <i class="icon-edit"></i></a>
-                    </p> --}}
+                    <p><a wire:click="updateAddressType('{{ App\Enums\AddressType::SHIPPING }}')" data-toggle="modal"
+                        data-target="#createAddressModal"
+                        href="#"><br>{{ trans('labels.create_address') }} <i class="icon-edit"></i></a></p>
                 </div><!-- End .card-body -->
             </div><!-- End .card-dashboard -->
         </div><!-- End .col-lg-6 -->
     </div><!-- End .row -->
+    @include('landingpage.layouts.pages.profile.address.create')
+    @include('landingpage.layouts.pages.profile.address.update')
 </div>

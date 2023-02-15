@@ -19,7 +19,7 @@ class NewArrivalComponent extends Component {
             ->with(['inventories', 'images:path,imageable_id', 'unique_attribute_inventories' => function($q) {
                 $q->with('image');
             }])
-            ->select('products.id', 'products.name', 'products.slug')->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize)->get();
+            ->select('products.id', 'products.name', 'products.slug')->getPage($this->page, $this->pageSize)->get();
         $this->hasNext = $this->products->count() < Product::available()->newArrival()->count();
     }
 
@@ -32,7 +32,7 @@ class NewArrivalComponent extends Component {
         $products = Product::available()->newArrival()
         ->with(['inventories', 'images:path,imageable_id', 'unique_attribute_inventories' => function($q) {
             $q->with('image');
-        }])->select('products.id', 'products.name', 'products.slug')->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize)->get();
+        }])->select('products.id', 'products.name', 'products.slug')->getPage($this->page, $this->pageSize)->get();
         $this->products = $this->products->merge($products);
         $this->hasNext = $this->products->count() < Product::available()->newArrival()->count();
     }

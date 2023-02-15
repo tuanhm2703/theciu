@@ -1,4 +1,6 @@
 @extends('landingpage.layouts.app')
+@push('css')
+@endpush
 @section('content')
     <div class="page-header text-center" style="background-image: url('/assets/images/page-header-bg.jpg')">
         <div class="container">
@@ -60,5 +62,5 @@
     </div><!-- End .page-content -->
 @endsection
 @push('js')
-    <script></script>
+    @yield('js')
 @endpush
