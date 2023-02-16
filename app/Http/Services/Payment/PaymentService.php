@@ -28,7 +28,7 @@ class PaymentService {
     }
 
     public static function refund($order) {
-        if($order->order_status == OrderStatus::CANCELED) {
+        if($order->order_status != OrderStatus::CANCELED) {
             throw new Exception('Không thể hoàn tiền đơn hàng chưa huỷ.', 409);
         }
         if ($order->payment && $order->payment->payment_status == PaymentStatus::PAID) {

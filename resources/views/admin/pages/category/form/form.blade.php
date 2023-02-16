@@ -2,7 +2,12 @@
     <label for="example-text-input" class="form-control-label">{{ trans('labels.category_name') }}</label>
     <div class="input-group">
         <span class="input-group-text">
-            {!! Form::select('type', App\Enums\CategoryType::categoryTypeOptions(), [isset($category) ? $category->type : null], ['class' => 'form-control']) !!}
+            {!! Form::select(
+                'type',
+                App\Enums\CategoryType::categoryTypeOptions(),
+                [isset($category) ? $category->type : null],
+                ['class' => 'form-control'],
+            ) !!}
         </span>
         {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào']) !!}
     </div>
@@ -22,6 +27,7 @@
         },
         error: (err) => {
             $('.submit-btn').loading(false)
+            tata.error(@json(trans('toast.action_failed')), err.responseJSON.message)
         }
     })
 </script>

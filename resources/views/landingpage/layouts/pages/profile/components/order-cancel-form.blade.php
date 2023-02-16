@@ -57,7 +57,8 @@
             }, 1000);
         },
         error: (err) => {
-
+            tata.error(@json(trans('toast.action_failed')), err.responseJSON.message)
+            $('#cancelOrderForm button[type=submit]').loading(false)
         }
     })
 </script>

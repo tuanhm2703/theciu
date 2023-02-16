@@ -32,7 +32,6 @@ class OrderCanceledListener
             $voucher->increaseQuantity();
         }
         $order->restock();
-        $order->putKiotWarehouse(false);
         $order->cancelShippingOrder();
     }
 }

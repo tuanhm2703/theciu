@@ -1134,7 +1134,6 @@ $(document).ready(function () {
                     );
                 });
             } else if (err.status === 401) {
-                console.log(err.responseJSON);
                 registerFormValidator.errorTrigger(
                     $(`#login-form input[name=username]`),
                     err.responseJSON.message

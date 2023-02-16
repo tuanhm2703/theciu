@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller {
     public function index() {
@@ -14,14 +15,23 @@ class OrderController extends Controller {
     }
 
     public function pay() {
-
     }
 
     public function cancel(Order $order, Request $request) {
-        $cancel_reason = $request->cancel_reason;
-        $order->cancel_reason = $cancel_reason;
-        $order->order_status = OrderStatus::CANCELED;
-        $order->save();
+        DB::beginTransaction();
+        try {
+            $cancel_reason = $request->cancel_reason;
+            $order->cancel_reason = $cancel_reason;
+            $order->order_status = OrderStatus::CANCELED;
+            $order->save();
+            DB::commit();
+        } catch (\Throwable $th) {
+            \Log::info($th);
+            DB::rollBack();
+            return BaseResponse::error([
+                'message' => 'Huỷ đơn hàng thành công'
+            ]);
+        }
         return BaseResponse::success([
             'message' => 'Huỷ đơn hàng thành công'
         ]);
@@ -32,7 +42,7 @@ class OrderController extends Controller {
 
     public function details(Order $order) {
         $order->setRelation('order_histories', $order->order_histories()->with('action')->reorder()->orderBy('created_at', 'asc')->get());
-        $order->setRelation('shipping_order', $order->shipping_order()->with(['shipping_order_histories' => function($q) {
+        $order->setRelation('shipping_order', $order->shipping_order()->with(['shipping_order_histories' => function ($q) {
             return $q->orderBy('shipping_order_histories.created_at', 'desc');
         }])->first());
         return view('landingpage.layouts.pages.order.details', compact('order'));
