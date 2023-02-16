@@ -160,5 +160,6 @@ return [
     'most_popular' => 'Phổ biến nhấn',
     'most_rated' => 'Đánh giá',
     'sort_by' => 'Sắp xếp',
-    'loading' => 'Đang tải'
+    'loading' => 'Đang tải',
+    'price_range' => 'Khoảng giá'
 ];

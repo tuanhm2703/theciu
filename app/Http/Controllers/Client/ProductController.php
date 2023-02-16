@@ -28,10 +28,7 @@ class ProductController extends Controller {
     }
 
     public function index(Request $request) {
-        $params = $request->all();
-        $keyword = $request->keyword;
-        $categories = $request->categories ?? [];
-        return view('landingpage.layouts.pages.product.index', compact('params', 'keyword', 'categories'));
+        return view('landingpage.layouts.pages.product.index');
     }
 
     public function saleOff() {

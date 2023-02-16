@@ -10,15 +10,13 @@ use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class ProductListComponent extends Component {
-    public $params;
-
     public $keyword;
 
     public $title;
 
     public $type;
 
-    public $pageSize;
+    public $pageSize = 8;
 
     public $hasNext;
 
@@ -26,21 +24,29 @@ class ProductListComponent extends Component {
 
     public $products;
 
-    public $categories;
+    public $categories = [];
     public $product_categories;
 
     public $sort_type;
 
+    public $min_price = 0;
+    public $max_price;
+
+    public $promotion;
+    public $category = '';
+
     protected $queryString = [
         'page' => ['except' => 1, 'as' => 'page'],
         'keyword',
-        'categories'
+        'categories',
+        'min_price',
+        'max_price',
+        'category' => ['except' => ''],
+        'promotion'
     ];
 
     public function mount() {
         $this->product_categories = Category::whereType(CategoryType::PRODUCT)->select('id', 'name')->withCount('products')->get();
-        $this->pageSize = $this->params['pageSize'] ?? 8;
-        $this->page = $this->params['page'] ?? 1;
         $this->products = new Collection();
         $this->searchProduct();
     }
@@ -58,13 +64,11 @@ class ProductListComponent extends Component {
             $this->products = new Collection();
             $this->page = $page;
         }
-        $category = optional($this->params)['category'];
-        $promotion = optional($this->params)['promotion'];
         $this->title = null;
         $this->type = null;
         $products = Product::query();
-        if ($category) {
-            $category = Category::whereSlug($category)->with('categories.categories')->firstOrFail();
+        if ($this->category) {
+            $category = Category::whereSlug($this->category)->with('categories.categories')->firstOrFail();
             $category_ids = $category->getAllChildId();
             $this->title = $category->name;
             $this->type = 'Danh mục';
@@ -72,8 +76,8 @@ class ProductListComponent extends Component {
                 return $q->whereIn('categories.id', $category_ids);
             });
         }
-        if ($promotion) {
-            $promotion = Promotion::whereSlug($promotion)->first();
+        if ($this->promotion) {
+            $promotion = Promotion::whereSlug($this->promotion)->first();
             if ($promotion) {
                 $promotion = $products->whereHas('promotions', function ($q) use ($promotion) {
                     $q->where('promotions.slug', $promotion->slug);
@@ -92,6 +96,7 @@ class ProductListComponent extends Component {
         }
         $total = (clone $products)->count();
         $products = $products->select('products.name', 'products.slug', 'products.id')
+        ->filterByPriceRange($this->min_price, $this->max_price)
         ->with(['inventories.image:path,imageable_id', 'images:path,imageable_id'])
         ->getPage($this->page, $this->pageSize)->get();
         $this->products = $this->products->merge($products);

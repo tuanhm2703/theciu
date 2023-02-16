@@ -26,7 +26,9 @@
                     <div class="toolbox-info">
                         <div class="search-wrapper-wide d-flex align-items-center">
                             <a href="#" wire:click.prevent="searchProduct(1)"><i class="icon-search"></i></a>
-                            <input wire:model.lazy="keyword" type="search" class="form-control" name="q" id="q" placeholder="Tìm sản phẩm..." required="">
+                            <input wire:model.lazy="keyword" type="search" wire:keydown.enter="searchProduct(1)"
+                                class="form-control" name="q" id="q" placeholder="Tìm sản phẩm..."
+                                required="">
                         </div><!-- End .header-search-wrapper -->
                     </div><!-- End .toolbox-info -->
                 </div><!-- End .toolbox-center -->
@@ -50,7 +52,7 @@
             <div class="products">
                 <div wire:loading wire:target="searchProduct" class="spinner-grow spinner-grow-sm" role="status">
                     <span class="sr-only">{{ trans('labels.loading') }}...</span>
-                  </div>
+                </div>
                 <div class="row" wire:loading.remove wire:target="searchProduct">
                     @foreach ($products as $product)
                         <div class="col-6 col-md-4 col-lg-4 col-xl-3">
@@ -80,7 +82,8 @@
                 <div class="sidebar-filter-wrapper">
                     <div class="widget widget-clean">
                         <label><i class="icon-close"></i>{{ trans('labels.filters') }}</label>
-                        <a href="#" wire:click="clearAllFilter" class="sidebar-filter-clear">{{ trans('labels.clear_filter') }}</a>
+                        <a href="#" wire:click="clearAllFilter"
+                            class="sidebar-filter-clear">{{ trans('labels.clear_filter') }}</a>
                     </div><!-- End .widget -->
                     <div class="widget widget-collapsible">
                         <h3 class="widget-title">
@@ -97,8 +100,9 @@
                                         <div class="filter-item">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" name="params-categories"
-                                                    value="{{ $category->id }}" wire:model="categories" wire:change="searchProduct(1)"
-                                                    class="custom-control-input" id="cat-{{ $category->id }}">
+                                                    value="{{ $category->id }}" wire:model="categories"
+                                                    wire:change="searchProduct(1)" class="custom-control-input"
+                                                    id="cat-{{ $category->id }}">
                                                 <label class="custom-control-label"
                                                     for="cat-{{ $category->id }}">{{ $category->name }}</label>
                                             </div><!-- End .custom-checkbox -->
@@ -110,7 +114,7 @@
                         </div><!-- End .collapse -->
                     </div><!-- End .widget -->
 
-                    <div class="widget widget-collapsible">
+                    {{-- <div class="widget widget-collapsible">
                         <h3 class="widget-title">
                             <a data-toggle="collapse" href="#widget-2" role="button" aria-expanded="true"
                                 aria-controls="widget-2">
@@ -167,9 +171,9 @@
                                 </div><!-- End .filter-items -->
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->
-                    </div><!-- End .widget -->
+                    </div><!-- End .widget --> --}}
 
-                    <div class="widget widget-collapsible">
+                    {{-- <div class="widget widget-collapsible">
                         <h3 class="widget-title">
                             <a data-toggle="collapse" href="#widget-3" role="button" aria-expanded="true"
                                 aria-controls="widget-3">
@@ -200,9 +204,9 @@
                             </div><!-- End .widget-body -->
 
                         </div><!-- End .collapse -->
-                    </div><!-- End .widget -->
+                    </div><!-- End .widget --> --}}
 
-                    <div class="widget widget-collapsible">
+                    {{-- <div class="widget widget-collapsible">
                         <h3 class="widget-title">
                             <a data-toggle="collapse" href="#widget-4" role="button" aria-expanded="true"
                                 aria-controls="widget-4">
@@ -265,22 +269,34 @@
                                 </div><!-- End .filter-items -->
                             </div><!-- End .widget-body -->
                         </div><!-- End .collapse -->
-                    </div><!-- End .widget -->
+                    </div><!-- End .widget --> --}}
 
                     <div class="widget widget-collapsible">
                         <h3 class="widget-title">
                             <a data-toggle="collapse" href="#widget-5" role="button" aria-expanded="true"
                                 aria-controls="widget-5">
-                                Price
+                                {{ trans('labels.price_range') }}
                             </a>
                         </h3><!-- End .widget-title -->
 
                         <div class="collapse show" id="widget-5">
                             <div class="widget-body">
                                 <div class="filter-price">
-                                    <div class="filter-price-text">
-                                        Price Range:
-                                        <span id="filter-price-range"></span>
+                                    <div class="filter-price-text d-flex align-items-center" wire:ignore>
+                                        <input type="number" wire:model.lazy="min_price"
+                                            wire:change="searchProduct(1)"
+                                            placeholder="{{ trans('placeholder.min_price') }}">
+                                        <div class="mx-1"
+                                            style="
+                                            background-color: #dadada;
+                                            width: 10%;
+                                            height: 2px;
+                                            align-self: center;
+                                        ">
+                                        </div>
+                                        <input type="number" wire:model.lazy="max_price"
+                                        wire:change="searchProduct(1)"
+                                            placeholder="{{ trans('placeholder.max_price') }}">
                                     </div><!-- End .filter-price-text -->
 
                                     <div id="price-slider"></div><!-- End #price-slider -->

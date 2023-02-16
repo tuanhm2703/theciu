@@ -156,5 +156,6 @@ return [
     'most_popular' => 'Most popular',
     'most_rated' => 'Most rated',
     'sort_by' => 'Sort by',
-    'loading' => 'Loading'
+    'loading' => 'Loading',
+    'price_range' => 'Price range'
 ];
