@@ -87,7 +87,7 @@ class ProductListComponent extends Component {
             }
         }
         if(!empty($this->keyword)) {
-            $products->search('name', $this->keyword);
+            $products->search('products.name', $this->keyword);
         }
         if(!empty($this->categories)) {
             $products->whereHas('categories', function($q) {
