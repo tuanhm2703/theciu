@@ -281,10 +281,9 @@ class GHTKService extends ShippingServiceAbstract {
                 'cod_amount' => $service_order->pick_money,
                 "service_fee" => $service_order->ship_money,
                 "insurance_fee" => $service_order->insurance,
-                "order_value" => $order->total,
                 "to_address" => $service_order->address,
                 "total_fee" => $service_order->ship_money + $service_order->insurance,
-                "order_value" => $order->total,
+                "order_value" => $order->origin_subtotal,
                 "shop_id" => $order->shop_id,
                 "order_id" => $order->id,
             ]);
