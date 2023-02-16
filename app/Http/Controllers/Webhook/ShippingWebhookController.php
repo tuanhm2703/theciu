@@ -30,9 +30,6 @@ class ShippingWebhookController extends Controller {
         } catch (\Exception $e) {
             DB::rollback();
             Log::error($e);
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 500);
         }
         return response()->json([
             'message' => 'success'
