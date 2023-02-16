@@ -243,4 +243,12 @@ class Order extends Model {
             }
         }
     }
+
+    public function cancelShippingOrder() {
+        if($this->shipping_order && $this->shipping_order->code) {
+            App::make(GHTKService::class)->cancelOrder($this->shipping_order->code);
+            return true;
+        }
+        return false;
+    }
 }

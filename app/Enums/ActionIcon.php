@@ -7,7 +7,7 @@ use Illuminate\Validation\Rules\Enum;
 class ActionIcon extends Enum {
     const ORDER_OREDRED = 'fas fa-shopping-bag';
     const ORDER_CANCELED = 'fas fa-ban';
-    const ORDER_CONFIRMED = 'fa-solid fa-file-circle-check';
+    const ORDER_CONFIRMED = 'fas fa-clipboard-check';
     const ORDER_DELIVERING = 'fas fa-shipping-fast';
     const ORDER_DELIVERED = 'far fa-check-circle';
     const ORDER_PICKING_UP = 'fas fa-dolly';

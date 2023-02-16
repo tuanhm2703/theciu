@@ -33,6 +33,6 @@ class OrderCanceledListener
         }
         $order->restock();
         $order->putKiotWarehouse(false);
-
+        $order->cancelShippingOrder();
     }
 }
