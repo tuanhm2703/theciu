@@ -57,6 +57,11 @@ class PaymentWebhookController extends Controller {
                             $order->payment->trans_id = $request->{Param::TRANSACTION_NUMBER};
                             $order->payment->save();
                             $order->createPaymentOrderHistory();
+                        } else {
+                            $order->payment->payment_status = PaymentStatus::FAILED;
+                            $order->payment->payment_status = PaymentStatus::PAID;
+                            $order->payment->trans_id = $request->{Param::TRANSACTION_NUMBER};
+                            $order->payment->save();
                         }
                     }
                 }

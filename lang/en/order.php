@@ -21,7 +21,7 @@ return [
         'other' => 'Other'
     ],
     'description' => [
-        'checkout_description' => 'Payment order :appName - Order code :orderNumber',
-        'refund_description' => "Refund order :appName - Order code :orderNumber"
+        'checkout_description' => 'Payment order :appName Order code :orderNumber',
+        'refund_description' => "Refund order :appName Order code :orderNumber"
     ]
 ];

@@ -21,7 +21,7 @@ return [
         'other' => 'Khác'
     ],
     'description' => [
-        'checkout_description' => 'Thanh toán đơn hàng :appName - Mã đơn hàng :orderNumber',
-        'refund_description' => "Hoàn tiền cho đơn hàng :appName :orderNumber"
+        'checkout_description' => 'Thanh toan don hang :appName Ma don hang :orderNumber',
+        'refund_description' => "Hoan tien don hang :appName :orderNumber"
     ]
 ];

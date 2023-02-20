@@ -17,7 +17,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->float('amount', 20);
-            $table->enum('payment_status', [PaymentStatus::PAID, PaymentStatus::PENDING]);
+            $table->enum('payment_status', [PaymentStatus::PAID, PaymentStatus::PENDING, PaymentStatus::REFUND, PaymentStatus::FAILED]);
             $table->string('trans_id')->nullable()->comment('Transaction ID that response from payment method that apply for order');
             $table->string('order_number')->nullable();
             $table->json('data')->nullable();
