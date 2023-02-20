@@ -7,6 +7,7 @@ use App\Enums\PaymentMethodType;
 use App\Enums\PaymentServiceType;
 use App\Enums\PaymentStatus;
 use App\Http\Services\Momo\MomoService;
+use App\Http\Services\VNPay\src\Models\VNPayment;
 use Exception;
 use MService\Payment\Shared\Constants\RequestType;
 
@@ -22,6 +23,8 @@ class PaymentService {
                 return MomoService::checkout($order, RequestType::PAY_WITH_ATM);
             case PaymentServiceType::COD:
                 return route('client.auth.profile.order.details', $order->id);
+            case PaymentServiceType::VNPAY:
+                return VNPayment::process((int) $order->total, $order->getCheckoutDescription(), route('client.auth.profile.order.details', $order->id));
             default:
                 throw new Exception('Dịch vụ thanh toán không hợp lệ.');
         }
