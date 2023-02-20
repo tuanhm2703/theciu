@@ -32,7 +32,7 @@ class PaymentWebhookController extends Controller {
 
     public function vnpayWebhook(Request $request) {
         try {
-            $orderNumber = $request->{Param::TMN_CODE};
+            $orderNumber = $request->{Param::TXN_REF};
             $order = Order::where('order_number', $orderNumber)->firstOrFail();
             $returnData = [];
             if (VNPayment::checkSum($request->all())) {
