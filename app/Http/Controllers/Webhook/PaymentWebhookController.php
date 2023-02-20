@@ -45,7 +45,7 @@ class PaymentWebhookController extends Controller {
                     $returnData['RspCode'] = '04';
                     $returnData['Message'] = 'Invalid amount';
                 } else {
-                    if ($order->payment->status != PaymentStatus::PENDING) {
+                    if ($order->payment->payment_status != PaymentStatus::PENDING) {
                         $returnData['RspCode'] = '02';
                         $returnData['Message'] = 'Order is not on pending status';
                     } else {
