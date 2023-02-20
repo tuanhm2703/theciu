@@ -39,7 +39,7 @@ class PaymentMethodSeeder extends Seeder {
             'max_value' => 2000000,
         ]);
         $momo->images()->delete();
-        $momo->createImagesFromUrls(['https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png']);
+        $momo->createImagesFromUrls([public_path('/img/momo.png')]);
         $atm = PaymentMethod::updateOrCreate([
             'name' => 'Momo ATM'
         ], [
@@ -51,7 +51,7 @@ class PaymentMethodSeeder extends Seeder {
             'max_value' => null,
         ]);
         $atm->images()->delete();
-        $atm->createImagesFromUrls(['https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png']);
+        $atm->createImagesFromUrls([public_path('/img/momo.png')]);
         $vnpay = PaymentMethod::updateOrCreate([
             'name' => 'VNPay'
         ], [
@@ -63,6 +63,6 @@ class PaymentMethodSeeder extends Seeder {
             'max_value' => 5000000,
         ]);
         $vnpay->images()->delete();
-        $vnpay->createImagesFromUrls(['https://inkythuatso.com/uploads/images/2021/12/vnpay-logo-inkythuatso-01-13-16-26-42.jpg']);
+        $vnpay->createImagesFromUrls([public_path('/img/vnpay.jpeg')]);
     }
 }
