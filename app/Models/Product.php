@@ -69,6 +69,10 @@ class Product extends Model {
         return $this->morphOne(Image::class, 'imageable')->where('type', MediaType::SIZE_RULE);
     }
 
+    public function size_rule_images() {
+        return $this->morphMany(Image::class, 'imageable')->where('type', MediaType::SIZE_RULE);
+    }
+
     public function images() {
         return $this->morphMany(Image::class, 'imageable')->where(function ($q) {
             $q->where('type', MediaType::IMAGE)->orWhere('type', null);

@@ -205,7 +205,7 @@ class GHTKService extends ShippingServiceAbstract {
                 /* A required field. */
                 "hamlet" => "Khác",
                 /* The order is free shipping. */
-                "is_freeship" => $order->is_freeship,
+                "is_freeship" => $order->is_freeship || $order->isPaid(),
                 /* Pickup date. */
                 // "pick_date" => "2016-09-30",
                 /* The money that the receiver will pay to the sender. */

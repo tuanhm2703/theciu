@@ -9,5 +9,7 @@ class PaymentMethodType {
 
     const MOMO = 'momo';
 
-    const REFUNDABLE_METHODS = [self::EWALLET, self::EBANK];
+    const VNPAY = 'vnpay';
+
+    const REFUNDABLE_METHODS = [self::EWALLET, self::EBANK, self::VNPAY];
 }

@@ -26,7 +26,8 @@ class PaymentMethodSeeder extends Seeder {
             'max_value' => null,
         ]);
         $cod->images()->delete();
-        $cod->createImagesFromUrls(['https://cdn-icons-png.flaticon.com/512/5229/5229335.png']);
+        $cod->createImagesFromUrls([public_path('/img/cod.png')]);
+
         $momo = PaymentMethod::updateOrCreate([
             'name' => 'Momo'
         ], [
@@ -39,9 +40,8 @@ class PaymentMethodSeeder extends Seeder {
         ]);
         $momo->images()->delete();
         $momo->createImagesFromUrls(['https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png']);
-
         $atm = PaymentMethod::updateOrCreate([
-            'name' => 'ATM'
+            'name' => 'Momo ATM'
         ], [
             'status' => StatusType::ACTIVE,
             'code' => 'ebank',
@@ -51,7 +51,18 @@ class PaymentMethodSeeder extends Seeder {
             'max_value' => null,
         ]);
         $atm->images()->delete();
-        $atm->createImagesFromUrls(['https://cdn-icons-png.flaticon.com/512/6519/6519443.png']);
-
+        $atm->createImagesFromUrls(['https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png']);
+        $vnpay = PaymentMethod::updateOrCreate([
+            'name' => 'VNPay'
+        ], [
+            'status' => StatusType::ACTIVE,
+            'code' => 'vnpay',
+            'description' => 'Thanh toán thông qua ví điện tử VNPay: Đơn hàng tối thiểu 5.000đ - Đơn hàng tối đa 5.000.000đ',
+            'type' => PaymentMethodType::EWALLET,
+            'min_value' => 5000,
+            'max_value' => 5000000,
+        ]);
+        $vnpay->images()->delete();
+        $vnpay->createImagesFromUrls(['https://inkythuatso.com/uploads/images/2021/12/vnpay-logo-inkythuatso-01-13-16-26-42.jpg']);
     }
 }

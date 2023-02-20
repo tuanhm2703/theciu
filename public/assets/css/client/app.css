@@ -59,8 +59,8 @@
 .invalid-feedback {
     font-size: 100%;
 }
-.btn-product:hover span,
-.btn-product:focus span {
+.product-media .btn-product:hover span,
+.product-media .btn-product:focus span {
     color: white !important;
 }
 .order-footer-action {
@@ -524,7 +524,31 @@
     font-size: 2.5rem;
     color: #666;
 }
-.toolbox-center input[type=search] {
+.toolbox-center input[type="search"] {
     color: #666;
     border: none;
+}
+.new-promotion {
+    color: #c96;
+    padding-left: 0.5rem;
+}
+@keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+  @-webkit-keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+.size-rule-gallery {
+    height: 50px;
+    width: 50px;
+    background-size: cover !important;
+    background-position: center !important;
+    display: inline-block;
+}
+#size-guide-gallery {
+    font-size: 1.3rem;
 }

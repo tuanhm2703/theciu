@@ -124,7 +124,8 @@ return [
     'payment_methods' => [
         'momo' => 'Ví Momo',
         'cod' => 'Thanh toán khi nhận hàng',
-        'ebank' => 'E-Banking'
+        'ebank' => 'E-Banking',
+        'vnpay' => 'VNPay'
     ],
     'information' => 'Thông tin',
     'sale_off' => 'Sale off',
@@ -161,5 +162,8 @@ return [
     'most_rated' => 'Đánh giá',
     'sort_by' => 'Sắp xếp',
     'loading' => 'Đang tải',
-    'price_range' => 'Khoảng giá'
+    'price_range' => 'Khoảng giá',
+    'payment_method' => 'Phương thức thanh toán',
+    'order_voucher' => 'Voucher đơn hàng',
+    'size_guide' => 'Hướng dẫn chọn kích cỡ'
 ];

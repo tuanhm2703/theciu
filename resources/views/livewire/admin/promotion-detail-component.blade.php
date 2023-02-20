@@ -1,4 +1,4 @@
-@if (isset($promotion))
+@if ($promotion)
     {!! Form::model($promotion, [
         'url' => route('admin.promotion.update', $promotion->id),
         'method' => 'PUT',
@@ -80,25 +80,22 @@
             </div>
             <div class="col-2">
                 <label for="">Khuyến mãi</label>
-                <div class="input-group height-fit-content">
-                    <input min="1" max="100" type="number" class="form-control" name="general-discount-percent">
-                    <span class="input-group-text" id="basic-addon2"><span class="before-prefix-split"></span>%GIẢM</span>
-                </div>
+                <input type="text" class="form-control">
             </div>
-            {{-- <div class="col-2">
+            <div class="col-2">
                 <label for="">
                     Số lượng sản phẩm khuyến mãi
                   </label>
                 <input type="text" class="form-control">
-            </div> --}}
-            {{-- <div class="col-2">
+            </div>
+            <div class="col-2">
                 <label for="">
                     Giới hạn mua tối đa của mỗi khách hàng
                   </label>
                 <input type="text" class="form-control">
-            </div> --}}
-            <div class="offset-4 col-2 d-flex justify-content-center align-items-center">
-                <button class="btn btn-default common-info-update-btn">Cập nhật hàng loạt</button>
+            </div>
+            <div class="col-2 d-flex justify-content-center align-items-center">
+                <button class="btn btn-default">Cập nhật hàng loạt</button>
             </div>
             <div class="col-1 d-flex justify-content-center align-items-center">
                 <button class="btn btn-default">Xoá</button>

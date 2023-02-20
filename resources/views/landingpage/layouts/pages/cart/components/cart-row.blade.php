@@ -20,7 +20,7 @@
             </h3><!-- End .product-title -->
         </div><!-- End .product -->
     </td>
-    <td class="price-col">{{ format_currency($inventory->sale_price) }}</td>
+    <td class="price-col">{{ format_currency_with_label($inventory->sale_price) }}</td>
     <td class="quantity-col">
         <div class="cart-product-quantity">
             <input type="number" class="form-control" min="1" max="10" step="1" data-decimals="0"
@@ -28,7 +28,7 @@
                 data-inventory-id="{{ $inventory->id }}" value="{{ $inventory->pivot->quantity }}" required>
         </div><!-- End .cart-product-quantity -->
     </td>
-    <td class="total-col">{{ format_currency($inventory->sale_price * $inventory->pivot->quantity) }}</td>
+    <td class="total-col">{{ format_currency_with_label($inventory->sale_price * $inventory->pivot->quantity) }}</td>
     <td class="remove-col" wire:click="$emit('cart:itemDeleted', {{ $inventory->id }})"><button class="btn-remove"><i
                 class="icon-close"></i></button></td>
 </tr>

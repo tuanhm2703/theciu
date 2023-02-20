@@ -275,10 +275,7 @@ div.dataTables_processing > div:last-child > div {
 .timeline__row_content .badge {
     margin-bottom: 10px;
 }
-.timeline__row_content_desc {
-    padding: 15px;
-    padding-top: 0px;
-}
+
 .timeline__row:nth-last-child(1) .timeline__row_content {
     border: none;
     padding-bottom: 0;

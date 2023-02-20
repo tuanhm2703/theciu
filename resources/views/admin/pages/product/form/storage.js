@@ -22,7 +22,7 @@ inventories.forEach(inventory => {
                                             ${renderAttributeColumn(inventory)}
                                             <td>
                                                 <div class="input-group">
-                                                    <span class="input-group-text border-end">₫</span>
+                                                    <span class="input-group-text border-end"></span>
                                                     <input type="number" class="form-control" placeholder="Nhập vào">
                                                 </div>
                                             </td>

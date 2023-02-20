@@ -18,6 +18,7 @@
             },
             options
         );
+        elemRef.multiple = elemRef.maxFile > 1;
         const requiredMessage =
             elemRef.type == "img"
                 ? "Vui lòng chọn ít nhất 1 ảnh"
@@ -84,11 +85,11 @@
         });
         $(document).off("click", elemRef.dragBtn);
         $(document).on("click", elemRef.dragBtn, function (event) {
-            const inputId =
+            let inputId =
                 elemRef.maxFile == 1
                     ? `${elemRef.inputName}-upload`
                     : `${elemRef.inputName}-upload${i}`;
-            const inputName =
+            let inputName =
                 elemRef.maxFile == 1
                     ? `${elemRef.inputName}`
                     : `${elemRef.inputName}[${i}]`;
@@ -110,6 +111,23 @@
                         const preview = window.URL.createObjectURL(_file);
                         printPreview(preview, i);
                         i++;
+                        if (index < files.length - 1) {
+                            inputId =
+                                elemRef.maxFile == 1
+                                    ? `${elemRef.inputName}-upload`
+                                    : `${elemRef.inputName}-upload${i}`;
+                            inputName =
+                                elemRef.maxFile == 1
+                                    ? `${elemRef.inputName}`
+                                    : `${elemRef.inputName}[${i}]`;
+                            $(elemRef.dragBtn).after(
+                                `<input type='file' accept="${
+                                    elemRef.acceptedExtensions
+                                }" id='${inputId}' ${
+                                    elemRef.multiple ? "multiple" : ""
+                                } style='display:none;' name='${inputName}'/>`
+                            );
+                        }
                         if (i >= elemRef.maxFile) {
                             $(elemRef.dragBtn).css("display", "none");
                         }

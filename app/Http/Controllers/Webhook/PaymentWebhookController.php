@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Webhook;
 
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Services\VNPay\src\Models\Param;
+use App\Http\Services\VNPay\src\Models\VNPayment;
 use App\Models\Order;
 use Exception;
 use Illuminate\Http\Request;
@@ -26,5 +28,39 @@ class PaymentWebhookController extends Controller {
             throw new Exception('Order id not match with platform order', 409);
         }
         return response()->json([], 204);
+    }
+
+    public function vnpayWebhook(Request $request) {
+        try {
+            $orderNumber = $request->{Param::TMN_CODE};
+            $order = Order::where('order_number', $orderNumber)->firstOrFail();
+            $returnData = [];
+            if (VNPayment::checkSum($request->all())) {
+                if ($order->total != $request->{Param::AMOUNT}) {
+                    $returnData['RspCode'] = '97';
+                    $returnData['Message'] = 'Invalid amount';
+                } else {
+                    if ($order->payment->status != PaymentStatus::PENDING) {
+                        $returnData['RspCode'] = '02';
+                        $returnData['Message'] = 'Order is not on pending status';
+                    } else {
+                        $returnData['RspCode'] = '00';
+                        $returnData['Message'] = 'Confirm Success';
+                        $order->payment->data = $request->all();
+                        $order->payment->payment_status = PaymentStatus::PAID;
+                        $order->payment->trans_id = $request->{Param::TRANSACTION_NUMBER};
+                        $order->payment->save();
+                        $order->createPaymentOrderHistory();
+                    }
+                }
+            } else {
+                $returnData['RspCode'] = '97';
+                $returnData['Message'] = 'Invalid signature';
+            }
+        } catch (\Throwable $th) {
+            $returnData['RspCode'] = '97';
+            $returnData['Message'] = 'Invalid signature';
+        }
+        return response()->json($returnData);
     }
 }

@@ -3,20 +3,10 @@
     let inventories = []
     let listCategories = []
     let deleteImages = []
-    let productImgSrc =
-        @if (isset($listImgSources))
-            @json($listImgSources)
-        @else
-            []
-        @endif ;
-    let productCategoryIds =
-        @if (isset($product))
-            @json($product->category_ids)
-        @else
-            []
-        @endif ;
+    let productImgSrc = JSON.parse(`@json(isset($product) ? $listImgSources: `[]`)`);
+    let productCategoryIds = @json(isset($product) ? $product->category_ids : []);
     let productVideoSrc = `{{ isset($product) ? optional($product->video)->path_with_domain : '' }}`
-    let productSizeRuleSrc = `{{ isset($product) ? optional($product->size_rule_image)->path_with_domain : '' }}`
+    let productSizeRuleSrc = JSON.parse(`@json(isset($product) ? $productSizeRuleSrc : `[]`)`);
     var productFormValidator
     $(document).ready(() => {
         initProductDetailsInfoSelector()
@@ -37,7 +27,6 @@
             inputName: 'images',
             maxFile: 9,
             sortable: true,
-            multiple: true,
             required: true,
             showThumb: true,
             sortableOptions: {
@@ -69,11 +58,12 @@
         $('.size-rule-gallery').miv({
             dragBtn: '.size-rule-drag',
             inputName: 'size-rule-img',
+            maxFile: 8,
             onDeleted: (element) => {
                 element = $(element).parent().find('img')[0]
                 deleteImages.push($(element).attr('src'))
             },
-            initSrc: productSizeRuleSrc !== '' ? [productSizeRuleSrc] : [],
+            initSrc: productSizeRuleSrc,
         })
         $('#save-category-btn').on('click', (e) => {
             finishChooseCategories()
@@ -257,20 +247,20 @@
                         <div class="card-body p-3">
                             <i onClick="deleteAttributeForm(this)" style="cursor: pointer" class="fas fa-times position-absolute top-10 end-1"></i>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-lg-3">
                                     {!! Form::label('', 'Phân loại nhóm ${index + 1}', ['class' => 'custom-control-label']) !!}
                                 </div>
-                                <div class="col-md-3" style="padding-right: 55px;">
+                                <div class="col-lg-3" style="padding-right: 55px;">
                                     <select ${element.name ? `value="${element.name}"` : ''} class="form-control attribute-ajax-select2" placeholder="Ví dụ: Màu sắc, v.v" onChange="fillAttributeName(this, event)">
                                         ${element.name ? `<option value="${element.id}">${element.name}</option>` : ''}
                                     </select>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-3 mt-3">
+                                <div class="col-lg-3 mt-3">
                                     <label class="custom-control-label">Phân loại hàng</label>
                                 </div>
-                                <div class="col-md-9">
+                                <div class="col-lg-9">
                                     <div class="row attribute-value-wrapper">
                                         ${renderAttributeValue(element)}
                                     </div>
@@ -290,12 +280,12 @@
     const renderAttributeValue = (attribute) => {
         let output = ''
         if (attribute.values.length == 0) {
-            return output += `<div class="col-md-4 mt-3">
+            return output += `<div class="col-lg-4 mt-3">
                                     <input class="form-control required attribute-value-input" placeholder="Ví dụ: Trắng, đỏ, v.v" onChange="fillAttributeValue(this, event)"/>
                                 </div>`;
         }
         attribute.values.forEach((value, index) => {
-            output += `<div class="col-md-4 mt-3">
+            output += `<div class="col-lg-4 mt-3">
                         <div class="d-flex align-items-center">
                             <input required class="form-control attribute-value-input" ${value.value ? `value="${value.value}"` : ''} accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onChange="fillAttributeValue(this, event)"/>
                                     <i class="fas fa-arrows-alt p-1 attribute-action-btn" style="color: lightgrey; font-size: 15px"></i>
@@ -303,7 +293,7 @@
                                     </div>
                                 </div>`
         })
-        output += `<div class="col-md-4 mt-3">
+        output += `<div class="col-lg-4 mt-3">
                         <div class="d-flex align-items-center">
                             <input class="form-control attribute-value-input last-value" accept-charset="utf-8"  placeholder="Ví dụ: Trắng, đỏ, v.v" onChange="fillAttributeValue(this, event)"/>
                                     <i class="fas fa-arrows-alt p-1 invisible attribute-action-btn" style="color: lightgrey; font-size: 15px"></i>
@@ -337,7 +327,7 @@
             $(element).parents('.attribute-value-wrapper').find('.attribute-action-btn').removeClass(
                 'last-delete-btn')
             $(element).parents('.attribute-value-wrapper').find('.attribute-value-input').prop('required', true)
-            $(element).parents('.attribute-value-wrapper').append(`<div class="col-md-4 mt-3">
+            $(element).parents('.attribute-value-wrapper').append(`<div class="col-lg-4 mt-3">
                                     <div class="d-flex align-items-center"><input class="form-control required attribute-value-input last-value" placeholder="Ví dụ: Trắng, đỏ, v.v" onChange="fillAttributeValue(this, event)"/>
                                         <i class="fas fa-arrows-alt p-1 attribute-action-btn invisible" style="color: lightgrey; font-size: 15px"></i>
                                         <i class="last-delete-btn delete-attribute-value-btn far fa-trash-alt p-1 invisible attribute-action-btn" style="color: lightgrey; font-size: 15px" onClick="deleteAttributeValue(this)"></i>
@@ -419,7 +409,7 @@
             });
             columns.push(`<td>
                                             <div class="input-group">
-                                                    <span class="input-group-text border-end">₫</span>
+                                                    <span class="input-group-text border-end"></span>
                                                     <input type="number" required class="form-control price-input" ${inventory.price ? `value="${inventory.price}"` : ''}  onkeyup="fillInventoryInfo(this, 'price')" placeholder="Nhập vào">
                                                 </div>
                                             </td>
@@ -464,7 +454,7 @@
         attributes[0].values.forEach((value, index) => {
             value.inventories.forEach((inventory, i) => {
                 inventory.attributes.forEach((a) => {
-                    if(a.value == deletedValue) value.inventories.splice(i, 1)
+                    if (a.value == deletedValue) value.inventories.splice(i, 1)
                 })
             })
         })
@@ -474,7 +464,7 @@
     const renderAttributeTable = () => {
         $('#attribute-table tbody').html('')
         $('.attribute-value-wrapper').sortable({
-            items: "> .col-md-4:not(:last)",
+            items: "> .col-lg-4:not(:last)",
             start: function(e, ui) {
                 $(ui.item).attr('data-previndex', ui.item.index());
             },

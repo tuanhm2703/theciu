@@ -60,3 +60,4 @@ include('client/Client.php');
 include('Webhook.php');
 
 Route::get('test', [TestController::class, 'test']);
+Route::get('test-ipn', [TestController::class, 'ipn']);

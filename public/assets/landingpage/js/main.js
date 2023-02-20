@@ -1063,7 +1063,7 @@ $(document).ready(function () {
         //     }, 500)
         // }, 10000)
     }
-    $("#size-rule-gallery").magnificPopup({
+    $(".size-rule-gallery").magnificPopup({
         type: "image",
     });
 

@@ -24,8 +24,7 @@ class PromotionController extends Controller {
                 return view('admin.pages.promotion.components.name', compact('promotion'));
             })
             ->addColumn('promotiom_status_label', function ($promotion) {
-                $product = $promotion->products->first();
-                return view('components.admin.promotion-status-label', compact('product'));
+                return view('components.admin.promotion-status-label', compact('promotion'));
             })
             ->addColumn('product_img_list', function ($promotion) {
                 return view('admin.pages.promotion.components.product_img_list', compact('promotion'));

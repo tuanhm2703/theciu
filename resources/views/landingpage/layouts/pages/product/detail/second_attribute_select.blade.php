@@ -12,7 +12,7 @@
                         wire:model="second_attribute_value" value="{{ $attribute->value }}">
                     <label for="second-attribute-{{ $attribute->value }}" class="radio">{{ $attribute->value }}</label>
                 </div>
-        @endforeach
+            @endforeach
             {{-- <select name="size" id="size" class="form-control" wire:model="second_attribute_id">
                 @foreach ($second_attributes as $index => $attribute)
                     <option value="{{ ((object) $attribute)->id }}">
@@ -22,5 +22,18 @@
         </div><!-- End .select-custom -->
     </div><!-- End .details-filter-row -->
 @endif
-<a class="size-guide" id="size-rule-gallery" href="{{ optional($product->size_rule_image)->path_with_domain }}"><i
-        class="icon-th-list"></i>Hướng dẫn chọn size</a>
+<a href="#" id="size-guide-gallery">
+    <i class="icon-th-list"></i>{{ trans('labels.size_guide') }} <br>
+</a>
+<div class="mt-1">
+    @foreach ($product->size_rule_images as $image)
+        <a style="background: url({{ $image->path_with_domain }})" class="size-rule-gallery img-thumbnail"
+            href="{{ $image->path_with_domain }}"></a>
+    @endforeach
+</div>
+
+{{-- <div id="size-rule-gallery">
+    @foreach ($product->size_rule_images as $image)
+        <a class="size-rule-item" href="{{ $image->path_with_domain }}"></a>
+    @endforeach
+</div> --}}

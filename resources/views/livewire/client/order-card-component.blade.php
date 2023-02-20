@@ -16,10 +16,10 @@
             </div>
             <div class="product-price">
                 @if ($inventory->pivot->promotion_price < $inventory->pivot->origin_price)
-                    <span class="old-price">₫{{ format_currency($inventory->pivot->origin_price) }}</span>
-                    <span class="new-price ml-1">₫{{ format_currency($inventory->pivot->promotion_price) }}</span>
+                    <span class="old-price">{{ format_currency_with_label($inventory->pivot->origin_price) }}</span>
+                    <span class="new-price ml-1">{{ format_currency_with_label($inventory->pivot->promotion_price) }}</span>
                 @else
-                    ₫{{ format_currency($inventory->pivot->origin_price) }}
+                    {{ format_currency_with_label($inventory->pivot->origin_price) }}
                 @endif
             </div>
         </div>
@@ -44,7 +44,7 @@
         </div>
         <div class="action-button-wrapper">
             <div>
-                Thành tiền: <span class="font-weight-bold text-danger">₫{{ format_currency($order->total) }}</span>
+                Thành tiền: <span class="font-weight-bold text-danger">{{ format_currency_with_label($order->total) }}</span>
             </div>
             @switch($order->order_status)
                 @case(App\Enums\OrderStatus::CANCELED)

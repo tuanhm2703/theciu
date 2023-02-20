@@ -1,6 +1,6 @@
 <?php
 
-namespace Theciu\Services\VNPay;
+namespace App\Http\Services\VNPay\src;
 
 class Gateway {
 

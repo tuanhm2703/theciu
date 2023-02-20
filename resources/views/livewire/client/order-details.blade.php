@@ -3,7 +3,7 @@
         <div class="order-header d-flex justify-content-between bg-light p-3">
             <span class="text-uppercase w-25">
                 < Trở lại</span>
-                    <div class="w-100 text-right">
+                    <div class="w-100">
                         <span>Mã đơn hàng. {{ $order->order_number }}</span> | <span
                             class="text-danger">{{ $order->getCurrentStatusLabel() }}</span>
                     </div>
@@ -111,5 +111,50 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="order-turnover-info text-right" style="font-size: 14px;">
+            <div class="row">
+                <div class="col-8 border-right">
+                    Tổng tiền hàng
+                </div>
+                <div class="col-4">
+                    {{ format_currency_with_label($order->subtotal) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 border-right">
+                    {{ trans('labels.shipping_fee') }}
+                </div>
+                <div class="col-4">
+                    {{ format_currency_with_label($order->shipping_fee) }}
+                </div>
+            </div>
+            @if ($order->order_voucher)
+                <div class="row">
+                    <div class="col-8 border-right">{{ trans('labels.order_voucher') }}</div>
+                    <div class="col-4">
+                        - {{ format_currency_with_label($order->order_voucher->pivot->amount) }}
+                    </div>
+                </div>
+            @endif
+            <div class="row">
+                <div class="col-8 border-right">
+                    {{ trans('labels.total') }}
+                </div>
+                <div class="col-4 text-right">
+                    <h5 class="text-danger">
+                        {{ format_currency_with_label($order->total) }}
+                    </h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 border-right">
+                    {{ trans('labels.payment_method') }}
+                </div>
+                <div class="col-4">
+                    {{ trans('labels.payment_methods.' . $order->payment->payment_method->code) }}
+                </div>
+            </div>
+        </div>
     @endif
 </div>

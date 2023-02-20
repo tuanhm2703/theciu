@@ -15,10 +15,8 @@
             <span wire:loading wire:target="addToCart">Đang thực hiện...</span>
         </button>
         <div class="details-action-wrapper">
-            <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
-                    Wishlist</span></a>
-            <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to
-                    Compare</span></a>
+            <a href="#" class="btn-product btn-wishlist"
+                title="Wishlist"><span>{{ trans('labels.add_to_wishlist') }}</span></a>
         </div><!-- End .details-action-wrapper -->
     </div><!-- End .product-details-action -->
 </div>

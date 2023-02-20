@@ -68,6 +68,7 @@ class OrderController extends Controller {
     public function details(Order $order) {
         $total_delivered_orders = $order->customer->delivered_orders()->count();
         $order_success_percentage = $order->customer->order_success_percentage();
+        $order->shipping_order->setRelation('shipping_order_histories', $order->shipping_order->shipping_order_histories()->orderBy('created_at', 'desc')->get());
         return view('admin.pages.order.details', compact('order', 'total_delivered_orders', 'order_success_percentage'));
     }
 

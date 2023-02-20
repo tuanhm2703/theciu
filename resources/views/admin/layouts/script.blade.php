@@ -168,5 +168,11 @@
             $(e.target).parents('table').children('tbody').find('.child-checkbox').prop('checked', $(e
                 .target).is(':checked'))
         })
+        $('.common-info-update-btn').on('click', (e) => {
+            $('.promotion-percent-input').val($('input[name=general-discount-percent]').val())
+            $('.promotion-percent-input').each((i, e) => {
+                fillPromotionPrice(e, 'percent')
+            })
+        })
     })
 </script>

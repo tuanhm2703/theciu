@@ -7,8 +7,11 @@
                 <div class="menu-col">
                     <ul>
                         @foreach ($promotions as $p)
-                            <li><a
-                                    href="{{ route('client.product.index', ['promotion' => $p->slug]) }}">{{ $p->name }}</a>
+                            <li>
+                                <a
+                                    href="{{ route('client.product.index', ['promotion' => $p->slug]) }}">
+                                    {{ $p->name }}<span><span class="tip tip-new">New</span></span>
+                                </a>
                             </li>
                         @endforeach
                     </ul>

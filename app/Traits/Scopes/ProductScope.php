@@ -44,6 +44,7 @@ trait ProductScope {
     }
 
     public function scopeAddSalePrice($q) {
+        /* Adding a column called `sale_price` to the query. */
         $q->leftJoin('promotion_product', function ($q) {
             $q->on('promotion_product.product_id', 'products.id');
         })->leftJoin('promotions', function ($q) {

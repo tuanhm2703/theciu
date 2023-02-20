@@ -95,7 +95,7 @@ class Inventory extends Model {
     }
 
     public function getFormattedSalePriceAttribute() {
-        return format_currency($this->sale_price);
+        return format_currency_with_label($this->sale_price);
     }
 
     public function getPackageInfoAttribute() {

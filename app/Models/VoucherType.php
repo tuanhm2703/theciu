@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class VoucherType extends Model {
     use HasFactory, CustomScope;
+
+    const ORDER = 'order';
+    const FREESHIP = 'freeship';
 }

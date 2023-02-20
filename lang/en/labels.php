@@ -121,6 +121,7 @@ return [
         'momo' => 'Momo Wallet',
         'ebank' => 'E-Banking',
         'cod' => 'Cash on delivery',
+        'vnpay' => 'VNPay'
     ],
     'page_list' => 'Page list',
     'create_page' => 'Create page',
@@ -157,5 +158,8 @@ return [
     'most_rated' => 'Most rated',
     'sort_by' => 'Sort by',
     'loading' => 'Loading',
-    'price_range' => 'Price range'
+    'price_range' => 'Price range',
+    'payment_method' => 'Payment method',
+    'order_voucher' => 'Order voucher',
+    'size_guide' => 'Size guide'
 ];

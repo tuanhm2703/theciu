@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PromotionStatusType;
 use App\Traits\Common\CommonFunc;
 use App\Traits\Scopes\CustomScope;
 use App\Traits\Scopes\PromotionScope;
@@ -42,5 +43,37 @@ class Promotion extends Model {
 
     public function getTimeLeftAttribute() {
         return $this->to->diffInSeconds(now());
+    }
+
+    public function getStatus() {
+        $status = PromotionStatusType::STOPPED;
+        if ($this && $this->from && $this->to) {
+            if (now()->isBetween($this->from, $this->to)) {
+                $status = PromotionStatusType::HAPPENDING;
+            } else if (now()->isBefore($this->from)) {
+                $status = PromotionStatusType::COMMING;
+            } else {
+                $status = PromotionStatusType::STOPPED;
+            }
+        }
+        if (in_array($status, [PromotionStatusType::COMMING, PromotionStatusType::HAPPENDING]) && optional($this)->isInactive()) {
+            return PromotionStatusType::PAUSE;
+        }
+        return $status;
+    }
+
+    public function getPromotionStatusLabelAttribute() {
+        switch ($this->getStatus()) {
+            case PromotionStatusType::COMMING:
+                return "Sắp diễn ra";
+            case PromotionStatusType::HAPPENDING:
+                return "Đang diễn ra";
+            case PromotionStatusType::STOPPED:
+                return "Đã kết thúc";
+            case PromotionStatusType::PAUSE:
+                return "Tạm dừng";
+            default:
+                return "Đã kết thúc";
+        }
     }
 }

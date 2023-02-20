@@ -77,6 +77,12 @@ class Order extends Model {
         return $this->belongsTo(PaymentMethod::class);
     }
 
+    public function getOrderVoucherAttribute() {
+        return $this->vouchers()->whereHas('voucher_type', function($q) {
+            $q->where('voucher_types.code', VoucherType::ORDER);
+        })->first();
+    }
+
     public function vouchers() {
         return $this->belongsToMany(Voucher::class, 'order_vouchers')->withPivot([
             'amount',
@@ -250,5 +256,19 @@ class Order extends Model {
             return true;
         }
         return false;
+    }
+
+    public function getActualShippingFee() {
+        return $this->shipping_order->shipping_order_histories->count() > 0 ? $this->shipping_order->shipping_order_histories->last()->fee : $this->shipping_fee;
+    }
+
+    /**
+     * It calculates the final revenue of an order.
+     *
+     * @return The final revenue of the order.
+     */
+    public function getFinalRevenue() {
+        $revenue = $this->subtotal - ($this->getActualShippingFee() - $this->shipping_order->total_fee);
+        return $this->order_voucher ? $revenue - $this->order_voucher->pivot->amount : $revenue;
     }
 }

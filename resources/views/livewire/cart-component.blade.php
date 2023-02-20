@@ -90,7 +90,7 @@
                                         class="custom-control-label">{{ $type['short_name'] }}</label>
                                 </div><!-- End .custom-control -->
                             </td>
-                            <td>{{ format_currency($type['fee']) }}</td>
+                            <td>{{ format_currency_with_label($type['fee']) }}</td>
                         </tr><!-- End .summary-shipping-row -->
                         <tr class="summary-shipping-row">
                             <td>
@@ -130,23 +130,23 @@
                     </tr>
                     <tr class="order-payment-info">
                         <td>{{ trans('labels.subtotal') }}</td>
-                        <td>{{ format_currency($cart->getTotalWithSelectedItems($item_selected, $order_voucher)) }}
+                        <td>{{ format_currency_with_label($cart->getTotalWithSelectedItems($item_selected, $order_voucher)) }}
                         </td>
                     </tr>
                     @if ($order_voucher)
                         <tr class="order-payment-info">
                             <td>{{ trans('labels.order_discount_amount') }}</td>
-                            <td>{{ format_currency($order_voucher->getDiscountAmount($cart->getTotalWithSelectedItems($item_selected))) }}
+                            <td>{{ format_currency_with_label($order_voucher->getDiscountAmount($cart->getTotalWithSelectedItems($item_selected))) }}
                             </td>
                         </tr>
                     @endif
                     <tr class="order-payment-info">
                         <td>{{ trans('labels.shipping_fee') }}</td>
-                        <td>{{ format_currency($shipping_fee) }}</td>
+                        <td>{{ format_currency_with_label($shipping_fee) }}</td>
                     </tr>
                     <tr class="summary-total">
                         <td>{{ trans('labels.total') }}:</td>
-                        <td>{{ format_currency($cart->getTotalWithSelectedItems($item_selected, $order_voucher) + $shipping_fee) }}
+                        <td>{{ format_currency_with_label($cart->getTotalWithSelectedItems($item_selected, $order_voucher) + $shipping_fee) }}
                         </td>
                     </tr><!-- End .summary-total -->
                 </tbody>

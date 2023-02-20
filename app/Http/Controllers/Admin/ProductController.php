@@ -31,7 +31,7 @@ class ProductController extends Controller {
                 $product->createImages([$request->file('video')], MediaType::VIDEO, 'videos');
             }
             if ($request->hasFile('size-rule-img')) {
-                $product->createImages([$request->file('size-rule-img')], MediaType::SIZE_RULE);
+                $product->createImages($request->file('size-rule-img'), MediaType::SIZE_RULE);
             }
             $product->categories()->attach($request->input('category_id'));
             foreach ($attributes[0]->values as $index => $value) {
@@ -82,7 +82,7 @@ class ProductController extends Controller {
                 $product->createImages([$request->file('video')], MediaType::VIDEO, 'videos');
             }
             if ($request->hasFile('size-rule-img')) {
-                $product->createImages([$request->file('size-rule-img')], MediaType::SIZE_RULE);
+                $product->createImages($request->file('size-rule-img'), MediaType::SIZE_RULE);
             }
             $product->categories()->detach(optional($product->category)->id);
             $product->categories()->attach($request->input('category_id'));
@@ -157,6 +157,7 @@ class ProductController extends Controller {
         }
         $product['category_ids'] = $category_ids;
         $listImgSources = $product->images->pluck('path_with_domain')->toArray();
-        return view('admin.pages.product.edit', compact('product', 'listImgSources'));
+        $productSizeRuleSrc = $product->size_rule_images->pluck('path_with_domain')->toArray();
+        return view('admin.pages.product.edit', compact('product', 'listImgSources', 'productSizeRuleSrc'));
     }
 }

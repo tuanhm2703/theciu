@@ -1,9 +1,9 @@
 <x-admin.card header="Thông tin bán hàng" cardClass="mt-3 product-step" id="sale-info-step">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-lg-2">
             {!! Form::label('attribute', 'Phân loại hàng', ['class' => 'custom-control-label']) !!}
         </div>
-        <div class="col-md-10">
+        <div class="col-lg-10">
             <button id="add-attribute-btn" class="text-bold text-danger btn-border-dash"><i class="fas fa-plus"></i>
                 Thêm nhóm
                 phân loại</button>
@@ -14,9 +14,9 @@
         <div class="col-lg-2">
             {!! Form::label('', 'Danh sách phân loại nhóm hàng', ['class' => 'custom-control-label']) !!}
         </div>
-        <div class="col-md-7">
+        <div class="col-lg-7">
             <div class="d-flex input-group">
-                <span class="input-group-text" id="basic-addon1">₫</span>
+                <span class="input-group-text" id="basic-addon1"></span>
                 <input type="text" class="form-control p-1 validate-disabled common-input" placeholder="Giá"
                     name="common-price" data-field="price" novalidate>
                 <input type="text" class="form-control p-1 validate-disabled common-input" placeholder="Kho hàng"
@@ -27,14 +27,14 @@
                     style="border-left: 1px solid #d2d6da !important">
             </div>
         </div>
-        <div class="col-md-3 mt-3 mt-md-0 text-end">
+        <div class="col-lg-3 mt-3 mt-md-0 text-end">
             <button class="btn btn-primary" onClick="applyCommonDataForInventory(event)">Áp dụng cho tất cả các
                 loại</button>
         </div>
         <div class="mt-3">
             <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-10">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-10">
                     <table class="table table-bordered align-items-center mb-0" id="attribute-table">
                         <thead style="background-color: #f5f5f5">
                             <tr>
@@ -58,10 +58,10 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-md-2">
+        <div class="col-lg-2">
             {!! Form::label('size_rule_img', 'Hình ảnh Bảng quy đổi kích cỡ', ['class' => 'custom-control-label']) !!}
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-10">
             <div class="size-rule-gallery"></div>
             <x-admin.bordered-add-btn class="size-rule-drag" text="Thêm hình ảnh">
                 <svg viewBox="0 0 23 21" xmlns="http://www.w3.org/2000/svg">

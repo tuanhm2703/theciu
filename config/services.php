@@ -44,5 +44,12 @@ return [
         'client_id' => env('KIOTVIET_CLIENT_ID'),
         'client_secret' => env('KIOTVIET_CLIENT_SECRET'),
         'retailer' => env('KIOTVIET_RETAILER')
+    ],
+    'vnpay' => [
+        'tmn_code' => env('VNP_TMNCODE'),
+        'hash_secret' => env('VNP_HASH_SECRET'),
+        'url' => env('VNP_URL'),
+        'refund_url' => env('VNP_REFUND_URL'),
+        'ipn_url' => env('VNP_IPN_URL')
     ]
 ];

@@ -37,10 +37,10 @@
                                 </div>
                                 <div>
                                     <h6 class="text-bold voucher-name mb-0">{{ $voucher->name }}</h6>
-                                    <div><span>Đơn tối thiểu {{ format_currency($voucher->min_order_value) }}</span></div>
+                                    <div><span>Đơn tối thiểu {{ format_currency_with_label($voucher->min_order_value) }}</span></div>
                                     <div class="voucher-description">
                                         Giảm giá -
-                                        {{ $voucher->max_discount_amount ? trans('labels.max') . ' ' . format_currency($voucher->max_discount_amount) : trans('labels.unlimit') }}
+                                        {{ $voucher->max_discount_amount ? trans('labels.max') . ' ' . format_currency_with_label($voucher->max_discount_amount) : trans('labels.unlimit') }}
                                     </div>
                                 </div>
                             </label>

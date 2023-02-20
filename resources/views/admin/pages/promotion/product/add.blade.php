@@ -6,7 +6,7 @@
     @include('admin.layouts.navbars.auth.topnav', ['title' => trans('nav.create_promotion')])
     <div class="container-fluid">
         @include('admin.pages.promotion.product.components.edit-table')
-
+        {{-- <livewire:admin.promotion-detail-component></livewire:admin.promotion-detail-component> --}}
         @include('admin.layouts.footers.auth.footer')
     </div>
 @endsection
