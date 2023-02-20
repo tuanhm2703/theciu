@@ -19,8 +19,8 @@ class VNPayment {
         $this->returnUrl = $returnUrl;
     }
 
-    public static function process($amount, $orderInfo, $returnUrl) {
-        $payment = new VNPayment($amount, $orderInfo, $returnUrl);
+    public static function process($order_number, $amount, $orderInfo, $returnUrl) {
+        $payment = new VNPayment($order_number, $amount, $orderInfo, $returnUrl);
         return $payment->execute();
     }
 
