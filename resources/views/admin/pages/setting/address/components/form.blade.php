@@ -1,12 +1,13 @@
 <div class="row mt-2">
     <div class="col-lg-6">
         <div class="form-group">
-            <label for="inputEmail">{{ trans('labels.fullname') }}</label>
+            <label for="fullname">{{ trans('labels.fullname') }}</label>
             {!! Form::text('fullname', null, [
                 'placeholder' => trans('labels.fullname'),
                 'class' => 'form-control',
                 'required',
                 'autofocus' => '',
+                'wire:model' => 'address.fullname'
             ]) !!}
         </div>
     </div>
@@ -16,8 +17,7 @@
             {!! Form::text('phone', null, [
                 'placeholder' => trans('labels.phone'),
                 'class' => 'form-control text-input',
-                'required',
-                'autofocus' => '',
+                'wire:model' => 'address.phone'
             ]) !!}
         </div>
     </div>

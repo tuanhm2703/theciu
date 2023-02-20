@@ -552,3 +552,6 @@
 #size-guide-gallery {
     font-size: 1.3rem;
 }
+.check-cart-item {
+    width: 20px !important;
+}

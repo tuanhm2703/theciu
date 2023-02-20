@@ -8,6 +8,8 @@ use Livewire\Component;
 class Create extends Component
 {
     public $address_type = AddressType::SHIPPING;
+    public $address;
+
     public function render()
     {
         return view('livewire.admin.address.create');

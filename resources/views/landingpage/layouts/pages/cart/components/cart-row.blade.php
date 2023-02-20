@@ -1,13 +1,13 @@
 <tr>
     <td width="5%" class="p-3">
-        <input wire:change="updateOrderInfo" type="checkbox" class="form-control custom-checkbox w-100" value="{{ $inventory->id }}" wire:model="item_selected">
+        <input wire:change="updateOrderInfo" type="checkbox" class="form-control custom-checkbox m-auto check-cart-item p-1"
+            value="{{ $inventory->id }}" wire:model="item_selected">
     </td>
     <td class="product-col">
         <div class="product">
-            <figure class="product-media">
-                <a href="#">
-                    <img src="{{ $inventory->image->path_with_domain }}" alt="Product image">
-                </a>
+            <figure class="product-media mr-1">
+                <a href="{{ optional($inventory->image)->path_with_domain }}" class="inventory-img-btn"
+                    style="background: url({{ optional($inventory->image)->path_with_domain }}); width: 50px; height: 50px; background-position: center; background-size: cover"></a>
             </figure>
 
             <h3 class="product-title">

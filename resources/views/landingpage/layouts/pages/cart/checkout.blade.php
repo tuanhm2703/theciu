@@ -28,38 +28,27 @@
 @endsection
 @push('js')
     <script>
-        var createAddressFormValidator = $('#create-address-form').initValidator()
-        $('#create-address-form').ajaxForm({
-            beforeSend: () => {
-
-            },
-            success: (res) => {
-                $('#return-address-list-btn').trigger('click')
-            },
-            error: (err) => {
-                if (err.status === 422) {
-                    const errors = err.responseJSON.errors;
-                    Object.keys(err.responseJSON.errors).forEach((key) => {
-                        createAddressFormValidator.errorTrigger(
-                            $(`#create-address-form .form-control[name=${key}]`),
-                            errors[key][0]
-                        );
-                    });
-                }
-            }
+        $('#createAddressModal').on('shown.bs.modal', (e) => {
+            $('#createAddressModal form').trigger('reset')
         })
-        $('#updateAddressModal').on('shown.bs.modal', (e) => {
-            $('#update-address-form').ajaxForm({
-                beforeSend: () => {
-                    $('.address-update-btn').loading()
-                },
-                success: () => {
-                    $('#return-address-list-btn').trigger('click')
-                },
-                error: () => {
-                    $('.address-update-btn').loading(false)
+        window.addEventListener('addressUpdated', (e) => {
+            $('#return-address-list-btn').trigger('click')
+        });
+        const initChangeModal = () => {
+            $('.submit-change-address-btn').on('click', (e) => {
+                e.preventDefault()
+                if ($('input[name=shipping-address]:checked').val()) {
+                    Livewire.emit('cart:changeAddress', $('input[name=shipping-address]:checked').val())
+                    $('.modal.show').modal('hide')
                 }
             })
-        })
+            $('.update-address-btn').on('click', (e) => {
+                e.preventDefault()
+                Livewire.emit('address:change', $(e.currentTarget).attr('data-address-id'))
+                $(e.currentTarget).parents('.modal').modal('hide')
+                $('#updateAddressModal').modal('show')
+                console.log('hello');
+            })
+        }
     </script>
 @endpush

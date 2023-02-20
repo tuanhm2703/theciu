@@ -165,5 +165,6 @@ return [
     'price_range' => 'Khoảng giá',
     'payment_method' => 'Phương thức thanh toán',
     'order_voucher' => 'Voucher đơn hàng',
-    'size_guide' => 'Hướng dẫn chọn kích cỡ'
+    'size_guide' => 'Hướng dẫn chọn kích cỡ',
+    'add_address' => 'Thêm địa chỉ'
 ];

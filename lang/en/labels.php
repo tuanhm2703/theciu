@@ -161,5 +161,6 @@ return [
     'price_range' => 'Price range',
     'payment_method' => 'Payment method',
     'order_voucher' => 'Order voucher',
-    'size_guide' => 'Size guide'
+    'size_guide' => 'Size guide',
+    'add_address' => 'Add address'
 ];
