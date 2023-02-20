@@ -33,8 +33,12 @@ class PaymentWebhookController extends Controller {
     public function vnpayWebhook(Request $request) {
         try {
             $orderNumber = $request->{Param::TXN_REF};
-            $order = Order::where('order_number', $orderNumber)->firstOrFail();
+            $order = Order::where('order_number', $orderNumber)->first();
             $returnData = [];
+            if(!$order) {
+                $returnData['RspCode'] = '01';
+                $returnData['Message'] = 'Order Not Found';
+            }
             if (VNPayment::checkSum($request->all())) {
                 if ($order->total != $request->{Param::AMOUNT}) {
                     $returnData['RspCode'] = '97';
