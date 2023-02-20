@@ -58,6 +58,7 @@ class PaymentWebhookController extends Controller {
                 $returnData['Message'] = 'Invalid signature';
             }
         } catch (\Throwable $th) {
+            \Log::error($th);
             $returnData['RspCode'] = '97';
             $returnData['Message'] = 'Invalid signature';
         }
