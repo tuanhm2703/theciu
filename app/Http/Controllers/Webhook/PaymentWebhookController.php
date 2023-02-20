@@ -41,7 +41,7 @@ class PaymentWebhookController extends Controller {
             }
             if (VNPayment::checkSum($request->all())) {
                 if ($order->total * 100 != $request->{Param::AMOUNT}) {
-                    $returnData['RspCode'] = '97';
+                    $returnData['RspCode'] = '04';
                     $returnData['Message'] = 'Invalid amount';
                 } else {
                     if ($order->payment->status != PaymentStatus::PENDING) {
