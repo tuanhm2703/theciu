@@ -35,7 +35,7 @@ class PaymentWebhookController extends Controller {
             $orderNumber = $request->{Param::TXN_REF};
             $order = Order::where('order_number', $orderNumber)->first();
             $returnData = [];
-            if(!$order) {
+            if (!$order) {
                 $returnData['RspCode'] = '01';
                 $returnData['Message'] = 'Order Not Found';
                 return response()->json($returnData);
@@ -51,11 +51,13 @@ class PaymentWebhookController extends Controller {
                     } else {
                         $returnData['RspCode'] = '00';
                         $returnData['Message'] = 'Confirm Success';
-                        $order->payment->data = $request->all();
-                        $order->payment->payment_status = PaymentStatus::PAID;
-                        $order->payment->trans_id = $request->{Param::TRANSACTION_NUMBER};
-                        $order->payment->save();
-                        $order->createPaymentOrderHistory();
+                        if ($request->{Param::RESPONSE_CODE} == '00') {
+                            $order->payment->data = $request->all();
+                            $order->payment->payment_status = PaymentStatus::PAID;
+                            $order->payment->trans_id = $request->{Param::TRANSACTION_NUMBER};
+                            $order->payment->save();
+                            $order->createPaymentOrderHistory();
+                        }
                     }
                 }
             } else {

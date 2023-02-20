@@ -68,9 +68,7 @@ class VNPayment {
         }
         $secureHash = hash_hmac('sha512', $hashData, config('services.vnpay.hash_secret'));
         if ($secureHash == $vnp_SecureHash) {
-            if ($inputData['vnp_ResponseCode'] == '00') {
-                return true;
-            }
+            return true;
         }
         return false;
     }
