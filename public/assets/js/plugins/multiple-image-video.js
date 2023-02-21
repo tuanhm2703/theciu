@@ -18,6 +18,7 @@
             },
             options
         );
+        elemRef.initSrc = elemRef.initSrc ? elemRef.initSrc : [];
         elemRef.multiple = elemRef.maxFile > 1;
         const requiredMessage =
             elemRef.type == "img"
