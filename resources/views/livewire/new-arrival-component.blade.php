@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             @foreach ($products as $product)
                 <div class="col-6 col-md-4 col-lg-3">
-                    <livewire:client.product-card-component :product="$product"></livewire:client.product-card-component>
+                    <livewire:client.product-card-component wire:key="product-new-arrival-{{ $product->id }}" :product="$product"></livewire:client.product-card-component>
                 </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
             @endforeach
         </div><!-- End .row -->
