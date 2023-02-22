@@ -3,7 +3,7 @@
     let inventories = []
     let listCategories = []
     let deleteImages = []
-    let productImgSrc = JSON.parse(`@json(isset($product) ? $listImgSources: `[]`)`);
+    let productImgSrc = JSON.parse(`@json(isset($product) ? $listImgSources : `[]`)`);
     let productCategoryIds = @json(isset($product) ? $product->category_ids : []);
     let productVideoSrc = `{{ isset($product) ? optional($product->video)->path_with_domain : '' }}`
     let productSizeRuleSrc = JSON.parse(`@json(isset($product) ? $productSizeRuleSrc : `[]`)`);
@@ -30,6 +30,9 @@
             required: true,
             showThumb: true,
             sortableOptions: {
+                start: function(e, ui) {
+                    $(this).attr('data-previndex', ui.item.index());
+                },
                 update: function(event, ui) {
                     let sources = [];
                     $('.img-gallery img').each((index, e) => {

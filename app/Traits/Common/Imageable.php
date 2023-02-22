@@ -22,17 +22,15 @@ trait Imageable {
     }
 
     public function createImages($images, $type = null, $folder = 'images') {
-        $records = [];
         foreach ($images as $image) {
             $fileName = $image->getClientOriginalName();
             $path = StorageService::put($folder, $image);
-            $records[] = [
+            $this->image()->create([
                 'name' => $fileName,
                 'path' => $path,
                 'type' => $type
-            ];
+            ]);
         }
-        $this->images()->createMany($records);
     }
 
     public function createImagesFromUrls(Array $urls, $type = null, $folder = 'images') {
