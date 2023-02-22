@@ -43,13 +43,6 @@ class Customer extends User {
         return $this->hasMany(Order::class)->where('order_status', OrderStatus::CANCELED);
     }
 
-    public function getAvatarPathAttribute() {
-        if($this->avatar) {
-            return $this->avatar->path_with_domain;
-        }
-        return asset('assets/images/default-avatar.png');
-    }
-
     public function getFullnameAttribute() {
         return "$this->last_name $this->first_name";
     }

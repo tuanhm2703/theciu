@@ -36,4 +36,8 @@ class Param {
     const TRANSACTION_STATUS = "vnp_TransactionStatus";
     const RESPONSE_CODE = "vnp_ResponseCode";
     const BANK_COD = 'vnp_BankCode';
+    const REQUEST_ID = 'vnp_RequestId';
+    const TRANSACTION_TYPE = 'vnp_TransactionType';
+    const CREATE_BY = 'vnp_CreateBy';
+    const SECURE_HASH = 'vnp_SecureHash';
 }

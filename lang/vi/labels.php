@@ -166,5 +166,13 @@ return [
     'payment_method' => 'Phương thức thanh toán',
     'order_voucher' => 'Voucher đơn hàng',
     'size_guide' => 'Hướng dẫn chọn kích cỡ',
-    'add_address' => 'Thêm địa chỉ'
+    'add_address' => 'Thêm địa chỉ',
+    'add_staff' => 'Thêm nhân viên',
+    'create_role' => 'Tạo vai trò',
+    'name' => 'Tên',
+    'permission' => 'Quyền',
+    'created_at' => 'Tạo ngày',
+    'contact_information' => 'Thông tin liên lạc',
+    'role' => 'Vai trò',
+    'edit_staff' => 'Cập nhật nhân viên'
 ];

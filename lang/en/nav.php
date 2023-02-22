@@ -23,5 +23,6 @@ return [
     'order_details' => "Order's details",
     'seo_management' => 'Order management',
     'page_management' => 'Page management',
-    'sync_warehouse' => 'Sync warehouse'
+    'sync_warehouse' => 'Sync warehouse',
+    'staff_management' => 'Staff management'
 ];

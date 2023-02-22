@@ -11,4 +11,7 @@ class ModuleController extends Controller {
         $modules = Module::all();
         return view('admin.pages.module.index', compact('modules'));
     }
+
+    public function editRole() {
+    }
 }

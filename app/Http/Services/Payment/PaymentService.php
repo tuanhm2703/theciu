@@ -8,6 +8,8 @@ use App\Enums\PaymentServiceType;
 use App\Enums\PaymentStatus;
 use App\Http\Services\Momo\MomoService;
 use App\Http\Services\VNPay\src\Models\VNPayment;
+use App\Http\Services\VNPay\src\Models\VNRefund;
+use App\Http\Services\VNPay\src\VNPayService;
 use Exception;
 use MService\Payment\Shared\Constants\RequestType;
 
@@ -31,16 +33,29 @@ class PaymentService {
     }
 
     public static function refund($order) {
-        if($order->order_status != OrderStatus::CANCELED) {
+        if ($order->order_status != OrderStatus::CANCELED) {
             throw new Exception('Không thể hoàn tiền đơn hàng chưa huỷ.', 409);
         }
+        $result = false;
         if ($order->payment && $order->payment->payment_status == PaymentStatus::PAID) {
             $payment_method = $order->payment->payment_method;
             if (in_array($payment_method->type, PaymentMethodType::REFUNDABLE_METHODS)) {
-                MomoService::refund($order);
-                return true;
+                switch ($payment_method->code) {
+                    case PaymentMethodType::MOMO:
+                        MomoService::refund($order);
+                        $result = true;
+                        break;
+                    case PaymentMethodType::VNPAY:
+                        $result = VNPayService::refund($order);
+                        break;
+                }
+                if (!$result) {
+
+                }
             }
         }
+        if ($result) $order->payment->update(['payment_status' => PaymentStatus::REFUND]);
+        else $order->payment->update(['payment_status' => PaymentStatus::REFUND_FAILED]);
         return false;
     }
 }

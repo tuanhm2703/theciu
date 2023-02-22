@@ -57,4 +57,10 @@ trait Imageable {
     public function avatar() {
         return $this->morphOne(Image::class, 'imageable')->where('type', MediaType::AVATAR);
     }
+    public function getAvatarPathAttribute() {
+        if($this->avatar) {
+            return $this->avatar->path_with_domain;
+        }
+        return asset('assets/images/default-avatar.png');
+    }
 }

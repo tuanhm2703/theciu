@@ -6,6 +6,11 @@ use App\Http\Services\Shipping\GHTKService;
 use App\Http\Services\VNPay\src\Models\CreatePaymentRequest;
 use App\Http\Services\VNPay\src\Models\IPNUrl;
 use App\Http\Services\VNPay\src\Models\VNPayment;
+use App\Http\Services\VNPay\src\Models\VNRefund;
+use App\Models\Order;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TestController extends Controller {
@@ -15,7 +20,8 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-        return redirect()->to(VNPayment::process(time(),30000000, 'don hang theciu', 'http://localhost:4000/test-ipn'));
+        $order = Order::latest()->first();
+        $order->refund();
     }
 
     public function ipn(Request $request) {

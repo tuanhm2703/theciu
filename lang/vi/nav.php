@@ -23,5 +23,6 @@ return [
     'order_details' => "Chi tiết đơn hàng",
     'seo_management' => 'Quản lý SEO',
     'page_management' => 'Quản lý trang',
-    'sync_warehouse' => 'Đồng bộ tồn kho'
+    'sync_warehouse' => 'Đồng bộ tồn kho',
+    'staff_management' => 'Quản lý nhân viên'
 ];

@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\Common\Imageable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\PermissionRegistrar;
+use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+class User extends Authenticatable {
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, Imageable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,15 +22,15 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
-        'firstname',
-        'lastname',
+        'name',
         'email',
         'password',
         'address',
         'city',
         'country',
         'postal',
-        'about'
+        'about',
+        'phone'
     ];
 
     /**
@@ -54,10 +56,17 @@ class User extends Authenticatable
      * Always encrypt the password when it is updated.
      *
      * @param $value
-    * @return string
-    */
-    public function setPasswordAttribute($value)
-    {
+     * @return string
+     */
+    public function setPasswordAttribute($value) {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function getName() {
+        return $this->firstname . " " . $this->lastname;
+    }
+
+    public function getRoleAttribute() {
+        return $this->roles()->first();
     }
 }

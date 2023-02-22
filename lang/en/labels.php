@@ -162,5 +162,13 @@ return [
     'payment_method' => 'Payment method',
     'order_voucher' => 'Order voucher',
     'size_guide' => 'Size guide',
-    'add_address' => 'Add address'
+    'add_address' => 'Add address',
+    'add_staff' => 'New staff',
+    'create_role' => 'Create role',
+    'name' => 'Name',
+    'permission' => 'Permission',
+    'created_at' => 'Created at',
+    'contact_information' => 'Contact information',
+    'role' => 'Role',
+    'edit_staff' => 'Edit staff'
 ];

@@ -9,4 +9,5 @@ class PaymentStatus extends Enum {
     const PAID = 'Paid';
     const FAILED = 'Failed';
     const REFUND = 'Refund';
+    const REFUND_FAILED = 'RefundFailed';
 }

@@ -11,5 +11,5 @@ class PaymentMethodType {
 
     const VNPAY = 'vnpay';
 
-    const REFUNDABLE_METHODS = [self::EWALLET, self::EBANK, self::VNPAY];
+    const REFUNDABLE_METHODS = [self::EWALLET, self::EBANK];
 }
