@@ -93,6 +93,10 @@ class Product extends Model {
         return $this->morphToMany(Category::class, 'categorizable')->where('type', CategoryType::PRODUCT);
     }
 
+    public function other_categories() {
+        return $this->morphToMany(Category::class, 'categorizable')->where('type', '!=', CategoryType::PRODUCT);
+    }
+
     public function promotions() {
         return $this->belongsToMany(Promotion::class, 'promotion_product');
     }
