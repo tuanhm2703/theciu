@@ -72,7 +72,7 @@ class ProductListComponent extends Component {
             $category_ids = $category->getAllChildId();
             $this->title = $category->name;
             $this->type = 'Danh mục';
-            $products = Product::whereHas('categories', function ($q) use ($category_ids) {
+            $products = Product::whereHas('other_categories', function ($q) use ($category_ids) {
                 return $q->whereIn('categories.id', $category_ids);
             });
         }
