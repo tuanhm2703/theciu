@@ -174,5 +174,6 @@ return [
     'created_at' => 'Tạo ngày',
     'contact_information' => 'Thông tin liên lạc',
     'role' => 'Vai trò',
-    'edit_staff' => 'Cập nhật nhân viên'
+    'edit_staff' => 'Cập nhật nhân viên',
+    'see_more' => 'Xem thêm'
 ];

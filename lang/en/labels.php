@@ -170,5 +170,6 @@ return [
     'created_at' => 'Created at',
     'contact_information' => 'Contact information',
     'role' => 'Role',
-    'edit_staff' => 'Edit staff'
+    'edit_staff' => 'Edit staff',
+    'see_more' => 'See more'
 ];
