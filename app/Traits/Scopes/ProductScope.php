@@ -55,9 +55,10 @@ trait ProductScope {
                 ->whereNotNull('promotions.from')->whereNotNull('promotions.to');
         })->leftJoin('inventories', function ($q) {
             $q->on('inventories.product_id', 'products.id')
-                ->where('inventories.stock_quantity', '>', 0)
-                ->whereRaw('(now() not between inventories.promotion_from and inventories.promotion_to or inventories.promotion_status = 0)')
-                ->whereNull('inventories.deleted_at');
+                ->where('inventories.stock_quantity', '>', 0)->orWhere(function($q) {
+                    $q->whereRaw('(now() not between inventories.promotion_from and inventories.promotion_to or inventories.promotion_status = 0)')
+                    ->orWhereNull('inventories.promotion_from')->orWhereNull('inventories.promotion_to');
+                })->whereNull('inventories.deleted_at');
         })->leftJoin('inventories as promotion_inventories', function ($q) {
             $q->on('promotion_inventories.product_id', 'products.id')
                 ->where('promotion_inventories.stock_quantity', '>', 0)
