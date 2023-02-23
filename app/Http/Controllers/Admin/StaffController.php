@@ -25,7 +25,7 @@ class StaffController extends Controller {
     public function store(StoreStaffRequest $request) {
         $role_id = $request->role_id;
         $input = $request->except(['role_id']);
-        $input['password'] = Hash::make('Theciu@2022');
+        $input['password'] = 'Theciu@2022';
         $user = User::create($input);
         $user->assignRole($role_id);
         return BaseResponse::success([

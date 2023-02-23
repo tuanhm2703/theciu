@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CategoryType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateCategoryRequest;
+use App\Http\Requests\Admin\DeleteCategoryRequest;
+use App\Http\Requests\Admin\EditCategoryRequest;
+use App\Http\Requests\Admin\StoreCategoryRequest;
+use App\Http\Requests\Admin\UpdateCategoryRequest;
 use App\Http\Requests\Admin\ViewCategoryRequest;
 use App\Models\Category;
 use App\Responses\Admin\BaseResponse;
@@ -14,12 +19,12 @@ class CategoryController extends Controller {
         return view('admin.pages.category.index');
     }
 
-    public function productCategories() {
+    public function productCategories(ViewCategoryRequest $request) {
         $categories = Category::whereType(CategoryType::PRODUCT)->with('categories.categories')->where('parent_id', null)->get();
         return view("admin.pages.product-category.product", compact('categories'));
     }
 
-    public function store(Request $request) {
+    public function store(StoreCategoryRequest $request) {
         $category = Category::create($request->all());
         if ($request->hasFile('image')) {
             $category->createImages([$request->file('image')]);
@@ -29,12 +34,12 @@ class CategoryController extends Controller {
         ]);
     }
 
-    public function edit(Category $category) {
+    public function edit(EditCategoryRequest $request, Category $category) {
         $category->image;
         return view('admin.pages.category.form.edit', compact('category'));
     }
 
-    public function update(Category $category, Request $request) {
+    public function update(Category $category, UpdateCategoryRequest $request) {
         $category->update($request->all());
         if ($request->hasFile('image')) {
             optional($category->image)->delete();
@@ -45,18 +50,18 @@ class CategoryController extends Controller {
         ]);
     }
 
-    public function destroy(Category $category) {
+    public function destroy(Category $category, DeleteCategoryRequest $request) {
         $category->delete();
         return BaseResponse::success([
             'message' => 'Xoá danh mục thành công'
         ]);
     }
 
-    public function createProductCategory() {
+    public function createProductCategory(CreateCategoryRequest $request) {
         return view('admin.pages.product-category.form.create');
     }
 
-    public function editProductCategory(Category $category) {
+    public function editProductCategory(Category $category, EditCategoryRequest $request) {
         $category->image;
         return view('admin.pages.product-category.form.edit', compact('category'));
     }
