@@ -6,7 +6,7 @@
         'novalidate',
     ]) !!}
     @include('admin.pages.product.form.form')
-    <div class="card mt-3 fixed-bottom" style="width: 83%;left: 15.5%;    bottom: 1rem;">
+    <div class="card mt-3 position-sticky bottom-0">
         <div class="card-body text-end pt-0 pb-0 position-relative">
             <div class="product-submit-error-tip d-none">
                 <i class="text-warning fas fa-exclamation-triangle"></i> <span class="product-number-of-invalidate">Có 0 lỗi</span> <a
