@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateProductRequest;
 use App\Http\Requests\Admin\DeleteProductRequest;
 use App\Http\Requests\Admin\EditProductRequest;
+use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Http\Requests\Admin\ViewProductRequest;
 use App\Models\Attribute;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller {
-    public function store(ViewProductRequest $request) {
+    public function store(StoreProductRequest $request) {
         $attributes = json_decode($request->input('attributes'));
         $input = $request->all();
         $input['description'] = $request->input('short_description');
