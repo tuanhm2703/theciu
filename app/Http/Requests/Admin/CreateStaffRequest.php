@@ -13,7 +13,7 @@ class CreateStaffRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth('web')->user()->can('create user');
+        return user()->can('create user');
     }
 
     /**

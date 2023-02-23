@@ -46,7 +46,7 @@ class StaffController extends Controller {
     }
 
     public function paginate(ViewStaffRequest $request) {
-        $users = User::query()->where('id', '!=', auth('web')->user()->id);
+        $users = User::query()->where('id', '!=', user()->id);
         return DataTables::of($users)
         ->addColumn('name', function($user) {
             return view('admin.pages.setting.staff.components.name', compact('user'));

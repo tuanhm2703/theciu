@@ -13,7 +13,7 @@ class StoreStaffRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth('web')->user()->can('create user');
+        return user()->can('create user');
     }
 
     /**
@@ -26,13 +26,16 @@ class StoreStaffRequest extends FormRequest
         return [
             'name' => 'required',
             'phone' => 'phone_number|required|unique:users,phone',
-            'email' => 'required|unique:users,email'
+            'email' => 'required|unique:users,email',
+            'password' => 'required',
+            'password_confirmation' => 'required|same:password'
         ];
     }
 
     public function attributes(){
         return [
             'fullname' => trans('labels.fullname'),
+            'password_confirmation' => 'mật khẩu xác nhận'
         ];
     }
 }

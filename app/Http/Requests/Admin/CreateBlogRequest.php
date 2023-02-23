@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateStaffRequest extends FormRequest
+class CreateBlogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateStaffRequest extends FormRequest
      */
     public function authorize()
     {
-        return user()->can('edit user');
+        return user()->can('create blog');
     }
 
     /**

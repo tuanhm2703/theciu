@@ -13,7 +13,7 @@ class UpdateRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth('web')->user()->can('update role');
+        return user()->can('edit role');
     }
 
     /**

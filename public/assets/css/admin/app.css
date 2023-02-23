@@ -354,3 +354,6 @@ div.dataTables_processing > div:last-child > div {
 .note-editable #footer {
     width: 100% !important;
 }
+.invalid-feedback {
+    line-height: 1rem;
+}

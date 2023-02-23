@@ -4,16 +4,14 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateStaffRequest extends FormRequest
-{
+class EditProductRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
-    {
-        return user()->can('edit user');
+    public function authorize() {
+        return user()->can('edit product');
     }
 
     /**
@@ -21,8 +19,7 @@ class UpdateStaffRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             //
         ];

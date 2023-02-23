@@ -13,7 +13,7 @@ class CreateRoleRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth('web')->user()->can('create role');
+        return user()->can('create role');
     }
 
     /**

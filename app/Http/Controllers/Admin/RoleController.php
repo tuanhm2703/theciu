@@ -53,4 +53,11 @@ class RoleController extends Controller {
                 return view('admin.pages.module.components.action', compact('role'));
             })->make(true);
     }
+
+    public function destroy(Role $role) {
+        $role->delete();
+        return BaseResponse::success([
+            'message' => 'Xoá quyền thành công'
+        ]);
+    }
 }

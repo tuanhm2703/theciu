@@ -11,7 +11,7 @@
             "autoplay": true,
             "autoplayTimeout": 3000,
             "items": 1,
-            "loop": false,
+            "loop": true,
             "center": true,
             "responsive": {
                 "992": {

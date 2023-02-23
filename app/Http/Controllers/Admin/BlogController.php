@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CategoryType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateBlogRequest;
+use App\Http\Requests\Admin\EditBlogRequest;
+use App\Http\Requests\Admin\StoreBlogRequest;
+use App\Http\Requests\Admin\UpdateBlogRequest;
+use App\Http\Requests\Admin\ViewBlogRequest;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Responses\Admin\BaseResponse;
@@ -11,15 +16,15 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
-    public function index() {
+    public function index(ViewBlogRequest $request) {
         return view('admin.pages.appearance.blog.index');
     }
 
-    public function create() {
+    public function create(CreateBlogRequest $request) {
         return view('admin.pages.appearance.blog.create');
     }
 
-    public function store(Request $request) {
+    public function store(StoreBlogRequest $request) {
         $blog = Blog::create($request->all());
         if($request->hasFile('image')) {
             $blog->createImages([$request->file('image')]);
@@ -29,13 +34,13 @@ class BlogController extends Controller
         ]);
     }
 
-    public function edit(Blog $blog) {
+    public function edit(EditBlogRequest $request, Blog $blog) {
         $blog->category_ids = $blog->categories()->pluck('categories.id')->toArray();
         $selected = $blog->categories()->select('categories.id as id', 'categories.name as text')->pluck('text', 'id');
         return view('admin.pages.appearance.blog.edit', compact('blog', 'selected'));
     }
 
-    public function update(Blog $blog, Request $request) {
+    public function update(Blog $blog, UpdateBlogRequest $request) {
         $request->merge([
             'status' => $request->status == 'on' ? 1 : 0
         ]);

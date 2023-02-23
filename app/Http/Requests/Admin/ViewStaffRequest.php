@@ -13,7 +13,7 @@ class ViewStaffRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth('web')->user()->can('view user');
+        return user()->can('view user');
     }
 
     /**

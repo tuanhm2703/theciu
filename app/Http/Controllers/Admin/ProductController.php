@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\MediaType;
 use App\Events\ProductCreated;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateProductRequest;
+use App\Http\Requests\Admin\DeleteProductRequest;
+use App\Http\Requests\Admin\EditProductRequest;
+use App\Http\Requests\Admin\UpdateProductRequest;
+use App\Http\Requests\Admin\ViewProductRequest;
 use App\Models\Attribute;
 use App\Models\Image;
 use App\Models\Inventory;
@@ -16,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller {
-    public function store(Request $request) {
+    public function store(ViewProductRequest $request) {
         $attributes = json_decode($request->input('attributes'));
         $input = $request->all();
         $input['description'] = $request->input('short_description');
@@ -66,7 +71,7 @@ class ProductController extends Controller {
         }
     }
 
-    public function update(Request $request, Product $product) {
+    public function update(UpdateProductRequest $request, Product $product) {
         $attributes = json_decode($request->input('attributes'));
         $input = $request->all();
         $input['description'] = $request->input('short_description');
@@ -130,21 +135,21 @@ class ProductController extends Controller {
         }
     }
 
-    public function index() {
+    public function index(ViewProductRequest $request) {
         return view('admin.pages.product.index');
     }
-    public function create() {
+    public function create(CreateProductRequest $request) {
         return view('admin.pages.product.create');
     }
 
-    public function destroy(Product $product) {
+    public function destroy(DeleteProductRequest $product) {
         $product->delete();
         return BaseResponse::success([
             'message' => 'Xoá sản phẩm thành công'
         ]);
     }
 
-    public function edit(Product $product) {
+    public function edit(EditProductRequest $product) {
         $category = $product->category;
         if($category) {
             $category_ids = [$category->id];

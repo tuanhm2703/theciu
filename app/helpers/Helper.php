@@ -384,3 +384,6 @@ function checkAuthCustomer() {
 function customer() {
     return checkAuthCustomer() ? auth('customer')->user() : null;
 }
+function user() {
+    return auth('web')->check() ? user() : null;
+}
