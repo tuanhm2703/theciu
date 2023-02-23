@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller {
-    public function store(StoreProductRequest $request) {
+    public function store(Request $request) {
         $attributes = json_decode($request->input('attributes'));
         $input = $request->all();
         $input['description'] = $request->input('short_description');
@@ -72,7 +72,7 @@ class ProductController extends Controller {
         }
     }
 
-    public function update(UpdateProductRequest $request, Product $product) {
+    public function update(Request $request, Product $product) {
         $attributes = json_decode($request->input('attributes'));
         $input = $request->all();
         $input['description'] = $request->input('short_description');
@@ -136,21 +136,21 @@ class ProductController extends Controller {
         }
     }
 
-    public function index(ViewProductRequest $request) {
+    public function index(Request $request) {
         return view('admin.pages.product.index');
     }
-    public function create(CreateProductRequest $request) {
+    public function create(Request $request) {
         return view('admin.pages.product.create');
     }
 
-    public function destroy(DeleteProductRequest $product) {
+    public function destroy(Request $product) {
         $product->delete();
         return BaseResponse::success([
             'message' => 'Xoá sản phẩm thành công'
         ]);
     }
 
-    public function edit(EditProductRequest $product) {
+    public function edit(Request $product) {
         $category = $product->category;
         if($category) {
             $category_ids = [$category->id];
