@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\MediaType;
 use App\Events\ProductCreated;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateProductRequest;
-use App\Http\Requests\DeleteProductRequest;
-use App\Http\Requests\EditProductRequest;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
-use App\Http\Requests\ViewProductRequest;
+use App\Http\Requests\Admin\CreateProductRequest;
+use App\Http\Requests\Admin\DeleteProductRequest;
+use App\Http\Requests\Admin\EditProductRequest;
+use App\Http\Requests\Admin\StoreProductRequest;
+use App\Http\Requests\Admin\UpdateProductRequest;
+use App\Http\Requests\Admin\ViewProductRequest;
 use App\Models\Attribute;
 use App\Models\Image;
 use App\Models\Inventory;
@@ -150,7 +150,7 @@ class ProductController extends Controller {
         ]);
     }
 
-    public function edit(Product $product) {
+    public function edit(Request $product) {
         $category = $product->category;
         if($category) {
             $category_ids = [$category->id];

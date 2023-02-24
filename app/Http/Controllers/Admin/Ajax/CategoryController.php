@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Ajax;
 
 use App\Enums\CategoryType;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Ajax\ViewCategoryRequest;
+use App\Http\Requests\Admin\Ajax\ViewCategoryRequest;
 use App\Models\Category;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;

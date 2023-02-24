@@ -6,7 +6,7 @@ use App\Enums\CategoryType;
 use App\Enums\PromotionType;
 use App\Enums\StatusType;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreatePromotionProductRequest;
+use App\Http\Requests\Admin\CreatePromotionProductRequest;
 use App\Models\Category;
 use App\Models\Inventory;
 use App\Models\Product;

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Ajax;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ViewCategory extends FormRequest
+class UpdateStaffRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ViewCategory extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return user()->can('edit user');
     }
 
     /**

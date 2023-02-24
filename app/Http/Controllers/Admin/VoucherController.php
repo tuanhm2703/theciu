@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateVoucherRequest;
+use App\Http\Requests\Admin\CreateVoucherRequest;
 use App\Models\Voucher;
 use App\Models\VoucherType;
 use App\Responses\Admin\BaseResponse;

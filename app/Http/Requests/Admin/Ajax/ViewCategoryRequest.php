@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Ajax;
+namespace App\Http\Requests\Admin\Ajax;
 
 use Illuminate\Foundation\Http\FormRequest;
 
