@@ -69,9 +69,11 @@
                         elemRef.sortableOptions.update(event, ui);
                         const prevItem = $(`input[name="${elemRef.inputName}[${$(this).attr('data-previndex')}]"]`)
                         const currentItem = $(`input[name="${elemRef.inputName}[${ui.item.index()}]"]`)
-                        if(prevItem && currentItem) {
-                            prevItem.attr('name', `${inputName}[${ui.item.index()}]`)
-                            currentItem.attr('name', `${inputName}[${$(this).attr('data-previndex')}]"]`)
+                        if(prevItem) {
+                            prevItem.attr('name', `${elemRef.inputName}[${ui.item.index()}]`)
+                        }
+                        if(currentItem) {
+                            currentItem.attr('name', `${elemRef.inputName}[${$(this).attr('data-previndex')}]"]`)
                         }
                     },
                     start: function(e, ui) {

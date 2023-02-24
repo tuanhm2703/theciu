@@ -76,7 +76,7 @@ class Product extends Model {
     public function images() {
         return $this->morphMany(Image::class, 'imageable')->where(function ($q) {
             $q->where('type', MediaType::IMAGE)->orWhere('type', null);
-        })->orderBy('order');
+        })->orderBy('order')->orderBy('updated_at', 'desc');
     }
     public function image() {
         return $this->morphOne(Image::class, 'imageable')->where(function ($q) {

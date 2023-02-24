@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Services\StorageService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Request;
 
 class Image extends Model {
     use HasFactory;
@@ -24,12 +25,17 @@ class Image extends Model {
     ];
 
     public function getPathWithDomainAttribute() {
-        return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
-        if(StorageService::exists($this->path)) {
-            return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
-        } else {
+        try {
+            if(StorageService::exists($this->path)) {
+                if(isNavActive('admin')) {
+                    return StorageService::url($this->path);
+                }
+                return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
+            }
+        } catch (\Throwable $th) {
             return asset('img/image-not-available.png');
         }
+        return asset('img/image-not-available.png');
     }
 
     public function getImageableSize() {
