@@ -24,11 +24,21 @@ class Image extends Model {
     ];
 
     public function getPathWithDomainAttribute() {
-        return StorageService::url($this->path);
         if(StorageService::exists($this->path)) {
-            return StorageService::url($this->path);
+            return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
         } else {
             return asset('img/image-not-available.png');
+        }
+    }
+
+    public function getImageableSize() {
+        switch ($this->imageable_type) {
+            case Banner::class:
+                return 1200;
+                break;
+            default:
+                return 600;
+                break;
         }
     }
 }
