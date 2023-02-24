@@ -24,6 +24,7 @@ class Image extends Model {
     ];
 
     public function getPathWithDomainAttribute() {
+        return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
         if(StorageService::exists($this->path)) {
             return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
         } else {
