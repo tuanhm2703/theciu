@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CategoryType;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CreateBlogRequest;
-use App\Http\Requests\Admin\EditBlogRequest;
-use App\Http\Requests\Admin\StoreBlogRequest;
-use App\Http\Requests\Admin\UpdateBlogRequest;
-use App\Http\Requests\Admin\ViewBlogRequest;
+use App\Http\Requests\CreateBlogRequest;
+use App\Http\Requests\EditBlogRequest;
+use App\Http\Requests\StoreBlogRequest;
+use App\Http\Requests\UpdateBlogRequest;
+use App\Http\Requests\ViewBlogRequest;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Responses\Admin\BaseResponse;

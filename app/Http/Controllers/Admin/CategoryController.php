@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CategoryType;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CreateCategoryRequest;
-use App\Http\Requests\Admin\DeleteCategoryRequest;
-use App\Http\Requests\Admin\EditCategoryRequest;
-use App\Http\Requests\Admin\StoreCategoryRequest;
-use App\Http\Requests\Admin\UpdateCategoryRequest;
-use App\Http\Requests\Admin\ViewCategoryRequest;
+use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\DeleteCategoryRequest;
+use App\Http\Requests\EditCategoryRequest;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\ViewCategoryRequest;
 use App\Models\Category;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;

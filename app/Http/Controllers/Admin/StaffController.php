@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CreateStaffRequest;
-use App\Http\Requests\Admin\StoreStaffRequest;
-use App\Http\Requests\Admin\UpdateStaffRequest;
-use App\Http\Requests\Admin\ViewStaffRequest;
+use App\Http\Requests\CreateStaffRequest;
+use App\Http\Requests\StoreStaffRequest;
+use App\Http\Requests\UpdateStaffRequest;
+use App\Http\Requests\ViewStaffRequest;
 use App\Models\User;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;

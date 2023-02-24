@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CreateBannerRequest;
-use App\Http\Requests\Admin\DeleteBannerRequest;
-use App\Http\Requests\Admin\EditBannerRequest;
-use App\Http\Requests\Admin\StoreBannerRequest;
-use App\Http\Requests\Admin\UpdateBannerRequest;
-use App\Http\Requests\Admin\ViewBannerRequest;
+use App\Http\Requests\CreateBannerRequest;
+use App\Http\Requests\DeleteBannerRequest;
+use App\Http\Requests\EditBannerRequest;
+use App\Http\Requests\StoreBannerRequest;
+use App\Http\Requests\UpdateBannerRequest;
+use App\Http\Requests\ViewBannerRequest;
 use App\Models\Banner;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;

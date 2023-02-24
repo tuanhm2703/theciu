@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CreatePageRequest;
-use App\Http\Requests\Admin\DeletePageRequest;
-use App\Http\Requests\Admin\EditPageRequest;
-use App\Http\Requests\Admin\StorePageRequest;
-use App\Http\Requests\Admin\UpdatePageRequest;
-use App\Http\Requests\Admin\ViewPageRequest;
+use App\Http\Requests\CreatePageRequest;
+use App\Http\Requests\DeletePageRequest;
+use App\Http\Requests\EditPageRequest;
+use App\Http\Requests\StorePageRequest;
+use App\Http\Requests\UpdatePageRequest;
+use App\Http\Requests\ViewPageRequest;
 use App\Models\Page;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
