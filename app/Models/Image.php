@@ -25,7 +25,9 @@ class Image extends Model {
 
     public function getPathWithDomainAttribute() {
         if(StorageService::exists($this->path)) {
-            return asset('storage/'.$this->path);
+            return StorageService::url($this->path);
+            $url = get_proxy_image_url(StorageService::url($this->path));
+            return $url;
         } else {
             return asset('img/image-not-available.png');
         }
