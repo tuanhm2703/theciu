@@ -51,5 +51,10 @@ return [
         'url' => env('VNP_URL'),
         'refund_url' => env('VNP_REFUND_URL'),
         'ipn_url' => env('VNP_IPN_URL')
+    ],
+    'imgproxy' => [
+        'key' => env('PROXY_KEY'),
+        'salt' => env('PROXY_SALT'),
+        'domain' => env('IMAGE_PROXY_DOMAIN')
     ]
 ];

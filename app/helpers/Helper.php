@@ -387,3 +387,49 @@ function customer() {
 function user() {
     return auth('web')->check() ? auth('web')->user() : null;
 }
+function get_placeholder_img($size = 'small') {
+    $size = config("image.sizes.{$size}");
+
+    if ($size && is_array($size))
+        return ('/images/placeholder.png');
+
+    return "/images/placeholders/no_img.png";
+}
+function get_proxy_image_url($path, $size = 600) {
+    $info = pathinfo($path);
+    if ($path != '' && $info != null && $info['extension'] == 'gif') {
+        $extension = 'gif';
+    } else {
+        $extension = $info['extension'];
+    }
+    if (!is_numeric($size)) $size = 600;
+    $key = config('services.imgproxy.key');
+    $salt = config('services.imgproxy.salt');
+    $keyBin = pack("H*", $key);
+    if (empty($keyBin)) {
+        die('Key expected to be hex-encoded string');
+    }
+
+    $saltBin = pack("H*", $salt);
+    if (empty($saltBin)) {
+        die('Salt expected to be hex-encoded string');
+    }
+
+    $resize = 'fill';
+    $width = $size;
+    $height = 0;
+    $gravity = 'sm';
+    $enlarge = 1;
+    if (!$path)
+        return get_placeholder_img($size);
+
+    // return asset("image/{$path}?p={$size}");
+    $url = $path;
+    $encodedUrl = rtrim(strtr(base64_encode($url), '+/', '-_'), '=');
+
+    $path = "/rs:{$resize}:{$width}:{$height}:{$enlarge}/g:{$gravity}/{$encodedUrl}.{$extension}";
+
+    $signature = rtrim(strtr(base64_encode(hash_hmac('sha256', $saltBin . $path, $keyBin, true)), '+/', '-_'), '=');
+    $proxy_domain = config('services.imgproxy.domain');
+    return sprintf("$proxy_domain/%s%s", $signature, $path);
+}
