@@ -35,7 +35,7 @@ class Image extends Model {
     public function getImageableSize() {
         switch ($this->imageable_type) {
             case Banner::class:
-                return 1200;
+                return 1600;
                 break;
             default:
                 return 600;
