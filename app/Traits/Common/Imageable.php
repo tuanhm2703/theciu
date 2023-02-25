@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Storage;
 
 trait Imageable {
     public function images() {
-        return $this->morphMany(Image::class, 'imageable')->where(function($q) {
+        return $this->morphMany(Image::class, 'imageable')->where(function ($q) {
             $q->where('type', '!=', MediaType::VIDEO)->orWhere('type', null);
         })->orderBy('order', 'asc');
     }
     public function image() {
-        return $this->morphOne(Image::class, 'imageable')->where(function($q) {
+        return $this->morphOne(Image::class, 'imageable')->where(function ($q) {
             $q->where('type', '!=', MediaType::VIDEO)->orWhere('type', null);
         })->orderBy('order', 'asc');
     }
@@ -25,18 +25,20 @@ trait Imageable {
         foreach ($images as $key => $image) {
             $fileName = $image->getClientOriginalName();
             $path = StorageService::put($folder, $image);
-            $this->image()->create([
-                'name' => $fileName,
-                'path' => $path,
-                'type' => $type,
-                'order' => $key + 1
-            ]);
+            if ($path) {
+                $this->image()->create([
+                    'name' => $fileName,
+                    'path' => $path,
+                    'type' => $type,
+                    'order' => $key + 1
+                ]);
+            }
         }
     }
 
-    public function createImagesFromUrls(Array $urls, $type = null, $folder = 'images') {
+    public function createImagesFromUrls(array $urls, $type = null, $folder = 'images') {
         $records = [];
-        foreach($urls as $url) {
+        foreach ($urls as $url) {
             $basename = pathinfo($url)['basename'];
             $content = file_get_contents($url);
             Storage::put("$folder/$basename", $content);
@@ -57,7 +59,7 @@ trait Imageable {
         return $this->morphOne(Image::class, 'imageable')->where('type', MediaType::AVATAR);
     }
     public function getAvatarPathAttribute() {
-        if($this->avatar) {
+        if ($this->avatar) {
             return $this->avatar->path_with_domain;
         }
         return asset('assets/images/default-avatar.png');
