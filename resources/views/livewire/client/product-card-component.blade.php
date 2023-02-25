@@ -1,7 +1,7 @@
 <div class="product product-7 text-center">
     <figure class="product-media">
         <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}" class="product-image lazy"
-            style="background: url({{ $product->images->first()->path_with_domain }});"></a>
+            style="background: url({{ optional($product->images->first())->path_with_domain }});"></a>
 
         <div class="product-action-vertical">
             <button href="#" wire:click.prevent="addToWishlist"
