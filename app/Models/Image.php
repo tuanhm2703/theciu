@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\MediaType;
 use App\Services\StorageService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,17 +26,21 @@ class Image extends Model {
     ];
 
     public function getPathWithDomainAttribute() {
-        try {
-            if(StorageService::exists($this->path) || isNavActive('admin')) {
-                if(isNavActive('admin')) {
-                    return StorageService::url($this->path);
+        if ($this->type == MediaType::VIDEO) {
+            return StorageService::url($this->path);
+        } else {
+            try {
+                if (StorageService::exists($this->path) || isNavActive('admin')) {
+                    if (isNavActive('admin')) {
+                        return StorageService::url($this->path);
+                    }
+                    return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
                 }
-                return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
+            } catch (\Throwable $th) {
+                return asset('img/image-not-available.png');
             }
-        } catch (\Throwable $th) {
             return asset('img/image-not-available.png');
         }
-        return asset('img/image-not-available.png');
     }
 
     public function getImageableSize() {
