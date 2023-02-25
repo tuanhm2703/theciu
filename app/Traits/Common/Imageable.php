@@ -73,8 +73,4 @@ trait Imageable {
         }
         return asset('assets/images/default-avatar.png');
     }
-
-    public function getImageAttribute() {
-        return $this->image ? $this->image : new Image();
-    }
 }
