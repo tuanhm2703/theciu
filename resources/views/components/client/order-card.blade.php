@@ -7,7 +7,7 @@
         <div class="d-flex py-3 justify-content-between">
             <div class="d-flex">
                 <a href="{{ route('client.product.details', $inventory->product->slug) }}"
-                    style="background: url({{ $inventory->image->path_with_domain }}); width: 70px; height: 70px; background-size: cover; background-position:center"></a>
+                    style="background: url({{ optional($inventory->image)->path_with_domain }}); width: 70px; height: 70px; background-size: cover; background-position:center"></a>
                 <div class="ml-3" style="line-height: 1rem">
                     <h5>{{ $inventory->product->name }}</h5>
                     <p class="text-large">Phân loại hàng: {{ $inventory->title }}</p>

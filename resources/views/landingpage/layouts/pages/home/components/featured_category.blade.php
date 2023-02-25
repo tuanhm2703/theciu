@@ -26,7 +26,7 @@
             @foreach ($featured_categories as $c)
                 <div class="banner banner-overlay h-100">
                     <a href="{{ route('client.product.index', ['category' => $c->slug]) }}" class="category-card-img"
-                        style="background: url({{ $c->image->path_with_domain }})">
+                        style="background: url({{ optional($c->image)->path_with_domain }})">
                     </a>
                     <div class="bg-overlay"></div>
                     <div class="banner-content banner-content-center">

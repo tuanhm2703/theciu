@@ -26,7 +26,7 @@
                         <figure class="product-image-container">
                             <a href="{{ route('client.product.details', $inventory->product->slug) }}"
                                 class="product-image">
-                                <img src="{{ $inventory->image->path_with_domain }}" alt="product">
+                                <img src="{{ optional($inventory->image)->path_with_domain }}" alt="product">
                             </a>
                         </figure>
                         <a href="#" class="btn-remove remove-cart-item-btn"

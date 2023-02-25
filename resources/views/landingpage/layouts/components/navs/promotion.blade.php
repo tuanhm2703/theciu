@@ -29,7 +29,7 @@
                     @foreach ($promotions as $promotion)
                         @foreach ($promotion->products as $p)
                             <a href="{{ route('client.product.details', $p->slug) }}">
-                                <img src="{{ $p->image->path_with_domain }}" alt="Banner">
+                                <img src="{{ optional($p->image)->path_with_domain }}" alt="Banner">
 
                                 <div class="banner-content banner-content-bottom">
                                     <div class="banner-title text-white">{{ $p->name }}</div>

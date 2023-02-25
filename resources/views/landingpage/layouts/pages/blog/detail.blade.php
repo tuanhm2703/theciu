@@ -23,7 +23,7 @@
                 <div class="col-lg-9">
                     <article class="entry single-entry">
                         <figure class="entry-media">
-                            <img src="{{ $blog->image->path_with_domain }}" alt="image desc">
+                            <img src="{{ optional($blog->image)->path_with_domain }}" alt="image desc">
                         </figure><!-- End .entry-media -->
 
                         <div class="entry-body">

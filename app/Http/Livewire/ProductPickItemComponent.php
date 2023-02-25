@@ -22,7 +22,7 @@ class ProductPickItemComponent extends Component {
         $this->first_attributes = collect();
         foreach ($this->product->inventories as $inventory) {
             $this->first_attributes->push((object) [
-                'path' => $inventory->image->path_with_domain,
+                'path' => optional($inventory->image)->path_with_domain,
                 'id' => $inventory->firstAttribute->id,
                 'value' => $inventory->firstAttribute->value
             ]);

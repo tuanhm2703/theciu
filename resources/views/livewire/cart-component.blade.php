@@ -104,7 +104,7 @@
                                         @disabled($pm->canUse($cart->getTotalWithSelectedItems($item_selected, $order_voucher)) === false) class="custom-control-input">
                                     <label for="payment-method-{{ $pm->id }}"
                                         class="custom-control-label d-flex align-items-center">
-                                        <img src="{{ $pm->image->path_with_domain }}" width="10%"
+                                        <img src="{{ optional($pm->image)->path_with_domain }}" width="10%"
                                             class="mr-3"alt="">
                                         <span>{{ trans("labels.payment_methods.$pm->code") }} <i wire:ignore
                                                 class="fa fa-question-circle" data-toggle="tooltip" data-placement="top"

@@ -233,7 +233,7 @@ class Product extends Model {
             ),
             array(
                 "property" => "og:image",
-                "content" => $this->image->path_with_domain
+                "content" => optional($this->image)->path_with_domain
             ),
             array(
                 "property" => "og:url",
@@ -265,7 +265,7 @@ class Product extends Model {
             ),
             array(
                 "name" => "twitter:image",
-                "content" => $this->image->path_with_domain
+                "content" => optional($this->image)->path_with_domain
             )
         );
         $output = '';

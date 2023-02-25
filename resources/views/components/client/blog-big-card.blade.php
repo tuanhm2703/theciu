@@ -3,7 +3,7 @@
         <div class="col-md-5">
             <figure class="entry-media">
                 <a href="{{ route('client.blog.details', $blog->slug) }}">
-                    <img src="{{ $blog->image->path_with_domain }}" alt="{{ $blog->slug }}">
+                    <img src="{{ optional($blog->image)->path_with_domain }}" alt="{{ $blog->slug }}">
                 </a>
             </figure><!-- End .entry-media -->
         </div><!-- End .col-md-5 -->
