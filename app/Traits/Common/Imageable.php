@@ -30,7 +30,7 @@ trait Imageable {
                     'name' => $fileName,
                     'path' => $path,
                     'type' => $type,
-                    'order' => $key + 1
+                    'order' => $key
                 ]);
             }
         }

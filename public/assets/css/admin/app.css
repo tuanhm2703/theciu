@@ -357,3 +357,10 @@ div.dataTables_processing > div:last-child > div {
 .invalid-feedback {
     line-height: 1rem;
 }
+.delfile {
+    cursor: pointer;
+}
+.delfile:hover {
+    scale: 1.1;
+    color: white;
+}
