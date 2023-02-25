@@ -98,7 +98,7 @@
             const file = FilePond.create(document.querySelector('input[name=image]'), {
                 imagePreviewHeight: 170,
                 storeAsFile: true,
-                files: imgsource ? [imgSource] : [],
+                files: imgSource ? [imgSource] : [],
                 labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
             })
 
