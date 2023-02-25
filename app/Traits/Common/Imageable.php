@@ -40,6 +40,15 @@ trait Imageable {
         $records = [];
         foreach ($urls as $url) {
             $basename = pathinfo($url)['basename'];
+            $extension = pathinfo($url, PATHINFO_EXTENSION);
+            if(strlen($basename) > 100) {
+                if($extension != '') {
+                    $basename = random_string(100).".$extension";
+                } else {
+                    $basename = random_string(100);
+                }
+            }
+            $basename = $extension  == "" ? "$basename.jpeg" : $basename;
             $content = file_get_contents($url);
             Storage::put("$folder/$basename", $content);
             $records[] = [

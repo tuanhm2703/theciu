@@ -433,3 +433,8 @@ function get_proxy_image_url($path, $size = 600) {
     $proxy_domain = config('services.imgproxy.domain');
     return sprintf("$proxy_domain/%s%s", $signature, $path);
 }
+function random_string($length) {
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    $rand_str = substr(str_shuffle($chars), 0, $length);
+    return $rand_str;
+}
