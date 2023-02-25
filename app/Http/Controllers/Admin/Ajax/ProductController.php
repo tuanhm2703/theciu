@@ -25,7 +25,7 @@ class ProductController extends Controller {
     public function paginate(Request $request) {
         $products = Product::with(['category', 'image:path,imageable_id','images:path,imageable_id', 'inventories' => function ($q) {
             return $q->with('attributes');
-        }])->select('products.id', 'products.name', 'products.sku');
+        }])->select('products.id', 'products.name', 'products.sku', 'products.updated_at');
         if($request->ids) $products->whereIn('id', $request->ids);
         return DataTables::of($products)
             ->editColumn('name', function ($product) {

@@ -33,6 +33,7 @@
                     <table class="product-table table align-items-center mb-0">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder">
                                     {{ trans('labels.product_name') }}</th>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">
@@ -66,7 +67,12 @@
             "processing": true,
             "serverSide": true,
             "ajax": "{{ route('admin.ajax.product.paginate') }}",
-            "columns": [{
+            "columns": [
+                {
+                    data: "updated_at",
+                    visible: false
+                },
+                {
                     data: "name"
                 },
                 {
@@ -101,6 +107,7 @@
                     searchable: false,
                 }
             ],
+            order: [[0, 'desc']],
             initComplete: function(settings, json) {
                 $('.magnifig-img').magnificPopup({
                     type: "image",

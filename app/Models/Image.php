@@ -26,7 +26,7 @@ class Image extends Model {
 
     public function getPathWithDomainAttribute() {
         try {
-            if(StorageService::exists($this->path)) {
+            if(StorageService::exists($this->path) || isNavActive('admin')) {
                 if(isNavActive('admin')) {
                     return StorageService::url($this->path);
                 }
