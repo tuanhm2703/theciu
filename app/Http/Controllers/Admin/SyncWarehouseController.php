@@ -21,7 +21,7 @@ class SyncWarehouseController extends Controller {
         $branches = $brancheResource->list()->toArray();
         $branches = collect($branches);
         $kiotSetting = App::get('KiotConfig');
-        $numberOfProductHaveToSync = Product::whereNotNull('sku')->count();
+        $numberOfProductHaveToSync = Inventory::whereNotNull('sku')->count();
         return view('admin.pages.setting.warehouse.index', compact('branches', 'kiotSetting', 'numberOfProductHaveToSync'));
     }
 
