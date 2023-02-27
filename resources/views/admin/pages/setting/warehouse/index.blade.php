@@ -88,7 +88,9 @@
                     url: `{{ route('admin.setting.warehouse.stock.sync') }}?page=${page}&pageSize=10`,
                     type: 'POST',
                     success: (res) => {
+                        const oldSyncPercent = syncPercent
                         syncPercent = Math.floor(page / numberOfPages * 100);
+                        syncPercent = syncPercent < oldSyncPercent ?  oldSyncPercent : syncPercent
                         $('.progress-bar').css('width', `${syncPercent}%`)
                         $('.progress-bar').text(`${syncPercent}%`)
                         if (syncPercent == 100) {
