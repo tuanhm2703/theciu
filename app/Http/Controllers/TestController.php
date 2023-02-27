@@ -13,6 +13,9 @@ use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use VienThuong\KiotVietClient\Client;
+use VienThuong\KiotVietClient\Resource\ProductResource;
 
 class TestController extends Controller {
     private $shipping_service;
@@ -21,7 +24,10 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-        return MomoService::queryStatusTransaction('1676694466');
+        $productSource = new ProductResource(App::make(Client::class));
+        $kiotSetting = App::get('KiotConfig');
+        $kiotProduct = $productSource->getByCode('SP078172')->getModelData();
+        return $kiotProduct;
     }
 
     public function ipn(Request $request) {

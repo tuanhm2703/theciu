@@ -279,22 +279,6 @@ class Product extends Model {
         return $output;
     }
 
-    public function syncKiotWarehouse() {
-        $productSource = new ProductResource(App::make(Client::class));
-        $kiotSetting = App::get('KiotConfig');
-        if ($kiotSetting->data['branchId']) {
-            $kiotProduct = $productSource->getByCode($this->sku);
-            $inventories = $kiotProduct->getModelData()['inventories'];
-            foreach ($inventories as $inventory) {
-                if ($inventory['branchId'] == $kiotSetting->data['branchId']) {
-                    $this->inventories()->update([
-                        'stock_quantity' => $inventory['onHand']
-                    ]);
-                }
-            }
-        }
-    }
-
     public function putKiotWarehouse($decrease = true) {
         $productResource = new ProductResource(App::make(Client::class));
         $kiotSetting = App::get('KiotConfig');

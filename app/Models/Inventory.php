@@ -9,7 +9,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use VienThuong\KiotVietClient\Client;
+use VienThuong\KiotVietClient\Resource\ProductResource;
 
 class Inventory extends Model {
     use HasFactory, SoftDeletes, Imageable, InventoryScope;
@@ -116,5 +119,21 @@ class Inventory extends Model {
         $this->update([
             'stock_quantity' => DB::raw('stock_quantity - +')
         ]);
+    }
+
+    public function syncKiotWarehouse() {
+        $productSource = new ProductResource(App::make(Client::class));
+        $kiotSetting = App::get('KiotConfig');
+        if ($kiotSetting->data['branchId']) {
+            $kiotProduct = $productSource->getByCode($this->sku);
+            $inventories = $kiotProduct->getModelData()['inventories'];
+            foreach ($inventories as $inventory) {
+                if ($inventory['branchId'] == $kiotSetting->data['branchId']) {
+                    $this->update([
+                        'stock_quantity' => $inventory['onHand']
+                    ]);
+                }
+            }
+        }
     }
 }

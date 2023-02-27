@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Responses\Admin\BaseResponse;
@@ -45,10 +46,10 @@ class SyncWarehouseController extends Controller {
 
     public function syncStock(Request $request) {
         $pageSize = $request->pageSize ?? 10;
-        $products = Product::whereNotNull('sku')->paginate($pageSize);
-        foreach ($products as $product) {
+        $inventories = Inventory::whereNotNull('sku')->paginate($pageSize);
+        foreach ($inventories as $inventory) {
             try {
-                $product->syncKiotWarehouse();
+                $inventory->syncKiotWarehouse();
             } catch (\Throwable $th) {
                 //throw $th;
             }

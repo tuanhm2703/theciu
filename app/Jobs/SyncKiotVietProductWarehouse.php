@@ -36,7 +36,9 @@ class SyncKiotVietProductWarehouse implements ShouldQueue {
      */
     public function handle() {
         try {
-            $this->product->syncKiotWarehouse();
+            $this->product->inventories->each(function ($inventory) {
+                $inventory->syncKiotWarehouse();
+            });
         } catch (\Throwable $th) {
             Log::error($th);
         }
