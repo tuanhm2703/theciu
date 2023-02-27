@@ -3,6 +3,7 @@
 
 namespace MService\Payment\AllInOne\Processors;
 
+use Illuminate\Support\Facades\App;
 use MService\Payment\AllInOne\Models\QueryStatusRequest;
 use MService\Payment\AllInOne\Models\QueryStatusResponse;
 use MService\Payment\Shared\Constants\Parameter;
@@ -14,35 +15,30 @@ use MService\Payment\Shared\Utils\HttpClient;
 use MService\Payment\Shared\Utils\MoMoException;
 use MService\Payment\Shared\Utils\Process;
 
-class QueryStatusTransaction extends Process
-{
-    public function __construct(Environment $environment)
-    {
+class QueryStatusTransaction extends Process {
+    public function __construct(Environment $environment) {
         parent::__construct($environment);
     }
 
-    public static function process(Environment $env, $orderId, $requestId)
-    {
+    public static function process(Environment $env, $orderId, $requestId) {
         $queryStatusTransaction = new QueryStatusTransaction($env);
 
         try {
             $queryStatusRequest = $queryStatusTransaction->createQueryStatusRequest($orderId, $requestId);
             $queryStatusResponse = $queryStatusTransaction->execute($queryStatusRequest);
-
             return $queryStatusResponse;
-
         } catch (MoMoException $exception) {
             $queryStatusTransaction->logger->error($exception->getErrorMessage());
         }
     }
 
-    public function createQueryStatusRequest($orderId, $requestId): QueryStatusRequest
-    {
+    public function createQueryStatusRequest($orderId, $requestId): QueryStatusRequest {
 
         $rawData =
             Parameter::ACCESS_KEY . "=" . $this->getPartnerInfo()->getAccessKey() .
             "&" . Parameter::ORDER_ID . "=" . $orderId .
             "&" . Parameter::PARTNER_CODE . "=" . $this->getPartnerInfo()->getPartnerCode() .
+            "&" . Parameter::LANG . "=" . App::getLocale() .
             "&" . Parameter::REQUEST_ID . "=" . $requestId;
 
         $signature = Encoder::hashSha256($rawData, $this->getPartnerInfo()->getSecretKey());
@@ -61,8 +57,7 @@ class QueryStatusTransaction extends Process
         return new QueryStatusRequest($arr);
     }
 
-    public function execute($queryStatusRequest)
-    {
+    public function execute($queryStatusRequest) {
         try {
             $data = Converter::objectToJsonStrNoNull($queryStatusRequest);
             $response = HttpClient::HTTPPost($this->getEnvironment()->getMomoEndpoint(), $data, $this->getLogger());
@@ -73,15 +68,13 @@ class QueryStatusTransaction extends Process
             $queryStatusResponse = new QueryStatusResponse(json_decode($response->getBody(), true));
 
             return $this->checkResponse($queryStatusResponse);
-
         } catch (MoMoException $exception) {
             $this->logger->error($exception->getErrorMessage());
         }
         return null;
     }
 
-    public function checkResponse(QueryStatusResponse $queryStatusResponse)
-    {
+    public function checkResponse(QueryStatusResponse $queryStatusResponse) {
         try {
 
             //check signature
@@ -113,5 +106,4 @@ class QueryStatusTransaction extends Process
         }
         return $queryStatusResponse;
     }
-
 }

@@ -31,7 +31,7 @@ class ProductController extends Controller {
             ->editColumn('name', function ($product) {
                 return view('admin.pages.product.components.name', compact('product'));
             })
-            ->editColumn('sku', function ($product) {
+            ->addColumn('inventory_sku', function ($product) {
                 return view('admin.pages.product.components.sku', compact('product'));
             })
             ->addColumn('quantity_info', function ($product) {

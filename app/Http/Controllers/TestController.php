@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\Momo\MomoService;
 use App\Http\Services\Shipping\GHTKService;
 use App\Http\Services\VNPay\src\Models\CreatePaymentRequest;
 use App\Http\Services\VNPay\src\Models\IPNUrl;
@@ -20,8 +21,7 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-        $order = Order::latest()->first();
-        $order->refund();
+        return MomoService::queryStatusTransaction('1676694466');
     }
 
     public function ipn(Request $request) {

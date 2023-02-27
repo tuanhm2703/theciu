@@ -57,10 +57,9 @@ class MomoService {
         return RefundMoMo::process($env, $orderId, $requestId, $order->payment->amount, $order->payment->trans_id, $description);
     }
 
-    public static function queryStatusTransaction() {
+    public static function queryStatusTransaction($orderId) {
         $env = MomoService::selectEnv('dev', MomoEndpoints::QUERY_STATUS_TRANSACTION);
         $requestId = time() + 60;
-        $orderId = time();
         return QueryStatusTransaction::process($env, $orderId, $requestId);
     }
 

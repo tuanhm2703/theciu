@@ -79,7 +79,7 @@
                     data: "id"
                 },
                 {
-                    data: "sku"
+                    data: "inventory_sku"
                 },
                 {
                     data: "attribute_description",

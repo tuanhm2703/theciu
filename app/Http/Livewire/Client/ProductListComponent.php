@@ -25,6 +25,7 @@ class ProductListComponent extends Component {
     public $products;
 
     public $categories = [];
+
     public $product_categories;
 
     public $sort_type;
@@ -60,7 +61,7 @@ class ProductListComponent extends Component {
     }
 
     public function searchProduct($page = null) {
-        if($page) {
+        if ($page) {
             $this->products = new Collection();
             $this->page = $page;
         }
@@ -72,8 +73,12 @@ class ProductListComponent extends Component {
             $category_ids = $category->getAllChildId();
             $this->title = $category->name;
             $this->type = 'Danh mục';
-            $products = Product::whereHas('other_categories', function ($q) use ($category_ids) {
-                return $q->whereIn('categories.id', $category_ids);
+            $products = Product::where(function ($q) use ($category_ids) {
+                $q->whereHas('other_categories', function ($q) use ($category_ids) {
+                    return $q->whereIn('categories.id', $category_ids);
+                })->orWhereHas('categories', function ($q) use ($category_ids) {
+                    return $q->whereIn('categories.id', $category_ids);
+                });
             });
         }
         if ($this->promotion) {
@@ -86,19 +91,19 @@ class ProductListComponent extends Component {
                 $this->type = 'Chương trình';
             }
         }
-        if(!empty($this->keyword)) {
+        if (!empty($this->keyword)) {
             $products->search('products.name', $this->keyword);
         }
-        if(!empty($this->categories)) {
-            $products->whereHas('categories', function($q) {
+        if (!empty($this->categories)) {
+            $products->whereHas('categories', function ($q) {
                 $q->whereIn('categories.id', $this->categories);
             });
         }
         $total = (clone $products)->count();
         $products = $products->select('products.name', 'products.slug', 'products.id')
-        ->filterByPriceRange($this->min_price, $this->max_price)
-        ->with(['inventories.image:path,imageable_id', 'images:path,imageable_id'])
-        ->getPage($this->page, $this->pageSize)->get();
+            ->filterByPriceRange($this->min_price, $this->max_price)
+            ->with(['inventories.image:path,imageable_id', 'images:path,imageable_id'])
+            ->getPage($this->page, $this->pageSize)->get();
         $this->products = $this->products->merge($products);
         $this->hasNext = $this->products->count() < $total;
     }
