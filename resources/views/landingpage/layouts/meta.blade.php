@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/landingpage/images/icons/apple-touch-icon.png') }}">
 <link rel="manifest" href="{{ asset('assets/landingpage/images/icons/site.webmanifest') }}">
 <link rel="mask-icon" href="{{ asset('assets/landingpage/images/icons/safari-pinned-tab.svg') }}" color="#666666">
-<link rel="icon" type="image/png" href="{{ asset('img/ciu-favicon.png') }}">
+<meta property="og:image" content="/img/logo-dark.png" />
 <meta name="apple-mobile-web-app-title" content="THE C.I.U">
 <meta name="application-name" content="THE C.I.U">
 <meta name="locale" content="{{ App::getLocale() }}">
