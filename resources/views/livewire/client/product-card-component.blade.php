@@ -1,7 +1,14 @@
 <div class="product product-7 text-center">
     <figure class="product-media">
+        @if ($product->is_has_sale)
+            <span class="product-label label-sale">{{$product->discount_percent}}% off</span>
+        @endif
         <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}" class="product-image lazy"
             style="background: url({{ optional($product->images->first())->path_with_domain }});"></a>
+        @if ($product->available_flash_sales->first())
+            <div class="product-countdown"
+                data-until="{{ $product->available_flash_sales->first()->to->format('Y, m, d') }}"></div>
+        @endif
 
         <div class="product-action-vertical">
             <button href="#" wire:click.prevent="addToWishlist"

@@ -22,7 +22,7 @@
                                     <div class="deal-countdown" data-until="+{{ $product->flash_sale->time_left }}s">
                                     </div><!-- End .deal-countdown -->
                                 </div><!-- End .deal-content -->
-                                <div class="row deal-products">
+                                <div class="row deal-products justify-content-center">
                                     <livewire:client.product-card-component :product="$product"></livewire:client.product-card-component>
                                 </div>
                             </div>

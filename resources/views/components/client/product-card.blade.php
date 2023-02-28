@@ -2,7 +2,8 @@
     <figure class="product-media">
         <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}" class="product-image lazy"
             style="background: url({{ optional($product->images->first())->path_with_domain }});"></a>
-
+        <div class="product-countdown" data-until="{{ optional($product->available_promotions->first())to->format('Y-m-d') }}"></div>
+        <!-- End .product-countdown -->
         <div class="product-action-vertical">
             <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
         </div><!-- End .product-action-vertical -->

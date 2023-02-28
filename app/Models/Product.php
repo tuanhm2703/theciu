@@ -101,6 +101,10 @@ class Product extends Model {
         return $this->belongsToMany(Promotion::class, 'promotion_product');
     }
 
+    public function available_promotions() {
+        return $this->belongsToMany(Promotion::class, 'promotion_product')->available();
+    }
+
     public function flash_sales() {
         return $this->belongsToMany(Promotion::class, 'promotion_product')->where('promotions.type', PromotionType::FLASH_SALE);
     }
@@ -109,6 +113,10 @@ class Product extends Model {
         return $this->hasOneThrough(Promotion::class, PromotionProduct::class, 'product_id', 'id', 'id', 'promotion_id')->where(function ($q) {
             $q->where('type', PromotionType::FLASH_SALE);
         })->latest();
+    }
+
+    public function available_flash_sales() {
+        return $this->belongsToMany(Promotion::class, 'promotion_product')->where('promotions.type', PromotionType::FLASH_SALE)->available();
     }
 
     public function migrateUniqueCode() {
@@ -156,6 +164,10 @@ class Product extends Model {
         } else {
             return $this->promotions()->first();
         }
+    }
+
+    public function getDiscountPercentAttribute() {
+        return (int) ($this->sale_price - $this->original_price) / $this->original_price * 100;
     }
 
     /**

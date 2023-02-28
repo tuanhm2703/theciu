@@ -40,7 +40,7 @@ trait ProductScope {
     }
 
     public function scopeWithNeededProductCardData($q) {
-        return $q->available()->with('image:path,imageable_id')->select('id', 'slug', 'name');
+        return $q->available()->with('image:path,imageable_id', 'available_flash_sales')->select('id', 'slug', 'name');
     }
 
     public function scopeAddSalePrice($q) {
