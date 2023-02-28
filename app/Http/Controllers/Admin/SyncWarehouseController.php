@@ -35,7 +35,13 @@ class SyncWarehouseController extends Controller {
         $client = App::make(Client::class);
         $webhookResource = new WebhookResource($client);
         try {
-            $webhookResource->registerWebhook(WebhookType::STOCK_UPDATE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật tồn kho');
+            $webhooklist = $webhookResource->list()->toArray();
+            foreach($webhooklist as $webhook) {
+                if($webhook['otherProperties']['type'] == WebhookType::STOCK_UPDATE && $webhook['otherProperties']['isActive'] == false) {
+                    $webhookResource->remove($webhook['id']);
+                }
+                $webhookResource->registerWebhook(WebhookType::STOCK_UPDATE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật tồn kho');
+            }
         } catch (\Throwable $th) {
             Log::error($th);
         }

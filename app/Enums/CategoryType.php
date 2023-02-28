@@ -11,15 +11,16 @@ class CategoryType extends Enum {
     const NEW_ARRIVAL = 'new_arrival';
     const BLOG = 'blog';
     const FEATURED = 'featured';
+    const BEST_SELLER = 'best_seller';
 
     public static function categoryTypeOptions() {
         return [
-            self::SHOP => trans("labels.".self::SHOP),
-            self::TRENDING => trans("labels.".self::TRENDING),
-            self::NEW_ARRIVAL => trans("labels.".self::NEW_ARRIVAL),
-            self::BLOG => trans("labels.".self::BLOG),
-            self::FEATURED => trans("labels.".self::FEATURED),
+            self::SHOP => trans("labels." . self::SHOP),
+            self::TRENDING => trans("labels." . self::TRENDING),
+            self::NEW_ARRIVAL => trans("labels." . self::NEW_ARRIVAL),
+            self::BLOG => trans("labels." . self::BLOG),
+            self::FEATURED => trans("labels." . self::FEATURED),
+            self::BEST_SELLER => trans("labels." . self::BEST_SELLER)
         ];
     }
 }
-

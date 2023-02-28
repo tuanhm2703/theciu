@@ -171,5 +171,7 @@ return [
     'contact_information' => 'Contact information',
     'role' => 'Role',
     'edit_staff' => 'Edit staff',
-    'see_more' => 'See more'
+    'see_more' => 'See more',
+    'quantity' => 'Quantity',
+    'best_seller' => 'Best seller'
 ];

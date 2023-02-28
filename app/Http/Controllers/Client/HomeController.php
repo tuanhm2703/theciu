@@ -14,4 +14,8 @@ class HomeController extends Controller
         $blogs = Blog::available()->with('image', 'categories')->get();
         return view('landingpage.layouts.pages.home.index', compact('blogs'));
     }
+
+    public function about() {
+        return view('landingpage.layouts.pages.about.index');
+    }
 }

@@ -175,5 +175,7 @@ return [
     'contact_information' => 'Thông tin liên lạc',
     'role' => 'Vai trò',
     'edit_staff' => 'Cập nhật nhân viên',
-    'see_more' => 'Xem thêm'
+    'see_more' => 'Xem thêm',
+    'quantity' => 'Số lượng',
+    'best_seller' => 'Best seller'
 ];

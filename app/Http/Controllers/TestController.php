@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Resource\ProductResource;
+use VienThuong\KiotVietClient\Resource\WebhookResource;
 
 class TestController extends Controller {
     private $shipping_service;
@@ -26,6 +27,8 @@ class TestController extends Controller {
     public function test(Request $request) {
         $productSource = new ProductResource(App::make(Client::class));
         $kiotSetting = App::get('KiotConfig');
+        $webhookResource = new WebhookResource(App::make(Client::class));
+        return $webhookResource->list();
         $kiotProduct = $productSource->getByCode('SP078172')->getModelData();
         return $kiotProduct;
     }

@@ -2,7 +2,7 @@
     <div class="mobile-menu-wrapper">
         <span class="mobile-menu-close"><i class="icon-close"></i></span>
 
-        <form action="#" method="get" class="mobile-search">
+        <form action="{{ route('client.product.index') }}" method="get">
             <label for="mobile-search" class="sr-only">Search</label>
             <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..."
                 required>
@@ -14,48 +14,10 @@
                 <li class="active">
                     <a href="/">Trang chủ</a>
                 </li>
-                <li>
-                    <a href="#">New</a>
-                    <ul>
-                        @foreach ($new_arrival_categories as $c)
-                            <li>
-                                <a
-                                    href="{{ route('client.product.index', ['category' => $c->slug]) }}">{{ $c->name }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" class="sf-with-ul">Sản phẩm</a>
-
-                    <ul>
-                        @foreach ($product_categories as $c)
-                            {!! renderCategory($c) !!}
-                        @endforeach
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="#">Sale</a>
-                    <ul>
-                        @foreach ($promotions as $p)
-                            <li><a
-                                    href="{{ route('client.product.index', ['promotion' => $p->slug]) }}">{{ $p->name }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
-                <li>
-                    <a href="blog.html">Blog</a>
-
-                    <ul>
-                        @foreach ($blog_categories as $category)
-                            <li><a
-                                    href="{{ route('client.blog.index', ['category' => $category->name]) }}">{{ $category->name }}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
+                @include('landingpage.layouts.components.navs.shop-category')
+                @include('landingpage.layouts.components.navs.product-category')
+                @include('landingpage.layouts.components.navs.best-seller-category');
+                @include('landingpage.layouts.components.navs.promotion')
             </ul>
         </nav><!-- End .mobile-nav -->
 

@@ -61,8 +61,15 @@ class ViewComposerServiceProvider extends ServiceProvider {
                 $promotions = Promotion::available()->whereHas('products')->with(['products' => function ($q) {
                     $q->withNeededProductCardData();
                 }])->get();
+                $best_seller_categories = Category::with("image:imageable_id,path")->whereType(CategoryType::BEST_SELLER)->whereHas('products')->get();
                 $blog_categories = Category::allActiveBlogCategories();
-                $view->with(['product_categories' => $product_categories, 'new_arrival_categories' => $new_arrival_categories, 'promotions' => $promotions, 'blog_categories' => $blog_categories]);
+                $view->with([
+                    'product_categories' => $product_categories,
+                    'new_arrival_categories' => $new_arrival_categories,
+                    'promotions' => $promotions,
+                    'blog_categories' => $blog_categories,
+                    'best_seller_categories' => $best_seller_categories
+                ]);
             }
         );
 
@@ -84,7 +91,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
 
         View::composer(
             'landingpage.layouts.pages.cart.index',
-            function($view) {
+            function ($view) {
                 $cart = null;
                 if (auth('customer')->check()) {
                     $customer = auth('customer')->user();
@@ -135,12 +142,12 @@ class ViewComposerServiceProvider extends ServiceProvider {
             }
         );
 
-        View::composer('landingpage.layouts.meta', function($view) {
+        View::composer('landingpage.layouts.meta', function ($view) {
             $keywords = Category::whereType(CategoryType::PRODUCT)->pluck('name')->toArray();
             $mKeywords = implode(', ', $keywords);
             $view->with(['mKeywords' => $mKeywords]);
         });
-        View::composer('landingpage.layouts.footer', function($view) {
+        View::composer('landingpage.layouts.footer', function ($view) {
             $pages = Page::select('title', 'slug')->get();
             $view->with(['pages' => $pages]);
         });

@@ -26,6 +26,8 @@ class ProductListComponent extends Component {
 
     public $categories = [];
 
+    public $categoryType;
+
     public $product_categories;
 
     public $sort_type;
@@ -42,6 +44,7 @@ class ProductListComponent extends Component {
         'categories',
         'min_price',
         'max_price',
+        'categoryType',
         'category' => ['except' => ''],
         'promotion'
     ];
@@ -73,12 +76,17 @@ class ProductListComponent extends Component {
             $category_ids = $category->getAllChildId();
             $this->title = $category->name;
             $this->type = 'Danh mục';
-            $products = Product::where(function ($q) use ($category_ids) {
+            $products = $products->where(function ($q) use ($category_ids) {
                 $q->whereHas('other_categories', function ($q) use ($category_ids) {
                     return $q->whereIn('categories.id', $category_ids);
                 })->orWhereHas('categories', function ($q) use ($category_ids) {
                     return $q->whereIn('categories.id', $category_ids);
                 });
+            });
+        }
+        if($this->categoryType) {
+            $products->whereHas("categories", function($q) {
+                $q->where('categories.type', $this->categoryType);
             });
         }
         if ($this->promotion) {
