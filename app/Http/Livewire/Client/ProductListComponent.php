@@ -85,8 +85,12 @@ class ProductListComponent extends Component {
             });
         }
         if($this->categoryType) {
-            $products->whereHas("categories", function($q) {
-                $q->where('categories.type', $this->categoryType);
+            $products->where(function($q) {
+                $q->whereHas("categories", function($q) {
+                    $q->where('categories.type', $this->categoryType);
+                })->orWhereHas("other_categories", function($q) {
+                    $q->where('other_categories.type', $this->categoryType);
+                });
             });
         }
         if ($this->promotion) {
