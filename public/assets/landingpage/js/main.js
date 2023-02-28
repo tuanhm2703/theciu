@@ -168,7 +168,7 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $(".mobile-menu-overlay, .mobile-menu-close").on("click", function (e) {
+    $(".mobile-menu-close").on("click", function (e) {
         $body.removeClass("mmenu-active");
         $(".menu-toggler").removeClass("active");
         e.preventDefault();
