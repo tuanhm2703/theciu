@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Webhook;
 
 use App\Enums\PaymentStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Webhook\MomoWebhookRequest;
+use App\Http\Requests\Webhook\VNPaywebhookRequest;
 use App\Http\Services\VNPay\src\Models\Param;
 use App\Http\Services\VNPay\src\Models\VNPayment;
 use App\Models\Order;
@@ -12,7 +14,7 @@ use Illuminate\Http\Request;
 use MService\Payment\Pay\Models\ResultCode;
 
 class PaymentWebhookController extends Controller {
-    public function momoWebhook(Order $order, Request $request) {
+    public function momoWebhook(Order $order, MomoWebhookRequest $request) {
         $order_number = base64_decode($request->extraData);
         if ($order->order_number == $order_number) {
             $resultCode = $request->resultCode;
@@ -30,7 +32,7 @@ class PaymentWebhookController extends Controller {
         return response()->json([], 204);
     }
 
-    public function vnpayWebhook(Request $request) {
+    public function vnpayWebhook(VNPaywebhookRequest $request) {
         try {
             $orderNumber = $request->{Param::TXN_REF};
             $order = Order::where('order_number', $orderNumber)->first();

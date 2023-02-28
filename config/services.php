@@ -50,7 +50,11 @@ return [
         'hash_secret' => env('VNP_HASH_SECRET'),
         'url' => env('VNP_URL'),
         'refund_url' => env('VNP_REFUND_URL'),
-        'ipn_url' => env('VNP_IPN_URL')
+        'ipn_url' => env('VNP_IPN_URL'),
+        'ip' => env('VNP_IP')
+    ],
+    'momo' => [
+        'ip' => env('MOMO_IP')
     ],
     'imgproxy' => [
         'key' => env('PROXY_KEY'),
