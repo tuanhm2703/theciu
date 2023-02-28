@@ -31,7 +31,7 @@ class Image extends Model {
         } else {
             try {
                 if (StorageService::exists($this->path) || isNavActive('admin')) {
-                    if (isNavActive('admin.product.index')) {
+                    if (isNavActive('admin.product.edit')) {
                         return StorageService::url($this->path);
                     }
                     return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
