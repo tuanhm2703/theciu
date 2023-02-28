@@ -89,7 +89,7 @@ class ProductListComponent extends Component {
                 $q->whereHas("categories", function($q) {
                     $q->where('categories.type', $this->categoryType);
                 })->orWhereHas("other_categories", function($q) {
-                    $q->where('other_categories.type', $this->categoryType);
+                    $q->where('type', $this->categoryType);
                 });
             });
         }
