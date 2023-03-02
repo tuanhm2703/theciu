@@ -24,6 +24,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Mulish:wght@500&family=Roboto:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <script src="{{ asset('assets/landingpage/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.form.min.js') }}"></script>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+/>
     @stack('css')
     @livewireStyles
 </head>
@@ -133,6 +137,7 @@
     <script src="{{ asset('assets/landingpage/cart.js') }}"></script>
     <script src="{{ asset('assets/js/bs4Toast.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/tata/tata.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     @stack('js')
     <script>
         $('.lazy').lazyload();

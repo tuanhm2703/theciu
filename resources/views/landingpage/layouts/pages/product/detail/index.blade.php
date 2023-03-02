@@ -3,6 +3,11 @@
 ])
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/nouislider/nouislider.css') }}">
+    <style>
+        .swiper-slide {
+            height: fit-content !important;
+        }
+    </style>
 @endpush
 @section('content')
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
@@ -29,16 +34,23 @@
                                                 data-video="{{ $product->video->path_with_domain }}" width="100%"
                                                 src="{{ $product->video->path_with_domain }}"></video>
                                         @endif
-                                        @foreach ($product->images as $image)
-                                            <a class="product-gallery-item product-image-check active w-100 p-0"
-                                                href="#" data-image="{{ $image->path_with_domain }}"
-                                                data-zoom-image="{{ $image->path_with_domain }}">
-                                                <img src="{{ $image->path_with_domain }}" alt="product side">
-                                            </a>
-                                        @endforeach
+                                        <div class="swiper-container">
+                                            <div class="swiper-wrapper">
+                                                @foreach ($product->images as $image)
+                                                    <div class="swiper-slide">
+                                                        <a class="product-gallery-item product-image-check active w-100 p-0"
+                                                            href="#" data-image="{{ $image->path_with_domain }}"
+                                                            data-zoom-image="{{ $image->path_with_domain }}">
+                                                            <img src="{{ $image->path_with_domain }}" alt="product side">
+                                                        </a>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
                                     </div><!-- End .product-image-gallery -->
                                 </div>
-                                <div class="col-10 h-100 d-flex align-items-center bg-light">
+                                <div class="col-10 h-100 d-flex align-items-center bg-light" style="height: fit-content !important;">
                                     <figure class="product-main-image">
                                         @if ($product->video)
                                             <video id="video-previewer" width="100%" controls autoplay muted>
@@ -139,7 +151,8 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.material') }}</label>
+                        <label class="product-detail-label w-20 m-0"
+                            for="">{{ trans('labels.material') }}</label>
                         <div class="d-flex align-items-center product-detail-content">
                             {{ $product->material }}
                         </div>
@@ -192,4 +205,10 @@
     </div><!-- End .page-content -->
 @endsection
 @push('js')
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            direction: 'vertical',
+            slidesPerView: 5
+        });
+    </script>
 @endpush
