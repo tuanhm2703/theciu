@@ -27,7 +27,8 @@
                     <div class="col-md-6">
                         <div class="product-gallery product-gallery-vertical h-100">
                             <div class="row h-100">
-                                <div class="col-2 p-0">
+                                <div class="col-2 p-0" style="max-height: 630px;
+                                overflow: hidden;">
                                     <div id="product-zoom-gallery" class="product-image-gallery d-block w-100">
                                         @if ($product->video)
                                             <video class="product-video-item"
