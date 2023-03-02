@@ -7,6 +7,11 @@ use App\Enums\PromotionType;
 use App\Enums\StatusType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreatePromotionProductRequest;
+use App\Http\Requests\Admin\CreatePromotionRequest;
+use App\Http\Requests\Admin\DeletePromotionRequest;
+use App\Http\Requests\Admin\EditPromotionRequest;
+use App\Http\Requests\Admin\UpdatePromotionRequest;
+use App\Http\Requests\Admin\ViewPromotionRequest;
 use App\Models\Category;
 use App\Models\Inventory;
 use App\Models\Product;
@@ -18,27 +23,26 @@ use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class PromotionController extends Controller {
-    public function index(Request $request) {
+    public function index(ViewPromotionRequest $request) {
         return view('admin.pages.promotion.index');
     }
 
     public function show(Promotion $promotion) {
-
     }
 
-    public function create(Request $request) {
+    public function create(CreatePromotionRequest $request) {
         $type = $request->type ?? PromotionType::DISCOUNT;
         return view('admin.pages.promotion.product.add', compact('type'));
     }
 
-    public function edit($id) {
-        $promotion = Promotion::with(['products' => function($q) {
+    public function edit($id, EditPromotionRequest $request) {
+        $promotion = Promotion::with(['products' => function ($q) {
             $q->select('id', 'name')->with('image', 'inventories');
         }])->findOrFail($id);
         $type = $promotion->type;
         $products = $promotion->products;
-        $products->each(function($p) {
-            $p->inventories->each(function($i) {
+        $products->each(function ($p) {
+            $p->inventories->each(function ($i) {
                 $i->append('title');
             });
         });
@@ -46,7 +50,7 @@ class PromotionController extends Controller {
         return view('admin.pages.promotion.product.add', compact('promotion', 'type', 'products', 'productIds'));
     }
 
-    public function editPromotion($id, Request $request) {
+    public function editPromotion($id, EditPromotionRequest $request) {
         $category = Category::with('products.inventories')->findOrFail($id);
         $category->products->each(function ($p) {
             $p->inventories->each(function ($i) {
@@ -152,7 +156,7 @@ class PromotionController extends Controller {
         ]);
     }
 
-    public function update(Promotion $promotion, Request $request) {
+    public function update(Promotion $promotion, UpdatePromotionRequest $request) {
         $products = $request->products;
         $from = (new Carbon($request->from))->format('Y-m-d H:i:s');
         $to = (new Carbon($request->to))->format('Y-m-d H:i:s');
@@ -187,7 +191,7 @@ class PromotionController extends Controller {
         ]);
     }
 
-    public function destroy(Promotion $promotion) {
+    public function destroy(Promotion $promotion, DeletePromotionRequest $request) {
         $promotion->delete();
         return BaseResponse::success([
             'message' => 'Xoá chương trình thành công'

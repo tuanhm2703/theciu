@@ -1,5 +1,5 @@
 <li>
-    <a href="{{ route('client.product.sale_off') }}">Best Seller</a>
+    <a href="{{ route('client.product.index', ['categoryType' => App\Enums\CategoryType::BEST_SELLER]) }}">Best Seller</a>
 
     <div class="megamenu megamenu-sm">
         <div class="row no-gutters">
