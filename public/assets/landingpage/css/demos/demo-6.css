@@ -580,7 +580,7 @@
 @media screen and (min-width: 576px) {
     .intro-slider-container,
     .intro-slide {
-        height: 350px;
+        height: 250px;
     }
 }
 @media screen and (min-width: 768px) {
