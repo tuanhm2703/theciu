@@ -15,6 +15,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use VienThuong\KiotVietClient\Client;
+use VienThuong\KiotVietClient\Resource\OrderResource;
 use VienThuong\KiotVietClient\Resource\ProductResource;
 use VienThuong\KiotVietClient\Resource\WebhookResource;
 
@@ -27,8 +28,8 @@ class TestController extends Controller {
     public function test(Request $request) {
         $productSource = new ProductResource(App::make(Client::class));
         $kiotSetting = App::get('KiotConfig');
-        $webhookResource = new WebhookResource(App::make(Client::class));
-        return $webhookResource->list();
+        $orderResource = new OrderResource(App::make(Client::class));
+        dd($orderResource->getByCode('DHTTS_576618391369779406'));
         $kiotProduct = $productSource->getByCode('SP078172')->getModelData();
         return $kiotProduct;
     }

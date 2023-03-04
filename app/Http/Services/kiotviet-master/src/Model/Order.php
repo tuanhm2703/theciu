@@ -164,6 +164,10 @@ class Order extends BaseModel
     {
         return $this->saleChannelId;
     }
+    public function setSaleChannelId(int $id)
+    {
+        return $this->saleChannelId = $id;
+    }
 
     /**
      */
@@ -201,6 +205,10 @@ class Order extends BaseModel
     public function getOrderDetails(): OrderDetailCollection
     {
         return $this->orderDetails;
+    }
+
+    public function setOrderDelivery($orderDelivery) {
+        return $this->orderDelivery = $orderDelivery;
     }
 
     /**
