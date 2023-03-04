@@ -645,7 +645,7 @@
 @media screen and (min-width: 1200px) {
     .intro-slider-container,
     .intro-slide {
-        height: 750px;
+        height: 650px;
     }
     .intro-content .btn {
         min-width: 200px;
