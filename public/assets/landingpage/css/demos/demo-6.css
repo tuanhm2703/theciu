@@ -13,7 +13,7 @@
 }
 .intro-slider-container,
 .intro-slide {
-    height: 200px;
+    height: 150px;
     background-color: #c8c9cd;
 }
 .intro-slider.owl-theme.owl-nav-inside .owl-dots {
