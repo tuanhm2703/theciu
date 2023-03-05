@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Enums\CategoryType;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
@@ -28,13 +29,31 @@ class ProductController extends Controller {
     }
 
     public function index(Request $request) {
-        return view('landingpage.layouts.pages.product.index');
+        $title = trans('labels.product_list');
+        return view('landingpage.layouts.pages.product.index', compact('title'));
     }
 
-    public function saleOff() {
-        return view('landingpage.layouts.pages.product.sale-off.index');
+    public function saleOff($slug = null) {
+        $title = trans('labels.promotion');
+        $promotion = null;
+        if($slug) {
+            $promotion = Promotion::whereSlug($slug)->firstOrFail();
+            $title = $promotion->name;
+        }
+        return view('landingpage.layouts.pages.product.sale-off.index', compact('promotion', 'title'));
+    }
+    public function bestSeller() {
+        $categoryType = CategoryType::BEST_SELLER;
+        $title = trans('labels.best_seller');
+        return view('landingpage.layouts.pages.product.best-seller.index', compact('categoryType', 'title'));
     }
     public function myWishlist() {
         return view('landingpage.layouts.pages.product.wishlist.index');
+    }
+
+    public function newArrival() {
+        $categoryType = CategoryType::NEW_ARRIVAL;
+        $title = trans('labels.new_arrival');
+        return view('landingpage.layouts.pages.product.new-arrival.index', compact('categoryType', 'title'));
     }
 }

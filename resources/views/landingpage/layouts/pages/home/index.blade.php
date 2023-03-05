@@ -4,9 +4,7 @@
         @include('landingpage.layouts.components.banner-slider')
         @include('landingpage.layouts.pages.home.components.featured_category')
         <div class="mb-5"></div><!-- End .mb-5 -->
-        <div class="container">
-            @include('landingpage.layouts.pages.home.components.trending')
-        </div><!-- End .container -->
+        <livewire:new-arrival-component></livewire:new-arrival-component>
 
         <div class="mb-5"></div><!-- End .mb-5 -->
 
@@ -67,7 +65,9 @@
         </div><!-- End .bg-light pt-2 pb-2 -->
 
         <div class="mb-6"></div><!-- End .mb-5 -->
-        <livewire:new-arrival-component></livewire:new-arrival-component>
+        <div class="container">
+            @include('landingpage.layouts.pages.home.components.trending')
+        </div><!-- End .container -->
         <div class="mb-2"></div><!-- End .mb-5 -->
 
         <div class="container">

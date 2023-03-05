@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('product_id');
+            $table->bigInteger('product_id')->index();
             $table->integer('stock_quantity')->unsigned();
             $table->string('sku')->nullable();
             $table->float('price', 20);

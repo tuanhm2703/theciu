@@ -34,9 +34,8 @@
 
 <body>
     <div class="page-wrapper">
-        <header class="header header-6">
+
             @include('landingpage.layouts.components.header')
-        </header><!-- End .header -->
 
         <main class="main">
             @yield('content')

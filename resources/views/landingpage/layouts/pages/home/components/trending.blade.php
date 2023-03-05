@@ -1,5 +1,5 @@
 <div class="heading heading-center mb-3">
-    <h2 class="title">Trending</h2><!-- End .title -->
+    <h2 class="title">Best Seller</h2><!-- End .title -->
 </div><!-- End .heading -->
 <div class="tab-content tab-content-carousel trending-carousel">
     <div class="tab-pane p-0 fade show active" id="trending-all-tab" role="tabpanel" aria-labelledby="trending-all-link">

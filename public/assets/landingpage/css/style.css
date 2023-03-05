@@ -571,8 +571,9 @@ blockquote.text-white cite span {
 }
 .logo img {
     display: block;
-    width: 30%;
+    width: 40%;
     height: auto;
+    min-width: 100px;
 }
 .header-top {
     font-weight: 300;
@@ -606,6 +607,14 @@ blockquote.text-white cite span {
 }
 .header-top .top-menu li + li {
     margin-left: 2.6rem;
+}
+@media screen and (min-width: 768px) {
+    .logo img {
+        width: 30%;
+    }
+    .footer-logo img {
+        width: 20%;
+    }
 }
 @media screen and (min-width: 1200px) {
     .header-top .container-fluid:after {
@@ -10116,7 +10125,7 @@ button:focus {
 .toolbox {
     display: flex;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
     font-weight: 400;
     font-size: 1.4rem;
@@ -10173,12 +10182,11 @@ button:focus {
     flex-wrap: wrap;
 }
 .toolbox-center {
-    margin-top: 1rem;
     flex: 0 1 auto;
 }
 .toolbox-right {
     margin-top: 1rem;
-    flex-direction: column;
+    justify-content: end;
 }
 .toolbox-info {
     color: #ccc;
@@ -10349,6 +10357,7 @@ button:focus {
     background-color: #f8f8f8;
 }
 .sidebar-toggler {
+    display: block;
     display: inline-flex;
     align-items: center;
     color: #333;
@@ -10850,6 +10859,9 @@ button:focus {
         -ms-flex: 0 0 43.5%;
         flex: 0 0 43.5%;
         max-width: 43.5%;
+    }
+    .sidebar-toggler {
+        display: none;
     }
 }
 @media screen and (min-width: 1700px) {

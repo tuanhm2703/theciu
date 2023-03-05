@@ -5,11 +5,10 @@ namespace App\Http\Livewire\Client;
 use App\Enums\CategoryType;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Promotion;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
-class ProductListComponent extends Component {
+class PromotionProductListComponent extends Component {
     public $keyword;
 
     public $title;
@@ -36,7 +35,7 @@ class ProductListComponent extends Component {
 
     public $max_price;
 
-    public $category = '';
+    public $promotion;
 
     protected $queryString = [
         'page' => ['except' => 1, 'as' => 'page'],
@@ -44,7 +43,6 @@ class ProductListComponent extends Component {
         'categories',
         'min_price',
         'max_price',
-        'category' => ['except' => '']
     ];
 
     public function mount() {
@@ -53,9 +51,8 @@ class ProductListComponent extends Component {
         $this->searchProduct();
     }
     public function render() {
-        return view('livewire.client.product-list-component');
+        return view('livewire.client.promotion-product-list-component');
     }
-
     public function nextPage() {
         $this->page++;
         $this->searchProduct();
@@ -66,27 +63,13 @@ class ProductListComponent extends Component {
             $this->products = new Collection();
             $this->page = $page;
         }
-        $products = Product::query();
-        if ($this->category) {
-            $category = Category::whereSlug($this->category)->with('categories.categories')->firstOrFail();
-            $category_ids = $category->getAllChildId();
-            $products = $products->where(function ($q) use ($category_ids) {
-                $q->whereHas('other_categories', function ($q) use ($category_ids) {
-                    return $q->whereIn('categories.id', $category_ids);
-                })->orWhereHas('categories', function ($q) use ($category_ids) {
-                    return $q->whereIn('categories.id', $category_ids);
-                });
-            });
-        }
-        if($this->type) {
-            $products->where(function($q) {
-                $q->whereHas("categories", function($q) {
-                    $q->where('categories.type', $this->type);
-                })->orWhereHas("other_categories", function($q) {
-                    $q->where('type', $this->type);
-                });
-            });
-        }
+        $products = Product::query()->whereHas('promotions', function($q) {
+            $q->available();
+            if($this->promotion) {
+                $q->where('promotions.id', $this->promotion->id);
+            }
+        });
+
         if (!empty($this->keyword)) {
             $products->search('products.name', $this->keyword);
         }

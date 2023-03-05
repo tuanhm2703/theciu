@@ -173,5 +173,6 @@ return [
     'edit_staff' => 'Edit staff',
     'see_more' => 'See more',
     'quantity' => 'Quantity',
-    'best_seller' => 'Best seller'
+    'best_seller' => 'Best seller',
+    'product_paging_description' => 'Showing :current of :total products',
 ];

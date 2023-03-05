@@ -22,15 +22,7 @@
         </div><!-- End .select-custom -->
     </div><!-- End .details-filter-row -->
 @endif
-<a href="#" id="size-guide-gallery">
-    <i class="icon-th-list"></i>{{ trans('labels.size_guide') }} <br>
-</a>
-<div class="mt-1">
-    @foreach ($product->size_rule_images as $image)
-        <a style="background: url({{ $image->path_with_domain }})" class="size-rule-gallery img-thumbnail"
-            href="{{ $image->path_with_domain }}"></a>
-    @endforeach
-</div>
+
 
 {{-- <div id="size-rule-gallery">
     @foreach ($product->size_rule_images as $image)

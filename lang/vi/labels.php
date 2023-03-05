@@ -177,5 +177,6 @@ return [
     'edit_staff' => 'Cập nhật nhân viên',
     'see_more' => 'Xem thêm',
     'quantity' => 'Số lượng',
-    'best_seller' => 'Best seller'
+    'best_seller' => 'Best seller',
+    'product_paging_description' => 'Hiện <span>:current</span> trên <span>:total</span> sản phẩm'
 ];

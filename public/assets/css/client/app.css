@@ -555,3 +555,27 @@
 .check-cart-item {
     width: 20px !important;
 }
+
+.order-lg-first {
+    display: none;
+}
+.toolbox-info {
+    font-size: 1.3em;
+}
+.header-sticky {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.add-to-cart-btn {
+    width: 100%;
+    max-width: none !important;
+}
+.btn-product:hover span {
+    color: white !important;
+}
+@media (min-width: 991px) {
+    .order-lg-first {
+        display: block;
+    }
+}
