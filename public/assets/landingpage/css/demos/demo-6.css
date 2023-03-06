@@ -693,4 +693,10 @@
         padding-right: 0;
     }
 }
+@media screen and (min-width: 1536px) {
+    .intro-slider-container,
+    .intro-slide {
+        height: 700px;
+    }
+}
 /*# sourceMappingURL=demo-6.css.map */
