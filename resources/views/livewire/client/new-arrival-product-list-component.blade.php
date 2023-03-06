@@ -17,11 +17,11 @@
     <div class="page-content">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-12">
                     <div class="products mb-3">
                         <div class="toolbox">
                             <div class="toolbox-left">
-                                <a href="#" class="sidebar-toggler"><i
+                                <a href="#" class="sidebar-toggler d-block"><i
                                         class="icon-bars"></i>{{ trans('labels.filters') }}</a>
                             </div><!-- End .toolbox-left -->
 
@@ -52,9 +52,8 @@
                             </div>
                         </div>
                         <div class="row" wire:loading.remove wire:target="searchProduct">
-
                             @foreach ($products as $product)
-                                <div class="col-6 col-md-4">
+                                <div class="col-6 col-md-3">
                                     <livewire:client.product-card-component
                                         wire:key="product-{{ $product->id . time() }}" :product="$product">
                                     </livewire:client.product-card-component>
@@ -86,76 +85,6 @@
                         </div>
                     </div><!-- End .load-more-container -->
                 </div><!-- End .col-lg-9 -->
-                <aside class="col-lg-3 order-lg-first">
-                    <div class="sidebar sidebar-shop">
-                        <div class="widget widget-clean">
-                            <a href="#" wire:click="clearAllFilter"
-                                class="sidebar-filter-clear">{{ trans('labels.clear_filter') }}</a>
-                        </div><!-- End .widget -->
-                        <div class="widget widget-collapsible">
-                            <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true"
-                                    aria-controls="widget-1">
-                                    {{ trans('labels.category') }}
-                                </a>
-                            </h3><!-- End .widget-title -->
-
-                            <div class="collapse show" id="widget-1">
-                                <div class="widget-body">
-                                    <div class="filter-items filter-items-count">
-                                        @foreach ($product_categories as $category)
-                                            <div class="filter-item">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" name="params-categories-1"
-                                                        value="{{ $category->slug }}" wire:model="category"
-                                                        wire:change="searchProduct(1)" class="custom-control-input"
-                                                        id="cat-{{ $category->slug }}">
-                                                    <label class="custom-control-label"
-                                                        for="cat-{{ $category->slug }}">{{ $category->name }}</label>
-                                                </div>
-                                                {{-- <span wire:ignore
-                                                    class="item-count">{{ $category->products_count }}</span> --}}
-                                            </div><!-- End .filter-item -->
-                                        @endforeach
-                                    </div><!-- End .filter-items -->
-                                </div><!-- End .widget-body -->
-                            </div><!-- End .collapse -->
-                        </div><!-- End .widget -->
-                        <div class="widget widget-collapsible">
-                            <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-5" role="button" aria-expanded="true"
-                                    aria-controls="widget-5">
-                                    {{ trans('labels.price_range') }}
-                                </a>
-                            </h3><!-- End .widget-title -->
-
-                            <div class="collapse show" id="widget-5">
-                                <div class="widget-body">
-                                    <div class="filter-price">
-                                        <div class="filter-price-text d-flex align-items-center" wire:ignore>
-                                            <input type="number" wire:model.lazy="min_price"
-                                                wire:change="searchProduct(1)"
-                                                placeholder="{{ trans('placeholder.min_price') }}">
-                                            <div class="mx-1"
-                                                style="
-                                                background-color: #dadada;
-                                                width: 10%;
-                                                height: 2px;
-                                                align-self: center;
-                                            ">
-                                            </div>
-                                            <input type="number" wire:model.lazy="max_price"
-                                                wire:change="searchProduct(1)"
-                                                placeholder="{{ trans('placeholder.max_price') }}">
-                                        </div><!-- End .filter-price-text -->
-
-                                        <div id="price-slider"></div><!-- End #price-slider -->
-                                    </div><!-- End .filter-price -->
-                                </div><!-- End .widget-body -->
-                            </div><!-- End .collapse -->
-                        </div><!-- End .widget -->
-                    </div><!-- End .sidebar sidebar-shop -->
-                </aside><!-- End .col-lg-3 -->
             </div><!-- End .row -->
         </div><!-- End .container -->
     </div><!-- End .page-content -->
@@ -182,6 +111,7 @@
                                 <div class="filter-items filter-items-count">
                                     @foreach ($product_categories as $category)
                                         <div class="filter-item">
+
                                             <div class="custom-control custom-radio">
                                                 <input type="radio" name="params-categories"
                                                     value="{{ $category->slug }}" wire:model="category"
@@ -192,6 +122,7 @@
                                             </div>
                                             {{-- <span wire:ignore
                                                 class="item-count">{{ $category->products_count }}</span> --}}
+
                                         </div><!-- End .filter-item -->
                                     @endforeach
                                 </div><!-- End .filter-items -->

@@ -1,10 +1,4 @@
 <div>
-    <div class="page-header text-center" style="background-image: url('/assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">
-                {{ $title ? $title : 'Danh sách sản phẩm' }}</h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
         <div class="container">
             <ol class="breadcrumb">
@@ -105,16 +99,16 @@
                                     <div class="filter-items filter-items-count">
                                         @foreach ($product_categories as $category)
                                             <div class="filter-item">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" name="params-categories"
-                                                        value="{{ $category->id }}" wire:model="categories"
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" name="params-categories-1"
+                                                        value="{{ $category->slug }}" wire:model="category"
                                                         wire:change="searchProduct(1)" class="custom-control-input"
-                                                        id="cat-{{ $category->id }}">
+                                                        id="cat-{{ $category->slug }}">
                                                     <label class="custom-control-label"
-                                                        for="cat-{{ $category->id }}">{{ $category->name }}</label>
-                                                </div><!-- End .custom-checkbox -->
-                                                <span wire:ignore
-                                                    class="item-count">{{ $category->products_count }}</span>
+                                                        for="cat-{{ $category->slug }}">{{ $category->name }}</label>
+                                                </div>
+                                                {{-- <span wire:ignore
+                                                    class="item-count">{{ $category->products_count }}</span> --}}
                                             </div><!-- End .filter-item -->
                                         @endforeach
                                     </div><!-- End .filter-items -->
@@ -182,16 +176,16 @@
                                 <div class="filter-items filter-items-count">
                                     @foreach ($product_categories as $category)
                                         <div class="filter-item">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" name="params-categories"
-                                                    value="{{ $category->id }}" wire:model="categories"
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" name="params-categories"
+                                                    value="{{ $category->slug }}" wire:model="category"
                                                     wire:change="searchProduct(1)" class="custom-control-input"
-                                                    id="cat-{{ $category->id }}">
+                                                    id="cat-{{ $category->slug }}">
                                                 <label class="custom-control-label"
-                                                    for="cat-{{ $category->id }}">{{ $category->name }}</label>
-                                            </div><!-- End .custom-checkbox -->
-                                            <span wire:ignore
-                                                class="item-count">{{ $category->products_count }}</span>
+                                                    for="cat-{{ $category->slug }}">{{ $category->name }}</label>
+                                            </div>
+                                            {{-- <span wire:ignore
+                                                class="item-count">{{ $category->products_count }}</span> --}}
                                         </div><!-- End .filter-item -->
                                     @endforeach
                                 </div><!-- End .filter-items -->

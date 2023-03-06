@@ -21,9 +21,9 @@ class PromotionProductListComponent extends Component {
 
     public $page = 1;
 
-    public $products;
+    public $category;
 
-    public $categories = [];
+    public $products;
 
     public $product_categories;
 
@@ -40,13 +40,15 @@ class PromotionProductListComponent extends Component {
     protected $queryString = [
         'page' => ['except' => 1, 'as' => 'page'],
         'keyword',
-        'categories',
+        'category',
         'min_price',
         'max_price',
     ];
 
     public function mount() {
-        $this->product_categories = Category::whereType(CategoryType::PRODUCT)->select('id', 'name')->withCount('products')->get();
+        $this->product_categories = Category::whereHas('products', function($q) {
+            $q->available();
+        })->whereType(CategoryType::PRODUCT)->select('id', 'name')->withCount('products')->get();
         $this->products = new Collection();
         $this->searchProduct();
     }
@@ -73,14 +75,22 @@ class PromotionProductListComponent extends Component {
         if (!empty($this->keyword)) {
             $products->search('products.name', $this->keyword);
         }
-        if (!empty($this->categories)) {
-            $products->whereHas('categories', function ($q) {
-                $q->whereIn('categories.id', $this->categories);
+        $category_ids = [];
+        if ($this->category) {
+            $category = Category::whereSlug($this->category)->with('categories.categories')->firstOrFail();
+            $category_ids = $category->getAllChildId();
+            $products = $products->where(function ($q) use ($category_ids) {
+                $q->whereHas('other_categories', function ($q) use ($category_ids) {
+                    return $q->whereIn('categories.id', $category_ids);
+                })->orWhereHas('categories', function ($q) use ($category_ids) {
+                    return $q->whereIn('categories.id', $category_ids);
+                });
             });
         }
-        $this->total = (clone $products)->filterByPriceRange($this->min_price, $this->max_price)->count();
-        $products = $products->select('products.name', 'products.slug', 'products.id')
-            ->filterByPriceRange($this->min_price, $this->max_price)
+        $products->select('products.name', 'products.slug', 'products.id')
+        ->filterByPriceRange($this->min_price, $this->max_price);
+        $this->total = (clone $products)->count();
+        $products = $products
             ->with(['inventories.image:path,imageable_id', 'images:path,imageable_id'])
             ->getPage($this->page, $this->pageSize)->get();
         $this->products = $this->products->merge($products);
@@ -88,7 +98,6 @@ class PromotionProductListComponent extends Component {
     }
 
     public function clearAllFilter() {
-        $this->categories = [];
         $this->searchProduct(1);
     }
 }

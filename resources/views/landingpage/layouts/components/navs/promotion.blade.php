@@ -1,4 +1,4 @@
-<li>
+<li class="{{ isNavActive('client.product.sale_off') ? 'active' : '' }}">
     <a href="{{ route('client.product.sale_off') }}">Sale off</a>
 
     <div class="megamenu megamenu-sm">

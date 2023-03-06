@@ -3,7 +3,7 @@
         <div class="header-left">
             <nav class="main-nav">
                 <ul class="menu sf-arrows">
-                    <li class="megamenu-container active">
+                    <li class="megamenu-container {{ isNavActive('client.home') ? 'active' : '' }}">
                         <a href="/">Trang chủ</a>
                     </li>
                     @include('landingpage.layouts.components.navs.shop-category')

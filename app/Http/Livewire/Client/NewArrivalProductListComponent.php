@@ -5,11 +5,11 @@ namespace App\Http\Livewire\Client;
 use App\Enums\CategoryType;
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Promotion;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
-class ProductListComponent extends Component {
+class NewArrivalProductListComponent extends Component
+{
     public $keyword;
 
     public $title;
@@ -44,7 +44,6 @@ class ProductListComponent extends Component {
         'max_price',
         'category' => ['except' => '']
     ];
-
     public function mount() {
         $this->product_categories = Category::whereHas('products', function($q) {
             $q->available();
@@ -52,8 +51,10 @@ class ProductListComponent extends Component {
         $this->products = new Collection();
         $this->searchProduct();
     }
-    public function render() {
-        return view('livewire.client.product-list-component');
+
+    public function render()
+    {
+        return view('livewire.client.new-arrival-product-list-component');
     }
 
     public function nextPage() {
@@ -67,6 +68,7 @@ class ProductListComponent extends Component {
             $this->page = $page;
         }
         $products = Product::query();
+        $category_ids = [];
         if ($this->category) {
             $category = Category::whereSlug($this->category)->with('categories.categories')->firstOrFail();
             $category_ids = $category->getAllChildId();
@@ -81,9 +83,11 @@ class ProductListComponent extends Component {
         if (!empty($this->keyword)) {
             $products->search('products.name', $this->keyword);
         }
-        $this->total = (clone $products)->filterByPriceRange($this->min_price, $this->max_price)->count();
-        $products = $products->select('products.name', 'products.slug', 'products.id')
-            ->filterByPriceRange($this->min_price, $this->max_price)
+        $products->select('products.name', 'products.slug', 'products.id')
+        ->filterByPriceRange($this->min_price, $this->max_price);
+
+        $this->total = (clone $products)->count();
+        $products = $products
             ->with(['inventories.image:path,imageable_id', 'images:path,imageable_id'])
             ->getPage($this->page, $this->pageSize)->get();
         $this->products = $this->products->merge($products);
