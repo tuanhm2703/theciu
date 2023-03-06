@@ -178,5 +178,6 @@ return [
     'see_more' => 'Xem thêm',
     'quantity' => 'Số lượng',
     'best_seller' => 'Best seller',
-    'product_paging_description' => 'Hiện <span>:current</span> trên <span>:total</span> sản phẩm'
+    'product_paging_description' => 'Hiện <span>:current</span> trên <span>:total</span> sản phẩm',
+    'promotion' => 'Chương trình khuyến mãi'
 ];

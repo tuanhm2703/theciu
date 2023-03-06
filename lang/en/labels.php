@@ -175,4 +175,5 @@ return [
     'quantity' => 'Quantity',
     'best_seller' => 'Best seller',
     'product_paging_description' => 'Showing :current of :total products',
+    'promotion' => 'Promotion'
 ];
