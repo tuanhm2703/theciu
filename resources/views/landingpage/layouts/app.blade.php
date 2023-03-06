@@ -43,6 +43,10 @@
 
         @include('landingpage.layouts.footer')
     </div><!-- End .page-wrapper -->
+    <div class="mobile-menu-overlay">
+    </div><!-- End .mobil-menu-overlay -->
+    @include('landingpage.layouts.components.header-bottom-phone')
+
     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
 
     <!-- Mobile Menu -->

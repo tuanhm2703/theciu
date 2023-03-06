@@ -26,6 +26,3 @@
         </div>
     </div><!-- End .container -->
 </div><!-- End .header-bottom -->
-<div class="mobile-menu-overlay">
-</div><!-- End .mobil-menu-overlay -->
-@include('landingpage.layouts.components.header-bottom-phone')

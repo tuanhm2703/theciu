@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\Promotion;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -54,9 +55,9 @@ class ViewComposerServiceProvider extends ServiceProvider {
         );
 
         View::composer(
-            'landingpage.layouts.components.header-bottom',
+            'landingpage.layouts.app',
             function ($view) {
-                $product_categories = Category::getMenuCategories();
+                $product_categories = App::get('ProductCategory');
                 $new_arrival_categories = Category::with('image:imageable_id,path')->whereType(CategoryType::TRENDING)->get();
                 $promotions = Promotion::available()->whereHas('products')->with(['products' => function ($q) {
                     $q->withNeededProductCardData();

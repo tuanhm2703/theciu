@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\Services\Momo\MomoService;
+use App\Models\Category;
 use App\Models\Setting;
 use App\Services\BatchService;
 use Carbon\Carbon;
@@ -40,6 +41,9 @@ class AppServiceProvider extends ServiceProvider {
         });
         $this->app->singleton('KiotConfig', function() {
             return Setting::getKiotSetting();
+        });
+        $this->app->singleton('ProductCategory', function() {
+            return Category::getMenuCategories();
         });
     }
 }
