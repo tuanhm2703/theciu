@@ -14,7 +14,7 @@ class NewArrivalProductListComponent extends Component
 
     public $title;
 
-    public $pageSize = 9;
+    public $pageSize = 8;
 
     public $hasNext;
 
