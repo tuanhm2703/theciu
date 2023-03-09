@@ -15,6 +15,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use VienThuong\KiotVietClient\Client;
+use VienThuong\KiotVietClient\Collection\OrderDetailCollection;
+use VienThuong\KiotVietClient\Model\Order as ModelOrder;
+use VienThuong\KiotVietClient\Model\OrderDetail;
 use VienThuong\KiotVietClient\Resource\CustomerResource;
 use VienThuong\KiotVietClient\Resource\OrderResource;
 use VienThuong\KiotVietClient\Resource\ProductResource;
@@ -27,8 +30,29 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-        $customerResource = new CustomerResource(App::make(Client::class));
-        return dd($customerResource->list(['contactNumber' => '0328483487']));
+        $productResource = new ProductResource(App::make(Client::class));
+        $orderResource = new OrderResource(App::make(Client::class));
+        // return $orderResource->list(['pageSize' => 100, 'orderBy' => 'CreatedDate', 'orderDirection' => 'DESC'])->toArray();
+        // $order = $orderResource->getByCode('DH000013');
+        // $order->setMethod('hello');
+        // dd($orderResource->update($order));
+        $kiotSetting = App::get('KiotConfig');
+        $ciuOrder = Order::first();
+        $order = new ModelOrder();
+        $order->setPurchaseDate(now());
+        $order->setBranchId($kiotSetting->data['branchId']);
+        $order->setDescription('The ciu order');
+        $order->setTotalPayment($ciuOrder->total);
+        $order->setMethod('hello');
+        $order->setOrderDetails(new OrderDetailCollection([
+            new OrderDetail([
+                'productCode' => 'test',
+                'quantity' => 1
+            ])
+        ]));
+        dd($orderResource->create($order));
+
+        return dd($productResource->getByCode('test'));
     }
 
     public function ipn(Request $request) {
