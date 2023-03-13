@@ -28,7 +28,7 @@ class AuthController extends Controller {
         }
         if (Hash::check($credentials['password'], $customer->password)) {
             auth('customer')->login($customer);
-            return redirect()->back();
+            return redirect()->route('client.home');
         } else {
             return BaseResponse::error([
                 'errors' => [
