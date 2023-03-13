@@ -28,7 +28,6 @@
                     <a href="{{ route('client.product.index', ['category' => $c->slug]) }}" class="category-card-img"
                         style="background: url({{ optional($c->image)->path_with_domain }})">
                     </a>
-                    <div class="bg-overlay"></div>
                     <div class="banner-content banner-content-center">
                         {{-- <h4 class="banner-subtitle text-white"><a href="#">Danh mục THE CIU</a></h4> --}}
                         <!-- End .banner-subtitle -->

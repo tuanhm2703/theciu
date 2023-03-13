@@ -27,7 +27,7 @@
                         <h4 class="widget-title">{{ trans('labels.information') }}</h4><!-- End .widget-title -->
 
                         <ul class="widget-list">
-                            <li><a href="https://www.facebook.com/HR.THECIU">Tuyển dụng</a></li>
+                            <li><a href="https://www.facebook.com/HR.THECIU" target="_blank">Tuyển dụng</a></li>
                             <li><a href="{{ route('client.blog.index') }}" class="sf-with-ul">Blog</a></li>
                             @foreach ($pages as $page)
                                 <li><a href="{{ route('client.page.details', $page->slug) }}"

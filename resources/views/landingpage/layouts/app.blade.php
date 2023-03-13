@@ -173,16 +173,16 @@
         });
     </script>
     <livewire:scripts />
-    <!-- Messenger Chat plugin Code -->
+    <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
 
-    <!-- Your Chat plugin code -->
+    <!-- Your Plugin chat code -->
     <div id="fb-customer-chat" class="fb-customerchat">
     </div>
 
     <script>
         var chatbox = document.getElementById('fb-customer-chat');
-        chatbox.setAttribute("page_id", "105451375308255");
+        chatbox.setAttribute("page_id", "108168607735167");
         chatbox.setAttribute("attribution", "biz_inbox");
     </script>
 
