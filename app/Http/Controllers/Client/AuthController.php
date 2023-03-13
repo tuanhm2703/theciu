@@ -28,7 +28,7 @@ class AuthController extends Controller {
         }
         if (Hash::check($credentials['password'], $customer->password)) {
             auth('customer')->login($customer);
-            return redirect()->route('client.home');
+            return redirect()->back();
         } else {
             return BaseResponse::error([
                 'errors' => [
@@ -74,7 +74,7 @@ class AuthController extends Controller {
             $customer->createImagesFromUrls([$user->avatar], MediaType::AVATAR);
         }
         auth('customer')->login($customer);
-        return  redirect()->back();
+        return redirect()->route('client.home');
     }
 
     public function redirectToGoogle() {
@@ -99,6 +99,6 @@ class AuthController extends Controller {
             $customer->createImagesFromUrls([$user->picture], MediaType::AVATAR);
         }
         auth('customer')->login($customer);
-        return redirect()->to('/');
+        return redirect()->route('client.home');
     }
 }
