@@ -32,6 +32,9 @@ class ReadDocsHelper
         }
 
         if (empty($propertyType)) {
+            // if($propertyName == 'soldById') {
+            //     dd($class);
+            // }
             if (preg_match('/@var\s+([^\s]+)/', $property->getDocComment(), $matches)) {
                 list(, $propertyType) = $matches;
 

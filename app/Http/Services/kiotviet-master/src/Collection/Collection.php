@@ -215,7 +215,8 @@ class Collection extends ArrayObject implements CollectionInterface
 
         $items = array_map(function ($item) {
             $expectedModel = $this->getModelClass();
-            return $item instanceof $expectedModel ? $item : new $expectedModel($item);
+            $result = $item instanceof $expectedModel ? $item : new $expectedModel($item);
+            return $result;
         }, $items);
 
         $this->items = $this->items ? array_merge($this->items, $items) : $items;

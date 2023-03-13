@@ -67,11 +67,6 @@
                                     Tiktok
                                 </a>
                             </li>
-                            <li>
-                                <a href="#" class="social-link" title="Youtube" target="_blank">
-                                    <i class="icon-youtube"></i> Youtube
-                                </a>
-                            </li>
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->

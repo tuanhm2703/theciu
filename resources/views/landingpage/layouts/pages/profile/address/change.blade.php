@@ -3,7 +3,7 @@
     <hr class="my-2">
     <div>
         @foreach ($addresses as $address)
-            <div class="custom-control custom-radio py-2">
+            <div class="custom-control custom-radio py-2 address-row">
                 <input type="radio" value="{{ $address->id }}" id="address-{{ $address->id }}"
                     @checked(empty($selected_address_id) ? $address->featured == 1 : $selected_address_id == $address->id) name="shipping-address" class="custom-control-input">
                 <label for="address-{{ $address->id }}" class="custom-control-label d-inline-blox w-100">
@@ -16,6 +16,16 @@
                                 <a href="#" data-address-id="{{ $address->id }}" class="update-address-btn">
                                     {{ trans('labels.update') }}
                                 </a>
+                                <br>
+                                {!! Form::open([
+                                    'url' => route('client.auth.profile.address.destroy', $address->id),
+                                    'class' => 'delete-address-form',
+                                    'method' => 'DELETE'
+                                ]) !!}
+                                <a href="#" data-address-id="{{ $address->id }}" class="delete-address-btn text-danger">
+                                    {{ trans('labels.delete') }}
+                                </a>
+                                {!! Form::close() !!}
                             </div>
                         </div>
                         <p>{{ $address->details }}</p>
@@ -27,7 +37,6 @@
                     </div>
                 </label>
             </div><!-- End .custom-control -->
-            <hr class="my-2">
         @endforeach
     </div>
     <div class="text-right"

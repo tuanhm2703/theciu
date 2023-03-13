@@ -574,6 +574,9 @@
 .btn-product:hover span {
     color: white !important;
 }
+.address-row {
+    border-bottom: 1px solid #ebebeb
+}
 @media (min-width: 991px) {
     .order-lg-first {
         display: block;

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Resource\BranchResource;
+use VienThuong\KiotVietClient\Resource\SaleChannelResource;
 use VienThuong\KiotVietClient\Resource\WebhookResource;
 use VienThuong\KiotVietClient\WebhookType;
 
@@ -20,9 +21,20 @@ class SyncWarehouseController extends Controller {
         $brancheResource = new BranchResource(App::make(Client::class));
         $branches = $brancheResource->list()->toArray();
         $branches = collect($branches);
+        $saleChannelResource = new SaleChannelResource(App::make(Client::class));
+        $sale_channels = $saleChannelResource->list()->toArray();
+        foreach($sale_channels as $index => $channel) {
+            $sale_channels[$index]['name'] = $channel['name']. "|". $channel['otherProperties']['img'];
+        }
+        $sale_channels = collect($sale_channels);
         $kiotSetting = App::get('KiotConfig');
+        if(isset($kiotSetting->data['saleChannelId'])) {
+            foreach($sale_channels as $channel) {
+
+            }
+        }
         $numberOfProductHaveToSync = Inventory::whereNotNull('sku')->count();
-        return view('admin.pages.setting.warehouse.index', compact('branches', 'kiotSetting', 'numberOfProductHaveToSync'));
+        return view('admin.pages.setting.warehouse.index', compact('branches', 'kiotSetting', 'numberOfProductHaveToSync', 'sale_channels'));
     }
 
     public function update(Request $request) {

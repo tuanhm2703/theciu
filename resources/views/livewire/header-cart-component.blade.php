@@ -14,7 +14,7 @@
                         <div class="product-cart-details">
                             <h4 class="product-title">
                                 <a
-                                    href="{{ route('client.product.details', $inventory->product->slug) }}">{{ $inventory->product->name }}</a>
+                                    href="{{ route('client.product.details', $inventory->product->slug) }}">{{ $inventory->name }}</a>
                             </h4>
 
                             <span class="cart-product-info">
@@ -38,7 +38,7 @@
             </div><!-- End .cart-product -->
 
             <div class="dropdown-cart-total">
-                <span>Total</span>
+                <span>{{ trans('labels.total') }}</span>
 
                 <span class="cart-total-price">{{ $cart->formatted_total }}</span>
             </div><!-- End .dropdown-cart-total -->

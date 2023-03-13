@@ -20,14 +20,13 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bs4Toast.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/admin/tata.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Mulish:wght@500&family=Roboto:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Mulish:wght@500&family=Roboto:ital,wght@0,300;1,300&display=swap"
+        rel="stylesheet">
     <script src="{{ asset('assets/landingpage/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.form.min.js') }}"></script>
-    <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
-/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     @stack('css')
     @livewireStyles
 </head>
@@ -35,7 +34,7 @@
 <body>
     <div class="page-wrapper">
 
-            @include('landingpage.layouts.components.header')
+        @include('landingpage.layouts.components.header')
 
         <main class="main">
             @yield('content')
@@ -67,7 +66,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin"
                                         role="tab" aria-controls="signin"
-                                        aria-selected="true">{{ trans('labels.signin') }}</a>
+                                        aria-selected="true">{{ trans('labels.login') }}</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="register-tab" data-toggle="tab" href="#register"

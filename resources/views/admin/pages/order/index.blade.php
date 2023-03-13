@@ -26,32 +26,32 @@
                 <li class="nav-item">
                     <a class="nav-link active" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
                         data-order-status="{{ App\Enums\OrderStatus::ALL }}" aria-controls="order-list"
-                        aria-selected="true">Tất cả</a>
+                        aria-selected="true">Tất cả <span class="order-count"></span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
                         data-order-status="{{ App\Enums\OrderStatus::WAIT_TO_ACCEPT }}" aria-controls="order-list"
-                        aria-selected="true">Chờ xác nhận</a>
+                        aria-selected="true">Chờ xác nhận <span class="order-count"></span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
                         data-order-status="{{ App\Enums\OrderStatus::WAITING_TO_PICK }}" aria-controls="order-list"
-                        aria-selected="true">Chờ lấy hàng</a>
+                        aria-selected="true">Chờ lấy hàng <span class="order-count"></span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
                         data-order-status="{{ App\Enums\OrderStatus::DELIVERING }}" aria-controls="order-list"
-                        aria-selected="true">Đang giao</a>
+                        aria-selected="true">Đang giao <span class="order-count"></span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
                         data-order-status="{{ App\Enums\OrderStatus::DELIVERED }}" aria-controls="order-list"
-                        aria-selected="true">Đã giao</a>
+                        aria-selected="true">Đã giao <span class="order-count"></span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
                         data-order-status="{{ App\Enums\OrderStatus::CANCELED }}" aria-controls="order-list"
-                        aria-selected="true">Đơn huỷ</a>
+                        aria-selected="true">Đơn huỷ <span class="order-count"></span></a>
                 </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
@@ -122,8 +122,11 @@
                         data: 'action'
                     }
                 ],
+                order: [[5, 'desc']],
                 initComplete: (settings, json) => {
-
+                    json.order_counts.forEach(data => {
+                        $(`[data-order-status=${data.order_status}] .order-count`).text(`(${data.order_count})`)
+                    })
                     if ($("[data-bs-toggle=tooltip]").length) {
                         $("[data-bs-toggle=tooltip]").tooltip({
                             html: true

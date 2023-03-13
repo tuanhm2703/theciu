@@ -57,6 +57,14 @@ class AddressController extends Controller {
         ]);
     }
 
+    public function destroy(Address $address) {
+        $address->delete();
+        return BaseResponse::success([
+            'message' => 'Xoá địa chỉ thành công'
+        ]);
+    }
+
+
     public function index() {
         return view('landingpage.layouts.pages.profile.address');
     }

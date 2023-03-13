@@ -3,7 +3,7 @@
         @if ($product->is_has_sale)
             <span class="product-label label-sale">{{$product->discount_percent}}% off</span>
         @endif
-        <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}" class="product-image lazy"
+        <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}" class="product-image image-loading lazy d-none"
             style="background: url({{ optional($product->images->first())->path_with_domain }});"></a>
         @if ($product->available_flash_sales->first())
             <div class="product-countdown"

@@ -22,6 +22,12 @@ class ProfileInfoComponent extends Component {
         'user.last_name' => 'required'
     ];
 
+    protected $rules = [
+        'user.email' => 'required|email',
+        'user.first_name' => 'required',
+        'user.last_name' => 'required'
+    ];
+
     public function render() {
         return view('livewire.profile-info-component');
     }

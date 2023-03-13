@@ -15,7 +15,12 @@ class OrderController extends Controller {
             $q->withTrashed();
         }]);
         if($order_status != OrderStatus::ALL) $orders->where('order_status', $order_status);
-        return DataTables::of($orders)
+        $order_counts = Order::selectRaw('count(id) as order_count, order_status')->groupBy('order_status')->get();
+        $order_counts[] = [
+            'order_status' => OrderStatus::ALL,
+            'order_count' => $order_counts->sum('order_count')
+        ];
+        $result = DataTables::of($orders)
         ->addColumn('header', function($order) {
             return view('admin.pages.order.components.order_header', compact('order'));
         })
@@ -41,5 +46,8 @@ class OrderController extends Controller {
             return view('admin.pages.order.components.action', compact('order'));
         })
         ->make(true);
+        $result->original['order_counts'] = $order_counts;
+        $result->setData($result->original);
+        return $result;
     }
 }

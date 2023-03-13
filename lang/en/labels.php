@@ -175,5 +175,10 @@ return [
     'quantity' => 'Quantity',
     'best_seller' => 'Best seller',
     'product_paging_description' => 'Showing :current of :total products',
-    'promotion' => 'Promotion'
+    'promotion' => 'Promotion',
+    'pay' => 'Pay',
+    'order_number' => 'Order number',
+    'shipping_address' => 'Shipping address',
+    'payment_info' => 'Payment info',
+    'view_order_details' => 'View order details'
 ];

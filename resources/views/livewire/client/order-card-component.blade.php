@@ -17,7 +17,8 @@
             <div class="product-price">
                 @if ($inventory->pivot->promotion_price < $inventory->pivot->origin_price)
                     <span class="old-price">{{ format_currency_with_label($inventory->pivot->origin_price) }}</span>
-                    <span class="new-price ml-1">{{ format_currency_with_label($inventory->pivot->promotion_price) }}</span>
+                    <span
+                        class="new-price ml-1">{{ format_currency_with_label($inventory->pivot->promotion_price) }}</span>
                 @else
                     {{ format_currency_with_label($inventory->pivot->origin_price) }}
                 @endif
@@ -44,14 +45,15 @@
         </div>
         <div class="action-button-wrapper">
             <div>
-                Thành tiền: <span class="font-weight-bold text-danger">{{ format_currency_with_label($order->total) }}</span>
+                Thành tiền: <span
+                    class="font-weight-bold text-danger">{{ format_currency_with_label($order->total) }}</span>
             </div>
-            @switch($order->order_status)
-                @case(App\Enums\OrderStatus::CANCELED)
-                @break
+            <div class="mb-3 d-flex" style="justify-content: right">
+                @switch($order->order_status)
+                    @case(App\Enums\OrderStatus::CANCELED)
+                    @break
 
-                @case(App\Enums\OrderStatus::WAIT_TO_ACCEPT)
-                    <div class="mb-3 d-flex" style="justify-content: right">
+                    @case(App\Enums\OrderStatus::WAIT_TO_ACCEPT)
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
                             data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">
                             Huỷ đơn hàng
@@ -62,20 +64,21 @@
                                 <span wire:loading wire:target="pay">Đang triển khai...</span>
                             </button>
                         @endif
-                    </div>
-                @break
+                    @break
 
-                @case(App\Enums\OrderStatus::WAITING_TO_PICK)
-                    <div class="mb-3 d-flex" style="justify-content: right">
+                    @case(App\Enums\OrderStatus::WAITING_TO_PICK)
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
                             data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">Huỷ đơn
                             hàng</button>
-                    </div>
-                @break
+                    @break
 
-                @default
-                @break
-            @endswitch
+                    @default
+                    @break
+
+                @endswitch
+                <a class="btn btn-light ml-2"
+                            href="{{ route('client.auth.profile.order.details', $order->id) }}">{{ trans('labels.view_order_details') }}</a>
+            </div>
         </div>
     </div>
 </div>

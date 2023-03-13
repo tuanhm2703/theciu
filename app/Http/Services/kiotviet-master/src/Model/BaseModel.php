@@ -39,10 +39,8 @@ abstract class BaseModel
             } elseif (property_exists($this, $camelKey)) {
                 $propertyType = ReadDocsHelper::detectPropertyType(get_class($this), $camelKey);
             }
-
             if (!empty($propertyType) && class_exists($propertyType)) {
                 $propertyParent = get_parent_class($propertyType);
-
                 if ($propertyParent === BaseModel::class || $propertyParent === Collection::class) {
                     $val = new $propertyType($val);
                 }

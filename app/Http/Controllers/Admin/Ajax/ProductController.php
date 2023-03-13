@@ -17,16 +17,19 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
-class ProductController extends Controller {
+class ProductController extends Controller
+{
     private BatchService $batchService;
-    public function __construct(BatchService $batchService) {
+    public function __construct(BatchService $batchService)
+    {
         $this->batchService = $batchService;
     }
-    public function paginate(Request $request) {
-        $products = Product::with(['category', 'image:path,imageable_id','images:path,imageable_id', 'inventories' => function ($q) {
+    public function paginate(Request $request)
+    {
+        $products = Product::with(['category', 'image:path,imageable_id', 'images:path,imageable_id', 'inventories' => function ($q) {
             return $q->with('attributes');
         }])->select('products.id', 'products.name', 'products.sku', 'products.updated_at');
-        if($request->ids) $products->whereIn('id', $request->ids);
+        if ($request->ids) $products->whereIn('id', $request->ids);
         return DataTables::of($products)
             ->editColumn('name', function ($product) {
                 return view('admin.pages.product.components.name', compact('product'));
@@ -61,7 +64,8 @@ class ProductController extends Controller {
             ->make(true);
     }
 
-    public function getInventories(Product $product) {
+    public function getInventories(Product $product)
+    {
         $attribute_ids = $product->inventory->attributes()->orderBy('attribute_inventory.created_at', 'desc')->pluck('attributes.id')->toArray();
         $attribute_ids = implode(',', $attribute_ids);
         $attributes = Attribute::with(['inventories' => function ($q) use ($product) {
@@ -88,7 +92,8 @@ class ProductController extends Controller {
         return BaseResponse::success($attributes);
     }
 
-    public function ajaxSearchDetailsInfoAttribute(Request $request) {
+    public function ajaxSearchDetailsInfoAttribute(Request $request)
+    {
         $q = $request->q;
         $field = $request->field ?? 'model';
         $values = Product::select("$field as text")->search($field, $q)->paginate(8)->toArray()['data'];
@@ -98,15 +103,18 @@ class ProductController extends Controller {
         return BaseResponse::success($values);
     }
 
-    public function loadBatchCreateView() {
+    public function loadBatchCreateView()
+    {
         return view('admin.pages.product.modal-view.batch-create');
     }
 
-    public function loadBatchUpdateView() {
+    public function loadBatchUpdateView()
+    {
         return view('admin.pages.product.modal-view.batch-update');
     }
 
-    public function createFromFile(Request $request) {
+    public function createFromFile(Request $request)
+    {
         $import = new ProductBatchImport;
         $path = $request->file('batch-create-file')->store('temp');
         $collection = $import->toCollection($path);
@@ -178,14 +186,16 @@ class ProductController extends Controller {
         ]);
     }
 
-    public function batchUpdateFromFile(Request $request) {
+    public function batchUpdateFromFile(Request $request)
+    {
         return BaseResponse::success([
             'message' => 'Cập nhật thành công',
             'product_ids' => $this->batchService->updateBatch($request->file('file'))
         ]);
     }
 
-    public function downloadBatchUpdateFile(Request $request) {
+    public function downloadBatchUpdateFile(Request $request)
+    {
         $type  = $request->type;
         return $this->batchService->getBatchUpdateFile($type);
     }

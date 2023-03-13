@@ -1,8 +1,8 @@
 @if (auth('customer')->check())
     <div class="dropdown cart-dropdown">
-        <a href="{{ route('client.auth.profile.index') }}" class="dropdown-toggle" role="button" data-toggle="dropdown"
+        <a href="{{ route('client.auth.profile.index') }}" class="dropdown-toggle d-flex align-items-end" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" data-display="static">
-            <i class="icon-user"></i>
+            <i class="icon-user mr-2"></i> <span class="cart-txt ml-0">{{ customer()->full_name }}</span>
         </a>
 
         <div class="dropdown-menu p-0" style="width: fit-content !important;">
@@ -28,7 +28,7 @@
             <li>
                 <a href="#">Links</a>
                 <ul>
-                    <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user mr-1"></i>Login</a></li>
+                    <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user mr-1"></i>{{ trans('labels.login') }}</a></li>
                 </ul>
             </li>
         </ul>

@@ -2,9 +2,9 @@
     @if (!empty($order))
         <div class="order-header d-flex justify-content-between bg-light p-3">
             <span class="text-uppercase w-25">
-                < Trở lại</span>
+                < {{ trans('labels.return') }}</span>
                     <div class="w-100 text-right">
-                        <span>Mã đơn hàng. {{ $order->order_number }}</span> | <span
+                        <span>{{ trans('labels.order_number') }}. {{ $order->order_number }}</span> | <span
                             class="text-danger">{{ $order->getCurrentStatusLabel() }}</span>
                     </div>
         </div>
@@ -38,12 +38,12 @@
                     <div class="d-flex" style="justify-content: right">
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
                             data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">
-                            Huỷ đơn hàng
+                            {{ trans('labels.cancel_order') }}
                         </button>
                         @if (!$order->isPaid())
                             <button wire:click.prevent="pay()" class="d-block btn btn-primary text-white ml-2">
-                                <span wire:loading.remove>Thanh toán</span>
-                                <span wire:loading wire:target="pay">Đang triển khai...</span>
+                                <span wire:loading.remove>{{ trans('labels.pay') }}</span>
+                                <span wire:loading wire:target="pay">{{ trans('labels.loading') }}...</span>
                             </button>
                         @endif
                     </div>
@@ -52,8 +52,7 @@
                 @case(App\Enums\OrderStatus::WAITING_TO_PICK)
                     <div class="d-flex" style="justify-content: right">
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
-                            data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">Huỷ đơn
-                            hàng</button>
+                            data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">{{ trans('labels.cancel_order') }}</button>
                     </div>
                 @break
 
@@ -66,10 +65,11 @@
                 <div class="border-color-gradient"></div>
             </div>
             <div class="p-5">
-                <div class="shipping-address-label">
-                    <h6>Địa chỉ nhận hàng</h6>
+                <div class="shipping-address-label align-items-baseline">
+                    <h6>{{ trans('labels.shipping_address') }}</h6>
                     <div class="shipping-address-service-info">
                         <div>
+                            <h6>{{ trans('labels.shipping_info') }}</h6>
                             <div>{{ $order->shipping_service->name }}</div>
                             <div>{{ $order->shipping_order->code }}</div>
                             {{-- <div>Tài xế: Nguyễn Thái Dương, 84903691278</div> --}}
@@ -113,9 +113,10 @@
             </div>
         </div>
         <div class="order-turnover-info text-right" style="font-size: 14px;">
+            <h6>{{ trans('labels.payment_info') }}</h6>
             <div class="row">
                 <div class="col-8 border-right">
-                    Tổng tiền hàng
+                    {{ trans('labels.subtotal') }}
                 </div>
                 <div class="col-4">
                     {{ format_currency_with_label($order->subtotal) }}

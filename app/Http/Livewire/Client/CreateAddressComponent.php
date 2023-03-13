@@ -69,7 +69,9 @@ class CreateAddressComponent extends Component {
         $this->validate();
         $this->address->featured = $this->address->featured ? 1 : 0;
         auth('customer')->user()->addresses()->create($this->address->toArray());
-        $this->dispatchBrowserEvent('addressUpdated');
+        $this->dispatchBrowserEvent('addressUpdated', [
+            'message' => 'Tạo địa chỉ thành công'
+        ]);
     }
 
 

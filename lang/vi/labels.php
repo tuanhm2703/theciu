@@ -179,5 +179,10 @@ return [
     'quantity' => 'Số lượng',
     'best_seller' => 'Best seller',
     'product_paging_description' => 'Hiện <span>:current</span> trên <span>:total</span> sản phẩm',
-    'promotion' => 'Chương trình khuyến mãi'
+    'promotion' => 'Chương trình khuyến mãi',
+    'pay' => 'Thanh toán',
+    'order_number' => 'Mã đơn hàng',
+    'shipping_address' => 'Địa chỉ giao hàng',
+    'payment_info' => 'Thông tin thanh toán',
+    'view_order_details' => 'Xem chi viết'
 ];

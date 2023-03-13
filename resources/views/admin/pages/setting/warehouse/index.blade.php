@@ -4,6 +4,31 @@
         .select2-container {
             width: 100% !important;
         }
+
+        .tiktok {
+            display: inline-block;
+            background: url(https://cdn-app.kiotviet.vn/retailler/bundles/2023310939/tiktok-ico.svg) no-repeat center;
+            background-size: contain;
+            height: 15px;
+            width: 15px;
+            margin-top: -5px;
+        }
+        .lazada {
+            display: inline-block;
+            background: url(https://cdn-app.kiotviet.vn/retailler/bundles/2023310939/lazada-icon-active.png) no-repeat center;
+            background-size: contain;
+            height: 15px;
+            width: 15px;
+            margin-top: -5px;
+        }
+        .shopee {
+            display: inline-block;
+            background: url(https://cdn-app.kiotviet.vn/retailler/bundles/2023310939/shopee-icon-active.png) no-repeat center;
+            background-size: contain;
+            height: 15px;
+            width: 15px;
+            margin-top: -5px;
+        }
     </style>
 @endpush
 @section('content')
@@ -23,14 +48,34 @@
                     {!! Form::model($kiotSetting, [
                         'url' => route('admin.setting.warehouse.update'),
                         'method' => 'PUT',
-                        'class' => 'kiot-config-form',
+                        'class' => 'kiot-config-form w-80',
                     ]) !!}
-                    {!! Form::select(
-                        'branchId',
-                        $branches->pluck('otherProperties.branchName', 'id')->toArray(),
-                        $kiotSetting->data['branchId'],
-                        ['class' => 'select2'],
-                    ) !!}
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="customer-label">Kho :</label>
+                        </div>
+                        <div class="col-6">
+                            {!! Form::select(
+                                'branchId',
+                                $branches->pluck('otherProperties.branchName', 'id')->toArray(),
+                                $kiotSetting->data['branchId'],
+                                ['class' => 'select2'],
+                            ) !!}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <label class="form-label">Kênh bán hàng: </label>
+                        </div>
+                        <div class="col-6">
+                            {!! Form::select(
+                                'saleChannelId',
+                                $sale_channels->pluck('name', 'id')->toArray(),
+                                isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null,
+                                ['class' => 'sale-channel-selector'],
+                            ) !!}
+                        </div>
+                    </div>
                     <livewire:admin.sync-kiot-warehouse-component></livewire:admin.sync-kiot-warehouse-component>
                     <div class="text-center d-flex mt-3 justify-content-between">
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
@@ -60,6 +105,7 @@
                 $('#sync-btn').attr('disabled', true)
             }
         })
+
         $('.kiot-config-form').ajaxForm({
             beforeSend: () => {
                 $('button[type=submit]').loading()
@@ -90,7 +136,7 @@
                     success: (res) => {
                         const oldSyncPercent = syncPercent
                         syncPercent = Math.floor(page / numberOfPages * 100);
-                        syncPercent = syncPercent < oldSyncPercent ?  oldSyncPercent : syncPercent
+                        syncPercent = syncPercent < oldSyncPercent ? oldSyncPercent : syncPercent
                         $('.progress-bar').css('width', `${syncPercent}%`)
                         $('.progress-bar').text(`${syncPercent}%`)
                         if (syncPercent == 100) {
@@ -106,6 +152,24 @@
         })
         window.addEventListener('update-percentage', event => {
             console.log(event.detail);
+        })
+        $(document).ready(() => {
+            const options = @json($sale_channels->pluck('name', 'id')->toArray());
+
+            function formatState(state) {
+                let [name, img] = state.text.split('|')
+                if (!state.id) {
+                    return state.text;
+                }
+                var $state = $(
+                    `<span class="${img}"></span> <span>${name}</span>`
+                );
+                return $state;
+            };
+            $('.sale-channel-selector').select2({
+                templateResult: formatState,
+                templateSelection: formatState
+            })
         })
     </script>
 @endpush

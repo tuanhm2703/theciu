@@ -14,7 +14,11 @@
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">{{ trans('labels.dashboard') }}</a></li>
-                <li class="breadcrumb-item"><a href="#">{{ trans('labels.product') }}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('client.product.index') }}">{{ trans('labels.product') }}</a>
+                </li>
+                <li class="breadcrumb-item"><a
+                        href="{{ route('client.product.index', ['category' => $product->category->slug]) }}">{{ $product->category->name }}</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">{{ $product->name }}</li>
             </ol>
         </div><!-- End .container -->
@@ -27,7 +31,8 @@
                     <div class="col-md-6">
                         <div class="product-gallery product-gallery-vertical h-100">
                             <div class="row h-100">
-                                <div class="col-2 p-0" style="max-height: 630px;
+                                <div class="col-2 p-0"
+                                    style="max-height: 630px;
                                 overflow: hidden;">
                                     <div id="product-zoom-gallery" class="product-image-gallery d-block w-100">
                                         @if ($product->video)
@@ -51,7 +56,8 @@
 
                                     </div><!-- End .product-image-gallery -->
                                 </div>
-                                <div class="col-10 h-100 d-flex align-items-center bg-light" style="height: fit-content !important;">
+                                <div class="col-10 h-100 d-flex align-items-center bg-light"
+                                    style="height: fit-content !important;">
                                     <figure class="product-main-image">
                                         @if ($product->video)
                                             <video id="video-previewer" width="100%" controls autoplay muted>
@@ -141,8 +147,7 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <label class="product-detail-label w-20 m-0"
-                            for="">{{ trans('labels.material') }}</label>
+                        <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.material') }}</label>
                         <div class="d-flex align-items-center product-detail-content">
                             {{ $product->material }}
                         </div>

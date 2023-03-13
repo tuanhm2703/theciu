@@ -364,7 +364,7 @@ class Customer extends BaseModel
 
     /**
      */
-    public function getCustomerGroupDetails(): CustomerGroupDetailCollection
+    public function getCustomerGroupDetails(): ?CustomerGroupDetailCollection
     {
         return $this->customerGroupDetails;
     }

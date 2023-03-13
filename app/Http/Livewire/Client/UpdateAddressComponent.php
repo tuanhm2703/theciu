@@ -73,6 +73,8 @@ class UpdateAddressComponent extends Component {
         $this->validate();
         $this->address->featured = $this->address->featured ? 1 : 0;
         $this->address->save();
-        $this->dispatchBrowserEvent('addressUpdated');
+        $this->dispatchBrowserEvent('addressUpdated', [
+            'message' => 'Cập nhật địa chỉ thành công'
+        ]);
     }
 }

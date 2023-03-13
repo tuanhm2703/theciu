@@ -1,5 +1,5 @@
 <div>
-    <div class="row d-flex align-items-stretch">
+    {{-- <div class="row d-flex align-items-stretch">
         <div class="col-lg-6">
             <div class="card card-dashboard">
                 <div class="card-body">
@@ -10,11 +10,6 @@
                             <a wire:click="openUpdateAddress({{ $address->id }})" data-toggle="modal"
                                 data-target="#updateAddressModal" href="#"><br>{{ trans('labels.update_address') }}
                                 <i class="icon-edit"></i></a>
-                            {{-- <a wire:click="openUpdateAddress({{ $address->id }})" data-toggle="modal"
-                                data-target="#updateAddressModel">
-                                <br>
-                                {{ trans('labels.update_address') }} <i class="icon-edit"></i>
-                            </a> --}}
                         </p>
                     @else
                         <p>Bạn chưa có địa chỉ cá nhân, vui lòng cập nhật <br>
@@ -24,11 +19,11 @@
                         </p>
                     @endif
 
-                </div><!-- End .card-body -->
-            </div><!-- End .card-dashboard -->
-        </div><!-- End .col-lg-6 -->
+                </div>
+            </div>
+        </div> --}}
 
-        <div class="col-lg-6 h-100">
+        <div class="col-12 h-100">
             <div class="card card-dashboard">
                 <div class="card-body">
                     <h3 class="card-title">Địa chỉ giao hàng</h3><!-- End .card-title -->

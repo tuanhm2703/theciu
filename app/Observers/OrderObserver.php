@@ -48,8 +48,11 @@ class OrderObserver {
                     break;
             }
         // }
-        if($order->isDirty('sub_status') && $order->sub_status == OrderSubStatus::FINISH_PACKAGING) {
-            $order->pushShippingOrder();
+        if($order->isDirty('sub_status')) {
+            if($order->sub_status == OrderSubStatus::FINISH_PACKAGING) {
+                $order->pushShippingOrder();
+                $order->createKiotOrder();
+            }
         }
     }
 }

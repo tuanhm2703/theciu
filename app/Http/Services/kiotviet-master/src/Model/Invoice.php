@@ -2,6 +2,7 @@
 
 namespace VienThuong\KiotVietClient\Model;
 
+use VienThuong\KiotVietClient\Collection\InvoiceDetailCollection;
 use VienThuong\KiotVietClient\Collection\PaymentCollection;
 use VienThuong\KiotVietClient\Collection\SurchargeCollection;
 
@@ -46,7 +47,7 @@ class Invoice extends BaseModel
     ];
 
     /**
-     * @var SaleChannel|null
+     * @var SaleChannel
      */
     private $saleChannel;
 
@@ -56,7 +57,7 @@ class Invoice extends BaseModel
     private $invoiceDelivery;
 
     /**
-     * @var InvoiceDetail|null
+     * @var VienThuong\KiotVietClient\Collection\InvoiceDetailCollection
      */
     private $invoiceDetails;
 
@@ -80,6 +81,9 @@ class Invoice extends BaseModel
      */
     private $branchName;
 
+    /**
+     * @var int|null
+     */
     private $soldById;
 
     /**
@@ -158,7 +162,7 @@ class Invoice extends BaseModel
 
     /**
      */
-    public function getInvoiceDelivery(): Delivery
+    public function getInvoiceDelivery(): ?Delivery
     {
         return $this->invoiceDelivery;
     }
@@ -172,21 +176,21 @@ class Invoice extends BaseModel
 
     /**
      */
-    public function getInvoiceDetails(): ?InvoiceDetail
+    public function getInvoiceDetails(): ?InvoiceDetailCollection
     {
         return $this->invoiceDetails;
     }
 
     /**
      */
-    public function setInvoiceDetails(?InvoiceDetail $invoiceDetails): void
+    public function setInvoiceDetails(?InvoiceDetailCollection $invoiceDetails): void
     {
         $this->invoiceDetails = $invoiceDetails;
     }
 
     /**
      */
-    public function getPayments(): PaymentCollection
+    public function getPayments(): ?PaymentCollection
     {
         return $this->payments;
     }
@@ -239,8 +243,10 @@ class Invoice extends BaseModel
     {
         $this->branchName = $branchName;
     }
-
     /**
+     * It returns the value of the soldById property.
+     *
+     * @return The value of the soldById property.
      */
     public function getSoldById()
     {

@@ -164,7 +164,7 @@ class Order extends BaseModel {
     public function getSaleChannelId(): ?int {
         return $this->saleChannelId;
     }
-    public function setSaleChannelId(int $id) {
+    public function setSaleChannelId(?int $id) {
         return $this->saleChannelId = $id;
     }
 
@@ -172,6 +172,10 @@ class Order extends BaseModel {
      */
     public function getMakeInvoice(): ?bool {
         return $this->makeInvoice;
+    }
+
+    public function setMakeInvoice(bool $value) {
+        $this->makeInvoice = $value;
     }
 
     /**
@@ -228,13 +232,13 @@ class Order extends BaseModel {
 
     /**
      */
-    public function getPurchaseDate(): string {
+    public function getPurchaseDate(): ?string {
         return $this->purchaseDate;
     }
 
     /**
      */
-    public function setPurchaseDate(string $purchaseDate): void {
+    public function setPurchaseDate(?string $purchaseDate): void {
         $this->purchaseDate = $purchaseDate;
     }
 

@@ -39,5 +39,33 @@
                 }
             })
         })
+        const initChangeModal = () => {
+            $('.submit-change-address-btn').on('click', (e) => {
+                e.preventDefault()
+                if ($('input[name=shipping-address]:checked').val()) {
+                    Livewire.emit('cart:changeAddress', $('input[name=shipping-address]:checked').val())
+                    $('.modal.show').modal('hide')
+                }
+            })
+            $('.update-address-btn').on('click', (e) => {
+                e.preventDefault()
+                Livewire.emit('address:change', $(e.currentTarget).attr('data-address-id'))
+                $(e.currentTarget).parents('.modal').modal('hide')
+                $('#updateAddressModal').modal('show')
+            })
+            $('.delete-address-btn').on('click', (e) => {
+                $(e.currentTarget).parent().submit()
+            })
+            $('.delete-address-form').ajaxForm({
+                success: (res, statusText, xhr, $form) => {
+                    tata.success(@json(trans('toast.action_successful')), res.data.message)
+                    $($form).parents('.address-row').remove()
+                }
+            })
+        }
+        window.addEventListener('addressUpdated', (e) => {
+            tata.success(@json(trans('toast.action_successful')), e.detail.message)
+            $('#return-address-list-btn').trigger('click')
+        });
     </script>
 @endsection
