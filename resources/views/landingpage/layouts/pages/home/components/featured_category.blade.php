@@ -31,10 +31,12 @@
                     <div class="banner-content banner-content-center">
                         {{-- <h4 class="banner-subtitle text-white"><a href="#">Danh mục THE CIU</a></h4> --}}
                         <!-- End .banner-subtitle -->
-                        <h3 class="banner-title text-white"><a href="#"><strong>{{ $c->name }}</strong></h3>
                         <!-- End .banner-title -->
-                        <a href="{{ route('client.product.index', ['category' => $c->slug]) }}" class="btn btn-outline-white banner-link underline">Mua ngay</a>
                     </div><!-- End .banner-content -->
+                    <h3 class="banner-title text-white text-center my-3">
+                        <a href="#" ><strong style="color: black">{{ $c->name }}</strong></a>
+                        </h3>
+                    <a href="{{ route('client.product.index', ['category' => $c->slug]) }}" style="color: black" class="btn btn-outline-white banner-link underline">Mua ngay</a>
                 </div><!-- End .col-sm-6 -->
             @endforeach
         </div><!-- End .bg-gray -->
