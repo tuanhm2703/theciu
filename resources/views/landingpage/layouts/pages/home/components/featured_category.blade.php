@@ -10,12 +10,16 @@
             "margin": 30,
             "autoplay": true,
             "autoplayTimeout": 3000,
-            "items": 2,
+            "items": 1,
             "loop": true,
+            "center": true,
             "responsive": {
                 "992": {
                     "nav": true,
                     "items": 3
+                },
+                "576": {
+                    "items": 2
                 }
             }
         }'>
