@@ -12,7 +12,6 @@
             "autoplayTimeout": 3000,
             "items": 1,
             "loop": true,
-            "center": true,
             "responsive": {
                 "992": {
                     "nav": true,
