@@ -142,6 +142,11 @@ class Invoice extends BaseModel
     private $surchages;
 
     /**
+     * @var int
+     */
+    private $saleChannelId;
+
+    /**
      * @var SurchargeCollection
      */
     private $invoiceOrderSurcharges;
@@ -429,5 +434,29 @@ class Invoice extends BaseModel
     {
         $this->surchages = $surchages;
         $this->invoiceOrderSurcharges = $surchages;
+    }
+
+    /**
+     * Get the value of saleChannelId
+     *
+     * @return  int
+     */
+    public function getSaleChannelId()
+    {
+        return $this->saleChannelId;
+    }
+
+    /**
+     * Set the value of saleChannelId
+     *
+     * @param  int  $saleChannelId
+     *
+     * @return  self
+     */
+    public function setSaleChannelId(int $saleChannelId)
+    {
+        $this->saleChannelId = $saleChannelId;
+
+        return $this;
     }
 }

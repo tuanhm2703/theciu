@@ -20,9 +20,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use VienThuong\KiotVietClient\Client;
+use VienThuong\KiotVietClient\Collection\InvoiceDetailCollection;
 use VienThuong\KiotVietClient\Collection\OrderDetailCollection;
+use VienThuong\KiotVietClient\Model\Customer as ModelKiotCustomer;
+use VienThuong\KiotVietClient\Model\Invoice;
+use VienThuong\KiotVietClient\Model\InvoiceDetail;
 use VienThuong\KiotVietClient\Model\Order as ModelOrder;
 use VienThuong\KiotVietClient\Model\OrderDetail;
+use VienThuong\KiotVietClient\Resource\InvoiceResource;
 use VienThuong\KiotVietClient\Resource\OrderResource;
 
 class Order extends Model
@@ -314,9 +319,10 @@ class Order extends Model
             $order->setTotalPayment($this->total);
             $order->setMethod('hello');
             $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
-            $order->setMakeInvoice(true);
+            $order->setMakeInvoice(false);
             $order->setOrderDetails($this->generateKiotOrderDetailCollection());
-            $orderResource->create($order);
+            $kiotOrder = $orderResource->create($order);
+            $this->createKiotInvoice($kiotOrder);
         } catch (\Throwable $th) {
             Log::error($th);
             return false;
@@ -324,9 +330,49 @@ class Order extends Model
         return true;
     }
 
+    public function createKiotInvoice(ModelOrder $order)
+    {
+        try {
+            $kiotSetting = App::get('KiotConfig');
+            $invoice = new Invoice([
+                'customerId' => $order->getCustomerId(),
+                'discount' => $order->getDiscount(),
+                'totalPayment' => $order->getTotalPayment(),
+                'saleChannelId' => $order->getSaleChannelId(),
+                'usingCod' => false,
+                'branchId' => $order->getBranchId(),
+                'orderId' => $order->getId(),
+                'invoiceDetails' => $this->generateKiotInvoiceDetailCollection(),
+                'status' => 3
+            ]);
+            dd($invoice);
+            $invoiceResource = new InvoiceResource(App::make(Client::class));
+            $invoiceResource->create($invoice);
+            return true;
+        } catch (\Throwable $th) {
+            dd($th);
+            Log::error($th);
+        }
+        return false;
+    }
+
     // public function cancelKiotInvoice() {
     //     $invoiceResource = new
     // }
+    public function generateKiotInvoiceDetailCollection()
+    {
+        $arr = [];
+        foreach ($this->inventories as $inventory) {
+            $arr[] = new InvoiceDetail([
+                'productCode' => $inventory->sku,
+                'quantity' => $inventory->pivot->quantity,
+                'price' => $inventory->pivot->total,
+                'discountRatio' => 100 - ($inventory->pivot->promotion_price / $inventory->pivot->origin_price) * 100,
+                'discount' => $inventory->pivot->origin_price - $inventory->pivot->promotion_price,
+            ]);
+        }
+        return $arr;
+    }
 
     public function generateKiotOrderDetailCollection()
     {
