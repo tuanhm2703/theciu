@@ -22,10 +22,6 @@
                             <table class="category-product-table table w-100">
                                 <thead>
                                     <th style="padding-left: 0.5rem">
-                                        <div class="form-check form-check-info">
-                                            <input type="checkbox"
-                                                class="editor-active form-check-input mass-checkbox-btn">
-                                        </div>
                                     </th>
                                     <th>{{ trans('labels.product_name') }}</th>
                                     <th>{{ trans('labels.price') }}</th>
@@ -60,15 +56,19 @@
 <script>
     (() => {
         const selectedProductIds = (`{{ $productIds }}`).split(',')
-        console.log(selectedProductIds);
         $('.category-product-table').DataTable({
             "processing": true,
             "serverSide": true,
-            "ajax": "{{ route('admin.ajax.product.paginate') }}",
+            "ajax": {
+                url: "{{ route('admin.ajax.product.paginate') }}",
+                type: "GET",
+                data: {
+                    selected: selectedProductIds
+                }
+            },
             "columns": [{
                     data: "id",
                     render: function(data, type, row) {
-                        console.log("product id: ", data);
                         if (type === 'display') {
                             return `<div class="form-check text-center form-check-info">
                                         <input type="checkbox" data-product-id="${data}" ${selectedProductIds.indexOf(data.toString()) > -1 ? 'checked' : ''} class="editor-active form-check-input child-checkbox">
@@ -91,6 +91,15 @@
                 },
             ],
         });
+        $('body').on('click', '.child-checkbox', (e) => {
+            const productId = $(e.target).attr('data-product-id')
+            if($(e.target).is(':checked')) {
+                selectedProductIds.push(productId)
+            } else {
+                const productIdIndex = selectedProductIds.indexOf(productId)
+                selectedProductIds.splice(productIdIndex, 1)
+            }
+        })
         const pond = FilePond.create(document.querySelector('.filePond'), {
             storeAsFile: true,
             labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'

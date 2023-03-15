@@ -141,7 +141,7 @@
                             <div class="widget-body">
                                 <div class="filter-price">
                                     <div class="filter-price-text d-flex align-items-center" wire:ignore>
-                                        <input type="number" wire:model.lazy="min_price"
+                                        <input type="number" wire:model.lazy="min_price" step="50000"
                                             wire:change="searchProduct(1)"
                                             placeholder="{{ trans('placeholder.min_price') }}">
                                         <div class="mx-1"
@@ -153,6 +153,7 @@
                                         ">
                                         </div>
                                         <input type="number" wire:model.lazy="max_price"
+                                        step="50000"
                                             wire:change="searchProduct(1)"
                                             placeholder="{{ trans('placeholder.max_price') }}">
                                     </div><!-- End .filter-price-text -->

@@ -30,6 +30,9 @@ class ProductController extends Controller
             return $q->with('attributes');
         }])->select('products.id', 'products.name', 'products.sku', 'products.updated_at');
         if ($request->ids) $products->whereIn('id', $request->ids);
+        if($request->selected) {
+            $products->orderByField('id', $request->selected, 'desc');
+        }
         return DataTables::of($products)
             ->editColumn('name', function ($product) {
                 return view('admin.pages.product.components.name', compact('product'));

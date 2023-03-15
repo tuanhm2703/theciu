@@ -6,7 +6,8 @@ use App\Models\Inventory;
 use App\Models\Product;
 use Livewire\Component;
 
-class ProductPickItemComponent extends Component {
+class ProductPickItemComponent extends Component
+{
     public Product $product;
     public $first_attribute_value;
     public $second_attribute_value;
@@ -14,25 +15,35 @@ class ProductPickItemComponent extends Component {
     public $second_attribute_id;
     public $second_attributes = [];
     public $first_attributes = [];
-    public function mount() {
+
+    protected $listeners = ['product-pick:changeProduct' => 'changeProduct'];
+
+    public function mount()
+    {
+        $this->reloadProductInfo();
+    }
+
+    private function reloadProductInfo()
+    {
         $this->product->setRelation('inventories', $this->product->inventories()
             ->with(['attributes', 'firstAttribute' => function ($q) {
                 $q->addSelect('*', 'attribute_inventory.value');
-            }, 'secondAttribute', 'image:imageable_id,path'])->get());
+            }, 'secondAttribute', 'image:imageable_id,path,id,name'])->get());
         $this->first_attributes = collect();
         foreach ($this->product->inventories as $inventory) {
             $this->first_attributes->push((object) [
                 'path' => optional($inventory->image)->path_with_domain,
                 'id' => $inventory->firstAttribute->id,
-                'value' => $inventory->firstAttribute->value
+                'value' => $inventory->firstAttribute->value,
+                'image_name' => optional($inventory->image)->name
             ]);
         }
         $this->first_attributes = $this->first_attributes->unique('path')->unique('value');
-
-
         $this->first_attribute_id = $this->first_attributes->first()->id;
         $this->second_attributes = collect();
-        $inventories = $this->product->inventories()->haveStock()->withCount('attributes')->with(['secondAttribute' => function ($q) {return $q->addSelect('*', 'attribute_inventory.value');}])
+        $inventories = $this->product->inventories()->haveStock()->withCount('attributes')->with(['secondAttribute' => function ($q) {
+            return $q->addSelect('*', 'attribute_inventory.value');
+        }])
             ->whereHas('attributes', function ($q) {
                 return $q->where('attributes.id', $this->first_attribute_id);
             })->get();
@@ -46,10 +57,12 @@ class ProductPickItemComponent extends Component {
         $this->second_attributes->unique('value');
     }
 
-    public function render() {
+    public function render()
+    {
         return view('livewire.product-pick-item-component');
     }
-    public function changeFirstAttributeId($attribute_id) {
+    public function changeFirstAttributeId($attribute_id)
+    {
         $attribute_id;
         $this->second_attributes = collect();
         $inventories = $this->product->inventories()
@@ -71,11 +84,12 @@ class ProductPickItemComponent extends Component {
         $this->second_attributes->unique('value');
     }
 
-    public function addToCart() {
+    public function addToCart()
+    {
         $inventory = $this->product->inventories()->whereHas('attributes', function ($q) {
             $q->where('attributes.id', $this->first_attribute_id)->where('attribute_inventory.value', $this->first_attribute_value);
         });
-        if(count($this->second_attributes) > 0) {
+        if (count($this->second_attributes) > 0) {
             $inventory->whereHas('attributes', function ($q) {
                 $q->where('attributes.id', $this->second_attribute_id)->where('attribute_inventory.value', $this->second_attribute_value);
             });
@@ -84,11 +98,13 @@ class ProductPickItemComponent extends Component {
         $this->emit('cart:itemAdded', $inventory->id);
     }
 
-    public function changeSecondAttributeId($id) {
+    public function changeSecondAttributeId($id)
+    {
         $this->second_attribute_id = $id;
     }
 
-    public function addToWishlist() {
+    public function addToWishlist()
+    {
         if (!auth('customer')->check()) {
             $this->dispatchBrowserEvent('openLoginForm');
         } else {
@@ -100,5 +116,11 @@ class ProductPickItemComponent extends Component {
             $this->product->is_on_customer_wishlist = !$this->product->is_on_customer_wishlist;
             $this->emitTo('client.header-wishlist-component', 'refresh');
         }
+    }
+
+    public function changeProduct(Product $product)
+    {
+        $this->product = $product;
+        $this->reloadProductInfo();
     }
 }

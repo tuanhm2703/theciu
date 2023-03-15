@@ -5,11 +5,12 @@
             @php
                 $attribute = (object) $attribute;
             @endphp
-            <div class="radio-container" wire:ignore>
+            <div class="radio-container">
                 <input wire:change="changeFirstAttributeId({{ $attribute->id }})" name="first_attribute_value"
                     id="first-attribute-{{ $attribute->value }}" type="radio" class="square-radio-input"
                     wire:model="first_attribute_value" value="{{ $attribute->value }}">
-                <label for="first-attribute-{{ $attribute->value }}" class="radio check-product-thumb-image"
+                <label for="first-attribute-{{ $attribute->value }}" class="radio check-product-thumb-image carousel-dot"
+                    data-hash="#{{ $attribute->image_name }}"
                     data-image="{{ $attribute->path }}">{{ $attribute->value }}</label>
             </div>
         @endforeach

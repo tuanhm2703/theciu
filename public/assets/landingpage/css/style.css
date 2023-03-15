@@ -9763,7 +9763,7 @@ button:focus {
     font-weight: 400;
     letter-spacing: 0.01em;
     color: #777;
-    margin-bottom: 4.5rem;
+    margin-bottom: 2rem;
 }
 .quickView-content .product-cat span {
     margin-right: 0.7rem;
@@ -10643,7 +10643,7 @@ button:focus {
 }
 .product-details .product-title {
     font-weight: 400;
-    font-size: 2.4rem;
+    font-size: 2em;
     letter-spacing: -0.025em;
     margin-bottom: 1.2rem;
     margin-top: -0.5rem;
@@ -10663,6 +10663,7 @@ button:focus {
 }
 .product-details .product-content p:last-child {
     margin-bottom: 0;
+    font-size: 1.3em;
 }
 .product-details .product-countdown {
     position: static;

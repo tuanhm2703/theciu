@@ -19,114 +19,13 @@
                 <li class="breadcrumb-item"><a
                         href="{{ route('client.product.index', ['category' => $product->category->slug]) }}">{{ $product->category->name }}</a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">{{ $product->name }}</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
 
     <div class="page-content">
         <div class="container">
-            <div class="product-details-top">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="product-gallery product-gallery-vertical h-100">
-                            <div class="row h-100">
-                                <div class="col-2 p-0"
-                                    style="max-height: 630px;
-                                overflow: hidden;">
-                                    <div id="product-zoom-gallery" class="product-image-gallery d-block w-100">
-                                        @if ($product->video)
-                                            <video class="product-video-item"
-                                                data-video="{{ $product->video->path_with_domain }}" width="100%"
-                                                src="{{ $product->video->path_with_domain }}"></video>
-                                        @endif
-                                        <div class="swiper-container">
-                                            <div class="swiper-wrapper">
-                                                @foreach ($product->images as $image)
-                                                    <div class="swiper-slide">
-                                                        <a class="product-gallery-item product-image-check active w-100 p-0"
-                                                            href="#" data-image="{{ $image->path_with_domain }}"
-                                                            data-zoom-image="{{ $image->path_with_domain }}">
-                                                            <img src="{{ $image->path_with_domain }}" alt="product side">
-                                                        </a>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-
-                                    </div><!-- End .product-image-gallery -->
-                                </div>
-                                <div class="col-10 h-100 d-flex align-items-center bg-light"
-                                    style="height: fit-content !important;">
-                                    <figure class="product-main-image">
-                                        @if ($product->video)
-                                            <video id="video-previewer" width="100%" controls autoplay muted>
-                                                <source src="{{ $product->video->path_with_domain }}" type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-                                            <div class="d-none">
-                                                <img id="product-zoom"
-                                                    src="{{ $product->images->first()->path_with_domain }}"
-                                                    data-zoom-image="{{ $product->images->first()->path_with_domain }}"
-                                                    alt="product image">
-
-                                                <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                                    <i class="icon-arrows"></i>
-                                                </a>
-                                            </div>
-                                        @else
-                                            <img id="product-zoom" src="{{ $product->images->first()->path_with_domain }}"
-                                                data-zoom-image="{{ $product->images->first()->path_with_domain }}"
-                                                alt="product image">
-
-                                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                                <i class="icon-arrows"></i>
-                                            </a>
-                                        @endif
-                                    </figure><!-- End .product-main-image -->
-                                </div>
-                            </div><!-- End .row -->
-                        </div><!-- End .product-gallery -->
-                    </div><!-- End .col-md-6 -->
-
-                    <div class="col-md-6">
-                        <div class="product-details">
-                            <h1 class="product-title">{{ $product->name }}</h1><!-- End .product-title -->
-
-                            <div class="ratings-container">
-                                <div class="ratings">
-                                    <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                </div><!-- End .ratings -->
-                                <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
-                            </div><!-- End .rating-container -->
-                            @component('components.product-price-label', compact('product'))
-                            @endcomponent
-
-                            <div class="product-content">
-                                <p>{{ $product->short_description }}</p>
-                            </div><!-- End .product-content -->
-                            <livewire:product-pick-item-component :product="$product"></livewire:product-pick-item-component>
-
-                            <div class="product-details-footer">
-                                <div class="product-cat">
-                                    <span>Danh mục:</span>
-                                    @php
-                                        $category = $product->category;
-                                        $arr = [];
-                                        while ($category) {
-                                            $route = route('client.product.index', ['category' => $category->slug]);
-                                            $arr[] = "<a href='$route'>$category->name</a>";
-                                            $category = $category->category;
-                                        }
-                                    @endphp
-                                    {!! implode(', ', $arr) !!}
-                                </div><!-- End .product-cat -->
-
-                            </div><!-- End .product-details-footer -->
-                        </div><!-- End .product-details -->
-                    </div><!-- End .col-md-6 -->
-                </div><!-- End .row -->
-            </div><!-- End .product-details-top -->
+            <livewire:client.product-detail-info-component :product="$product"/>
 
             <div class="bg-light p-5 mb-3">
                 <h6 class="mb-3">CHI TIẾT SẢN PHẨM</h6>
@@ -200,10 +99,4 @@
     </div><!-- End .page-content -->
 @endsection
 @push('js')
-    <script>
-        var swiper = new Swiper('.swiper-container', {
-            direction: 'vertical',
-            slidesPerView: 5
-        });
-    </script>
 @endpush

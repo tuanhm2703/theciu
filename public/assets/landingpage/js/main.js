@@ -81,6 +81,55 @@ $.fn.loading = function (status = true, options) {
         $(this).find(`.spinner-border`).remove();
     }
 };
+function owlCarousels($wrap, options) {
+    if ($.fn.owlCarousel) {
+        var owlSettings = {
+            items: 1,
+            loop: true,
+            margin: 0,
+            responsiveClass: true,
+            nav: true,
+            navText: [
+                '<i class="icon-angle-left">',
+                '<i class="icon-angle-right">',
+            ],
+            dots: true,
+            smartSpeed: 400,
+            autoplay: false,
+            lazyLoad: true,
+            autoplayTimeout: 15000,
+        };
+        if (typeof $wrap == "undefined") {
+            $wrap = $("body");
+        }
+        if (options) {
+            owlSettings = $.extend({}, owlSettings, options);
+        }
+
+        // Init all carousel
+        $wrap.find('[data-toggle="owl"]').each(function () {
+            var $this = $(this),
+                newOwlSettings = $.extend(
+                    {},
+                    owlSettings,
+                    $this.data("owl-options")
+                );
+            $this.owlCarousel(newOwlSettings);
+        });
+    }
+}
+
+function quantityInputs() {
+    if ($.fn.inputSpinner) {
+        $("input[type='number']").inputSpinner({
+            decrementButton: '<i class="icon-minus"></i>',
+            incrementButton: '<i class="icon-plus"></i>',
+            groupClass: "input-spinner",
+            buttonsClass: "btn-spinner",
+            buttonsWidth: "26px",
+        });
+    }
+}
 
 $(document).ready(function () {
     "use strict";
@@ -371,17 +420,6 @@ $(document).ready(function () {
     }
 
     // Quantity Input - Cart page - Product Details pages
-    function quantityInputs() {
-        if ($.fn.inputSpinner) {
-            $("input[type='number']").inputSpinner({
-                decrementButton: '<i class="icon-minus"></i>',
-                incrementButton: '<i class="icon-plus"></i>',
-                groupClass: "input-spinner",
-                buttonsClass: "btn-spinner",
-                buttonsWidth: "26px",
-            });
-        }
-    }
 
     // Sticky Content - Sidebar - Social Icons etc..
     // Wrap elements with <div class="sticky-content"></div> if you want to make it sticky
@@ -392,49 +430,13 @@ $(document).ready(function () {
         });
     }
 
-    function owlCarousels($wrap, options) {
-        if ($.fn.owlCarousel) {
-            var owlSettings = {
-                items: 1,
-                loop: true,
-                margin: 0,
-                responsiveClass: true,
-                nav: true,
-                navText: [
-                    '<i class="icon-angle-left">',
-                    '<i class="icon-angle-right">',
-                ],
-                dots: true,
-                smartSpeed: 400,
-                autoplay: false,
-                lazyLoad: true,
-                autoplayTimeout: 15000,
-            };
-            if (typeof $wrap == "undefined") {
-                $wrap = $("body");
-            }
-            if (options) {
-                owlSettings = $.extend({}, owlSettings, options);
-            }
 
-            // Init all carousel
-            $wrap.find('[data-toggle="owl"]').each(function () {
-                var $this = $(this),
-                    newOwlSettings = $.extend(
-                        {},
-                        owlSettings,
-                        $this.data("owl-options")
-                    );
-                $this.owlCarousel(newOwlSettings);
-            });
-        }
-    }
 
     // Product Image Zoom plugin - product pages
     if ($.fn.elevateZoom) {
         $("body").on("click", ".check-product-thumb-image", (e) => {
-            $("#video-previewer").addClass('d-none')
-            $('.product-main-image div').removeClass('d-none')
+            $("#video-previewer").addClass("d-none");
+            $(".product-main-image div").removeClass("d-none");
             $("#product-zoom").removeData("elevateZoom");
             $("#product-zoom").attr("src", $(e.target).data("image"));
             $("#product-zoom").data("zoom-image", $(e.target).data("image"));
@@ -447,12 +449,14 @@ $(document).ready(function () {
                 zoomWindowFadeOut: 400,
                 responsive: true,
             });
+            $(`a[href="${$(e.currentTarget).attr('data-hash')}"]`)?.trigger('click')
+            window.location.hash = $(e.currentTarget).attr('data-hash')
         });
         $("body").on("click", ".product-video-item", (e) => {
-            $("#video-previewer").removeClass('d-none')
-            $('.product-main-image div').addClass('d-none')
-            $('#video-previewer').attr('src', $(e.target).data('video'));
-        })
+            $("#video-previewer").removeClass("d-none");
+            $(".product-main-image div").addClass("d-none");
+            $("#video-previewer").attr("src", $(e.target).data("video"));
+        });
         $("#product-zoom").elevateZoom({
             gallery: "product-zoom-gallery",
             galleryActiveClass: "active",
@@ -465,8 +469,8 @@ $(document).ready(function () {
 
         // On click change thumbs active item
         $(".product-gallery-item").on("click", function (e) {
-            $("#video-previewer").addClass('d-none')
-            $('.product-main-image div').removeClass('d-none')
+            $("#video-previewer").addClass("d-none");
+            $(".product-main-image div").removeClass("d-none");
             $("#product-zoom-gallery").find("a").removeClass("active");
             $(this).addClass("active");
 
@@ -606,7 +610,7 @@ $(document).ready(function () {
         const btn = $(this);
         const modalSize = $(this).data().modalSize ?? "modal-lg";
         $(this).loading();
-        var url = $(this).attr('data-link');
+        var url = $(this).attr("data-link");
         const callback = $(this).data("callback");
         var ajaxElement = this;
         if (!url || url.indexOf("#") == 0) {
@@ -893,71 +897,20 @@ $(document).ready(function () {
     });
 
     // Product quickView popup
-    $(".btn-quickview").on("click", function (e) {
-        var ajaxUrl = $(this).attr("href");
-        if ($.fn.magnificPopup) {
-            setTimeout(function () {
-                $.magnificPopup.open(
-                    {
-                        type: "ajax",
-                        mainClass: "mfp-ajax-product",
-                        tLoading: "",
-                        preloader: false,
-                        removalDelay: 350,
-                        items: {
-                            src: ajaxUrl,
-                        },
-                        callbacks: {
-                            ajaxContentAdded: function () {
-                                owlCarousels($(".quickView-content"), {
-                                    onTranslate: function (e) {
-                                        var $this = $(e.target),
-                                            currentIndex =
-                                                ($this
-                                                    .data("owl.carousel")
-                                                    .current() +
-                                                    e.item.count -
-                                                    Math.ceil(
-                                                        e.item.count / 2
-                                                    )) %
-                                                e.item.count;
-                                        $(".quickView-content .carousel-dot")
-                                            .eq(currentIndex)
-                                            .addClass("active")
-                                            .siblings()
-                                            .removeClass("active");
-                                    },
-                                });
-                                quantityInputs();
-                            },
-                            open: function () {
-                                $("body").css("overflow-x", "visible");
-                                $(".sticky-header.fixed").css(
-                                    "padding-right",
-                                    "1.7rem"
-                                );
-                            },
-                            close: function () {
-                                $("body").css("overflow-x", "hidden");
-                                $(".sticky-header.fixed").css(
-                                    "padding-right",
-                                    "0"
-                                );
-                            },
-                        },
+    $(".add-to-cart-btn").on("click", function (e) {
+        if($(e.currentTarget).attr('data-product-id')) {
+            Livewire.emit('changeProduct', $(e.currentTarget).attr('data-product-id'))
+            $.magnificPopup.open({
+                items: {
+                    src: $("#test-popup"),
+                    type: "inline",
+                },
+            });
 
-                        ajax: {
-                            tError: "",
-                        },
-                    },
-                    0
-                );
-            }, 500);
-
-            e.preventDefault();
+            // quantityInputs();
         }
     });
-    $("body").on("click", ".carousel-dot", function () {
+    $("body").on("click", ".carousel-dot", function (e) {
         $(this).siblings().removeClass("active");
         $(this).addClass("active");
     });
