@@ -33,6 +33,7 @@ class ProductDetailInfoComponent extends Component
 
     public function changeProduct($id)
     {
+        $this->inventory_images = $this->inventory_images ?? collect();
         $this->product = Product::with(['category', 'inventories' => function ($q) {
             return $q->with(['image', 'attributes' => function ($q) {
                 $q->orderBy('attribute_inventory.created_at', 'desc');
