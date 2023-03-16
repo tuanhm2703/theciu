@@ -16,23 +16,30 @@
                 <div class="col-lg-7 col-md-6">
                     <div class="row">
                         <div class="product-left">
-                            @if ($product->video)
-                                <a href="#{{ $product->video->name }}" class="carousel-dot d-block">
-                                    <video controls autoplay width="100%">
-                                        <source src="{{ $product->video->path_with_domain }}" type="video/mp4">
-                                    </video>
-                                </a>
-                            @endif
-                            @foreach ($product->images as $index => $image)
-                                <a href="#{{ $image->name }}" class="carousel-dot {{ $index === 0 ? 'active' : '' }}">
-                                    <img src="{{ $image->path_with_domain }}">
-                                </a>
-                            @endforeach
-                            @foreach ($inventory_images as $index => $image)
-                                <a href="#{{ $image->name }}" class="carousel-dot">
-                                    <img src="{{ $image->path_with_domain }}">
-                                </a>
-                            @endforeach
+                            <div class="swiper mySwiper h-100">
+                                <div class="swiper-wrapper">
+                                    @if ($product->video)
+                                        <a href="#{{ $product->video->name }}"
+                                            class="carousel-dot d-block swiper-slide">
+                                            <video controls autoplay width="100%" height="100%">
+                                                <source src="{{ $product->video->path_with_domain }}" type="video/mp4">
+                                            </video>
+                                        </a>
+                                    @endif
+                                    @foreach ($product->images as $index => $image)
+                                        <a href="#{{ $image->name }}"
+                                            class="carousel-dot swiper-slide {{ $index === 0 ? 'active' : '' }}">
+                                            <img src="{{ $image->path_with_domain }}">
+                                        </a>
+                                    @endforeach
+                                    @foreach ($inventory_images as $index => $image)
+                                        <a href="#{{ $image->name }}" class="carousel-dot swiper-slide">
+                                            <img src="{{ $image->path_with_domain }}">
+                                        </a>
+                                    @endforeach
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
                         </div>
                         <div class="product-right">
                             <div class="owl-carousel owl-theme owl-nav-inside owl-light mb-0" data-toggle="owl"
@@ -123,6 +130,7 @@
         @endif
     </div>
 </div><!-- End .product-details-top -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         Livewire.hook('message.processed', (el, component) => {
@@ -132,11 +140,34 @@
             owlCarousels($('.quickView-content'), {
                 onTranslate: function(e) {
                     var $this = $(e.target),
-                        currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
+                        currentIndex = ($this.data('owl.carousel').current() + e.item
+                            .count - Math.ceil(e.item.count / 2)) % e.item.count;
                     $('.quickView-content .carousel-dot').eq(currentIndex).addClass(
                         'active').siblings().removeClass('active');
                 }
             });
+            var swiper = new Swiper(".mySwiper", {
+                direction: "vertical",
+                slidesPerView: 5,
+                spaceBetween: 5,
+                loop: true,
+                navigation: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+            });
         })
+        var swiper = new Swiper(".mySwiper", {
+            direction: "vertical",
+            slidesPerView: 5,
+            spaceBetween: 5,
+            loop: true,
+            navigation: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
     });
 </script>

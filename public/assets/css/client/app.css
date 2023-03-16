@@ -591,6 +591,7 @@
 .intro-slider-container, .intro-slide {
     background-color: #f3f3f3;
 }
+
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;
