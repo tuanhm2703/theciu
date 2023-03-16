@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="product-left">
                             <div class="swiper mySwiper h-100">
-                                <div class="swiper-wrapper">
+                                <div class="swiper-wrapper px-0">
                                     @if ($product->video)
                                         <a href="#{{ $product->video->name }}"
                                             class="carousel-dot d-block swiper-slide">
@@ -160,7 +160,7 @@
         })
         var swiper = new Swiper(".mySwiper", {
             direction: "vertical",
-            slidesPerView: 5,
+            slidesPerView: 4,
             spaceBetween: 5,
             loop: true,
             navigation: true,
