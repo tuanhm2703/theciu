@@ -9,8 +9,7 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">{{ trans('labels.dashboard') }}</a></li>
-                <li class="breadcrumb-item"><a
-                        href="#">{{ isset($title) ? $title : 'Danh sách sản phẩm' }}</a></li>
+                <li class="breadcrumb-item"><a href="#">{{ isset($title) ? $title : 'Danh sách sản phẩm' }}</a></li>
                 @if ($category_name)
                     <li class="breadcrumb-item active"><a href="#">{{ $category_name }}</a></li>
                 @endif
@@ -170,3 +169,22 @@
         </div><!-- End .container -->
     </div><!-- End .page-content -->
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        Livewire.hook('message.processed', (el, component) => {
+            $(".add-to-cart-btn").on("click", function(e) {
+                if ($(e.currentTarget).attr('data-product-id')) {
+                    Livewire.emit('changeProduct', $(e.currentTarget).attr('data-product-id'))
+                    $.magnificPopup.open({
+                        items: {
+                            src: $("#test-popup"),
+                            type: "inline",
+                        },
+                    });
+
+                    // quantityInputs();
+                }
+            });
+        })
+    })
+</script>
