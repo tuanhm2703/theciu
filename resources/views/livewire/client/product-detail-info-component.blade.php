@@ -33,6 +33,9 @@
                                         </a>
                                     @endforeach
                                     @foreach ($inventory_images as $index => $image)
+                                        @php
+                                            $image = (object) $image;
+                                        @endphp
                                         <a href="#{{ $image->name }}" class="carousel-dot swiper-slide">
                                             <img src="{{ $image->path_with_domain }}">
                                         </a>
@@ -72,6 +75,9 @@
                                     </div><!-- End .intro-slide -->
                                 @endforeach
                                 @foreach ($inventory_images as $image)
+                                    @php
+                                        $image = (object) $image;
+                                    @endphp
                                     <div class="intro-slide" data-hash="{{ $image->name }}">
                                         <img src="{{ $image->path_with_domain }}" alt="Image Desc"
                                             style="max-height: 600px">
