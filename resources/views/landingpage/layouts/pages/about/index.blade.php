@@ -1,292 +1,113 @@
 @extends('landingpage.layouts.app')
+@push('css')
+    <style>
+        .info-icon {
+            flex: 0 0 3%;
+            min-width: 50px;
+        }
+    </style>
+@endpush
 @section('content')
-    <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                <li class="breadcrumb-item active" aria-current="page">About us</li>
+                <li class="breadcrumb-item"><a href="/">{{ trans('labels.dashboard') }}</a></li>
+                <li class="breadcrumb-item active"><a href="#">{{ trans('labels.about_the_ciu') }}</a></li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
-    <div class="container">
-        <div class="page-header page-header-big text-center"
-            style="background-image: url('assets/images/about-header-bg.jpg')">
-            <h1 class="page-title text-white">About us<span class="text-white">Who we are</span></h1>
-        </div><!-- End .page-header -->
-    </div><!-- End .container -->
-
-    <div class="page-content pb-0">
+    <div class="page-content">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-6 mb-3 mb-lg-0">
-                    <h2 class="title">Our Vision</h2><!-- End .title -->
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet
-                        nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula
-                        sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. </p>
-                </div><!-- End .col-lg-6 -->
+            <h5 class="page-title">ABOUT THE C.I.U</h5>
+            <section class="payment-section">
+                <h5 class="section-title">THE C.I.U</h5>
+                <div class="section-content">
+                    <p>The C.I.U được thành lập từ năm 2016 với mục tiêu mang đến cho khách hàng những sản phẩm thời trang đa dạng và tiện dụng
+                        <br>
+                        Với mong muốn được đồng hành lâu dài với khách hàng, The C.I.U luôn cố gắng hoàn thiện chất lượng sản phẩm và dịch vụ để khách hàng có những trải nghiệm tốt nhất khi mua sắm tại The C.I.U.</p>
+                    <p class="d-flex mt-3">
+                        <span class="info-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 0.25C8.07164 0.25 6.18657 0.821828 4.58319 1.89317C2.97982 2.96451 1.73013 4.48726 0.992179 6.26884C0.254225 8.05042 0.061142 10.0108 0.437348 11.9021C0.813554 13.7934 1.74215 15.5307 3.10571 16.8943C4.46928 18.2579 6.20656 19.1865 8.09787 19.5627C9.98919 19.9389 11.9496 19.7458 13.7312 19.0078C15.5127 18.2699 17.0355 17.0202 18.1068 15.4168C19.1782 13.8134 19.75 11.9284 19.75 10C19.7473 7.41498 18.7192 4.93661 16.8913 3.10872C15.0634 1.28084 12.585 0.25273 10 0.25ZM7.52782 13.75H12.4722C11.9688 15.4694 11.125 17.0191 10 18.2397C8.875 17.0191 8.03125 15.4694 7.52782 13.75ZM7.1875 12.25C6.93876 10.7603 6.93876 9.23969 7.1875 7.75H12.8125C13.0613 9.23969 13.0613 10.7603 12.8125 12.25H7.1875ZM1.75 10C1.74935 9.23916 1.85442 8.48192 2.06219 7.75H5.66782C5.44407 9.24166 5.44407 10.7583 5.66782 12.25H2.06219C1.85442 11.5181 1.74935 10.7608 1.75 10ZM12.4722 6.25H7.52782C8.03125 4.53062 8.875 2.98094 10 1.76031C11.125 2.98094 11.9688 4.53062 12.4722 6.25ZM14.3322 7.75H17.9378C18.3541 9.22112 18.3541 10.7789 17.9378 12.25H14.3322C14.5559 10.7583 14.5559 9.24166 14.3322 7.75ZM17.3472 6.25H14.0256C13.6429 4.74392 13.0001 3.31623 12.1263 2.03125C13.2427 2.33127 14.2839 2.86162 15.1831 3.58818C16.0823 4.31475 16.8194 5.22146 17.3472 6.25ZM7.87375 2.03125C6.9999 3.31623 6.35713 4.74392 5.97438 6.25H2.65282C3.18056 5.22146 3.91772 4.31475 4.81689 3.58818C5.71606 2.86162 6.75733 2.33127 7.87375 2.03125ZM2.65282 13.75H5.97438C6.35713 15.2561 6.9999 16.6838 7.87375 17.9688C6.75733 17.6687 5.71606 17.1384 4.81689 16.4118C3.91772 15.6852 3.18056 14.7785 2.65282 13.75ZM12.1263 17.9688C13.0001 16.6838 13.6429 15.2561 14.0256 13.75H17.3472C16.8194 14.7785 16.0823 15.6852 15.1831 16.4118C14.2839 17.1384 13.2427 17.6687 12.1263 17.9688Z" fill="black"/>
+                                </svg>
+                        </span>
+                        <span class="info-content">
+                            Hotline: <a href="tel:0775.665.912">0775.665.912</a>
+                        </span>
+                    </p>
+                    <p class="d-flex">
+                        <span class="info-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 0.25C8.07164 0.25 6.18657 0.821828 4.58319 1.89317C2.97982 2.96451 1.73013 4.48726 0.992179 6.26884C0.254225 8.05042 0.061142 10.0108 0.437348 11.9021C0.813554 13.7934 1.74215 15.5307 3.10571 16.8943C4.46928 18.2579 6.20656 19.1865 8.09787 19.5627C9.98919 19.9389 11.9496 19.7458 13.7312 19.0078C15.5127 18.2699 17.0355 17.0202 18.1068 15.4168C19.1782 13.8134 19.75 11.9284 19.75 10C19.7473 7.41498 18.7192 4.93661 16.8913 3.10872C15.0634 1.28084 12.585 0.25273 10 0.25ZM10.75 18.2153V12.25H13C13.1989 12.25 13.3897 12.171 13.5303 12.0303C13.671 11.8897 13.75 11.6989 13.75 11.5C13.75 11.3011 13.671 11.1103 13.5303 10.9697C13.3897 10.829 13.1989 10.75 13 10.75H10.75V8.5C10.75 8.10218 10.908 7.72064 11.1893 7.43934C11.4706 7.15804 11.8522 7 12.25 7H13.75C13.9489 7 14.1397 6.92098 14.2803 6.78033C14.421 6.63968 14.5 6.44891 14.5 6.25C14.5 6.05109 14.421 5.86032 14.2803 5.71967C14.1397 5.57902 13.9489 5.5 13.75 5.5H12.25C11.4544 5.5 10.6913 5.81607 10.1287 6.37868C9.56608 6.94129 9.25 7.70435 9.25 8.5V10.75H7C6.80109 10.75 6.61033 10.829 6.46967 10.9697C6.32902 11.1103 6.25 11.3011 6.25 11.5C6.25 11.6989 6.32902 11.8897 6.46967 12.0303C6.61033 12.171 6.80109 12.25 7 12.25H9.25V18.2153C7.13575 18.0223 5.17728 17.0217 3.78198 15.4215C2.38667 13.8214 1.66195 11.7449 1.75855 9.62409C1.85515 7.50324 2.76564 5.50127 4.30064 4.0346C5.83563 2.56793 7.87696 1.74947 10 1.74947C12.1231 1.74947 14.1644 2.56793 15.6994 4.0346C17.2344 5.50127 18.1449 7.50324 18.2415 9.62409C18.3381 11.7449 17.6133 13.8214 16.218 15.4215C14.8227 17.0217 12.8643 18.0223 10.75 18.2153Z" fill="black"/>
+                                </svg>
+                        </span>
+                        <span class="info-content">
+                            <a href="https://www.facebook.com/The.C.I.U.2016">
+                                Facebook/THECIU
+                            </a>
+                            <br>
+                            <a href="https://www.facebook.com/theciusaigon">Facebook/THECIUSAIGON</a>
+                        </span>
+                    </p>
+                    <p class="d-flex">
+                        <span class="info-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 5.5C9.10998 5.5 8.23995 5.76392 7.49993 6.25839C6.75991 6.75285 6.18314 7.45566 5.84254 8.27792C5.50195 9.10019 5.41283 10.005 5.58647 10.8779C5.7601 11.7508 6.18868 12.5526 6.81802 13.182C7.44736 13.8113 8.24918 14.2399 9.12209 14.4135C9.99501 14.5872 10.8998 14.4981 11.7221 14.1575C12.5443 13.8169 13.2471 13.2401 13.7416 12.5001C14.2361 11.76 14.5 10.89 14.5 10C14.4988 8.80691 14.0243 7.66303 13.1806 6.81939C12.337 5.97575 11.1931 5.50124 10 5.5ZM10 13C9.40666 13 8.82664 12.8241 8.33329 12.4944C7.83994 12.1648 7.45542 11.6962 7.22836 11.1481C7.0013 10.5999 6.94189 9.99667 7.05764 9.41473C7.1734 8.83279 7.45912 8.29824 7.87868 7.87868C8.29824 7.45912 8.83279 7.1734 9.41473 7.05764C9.99667 6.94189 10.5999 7.0013 11.1481 7.22836C11.6962 7.45542 12.1648 7.83994 12.4944 8.33329C12.8241 8.82664 13 9.40666 13 10C13 10.7956 12.6839 11.5587 12.1213 12.1213C11.5587 12.6839 10.7956 13 10 13ZM14.5 0.25H5.5C4.10807 0.251489 2.77358 0.805091 1.78933 1.78933C0.805091 2.77358 0.251489 4.10807 0.25 5.5V14.5C0.251489 15.8919 0.805091 17.2264 1.78933 18.2107C2.77358 19.1949 4.10807 19.7485 5.5 19.75H14.5C15.8919 19.7485 17.2264 19.1949 18.2107 18.2107C19.1949 17.2264 19.7485 15.8919 19.75 14.5V5.5C19.7485 4.10807 19.1949 2.77358 18.2107 1.78933C17.2264 0.805091 15.8919 0.251489 14.5 0.25ZM18.25 14.5C18.25 15.4946 17.8549 16.4484 17.1516 17.1516C16.4484 17.8549 15.4946 18.25 14.5 18.25H5.5C4.50544 18.25 3.55161 17.8549 2.84835 17.1516C2.14509 16.4484 1.75 15.4946 1.75 14.5V5.5C1.75 4.50544 2.14509 3.55161 2.84835 2.84835C3.55161 2.14509 4.50544 1.75 5.5 1.75H14.5C15.4946 1.75 16.4484 2.14509 17.1516 2.84835C17.8549 3.55161 18.25 4.50544 18.25 5.5V14.5ZM16 5.125C16 5.3475 15.934 5.56501 15.8104 5.75002C15.6868 5.93502 15.5111 6.07922 15.3055 6.16436C15.1 6.24951 14.8738 6.27179 14.6555 6.22838C14.4373 6.18498 14.2368 6.07783 14.0795 5.9205C13.9222 5.76316 13.815 5.56271 13.7716 5.34448C13.7282 5.12625 13.7505 4.90005 13.8356 4.69448C13.9208 4.48891 14.065 4.31321 14.25 4.1896C14.435 4.06598 14.6525 4 14.875 4C15.1734 4 15.4595 4.11853 15.6705 4.3295C15.8815 4.54048 16 4.82663 16 5.125Z" fill="black"/>
+                                </svg>
 
-                <div class="col-lg-6">
-                    <h2 class="title">Our Mission</h2><!-- End .title -->
-                    <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue.
-                        Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. <br>Praesent
-                        elementum hendrerit tortor. Sed semper lorem at felis. </p>
-                </div><!-- End .col-lg-6 -->
-            </div><!-- End .row -->
+                        </span>
+                        <span class="info-content">
+                            Instagram: <a href="https://www.instagram.com/theciu2016/?hl=en">@theciu2016</a>
+                        </span>
+                    </p>
+                    <p class="d-flex">
+                        <span class="info-icon">
+                            <svg width="22" height="24" viewBox="0 0 22 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 0.47998C8.44295 0.47998 6.48995 2.85749 6.27966 5.75998H1.4281C0.883296 5.75998 0.439672 6.23086 0.469971 6.77436L1.29778 21.2569C1.36953 22.5226 2.42568 23.52 3.6931 23.52H18.3068C19.5746 23.52 20.6304 22.5225 20.7022 21.2569L21.53 6.77529C21.5612 6.23141 21.1166 5.75998 20.5718 5.75998H15.7203C15.51 2.85749 13.557 0.47998 11 0.47998ZM11 1.43998C12.9377 1.43998 14.5563 3.30564 14.7612 5.75998H7.23872C7.44369 3.30564 9.06224 1.43998 11 1.43998ZM1.4281 6.71998H6.59935C6.65118 6.72855 6.70407 6.72855 6.75591 6.71998H15.2393C15.2912 6.72855 15.3441 6.72855 15.3959 6.71998H20.5718L19.744 21.2025C19.7006 21.9692 19.0752 22.56 18.3068 22.56H3.6931C2.92531 22.56 2.29936 21.969 2.25591 21.2025L1.4281 6.72092V6.71998ZM11.0356 8.64092C8.96488 8.64092 7.40372 9.93114 7.40372 11.6419C7.40372 13.5763 9.20261 14.2336 10.79 14.8134C12.7119 15.5157 13.879 16.0519 13.879 17.5697C13.879 18.7418 12.5682 19.6959 10.9568 19.6959C9.15445 19.6959 7.62721 18.38 7.61185 18.3665L7.07653 19.155C7.46629 19.4708 9.04213 20.6437 10.9568 20.6437C13.1264 20.6437 14.8269 19.2933 14.8259 17.5697C14.8259 15.2801 12.8548 14.5588 11.1153 13.9237C9.39544 13.2945 8.3506 12.8279 8.3506 11.6419C8.3506 10.4524 9.47992 9.58873 11.0356 9.58873C12.0729 9.58873 12.9755 9.98144 13.4656 10.2459C13.5482 10.2901 13.7656 10.4207 13.8865 10.5019L14.3768 9.70404C14.2645 9.63108 12.8822 8.64092 11.0356 8.64092Z" fill="black" stroke="black" stroke-width="0.5"/>
+                                </svg>
+                        </span>
+                        <span class="info-content">
+                            Shoppe: <a href="https://shopee.vn/theciu2016">theciu2016</a>
+                        </span>
+                    </p>
+                    <p class="d-flex">
+                        <span class="info-icon">
+                            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19 5.75C17.8069 5.74876 16.663 5.27425 15.8194 4.43061C14.9757 3.58697 14.5012 2.44309 14.5 1.25C14.5 1.05109 14.421 0.860322 14.2803 0.71967C14.1397 0.579018 13.9489 0.5 13.75 0.5H10C9.80109 0.5 9.61032 0.579018 9.46967 0.71967C9.32902 0.860322 9.25 1.05109 9.25 1.25V13.625C9.24985 13.9605 9.15967 14.2898 8.98887 14.5786C8.81807 14.8674 8.57291 15.1051 8.27896 15.2668C7.98501 15.4286 7.65304 15.5085 7.31768 15.4983C6.98232 15.488 6.65586 15.388 6.37234 15.2085C6.08883 15.0291 5.85865 14.7769 5.70582 14.4782C5.55299 14.1795 5.4831 13.8453 5.50345 13.5104C5.5238 13.1755 5.63364 12.8522 5.82151 12.5742C6.00939 12.2962 6.26841 12.0738 6.57156 11.93C6.6998 11.8691 6.80813 11.7731 6.88397 11.6532C6.95981 11.5332 7.00005 11.3941 7 11.2522V7.25C7.00005 7.14037 6.97606 7.03206 6.92972 6.9327C6.88339 6.83334 6.81584 6.74535 6.73182 6.67492C6.6478 6.60449 6.54937 6.55333 6.44345 6.52505C6.33752 6.49678 6.22669 6.49206 6.11875 6.51125C2.77281 7.1075 0.25 10.1656 0.25 13.625C0.25 15.5147 1.00067 17.3269 2.33686 18.6631C3.67306 19.9993 5.48533 20.75 7.375 20.75C9.26467 20.75 11.0769 19.9993 12.4131 18.6631C13.7493 17.3269 14.5 15.5147 14.5 13.625V9.90219C15.889 10.6269 17.4333 11.0036 19 11C19.1989 11 19.3897 10.921 19.5303 10.7803C19.671 10.6397 19.75 10.4489 19.75 10.25V6.5C19.75 6.30109 19.671 6.11032 19.5303 5.96967C19.3897 5.82902 19.1989 5.75 19 5.75ZM18.25 9.46625C16.7843 9.33637 15.3809 8.81329 14.1878 7.95219C14.0757 7.87156 13.9434 7.82347 13.8057 7.81321C13.668 7.80295 13.5301 7.83092 13.4072 7.89404C13.2844 7.95716 13.1814 8.05298 13.1095 8.17093C13.0376 8.28888 12.9997 8.42438 13 8.5625V13.625C13 15.1168 12.4074 16.5476 11.3525 17.6025C10.2976 18.6574 8.86684 19.25 7.375 19.25C5.88316 19.25 4.45242 18.6574 3.39752 17.6025C2.34263 16.5476 1.75 15.1168 1.75 13.625C1.75 11.1969 3.31 9.01906 5.5 8.225V10.8191C5.01517 11.143 4.62254 11.587 4.36037 12.1079C4.09821 12.6287 3.97545 13.2086 4.00407 13.7909C4.03268 14.3733 4.2117 14.9384 4.52366 15.431C4.83562 15.9236 5.26989 16.327 5.78414 16.6018C6.29839 16.8767 6.87508 17.0136 7.458 16.9993C8.04091 16.9849 8.61017 16.8198 9.11028 16.52C9.6104 16.2202 10.0243 15.796 10.3117 15.2886C10.599 14.7812 10.7501 14.2081 10.75 13.625V2H13.0469C13.2155 3.32101 13.818 4.54866 14.7597 5.49034C15.7013 6.43203 16.929 7.03446 18.25 7.20312V9.46625Z" fill="black"/>
+                                </svg>
 
-            <div class="mb-5"></div><!-- End .mb-4 -->
-        </div><!-- End .container -->
+                        </span>
+                        <span class="info-content">
+                            Tiktok: <a href="https://www.tiktok.com/@theciusaigon">theciusaigon</a>
+                        </span>
+                    </p>
+                    <p class="d-flex">
+                        <span class="info-icon">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 0.25C8.07164 0.25 6.18657 0.821828 4.58319 1.89317C2.97982 2.96452 1.73013 4.48726 0.992179 6.26884C0.254225 8.05042 0.061142 10.0108 0.437348 11.9021C0.813554 13.7934 1.74215 15.5307 3.10571 16.8943C4.46928 18.2579 6.20656 19.1865 8.09787 19.5627C9.98919 19.9389 11.9496 19.7458 13.7312 19.0078C15.5127 18.2699 17.0355 17.0202 18.1068 15.4168C19.1782 13.8134 19.75 11.9284 19.75 10C19.7473 7.41498 18.7192 4.93661 16.8913 3.10872C15.0634 1.28084 12.585 0.25273 10 0.25ZM7.52782 13.75H12.4722C11.9688 15.4694 11.125 17.0191 10 18.2397C8.875 17.0191 8.03125 15.4694 7.52782 13.75ZM7.1875 12.25C6.93876 10.7603 6.93876 9.23969 7.1875 7.75H12.8125C13.0613 9.23969 13.0613 10.7603 12.8125 12.25H7.1875ZM1.75 10C1.74935 9.23916 1.85442 8.48192 2.06219 7.75H5.66782C5.44407 9.24166 5.44407 10.7583 5.66782 12.25H2.06219C1.85442 11.5181 1.74935 10.7608 1.75 10ZM12.4722 6.25H7.52782C8.03125 4.53062 8.875 2.98094 10 1.76031C11.125 2.98094 11.9688 4.53062 12.4722 6.25ZM14.3322 7.75H17.9378C18.3541 9.22112 18.3541 10.7789 17.9378 12.25H14.3322C14.5559 10.7583 14.5559 9.24166 14.3322 7.75ZM17.3472 6.25H14.0256C13.6429 4.74392 13.0001 3.31623 12.1263 2.03125C13.2427 2.33127 14.284 2.86162 15.1831 3.58818C16.0823 4.31475 16.8194 5.22146 17.3472 6.25ZM7.87375 2.03125C6.9999 3.31623 6.35713 4.74392 5.97438 6.25H2.65282C3.18056 5.22146 3.91772 4.31475 4.81689 3.58818C5.71606 2.86162 6.75733 2.33127 7.87375 2.03125ZM2.65282 13.75H5.97438C6.35713 15.2561 6.9999 16.6838 7.87375 17.9688C6.75733 17.6687 5.71606 17.1384 4.81689 16.4118C3.91772 15.6852 3.18056 14.7785 2.65282 13.75ZM12.1263 17.9688C13.0001 16.6838 13.6429 15.2561 14.0256 13.75H17.3472C16.8194 14.7785 16.0823 15.6852 15.1831 16.4118C14.284 17.1384 13.2427 17.6687 12.1263 17.9688Z" fill="black"/>
+                                </svg>
 
-        <div class="bg-light-2 pt-6 pb-5 mb-6 mb-lg-8">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-5 mb-3 mb-lg-0">
-                        <h2 class="title">Who We Are</h2><!-- End .title -->
-                        <p class="lead text-primary mb-3">Pellentesque odio nisi, euismod pharetra a ultricies <br>in diam.
-                            Sed arcu. Cras consequat</p><!-- End .lead text-primary -->
-                        <p class="mb-2">Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget
-                            blandit nunc tortor eu nibh. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, uctus
-                            metus libero eu augue. </p>
+                        </span>
+                        <span class="info-content">
+                            Website: <a href="https://theciu.vn">www.theciu.vn</a>
+                        </span>
+                    </p>
+                    <p class="d-flex">
+                        <span class="info-icon">
+                            <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M19.75 6C19.7504 5.93027 19.7409 5.86083 19.7219 5.79375L18.3766 1.0875C18.2861 0.775232 18.0971 0.500591 17.8378 0.304588C17.5784 0.108585 17.2626 0.00173713 16.9375 0H3.0625C2.73741 0.00173713 2.4216 0.108585 2.16223 0.304588C1.90287 0.500591 1.71386 0.775232 1.62344 1.0875L0.279063 5.79375C0.259696 5.86079 0.249912 5.93022 0.250001 6V7.5C0.250001 8.08217 0.385545 8.65634 0.645899 9.17705C0.906253 9.69776 1.28427 10.1507 1.75 10.5V16.5C1.75 16.8978 1.90804 17.2794 2.18934 17.5607C2.47064 17.842 2.85218 18 3.25 18H16.75C17.1478 18 17.5294 17.842 17.8107 17.5607C18.092 17.2794 18.25 16.8978 18.25 16.5V10.5C18.7157 10.1507 19.0937 9.69776 19.3541 9.17705C19.6145 8.65634 19.75 8.08217 19.75 7.5V6ZM3.0625 1.5H16.9375L18.0081 5.25H1.99469L3.0625 1.5ZM7.75 6.75H12.25V7.5C12.25 8.09674 12.0129 8.66903 11.591 9.09099C11.169 9.51295 10.5967 9.75 10 9.75C9.40326 9.75 8.83097 9.51295 8.40901 9.09099C7.98705 8.66903 7.75 8.09674 7.75 7.5V6.75ZM6.25 6.75V7.5C6.25 8.09674 6.01295 8.66903 5.59099 9.09099C5.16903 9.51295 4.59674 9.75 4 9.75C3.40326 9.75 2.83097 9.51295 2.40901 9.09099C1.98705 8.66903 1.75 8.09674 1.75 7.5V6.75H6.25ZM16.75 16.5H3.25V11.175C3.4969 11.2248 3.74813 11.2499 4 11.25C4.58217 11.25 5.15634 11.1145 5.67705 10.8541C6.19776 10.5937 6.6507 10.2157 7 9.75C7.3493 10.2157 7.80224 10.5937 8.32295 10.8541C8.84366 11.1145 9.41783 11.25 10 11.25C10.5822 11.25 11.1563 11.1145 11.6771 10.8541C12.1978 10.5937 12.6507 10.2157 13 9.75C13.3493 10.2157 13.8022 10.5937 14.3229 10.8541C14.8437 11.1145 15.4178 11.25 16 11.25C16.2519 11.2499 16.5031 11.2248 16.75 11.175V16.5ZM16 9.75C15.4033 9.75 14.831 9.51295 14.409 9.09099C13.9871 8.66903 13.75 8.09674 13.75 7.5V6.75H18.25V7.5C18.25 8.09674 18.0129 8.66903 17.591 9.09099C17.169 9.51295 16.5967 9.75 16 9.75Z" fill="black"/>
+                                </svg>
 
-                        <a href="blog.html" class="btn btn-sm btn-minwidth btn-outline-primary-2">
-                            <span>VIEW OUR NEWS</span>
-                            <i class="icon-long-arrow-right"></i>
-                        </a>
-                    </div><!-- End .col-lg-5 -->
-
-                    <div class="col-lg-6 offset-lg-1">
-                        <div class="about-images">
-                            <img src="assets/images/about/img-1.jpg" alt="" class="about-img-front">
-                            <img src="assets/images/about/img-2.jpg" alt="" class="about-img-back">
-                        </div><!-- End .about-images -->
-                    </div><!-- End .col-lg-6 -->
-                </div><!-- End .row -->
-            </div><!-- End .container -->
-        </div><!-- End .bg-light-2 pt-6 pb-6 -->
-
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5">
-                    <div class="brands-text">
-                        <h2 class="title">The world's premium design brands in one destination.</h2><!-- End .title -->
-                        <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id,
-                            mattis vel, nis</p>
-                    </div><!-- End .brands-text -->
-                </div><!-- End .col-lg-5 -->
-                <div class="col-lg-7">
-                    <div class="brands-display">
-                        <div class="row justify-content-center">
-                            <div class="col-6 col-sm-4">
-                                <a href="#" class="brand">
-                                    <img src="assets/images/brands/1.png" alt="Brand Name">
-                                </a>
-                            </div><!-- End .col-sm-4 -->
-
-                            <div class="col-6 col-sm-4">
-                                <a href="#" class="brand">
-                                    <img src="assets/images/brands/2.png" alt="Brand Name">
-                                </a>
-                            </div><!-- End .col-sm-4 -->
-
-                            <div class="col-6 col-sm-4">
-                                <a href="#" class="brand">
-                                    <img src="assets/images/brands/3.png" alt="Brand Name">
-                                </a>
-                            </div><!-- End .col-sm-4 -->
-
-                            <div class="col-6 col-sm-4">
-                                <a href="#" class="brand">
-                                    <img src="assets/images/brands/4.png" alt="Brand Name">
-                                </a>
-                            </div><!-- End .col-sm-4 -->
-
-                            <div class="col-6 col-sm-4">
-                                <a href="#" class="brand">
-                                    <img src="assets/images/brands/5.png" alt="Brand Name">
-                                </a>
-                            </div><!-- End .col-sm-4 -->
-
-                            <div class="col-6 col-sm-4">
-                                <a href="#" class="brand">
-                                    <img src="assets/images/brands/6.png" alt="Brand Name">
-                                </a>
-                            </div><!-- End .col-sm-4 -->
-
-                            <div class="col-6 col-sm-4">
-                                <a href="#" class="brand">
-                                    <img src="assets/images/brands/7.png" alt="Brand Name">
-                                </a>
-                            </div><!-- End .col-sm-4 -->
-
-                            <div class="col-6 col-sm-4">
-                                <a href="#" class="brand">
-                                    <img src="assets/images/brands/8.png" alt="Brand Name">
-                                </a>
-                            </div><!-- End .col-sm-4 -->
-
-                            <div class="col-6 col-sm-4">
-                                <a href="#" class="brand">
-                                    <img src="assets/images/brands/9.png" alt="Brand Name">
-                                </a>
-                            </div><!-- End .col-sm-4 -->
-                        </div><!-- End .row -->
-                    </div><!-- End .brands-display -->
-                </div><!-- End .col-lg-7 -->
-            </div><!-- End .row -->
-
-            <hr class="mt-4 mb-6">
-
-            <h2 class="title text-center mb-4">Meet Our Team</h2><!-- End .title text-center mb-2 -->
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="member member-anim text-center">
-                        <figure class="member-media">
-                            <img src="assets/images/team/member-1.jpg" alt="member photo">
-
-                            <figcaption class="member-overlay">
-                                <div class="member-overlay-content">
-                                    <h3 class="member-title">Samanta Grey<span>Founder &amp; CEO</span></h3>
-                                    <!-- End .member-title -->
-                                    <p>Sed pretium, ligula sollicitudin viverra, tortor libero sodales leo, eget blandit
-                                        nunc.</p>
-                                    <div class="social-icons social-icons-simple">
-                                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i
-                                                class="icon-facebook-f"></i></a>
-                                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i
-                                                class="icon-twitter"></i></a>
-                                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i
-                                                class="icon-instagram"></i></a>
-                                    </div><!-- End .soial-icons -->
-                                </div><!-- End .member-overlay-content -->
-                            </figcaption><!-- End .member-overlay -->
-                        </figure><!-- End .member-media -->
-                        <div class="member-content">
-                            <h3 class="member-title">Samanta Grey<span>Founder &amp; CEO</span></h3>
-                            <!-- End .member-title -->
-                        </div><!-- End .member-content -->
-                    </div><!-- End .member -->
-                </div><!-- End .col-md-4 -->
-
-                <div class="col-md-4">
-                    <div class="member member-anim text-center">
-                        <figure class="member-media">
-                            <img src="assets/images/team/member-2.jpg" alt="member photo">
-
-                            <figcaption class="member-overlay">
-                                <div class="member-overlay-content">
-                                    <h3 class="member-title">Bruce Sutton<span>Sales &amp; Marketing Manager</span></h3>
-                                    <!-- End .member-title -->
-                                    <p>Sed pretium, ligula sollicitudin viverra, tortor libero sodales leo, eget blandit
-                                        nunc.</p>
-                                    <div class="social-icons social-icons-simple">
-                                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i
-                                                class="icon-facebook-f"></i></a>
-                                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i
-                                                class="icon-twitter"></i></a>
-                                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i
-                                                class="icon-instagram"></i></a>
-                                    </div><!-- End .soial-icons -->
-                                </div><!-- End .member-overlay-content -->
-                            </figcaption><!-- End .member-overlay -->
-                        </figure><!-- End .member-media -->
-                        <div class="member-content">
-                            <h3 class="member-title">Bruce Sutton<span>Sales &amp; Marketing Manager</span></h3>
-                            <!-- End .member-title -->
-                        </div><!-- End .member-content -->
-                    </div><!-- End .member -->
-                </div><!-- End .col-md-4 -->
-
-                <div class="col-md-4">
-                    <div class="member member-anim text-center">
-                        <figure class="member-media">
-                            <img src="assets/images/team/member-3.jpg" alt="member photo">
-
-                            <figcaption class="member-overlay">
-                                <div class="member-overlay-content">
-                                    <h3 class="member-title">Janet Joy<span>Product Manager</span></h3>
-                                    <!-- End .member-title -->
-                                    <p>Sed pretium, ligula sollicitudin viverra, tortor libero sodales leo, eget blandit
-                                        nunc.</p>
-                                    <div class="social-icons social-icons-simple">
-                                        <a href="#" class="social-icon" title="Facebook" target="_blank"><i
-                                                class="icon-facebook-f"></i></a>
-                                        <a href="#" class="social-icon" title="Twitter" target="_blank"><i
-                                                class="icon-twitter"></i></a>
-                                        <a href="#" class="social-icon" title="Instagram" target="_blank"><i
-                                                class="icon-instagram"></i></a>
-                                    </div><!-- End .soial-icons -->
-                                </div><!-- End .member-overlay-content -->
-                            </figcaption><!-- End .member-overlay -->
-                        </figure><!-- End .member-media -->
-                        <div class="member-content">
-                            <h3 class="member-title">Janet Joy<span>Product Manager</span></h3><!-- End .member-title -->
-                        </div><!-- End .member-content -->
-                    </div><!-- End .member -->
-                </div><!-- End .col-md-4 -->
-            </div><!-- End .row -->
-        </div><!-- End .container -->
-
-        <div class="mb-2"></div><!-- End .mb-2 -->
-
-        <div class="about-testimonials bg-light-2 pt-6 pb-6">
-            <div class="container">
-                <h2 class="title text-center mb-3">What Customer Say About Us</h2><!-- End .title text-center -->
-
-                <div class="owl-carousel owl-simple owl-testimonials-photo owl-loaded owl-drag" data-toggle="owl"
-                    data-owl-options="{
-                        &quot;nav&quot;: false,
-                        &quot;dots&quot;: true,
-                        &quot;margin&quot;: 20,
-                        &quot;loop&quot;: false,
-                        &quot;responsive&quot;: {
-                            &quot;1200&quot;: {
-                                &quot;nav&quot;: true
-                            }
-                        }
-                    }">
-                    <!-- End .testimonial -->
-
-                    <!-- End .testimonial -->
-                    <div class="owl-stage-outer">
-                        <div class="owl-stage"
-                            style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1454px;">
-                            <div class="owl-item active" style="width: 707px; margin-right: 20px;">
-                                <blockquote class="testimonial text-center">
-                                    <img src="assets/images/testimonials/user-1.jpg" alt="user">
-                                    <p>“ Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque aliquet nibh
-                                        nec urna. <br>In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium,
-                                        ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc
-                                        tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. ”</p>
-                                    <cite>
-                                        Jenson Gregory
-                                        <span>Customer</span>
-                                    </cite>
-                                </blockquote>
-                            </div>
-                            <div class="owl-item" style="width: 707px; margin-right: 20px;">
-                                <blockquote class="testimonial text-center">
-                                    <img src="assets/images/testimonials/user-2.jpg" alt="user">
-                                    <p>“ Impedit, ratione sequi, sunt incidunt magnam et. Delectus obcaecati optio eius
-                                        error libero perferendis nesciunt atque dolores magni recusandae! Doloremque quidem
-                                        error eum quis similique doloribus natus qui ut ipsum.Velit quos ipsa
-                                        exercitationem, vel unde obcaecati impedit eveniet non. ”</p>
-
-                                    <cite>
-                                        Victoria Ventura
-                                        <span>Customer</span>
-                                    </cite>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="owl-nav disabled"><button type="button" role="presentation"
-                            class="owl-prev disabled"><i class="icon-angle-left"></i></button><button type="button"
-                            role="presentation" class="owl-next"><i class="icon-angle-right"></i></button></div>
-                    <div class="owl-dots"><button role="button" class="owl-dot active"><span></span></button><button
-                            role="button" class="owl-dot"><span></span></button></div>
-                </div><!-- End .testimonials-slider owl-carousel -->
-            </div><!-- End .container -->
-        </div><!-- End .bg-light-2 pt-5 pb-6 -->
-    </div><!-- End .page-content -->
+                        </span>
+                        <span class="info-content">
+                            <strong>Store 1:</strong> Hẻm 29 Nguyễn Gia Trí, P.25, Quận Bình Thạnh, TPHCM <br>
+                            <strong>Store 2:</strong> 73 Nguyễn Văn Bảo, phường 4, Quận Gò Vấp, TPHCM <br>
+                            <strong>Store 3:</strong> 680 Sư Vạn Hạnh, p.12, Quận 10, TPHCM <br>
+                            <strong>Store 4:</strong> 50 Tô Vĩnh Diện, Phường Linh Chiểu, Thủ Đức, TPHCM
+                        </span>
+                    </p>
+                </div>
+            </section>
+        </div>
+    </div>
 @endsection

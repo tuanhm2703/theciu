@@ -180,5 +180,10 @@ return [
     'order_number' => 'Order number',
     'shipping_address' => 'Shipping address',
     'payment_info' => 'Payment info',
-    'view_order_details' => 'View order details'
+    'view_order_details' => 'View order details',
+    'product_exchange_and_warranty_policy' => 'Product exchange and warranty policy',
+    'payment_and_shipping' => 'Payment and shipping',
+    'about_the_ciu' => 'About THE C.I.U',
+    'customer_service' => 'Customer service',
+    'payment_safety' => 'Payment safety'
 ];

@@ -14,51 +14,61 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-3 col-sm-6">
-                        <div class="icon-box text-center">
-                            <span class="icon-box-icon">
-                                <i class="icon-truck"></i>
-                            </span>
-                            <div class="icon-box-content">
-                                <h3 class="icon-box-title">Thanh toán và vận chuyển</h3><!-- End .icon-box-title -->
-                                <p>Miễn phí cho đơn hàng 100k</p>
-                            </div><!-- End .icon-box-content -->
-                        </div><!-- End .icon-box -->
+                        <a href="{{ route('client.page.product_exchange_and_warranty') }}" class="d-block">
+                            <div class="icon-box text-center">
+                                <span class="icon-box-icon">
+                                    <i class="icon-rotate-left"></i>
+                                </span>
+                                <div class="icon-box-content">
+
+                                    <h3 class="icon-box-title">{{ trans('labels.product_exchange_and_warranty_policy') }}
+                                    </h3><!-- End .icon-box-title -->
+                                    {{-- <p>Miễn phí cho đơn hàng 100k</p> --}}
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </a>
                     </div><!-- End .col-lg-3 col-sm-6 -->
 
                     <div class="col-lg-3 col-sm-6">
-                        <div class="icon-box text-center">
-                            <span class="icon-box-icon">
-                                <i class="icon-rotate-left"></i>
-                            </span>
-                            <div class="icon-box-content">
-                                <h3 class="icon-box-title">Trả hàng và hoàn tiền</h3><!-- End .icon-box-title -->
-                                <p>Miễn phí 100% phí hoàn trả</p>
-                            </div><!-- End .icon-box-content -->
-                        </div><!-- End .icon-box -->
+                        <a href="{{ route('client.page.payment_and_shipping') }}" class="d-block">
+                            <div class="icon-box text-center">
+                                <span class="icon-box-icon">
+                                    <i class="icon-truck"></i>
+                                </span>
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Thanh toán và vận chuyển</h3><!-- End .icon-box-title -->
+                                    {{-- <p>Miễn phí 100% phí hoàn trả</p> --}}
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </a>
                     </div><!-- End .col-lg-3 col-sm-6 -->
 
                     <div class="col-lg-3 col-sm-6">
-                        <div class="icon-box text-center">
-                            <span class="icon-box-icon">
-                                <i class="icon-unlock"></i>
-                            </span>
-                            <div class="icon-box-content">
-                                <h3 class="icon-box-title">Thanh toán an toàn</h3><!-- End .icon-box-title -->
-                                <p>100% an toàn với phương thức thanh toán</p>
-                            </div><!-- End .icon-box-content -->
-                        </div><!-- End .icon-box -->
+                        <a href="{{ route('client.page.payment_safety') }}" class="d-block">
+                            <div class="icon-box text-center">
+                                <span class="icon-box-icon">
+                                    <i class="icon-unlock"></i>
+                                </span>
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Thanh toán an toàn</h3><!-- End .icon-box-title -->
+                                    {{-- <p>100% an toàn với phương thức thanh toán</p> --}}
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </a>
                     </div><!-- End .col-lg-3 col-sm-6 -->
 
                     <div class="col-lg-3 col-sm-6">
-                        <div class="icon-box text-center">
-                            <span class="icon-box-icon">
-                                <i class="icon-headphones"></i>
-                            </span>
-                            <div class="icon-box-content">
-                                <h3 class="icon-box-title">Hỗ trợ dịch vụ</h3><!-- End .icon-box-title -->
-                                <p>Dịch vụ hỗ trợ khách hàng 24/7</p>
-                            </div><!-- End .icon-box-content -->
-                        </div><!-- End .icon-box -->
+                        <a href="{{ route('client.page.customer_service') }}" class="d-block">
+                            <div class="icon-box text-center">
+                                <span class="icon-box-icon">
+                                    <i class="icon-headphones"></i>
+                                </span>
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Hỗ trợ dịch vụ</h3><!-- End .icon-box-title -->
+                                    {{-- <p>Dịch vụ hỗ trợ khách hàng 24/7</p> --}}
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </a>
                     </div><!-- End .col-lg-3 col-sm-6 -->
                 </div><!-- End .row -->
             </div><!-- End .container -->

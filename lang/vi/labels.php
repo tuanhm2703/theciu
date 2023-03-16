@@ -184,5 +184,10 @@ return [
     'order_number' => 'Mã đơn hàng',
     'shipping_address' => 'Địa chỉ giao hàng',
     'payment_info' => 'Thông tin thanh toán',
-    'view_order_details' => 'Xem chi viết'
+    'view_order_details' => 'Xem chi tiết',
+    'product_exchange_and_warranty_policy' => 'Chính sách bảo hành và đổi trả',
+    'payment_and_shipping' => 'Thanh toán và vận chuyển',
+    'about_the_ciu' => 'About THE C.I.U',
+    'customer_service' => 'Hỗ trợ dịch vụ',
+    'payment_safety' => 'Thanh toán an toàn'
 ];

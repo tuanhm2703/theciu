@@ -594,6 +594,67 @@
 .product-left {
     max-height: 400px;
 }
+.page-content-table thead tr th {
+    font-size: 1.5em;
+}
+
+.page-content-table thead tr th {
+    padding: 12px 0;
+}
+
+.page-content-table tbody tr td {
+    font-size: 1.3em;
+    padding: 2rem 5px;
+    color: black;
+    vertical-align: center;
+}
+
+.page-content-table tbody tr td.row-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    width: 20%;
+    text-align: center;
+}
+
+.page-content-table ul {
+    list-style-position: inside;
+}
+
+.page-content-table ul li::before {
+    content: "\2022";
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+}
+.page-title {
+    font-weight: bold;
+    text-align: center;
+    padding: 72px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.section-title {
+    color: #c96;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.section-content p {
+    color: black !important;
+}
+.section-content {
+    color: black;
+    font-size: 1.5em;
+    line-height: 2em;
+    margin-bottom: 72px;
+}
+.section-content  ul li::before {
+    content: "\2022";
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+}
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;
