@@ -2648,11 +2648,11 @@ function toggleSidenav() {
 }
 
 var html = document.getElementsByTagName('html')[0];
-html.addEventListener("click", function (e) {
-  if (body.classList.contains('g-sidenav-pinned') && !e.target.classList.contains('sidenav-toggler-line')) {
-    body.classList.remove(className);
-  }
-}); // Resize navbar color depends on configurator active type of sidenav
+// html.addEventListener("click", function (e) {
+//   if (body.classList.contains('g-sidenav-pinned') && !e.target.classList.contains('sidenav-toggler-line')) {
+//     body.classList.remove(className);
+//   }
+// }); // Resize navbar color depends on configurator active type of sidenav
 
 var referenceButtons = document.querySelector('[data-class]');
 window.addEventListener("resize", navbarColorOnResize);
