@@ -163,16 +163,5 @@
                 }
             });
         });
-        var swiper = new Swiper(".mySwiper", {
-            direction: "vertical",
-            slidesPerView: 'auto',
-            spaceBetween: 0,
-            loop: true,
-            mousewheel: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            }
-        });
     })
 </script>

@@ -25,7 +25,7 @@
 
     <div class="page-content">
         <div class="container">
-            <livewire:client.product-detail-info-component :product="$product"/>
+            <livewire:client.product-detail-info-component :product="$product" />
 
             <div class="bg-light p-5 mb-3">
                 <h6 class="mb-3">CHI TIẾT SẢN PHẨM</h6>
@@ -70,8 +70,7 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <label class="product-detail-label w-20 m-0"
-                            for="">{{ trans('labels.ship_from') }}</label>
+                        <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.ship_from') }}</label>
                         <div class="d-flex align-items-center product-detail-content">
                             {{ App\Models\Config::first()->pickup_address->province->name }}
                         </div>
@@ -99,4 +98,17 @@
     </div><!-- End .page-content -->
 @endsection
 @push('js')
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            direction: "vertical",
+            slidesPerView: 'auto',
+            spaceBetween: 0,
+            loop: true,
+            mousewheel: true,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            }
+        });
+    </script>
 @endpush
