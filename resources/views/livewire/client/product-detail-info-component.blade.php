@@ -10,13 +10,13 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <div class="quickView-content" wire:loading.remove wire:target="changeProduct">
+    <div class="quickView-content px-0" wire:loading.remove wire:target="changeProduct">
         @if ($product)
             <div class="row">
                 <div class="col-lg-7 col-md-6">
                     <div class="row">
                         <div class="product-left">
-                            <div class="swiper mySwiper" style="height: 600px">
+                            <div class="swiper mySwiper h-100">
                                 <div class="swiper-wrapper px-0">
                                     @if ($product->video)
                                         <a href="#{{ $product->video->name }}"
@@ -148,24 +148,42 @@
             });
             var swiper = new Swiper(".mySwiper", {
                 direction: "vertical",
-                slidesPerView: 4,
-                spaceBetween: 5,
+                slidesPerView: 5,
+                spaceBetween: 0,
+                loop: true,
                 mousewheel: true,
                 pagination: {
                     el: ".swiper-pagination",
                     clickable: true,
                 },
+                breakpoints: {
+                    576: {
+                        slidesPerView: 5,
+                    },
+                    992: {
+                        slidesPerView: 4
+                    }
+                }
             });
         })
         var swiper = new Swiper(".mySwiper", {
             direction: "vertical",
-            slidesPerView: 4,
-            spaceBetween: 5,
+            slidesPerView: 5,
+            spaceBetween: 0,
+            loop: true,
             mousewheel: true,
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true,
             },
+            breakpoints: {
+                576: {
+                    slidesPerView: 5,
+                },
+                992: {
+                    slidesPerView: 4
+                }
+            }
         });
     });
 </script>

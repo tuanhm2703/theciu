@@ -591,7 +591,9 @@
 .intro-slider-container, .intro-slide {
     background-color: #f3f3f3;
 }
-
+.product-left {
+    max-height: 600px;
+}
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;
@@ -603,6 +605,9 @@
     }
     .white-popup {
         width: 950px;
+    }
+    .product-left {
+        max-height: 600px;
     }
 }
 @media (min-width: 991px) {
