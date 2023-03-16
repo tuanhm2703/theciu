@@ -49,7 +49,6 @@
                                 data-owl-options='{
                                     "dots": false,
                                     "nav": false,
-                                    "URLhashListener": true,
                                     "lazyLoad": true,
                                     "responsive": {
                                         "900": {
@@ -154,42 +153,27 @@
             });
             var swiper = new Swiper(".mySwiper", {
                 direction: "vertical",
-                slidesPerView: 5,
+                slidesPerView: 'auto',
                 spaceBetween: 0,
                 loop: true,
                 mousewheel: true,
                 pagination: {
                     el: ".swiper-pagination",
                     clickable: true,
-                },
-                breakpoints: {
-                    576: {
-                        slidesPerView: 5,
-                    },
-                    992: {
-                        slidesPerView: 4
-                    }
                 }
             });
-        })
-        var swiper = new Swiper(".mySwiper", {
-            direction: "vertical",
-            slidesPerView: 5,
-            spaceBetween: 0,
-            loop: true,
-            mousewheel: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            breakpoints: {
-                576: {
-                    slidesPerView: 5,
-                },
-                992: {
-                    slidesPerView: 4
-                }
-            }
         });
+    })
+    var swiper = new Swiper(".mySwiper", {
+    direction: "vertical",
+    slidesPerView: 'auto',
+    spaceBetween: 0,
+    loop: true,
+    mousewheel: true,
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    }
+    });
     });
 </script>
