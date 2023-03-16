@@ -3,11 +3,6 @@
 ])
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/nouislider/nouislider.css') }}">
-    <style>
-        .swiper-slide {
-            height: fit-content !important;
-        }
-    </style>
 @endpush
 @section('content')
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">

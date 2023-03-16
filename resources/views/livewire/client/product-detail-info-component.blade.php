@@ -16,7 +16,7 @@
                 <div class="col-lg-7 col-md-6">
                     <div class="row">
                         <div class="product-left">
-                            <div class="swiper mySwiper h-100">
+                            <div class="swiper mySwiper" style="height: 600px">
                                 <div class="swiper-wrapper px-0">
                                     @if ($product->video)
                                         <a href="#{{ $product->video->name }}"
@@ -148,12 +148,11 @@
             });
             var swiper = new Swiper(".mySwiper", {
                 direction: "vertical",
-                slidesPerView: 5,
+                slidesPerView: 4,
                 spaceBetween: 5,
-                loop: true,
-                navigation: true,
+                mousewheel: true,
                 pagination: {
-                    el: '.swiper-pagination',
+                    el: ".swiper-pagination",
                     clickable: true,
                 },
             });
@@ -162,10 +161,9 @@
             direction: "vertical",
             slidesPerView: 4,
             spaceBetween: 5,
-            loop: true,
-            navigation: true,
+            mousewheel: true,
             pagination: {
-                el: '.swiper-pagination',
+                el: ".swiper-pagination",
                 clickable: true,
             },
         });
