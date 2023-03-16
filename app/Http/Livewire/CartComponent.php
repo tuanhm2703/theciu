@@ -37,6 +37,8 @@ class CartComponent extends Component {
     public $item_selected = [];
     public $total;
 
+    public $voucher_code;
+
     public $freeship_vouchers;
 
     public $order_vouchers;
@@ -219,6 +221,31 @@ class CartComponent extends Component {
         if($name == 'order_voucher_id') {
             $this->order_voucher = Voucher::find($value);
             $this->updateOrderInfo($this->address);
+        }
+    }
+
+    public function applyVoucher() {
+        $voucher = Voucher::where('code', $this->voucher_code)->first();
+        if(!$voucher) {
+            $this->dispatchBrowserEvent('openToast', [
+                'message' => 'Voucher không hợp lệ',
+                'type' => 'error'
+            ]);
+        } else {
+            $this->updateVoucherDisableStatus();
+            $voucher = $this->vouchers->where('id', $voucher->id)->first();
+            if($voucher->disabled) {
+                $this->dispatchBrowserEvent('openToast', [
+                    'message' => 'Đơn hàng chưa đủ điều kiện áp dụng voucher',
+                    'type' => 'error'
+                ]);
+            } else {
+                $this->order_voucher_id = $voucher->id;
+                $this->dispatchBrowserEvent('openToast', [
+                    'message' => 'Áp dụng voucher thành công',
+                    'type' => 'success'
+                ]);
+            }
         }
     }
 }

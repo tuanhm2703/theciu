@@ -40,7 +40,8 @@ class ProductController extends Controller {
             $promotion = Promotion::whereSlug($slug)->firstOrFail();
             $title = $promotion->name;
         }
-        return view('landingpage.layouts.pages.product.sale-off.index', compact('promotion', 'title'));
+        $haspromotion = true;
+        return view('landingpage.layouts.pages.product.index', compact('promotion', 'title', 'haspromotion'));
     }
     public function bestSeller() {
         $categoryType = CategoryType::BEST_SELLER;

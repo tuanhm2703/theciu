@@ -28,6 +28,8 @@ class ProductListComponent extends Component {
 
     public $sort_type;
 
+    public $categoryType;
+
     public $total;
 
     public $min_price = 0;
@@ -35,6 +37,14 @@ class ProductListComponent extends Component {
     public $max_price;
 
     public $category = '';
+
+    public $type;
+
+    public $category_name;
+
+    public $promotion;
+
+    public $haspromotion;
 
     protected $queryString = [
         'page' => ['except' => 1, 'as' => 'page'],
@@ -48,7 +58,7 @@ class ProductListComponent extends Component {
     public function mount() {
         $this->product_categories = Category::whereHas('products', function($q) {
             $q->available();
-        })->whereType(CategoryType::PRODUCT)->select('id', 'name')->withCount('products')->get();
+        })->whereType(CategoryType::PRODUCT)->orderBy('categories.name')->select('id', 'name')->withCount('products')->get();
         $this->products = new Collection();
         $this->searchProduct();
     }
@@ -69,6 +79,7 @@ class ProductListComponent extends Component {
         $products = Product::query();
         if ($this->category) {
             $category = Category::whereSlug($this->category)->with('categories.categories')->firstOrFail();
+            $this->category_name = $category->name;
             $category_ids = $category->getAllChildId();
             $products = $products->where(function ($q) use ($category_ids) {
                 $q->whereHas('other_categories', function ($q) use ($category_ids) {
@@ -76,6 +87,19 @@ class ProductListComponent extends Component {
                 })->orWhereHas('categories', function ($q) use ($category_ids) {
                     return $q->whereIn('categories.id', $category_ids);
                 });
+            });
+        }
+        if($this->haspromotion) {
+            $products->hasAvailablePromotions();
+        }
+        if($this->promotion) {
+            $products->whereHas('promotions', function($q) {
+                $q->where('promotions.id', $this->promotion->id);
+            });
+        }
+        if($this->type) {
+            $products->whereHas('other_categories', function($q) {
+                $q->where('categories.type', $this->type);
             });
         }
         if (!empty($this->keyword)) {

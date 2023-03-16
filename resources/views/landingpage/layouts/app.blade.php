@@ -165,6 +165,11 @@
         window.addEventListener('openLoginForm', (e) => {
             openLoginModal()
         });
+        window.addEventListener('openToast', (e) => {
+            const type = e.detail.type
+            const label = type == 'success' ?  `{{ trans('toast.action_successful') }}` : `{{ trans('toast.action_failed') }}`
+            tata[e.detail.type](label, e.detail.message)
+        });
         window.addEventListener("initQuantityInput", (e) => {
             $("input[type='number']").inputSpinner({
                 decrementButton: '<i class="icon-minus"></i>',

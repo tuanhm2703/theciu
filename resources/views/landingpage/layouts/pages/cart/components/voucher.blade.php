@@ -10,10 +10,10 @@
                             <label class="m-0" for="">Mã voucher</label>
                         </div>
                         <div class="col-6 d-flex align-items-center">
-                            <input type="text" placeholder="Mã voucher" class="form-control m-0">
+                            <input type="text" wire:model="voucher_code" wire:lazy placeholder="Mã voucher" class="form-control m-0">
                         </div>
                         <div class="col-3 d-flex align-items-center">
-                            <button style="min-width: fit-content" class="btn btn-secondary">ÁP DỤNG</button>
+                            <button style="min-width: fit-content" class="btn btn-secondary" wire:click.prevent="applyVoucher">ÁP DỤNG</button>
                         </div>
                     </div>
                     <div class="my-3 row mt-5">
@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     @foreach ($vouchers as $voucher)
-                        <div class="custom-control custom-radio voucher-radio row">
+                        <div class="custom-control custom-radio voucher-radio row" wire:ignore>
                             <input type="radio" wire:model="order_voucher_id" value="{{ $voucher->id }}"
                                 id="voucher-{{ $voucher->id }}" class="custom-control-input"
                                 @disabled($voucher->disabled)>
