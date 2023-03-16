@@ -592,7 +592,7 @@
     background-color: #f3f3f3;
 }
 .product-left {
-    max-height: 600px;
+    max-height: 400px;
 }
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
