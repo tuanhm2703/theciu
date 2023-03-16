@@ -16,7 +16,7 @@
                 <div class="col-lg-7 col-md-6">
                     <div class="row">
                         <div class="product-left">
-                            <div class="swiper mySwiper h-100">
+                            <div class="swiper mySwiper">
                                 <div class="swiper-wrapper px-0">
                                     @if ($product->video)
                                         <a href="#{{ $product->video->name }}"
