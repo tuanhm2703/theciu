@@ -88,7 +88,7 @@
                 </div>
             </section>
             <section class="shipping-section">
-                <h5 class="section-title">Vận chuyển</h5>
+                <h5 class="section-title">2. Vận chuyển</h5>
                 <div class="section-content">
                     <ul>
                         <li>
