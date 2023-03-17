@@ -43,7 +43,7 @@
                                             <div class="autocomplete-items">
                                                 @foreach ($autocompleteKeywords as $item)
                                                     <div>
-                                                        <a href="#" wire:click="pickKeyword({{ $item->name }})">
+                                                        <a href="#" wire:click.prevent="pickKeyword({{ $item->name }})">
                                                             {{ $item->name }}
                                                         </a>
                                                     </div>
