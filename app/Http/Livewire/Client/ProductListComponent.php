@@ -60,6 +60,8 @@ class ProductListComponent extends Component
         'category' => ['except' => '']
     ];
 
+    protected $listeners = ['updateKeyword', 'updateKeyword'];
+
     public function mount()
     {
         $this->product_categories = Category::whereHas('products', function ($q) {
@@ -148,5 +150,11 @@ class ProductListComponent extends Component
         } else {
             $this->autocompleteKeywords = [];
         }
+    }
+
+    public function updateKeyword($keyword) {
+        $this->keyword = $keyword;
+        $this->searchProduct(1);
+        $this->autocompleteKeywords = [];
     }
 }

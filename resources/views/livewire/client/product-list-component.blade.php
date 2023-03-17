@@ -32,9 +32,9 @@
                                     <div class="search-wrapper-wide d-flex align-items-center">
                                         <a href="#" wire:click.prevent="searchProduct(1)"><i
                                                 class="icon-search"></i></a>
-                                        <input wire:model="keyword" type="search"
-                                            wire:keydown.enter="searchProduct(1)" class="form-control" name="q"
-                                            id="q" placeholder="Tìm sản phẩm..." required="">
+                                        <input wire:model="keyword" type="search" wire:keydown.enter="searchProduct(1)"
+                                            class="form-control" name="q" id="q"
+                                            placeholder="Tìm sản phẩm..." required="">
                                         <div class="spinner-border spinner-border-sm" role="status" wire:loading
                                             wire:target="keyword">
                                             <span class="sr-only">Loading...</span>
@@ -43,7 +43,8 @@
                                             <div class="autocomplete-items">
                                                 @foreach ($autocompleteKeywords as $item)
                                                     <div>
-                                                        <a href="#" wire:click.prevent="pickKeyword({{ $item->name }})">
+                                                        <a href="#" class="keyword-picker" onclick="updateKeyword(event)"
+                                                            data-keyword="{{ $item->name }}">
                                                             {{ $item->name }}
                                                         </a>
                                                     </div>
@@ -196,12 +197,14 @@
                             type: "inline",
                         },
                     });
-
-                    // quantityInputs();
                 }
             });
         })
         $('input[name=q]').focusout(e => {
+            const relatedElement = $($(e.relatedTarget)[0])
+            if(relatedElement.attr('class') == 'keyword-picker') {
+                Livewire.emit('updateKeyword', $(relatedElement).attr('data-keyword'));
+            }
             $('.autocomplete-items').addClass('d-none');
         })
         $('input[name=q]').focus(e => {
