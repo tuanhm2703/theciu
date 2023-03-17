@@ -55,7 +55,7 @@
 </div>
 <script>
     (() => {
-        const selectedProductIds = @json($productIds)
+        const selectedProductIds = @json($productIds);
         $('.category-product-table').DataTable({
             "processing": true,
             "serverSide": true,
