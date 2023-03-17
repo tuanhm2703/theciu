@@ -113,7 +113,7 @@
             //         productIds.push($(checkbox).data().productId)
             //     }
             // });
-            if (productIds.length > 0) {
+            if (selectedProductIds.length > 0) {
                 addProductFromIdArray(selectedProductIds)
             }
         })
