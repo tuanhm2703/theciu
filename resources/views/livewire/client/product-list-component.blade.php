@@ -40,7 +40,7 @@
                                             <span class="sr-only">Loading...</span>
                                         </div>
                                         @if (count($autocompleteKeywords) != 0)
-                                            <div class="autocomplete-items">
+                                            <div class="autocomplete-items" wire:ignore.self>
                                                 @foreach ($autocompleteKeywords as $item)
                                                     <div>
                                                         <a href="#" class="keyword-picker" onclick="updateKeyword(event)"
@@ -205,10 +205,11 @@
             if(relatedElement.attr('class') == 'keyword-picker') {
                 Livewire.emit('updateKeyword', $(relatedElement).attr('data-keyword'));
             }
-            $('.autocomplete-items').addClass('d-none');
+            $('.toolbox .autocomplete-items').addClass('d-none');
         })
         $('input[name=q]').focus(e => {
-            $('.autocomplete-items').removeClass('d-none');
+            $('.toolbox .autocomplete-items').removeClass('d-none');
         })
     })
+    $('.toolbox .autocomplete-items').addClass('d-none');
 </script>

@@ -13,7 +13,6 @@ use Livewire\Component;
 class ProductListComponent extends Component
 {
     use KeywordCount;
-    public $keyword;
 
     public $title;
 
@@ -49,8 +48,6 @@ class ProductListComponent extends Component
 
     public $haspromotion;
 
-    public $autocompleteKeywords = [];
-
     protected $queryString = [
         'page' => ['except' => 1, 'as' => 'page'],
         'keyword',
@@ -69,6 +66,7 @@ class ProductListComponent extends Component
         })->whereType(CategoryType::PRODUCT)->orderBy('categories.name')->select('id', 'name')->withCount('products')->get();
         $this->products = new Collection();
         $this->searchProduct();
+        $this->resfreshAutocompleteKeywords();
     }
     public function render()
     {
@@ -129,32 +127,5 @@ class ProductListComponent extends Component
     {
         $this->categories = [];
         $this->searchProduct(1);
-    }
-
-    public function pickKeyword($value) {
-        $this->keyword = $value;
-        $this->searchProduct(1);
-    }
-
-    public function updated($name, $value) {
-        if($name == 'keyword') {
-            $this->resfreshAutocompleteKeywords();
-        }
-    }
-
-    public function resfreshAutocompleteKeywords()
-    {
-        if (!empty($this->keyword)) {
-            $this->countKeyWord($this->keyword);
-            $this->autocompleteKeywords = $this->getAutocomleteKeywords($this->keyword);
-        } else {
-            $this->autocompleteKeywords = [];
-        }
-    }
-
-    public function updateKeyword($keyword) {
-        $this->keyword = $keyword;
-        $this->searchProduct(1);
-        $this->autocompleteKeywords = [];
     }
 }

@@ -675,6 +675,13 @@
     font-size: 14px;
     padding: 0.5em;
 }
+.header-search .autocomplete-items {
+    z-index: 13;
+}
+.header-search-wrapper .spinner-border {
+    font-size: 1rem;
+    align-self: center;
+}
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;
