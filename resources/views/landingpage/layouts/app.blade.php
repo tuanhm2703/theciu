@@ -165,6 +165,14 @@
         window.addEventListener('openLoginForm', (e) => {
             openLoginModal()
         });
+        window.addEventListener('openQuickPreview', (e) => {
+            $.magnificPopup.open({
+                items: {
+                    src: $("#test-popup"),
+                    type: "inline",
+                },
+            });
+        });
         window.addEventListener('openToast', (e) => {
             const type = e.detail.type
             const label = type == 'success' ?  `{{ trans('toast.action_successful') }}` : `{{ trans('toast.action_failed') }}`
