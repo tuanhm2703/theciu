@@ -36,7 +36,7 @@ trait KeywordCount
         $baseQuery = Keyword::select('name', 'count');
         $keywords = (clone $baseQuery)->search('name', $keyword)
             ->union((clone $baseQuery)->search('name', $keyword, 'binary'))
-            ->union((clone $baseQuery)->where('name', $keyword))->orderBy('count', 'desc')->limit(10)->get();
+            ->union((clone $baseQuery)->where('name', $keyword))->orderByRaw('char_length(name) desc')->orderBy('count', 'desc')->limit(10)->get();
         return $keywords;
     }
 
