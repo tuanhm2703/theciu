@@ -1,3 +1,6 @@
+:root {
+    --swiper-theme-color: #c96 !important;
+}
 .trending-carousel .owl-stage {
     margin: auto;
 }
