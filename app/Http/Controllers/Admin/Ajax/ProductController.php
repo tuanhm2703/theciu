@@ -30,7 +30,7 @@ class ProductController extends Controller
             return $q->with('attributes');
         }])->select('products.id', 'products.name', 'products.sku', 'products.updated_at');
         if ($request->ids) $products->whereIn('id', $request->ids);
-        if($request->selected) {
+        if($request->selected && count($request->selected) > 0) {
             $products->orderByField('id', $request->selected, 'desc');
         }
         return DataTables::of($products)
