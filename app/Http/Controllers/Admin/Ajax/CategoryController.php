@@ -103,7 +103,7 @@ class CategoryController extends Controller {
     }
 
     public function viewAddProduct(Category $category, Request $request) {
-        $productIds = implode(',', $category->products()->pluck('products.id')->toArray());
+        $productIds = $category->products()->pluck('products.id')->toArray();
         return view('admin.pages.category.modal.product', compact('category', 'productIds'));
     }
 
