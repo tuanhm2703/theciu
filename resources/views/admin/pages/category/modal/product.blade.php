@@ -106,15 +106,15 @@
         });
         $('#add-product-btn').on('click', (e) => {
             e.preventDefault()
-            let productIds = []
-            const checkboxes = $('.category-product-table .child-checkbox')
-            Array.from(checkboxes).forEach(checkbox => {
-                if ($(checkbox).is(':checked')) {
-                    productIds.push($(checkbox).data().productId)
-                }
-            });
+            // let productIds = []
+            // const checkboxes = $('.category-product-table .child-checkbox')
+            // Array.from(checkboxes).forEach(checkbox => {
+            //     if ($(checkbox).is(':checked')) {
+            //         productIds.push($(checkbox).data().productId)
+            //     }
+            // });
             if (productIds.length > 0) {
-                addProductFromIdArray(productIds)
+                addProductFromIdArray(selectedProductIds)
             }
         })
         const addProductFromIdArray = (ids) => {
@@ -132,7 +132,6 @@
                 },
                 error: (err) => {
                     $('#add-product-btn').loading(false)
-                    console.log(err);
                 }
             })
         }
