@@ -10200,6 +10200,9 @@ button:focus {
 .toolbox-info {
     color: #ccc;
 }
+.toolbox-info .search-wrapper-wide {
+    position: relative;
+}
 .toolbox-info span {
     color: #333;
 }

@@ -3,13 +3,16 @@
 namespace App\Http\Livewire\Client;
 
 use App\Enums\CategoryType;
+use App\Enums\KeywordCount;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Promotion;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
-class ProductListComponent extends Component {
+class ProductListComponent extends Component
+{
+    use KeywordCount;
     public $keyword;
 
     public $title;
@@ -46,6 +49,8 @@ class ProductListComponent extends Component {
 
     public $haspromotion;
 
+    public $autocompleteKeywords = [];
+
     protected $queryString = [
         'page' => ['except' => 1, 'as' => 'page'],
         'keyword',
@@ -55,23 +60,27 @@ class ProductListComponent extends Component {
         'category' => ['except' => '']
     ];
 
-    public function mount() {
-        $this->product_categories = Category::whereHas('products', function($q) {
+    public function mount()
+    {
+        $this->product_categories = Category::whereHas('products', function ($q) {
             $q->available();
         })->whereType(CategoryType::PRODUCT)->orderBy('categories.name')->select('id', 'name')->withCount('products')->get();
         $this->products = new Collection();
         $this->searchProduct();
     }
-    public function render() {
+    public function render()
+    {
         return view('livewire.client.product-list-component');
     }
 
-    public function nextPage() {
+    public function nextPage()
+    {
         $this->page++;
         $this->searchProduct();
     }
 
-    public function searchProduct($page = null) {
+    public function searchProduct($page = null)
+    {
         if ($page) {
             $this->products = new Collection();
             $this->page = $page;
@@ -89,16 +98,16 @@ class ProductListComponent extends Component {
                 });
             });
         }
-        if($this->haspromotion) {
+        if ($this->haspromotion) {
             $products->hasAvailablePromotions();
         }
-        if($this->promotion) {
-            $products->whereHas('promotions', function($q) {
+        if ($this->promotion) {
+            $products->whereHas('promotions', function ($q) {
                 $q->where('promotions.id', $this->promotion->id);
             });
         }
-        if($this->type) {
-            $products->whereHas('other_categories', function($q) {
+        if ($this->type) {
+            $products->whereHas('other_categories', function ($q) {
                 $q->where('categories.type', $this->type);
             });
         }
@@ -114,8 +123,30 @@ class ProductListComponent extends Component {
         $this->hasNext = $this->products->count() < $this->total;
     }
 
-    public function clearAllFilter() {
+    public function clearAllFilter()
+    {
         $this->categories = [];
         $this->searchProduct(1);
+    }
+
+    public function pickKeyword($value) {
+        $this->keyword = $value;
+        $this->searchProduct(1);
+    }
+
+    public function updated($name, $value) {
+        if($name == 'keyword') {
+            $this->resfreshAutocompleteKeywords();
+        }
+    }
+
+    public function resfreshAutocompleteKeywords()
+    {
+        if (!empty($this->keyword)) {
+            $this->countKeyWord($this->keyword);
+            $this->autocompleteKeywords = $this->getAutocomleteKeywords($this->keyword);
+        } else {
+            $this->autocompleteKeywords = [];
+        }
     }
 }

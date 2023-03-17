@@ -32,9 +32,24 @@
                                     <div class="search-wrapper-wide d-flex align-items-center">
                                         <a href="#" wire:click.prevent="searchProduct(1)"><i
                                                 class="icon-search"></i></a>
-                                        <input wire:model.lazy="keyword" type="search"
+                                        <input wire:model="keyword" type="search"
                                             wire:keydown.enter="searchProduct(1)" class="form-control" name="q"
                                             id="q" placeholder="Tìm sản phẩm..." required="">
+                                        <div class="spinner-border spinner-border-sm" role="status" wire:loading
+                                            wire:target="keyword">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        @if (count($autocompleteKeywords) != 0)
+                                            <div class="autocomplete-items">
+                                                @foreach ($autocompleteKeywords as $item)
+                                                    <div>
+                                                        <a href="#" wire:click="pickKeyword({{ $item->name }})">
+                                                            {{ $item->name }}
+                                                        </a>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
                                     </div><!-- End .header-search-wrapper -->
                                 </div><!-- End .toolbox-info -->
                             </div><!-- End .toolbox-center -->
@@ -185,6 +200,12 @@
                     // quantityInputs();
                 }
             });
+        })
+        $('input[name=q]').focusout(e => {
+            $('.autocomplete-items').addClass('d-none');
+        })
+        $('input[name=q]').focus(e => {
+            $('.autocomplete-items').removeClass('d-none');
         })
     })
 </script>

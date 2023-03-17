@@ -7,12 +7,12 @@
         ]) !!}
         <div class="form-group">
             {!! Form::label('username', trans('labels.phone_or_email') . '*', []) !!}
-            {!! Form::text('username', null, ['class' => 'form-control', 'id' => 'signin-email', 'required']) !!}
+            {!! Form::text('username', null, ['class' => 'form-control', 'required']) !!}
         </div><!-- End .form-group -->
 
         <div class="form-group">
             {!! Form::label('password', trans('labels.password') . '*', []) !!}
-            {!! Form::password('password', ['class' => 'form-control', 'id' => 'signin-password', 'required']) !!}
+            {!! Form::password('password', ['class' => 'form-control', 'required']) !!}
         </div><!-- End .form-group -->
 
         <div class="form-footer">
@@ -22,7 +22,7 @@
             </button>
 
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="signin-remember">
+                <input type="checkbox" class="custom-control-input">
                 <label class="custom-control-label" for="signin-remember">{{ trans('labels.remember_me') }}</label>
             </div><!-- End .custom-checkbox -->
 
@@ -56,16 +56,16 @@
         ]) !!}
         <div class="form-group">
             {!! Form::label('username', trans('labels.phone_or_email') . '*', []) !!}
-            {!! Form::text('username', null, ['class' => 'form-control', 'id' => 'signin-email', 'required']) !!}
+            {!! Form::text('username', null, ['class' => 'form-control', 'required']) !!}
         </div><!-- End .form-group -->
 
         <div class="form-group">
             {!! Form::label('password', trans('labels.password') . '*', []) !!}
-            {!! Form::password('password', ['class' => 'form-control', 'id' => 'signin-password', 'required']) !!}
+            {!! Form::password('password', ['class' => 'form-control', 'required']) !!}
         </div><!-- End .form-group -->
         <div class="form-group">
             {!! Form::label('password_confirmation', trans('labels.password_confirmation') . '*', []) !!}
-            {!! Form::password('password_confirmation', ['class' => 'form-control', 'id' => 'signin-password', 'required']) !!}
+            {!! Form::password('password_confirmation', ['class' => 'form-control', 'required']) !!}
         </div><!-- End .form-group -->
         <div class="form-footer">
             <button type="submit" class="btn btn-outline-primary-2">
@@ -74,7 +74,7 @@
             </button>
 
             <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="signin-remember">
+                <input type="checkbox" class="custom-control-input">
                 <label class="custom-control-label" for="signin-remember">{{ trans('labels.remember_me') }}</label>
             </div><!-- End .custom-checkbox -->
 

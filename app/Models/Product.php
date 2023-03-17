@@ -46,7 +46,8 @@ class Product extends Model {
         'additional_information',
         'shipping_and_return',
         'code',
-        'reorder_days'
+        'reorder_days',
+        'status'
     ];
 
     public function unique_attribute_inventories() {

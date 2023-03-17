@@ -38,6 +38,10 @@ class Customer extends User {
         return $this->hasMany(Order::class);
     }
 
+    public function keywords() {
+        return $this->hasMany(Keyword::class);
+    }
+
     public function kiot_customer() {
         return $this->hasOne(KiotCustomer::class);
     }

@@ -26,15 +26,23 @@
             </div>
             <ul class="navbar-nav  justify-content-end">
                 <li class="nav-item d-flex align-items-center">
-                    <form role="form" method="post" action="{{ route('admin.logout') }}" id="logout-form">
-                        @csrf
-                        <a href="{{ route('admin.logout') }}"
-                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                            class="nav-link text-white font-weight-bold px-0">
+
+                    <div class="dropdown text-center nav-link text-white font-weight-bold px-0">
+                        <button class="btn dropdown-toggle m-0 text-white" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" style="box-shadow: none" aria-expanded="false">
                             <i class="fa fa-user me-sm-1"></i>
-                            <span class="d-sm-inline d-none">Log out</span>
-                        </a>
-                    </form>
+                        </button>
+                        <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
+                            <li>
+                                <a href="{{ route('admin.logout') }}">
+                                    <span class="d-sm-inline d-none">Log out</span>
+                                </a>
+                            </li>
+                            <li>
+                                hi
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item d-xxl-none ps-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">

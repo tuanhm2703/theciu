@@ -658,6 +658,23 @@
     display: inline-block;
     width: 1em;
 }
+.autocomplete-items {
+    font-size: 1em;
+    position: absolute;
+    top: 100%;
+    z-index: 11;
+    background: white;
+    padding: 1rem 3px;
+    width: 100%;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.26);
+    border-radius: 2px;
+    overflow: hidden;
+    left: 30px;
+}
+.autocomplete-items div {
+    font-size: 14px;
+    padding: 0.5em;
+}
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;
