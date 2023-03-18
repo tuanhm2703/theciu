@@ -130,20 +130,22 @@ class Inventory extends Model {
         if ($kiotSetting->data['branchId']) {
             try {
                 $kiotProduct = $productSource->getByCode($this->sku);
+                $inventories = $kiotProduct->getInventories();
+                foreach ($inventories as $inventory) {
+                    if ($inventory->getBranchId() == $kiotSetting->data['branchId']) {
+                        $otherProperties = $inventory->getOtherProperties();
+                        $this->update([
+                            'stock_quantity' => $inventory->getOnHand(),
+                            'status' => $otherProperties['isActive']
+                        ]);
+                    }
+                }
             } catch (\Throwable $th) {
+                \Log::error($th);
                 $this->update([
                     'status' => StatusType::INACTIVE
                 ]);
-            }
-            $inventories = $kiotProduct->getInventories();
-            foreach ($inventories as $inventory) {
-                if ($inventory->getBranchId() == $kiotSetting->data['branchId']) {
-                    $otherProperties = $inventory->getOtherProperties();
-                    $this->update([
-                        'stock_quantity' => $inventory->getOnHand(),
-                        'status' => $otherProperties['isActive']
-                    ]);
-                }
+                return;
             }
         }
     }

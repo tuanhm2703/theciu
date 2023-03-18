@@ -69,7 +69,7 @@ class SyncWarehouseController extends Controller {
             try {
                 $inventory->syncKiotWarehouse();
             } catch (\Throwable $th) {
-                //throw $th;
+                \Log::error($th);
             }
         }
         return BaseResponse::success([
