@@ -27,6 +27,8 @@ class ProductCreated
      */
     public function handle(EventsProductCreated $productCreatedEvent)
     {
-        dispatch(new SyncKiotVietProductWarehouse($productCreatedEvent->product));
+        foreach ($productCreatedEvent->product->inventories as $inventory) {
+            dispatch(new SyncKiotVietProductWarehouse($inventory));
+        }
     }
 }

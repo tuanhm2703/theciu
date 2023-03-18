@@ -24,9 +24,9 @@ class SyncKiotVietProductWarehouse implements ShouldQueue {
      *
      * @return void
      */
-    private $product;
-    public function __construct(Product $product) {
-        $this->product = $product;
+    private $inventory;
+    public function __construct(Inventory $inventory) {
+        $this->inventory = $inventory;
     }
 
     /**
@@ -36,9 +36,7 @@ class SyncKiotVietProductWarehouse implements ShouldQueue {
      */
     public function handle() {
         try {
-            $this->product->inventories->each(function ($inventory) {
-                $inventory->syncKiotWarehouse();
-            });
+            $this->inventory->syncKiotWarehouse();
         } catch (\Throwable $th) {
             Log::error($th);
         }

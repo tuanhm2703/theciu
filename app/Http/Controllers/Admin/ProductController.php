@@ -58,7 +58,6 @@ class ProductController extends Controller {
                     }
                 }
             }
-            event(new ProductCreated($product));
             DB::commit();
             return BaseResponse::success([
                 'message' => "Tạo sản phẩm thành công"
