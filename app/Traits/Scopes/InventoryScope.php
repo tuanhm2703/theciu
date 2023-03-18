@@ -27,4 +27,8 @@ trait InventoryScope {
     public function scopeHaveStock($q) {
         return $q->where('stock_quantity', '>', 0);
     }
+
+    public function scopeAvailable($q) {
+        return $q->active()->where('stock_quantity', '>', 0);
+    }
 }

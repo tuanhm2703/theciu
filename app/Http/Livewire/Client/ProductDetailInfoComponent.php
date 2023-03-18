@@ -36,7 +36,7 @@ class ProductDetailInfoComponent extends Component
         if(auth('customer')->check()) {
             $this->inventory_images = $this->inventory_images ?? collect();
             $this->product = Product::with(['category', 'inventories' => function ($q) {
-                return $q->with(['image', 'attributes' => function ($q) {
+                return $q->availalbe()->with(['image', 'attributes' => function ($q) {
                     $q->orderBy('attribute_inventory.created_at', 'desc');
                 }]);
             }])->find($id);

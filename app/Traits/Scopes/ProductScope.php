@@ -34,7 +34,7 @@ trait ProductScope
     {
         return $q->where(function ($q) {
             $q->whereHas('inventories', function ($q) {
-                $q->where('stock_quantity', '>', 0);
+                $q->where('stock_quantity', '>', 0)->where('inventories.status', 1);
             })->orWhere('products.is_reorder', 1);
         });
     }

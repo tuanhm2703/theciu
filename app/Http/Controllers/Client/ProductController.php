@@ -12,13 +12,13 @@ use Illuminate\Http\Request;
 class ProductController extends Controller {
     public function details($slug) {
         $product = Product::findBySlug($slug)->with(['category', 'inventories' => function ($q) {
-            return $q->with(['image', 'attributes' => function ($q) {
+            return $q->available()->with(['image', 'attributes' => function ($q) {
                 $q->orderBy('attribute_inventory.created_at', 'desc');
             }]);
         }])->firstOrFail();
         $other_products = Product::where('id', '!=', $product->id)
             ->with(['category', 'inventories' => function ($q) {
-                return $q->with(['image', 'attributes' => function ($q) {
+                return $q->available()->with(['image', 'attributes' => function ($q) {
                     $q->orderBy('attribute_inventory.created_at', 'desc');
                 }]);
             }])

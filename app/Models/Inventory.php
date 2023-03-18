@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Common\Imageable;
+use App\Traits\Scopes\CustomScope;
 use App\Traits\Scopes\InventoryScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,7 @@ use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Resource\ProductResource;
 
 class Inventory extends Model {
-    use HasFactory, SoftDeletes, Imageable, InventoryScope;
+    use HasFactory, SoftDeletes, Imageable, InventoryScope, CustomScope;
 
     protected $fillable = [
         'product_id',
@@ -26,6 +27,7 @@ class Inventory extends Model {
         'promotion_from',
         'promotion_to',
         'promotion_status',
+        'status'
     ];
 
     protected $casts = [
@@ -117,7 +119,7 @@ class Inventory extends Model {
 
     public function increaseQuantity() {
         $this->update([
-            'stock_quantity' => DB::raw('stock_quantity - +')
+            'stock_quantity' => DB::raw('stock_quantity + 1')
         ]);
     }
 
@@ -126,11 +128,13 @@ class Inventory extends Model {
         $kiotSetting = App::get('KiotConfig');
         if ($kiotSetting->data['branchId']) {
             $kiotProduct = $productSource->getByCode($this->sku);
-            $inventories = $kiotProduct->getModelData()['inventories'];
+            $inventories = $kiotProduct->getInventories();
             foreach ($inventories as $inventory) {
-                if ($inventory['branchId'] == $kiotSetting->data['branchId']) {
+                if ($inventory->getBranchId() == $kiotSetting->data['branchId']) {
+                    $otherProperties = $inventory->getOtherProperties();
                     $this->update([
-                        'stock_quantity' => $inventory['onHand']
+                        'stock_quantity' => $inventory->getOnHand(),
+                        'status' => $otherProperties['isActive']
                     ]);
                 }
             }
