@@ -160,7 +160,7 @@ class Inventory extends Model {
                     $inventories = $kiotProduct->data['inventories'];
                     foreach ($inventories as $inventory) {
                         if ($inventory['branchId'] == $kiotSetting->data['branchId']) {
-                            $otherProperties = $inventory['otherProperties']();
+                            $otherProperties = $inventory['otherProperties'];
                             $this->update([
                                 'stock_quantity' => $inventory['onHand'],
                                 'status' => $otherProperties['isActive']
