@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StatusType;
 use App\Traits\Common\Imageable;
 use App\Traits\Scopes\CustomScope;
 use App\Traits\Scopes\InventoryScope;
@@ -127,7 +128,13 @@ class Inventory extends Model {
         $productSource = new ProductResource(App::make(Client::class));
         $kiotSetting = App::get('KiotConfig');
         if ($kiotSetting->data['branchId']) {
-            $kiotProduct = $productSource->getByCode($this->sku);
+            try {
+                $kiotProduct = $productSource->getByCode($this->sku);
+            } catch (\Throwable $th) {
+                $this->update([
+                    'status' => StatusType::INACTIVE
+                ]);
+            }
             $inventories = $kiotProduct->getInventories();
             foreach ($inventories as $inventory) {
                 if ($inventory->getBranchId() == $kiotSetting->data['branchId']) {
