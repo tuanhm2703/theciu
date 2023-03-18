@@ -9,16 +9,19 @@ use Livewire\Component;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Resource\ProductResource;
 
-class SyncKiotWarehouseComponent extends Component {
+class SyncKiotWarehouseComponent extends Component
+{
     public $percentage;
 
     protected $listeners = ['startSyncKiot' => 'sync', 'downloadKiotProduct' => 'downloadKiotData'];
 
-    public function render() {
+    public function render()
+    {
         return view('livewire.admin.sync-kiot-warehouse-component');
     }
 
-    public function sync() {
+    public function sync()
+    {
         $this->percentage = 0;
 
         while ($this->percentage < 100) {
@@ -40,21 +43,25 @@ class SyncKiotWarehouseComponent extends Component {
         //     \Log::info($this->percentage);
         // }
     }
-    public function downloadKiotData() {
-        $productResource = new ProductResource(App::make(Client::class));
-        $data = $productResource->list(['pageSize' => '1']);
-        $total = $data->getTotal();
-        $numbeOfPage = $total % 100 == 0 ? $total / 100 : (int) ($total / 100) + 1;
-        for ($i=0; $i < $numbeOfPage; $i++) {
-            $currentItem = $i * 100;
-            $products = $productResource->list(['pageSize' => 100, 'currentItem' => $currentItem, 'includeInventory' => true])->getItems();
-            foreach($products as $product) {
-                KiotProduct::updateOrCreate([
-                    'kiot_product_id' => $product->getId(),
-                    'kiot_code' => $product->getCode()
-                ], [
-                    'data' => $product->getModelData()
-                ]);
+    public function downloadKiotData()
+    {
+        $kiotProduct = KiotProduct::orderBy('updated_at')->first();
+        if (now()->diffInHours($kiotProduct->updated_at) >= 24) {
+            $productResource = new ProductResource(App::make(Client::class));
+            $data = $productResource->list(['pageSize' => '1']);
+            $total = $data->getTotal();
+            $numbeOfPage = $total % 100 == 0 ? $total / 100 : (int) ($total / 100) + 1;
+            for ($i = 0; $i < $numbeOfPage; $i++) {
+                $currentItem = $i * 100;
+                $products = $productResource->list(['pageSize' => 100, 'currentItem' => $currentItem, 'includeInventory' => true])->getItems();
+                foreach ($products as $product) {
+                    KiotProduct::updateOrCreate([
+                        'kiot_product_id' => $product->getId(),
+                        'kiot_code' => $product->getCode()
+                    ], [
+                        'data' => $product->getModelData()
+                    ]);
+                }
             }
         }
         $this->dispatchBrowserEvent('startSyncKiot');

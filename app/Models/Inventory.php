@@ -155,7 +155,7 @@ class Inventory extends Model {
         $kiotSetting = App::get('KiotConfig');
         if ($kiotSetting->data['branchId']) {
             try {
-                $kiotProduct = KiotProduct::where('sku', $this->sku)->first();
+                $kiotProduct = KiotProduct::where('kiot_code', $this->sku)->first();
                 if($kiotProduct) {
                     $inventories = $kiotProduct->data['inventories'];
                     foreach ($inventories as $inventory) {
