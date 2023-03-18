@@ -12,7 +12,7 @@ class NewArrivalComponent extends Component {
 
     public $page = 1;
 
-    public $pageSize = 8;
+    public $pageSize = 4;
 
     public function mount() {
         $this->products = Product::available()->newArrival()

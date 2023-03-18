@@ -71,7 +71,7 @@
                     render: function(data, type, row) {
                         if (type === 'display') {
                             return `<div class="form-check text-center form-check-info">
-                                        <input type="checkbox" data-product-id="${data}" ${selectedProductIds.indexOf(data.toString()) > -1 ? 'checked' : ''} class="editor-active form-check-input child-checkbox">
+                                        <input type="checkbox" data-product-id="${data}" ${selectedProductIds.includes(data) ? 'checked' : ''} class="editor-active form-check-input child-checkbox">
                                     </div>`
                         }
                         return data;

@@ -2,6 +2,7 @@
 
 namespace App\Traits\Scopes;
 
+use App\Enums\CategoryType;
 use App\Enums\StatusType;
 use Illuminate\Support\Facades\DB;
 
@@ -24,9 +25,9 @@ trait ProductScope
 
     public function scopeNewArrival($q)
     {
-        $dayForNewArrival = 4;
-        $now = now();
-        return $q->whereRaw("TIMESTAMPDIFF(DAY, updated_at, '$now') <= $dayForNewArrival");
+        $q->whereHas('other_categories', function($q) {
+            $q->where('categories.type', CategoryType::NEW_ARRIVAL);
+        });
     }
 
     public function scopeAvailable($q)
