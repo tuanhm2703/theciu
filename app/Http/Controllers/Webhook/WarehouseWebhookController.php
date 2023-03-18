@@ -15,7 +15,7 @@ class WarehouseWebhookController extends Controller {
             $sku = $data['ProductCode'];
             $inventory = Inventory::whereSku($sku)->firstOrFail();
             $kiotConfig = App::get('KiotConfig');
-            if($inventory->sku == $sku && $kiotConfig->data['branchId']) {
+            if($inventory->sku == $sku && $kiotConfig->data['branchId'] == $data['branchId']) {
                 $inventory->stock_quantity = $data['OnHand'];
                 $inventory->status = $data['isActive'];
                 $inventory->save();
