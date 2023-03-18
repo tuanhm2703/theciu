@@ -122,6 +122,9 @@
         })
         $('#sync-btn').on('click', (e) => {
             e.preventDefault()
+            Livewire.emit('downloadKiotProduct');
+        })
+        window.addEventListener('startSyncKiot', (e) => {
             $('.progress').css('opacity', 1)
             $('.progress').css('height', '25px')
             syncPercent = 0
@@ -149,10 +152,7 @@
                     }
                 })
             }
-        })
-        window.addEventListener('update-percentage', event => {
-            console.log(event.detail);
-        })
+        });
         $(document).ready(() => {
             const options = @json($sale_channels->pluck('name', 'id')->toArray());
 

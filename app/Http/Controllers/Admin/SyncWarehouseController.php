@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inventory;
+use App\Models\KiotProduct;
 use App\Models\Product;
 use App\Models\Setting;
 use App\Responses\Admin\BaseResponse;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Resource\BranchResource;
+use VienThuong\KiotVietClient\Resource\ProductResource;
 use VienThuong\KiotVietClient\Resource\SaleChannelResource;
 use VienThuong\KiotVietClient\Resource\WebhookResource;
 use VienThuong\KiotVietClient\WebhookType;
@@ -62,12 +64,31 @@ class SyncWarehouseController extends Controller {
         ]);
     }
 
+    public function downloadKiotData() {
+        $productResource = new ProductResource(App::make(Client::class));
+        $data = $productResource->list(['pageSize' => '1']);
+        $total = $data->getTotal();
+        $numbeOfPage = $total % 100 == 0 ? $total / 100 : (int) ($total / 100) + 1;
+        for ($i=0; $i < $numbeOfPage; $i++) {
+            $currentItem = $i * 100;
+            $products = $productResource->list(['pageSize' => 100, 'currentItem' => $currentItem])->getItems();
+            foreach($products as $product) {
+                KiotProduct::updateOrCreate([
+                    'kiot_product_id' => $product->getId(),
+                    'kiot_code' => $product->getCode()
+                ], [
+                    $data
+                ]);
+            }
+        }
+    }
+
     public function syncStock(Request $request) {
         $pageSize = $request->pageSize ?? 10;
         $inventories = Inventory::whereNotNull('sku')->paginate($pageSize);
         foreach ($inventories as $inventory) {
             try {
-                $inventory->syncKiotWarehouse();
+                $inventory->syncKiotWarehouseLocal();
             } catch (\Throwable $th) {
                 \Log::error($th);
             }

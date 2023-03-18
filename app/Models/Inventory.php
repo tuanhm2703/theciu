@@ -149,4 +149,34 @@ class Inventory extends Model {
             }
         }
     }
+
+    public function syncKiotWarehouseLocal() {
+        $productSource = new ProductResource(App::make(Client::class));
+        $kiotSetting = App::get('KiotConfig');
+        if ($kiotSetting->data['branchId']) {
+            try {
+                $kiotProduct = KiotProduct::where('sku', $this->sku)->first();
+                if($kiotProduct) {
+                    $inventories = $kiotProduct->data['inventories'];
+                    foreach ($inventories as $inventory) {
+                        if ($inventory['branchId'] == $kiotSetting->data['branchId']) {
+                            $otherProperties = $inventory['otherProperties']();
+                            $this->update([
+                                'stock_quantity' => $inventory['onHand'],
+                                'status' => $otherProperties['isActive']
+                            ]);
+                        }
+                    }
+                } else {
+                    $this->update(['status' => StatusType::INACTIVE]);
+                }
+            } catch (\Throwable $th) {
+                \Log::error($th);
+                $this->update([
+                    'status' => StatusType::INACTIVE
+                ]);
+                return;
+            }
+        }
+    }
 }
