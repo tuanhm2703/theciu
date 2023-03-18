@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Address;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\Page;
 use App\Models\Product;
@@ -13,6 +14,7 @@ use App\Observers\AddressObserver;
 use App\Observers\BlogObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\EditByObserver;
+use App\Observers\InventoryObserver;
 use App\Observers\OrderObserver;
 use App\Observers\PageObserver;
 use App\Observers\ProductObserver;
@@ -36,6 +38,7 @@ class ObserverServiceProvider extends ServiceProvider {
      */
     public function boot() {
         Product::observe(ProductObserver::class);
+        Inventory::observe(InventoryObserver::class);
         Blog::observe(EditByObserver::class);
         Blog::observe(BlogObserver::class);
         Category::observe(CategoryObserver::class);
