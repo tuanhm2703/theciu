@@ -33,5 +33,6 @@ class OrderCanceledListener
         }
         $order->restock();
         $order->cancelShippingOrder();
+        $order->cancelKiotInvoice();
     }
 }

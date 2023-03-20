@@ -29,5 +29,6 @@ class OrderCreatedListener {
             $voucher->decreaseQuantity();
         }
         $order->removeStock();
+        $order->createKiotOrder();
     }
 }

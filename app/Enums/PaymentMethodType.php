@@ -12,4 +12,15 @@ class PaymentMethodType {
     const VNPAY = 'vnpay';
 
     const REFUNDABLE_METHODS = [self::EWALLET, self::EBANK];
+
+    public static function getKiotMethodType($code) {
+        switch ($code) {
+            case self::COD:
+                return 'Cash';
+                break;
+            default:
+                return 'Transfer';
+                break;
+        }
+    }
 }

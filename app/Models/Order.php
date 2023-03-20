@@ -58,7 +58,13 @@ class Order extends Model
     {
         return $this->morphOne(Address::class, 'addressable')->where('type', AddressType::PICKUP)->withTrashed();
     }
+    public function kiot_order() {
+        return $this->hasOne(KiotOrder::class);
+    }
 
+    public function kiot_invoice() {
+        return $this->hasOne(KiotInvoice::class);
+    }
     public function inventories()
     {
         return $this->belongsToMany(Inventory::class, 'order_items')->withTrashed()->withPivot([
@@ -321,7 +327,13 @@ class Order extends Model
             $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
             $order->setMakeInvoice(false);
             $order->setOrderDetails($this->generateKiotOrderDetailCollection());
+            // $order->setStatus(1);
             $kiotOrder = $orderResource->create($order);
+            $this->kiot_order()->create([
+                'kiot_order_id' => $kiotOrder->getId(),
+                'kiot_code' => $kiotOrder->getCode(),
+                'data' => $kiotOrder->getModelData()
+            ]);
             $this->createKiotInvoice($kiotOrder);
         } catch (\Throwable $th) {
             Log::error($th);
@@ -330,27 +342,42 @@ class Order extends Model
         return true;
     }
 
+    public function cancelKiotInvoice() {
+        if($this->kiot_invoice) {
+            $this->kiot_invoice->cancelKiotInvoice();
+            return true;
+        }
+        return false;
+    }
+
     public function createKiotInvoice(ModelOrder $order)
     {
         try {
-            $kiotSetting = App::get('KiotConfig');
             $invoice = new Invoice([
+                'branchId' => $order->getBranchId(),
+                'purchaseDate' => (string) now(),
                 'customerId' => $order->getCustomerId(),
                 'discount' => $order->getDiscount(),
                 'totalPayment' => $order->getTotalPayment(),
                 'saleChannelId' => $order->getSaleChannelId(),
+                'method' => 'test',
                 'usingCod' => false,
-                'branchId' => $order->getBranchId(),
+                'soldById' => 422903,
                 'orderId' => $order->getId(),
                 'invoiceDetails' => $this->generateKiotInvoiceDetailCollection(),
                 'status' => 3
             ]);
-            dd($invoice);
             $invoiceResource = new InvoiceResource(App::make(Client::class));
-            $invoiceResource->create($invoice);
+            $kiotInvoice = $invoiceResource->create($invoice);
+            KiotInvoice::create([
+                'kiot_invoice_id' => $kiotInvoice->getId(),
+                'kiot_code' => $kiotInvoice->getCode(),
+                'data' => $kiotInvoice->getModelData(),
+                'kiot_order_code' => $order->getCode(),
+                'order_id' => $this->id
+            ]);
             return true;
         } catch (\Throwable $th) {
-            dd($th);
             Log::error($th);
         }
         return false;
