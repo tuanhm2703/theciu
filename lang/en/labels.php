@@ -192,4 +192,7 @@ return [
     'user_informations' => 'User Informations',
     'contact_informations' => 'Contact Informations',
     'view_more' => 'View More',
+    'payment' => 'Payment',
+    'shipment' => 'Shipment',
+    'return_and_refund' => 'Return and Refund',
 ];

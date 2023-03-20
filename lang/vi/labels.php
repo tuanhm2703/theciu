@@ -195,4 +195,7 @@ return [
     'user_informations' => 'Thông tin tài khoản',
     'contact_informations' => 'Thông tin liên lạc',
     'view_more' => 'Xem thêm',
+    'payment' => 'Thanh toán',
+    'shipment' => 'Vận chuyển',
+    'return_and_refund' => 'Trả hàng và hoàn tiền',
 ];

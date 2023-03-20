@@ -12,8 +12,11 @@ class PageController extends Controller
         return view('landingpage.layouts.pages.page.product_exchange_and_warranty');
     }
 
-    public function paymentAndShipping() {
-        return view('landingpage.layouts.pages.page.payment_and_shipping');
+    public function payment() {
+        return view('landingpage.layouts.pages.page.payment');
+    }
+    public function shipment() {
+        return view('landingpage.layouts.pages.page.shipment');
     }
     public function about() {
         return view('landingpage.layouts.pages.about.index');

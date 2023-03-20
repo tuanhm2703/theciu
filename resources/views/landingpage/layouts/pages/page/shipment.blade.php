@@ -74,21 +74,8 @@
     </nav><!-- End .breadcrumb-nav -->
     <div class="page-content">
         <div class="container">
-            <h5 class="page-title">THANH TOÁN VÀ VẬN CHUYỂN</h5>
-            <section class="payment-section">
-                <h5 class="section-title">1. Thanh toán</h5>
-                <div class="section-content">
-                    <p>Với tiêu chí không ngừng nỗ lực để trải nghiệm mua hàng của Quý khách diễn ra thuận lợi hơn, The C.I.U hiện hỗ trợ 2 hình thức thanh toán tại Website như sau:</p>
-                    <ul>
-                        <li>Thanh toán khi nhận hàng (COD): quý khách nhận hàng, kiểm tra hàng và thanh toán trực tiếp cho nhân viên giao hàng</li>
-                        <li>
-                            Thanh toán Online: qua hình thức chuyển khoản hoặc ví điện tử <strong>Momo</strong>, <strong>VNPAY</strong>
-                        </li>
-                    </ul>
-                </div>
-            </section>
+            <h5 class="page-title">{{ trans('labels.shipment') }}</h5>
             <section class="shipping-section">
-                <h5 class="section-title">2. Vận chuyển</h5>
                 <div class="section-content">
                     <ul>
                         <li>
