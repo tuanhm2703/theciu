@@ -22,7 +22,8 @@ class Image extends Model {
     ];
 
     protected $appends = [
-        'path_with_domain'
+        'path_with_domain',
+        'path_with_original_size'
     ];
 
     public function getPathWithDomainAttribute() {
@@ -31,7 +32,7 @@ class Image extends Model {
         } else {
             try {
                 if (StorageService::exists($this->path) || isNavActive('admin')) {
-                    if (isNavActive('admin')) {
+                    if (isNavActive('admin.product.edit')) {
                         return StorageService::url($this->path);
                     }
                     return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
@@ -41,6 +42,13 @@ class Image extends Model {
             }
             return asset('img/image-not-available.png');
         }
+    }
+
+    public function getPathWithOriginalSizeAttribute() {
+        if(StorageService::exists($this->path)) {
+            return StorageService::url($this->path);
+        }
+        return asset('img/image-not-available.png');
     }
 
     public function getImageableSize() {

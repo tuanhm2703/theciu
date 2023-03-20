@@ -94,7 +94,7 @@
         })
 
         const initEditFormFunc = (banner) => {
-            const imgSource = banner.image?.path_with_domain
+            const imgSource = banner.image?.path_with_original_size
             const file = FilePond.create(document.querySelector('input[name=image]'), {
                 imagePreviewHeight: 170,
                 storeAsFile: true,

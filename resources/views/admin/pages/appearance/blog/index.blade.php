@@ -88,7 +88,7 @@
         })
 
         const initEditForm = (blog) => {
-            const imgSource = blog.image ? [blog.image.path_with_domain] : []
+            const imgSource = blog.image ? [blog.image.path_with_original_size] : []
             const file = FilePond.create(document.querySelector('input[name=image]'), {
                 imagePreviewHeight: 170,
                 storeAsFile: true,
