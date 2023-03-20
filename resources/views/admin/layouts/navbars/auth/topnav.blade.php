@@ -24,7 +24,7 @@
                     <input type="text" class="form-control" placeholder="Type here...">
                 </div>
             </div>
-            <ul class="navbar-nav  justify-content-end">
+            <ul class="navbar-nav justify-content-end">
                 <li class="nav-item d-flex align-items-center">
 
                     <div class="dropdown text-center nav-link text-white font-weight-bold px-0">
@@ -32,14 +32,24 @@
                             data-bs-toggle="dropdown" style="box-shadow: none" aria-expanded="false">
                             <i class="fa fa-user me-sm-1"></i>
                         </button>
-                        <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
+                        <ul class="profile-drop-down-menu dropdown-menu text-start px-3 mt-0"
+                            aria-labelledby="dropdownMenuButton" style="margin-top: 1rem !important;">
                             <li>
-                                <a href="{{ route('admin.logout') }}">
-                                    <span class="d-sm-inline d-none">Log out</span>
+                                <a href="{{ route('admin.profile-static') }}">
+                                    <span class="d-sm-inline d-none">{{ trans('labels.profile') }}</span>
                                 </a>
                             </li>
-                            <li>
-                                hi
+                            <li class="mt-2">
+                                {!! Form::open([
+                                    'url' => route('admin.logout'),
+                                    'method' => 'POST',
+                                    'id' => 'logout-form'
+                                ]) !!}
+                                <a href="#"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <span class="d-sm-inline d-none">{{ trans('labels.logout') }}</span>
+                                </a>
+                                {!! Form::close() !!}
                             </li>
                         </ul>
                     </div>

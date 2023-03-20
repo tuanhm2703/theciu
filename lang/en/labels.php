@@ -185,5 +185,11 @@ return [
     'payment_and_shipping' => 'Payment and shipping',
     'about_the_ciu' => 'About THE C.I.U',
     'customer_service' => 'Customer service',
-    'payment_safety' => 'Payment safety'
+    'payment_safety' => 'Payment safety',
+    'profile' => 'Profile',
+    'edit_profile' => 'Edit Profile',
+    'settings' => 'Settings',
+    'user_informations' => 'User Informations',
+    'contact_informations' => 'Contact Informations',
+    'view_more' => 'View More',
 ];

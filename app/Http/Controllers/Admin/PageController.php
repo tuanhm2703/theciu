@@ -62,7 +62,7 @@ class PageController extends Controller {
     }
 
     public function profile() {
-        return view("pages.profile-static");
+        return view("admin.pages.profile-static");
     }
 
     public function signin() {

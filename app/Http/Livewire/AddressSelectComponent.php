@@ -17,6 +17,12 @@ class AddressSelectComponent extends Component {
 
     public $address;
 
+    protected $rules = [
+        'address.province_id' => 'required',
+        'address.district_id' => 'required',
+        'address.ward_id' => 'required'
+    ];
+
     public function mount() {
         $this->address = $this->address ? $this->address : new Address();
         $this->provinces = Province::select('name', 'id')->orderBy('name', 'desc')->get();
@@ -39,12 +45,5 @@ class AddressSelectComponent extends Component {
 
     public function render() {
         return view('livewire.address-select-component');
-    }
-    public function rules() {
-        return [
-            'province_id' => 'required',
-            'ward_id' => 'required',
-            'district_id' => 'required'
-        ];
     }
 }

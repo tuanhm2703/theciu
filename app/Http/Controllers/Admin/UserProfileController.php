@@ -40,4 +40,8 @@ class UserProfileController extends Controller
         ]);
         return back()->with('succes', 'Profile succesfully updated');
     }
+
+    public function updatePassword(Request $request) {
+
+    }
 }

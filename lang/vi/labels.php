@@ -189,5 +189,10 @@ return [
     'payment_and_shipping' => 'Thanh toán và vận chuyển',
     'about_the_ciu' => 'About THE C.I.U',
     'customer_service' => 'Hỗ trợ dịch vụ',
-    'payment_safety' => 'Thanh toán an toàn'
+    'payment_safety' => 'Thanh toán an toàn',
+    'profile' => 'Tài khoản',
+    'edit_profile' => 'Cập nhật tài khoản',
+    'user_informations' => 'Thông tin tài khoản',
+    'contact_informations' => 'Thông tin liên lạc',
+    'view_more' => 'Xem thêm',
 ];

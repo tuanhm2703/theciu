@@ -39,16 +39,28 @@
                                             wire:target="keyword">
                                             <span class="sr-only">Loading...</span>
                                         </div>
-                                        @if (count($autocompleteKeywords) != 0)
-                                            <div class="autocomplete-items" wire:ignore.self>
-                                                @foreach ($autocompleteKeywords as $item)
-                                                    <div>
-                                                        <a href="#" class="keyword-picker" onclick="updateKeyword(event)"
-                                                            data-keyword="{{ $item->name }}">
-                                                            {{ $item->name }}
+                                        @if (count($search_products) != 0)
+                                            <div class="autocomplete-items py-0" wire:ignore.self>
+                                                @foreach ($search_products as $product)
+                                                    <div class="border-bottom">
+                                                        <a href="{{ route('client.product.details', $product->slug) }}"
+                                                            class="keyword-picker row">
+                                                            <div class="col-2 col-md-3">
+                                                                <img src="{{ $product->image->path_with_domain }}"
+                                                                    alt="" width="100">
+                                                            </div>
+                                                            <div class="col-10 col-md-9 pl-0">
+                                                                {{ $product->name }} <br>
+                                                                @component('components.product-price-label', compact('product'))
+                                                                @endcomponent
+                                                            </div>
                                                         </a>
                                                     </div>
                                                 @endforeach
+                                                <a href="#"
+                                                    class="text-center header-keyword-picker d-block p-3 autocomplete-view-more">
+                                                    {{ trans('labels.view_more') }}
+                                                </a>
                                             </div>
                                         @endif
                                     </div><!-- End .header-search-wrapper -->
@@ -202,8 +214,14 @@
         })
         $('input[name=q]').focusout(e => {
             const relatedElement = $($(e.relatedTarget)[0])
-            if(relatedElement.attr('class') == 'keyword-picker') {
-                Livewire.emit('updateKeyword', $(relatedElement).attr('data-keyword'));
+            const classes = relatedElement.attr('class')?.split(' ')
+            if (classes) {
+                if(classes.includes('autocomplete-view-more')) {
+                    @this.searchProduct(1)
+                }
+                if (classes.includes('keyword-picker')) {
+                    window.location.href = relatedElement.attr('href');
+                }
             }
             $('.toolbox .autocomplete-items').addClass('d-none');
         })
