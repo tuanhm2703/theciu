@@ -771,6 +771,9 @@ input[type=number] {
     .product-left {
         max-height: 600px;
     }
+    .toolbox {
+        padding: 0 1rem;
+    }
 }
 @media (min-width: 991px) {
     .order-lg-first {
