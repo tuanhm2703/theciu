@@ -13,19 +13,6 @@
                     <label for="second-attribute-{{ $attribute->value }}" class="radio">{{ $attribute->value }}</label>
                 </div>
             @endforeach
-            {{-- <select name="size" id="size" class="form-control" wire:model="second_attribute_id">
-                @foreach ($second_attributes as $index => $attribute)
-                    <option value="{{ ((object) $attribute)->id }}">
-                        {{ ((object) $attribute)->value }}</option>
-                @endforeach
-            </select> --}}
         </div><!-- End .select-custom -->
     </div><!-- End .details-filter-row -->
 @endif
-
-
-{{-- <div id="size-rule-gallery">
-    @foreach ($product->size_rule_images as $image)
-        <a class="size-rule-item" href="{{ $image->path_with_domain }}"></a>
-    @endforeach
-</div> --}}

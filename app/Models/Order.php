@@ -415,4 +415,9 @@ class Order extends Model
         }
         return new OrderDetailCollection($arr);
     }
+
+    public function canAction() {
+        if($this->payment_method->code == 'cod') return true;
+        return $this->paid();
+    }
 }

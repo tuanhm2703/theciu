@@ -5,6 +5,7 @@ namespace App\Http\Services\Checkout;
 use App\Enums\AddressType;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use App\Events\OrderCreatedEvent;
 use App\Exceptions\InventoryOutOfStockException;
 use App\Http\Services\Payment\PaymentService;
 use App\Models\Config;
@@ -87,6 +88,7 @@ class CheckoutService {
             $checkoutModel->getCart()->inventories()->detach($checkoutModel->getInventories()->pluck('id')->toArray());
             $redirectUrl = PaymentService::checkout($order);
             DB::commit();
+            event(new OrderCreatedEvent($order));
             return $redirectUrl;
         } catch (\Throwable $th) {
             DB::rollBack();

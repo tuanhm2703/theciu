@@ -10,7 +10,7 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <div class="quickView-content px-0" wire:loading.remove wire:target="changeProduct">
+    <div class="quickView-content px-0 pt-0" wire:loading.remove wire:target="changeProduct">
         @if ($product)
             <div class="row">
                 <div class="col-lg-7 col-md-6">
@@ -93,10 +93,10 @@
                     <h1 class="product-title">{{ $product->name }}</h1><!-- End .product-title -->
 
                     <div class="ratings-container">
-                        <div class="ratings">
+                        {{-- <div class="ratings">
                             <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                        </div><!-- End .ratings -->
-                        <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
+                        </div><!-- End .ratings --> --}}
+                        {{-- <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a> --}}
                     </div><!-- End .rating-container -->
                     @component('components.product-price-label', compact('product'))
                     @endcomponent

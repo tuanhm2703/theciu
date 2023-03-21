@@ -179,14 +179,13 @@
             tata[e.detail.type](label, e.detail.message)
         });
         window.addEventListener("initQuantityInput", (e) => {
-            $("input[type='number']").inputSpinner({
-                decrementButton: '<i class="icon-minus"></i>',
-                incrementButton: '<i class="icon-plus"></i>',
-                groupClass: "input-spinner",
-                buttonsClass: "btn-spinner",
-                buttonsWidth: "26px",
-            });
+            quantityInputs()
         });
+        if ($("[data-bs-toggle=tooltip]").length) {
+            $("[data-bs-toggle=tooltip]").tooltip({
+                html: true
+            });
+        }
     </script>
     <livewire:scripts />
     <!-- Messenger Plugin chat Code -->

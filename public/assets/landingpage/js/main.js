@@ -128,6 +128,7 @@ function quantityInputs() {
             buttonsClass: "btn-spinner",
             buttonsWidth: "26px",
         });
+        $('.input-spinner input[type=text]').attr('type', 'number');
     }
 }
 

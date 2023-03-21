@@ -9,16 +9,21 @@
         </div><!-- End .product-details-quantity -->
     </div><!-- End .details-filter-row -->
 
-    <div class="details-action-wrapper my-5">
-        <a href="#" class="btn-product btn-wishlist" wire:click.prevent="addToWishlist"
-            title="Wishlist"><span>{{ $product->is_on_customer_wishlist ? trans('labels.remove_from_wishlist') : trans('labels.add_to_wishlist') }}</span></a>
-    </div><!-- End .details-action-wrapper -->
-
-    <div class="product-details-action d-block my-5">
-        <button @disabled(!$first_attribute_value || (!$second_attribute_value && $second_attributes->count() > 0)) wire:click.prevent="addToCart" class="btn-product btn-cart btn add-to-cart-btn">
-            <span wire:loading.remove wire:target="addToCart">{{ trans('labels.add_to_cart') }}</span>
-            <span wire:loading wire:target="addToCart">Đang thực hiện...</span>
-        </button>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="product-details-action d-block my-5">
+                <button @disabled(!$first_attribute_value || (!$second_attribute_value && $second_attributes->count() > 0)) wire:click.prevent="addToCart" class="btn-product btn-cart btn add-to-cart-btn">
+                    <span wire:loading.remove wire:target="addToCart">{{ trans('labels.add_to_cart') }}</span>
+                    <span wire:loading wire:target="addToCart">Đang thực hiện...</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 d-flex justify-content-center">
+            <div class="details-action-wrapper my-5">
+                <a href="#" class="btn-product btn-wishlist" wire:click.prevent="addToWishlist"
+                    title="Wishlist"><span>{{ $product->is_on_customer_wishlist ? trans('labels.remove_from_wishlist') : trans('labels.add_to_wishlist') }}</span></a>
+            </div><!-- End .details-action-wrapper -->
+        </div>
     </div>
     <div>
         <a href="#" id="size-guide-gallery">

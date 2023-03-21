@@ -9,7 +9,8 @@
                 <input wire:change="changeFirstAttributeId({{ $attribute->id }})" name="first_attribute_value"
                     id="first-attribute-{{ $attribute->value }}" type="radio" class="square-radio-input"
                     wire:model="first_attribute_value" value="{{ $attribute->value }}">
-                <label for="first-attribute-{{ $attribute->value }}" class="radio check-product-thumb-image carousel-dot"
+                <label for="first-attribute-{{ $attribute->value }}" class="radio check-product-thumb-image carousel-dot" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-html="true" title="<div><img width='70px' src='{{ $attribute->path }}'/> <div class='text-center py-2'>{{ $attribute->value }}</div></div>"
                     data-hash="#{{ $attribute->image_name }}"
                     data-image="{{ $attribute->path }}">{{ $attribute->value }}</label>
             </div>

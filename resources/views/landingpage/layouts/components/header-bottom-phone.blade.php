@@ -1,12 +1,7 @@
 <div class="mobile-menu-container">
     <div class="mobile-menu-wrapper">
         <span class="mobile-menu-close"><i class="icon-close"></i></span>
-
-        <form action="{{ route('client.product.index') }}" method="get" class="mobile-search">
-            <label for="mobile-search" class="sr-only">Search</label>
-            <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="{{ trans('labels.search') }}...">
-            <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-        </form>
+        <livewire:client.mobile-search-component/>
 
         <nav class="mobile-nav">
             <ul class="mobile-menu">

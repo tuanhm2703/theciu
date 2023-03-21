@@ -1,6 +1,16 @@
 :root {
     --swiper-theme-color: #c96 !important;
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 .trending-carousel .owl-stage {
     margin: auto;
 }
@@ -586,6 +596,7 @@
 }
 .quickView-content .product-title {
     margin-top: 2rem;
+    font-weight: bold;
 }
 .product-right .owl-carousel img {
     width: auto !important;
@@ -708,7 +719,36 @@
     width: 100%;
     margin-top: 1rem;
 }
+.tooltip>.tooltip-inner {
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    line-height: 18px;
+    word-wrap: break-word;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow: 0 0 16px 0 rgb(0 0 0 / 10%), 0 8px 16px 0 rgb(0 0 0 / 6%);
+}
 
+.tooltip>.tooltip-arrow:before {
+    border-top-color: #fff;
+}
+.input-spinner {
+    font-weight: bold;
+}
+.page-content .container {
+    padding: 0;
+}
+.quickView-content .details-action-wrapper .btn-product:hover span {
+    color: #c96 !important;
+}
+.mobile-search .autocomplete-items {
+    width: calc(100% - 4rem);
+    margin-top: 2px;
+}
+.mobile-search button {
+    height: 36px;
+}
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;

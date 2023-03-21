@@ -11,7 +11,7 @@ use Exception;
 
 class OrderObserver {
     public function created(Order $order) {
-        event(new OrderCreatedEvent($order));
+
     }
     public function creating(Order $order) {
         $order->order_number = (time() + (10 * 24 * 60 * 60))."";
@@ -22,9 +22,16 @@ class OrderObserver {
         if ($original_status == OrderStatus::CANCELED) {
             throw new Exception('Không thể thay đổi trạng thái đơn hàng khi đơn hàng đã bị hủy.', 409);
         }
-        if ($order->isDirty('order_status')) {
-            $order->createOrderHistory();
+        if($order->isDirty('order_status') || $order->isDirty('sub_status')) {
+            if($order->canAction() || $order->order_status == OrderStatus::CANCELED) {
+                if ($order->isDirty('order_status')) {
+                    $order->createOrderHistory();
+                }
+            } else {
+                throw new Exception('Đơn hàng chưa được khách hàng thanh toán.', 409);
+            }
         }
+
     }
 
     public function updated(Order $order) {
