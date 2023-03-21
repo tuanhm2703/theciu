@@ -749,6 +749,9 @@ input[type=number] {
 .mobile-search button {
     height: 36px;
 }
+.toolbox {
+    padding: 0 1rem;
+}
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;
@@ -772,7 +775,7 @@ input[type=number] {
         max-height: 600px;
     }
     .toolbox {
-        padding: 0 1rem;
+        padding: 0;
     }
 }
 @media (min-width: 991px) {
