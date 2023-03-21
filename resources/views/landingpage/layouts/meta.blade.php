@@ -14,6 +14,8 @@
 <link rel="icon" type="image/png" href="/img/theciu-logo-16x16.jpg">
 <meta property="o:image" content="/img/logo-dark.png" />
 <meta name="apple-mobile-web-app-title" content="THE C.I.U">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta name="application-name" content="THE C.I.U">
 <meta name="locale" content="{{ App::getLocale() }}">
 <meta name="msapplication-TileColor" content="#cc9966">
