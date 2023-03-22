@@ -327,7 +327,9 @@ class Order extends Model
             $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
             $order->setMakeInvoice(false);
             $order->setOrderDetails($this->generateKiotOrderDetailCollection());
-            // $order->setStatus(1);
+            if(isset($kiotSetting->data['saleId'])) {
+                $order->setSoldById($kiotSetting->data['saleId']);
+            }
             $kiotOrder = $orderResource->create($order);
             $this->kiot_order()->create([
                 'kiot_order_id' => $kiotOrder->getId(),
