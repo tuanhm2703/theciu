@@ -28,13 +28,13 @@
                                             </video>
                                         </a>
                                     @endif
-                                    @foreach ($product->images as $index => $image)
+                                    @foreach ($product->images->unique('name') as $index => $image)
                                         <a href="#{{ $image->name }}"
                                             class="carousel-dot swiper-slide {{ $index === 0 ? 'active' : '' }}">
                                             <img src="{{ $image->path_with_domain }}">
                                         </a>
                                     @endforeach
-                                    @foreach ($inventory_images as $index => $image)
+                                    @foreach ($inventory_images->unique('name') as $index => $image)
                                         @php
                                             $image = (object) $image;
                                         @endphp
@@ -67,7 +67,7 @@
                                         </video>
                                     </div><!-- End .intro-slide -->
                                 @endif
-                                @foreach ($product->images as $image)
+                                @foreach ($product->images->unique('name') as $image)
                                     <div class="intro-slide" data-hash="{{ $image->name }}" wire:ignore>
                                         <img src="{{ $image->path_with_domain }}" alt="Image Desc"
                                             style="max-height: 600px">
@@ -76,7 +76,7 @@
                                         </a> --}}
                                     </div><!-- End .intro-slide -->
                                 @endforeach
-                                @foreach ($inventory_images as $image)
+                                @foreach ($inventory_images->unique('name') as $image)
                                     @php
                                         $image = (object) $image;
                                     @endphp

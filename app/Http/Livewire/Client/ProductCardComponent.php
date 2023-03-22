@@ -25,4 +25,8 @@ class ProductCardComponent extends Component {
             $this->emitTo('client.header-wishlist-component', 'refresh');
         }
     }
+
+    public function addToCart() {
+        $this->emit('changeProduct', $this->product->id);
+    }
 }

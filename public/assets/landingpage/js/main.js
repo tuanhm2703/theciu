@@ -881,12 +881,12 @@ $(document).ready(function () {
     });
 
     // Product quickView popup
-    $(".add-to-cart-btn").on("click", function (e) {
-        if($(e.currentTarget).attr('data-product-id')) {
-            Livewire.emit('changeProduct', $(e.currentTarget).attr('data-product-id'))
-            // quantityInputs();
-        }
-    });
+    // $(".add-to-cart-btn").on("click", function (e) {
+    //     if($(e.currentTarget).attr('data-product-id')) {
+    //         Livewire.emit('changeProduct', $(e.currentTarget).attr('data-product-id'))
+    //         // quantityInputs();
+    //     }
+    // });
     $("body").on("click", ".carousel-dot", function (e) {
         $(this).siblings().removeClass("active");
         $(this).addClass("active");

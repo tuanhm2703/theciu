@@ -19,8 +19,13 @@
         </div><!-- End .product-action-vertical -->
 
         <div class="product-action">
-            <a href="#"
-                class="btn-product btn-cart add-to-cart-btn" data-product-id="{{ $product->id }}"><span>{{ trans('labels.add_to_cart') }}</span></a>
+            <a href="#" class="btn-product btn-cart add-to-cart-btn"
+                wire:click="addToCart()"
+                data-product-id="{{ $product->id }}">
+                <div class="spinner-grow" role="status" wire:loading wire:target="addToCart">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <span>{{ trans('labels.add_to_cart') }}</span></a>
         </div><!-- End .product-action -->
     </figure><!-- End .product-media -->
 
