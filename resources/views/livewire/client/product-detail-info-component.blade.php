@@ -163,6 +163,11 @@
                     clickable: true,
                 }
             });
+            if ($("[data-bs-toggle=tooltip]").length) {
+                $("[data-bs-toggle=tooltip]").tooltip({
+                    html: true
+                });
+            }
         });
         $('body').on('click', '.check-product-thumb-image a', (e) => {
             $(e.currentTarget).parent().click()
