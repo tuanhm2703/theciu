@@ -142,39 +142,13 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         Livewire.hook('message.processed', (el, component) => {
-
-            try {
-                $('.quickView-content .owl-carousel').owlCarousel('destroy')
-            } catch (error) {}
-            owlCarousels($('.quickView-content'), {
-                onTranslate: function(e) {
-                    var $this = $(e.target),
-                        currentIndex = ($this.data('owl.carousel').current() + e.item
-                            .count - Math.ceil(e.item.count / 2)) % e.item.count;
-                    $('.quickView-content .carousel-dot').eq(currentIndex).addClass(
-                        'active').siblings().removeClass('active');
-                }
-            });
-            var swiper = new Swiper(".mySwiper", {
-                direction: "vertical",
-                slidesPerView: 4,
-                spaceBetween: 0,
-                loop: true,
-                mousewheel: true,
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                }
-            });
             if (component.fingerprint.name == 'product-pick-item-component') {
-                if ($("[data-bs-toggle=tooltip]").length) {
-                    $("[data-bs-toggle=tooltip]").tooltip({
-                        html: true
-                    });
-                }
-                quantityInputs()
+                // quantityInputs()
             }
         });
+        $("[data-bs-toggle=tooltip]").tooltip({
+                    html: true
+                });
         $('body').on('click', '.check-product-thumb-image a', (e) => {
             $(e.currentTarget).parent().click()
         })

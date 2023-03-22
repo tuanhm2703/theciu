@@ -200,17 +200,17 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         Livewire.hook('message.processed', (el, component) => {
-            $(".add-to-cart-btn").on("click", function(e) {
-                if ($(e.currentTarget).attr('data-product-id')) {
-                    Livewire.emit('changeProduct', $(e.currentTarget).attr('data-product-id'))
-                    $.magnificPopup.open({
-                        items: {
-                            src: $("#test-popup"),
-                            type: "inline",
-                        },
-                    });
-                }
-            });
+            // $(".add-to-cart-btn").on("click", function(e) {
+            //     if ($(e.currentTarget).attr('data-product-id')) {
+            //         Livewire.emit('changeProduct', $(e.currentTarget).attr('data-product-id'))
+            //         $.magnificPopup.open({
+            //             items: {
+            //                 src: $("#test-popup"),
+            //                 type: "inline",
+            //             },
+            //         });
+            //     }
+            // });
         })
         $('input[name=q]').focusout(e => {
             const relatedElement = $($(e.relatedTarget)[0])

@@ -47,7 +47,6 @@ class ProductDetailInfoComponent extends Component
             }
             $this->inventory_images->unique('name');
             $this->emit('product-pick:changeProduct', $this->product);
-            $this->dispatchBrowserEvent('openQuickPreview');
         } else {
             $this->dispatchBrowserEvent('openLoginForm');
         }

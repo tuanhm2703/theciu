@@ -172,10 +172,40 @@
                     type: "inline",
                 },
             });
+            try {
+                $('.quickView-content .owl-carousel').owlCarousel('destroy')
+            } catch (error) {}
+            owlCarousels($('.quickView-content'), {
+                onTranslate: function(e) {
+                    var $this = $(e.target),
+                        currentIndex = ($this.data('owl.carousel').current() + e.item
+                            .count - Math.ceil(e.item.count / 2)) % e.item.count;
+                    $('.quickView-content .carousel-dot').eq(currentIndex).addClass(
+                        'active').siblings().removeClass('active');
+                }
+            });
+            var swiper = new Swiper(".mySwiper", {
+                direction: "vertical",
+                slidesPerView: 4,
+                spaceBetween: 0,
+                loop: true,
+                mousewheel: true,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                }
+            });
+            if ($("[data-bs-toggle=tooltip]").length) {
+                $("[data-bs-toggle=tooltip]").tooltip({
+                    html: true
+                });
+            }
+            // quantityInputs()
         });
         window.addEventListener('openToast', (e) => {
             const type = e.detail.type
-            const label = type == 'success' ?  `{{ trans('toast.action_successful') }}` : `{{ trans('toast.action_failed') }}`
+            const label = type == 'success' ? `{{ trans('toast.action_successful') }}` :
+                `{{ trans('toast.action_failed') }}`
             tata[e.detail.type](label, e.detail.message)
         });
         window.addEventListener("initQuantityInput", (e) => {

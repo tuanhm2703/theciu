@@ -105,6 +105,9 @@ class ProductPickItemComponent extends Component
     public function changeProduct(Product $product)
     {
         $this->product = $product;
+        $this->first_attribute_id = null;
+        $this->first_attribute_value = null;
         $this->reloadProductInfo();
+        $this->dispatchBrowserEvent('openQuickPreview');
     }
 }
