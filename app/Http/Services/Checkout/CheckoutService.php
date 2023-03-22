@@ -75,7 +75,7 @@ class CheckoutService {
                 "order_value" => $order->subtotal,
                 'pickup_address_id' => Config::first()->pickup_address->id,
                 "cod_amount" => $order->subtotal,
-                "total_fee" => $order->subtotal,
+                "total_fee" => $checkoutModel->getShippingFee(),
                 'ship_at_office_hour' => 0
             ]);
             $order->payment()->create([
