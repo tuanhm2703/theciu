@@ -220,7 +220,7 @@
                     @this.searchProduct(1)
                 }
                 if (classes.includes('keyword-picker')) {
-                    window.location.href = relatedElement.attr('href');
+                    window.location.replace(relatedElement.attr('href'));
                 }
             }
             $('.toolbox .autocomplete-items').addClass('d-none');

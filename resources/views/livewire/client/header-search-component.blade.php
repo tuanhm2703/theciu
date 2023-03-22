@@ -41,7 +41,7 @@
             const classes = relatedElement.attr('class')?.split(' ')
             if (classes) {
                 if (classes.includes('header-keyword-picker')) {
-                    window.location.href = relatedElement.attr('href');
+                    window.location.replace(relatedElement.attr('href'));
                 }
             }
             $('.header-search .autocomplete-items').addClass('d-none');
