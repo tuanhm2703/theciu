@@ -76,6 +76,19 @@
                             ) !!}
                         </div>
                     </div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <label class="form-label">Người bán hàng: </label>
+                        </div>
+                        <div class="col-6">
+                            {!! Form::select(
+                                'salerId',
+                                $users->pluck('givenName', 'id')->toArray(),
+                                isset($kiotSetting->data['salerId']) ? $kiotSetting->data['salerId'] : null,
+                                ['class' => 'select2'],
+                            ) !!}
+                        </div>
+                    </div>
                     <livewire:admin.sync-kiot-warehouse-component></livewire:admin.sync-kiot-warehouse-component>
                     <div class="text-center d-flex mt-3 justify-content-between">
                         <button type="submit" class="btn btn-primary">Cập nhật</button>

@@ -13,7 +13,7 @@
 }
 .intro-slider-container,
 .intro-slide {
-    height: 170px;
+    /* height: 170px; */
     background-color: #c8c9cd;
 }
 .intro-slider.owl-theme.owl-nav-inside .owl-dots {
@@ -580,7 +580,7 @@
 @media screen and (min-width: 576px) {
     .intro-slider-container,
     .intro-slide {
-        height: 250px;
+        /* height: 250px; */
     }
 }
 @media screen and (min-width: 768px) {
@@ -589,7 +589,7 @@
     }
     .intro-slider-container,
     .intro-slide {
-        height: 400px;
+        /* height: 400px; */
     }
     .intro-subtitle {
         font-size: 2.4rem;
@@ -626,7 +626,7 @@
 @media screen and (min-width: 992px) {
     .intro-slider-container,
     .intro-slide {
-        height: 450px;
+        /* height: 450px; */
     }
     .intro-subtitle {
         font-size: 2.48rem;
@@ -645,7 +645,7 @@
 @media screen and (min-width: 1200px) {
     .intro-slider-container,
     .intro-slide {
-        height: 650px;
+        /* height: 650px; */
     }
     .intro-content .btn {
         min-width: 200px;
@@ -696,7 +696,7 @@
 @media screen and (min-width: 1536px) {
     .intro-slider-container,
     .intro-slide {
-        height: 700px;
+        /* height: 700px; */
     }
 }
 /*# sourceMappingURL=demo-6.css.map */

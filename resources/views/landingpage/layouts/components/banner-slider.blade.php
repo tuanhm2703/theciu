@@ -12,7 +12,9 @@
             }
         }'>
         @foreach ($banners as $banner)
-            <div class="intro-slide" style="background-image: url({{ $banner->image->path_with_domain }});">
+
+            <div class="intro-slide">
+                <img alt="the ciu banner" src="{{ $banner->image->path_with_domain }}">
                 {{-- <div class="container intro-content text-center">
                     <h3 class="intro-subtitle text-white">{{ $banner->title }}</h3><!-- End .h3 intro-subtitle -->
                     <h1 class="intro-title text-white">{{ $banner->title }}</h1><!-- End .intro-title -->
