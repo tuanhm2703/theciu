@@ -76,6 +76,9 @@ input[type=number] {
 .product-media .btn-product:focus span {
     color: white !important;
 }
+.btn-product.btn-cart[disabled] {
+    pointer-events: none;
+}
 .order-footer-action {
     min-height: 100px;
     background: #fffefb;
@@ -128,7 +131,7 @@ input[type=number] {
     display: none;
 }
 
-.radio-container > input[type="radio"] + label {
+.radio-container > input[type="radio"] + .inventory-picker {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -143,22 +146,26 @@ input[type=number] {
     vertical-align: middle;
     position: relative;
 }
+.radio-container > input[type="radio"] + .inventory-picker a {
+    display: block;
+    width: 100%;
+}
 
-.radio-container > input[type="radio"] + label.img-contain-label {
+.radio-container > input[type="radio"] + .inventory-picker.img-contain-label {
     width: 50px;
     height: 50px;
     background-size: contain !important;
     background-position: center !important;
 }
 
-.radio-container > input[type="radio"]:checked + label {
+.radio-container > input[type="radio"]:checked + .inventory-picker {
     border-color: #c96;
     color: #c96;
 }
-.radio-container > input[type="radio"]:checked + label.img-contain-label {
+.radio-container > input[type="radio"]:checked + .inventory-picker.img-contain-label {
     scale: 1.1;
 }
-.radio-container > input[type="radio"] + label:hover {
+.radio-container > input[type="radio"] + .inventory-picker:hover {
     box-shadow: 0 0 10px lightgray;
     color: #c96;
     border-color: #c96;
@@ -593,6 +600,7 @@ input[type=number] {
     max-width: 100%;
     max-height: 90vh;
     overflow: scroll;
+    padding: 2rem;
 }
 .quickView-content .product-title {
     margin-top: 2rem;
@@ -729,9 +737,8 @@ input[type=number] {
     border-radius: 3px;
     box-shadow: 0 0 16px 0 rgb(0 0 0 / 10%), 0 8px 16px 0 rgb(0 0 0 / 6%);
 }
-
-.tooltip>.tooltip-arrow:before {
-    border-top-color: #fff;
+.bs-tooltip-top .arrow::before {
+    border-top-color: #fff !important;
 }
 .input-spinner {
     font-weight: bold;
@@ -777,6 +784,16 @@ input[type=number] {
     .toolbox {
         padding: 0;
     }
+}
+.inventory-picker[disabled] {
+    box-shadow: unset;
+    cursor: default;
+    pointer-events: none;
+    border-color: lightgrey !important;
+    color: lightgrey !important;
+}
+.inventory-picker[disabled] a {
+    color: lightgrey !important;
 }
 @media (min-width: 991px) {
     .order-lg-first {

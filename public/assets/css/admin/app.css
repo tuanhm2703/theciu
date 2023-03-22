@@ -253,7 +253,7 @@ div.dataTables_processing>div:last-child>div {
 }
 
 .tooltip>.tooltip-arrow:before {
-    border-top-color: #fff;
+    border-top-color: #fff !important;
 }
 
 .treeview .list-group-item {

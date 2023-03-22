@@ -6,11 +6,11 @@
                 @php
                     $attribute = (object) $attribute;
                 @endphp
-                <div class="radio-container" wire:ignore>
+                <div class="radio-container">
                     <input wire:change="changeSecondAttributeId({{ $attribute->id }})" name="second_attribute_value"
                         id="second-attribute-{{ $attribute->value }}" type="radio" class="square-radio-input"
                         wire:model="second_attribute_value" value="{{ $attribute->value }}">
-                    <label for="second-attribute-{{ $attribute->value }}" class="radio">{{ $attribute->value }}</label>
+                    <label @disabled($attribute->out_of_stock) for="second-attribute-{{ $attribute->value }}" class="radio inventory-picker">{{ $attribute->value }}</label>
                 </div>
             @endforeach
         </div><!-- End .select-custom -->

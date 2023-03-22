@@ -435,24 +435,7 @@ $(document).ready(function () {
 
     // Product Image Zoom plugin - product pages
     if ($.fn.elevateZoom) {
-        $("body").on("click", ".check-product-thumb-image", (e) => {
-            $("#video-previewer").addClass("d-none");
-            $(".product-main-image div").removeClass("d-none");
-            $("#product-zoom").removeData("elevateZoom");
-            $("#product-zoom").attr("src", $(e.target).data("image"));
-            $("#product-zoom").data("zoom-image", $(e.target).data("image"));
-            $("#product-zoom").elevateZoom({
-                gallery: "product-zoom-gallery",
-                galleryActiveClass: "active",
-                zoomType: "inner",
-                cursor: "crosshair",
-                zoomWindowFadeIn: 400,
-                zoomWindowFadeOut: 400,
-                responsive: true,
-            });
-            $(`a[href="${$(e.currentTarget).attr('data-hash')}"]`)?.trigger('click')
-            window.location.hash = $(e.currentTarget).attr('data-hash')
-        });
+
         $("body").on("click", ".product-video-item", (e) => {
             $("#video-previewer").removeClass("d-none");
             $(".product-main-image div").addClass("d-none");

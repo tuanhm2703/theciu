@@ -47,11 +47,11 @@ class Inventory extends Model {
 
     public function firstAttribute() {
         return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
-        ->orderBy('attribute_inventory.order');
+        ->where('attribute_inventory.order', 1)->groupBy('laravel_through_key');
     }
     public function secondAttribute() {
         return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
-        ->orderBy('attribute_inventory.order', 'desc');
+        ->where('attribute_inventory.order', 2)->groupBy('laravel_through_key');
     }
 
     public function product() {

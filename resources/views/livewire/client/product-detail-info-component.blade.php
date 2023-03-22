@@ -50,6 +50,7 @@
                                     "dots": false,
                                     "nav": false,
                                     "lazyLoad": true,
+                                    "URLhashListener": true,
                                     "responsive": {
                                         "900": {
                                             "nav": true,
@@ -65,7 +66,7 @@
                                     </div><!-- End .intro-slide -->
                                 @endif
                                 @foreach ($product->images as $image)
-                                    <div class="intro-slide" data-hash="{{ $image->name }}">
+                                    <div class="intro-slide" data-hash="{{ $image->name }}" wire:ignore>
                                         <img src="{{ $image->path_with_domain }}" alt="Image Desc"
                                             style="max-height: 600px">
                                         {{-- <a href="{{ $image->path_with_domain }}" class="btn-fullscreen">
@@ -77,7 +78,7 @@
                                     @php
                                         $image = (object) $image;
                                     @endphp
-                                    <div class="intro-slide" data-hash="{{ $image->name }}">
+                                    <div class="intro-slide" data-hash="{{ $image->name }}" wire:ignore>
                                         <img src="{{ $image->path_with_domain }}" alt="Image Desc"
                                             style="max-height: 600px">
                                         {{-- <a href="{{ $image->path_with_domain }}" class="btn-fullscreen">
@@ -163,5 +164,8 @@
                 }
             });
         });
+        $('body').on('click', '.check-product-thumb-image a', (e) => {
+            $(e.currentTarget).parent().click()
+        })
     })
 </script>

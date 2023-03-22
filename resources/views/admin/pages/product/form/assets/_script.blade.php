@@ -349,12 +349,14 @@
 
     const fillInventoryInfo = (element, field) => {
         let index = $(element).index(`.${field}-input`)
-        attributes[0].values.forEach(value => {
+        attributes[0].values.every(value => {
             if (value.inventories.length - 1 >= index) {
                 value.inventories[index][field] = $(element).val()
+                return false;
             } else {
                 index = index - value.inventories.length
             }
+            return true;
         });
     }
 
