@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Client;
 
+use App\Enums\StatusType;
 use App\Models\Product;
 use Livewire\Component;
 
@@ -17,7 +18,7 @@ class ProductDetailInfoComponent extends Component
     {
         if ($this->product) {
             $this->inventory_images = collect();
-            foreach ($this->product->inventories as $inventory) {
+            foreach ($this->product->inventories->where('active', StatusType::ACTIVE)->where('stock_quantity', '>', 0) as $inventory) {
                 if ($inventory->image) {
                     $this->inventory_images->push($inventory->image);
                 }
@@ -40,7 +41,7 @@ class ProductDetailInfoComponent extends Component
                     $q->orderBy('attribute_inventory.created_at', 'desc');
                 }]);
             }])->find($id);
-            foreach ($this->product->inventories->where('stock_quantity', '>', 0) as $inventory) {
+            foreach ($this->product->inventories->where('active', StatusType::ACTIVE)->where('stock_quantity', '>', 0) as $inventory) {
                 if ($inventory->image) {
                     $this->inventory_images->push($inventory->image);
                 }
