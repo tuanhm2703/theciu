@@ -27,7 +27,7 @@ class SyncWarehouseController extends Controller {
         $saleChannelResource = new SaleChannelResource(App::make(Client::class));
         $sale_channels = $saleChannelResource->list()->toArray();
         $userResource = new UserResource(App::make(Client::class));
-        $users = collect($userResource->list()->toArray());
+        $users = collect($userResource->list(['pageSize' => 500])->toArray());
         foreach($sale_channels as $index => $channel) {
             $sale_channels[$index]['name'] = $channel['name']. "|". $channel['otherProperties']['img'];
         }
