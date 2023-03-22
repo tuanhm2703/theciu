@@ -601,6 +601,7 @@ input[type=number] {
     max-height: 90vh;
     overflow: scroll;
     padding: 2rem;
+    min-height: 60vh;
 }
 .quickView-content .product-title {
     margin-top: 2rem;
@@ -798,5 +799,8 @@ input[type=number] {
 @media (min-width: 991px) {
     .order-lg-first {
         display: block;
+    }
+    .btn-product.btn-wishlist {
+        padding-left: 1rem;
     }
 }

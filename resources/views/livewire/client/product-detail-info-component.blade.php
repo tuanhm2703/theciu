@@ -1,16 +1,18 @@
 <div class="product-details-top">
-    <div wire:loading wire:ignore wire:target="changeProduct">
-        <div class="spinner-grow" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-        <div class="spinner-grow" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-        <div class="spinner-grow" role="status">
-            <span class="sr-only">Loading...</span>
+    <div class="d-flex justify-content-center h-100">
+        <div wire:loading>
+            <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </div>
     </div>
-    <div class="quickView-content px-0 pt-0" wire:loading.remove wire:target="changeProduct">
+    <div class="quickView-content px-0 pt-0" wire:loading.remove>
         @if ($product)
             <div class="row">
                 <div class="col-lg-7 col-md-6">
@@ -140,6 +142,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         Livewire.hook('message.processed', (el, component) => {
+
             try {
                 $('.quickView-content .owl-carousel').owlCarousel('destroy')
             } catch (error) {}
@@ -163,10 +166,13 @@
                     clickable: true,
                 }
             });
-            if ($("[data-bs-toggle=tooltip]").length) {
-                $("[data-bs-toggle=tooltip]").tooltip({
-                    html: true
-                });
+            if (component.fingerprint.name == 'product-pick-item-component') {
+                if ($("[data-bs-toggle=tooltip]").length) {
+                    $("[data-bs-toggle=tooltip]").tooltip({
+                        html: true
+                    });
+                }
+                quantityInputs()
             }
         });
         $('body').on('click', '.check-product-thumb-image a', (e) => {

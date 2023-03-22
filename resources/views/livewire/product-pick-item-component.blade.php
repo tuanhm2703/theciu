@@ -1,10 +1,10 @@
 <div>
     @include('landingpage.layouts.pages.product.detail.first_attribute_select')
     @include('landingpage.layouts.pages.product.detail.second_attribute_select')
-    <div class="details-filter-row details-row-size" wire:ignore>
+    <div class="details-filter-row details-row-size">
         <label for="qty">{{ trans('labels.quantity') }}:</label>
         <div class="product-details-quantity">
-            <input type="number" id="qty" class="form-control" value="1" min="1" max="10"
+            <input type="number" id="qty" class="form-control" value="1" min="1"
                 step="1" data-decimals="0" required>
         </div><!-- End .product-details-quantity -->
     </div><!-- End .details-filter-row -->
@@ -12,7 +12,8 @@
     <div class="row">
         <div class="col-12 col-lg-6">
             <div class="product-details-action d-block my-5">
-                <button @disabled(!$first_attribute_value || (!$second_attribute_value && $second_attributes->count() > 0)) wire:click.prevent="addToCart" class="btn-product btn-cart btn add-to-cart-btn">
+                <button @disabled(!$first_attribute_value || (!$second_attribute_value && $second_attributes->count() > 0)) wire:click.prevent="addToCart"
+                    class="btn-product btn-cart btn add-to-cart-btn">
                     <span wire:loading.remove wire:target="addToCart">{{ trans('labels.add_to_cart') }}</span>
                     <span wire:loading wire:target="addToCart">Đang thực hiện...</span>
                 </button>

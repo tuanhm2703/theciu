@@ -40,7 +40,7 @@ class ProductDetailInfoComponent extends Component
                     $q->orderBy('attribute_inventory.created_at', 'desc');
                 }]);
             }])->find($id);
-            foreach ($this->product->inventories as $inventory) {
+            foreach ($this->product->inventories->where('stock_quantity', '>', 0) as $inventory) {
                 if ($inventory->image) {
                     $this->inventory_images->push($inventory->image);
                 }
