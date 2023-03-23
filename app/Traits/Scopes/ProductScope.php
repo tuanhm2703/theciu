@@ -30,6 +30,13 @@ trait ProductScope
         });
     }
 
+    public function scopeBestSeller($q)
+    {
+        $q->whereHas('other_categories', function($q) {
+            $q->where('categories.type', CategoryType::BEST_SELLER);
+        });
+    }
+
     public function scopeAvailable($q)
     {
         return $q->where(function ($q) {

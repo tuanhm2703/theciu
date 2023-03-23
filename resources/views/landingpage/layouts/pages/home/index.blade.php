@@ -81,7 +81,7 @@
 
         <div class="mb-6"></div><!-- End .mb-5 -->
         <div class="container">
-            @include('landingpage.layouts.pages.home.components.best_seller')
+            <livewire:client.best-seller-component/>
         </div><!-- End .container -->
         <div class="mb-2"></div><!-- End .mb-5 -->
 
