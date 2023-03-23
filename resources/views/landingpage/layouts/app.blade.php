@@ -137,7 +137,14 @@
     <script src="{{ asset('assets/landingpage/js/main.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/demos/demo-6.js') }}"></script>
     <script src="{{ asset('assets/landingpage/js/jquery.elevateZoom.min.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.lazyload.js') }}"></script>
+    <!-- jsDeliver -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+
+    <!-- cdnjs -->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js">
+    </script>
     <script src="{{ asset('assets/landingpage/api-service.js') }}"></script>
     <script src="{{ asset('assets/landingpage/cart.js') }}"></script>
     <script src="{{ asset('assets/js/bs4Toast.js') }}"></script>
@@ -145,11 +152,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     @stack('js')
     <script>
-        $('.lazy').lazyload({
-            effect: "fadeIn",
-            effectTime: 2000,
-            threshold: 0
-        });
+        $('.lazy').Lazy();
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
             $('body').on('click', 'a[data-toggle=modal]', (e) => {

@@ -3,7 +3,9 @@
         @if ($product->is_has_sale)
             <span class="product-label label-sale">{{ $product->discount_percent }}% off</span>
         @endif
-        <img src="{{ $product->images->first()->path_with_domain }}" class="product-image lazy" alt="">
+        <a href="{{ route('client.product.details', $product->slug) }}">
+            <img data-src="{{ $product->images->first()->path_with_domain }}" class="product-image lazy"
+                alt="THE CIU - {{ $product->name }}"></a>
         @if ($product->available_flash_sales->first())
             <div class="product-countdown"
                 data-until="{{ $product->available_flash_sales->first()->to->format('Y, m, d') }}"></div>
@@ -49,9 +51,8 @@
                 @php
                     $image = (object) $image;
                 @endphp
-                <a href="{{ $image->path_with_domain }}"
-                    class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
-                    style="background: url({{ $image ->path_with_domain }});">
+                <a href="{{ $image->path_with_domain }}" class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
+                    style="background: url({{ $image->path_with_domain }});">
                     {{-- <img src="{{ optional($inventory->image)->path_with_domain }}" alt="{{ $product->snake_name }}"> --}}
                 </a>
             @endforeach
