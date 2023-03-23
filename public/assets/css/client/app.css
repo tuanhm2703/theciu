@@ -786,6 +786,10 @@ input[type=number] {
     .toolbox {
         padding: 0;
     }
+    .phone-swap {
+        display: flex;
+        flex-direction: column-reverse;
+    }
 }
 .inventory-picker[disabled] {
     box-shadow: unset;

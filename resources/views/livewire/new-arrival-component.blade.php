@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-5 heading">
     <h2 class="title text-center mb-4">New Arrivals</h2><!-- End .title text-center -->
 
     <div class="products">

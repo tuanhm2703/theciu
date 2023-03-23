@@ -2,9 +2,10 @@
 @section('content')
     <main class="main">
         @include('landingpage.layouts.components.banner-slider')
-        @include('landingpage.layouts.pages.home.components.featured_category')
-        <div class="mb-5"></div><!-- End .mb-5 -->
-        <livewire:new-arrival-component></livewire:new-arrival-component>
+        <div class="phone-swap">
+            <livewire:new-arrival-component></livewire:new-arrival-component>
+            @include('landingpage.layouts.pages.home.components.featured_category')
+        </div>
 
         <div class="mb-5"></div><!-- End .mb-5 -->
 
@@ -21,7 +22,8 @@
                                 </span>
                                 <div class="icon-box-content">
 
-                                    <h3 class="icon-box-title">{{ trans('labels.payment') }}</h3><!-- End .icon-box-title -->
+                                    <h3 class="icon-box-title">{{ trans('labels.payment') }}</h3>
+                                    <!-- End .icon-box-title -->
                                     </h3><!-- End .icon-box-title -->
                                     {{-- <p>Miễn phí cho đơn hàng 100k</p> --}}
                                 </div><!-- End .icon-box-content -->
@@ -36,7 +38,8 @@
                                     <i class="icon-truck"></i>
                                 </span>
                                 <div class="icon-box-content">
-                                    <h3 class="icon-box-title">{{ trans('labels.shipment') }}</h3><!-- End .icon-box-title -->
+                                    <h3 class="icon-box-title">{{ trans('labels.shipment') }}</h3>
+                                    <!-- End .icon-box-title -->
                                     {{-- <p>Miễn phí 100% phí hoàn trả</p> --}}
                                 </div><!-- End .icon-box-content -->
                             </div><!-- End .icon-box -->
@@ -50,7 +53,8 @@
                                     <i class="icon-unlock"></i>
                                 </span>
                                 <div class="icon-box-content">
-                                    <h3 class="icon-box-title">{{ trans('labels.return_and_refund') }}</h3><!-- End .icon-box-title -->
+                                    <h3 class="icon-box-title">{{ trans('labels.return_and_refund') }}</h3>
+                                    <!-- End .icon-box-title -->
                                     {{-- <p>100% an toàn với phương thức thanh toán</p> --}}
                                 </div><!-- End .icon-box-content -->
                             </div><!-- End .icon-box -->
@@ -64,7 +68,8 @@
                                     <i class="icon-headphones"></i>
                                 </span>
                                 <div class="icon-box-content">
-                                    <h3 class="icon-box-title">{{ trans('labels.customer_service') }}</h3><!-- End .icon-box-title -->
+                                    <h3 class="icon-box-title">{{ trans('labels.customer_service') }}</h3>
+                                    <!-- End .icon-box-title -->
                                     {{-- <p>Dịch vụ hỗ trợ khách hàng 24/7</p> --}}
                                 </div><!-- End .icon-box-content -->
                             </div><!-- End .icon-box -->
