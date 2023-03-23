@@ -61,3 +61,4 @@ include('Webhook.php');
 
 Route::get('test', [TestController::class, 'test']);
 Route::get('test-ipn', [TestController::class, 'ipn']);
+ROute::get('gpt-assistant', [TestController::class, 'gptAssistant']);
