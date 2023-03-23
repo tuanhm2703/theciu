@@ -26,7 +26,7 @@
                     }
                 }
             }'>
-            @foreach ($trending_categories as $category)
+            @foreach ($best_seller_categories as $category)
                 @foreach ($category->products as $product)
                     <livewire:client.product-card-component :product="$product"></livewire:client.product-card-component>
                 @endforeach
@@ -34,7 +34,7 @@
 
         </div><!-- End .owl-carousel -->
     </div><!-- .End .tab-pane -->
-    @foreach ($trending_categories as $category)
+    @foreach ($best_seller_categories as $category)
         <div class="tab-pane p-0 fade" id="category-{{ $category->id }}-tab" role="tabpanel"
             aria-labelledby="category-{{ $category->id }}-link">
             <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"

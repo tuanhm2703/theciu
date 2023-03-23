@@ -12,4 +12,8 @@ trait CategoryScope {
     public function scopeNewArrival($q) {
         return $q->where('categories.type', CategoryType::NEW_ARRIVAL);
     }
+
+    public function scopeBestSeller($q) {
+        return $q->where('categories.type', CategoryType::BEST_SELLER);
+    }
 }

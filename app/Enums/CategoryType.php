@@ -6,7 +6,6 @@ use Illuminate\Validation\Rules\Enum;
 
 class CategoryType extends Enum {
     const PRODUCT = 'product';
-    const SHOP = 'shop';
     const TRENDING = 'trending';
     const NEW_ARRIVAL = 'new-arrival';
     const BLOG = 'blog';
@@ -15,12 +14,11 @@ class CategoryType extends Enum {
 
     public static function categoryTypeOptions() {
         return [
-            self::SHOP => trans("labels." . self::SHOP),
-            self::TRENDING => trans("labels." . self::TRENDING),
-            self::NEW_ARRIVAL => trans("labels." . self::NEW_ARRIVAL),
-            self::BLOG => trans("labels." . self::BLOG),
-            self::FEATURED => trans("labels." . self::FEATURED),
-            self::BEST_SELLER => trans("labels." . self::BEST_SELLER)
+            self::TRENDING => trans("labels.category_types." . self::TRENDING),
+            self::NEW_ARRIVAL => trans("labels.category_types." . self::NEW_ARRIVAL),
+            self::BLOG => trans("labels.category_types." . self::BLOG),
+            self::FEATURED => trans("labels.category_types." . self::FEATURED),
+            self::BEST_SELLER => trans("labels.category_types." . self::BEST_SELLER)
         ];
     }
 }

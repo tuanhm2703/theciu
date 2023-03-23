@@ -53,7 +53,7 @@ return [
     'min_quantity_to_apply' => 'Số lượng tối thiểu để áp dụng',
     'trending' => 'Xu hướng',
     'category_type' => "Loại danh mục",
-    'new-arrival' => 'Hàng mới',
+    'new-arrival' => 'New Arrival',
     'blog' => 'Bài viết',
     'blog_list' => 'Danh sách bài viết',
     'create_blog' => 'Thêm bài viết',
@@ -198,4 +198,13 @@ return [
     'payment' => 'Thanh toán',
     'shipment' => 'Vận chuyển',
     'return_and_refund' => 'Trả hàng và hoàn tiền',
+    'category_types' => [
+        'product' => 'Danh mục sản phẩm',
+        'shop' => 'Danh mục cửa hàng',
+        'trending' => 'Trending',
+        'new-arrival' => 'New Arrival',
+        'blog' => 'Danh mục bài viết',
+        'featured' => 'Danh mục nổi bật',
+        'best-seller' => 'Best seller',
+    ]
 ];

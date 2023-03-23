@@ -137,12 +137,12 @@ class ViewComposerServiceProvider extends ServiceProvider {
         );
 
         View::composer(
-            'landingpage.layouts.pages.home.components.trending',
+            'landingpage.layouts.pages.home.components.best_seller',
             function ($view) {
-                $trending_categories = Category::trending()->with(['products' => function ($q) {
+                $best_seller_categories = Category::bestSeller()->with(['products' => function ($q) {
                     $q->available()->with('images', 'inventories.image', 'categories')->select('products.id', 'products.name', 'slug')->groupBy('products.id');
                 }])->active()->get();
-                $view->with(['trending_categories' => $trending_categories]);
+                $view->with(['best_seller_categories' => $best_seller_categories]);
             }
         );
 

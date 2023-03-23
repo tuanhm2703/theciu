@@ -195,4 +195,13 @@ return [
     'payment' => 'Payment',
     'shipment' => 'Shipment',
     'return_and_refund' => 'Return and Refund',
+    'category_types' => [
+        'product' => 'Product Category',
+        'shop' => 'Shop Category',
+        'trending' => 'Trending Category',
+        'new-arrival' => 'New Arrival',
+        'blog' => 'Blog Category',
+        'featured' => 'Featured Category',
+        'best-seller' => 'Best seller',
+    ]
 ];
