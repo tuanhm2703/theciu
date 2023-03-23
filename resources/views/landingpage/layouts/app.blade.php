@@ -32,16 +32,13 @@
 </head>
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-W5CZEL5T2X"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BZXGHRRRX3"></script>
 <script>
-    window.dataLayer = window.dataLayer || [];
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-
-    gtag('config', 'G-W5CZEL5T2X');
+  gtag('config', 'G-BZXGHRRRX3');
 </script>
 
 <body>
