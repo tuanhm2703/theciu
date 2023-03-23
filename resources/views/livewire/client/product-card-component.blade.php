@@ -47,7 +47,7 @@
             "loop": false,
             "nav": false
         }'>
-            @foreach ($inventory_images as $index => $image)
+            @foreach ($inventory_images->unique('name') as $index => $image)
                 <a href="{{ $image->path_with_domain }}"
                     class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
                     style="background: url({{ $image ->path_with_domain }});">
