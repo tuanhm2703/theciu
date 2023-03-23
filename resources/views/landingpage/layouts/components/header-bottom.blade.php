@@ -8,7 +8,7 @@
                     </li>
                     @include('landingpage.layouts.components.navs.shop-category')
                     @include('landingpage.layouts.components.navs.product-category')
-                    @include('landingpage.layouts.components.navs.best-seller-category');
+                    @include('landingpage.layouts.components.navs.best-seller-category')
                     @include('landingpage.layouts.components.navs.promotion')
                 </ul><!-- End .menu -->
             </nav><!-- End .main-nav -->
