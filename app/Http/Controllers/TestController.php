@@ -11,6 +11,7 @@ use App\Http\Services\VNPay\src\Models\VNRefund;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Permission;
+use App\Models\Product;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ use VienThuong\KiotVietClient\Resource\InvoiceResource;
 use VienThuong\KiotVietClient\Resource\OrderResource;
 use VienThuong\KiotVietClient\Resource\ProductResource;
 use VienThuong\KiotVietClient\Resource\SaleChannelResource;
+use VienThuong\KiotVietClient\Resource\UserResource;
 use VienThuong\KiotVietClient\Resource\WebhookResource;
 
 class TestController extends Controller {
@@ -36,14 +38,31 @@ class TestController extends Controller {
         $productResource = new ProductResource(App::make(Client::class));
         $invocieResource = new InvoiceResource(App::make(Client::class));
         $orderResource = new OrderResource(App::make(Client::class));
-        return $orderResource->getByCode('DH000021')->getModelData();
-        // $product = $productResource->getByCode('test');
-        // $inventories = $product->getInventories();
-        // foreach($inventories as $inventory) {
-        //     $inventory->setOnHand(10);
-        // }
-        // $product->setInventories($inventories);
-        // dd($productResource->update($product));
+        $userResource = new UserResource(App::make(Client::class));
+        return Product::with('inventories.firstAttribute')->find(48);
+        return collect($userResource->list(['pageSize' => 100])->toArray())->pluck('givenName')->toArray();
+        // dd($invocieResource->getByCode('HD466073'));
+        // dd($invocieResource->remove('1151455286'));
+        // return  ($orderResource->list()->toArray());
+        // dd($userResource->list());
+        $order = Order::find(108);
+
+        dd($order->createKiotOrder());
+        $invoice = $invocieResource->getByCode('HD466056')->getModelData();
+        // return $invoice;
+        // $kiot_order = $orderResource->getByCode('DHSPE_2303200KD9EKW5')->getModelData();
+
+        // return $kiot_order;
+        // dd($order->createKiotInvoice($kiot_order));
+        // return $orderResource->getByCode('DH000021')->getModelData();
+
+        $product = $productResource->getByCode('test');
+        $inventories = $product->getInventories();
+        foreach($inventories as $inventory) {
+            $inventory->setOnHand(100);
+        }
+        $product->setInventories($inventories);
+        dd($productResource->update($product));
         // return $invocieResource->getByCode('HD459509')->getModelData();
         $customerResource = new CustomerResource(App::make(Client::class));
         $saleChannelResource = new SaleChannelResource(App::make(Client::class));
@@ -84,5 +103,9 @@ class TestController extends Controller {
 
     public function refundMomo() {
         // return  MomoService::refund();
+    }
+
+    public function gptAssistant() {
+        return view('admin.pages.gpt_assistant');
     }
 }
