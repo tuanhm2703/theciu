@@ -93,21 +93,6 @@
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-6">
-                    <h1 class="product-title">{{ $product->name }}</h1><!-- End .product-title -->
-
-                    <div class="ratings-container">
-                        {{-- <div class="ratings">
-                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                        </div><!-- End .ratings --> --}}
-                        {{-- <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a> --}}
-                    </div><!-- End .rating-container -->
-                    @component('components.product-price-label', compact('product'))
-                    @endcomponent
-
-                    <div class="product-content">
-                        <p>{{ $product->short_description }}</p>
-                    </div><!-- End .product-content -->
-
                     <livewire:product-pick-item-component :product="$product"></livewire:product-pick-item-component>
 
                     <div class="product-details-footer">

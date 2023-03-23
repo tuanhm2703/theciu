@@ -15,6 +15,8 @@ class ProductPickItemComponent extends Component
     public $second_attribute_id;
     public $second_attributes = [];
     public $first_attributes = [];
+    public $inventory = null;
+    public $inventories = null;
 
     protected $listeners = ['product-pick:changeProduct' => 'changeProduct'];
 
@@ -25,13 +27,14 @@ class ProductPickItemComponent extends Component
 
     private function reloadProductInfo()
     {
-        $this->product->setRelation('inventories', $this->product->inventories()
+        $this->product->inventories = $this->product->inventories()
             ->with(['attributes', 'firstAttribute' => function ($q) {
                 $q->addSelect('*', 'attribute_inventory.value');
-            }, 'secondAttribute' => function($q) {
+            }, 'secondAttribute' => function ($q) {
                 $q->addSelect('*', 'attribute_inventory.value');
-            }, 'image:imageable_id,path,id,name'])->withCount('attributes')->get());
+            }, 'image:imageable_id,path,id,name'])->withCount('attributes')->get();
         $this->first_attributes = collect();
+        $this->inventories = $this->product->inventories->toArray();
         foreach ($this->product->inventories as $inventory) {
             $this->first_attributes->push((object) [
                 'path' => optional($inventory->image)->path_with_domain,
@@ -46,7 +49,7 @@ class ProductPickItemComponent extends Component
         $this->first_attribute_value = $this->first_attribute_value ?? $this->first_attributes->where('out_of_stock', false)->first()->value;
         $this->second_attributes = collect();
         $inventories = $this->product->inventories->where('firstAttribute.value', $this->first_attribute_value)
-        ->where('secondAttribute.id', '!=', null);
+            ->where('secondAttribute.id', '!=', null);
         foreach ($inventories as $inventory) {
             if ($inventory->secondAttribute) {
                 $attr = $inventory->secondAttribute->toArray();
@@ -56,6 +59,7 @@ class ProductPickItemComponent extends Component
         }
         $this->second_attributes->unique('value');
         $this->second_attribute_value = null;
+        $this->getInventory();
     }
 
     public function render()
@@ -70,21 +74,22 @@ class ProductPickItemComponent extends Component
 
     public function addToCart()
     {
-        $inventory = $this->product->inventories()->whereHas('attributes', function ($q) {
-            $q->where('attributes.id', $this->first_attribute_id)->where('attribute_inventory.value', $this->first_attribute_value);
-        });
-        if (count($this->second_attributes) > 0) {
-            $inventory->whereHas('attributes', function ($q) {
-                $q->where('attributes.id', $this->second_attribute_id)->where('attribute_inventory.value', $this->second_attribute_value);
-            });
-        }
-        $inventory = $inventory->first();
-        $this->emit('cart:itemAdded', $inventory->id);
+        $this->emit('cart:itemAdded', $this->inventory->id);
     }
 
     public function changeSecondAttributeId($id)
     {
         $this->second_attribute_id = $id;
+    }
+
+    public function updated($name, $value)
+    {
+        $this->getInventory();
+    }
+
+    private function getInventory() {
+        $this->inventory = collect($this->inventories)->where('first_attribute.value', $this->first_attribute_value)->where('second_attribute.value', $this->second_attribute_value)->first();
+        $this->inventory = $this->inventory ? $this->product->inventories->where('id', $this->inventory['id'])->first() : null;
     }
 
     public function addToWishlist()

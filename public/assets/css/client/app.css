@@ -149,6 +149,7 @@ input[type=number] {
 .radio-container > input[type="radio"] + .inventory-picker a {
     display: block;
     width: 100%;
+    color: #333;
 }
 
 .radio-container > input[type="radio"] + .inventory-picker.img-contain-label {
@@ -158,7 +159,7 @@ input[type=number] {
     background-position: center !important;
 }
 
-.radio-container > input[type="radio"]:checked + .inventory-picker {
+.radio-container > input[type="radio"]:checked + .inventory-picker, .radio-container > input[type="radio"]:checked + .inventory-picker a {
     border-color: #c96;
     color: #c96;
 }
