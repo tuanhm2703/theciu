@@ -121,9 +121,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
         View::composer(
             'landingpage.layouts.pages.home.components.deal_of_day',
             function ($view) {
-                $flash_sale_products = Product::available()->whereHas('flash_sales', function ($q) {
-                    return $q->available();
-                })->with('inventories.image', 'images:path,imageable_id', 'flash_sale')->select('products.id', 'products.name', 'products.slug')->get();
+                $flash_sale_products = Product::whereHas('available_flash_sales')->withNeededProductCardData()->get();
                 $view->with(['flash_sale_products' => $flash_sale_products]);
             }
         );
@@ -133,16 +131,6 @@ class ViewComposerServiceProvider extends ServiceProvider {
             function ($view) {
                 $banners = Banner::active()->with('image')->orderBy('order', 'desc')->orderBy('updated_at', 'desc')->get();
                 $view->with(['banners' => $banners]);
-            }
-        );
-
-        View::composer(
-            'landingpage.layouts.pages.home.components.best_seller',
-            function ($view) {
-                $best_seller_categories = Category::bestSeller()->with(['products' => function ($q) {
-                    $q->available()->with('images', 'inventories.image', 'categories')->select('products.id', 'products.name', 'slug')->groupBy('products.id');
-                }])->active()->get();
-                $view->with(['best_seller_categories' => $best_seller_categories]);
             }
         );
 

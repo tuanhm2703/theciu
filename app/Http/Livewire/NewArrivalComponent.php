@@ -15,20 +15,13 @@ class NewArrivalComponent extends Component {
         return view('livewire.new-arrival-component');
     }
     public function mount() {
-        $this->products = Product::available()->newArrival()
-            ->with(['inventories', 'images:path,imageable_id', 'unique_attribute_inventories' => function($q) {
-                $q->with('image');
-            }])
-            ->select('products.id', 'products.name', 'products.slug')->getPage($this->page, $this->pageSize)->get();
-        $this->hasNext = $this->products->count() < Product::available()->newArrival()->count();
+        $this->products = Product::newArrival()->withNeededProductCardData()->getPage($this->page, $this->pageSize)->get();
+        $this->hasNext = $this->products->count() < Product::newArrival()->count();
     }
     public function loadMore() {
         $this->page++;
-        $products = Product::available()->newArrival()
-        ->with(['inventories', 'images:path,imageable_id', 'unique_attribute_inventories' => function($q) {
-            $q->with('image');
-        }])->select('products.id', 'products.name', 'products.slug')->getPage($this->page, $this->pageSize)->get();
+        $products = Product::newArrival()->withNeededProductCardData()->getPage($this->page, $this->pageSize)->get();
         $this->products = $this->products->merge($products);
-        $this->hasNext = $this->products->count() < Product::available()->newArrival()->count();
+        $this->hasNext = $this->products->count() < Product::newArrival()->count();
     }
 }

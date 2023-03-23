@@ -19,7 +19,7 @@ class BestSellerComponent extends Component
             ->with(['inventories', 'images:path,imageable_id', 'unique_attribute_inventories' => function ($q) {
                 $q->with('image');
             }])
-            ->select('products.id', 'products.name', 'products.slug')->getPage($this->page, $this->pageSize)->get();
+            ->withNeededProductCardData()->getPage($this->page, $this->pageSize)->get();
         $this->hasNext = $this->products->count() < Product::available()->bestSeller()->count();
     }
     public function loadMore()

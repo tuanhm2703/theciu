@@ -5,7 +5,7 @@
         @endif
         <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}"
             class="product-image image-loading lazy"
-            style="background: url({{ optional($product->images->first())->path_with_domain }});"></a>
+            style="background: url({{ optional($product->image)->path_with_domain }});"></a>
         @if ($product->available_flash_sales->first())
             <div class="product-countdown"
                 data-until="{{ $product->available_flash_sales->first()->to->format('Y, m, d') }}"></div>
@@ -19,13 +19,13 @@
         </div><!-- End .product-action-vertical -->
 
         <div class="product-action">
-            <a href="#" class="btn-product btn-cart add-to-cart-btn"
-                wire:click="addToCart()"
+            <a href="#" class="btn-product btn-cart add-to-cart-btn" wire:click="addToCart()"
                 data-product-id="{{ $product->id }}">
                 <div class="spinner-grow" role="status" wire:loading wire:target="addToCart">
                     <span class="sr-only">Loading...</span>
                 </div>
-                <span>{{ trans('labels.add_to_cart') }}</span></a>
+                <span>{{ trans('labels.add_to_cart') }}</span>
+            </a>
         </div><!-- End .product-action -->
     </figure><!-- End .product-media -->
 
@@ -47,21 +47,12 @@
             "loop": false,
             "nav": false
         }'>
-            @php
-                $added_image_names = [];
-            @endphp
-            @foreach ($product->unique_attribute_inventories as $index => $inventory)
-                @if ($inventory->image && !in_array($inventory->image->name, $added_image_names))
-                    @php
-                        $added_image_names[] = $inventory->image->name;
-                    @endphp
-                    <a href="{{ optional($inventory->image)->path_with_domain }}"
-                        class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
-                        data-inventory-id="{{ $inventory->id }}"
-                        style="background: url({{ optional($inventory->image)->path_with_domain }});">
-                        {{-- <img src="{{ optional($inventory->image)->path_with_domain }}" alt="{{ $product->snake_name }}"> --}}
-                    </a>
-                @endif
+            @foreach ($inventory_images as $index => $image)
+                <a href="{{ $image->path_with_domain }}"
+                    class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
+                    style="background: url({{ $image ->path_with_domain }});">
+                    {{-- <img src="{{ optional($inventory->image)->path_with_domain }}" alt="{{ $product->snake_name }}"> --}}
+                </a>
             @endforeach
         </div><!-- End .product-nav -->
     </div><!-- End .product-body -->

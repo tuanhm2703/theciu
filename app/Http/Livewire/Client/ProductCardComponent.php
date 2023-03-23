@@ -8,8 +8,18 @@ class ProductCardComponent extends Component {
 
     public $product;
 
+    public $inventory_images;
+
     public function render() {
         return view('livewire.client.product-card-component');
+    }
+
+    public function mount() {
+        $this->inventory_images = collect();
+        foreach ($this->product->inventories as $inventory) {
+            $this->inventory_images->push($inventory->image);
+        }
+        $this->inventory_images->unique('name');
     }
 
     public function addToWishlist() {
