@@ -420,6 +420,6 @@ class Order extends Model
 
     public function canAction() {
         if($this->payment_method->code == 'cod') return true;
-        return $this->paid();
+        return $this->isPaid();
     }
 }
