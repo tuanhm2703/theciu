@@ -9,5 +9,5 @@ trait ProductPagingComponent {
 
     public $page = 1;
 
-    public $pageSize = 4;
+    public $pageSize = 8;
 }
