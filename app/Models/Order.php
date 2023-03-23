@@ -346,7 +346,7 @@ class Order extends Model
 
     public function cancelKiotInvoice() {
         if($this->kiot_invoice) {
-            $this->kiot_invoice->cancelKiotInvoice();
+            $this->kiot_invoice->removeKiotInvoice();
             return true;
         }
         return false;
