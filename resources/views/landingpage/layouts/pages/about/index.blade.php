@@ -100,10 +100,10 @@
 
                         </span>
                         <span class="info-content">
-                            <strong>Store 1:</strong> Hẻm 29 Nguyễn Gia Trí, P.25, Quận Bình Thạnh, TPHCM <br>
+                            <strong>Store 1:</strong> Hẻm 29 Nguyễn Gia Trí, phường 25, Quận Bình Thạnh, TPHCM <br>
                             <strong>Store 2:</strong> 73 Nguyễn Văn Bảo, phường 4, Quận Gò Vấp, TPHCM <br>
-                            <strong>Store 3:</strong> 680 Sư Vạn Hạnh, p.12, Quận 10, TPHCM <br>
-                            <strong>Store 4:</strong> 50 Tô Vĩnh Diện, Phường Linh Chiểu, Thủ Đức, TPHCM
+                            <strong>Store 3:</strong> 680 Sư Vạn Hạnh, phường 12, Quận 10, TPHCM <br>
+                            <strong>Store 4:</strong> 50 Tô Vĩnh Diện, phường Linh Chiểu, Thủ Đức, TPHCM
                         </span>
                     </p>
                 </div>
