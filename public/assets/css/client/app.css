@@ -745,9 +745,6 @@ input[type=number] {
 .input-spinner {
     font-weight: bold;
 }
-.page-content .container {
-    padding: 0;
-}
 .quickView-content .details-action-wrapper .btn-product:hover span {
     color: #c96 !important;
 }
