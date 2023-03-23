@@ -1,8 +1,9 @@
 <div class="product product-7 text-center">
     <figure class="product-media">
         <a href="product-image" style="background: url(/img/image-icon);"></a>
-        <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}" class="product-image lazy d-none"
-            style="background: url({{ optional($product->images->first())->path_with_domain }});"></a>
+        <img src="{{ $product->images->first()->path_with_domain }}" class="product-image" alt="">
+        {{-- <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}" class="product-image lazy d-none"
+            style="background: url({{ optional($product->images->first())->path_with_domain }});"></a> --}}
         <div class="product-countdown" data-until="{{ optional($product->available_promotions->first())to->format('Y-m-d') }}"></div>
         <!-- End .product-countdown -->
         <div class="product-action-vertical">

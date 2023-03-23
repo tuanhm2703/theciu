@@ -145,7 +145,11 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     @stack('js')
     <script>
-        $('.lazy').lazyload();
+        $('.lazy').lazyload({
+            effect: "fadeIn",
+            effectTime: 2000,
+            threshold: 0
+        });
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
             $('body').on('click', 'a[data-toggle=modal]', (e) => {
