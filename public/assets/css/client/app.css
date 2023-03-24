@@ -689,7 +689,6 @@ input[type=number] {
     width: 100%;
     border-radius: 2px;
     overflow: hidden;
-    padding: 0 1rem;
     max-height: 400px;
     left: 1%;
     overflow-y: scroll;
@@ -707,12 +706,23 @@ input[type=number] {
 }
 .autocomplete-items a {
     color: black;
+    padding: 0.5rem 1rem;
+}
+.autocomplete-items a:hover {
+
+    background-color: #f3f3f3;
+}
+.autocomplete-items a > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .autocomplete-items .product-search-info {
     line-height: 1.1em;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: start;
 }
 .autocomplete-items .product-price {
     padding: 0;
