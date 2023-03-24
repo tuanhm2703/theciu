@@ -117,10 +117,11 @@ class ProductListComponent extends Component
             $products->search('products.name', $this->keyword);
         }
         $this->total = (clone $products)->filterByPriceRange($this->min_price, $this->max_price)->count();
-        $products = $products->select('products.name', 'products.slug', 'products.id')
+        $products = $products
+            ->withNeededProductCardData()
             ->filterByPriceRange($this->min_price, $this->max_price)
             ->with(['inventories.image:path,imageable_id', 'images:path,imageable_id'])
-            ->withNeededProductCardData()->getPage($this->page, $this->pageSize)->get();
+            ->getPage($this->page, $this->pageSize)->get();
         $this->products = $this->products->merge($products);
         $this->hasNext = $this->products->count() < $this->total;
     }
