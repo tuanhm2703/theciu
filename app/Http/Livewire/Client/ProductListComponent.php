@@ -16,7 +16,7 @@ class ProductListComponent extends Component
 
     public $title;
 
-    public $pageSize = 9;
+    public $pageSize = 12;
 
     public $hasNext;
 
