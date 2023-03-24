@@ -32,17 +32,18 @@
                 <div class="product-detail-info-wrapper">
                     @php
                         $category = $product->category;
-                        $arr = ['<a href="/">THE CIU</a>'];
+                        $arr = [];
                         while ($category) {
                             $route = route('client.product.index', ['category' => $category->slug]);
                             $arr[] = "<a href='$route'>$category->name</a>";
                             $category = $category->category;
                         }
+                        $arr[] = '<a href="/">THE CIU</a>';
                     @endphp
                     <div class="d-flex">
                         <label class="product-detail-label w-20 m-0" for="">{{ trans('labels.category') }}</label>
                         <div class="d-flex align-items-center product-detail-content">
-                            {!! implode('<span class="px-3"> > </span>', $arr) !!}
+                            {!! implode('<span class="px-3"> > </span>', array_reverse($arr)) !!}
                         </div>
                     </div>
                     <div class="d-flex">

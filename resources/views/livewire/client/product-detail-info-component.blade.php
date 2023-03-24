@@ -107,7 +107,7 @@
                                     $category = $category->category;
                                 }
                             @endphp
-                            {!! implode(', ', $arr) !!}
+                            {!! implode(', ', array_reverse($arr)) !!}
                         </div><!-- End .product-cat -->
 
                         <div class="social-icons social-icons-sm">
