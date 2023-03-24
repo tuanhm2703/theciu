@@ -206,5 +206,6 @@ return [
         'blog' => 'Danh mục bài viết',
         'featured' => 'Danh mục nổi bật',
         'best-seller' => 'Best seller',
-    ]
+    ],
+    'contact' => 'Liên hệ'
 ];

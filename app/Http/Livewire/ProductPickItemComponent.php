@@ -45,8 +45,8 @@ class ProductPickItemComponent extends Component
             ]);
         }
         $this->first_attributes = $this->first_attributes->unique('path')->unique('value');
-        $this->first_attribute_id = $this->first_attribute_id ?? $this->first_attributes->where('out_of_stock', false)->first()->id;
-        $this->first_attribute_value = $this->first_attribute_value ?? $this->first_attributes->where('out_of_stock', false)->first()->value;
+        $this->first_attribute_id = $this->first_attribute_id ?: $this->first_attributes->where('out_of_stock', false)->first()->id;
+        $this->first_attribute_value = $this->first_attribute_value ?: $this->first_attributes->where('out_of_stock', false)->first()->value;
         $this->second_attributes = collect();
         $inventories = $this->product->inventories->where('firstAttribute.value', $this->first_attribute_value)
             ->where('secondAttribute.id', '!=', null);

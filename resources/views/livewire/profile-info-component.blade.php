@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-12 col-lg-6">
                     <label>{{ trans('labels.phone') }} *</label>
-                    {!! Form::text('phone', null, ['class' => 'form-control', 'required', 'wire:model' => 'user.email']) !!}
+                    {!! Form::text('phone', null, ['class' => 'form-control', 'required', 'wire:model' => 'user.phone']) !!}
                     @error('user.phone')
                         <span class="error">{{ $message }}</span>
                     @enderror

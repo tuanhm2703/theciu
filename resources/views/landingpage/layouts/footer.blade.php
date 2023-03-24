@@ -30,6 +30,7 @@
                             <li><a href="https://www.facebook.com/HR.THECIU" target="_blank">Tuyển dụng</a></li>
                             <li><a href="{{ route('client.blog.index') }}" class="sf-with-ul">Blog</a></li>
                             <li><a href="{{ route('client.page.about') }}" class="sf-with-ul">About THE C.I.U</a></li>
+                            <li><a href="{{ route('client.page.contact') }}" class="sf-with-ul">{{ trans('labels.contact') }}</a></li>
                             @foreach ($pages as $page)
                                 <li><a href="{{ route('client.page.details', $page->slug) }}"
                                         class="sf-with-ul">{{ $page->title }}</a></li>

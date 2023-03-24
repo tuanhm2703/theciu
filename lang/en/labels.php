@@ -203,5 +203,6 @@ return [
         'blog' => 'Blog Category',
         'featured' => 'Featured Category',
         'best-seller' => 'Best seller',
-    ]
+    ],
+    'contact' => 'Contact'
 ];
