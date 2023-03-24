@@ -43,6 +43,7 @@
     $('.ajax-form').ajaxForm({
         success: (res) => {
             promotionProductTable.ajax.reload()
+            flashSaleTable.reload()
             tata.success('{{ trans('toast.action_successful') }}', res.data.message)
         }
     })

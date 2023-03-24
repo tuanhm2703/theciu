@@ -72,8 +72,7 @@ class Inventory extends Model {
      * @return A boolean value.
      */
     public function getHasPromotionAttribute() {
-        $now = Carbon::now();
-        return $now->isBetween($this->promotion_from, $this->promotion_to);
+        return now()->isBetween($this->promotion_from, $this->promotion_to);
     }
 
     /**
