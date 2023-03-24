@@ -120,7 +120,6 @@ class ProductListComponent extends Component
         $products = $products
             ->withNeededProductCardData()
             ->filterByPriceRange($this->min_price, $this->max_price)
-            ->with(['inventories.image:path,imageable_id', 'images:path,imageable_id'])
             ->getPage($this->page, $this->pageSize)->get();
         $this->products = $this->products->merge($products);
         $this->hasNext = $this->products->count() < $this->total;
