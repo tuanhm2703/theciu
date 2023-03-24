@@ -29,6 +29,7 @@ return [
     'shop' => 'Shop',
     'voucher' => 'Voucher',
     'create_voucher' => 'Create voucher',
+    'edit_voucher' => 'Edit voucher',
     'voucher_name' => 'Voucher name',
     'voucher_code' => 'Voucher code',
     'from_date' => 'From date',
@@ -204,5 +205,7 @@ return [
         'featured' => 'Featured Category',
         'best-seller' => 'Best seller',
     ],
-    'contact' => 'Contact'
+    'contact' => 'Contact',
+    'voucher_details' => 'Voucher Details',
+    'details' => 'Details',
 ];

@@ -128,7 +128,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         Livewire.hook('message.processed', (el, component) => {
             if (component.fingerprint.name == 'product-pick-item-component') {
-                // quantityInputs()
+                quantityInputs()
             }
         });
         $("[data-bs-toggle=tooltip]").tooltip({

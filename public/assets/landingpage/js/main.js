@@ -121,6 +121,7 @@ function owlCarousels($wrap, options) {
 
 function quantityInputs() {
     if ($.fn.inputSpinner) {
+        $("input[type='number']").inputSpinner('destroy')
         $("input[type='number']").inputSpinner({
             decrementButton: '<i class="icon-minus"></i>',
             incrementButton: '<i class="icon-plus"></i>',

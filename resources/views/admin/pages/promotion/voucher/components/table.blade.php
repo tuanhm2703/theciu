@@ -12,6 +12,8 @@
                 {{ trans('labels.to_date') }}</th>
             <th class="w-10 text-uppercase text-secondary text-xs font-weight-bolder text-center">
                 {{ trans('labels.status') }}</th>
+            <th class="w-10 text-uppercase text-secondary text-xs font-weight-bolder text-center">
+                {{ trans('labels.action') }}</th>
         </tr>
     </thead>
 </table>

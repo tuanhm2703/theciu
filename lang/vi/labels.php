@@ -31,6 +31,7 @@ return [
     'shop' => 'Cửa hàng',
     'voucher' => 'Voucher',
     'create_voucher' => 'Tạo mã khuyến mãi',
+    'edit_voucher' => 'Cập nhật khuyến mãi',
     'voucher_name' => 'Tên khuyến mãi',
     'voucher_code' => 'Mã khuyến mãi',
     'from_date' => 'Từ ngày',
@@ -207,5 +208,7 @@ return [
         'featured' => 'Danh mục nổi bật',
         'best-seller' => 'Best seller',
     ],
-    'contact' => 'Liên hệ'
+    'contact' => 'Liên hệ',
+    'voucher_details' => 'Chi tiết voucher',
+    'details' => 'Chi tiết',
 ];

@@ -10,8 +10,14 @@ use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
 
 class VoucherController extends Controller {
-    public function index() {
+    public function edit(Voucher $voucher) {
+        $voucher_types = VoucherType::active()->get();
+        return view('admin.pages.promotion.voucher.edit', compact('voucher', 'voucher_types'));
+    }
 
+    public function quickView(Voucher $voucher) {
+        $voucher_types = VoucherType::active()->get();
+        return view('admin.pages.promotion.voucher.quickView', compact('voucher', 'voucher_types'));
     }
 
     public function create() {

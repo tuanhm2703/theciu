@@ -27,6 +27,11 @@
             {
                 data: 'status',
                 width: '20%'
+            },
+            {
+                data: 'action',
+                sortable: false,
+                searchable: false
             }
         ],
     });

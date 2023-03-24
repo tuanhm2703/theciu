@@ -1,10 +1,6 @@
 @extends('admin.layouts.app', ['class' => 'g-sidenav-show bg-gray-100', 'headTitle' => trans('nav.create_promotion')])
 @push('style')
-    <style>
-        .nav-item svg {
-            width: 50px;
-        }
-    </style>
+    @include('admin.pages.promotion.assets.style')
 @endpush
 @section('content')
     @include('admin.layouts.navbars.auth.topnav', ['title' => trans('nav.create_promotion')])
