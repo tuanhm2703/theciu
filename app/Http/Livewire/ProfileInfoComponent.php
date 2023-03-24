@@ -26,7 +26,7 @@ class ProfileInfoComponent extends Component {
         'user.email' => 'required|email',
         'user.first_name' => 'required',
         'user.last_name' => 'required',
-        'user.phone' => 'nullable'
+        'user.phone' => 'required|phone_number'
     ];
 
     public function render() {
