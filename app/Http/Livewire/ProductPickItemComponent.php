@@ -17,6 +17,7 @@ class ProductPickItemComponent extends Component
     public $first_attributes = [];
     public $inventory = null;
     public $inventories = null;
+    public $quantity;
 
     protected $listeners = ['product-pick:changeProduct' => 'changeProduct'];
 

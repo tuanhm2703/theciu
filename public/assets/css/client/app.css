@@ -682,20 +682,37 @@ input[type=number] {
 .autocomplete-items {
     font-size: 1em;
     position: absolute;
-    top: 100%;
+    top: 105%;
     z-index: 11;
     background: white;
-    padding: 1rem 3px;
+    box-shadow: 5px 10px 16px rgba(51,51,51,0.05), -5px 10px 16px rgba(51,51,51,0.05);
     width: 100%;
-    box-shadow: 0 1px 4px 0 rgba(0,0,0,.26);
     border-radius: 2px;
     overflow: hidden;
+    padding: 0 1rem;
     max-height: 400px;
+    left: 1%;
     overflow-y: scroll;
+}
+.mobile-menu-wrapper .autocomplete-items {
+    left: 2rem;
+    top: 100%;
 }
 .autocomplete-items div {
     font-size: 14px;
     padding: 0.3em 0.5em;
+}
+.autocomplete-items img {
+    width: 50px;
+}
+.autocomplete-items a {
+    color: black;
+}
+.autocomplete-items .product-search-info {
+    line-height: 1.1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .autocomplete-items .product-price {
     padding: 0;
@@ -719,7 +736,6 @@ input[type=number] {
 .search-wrapper-wide {
     padding: 0 2rem 0 1rem;
     border: 1px solid #d4d4d4;
-    border-radius: 30px ;
     transition: all 0.3s ease;
 }
 .search-wrapper-wide:hover {
@@ -770,9 +786,6 @@ input[type=number] {
     .toolbox-center {
         width: auto;
         min-width: 300px;
-    }
-    .autocomplete-items {
-        left: 30px;
     }
     .white-popup {
         width: 950px;

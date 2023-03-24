@@ -49,7 +49,7 @@
                                                                 <img src="{{ $product->image->path_with_domain }}"
                                                                     alt="" width="100">
                                                             </div>
-                                                            <div class="col-10 col-md-9 pl-0">
+                                                            <div class="col-10 col-md-9 pl-0 product-search-info">
                                                                 {{ $product->name }} <br>
                                                                 @component('components.product-price-label', compact('product'))
                                                                 @endcomponent
@@ -223,7 +223,9 @@
                     window.location.replace(relatedElement.attr('href'));
                 }
             }
-            $('.toolbox .autocomplete-items').addClass('d-none');
+            setTimeout(() => {
+                $('.toolbox .autocomplete-items').addClass('d-none');
+            }, 50);
         })
         $('input[name=q]').focus(e => {
             $('.toolbox .autocomplete-items').removeClass('d-none');

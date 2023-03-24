@@ -18,7 +18,7 @@
                         <div class="col-3">
                             <img src="{{ $product->image->path_with_domain }}" alt="" width="100">
                         </div>
-                        <div class="col-9 pl-0">
+                        <div class="col-9 pl-0 product-search-info">
                             {{ $product->name }} <br>
                             @component('components.product-price-label', compact('product'))
                             @endcomponent
@@ -36,7 +36,6 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         $('input[name=mobile-search]').focusout(e => {
-            console.log(e);
             const relatedElement = $($(e.relatedTarget)[0])
             const classes = relatedElement.attr('class')?.split(' ')
             if (classes) {
@@ -45,7 +44,9 @@
                 }
             }
         }).blur(e => {
-            $('.mobile-search .autocomplete-items').hide();
+            setTimeout(() => {
+                $('.mobile-search .autocomplete-items').hide()
+            }, 50);;
         })
         $('input[name=mobile-search]').focus(e => {
             $('.mobile-search .autocomplete-items').show();

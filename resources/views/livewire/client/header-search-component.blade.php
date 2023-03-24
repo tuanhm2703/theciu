@@ -19,7 +19,7 @@
                         <div class="col-3">
                             <img src="{{ $product->image->path_with_domain }}" alt="" width="100">
                         </div>
-                        <div class="col-9 pl-0">
+                        <div class="col-9 pl-0 product-search-info">
                             {{ $product->name }} <br>
                             @component('components.product-price-label', compact('product'))
                             @endcomponent
@@ -44,7 +44,9 @@
                     window.location.replace(relatedElement.attr('href'));
                 }
             }
-            $('.header-search .autocomplete-items').addClass('d-none');
+            setTimeout(() => {
+                $('.header-search .autocomplete-items').addClass('d-none');
+            }, 50);
         })
         $('input[name=keyword]').focus(e => {
             $('.header-search .autocomplete-items').removeClass('d-none');
