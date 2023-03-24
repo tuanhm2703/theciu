@@ -16,7 +16,7 @@ class ProductCardComponent extends Component {
 
     public function mount() {
         $this->inventory_images = collect();
-        foreach ($this->product->inventories as $inventory) {
+        foreach ($this->product->inventories->where('image', '!=', null) as $inventory) {
             $this->inventory_images->push($inventory->image);
         }
         $this->inventory_images->unique('name');
