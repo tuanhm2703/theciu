@@ -19,7 +19,8 @@ class ProfileInfoComponent extends Component {
     protected $profileRules = [
         'user.email' => 'required|email',
         'user.first_name' => 'required',
-        'user.last_name' => 'required'
+        'user.last_name' => 'required',
+        'user.phone' => 'required|phone_number'
     ];
 
     protected $rules = [
