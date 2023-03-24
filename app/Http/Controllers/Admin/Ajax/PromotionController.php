@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin\Ajax;
 
 use App\Enums\PromotionType;
+use App\Enums\StatusType;
 use App\Http\Controllers\Controller;
+use App\Models\Inventory;
 use App\Models\Promotion;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
@@ -42,6 +44,17 @@ class PromotionController extends Controller {
         $status = $request->status;
         $promotion->status = $status;
         $promotion->save();
+        if($promotion->status == StatusType::INACTIVE) {
+            Inventory::whereIn('id', $promotion->products()->pluck('id')->toArray())->update([
+                'promotion_to' => now()->yesterday(),
+                'promotion_from' => now()->yesterday()
+            ]);
+        } else {
+            Inventory::whereIn('id', $promotion->products()->pluck('id')->toArray())->update([
+                'promotion_from' => $promotion->from,
+                'promotion_to' => $promotion->to,
+            ]);
+        }
         return BaseResponse::success([
             'message' => 'Cập nhật trạng thái chương trình thành công!'
         ]);
