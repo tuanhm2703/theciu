@@ -17,7 +17,7 @@ class VoucherController extends Controller {
 
     public function quickView(Voucher $voucher) {
         $voucher_types = VoucherType::active()->get();
-        return view('admin.pages.promotion.voucher.quickView', compact('voucher', 'voucher_types'));
+        return view('admin.pages.promotion.voucher.quickview', compact('voucher', 'voucher_types'));
     }
 
     public function create() {
