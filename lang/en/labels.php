@@ -208,4 +208,6 @@ return [
     'contact' => 'Contact',
     'voucher_details' => 'Voucher Details',
     'details' => 'Details',
+    'next' => 'Next',
+    'verification_code' => 'Verification Code',
 ];

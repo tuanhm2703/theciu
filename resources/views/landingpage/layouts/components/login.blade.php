@@ -26,7 +26,7 @@
                 <label class="custom-control-label" for="signin-remember">{{ trans('labels.remember_me') }}</label>
             </div><!-- End .custom-checkbox -->
 
-            <a href="#" class="forgot-link">{{ trans('labels.forgot_password') }}
+            <a href="{{ route('client.auth.forgot_password') }}" class="forgot-link">{{ trans('labels.forgot_password') }}
                 ?</a>
         </div><!-- End .form-footer -->
         {!! Form::close() !!}

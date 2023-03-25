@@ -211,4 +211,6 @@ return [
     'contact' => 'Liên hệ',
     'voucher_details' => 'Chi tiết voucher',
     'details' => 'Chi tiết',
+    'next' => 'Tiếp theo',
+    'verification_code' => 'Mã xác nhận',
 ];

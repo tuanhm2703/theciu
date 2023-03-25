@@ -101,4 +101,13 @@ class AuthController extends Controller {
         auth('customer')->login($customer);
         return redirect()->route('client.home');
     }
+
+    public function forgotPassword() {
+        return view('landingpage.layouts.pages.auth.forgot_password');
+    }
+
+    public function resetPassword() {
+        return view('landingpage.layouts.pages.auth.reset_password');
+    }
+
 }

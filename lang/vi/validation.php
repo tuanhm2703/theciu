@@ -167,5 +167,7 @@ return [
     'invalid_username'          => 'Tên tài khoản không hợp lệ',
     'phone_number'              => 'Số điện thoại không hợp lệ',
     'password_match'            => 'Mật khẩu không khớp',
-    'password_new'            => 'Mật khẩu trùng với mật khẩu cũ'
+    'password_new'            => 'Mật khẩu trùng với mật khẩu cũ',
+    'username_exists' => 'Tài khoản không tồn tại',
+    'valid_username' => 'Tên tài khoản không hợp lệ'
 ];

@@ -5,16 +5,19 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use App\Traits\Common\Addressable;
 use App\Traits\Common\Imageable;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\App;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Resource\CustomerResource;
+use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 
 class Customer extends User {
-    use HasFactory, Addressable, Imageable, SoftDeletes;
+    use HasFactory, Addressable, Imageable, SoftDeletes, CanResetPassword, Notifiable;
     protected $fillable = [
         'first_name',
         'last_name',
@@ -63,6 +66,17 @@ class Customer extends User {
         return (int) round($percent, 0);
     }
 
+    public static function findByUserName($username) {
+        return Customer::where('email', $username)->orWhere('phone', $username)->first();
+    }
+    public function sendPasswordResetNotification($token)
+    {
+        $mail = $this->email;
+        ResetPasswordNotification::createUrlUsing(function($notification, $token) use ($mail) {
+            return route('client.auth.resetPassword', ['username' => $mail, 'token' => $token]);
+        });
+        $this->notify(new ResetPasswordNotification($token));
+    }
     public function syncKiotInfo() {
         $customerResource = new CustomerResource(App::make(Client::class));
         if($this->phone) {

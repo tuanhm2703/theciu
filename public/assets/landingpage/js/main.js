@@ -122,13 +122,13 @@ function owlCarousels($wrap, options) {
 function quantityInputs() {
     if ($.fn.inputSpinner) {
         $("input[type='number']").inputSpinner('destroy')
-        $("input[type='number']").inputSpinner({
-            decrementButton: '<i class="icon-minus"></i>',
-            incrementButton: '<i class="icon-plus"></i>',
-            groupClass: "input-spinner",
-            buttonsClass: "btn-spinner",
-            buttonsWidth: "26px",
-        });
+    $("input[type='number']").inputSpinner({
+        decrementButton: '<i class="icon-minus"></i>',
+        incrementButton: '<i class="icon-plus"></i>',
+        groupClass: "input-spinner",
+        buttonsClass: "btn-spinner",
+        buttonsWidth: "26px",
+    });
         // $('.input-spinner input[type=text]').attr('type', 'number');
     }
 }
