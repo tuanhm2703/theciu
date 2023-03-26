@@ -27,19 +27,19 @@ class ForgotPasswordComponent extends Component
         return view('livewire.client.forgot-password-component');
     }
 
-    public function sendForgetPhoneRequest() {
-        $this->validate();
+    public function sendForgetPhoneRequest()
+    {
         $client = new Client();
         $key = $this->apiKey;
         $url = "https://identitytoolkit.googleapis.com/v1/accounts:sendVerificationCode?key=$key";
         try {
             $response = $client->post($url, [
                 'body' => json_encode([
-                    'phoneNumber' => "+84".$this->username,
+                    'phoneNumber' => "+84" . $this->username,
                     'recaptchaToken' => $this->recaptchaToken
                 ])
             ]);
-            if($response->getStatusCode() == 200) {
+            if ($response->getStatusCode() == 200) {
                 $this->verified = true;
             }
             $this->sessionInfo = json_decode($response->getBody()->getContents())->sessionInfo;
@@ -57,9 +57,11 @@ class ForgotPasswordComponent extends Component
         }
     }
 
-    public function sendVerify() {
-        if(isPhone($this->username)) {
-        $this->sendForgetPhoneRequest($this->apiKey, $this->recaptchaToken);
+    public function sendVerify()
+    {
+        $this->validate();
+        if (isPhone($this->username)) {
+            $this->sendForgetPhoneRequest($this->apiKey, $this->recaptchaToken);
         } else {
             $customer = Customer::findByUserName($this->username);
             $token = app('auth.password.broker')->createToken($customer);
@@ -67,16 +69,18 @@ class ForgotPasswordComponent extends Component
             $this->mailSent = true;
         };
     }
-    public function verifyOtp($code) {
+    public function verifyOtp($code)
+    {
         $key = $this->apiKey;
         $url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPhoneNumber?key=$key";
         $client = new Client();
         try {
             $client->post($url, [
-                'body' => json_encode([
-                    'code' => $code,
-                    'sessionInfo' => $this->sessionInfo
-                ],
+                'body' => json_encode(
+                    [
+                        'code' => $code,
+                        'sessionInfo' => $this->sessionInfo
+                    ],
                 )
             ]);
             $token = app('auth.password.broker')->createToken(Customer::findByUserName($this->userName));
