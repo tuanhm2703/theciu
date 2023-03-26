@@ -125,6 +125,7 @@
 </div><!-- End .product-details-top -->
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+        quantityInputs()
         Livewire.hook('message.processed', (message, component) => {
             if (component.fingerprint.name == 'product-pick-item-component') {
                 quantityInputs()

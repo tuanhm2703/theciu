@@ -121,6 +121,7 @@ function owlCarousels($wrap, options) {
 
 function quantityInputs() {
     if ($.fn.inputSpinner) {
+    $("input[type='number']").next().remove()
     $("input[type='number']").inputSpinner({
         decrementButton: '<i class="icon-minus"></i>',
         incrementButton: '<i class="icon-plus"></i>',
@@ -136,7 +137,6 @@ $(document).ready(function () {
     "use strict";
 
     owlCarousels();
-    // quantityInputs();
 
     // Header Search Toggle
 

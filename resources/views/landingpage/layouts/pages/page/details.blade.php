@@ -29,6 +29,3 @@
         </div><!-- End .container -->
     </div><!-- End .page-content -->
 @endsection
-@push('js')
-    {{-- <script src="{{asset('assets/landingpage/js/product-detail.js')}}"></script> --}}
-@endpush
