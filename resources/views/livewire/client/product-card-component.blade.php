@@ -47,11 +47,10 @@
             "loop": false,
             "nav": false,
             "responsive": {
-                "992": {
-                    "nav": true,
+                "576": {
                     "items": 4
                 },
-                "576": {
+                "482": {
                     "items": 3
                 }
             }
