@@ -43,9 +43,18 @@
         <div class="product-nav product-nav-thumbs intro-slider owl-carousel owl-theme owl-nav-inside owl-light"
             data-toggle="owl"
             data-owl-options='{
-            "items": 4,
+            "items": 2,
             "loop": false,
-            "nav": false
+            "nav": false,
+            "responsive": {
+                "992": {
+                    "nav": true,
+                    "items": 4
+                },
+                "576": {
+                    "items": 3
+                }
+            }
         }'>
             @foreach ($inventory_images->unique('name') as $index => $image)
                 @php
