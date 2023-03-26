@@ -5,7 +5,7 @@
             <label for="q" class="sr-only">Search</label>
             <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
             <input type="search" class="form-control" wire:model="keyword" name="keyword" autocomplete="off"
-                placeholder="Tìm sản phẩm..." required>
+                placeholder="Tìm sản phẩm...">
             <div class="spinner-border spinner-border-sm" role="status" wire:loading wire:target="keyword">
                 <span class="sr-only">Loading...</span>
             </div>
