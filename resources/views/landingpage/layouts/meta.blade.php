@@ -36,7 +36,7 @@
 @else
     <meta name="description"
         content="Thời trang nữ THE CIU mang phong cách trẻ trung, năng động. Chuyên sản phẩm kết hợp đi học, đi chơi như áo thun, áo khoác, quần jean, đầm, chân váy.">
-    <meta property="o:image" content="/img/theciu-meta.png" />
+    <meta property="og:image" content="/img/theciu-meta.png" />
 @endif
 <meta proterty="o:locale" content="{{ App::getLocale() }}">
 <meta proterty="o:price:currency" content="VN">
