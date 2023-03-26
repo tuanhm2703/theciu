@@ -199,7 +199,6 @@ class CartComponent extends Component {
             'customer_id' => auth('customer')->user()->id
         ]);
         $this->updateOrderInfo();
-        $this->dispatchBrowserEvent('initQuantityInput');
         $this->emitTo('header-cart-component', 'cart:refresh');
     }
 

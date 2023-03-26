@@ -161,4 +161,14 @@
                 class="icon-refresh"></i></a>
     </aside><!-- End .col-lg-3 -->
     @include('landingpage.layouts.pages.cart.components.voucher')
-</div><!-- End .row --
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        quantityInputs()
+        Livewire.hook('message.processed', (message, component) => {
+            if (component.fingerprint.name == 'cart-component') {
+                quantityInputs()
+            };
+        })
+    })
+</script>
