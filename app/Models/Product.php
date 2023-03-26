@@ -133,6 +133,14 @@ class Product extends Model {
         return $this->is_has_sale ? $this->promotion_price : $this->original_price;
     }
 
+    public function getDetailLinkAttrubute() {
+        return route('client.product.details', $this->slug);
+    }
+
+    public function getPageTitleAttribute() {
+        return $this->categories->first()->name . " - " . $this->name;
+    }
+
     public function getPromotionPriceAttribute() {
         $price = INF;
         foreach ($this->inventories as $inventory) {
@@ -227,6 +235,10 @@ class Product extends Model {
     }
 
     public function getMetaTags() {
+        $keywords = $this->categories()->pluck('name')->toArray();
+        $keywords[] = $this->name;
+        $Keywords[] = getAppName();
+        $link = $this->detail_link;
         $tags = array(
             array(
                 "name" => "description",
@@ -234,11 +246,11 @@ class Product extends Model {
             ),
             array(
                 "name" => "keywords",
-                "content" => implode(', ', $this->categories()->pluck('name')->toArray())
+                "content" => implode(', ', $keywords)
             ),
             array(
                 "property" => "og:title",
-                "content" => getAppName() . " - $this->name"
+                "content" => $this->page_title
             ),
             array(
                 "property" => "og:description",
@@ -250,11 +262,11 @@ class Product extends Model {
             ),
             array(
                 "property" => "og:url",
-                "content" => route('client.product.details', $this->slug)
+                "content" => "$link"
             ),
             array(
                 "property" => "og:type",
-                "content" => "website"
+                "content" => "product"
             ),
             array(
                 'property' => 'o:price:amount',
@@ -289,6 +301,7 @@ class Product extends Model {
             }
             $output .= "<meta " . implode(" ", $content) . ">";
         }
+        $output .= "<link rel='canonical' href='$link'>";
         return $output;
     }
 

@@ -67,7 +67,9 @@ class Customer extends User {
     }
 
     public static function findByUserName($username) {
-        return Customer::where('email', $username)->orWhere('phone', $username)->first();
+        return Customer::where(function($q) use ($username) {
+            $q->where('email', $username)->orWhere('phone', $username);
+        })->where('provider', null)->first();
     }
     public function sendPasswordResetNotification($token)
     {

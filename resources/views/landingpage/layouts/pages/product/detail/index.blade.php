@@ -1,5 +1,7 @@
 @extends('landingpage.layouts.app', [
     'metaTags' => $product->getMetaTags(),
+    'headTitle' => $product->page_title,
+    'shemaMarkup' => view('components.client.schema-markup', compact('product'))
 ])
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/nouislider/nouislider.css') }}">

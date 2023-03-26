@@ -19,6 +19,7 @@
         <div id="recaptcha-container"></div>
         <div class="form-footer text-right">
             <button type="button" id="submitBtn" class="btn btn-outline-primary-2">
+                <span wire:loading wire:target="sendVerify" class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>
                 <span>{{ trans('labels.next') }}</span>
                 <i class="icon-long-arrow-right"></i>
             </button>
@@ -32,9 +33,8 @@
             @endif
         </div><!-- End .form-group -->
         <div class="form-footer text-right">
-            <button type="submit" id="verifyOtpBtn" class="btn btn-outline-primary-2">
-                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading
-                    wire:target="verifyOtp, sendVerify"></span>
+            <button type="button" id="verifyOtpBtn" class="btn btn-outline-primary-2">
+                <span  wire:loading wire:target="verifyOtp, sendVerify" class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>
                 <span>{{ trans('labels.next') }}</span>
                 <i class="icon-long-arrow-right"></i>
             </button>

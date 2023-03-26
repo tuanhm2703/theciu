@@ -1,11 +1,14 @@
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MDCGLK4ZSC"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-MDCGLK4ZSC');
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-MDCGLK4ZSC');
 </script>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,8 +26,7 @@
 <link rel="icon" type="image/png" href="/img/theciu-logo-16x16.jpg">
 <meta property="o:image" content="/img/logo-dark.png" />
 <meta name="apple-mobile-web-app-title" content="THE C.I.U">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta name="application-name" content="THE C.I.U">
 <meta name="locale" content="{{ App::getLocale() }}">
 <meta name="msapplication-TileColor" content="#cc9966">
@@ -39,3 +41,6 @@
 @endif
 <meta proterty="o:locale" content="{{ App::getLocale() }}">
 <meta proterty="o:price:currency" content="VN">
+@if (isset($schemaMarkup))
+    {!! $schemaMarkup!!}
+@endif
