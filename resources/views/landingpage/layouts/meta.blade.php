@@ -24,7 +24,6 @@
 <link rel="manifest" href="{{ asset('assets/landingpage/images/icons/site.webmanifest') }}">
 <link rel="mask-icon" href="{{ asset('assets/landingpage/images/icons/safari-pinned-tab.svg') }}" color="#666666">
 <link rel="icon" type="image/png" href="/img/theciu-logo-16x16.jpg">
-<meta property="o:image" content="/img/logo-dark.png" />
 <meta name="apple-mobile-web-app-title" content="THE C.I.U">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta name="application-name" content="THE C.I.U">
@@ -37,7 +36,7 @@
 @else
     <meta name="description"
         content="Thời trang nữ THE CIU mang phong cách trẻ trung, năng động. Chuyên sản phẩm kết hợp đi học, đi chơi như áo thun, áo khoác, quần jean, đầm, chân váy.">
-    <meta property="og:image" content="/img/logo-dark.png" />
+    <meta property="o:image" content="/img/theciu-meta.png" />
 @endif
 <meta proterty="o:locale" content="{{ App::getLocale() }}">
 <meta proterty="o:price:currency" content="VN">
