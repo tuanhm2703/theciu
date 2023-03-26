@@ -51,11 +51,13 @@
                 @php
                     $image = (object) $image;
                 @endphp
-                <a href="{{ $image->path_with_domain }}"
-                    class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
-                    style="background: url({{ $image ->path_with_domain }});">
-                    {{-- <img src="{{ optional($inventory->image)->path_with_domain }}" alt="{{ $product->snake_name }}"> --}}
-                </a>
+                <div class="p-1">
+                    <a href="{{ $image->path_with_domain }}"
+                        class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
+                        style="background: url({{ $image ->path_with_domain }});">
+                        {{-- <img src="{{ optional($inventory->image)->path_with_domain }}" alt="{{ $product->snake_name }}"> --}}
+                    </a>
+                </div>
             @endforeach
         </div><!-- End .product-nav -->
     </div><!-- End .product-body -->
