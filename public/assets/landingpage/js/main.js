@@ -121,7 +121,6 @@ function owlCarousels($wrap, options) {
 
 function quantityInputs() {
     if ($.fn.inputSpinner) {
-        $("input[type='number']").inputSpinner('destroy')
     $("input[type='number']").inputSpinner({
         decrementButton: '<i class="icon-minus"></i>',
         incrementButton: '<i class="icon-plus"></i>',
@@ -881,13 +880,6 @@ $(document).ready(function () {
         $viewAll.removeClass("disabled-hidden");
     });
 
-    // Product quickView popup
-    // $(".add-to-cart-btn").on("click", function (e) {
-    //     if($(e.currentTarget).attr('data-product-id')) {
-    //         Livewire.emit('changeProduct', $(e.currentTarget).attr('data-product-id'))
-    //         // quantityInputs();
-    //     }
-    // });
     $("body").on("click", ".carousel-dot", function (e) {
         $(this).siblings().removeClass("active");
         $(this).addClass("active");

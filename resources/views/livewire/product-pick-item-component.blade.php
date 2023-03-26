@@ -4,12 +4,15 @@
     <div class="product-content">
         <p>{{ $product->short_description }}</p>
     </div><!-- End .product-content -->
-    @include('landingpage.layouts.pages.product.detail.first_attribute_select')
-    @include('landingpage.layouts.pages.product.detail.second_attribute_select')
+    <div>
+        @include('landingpage.layouts.pages.product.detail.first_attribute_select')
+        @include('landingpage.layouts.pages.product.detail.second_attribute_select')
+    </div>
     <div class="details-filter-row details-row-size">
         <label for="qty">{{ trans('labels.quantity') }}:</label>
         <div class="product-details-quantity">
-            <input type="number" id="qty" class="form-control" value="1" min="1" step="1"
+            <input type="number" id="qty" class="form-control" value="1" min="1" @disabled(!$inventory) step="1" wire:model.lazy="quantity"
+            max={{ $inventory ? $inventory->stock_quantity : 1 }}
                 data-decimals="0" required>
         </div><!-- End .product-details-quantity -->
     </div><!-- End .details-filter-row -->

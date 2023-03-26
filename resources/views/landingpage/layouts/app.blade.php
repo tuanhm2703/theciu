@@ -200,7 +200,6 @@
                     html: true
                 });
             }
-            // quantityInputs()
         });
         window.addEventListener('openToast', (e) => {
             const type = e.detail.type

@@ -68,7 +68,7 @@
                                     </div><!-- End .intro-slide -->
                                 @endif
                                 @foreach ($product->images->unique('name') as $image)
-                                    <div class="intro-slide" data-hash="{{ $image->name }}" wire:ignore>
+                                    <div class="intro-slide" data-hash="{{ $image->name }}">
                                         <img src="{{ $image->path_with_domain }}" alt="Image Desc"
                                             style="max-height: 600px">
                                         {{-- <a href="{{ $image->path_with_domain }}" class="btn-fullscreen">
@@ -80,7 +80,7 @@
                                     @php
                                         $image = (object) $image;
                                     @endphp
-                                    <div class="intro-slide" data-hash="{{ $image->name }}" wire:ignore>
+                                    <div class="intro-slide" data-hash="{{ $image->name }}">
                                         <img src="{{ $image->path_with_domain }}" alt="Image Desc"
                                             style="max-height: 600px">
                                         {{-- <a href="{{ $image->path_with_domain }}" class="btn-fullscreen">
@@ -123,14 +123,14 @@
         @endif
     </div>
 </div><!-- End .product-details-top -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        Livewire.hook('message.processed', (el, component) => {
+        Livewire.hook('message.processed', (message, component) => {
             if (component.fingerprint.name == 'product-pick-item-component') {
                 quantityInputs()
             }
-        });
+            // console.log(component.fingerprint.name, message);
+        })
         $("[data-bs-toggle=tooltip]").tooltip({
                     html: true
                 });

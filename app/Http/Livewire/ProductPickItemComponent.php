@@ -17,7 +17,7 @@ class ProductPickItemComponent extends Component
     public $first_attributes = [];
     public $inventory = null;
     public $inventories = null;
-    public $quantity;
+    public $quantity = 1;
 
     protected $listeners = ['product-pick:changeProduct' => 'changeProduct'];
 
@@ -75,12 +75,13 @@ class ProductPickItemComponent extends Component
 
     public function addToCart()
     {
-        $this->emit('cart:itemAdded', $this->inventory->id);
+        $this->emit('cart:itemAdded', $this->inventory->id, $this->quantity);
     }
 
     public function changeSecondAttributeId($id)
     {
         $this->second_attribute_id = $id;
+        $this->quantity = 1;
     }
 
     public function updated($name, $value)
@@ -113,6 +114,7 @@ class ProductPickItemComponent extends Component
         $this->product = $product;
         $this->first_attribute_id = null;
         $this->first_attribute_value = null;
+        $this->quantity = 1;
         $this->reloadProductInfo();
         $this->dispatchBrowserEvent('openQuickPreview');
     }
