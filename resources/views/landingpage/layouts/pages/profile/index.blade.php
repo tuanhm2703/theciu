@@ -10,7 +10,7 @@
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">{{ trans('labels.dashboard') }}</a></li>
+                <li class="breadcrumb-item"><a href="/">{{ trans('labels.dashboard') }}</a></li>
                 <li class="breadcrumb-item active" aria-current="page">{{ trans('labels.my_account') }}</li>
             </ol>
         </div><!-- End .container -->

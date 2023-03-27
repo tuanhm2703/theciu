@@ -57,7 +57,7 @@ class Image extends Model {
                 return 1600;
                 break;
             default:
-                return 600;
+                return 1000;
                 break;
         }
     }
