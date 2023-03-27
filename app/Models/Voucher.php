@@ -31,6 +31,10 @@ class Voucher extends Model {
         return $this->belongsToMany(Order::class, 'order_vouchers')->withPivot('type')->withTimestamps();
     }
 
+    public function customers() {
+        return $this->belongsToMany(Customer::class, 'customer_vouchers')->withPivot('type', 'is_used')->withTimestamps();
+    }
+
     public function canApplyForCustomer($customer_id) {
         return $this->orders()->where('customer_id', $customer_id)->count() < $this->customer_limit && $this->quantity > 0;
     }

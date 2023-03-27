@@ -61,13 +61,15 @@ class AuthController extends Controller {
         $user = (object) Socialite::driver('facebook')->user()->attributes;
         $customer_names = collect(explode(' ', $user->name));
         $customer = Customer::firstOrCreate([
-            'socialite_account_id' => $user->id
+            'email' => $user->email
         ], [
             'first_name' => $customer_names->first(),
             'last_name' => $customer_names->count() > 1 ? $customer_names->last() : null,
-            'email' => $user->email,
             'provider' => SocialProviderType::FACEBOOK,
-            'password' => Hash::make($user->id)
+            'socialite_account_id' => $user->id
+        ]);
+        $customer->update([
+            'socialite_account_id' => $user->id
         ]);
 
         if (!$customer->avatar) {
@@ -85,14 +87,17 @@ class AuthController extends Controller {
         $user = Socialite::driver('google')->user()->user;
         $user = (object) $user;
 
-        $customer = Customer::updateOrCreate([
-            'socialite_account_id' => $user->id
+        $customer = Customer::firstOrCreate([
+            'email' => $user->email,
         ], [
             'first_name' => $user->given_name,
             'last_name' => $user->family_name,
-            'email' => $user->email,
             'provider' => SocialProviderType::GOOGLE,
-            'password' => Hash::make($user->id)
+            'socialite_account_id' => $user->id
+        ]);
+
+        $customer->update([
+            'socialite_account_id' => $user->id
         ]);
 
         if (!$customer->avatar) {

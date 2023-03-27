@@ -14,7 +14,7 @@ class OrderObserver {
 
     }
     public function creating(Order $order) {
-        $order->order_number = (time() + (10 * 24 * 60 * 60))."";
+        $order->migrateOrderNumber();
     }
 
     public function updating(Order $order) {
@@ -31,34 +31,25 @@ class OrderObserver {
                 throw new Exception('Đơn hàng chưa được khách hàng thanh toán.', 409);
             }
         }
-
     }
 
     public function updated(Order $order) {
-        // if ($order->isDirty('order_status')) {
+        if ($order->isDirty('order_status')) {
             switch ($order->order_status) {
                 case OrderStatus::CANCELED:
                     event(new OrderCanceled($order));
-                    // $order->executeActionsAfterOrderCancelled();
-                    // $order->sendInformationToCustomerAfterCancelled();
                     break;
                 case OrderStatus::WAITING_TO_PICK:
-                    // $order->sendInformationToCustomerAfterAccepted();
                     break;
                 case OrderStatus::DELIVERING:
-                    // PushNotificationService::sendOrderDeliveringNotification($order);
                     break;
                 case OrderStatus::DELIVERED:
-                    // $customer = $order->customer;
-                    // if ($customer) $customer->updateRanking('FASHION');
-                    // $order->shop->createCodConsolidation();
                     break;
             }
-        // }
+        }
         if($order->isDirty('sub_status')) {
             if($order->sub_status == OrderSubStatus::FINISH_PACKAGING) {
                 $order->pushShippingOrder();
-                $order->createKiotOrder();
             }
         }
     }

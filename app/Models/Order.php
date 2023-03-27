@@ -263,6 +263,10 @@ class Order extends Model
         return trans('order.description.checkout_description', ['appName' => $app_name, 'orderNumber' => $this->order_number]);
     }
 
+    public function migrateOrderNumber() {
+        $this->order_number = (time() + (10 * 24 * 60 * 60))."";
+    }
+
     public function restock()
     {
         $inventories = $this->inventories()->with('product')->get();

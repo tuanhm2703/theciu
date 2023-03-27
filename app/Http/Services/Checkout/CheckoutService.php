@@ -5,6 +5,7 @@ namespace App\Http\Services\Checkout;
 use App\Enums\AddressType;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentStatus;
+use App\Events\Kiot\OrderCreatedEvent as KiotOrderCreatedEvent;
 use App\Events\OrderCreatedEvent;
 use App\Exceptions\InventoryOutOfStockException;
 use App\Http\Services\Payment\PaymentService;
@@ -89,6 +90,7 @@ class CheckoutService {
             $redirectUrl = PaymentService::checkout($order);
             DB::commit();
             event(new OrderCreatedEvent($order));
+            event(new KiotOrderCreatedEvent($order));
             return $redirectUrl;
         } catch (\Throwable $th) {
             DB::rollBack();

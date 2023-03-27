@@ -213,4 +213,5 @@ return [
     'details' => 'Chi tiết',
     'next' => 'Tiếp theo',
     'verification_code' => 'Mã xác nhận',
+    'reward_point' => 'Điểm tích luỹ',
 ];

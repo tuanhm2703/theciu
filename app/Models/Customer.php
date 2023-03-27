@@ -26,7 +26,8 @@ class Customer extends User {
         'email',
         'status',
         'provider',
-        'socialite_account_id'
+        'socialite_account_id',
+        'reward_point'
     ];
 
     public function product_wishlists() {
@@ -49,6 +50,10 @@ class Customer extends User {
         return $this->hasOne(KiotCustomer::class);
     }
 
+    public function vouchers() {
+        return $this->belongsToMany(Voucher::class)->withPivot('type', 'is_used')->withTimestamps();
+    }
+
     public function delivered_orders() {
         return $this->hasMany(Order::class)->where('order_status', OrderStatus::DELIVERED);
     }
@@ -69,7 +74,7 @@ class Customer extends User {
     public static function findByUserName($username) {
         return Customer::where(function($q) use ($username) {
             $q->where('email', $username)->orWhere('phone', $username);
-        })->where('provider', null)->first();
+        })->first();
     }
     public function sendPasswordResetNotification($token)
     {

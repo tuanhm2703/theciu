@@ -821,6 +821,152 @@ input[type=number] {
 .inventory-picker[disabled] a {
     color: lightgrey !important;
 }
+#signin-modal {
+    max-width: 80%;
+}
+.auth-dropdown-menu > div > a:hover {
+    background: #f3f3f3;
+    color: #c96;
+}
+.auth-dropdown-menu > div > form:hover button {
+    background: #f3f3f3;
+    color: #c96;
+}
+#sticky-gift-icon {
+    background: none;
+    border-radius: 60px;
+    bottom: 100px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px 0px;
+    display: block;
+    height: 60px;
+    margin: 0px 12px;
+    overflow: visible;
+    padding: 0px;
+    position: fixed;
+    right: 12px;
+    top: auto;
+    width: 60px;
+    z-index: 2147483644;
+    background: #ffffff;
+	animation-name: col;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+    cursor: pointer;
+}
+.my-btn-border {
+	height: 59px;
+	width: 59px;
+	border: 1px solid #ffffff !important;
+	animation-name: bord-pop;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+	box-shadow: 2px 2px 5px #ccc, -2px -2px 5px #ccc;
+    border-radius: 60px;
+}
+.btn-bell {
+	color: white;
+	font-size: 20px;
+	animation-name: bell-ring;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+    position: absolute;
+    width: 40px;
+    top: 50%;
+    left: 50%;
+}
+@keyframes bord-pop {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.9);
+		opacity: 0.1;
+	}
+	100% {
+		transform: scale(1.9);
+		opacity: 0;
+	}
+}
+@keyframes col {
+	0% {
+		transform: scale(1) translate(0,0);
+	}
+	10% {
+		transform: scale(1.1) translate(0,0);
+	}
+	75% {
+		transform: scale(1) translate(0,0);
+	}
+	100% {
+		transform: scale(1) translate(0,0);
+	}
+}
+@keyframes bell-ring {
+	0% {
+		transform: translate(-50%, -50%);
+	}
+	5%, 15% {
+		transform: translate(-50%, -50%) rotate(25deg);
+	}
+	10%, 20% {
+		transform: translate(-50%, -50%) rotate(-25deg);
+	}
+	25%  {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+	100% {
+		transform: translate(-50%, -50%) rotate(0deg);
+	}
+}
+.newsletter-popup-container .mfp-close {
+    top: -10px;
+    right: -10px;
+    opacity: 1;
+}
+.voucher-popup {
+    width: 250px !important;
+    margin: auto;
+    background-color: #fff;
+    padding: 0;
+    border-radius: 10px;
+}
+.newsletter-popup-content {
+    border-radius: 10px;
+}
+.voucher-info {
+    background: linear-gradient(90deg, rgba(222,94,0,1) 0%, rgba(252,141,8,1) 68%);
+    padding: 1rem;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px 10px 0 0;
+}
+.voucher-info .voucher-tag {
+    background: white;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+}
+
+.voucher-info .voucher-tag div {
+    border-top: 1px solid #f3f3f3;
+    border-top-style: dashed;
+    font-size: 14px;
+}
+
+.voucher-popup .congrats-content {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+.voucher-popup .congrats-content button {
+    border-radius: 60px;
+}
+
+
 @media (min-width: 991px) {
     .order-lg-first {
         display: block;

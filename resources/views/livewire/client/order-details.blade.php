@@ -40,7 +40,7 @@
                             data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">
                             {{ trans('labels.cancel_order') }}
                         </button>
-                        @if (!$order->isPaid())
+                        @if (!$order->isPaid() && $order->payment_method->code != 'cod')
                             <button wire:click.prevent="pay()" class="d-block btn btn-primary text-white ml-2">
                                 <span wire:loading.remove>{{ trans('labels.pay') }}</span>
                                 <span wire:loading wire:target="pay">{{ trans('labels.loading') }}...</span>

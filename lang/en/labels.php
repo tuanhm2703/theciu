@@ -210,4 +210,5 @@ return [
     'details' => 'Details',
     'next' => 'Next',
     'verification_code' => 'Verification Code',
+    'reward_point' => 'Reward Point',
 ];

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Listeners\Kiot;
 
-use App\Events\OrderCanceled;
+use App\Events\Kiot\OrderCanceledEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -24,14 +24,9 @@ class OrderCanceledListener
      * @param  object  $event
      * @return void
      */
-    public function handle(OrderCanceled $event)
+    public function handle(OrderCanceledEvent $event)
     {
         $order = $event->order;
-        $order->refund();
-        foreach($order->vouchers as $voucher) {
-            $voucher->increaseQuantity();
-        }
-        $order->restock();
-        $order->cancelShippingOrder();
+        $order->cancelKiotInvoice();
     }
 }

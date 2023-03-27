@@ -43,6 +43,13 @@
                                         class="fa fa-user text-light" aria-hidden="true"></i>
                                     {{ trans('labels.account_info') }}</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Route::currentRouteName() == 'client.auth.profile.index' ? 'active' : '' }}"
+                                    id="content-tab" href="{{ route('client.auth.profile.index') }}" role="tab"
+                                    role="tab" aria-controls="tab-account" aria-selected="false">
+                                    <i class="fas fa-star text-light"></i>
+                                    {{ trans('labels.reward_point') }}</a>
+                            </li>
                         </ul>
                     </aside><!-- End .col-lg-3 -->
                     <div class="col-md-9 col-lg-10">

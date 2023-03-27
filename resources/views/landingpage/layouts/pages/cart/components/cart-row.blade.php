@@ -11,8 +11,8 @@
             </figure>
 
             <h3 class="product-title">
-                <a href="#"
-                    class="{{ $inventory->pivot->quantity > $inventory->stock_quantity ? 'text-danger' : '' }}">{{ $inventory->product->name }}</a>
+                <a href="{{ route('client.product.details', $inventory->product->slug) }}"
+                    class="{{ $inventory->pivot->quantity > $inventory->stock_quantity ? 'text-danger' : '' }}">{{ $inventory->name }}</a>
                 @if ($inventory->pivot->quantity > $inventory->stock_quantity && $inventory->product->is_reorder == 0)
                     <br>
                     <small><i class="text-danger">{{ trans('errors.cart.dont_have_enough_stock') }}</i></small>

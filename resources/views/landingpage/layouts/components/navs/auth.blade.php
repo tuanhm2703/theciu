@@ -5,7 +5,7 @@
             <i class="icon-user mr-2"></i> <span class="cart-txt ml-0">{{ customer()->full_name }}</span>
         </a>
 
-        <div class="dropdown-menu p-0" style="width: fit-content !important;">
+        <div class="dropdown-menu auth-dropdown-menu p-0" style="width: fit-content !important;">
             <div>
                 <a class="btn justify-content-start" href="{{ route('client.auth.profile.index') }}">{{ trans('labels.profile') }}</a>
             </div>

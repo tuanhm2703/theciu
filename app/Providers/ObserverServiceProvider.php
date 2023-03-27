@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Address;
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Customer;
 use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\Page;
