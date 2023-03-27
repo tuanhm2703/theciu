@@ -121,14 +121,14 @@ function owlCarousels($wrap, options) {
 
 function quantityInputs() {
     if ($.fn.inputSpinner) {
-    $("input[type='number']").next().remove()
-    $("input[type='number']").inputSpinner({
-        decrementButton: '<i class="icon-minus"></i>',
-        incrementButton: '<i class="icon-plus"></i>',
-        groupClass: "input-spinner",
-        buttonsClass: "btn-spinner",
-        buttonsWidth: "26px",
-    });
+        $("input[type='number']").next().remove();
+        $("input[type='number']").inputSpinner({
+            decrementButton: '<i class="icon-minus"></i>',
+            incrementButton: '<i class="icon-plus"></i>',
+            groupClass: "input-spinner",
+            buttonsClass: "btn-spinner",
+            buttonsWidth: "26px",
+        });
         // $('.input-spinner input[type=text]').attr('type', 'number');
     }
 }
@@ -431,11 +431,8 @@ $(document).ready(function () {
         });
     }
 
-
-
     // Product Image Zoom plugin - product pages
     if ($.fn.elevateZoom) {
-
         $("body").on("click", ".product-video-item", (e) => {
             $("#video-previewer").removeClass("d-none");
             $(".product-main-image div").addClass("d-none");
@@ -992,26 +989,52 @@ $(document).ready(function () {
         if (mpInstance.isOpen) {
             mpInstance.close();
         }
-        setTimeout(function() {
+        setTimeout(function () {
             $.magnificPopup.open({
                 items: {
-                    src: '#newsletter-popup-form'
+                    src: "#newsletter-popup-form",
                 },
-                type: 'inline',
+                type: "inline",
                 removalDelay: 350,
                 callbacks: {
-                    open: function() {
-                        $('body').css('overflow-x', 'visible');
-                        $('.sticky-header.fixed').css('padding-right', '1.7rem');
+                    open: function () {
+                        $("body").css("overflow-x", "visible");
+                        $(".sticky-header.fixed").css(
+                            "padding-right",
+                            "1.7rem"
+                        );
                     },
-                    close: function() {
-                        $('body').css('overflow-x', 'hidden');
-                        $('.sticky-header.fixed').css('padding-right', '0');
-                    }
-                }
+                    close: function () {
+                        $("body").css("overflow-x", "hidden");
+                        $(".sticky-header.fixed").css("padding-right", "0");
+                    },
+                },
             });
-        }, 500)
+        }, 2000);
     }
+    $("#sticky-gift-icon").on("click", (e) => {
+        var mpInstance = $.magnificPopup.instance;
+        if (mpInstance.isOpen) {
+            mpInstance.close();
+        }
+        $.magnificPopup.open({
+            items: {
+                src: "#newsletter-popup-form",
+            },
+            type: "inline",
+            removalDelay: 350,
+            callbacks: {
+                open: function () {
+                    $("body").css("overflow-x", "visible");
+                    $(".sticky-header.fixed").css("padding-right", "1.7rem");
+                },
+                close: function () {
+                    $("body").css("overflow-x", "hidden");
+                    $(".sticky-header.fixed").css("padding-right", "0");
+                },
+            },
+        });
+    });
     $(".size-rule-gallery").magnificPopup({
         type: "image",
     });

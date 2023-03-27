@@ -211,4 +211,6 @@ return [
     'next' => 'Next',
     'verification_code' => 'Verification Code',
     'reward_point' => 'Reward Point',
+    'save_now' => 'Save Now',
+    'login_now' => 'Login Now',
 ];

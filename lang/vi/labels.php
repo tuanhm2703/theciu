@@ -214,4 +214,6 @@ return [
     'next' => 'Tiếp theo',
     'verification_code' => 'Mã xác nhận',
     'reward_point' => 'Điểm tích luỹ',
+    'save_now' => 'Lưu ngay',
+    'login_now' => 'Đăng nhập ngay',
 ];

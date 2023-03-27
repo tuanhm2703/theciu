@@ -69,11 +69,14 @@
                                 @endif
                                 @foreach ($product->images->unique('name') as $image)
                                     <div class="intro-slide" data-hash="{{ $image->name }}">
-                                        <img src="{{ $image->path_with_domain }}" alt="Image Desc"
-                                            style="max-height: 600px">
-                                        {{-- <a href="{{ $image->path_with_domain }}" class="btn-fullscreen">
-                                            <i class="icon-arrows"></i>
-                                        </a> --}}
+                                        <a id="Zoom-1" class="MagicZoom"
+                                            data-options="zoomPosition: inner;"
+                                            href="{{ $image->path_with_domain }}"
+                                            data-zoom-image-2x="{{ $image->path_with_domain }}"
+                                            data-image-2x="{{ $image->path_with_domain }}">
+                                            <img src="{{ $image->path_with_domain }}" alt="Image Desc"
+                                                style="max-height: 600px">
+                                        </a>
                                     </div><!-- End .intro-slide -->
                                 @endforeach
                                 @foreach ($inventory_images->unique('name') as $image)
@@ -81,11 +84,14 @@
                                         $image = (object) $image;
                                     @endphp
                                     <div class="intro-slide" data-hash="{{ $image->name }}">
-                                        <img src="{{ $image->path_with_domain }}" alt="Image Desc"
-                                            style="max-height: 600px">
-                                        {{-- <a href="{{ $image->path_with_domain }}" class="btn-fullscreen">
-                                            <i class="icon-arrows"></i>
-                                        </a> --}}
+                                        <a id="Zoom-1" class="MagicZoom"
+                                            data-options="zoomPosition: inner;"
+                                            href="{{ $image->path_with_domain }}"
+                                            data-zoom-image-2x="{{ $image->path_with_domain }}"
+                                            data-image-2x="{{ $image->path_with_domain }}">
+                                            <img src="{{ $image->path_with_domain }}" alt="Image Desc"
+                                                style="max-height: 600px">
+                                        </a>
                                     </div><!-- End .intro-slide -->
                                 @endforeach
                             </div>
@@ -129,12 +135,13 @@
         Livewire.hook('message.processed', (message, component) => {
             if (component.fingerprint.name == 'product-pick-item-component') {
                 quantityInputs()
+                MagicZoom.refresh();
             }
             // console.log(component.fingerprint.name, message);
         })
         $("[data-bs-toggle=tooltip]").tooltip({
-                    html: true
-                });
+            html: true
+        });
         $('body').on('click', '.check-product-thumb-image a', (e) => {
             $(e.currentTarget).parent().click()
         })

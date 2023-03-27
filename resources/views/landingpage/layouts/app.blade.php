@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('assets/landingpage/css/floating-labels.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bs4Toast.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/admin/tata.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/magiczoomplus.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -107,6 +108,7 @@
     <script src="{{ asset('assets/landingpage/cart.js') }}"></script>
     <script src="{{ asset('assets/js/bs4Toast.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/tata/tata.js') }}"></script>
+    <script src="{{ asset('assets/js/magiczoomplus.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     @stack('js')
     <script>
