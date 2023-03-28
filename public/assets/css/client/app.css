@@ -659,7 +659,7 @@ input[type=number] {
 
 .header-sticky {
     position: sticky;
-    top: -1;
+    top: -1px;
     z-index: 12;
 }
 
@@ -1088,7 +1088,7 @@ input[type=number] {
 }
 
 .voucher-info {
-    background: linear-gradient(90deg, rgba(222, 94, 0, 1) 0%, rgba(252, 141, 8, 1) 68%);
+    background: linear-gradient(90deg, rgb(222 50 0) 0%, rgba(252, 141, 8, 1) 68%);
     padding: 1rem;
     height: 150px;
     display: flex;
@@ -1155,6 +1155,9 @@ input[type=number] {
 }
 .voucher-popup .owl-dots {
     display: none;
+}
+.voucher-popup small {
+    font-size: 10px;
 }
 
 @media (min-width: 991px) {
