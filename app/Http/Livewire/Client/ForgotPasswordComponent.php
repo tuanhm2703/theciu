@@ -83,7 +83,7 @@ class ForgotPasswordComponent extends Component
                     ],
                 )
             ]);
-            $token = app('auth.password.broker')->createToken(Customer::findByUserName($this->userName));
+            $token = app('auth.password.broker')->createToken(Customer::findByUserName($this->username));
             return redirect()->route('client.auth.resetPassword', ['token' => $token, 'username' => $this->username]);
         } catch (\GuzzleHttp\Exception\ClientException $th) {
             $code = json_decode($th->getResponse()->getBody()->getContents())->error->message;

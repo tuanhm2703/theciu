@@ -989,28 +989,28 @@ $(document).ready(function () {
         if (mpInstance.isOpen) {
             mpInstance.close();
         }
-        setTimeout(function () {
-            $.magnificPopup.open({
-                items: {
-                    src: "#newsletter-popup-form",
-                },
-                type: "inline",
-                removalDelay: 350,
-                callbacks: {
-                    open: function () {
-                        $("body").css("overflow-x", "visible");
-                        $(".sticky-header.fixed").css(
-                            "padding-right",
-                            "1.7rem"
-                        );
-                    },
-                    close: function () {
-                        $("body").css("overflow-x", "hidden");
-                        $(".sticky-header.fixed").css("padding-right", "0");
-                    },
-                },
-            });
-        }, 2000);
+        // setTimeout(function () {
+        //     $.magnificPopup.open({
+        //         items: {
+        //             src: "#newsletter-popup-form",
+        //         },
+        //         type: "inline",
+        //         removalDelay: 350,
+        //         callbacks: {
+        //             open: function () {
+        //                 $("body").css("overflow-x", "visible");
+        //                 $(".sticky-header.fixed").css(
+        //                     "padding-right",
+        //                     "1.7rem"
+        //                 );
+        //             },
+        //             close: function () {
+        //                 $("body").css("overflow-x", "hidden");
+        //                 $(".sticky-header.fixed").css("padding-right", "0");
+        //             },
+        //         },
+        //     });
+        // }, 2000);
     }
     $("#sticky-gift-icon").on("click", (e) => {
         var mpInstance = $.magnificPopup.instance;

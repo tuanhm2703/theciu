@@ -43,7 +43,7 @@
     @if ($mailSent)
         <div>
             <p>Chúng tôi đã gửi thông tin lấy lại mật khẩu đến Email của bạn, vui lòng kiểm tra lại hộp thư.</p>
-            <a wire.click.prevent="sendVerify" class="d-block text-right" href="#">Chưa nhận được email? Gửi
+            <a wire:click.prevent="sendVerify" class="d-block text-right" href="#">Chưa nhận được email? Gửi
                 lại.</a>
         </div>
     @endif

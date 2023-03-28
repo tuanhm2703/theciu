@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\Shipping\GHTKService;
 use App\Mail\FirstTestMail;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
@@ -18,9 +19,9 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-        $productResource = new ProductResource(App::make(Client::class));
-        $customerResource = new CustomerResource(App::make(Client::class));
-        return $customerResource->list()->toArray();
+        $customer = Customer::find(4);
+        $token = app('auth.password.broker')->createToken($customer);
+        $customer->sendPasswordResetNotification($token);
     }
 
     public function ipn(Request $request) {
