@@ -76,7 +76,7 @@ class AuthController extends Controller {
             $customer->createImagesFromUrls([$user->avatar], MediaType::AVATAR);
         }
         auth('customer')->login($customer);
-        return redirect()->route('client.home');
+        return redirect()->intended('/');
     }
 
     public function redirectToGoogle() {
@@ -104,7 +104,7 @@ class AuthController extends Controller {
             $customer->createImagesFromUrls([$user->picture], MediaType::AVATAR);
         }
         auth('customer')->login($customer);
-        return redirect()->route('client.home');
+        return redirect()->intended('/');
     }
 
     public function forgotPassword() {
