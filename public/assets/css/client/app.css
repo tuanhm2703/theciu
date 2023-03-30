@@ -1181,7 +1181,6 @@ input[type=number] {
     border-left: 0;
     border-radius: 2px;
     display: flex;
-    width: 350px;
     color: rgb(238, 77, 45);
     overflow: hidden;
     min-height: 125px;
@@ -1247,9 +1246,13 @@ input[type=number] {
     transition: all 0.3s ease;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     min-height: 40vh;
+    opacity: 1;
 }
 #save-voucher-component-wrapper.hide {
-    bottom: -100%;
+    bottom: 0%;
+    height: 0 !important;
+    min-height: 0;
+    opacity: 0 !important;
 }
 .desktop-cart-table {
     display: none !important;

@@ -8,7 +8,7 @@
     </div>
     <div class="voucher-detail-info" style="background-color: rgb(255, 255, 255)">
         <div class="voucher-detail-left">
-            <h1 class="voucher-discount-value mb-0">
+            <h1 class="voucher-discount-value mb-1">
                 Giảm {{ $voucher->discount_label }}
             </h1>
             <p class="nvgK1r" style="color: rgb(89, 89, 89)">
