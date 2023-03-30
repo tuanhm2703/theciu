@@ -54,7 +54,7 @@ class BannerController extends Controller {
             'message' => 'Cập nhật banner thành công'
         ]);
     }
-    public function destroy(DeleteBannerRequest $banner) {
+    public function destroy(DeleteBannerRequest $request, Banner $banner) {
         $banner->delete();
         return BaseResponse::success([
             'message'  => 'Xoá banner thành công'
