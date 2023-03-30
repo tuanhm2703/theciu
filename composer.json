@@ -25,6 +25,7 @@
         "phpoffice/phpspreadsheet": "^1.26",
         "psr/simple-cache": "^2.0",
         "spatie/laravel-permission": "^5.7",
+        "spatie/laravel-sitemap": "^6.2",
         "yajra/laravel-datatables": "^9.0"
     },
     "require-dev": {
