@@ -65,7 +65,7 @@ class ProductListComponent extends Component
     {
         $this->product_categories = Category::whereHas('products', function ($q) {
             $q->available();
-        })->whereType(CategoryType::PRODUCT)->orderBy('categories.name')->select('id', 'name')->withCount('products')->get();
+        })->whereType(CategoryType::PRODUCT)->orderBy('categories.name')->select('id', 'name', 'slug')->withCount('products')->get();
         $this->products = new Collection();
         $this->searchProduct();
         $this->resfreshAutocompleteKeywords();

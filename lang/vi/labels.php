@@ -223,4 +223,7 @@ return [
     'voucher_unlimit_discount' => 'Không giới hạn giá trị. Khuyến mãi tối đa',
     'out_of_quantity' => 'Hết số lượng',
     'no_voucher_available' => 'Hiện tại chưa có voucher.',
+    'back_to_homepage' => 'Quay lại trang chủ',
+    'error_404' => 'Không tìm thấy trang',
+    '404_error_message' => "Xin lỗi, trang của bạn tìm kiếm không tồn tại."
 ];

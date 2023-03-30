@@ -18,8 +18,8 @@
     </div><!-- End .details-filter-row -->
 
     <div class="row">
-        <div class="col-12 col-lg-6">
-            <div class="product-details-action d-block my-5">
+        <div class="col-12 col-lg-6 p-0">
+            <div class="product-details-action d-block m-0">
                 <button @disabled(!$inventory) wire:click.prevent="addToCart"
                     class="btn-product btn-cart btn add-to-cart-btn">
                     <span wire:loading.remove wire:target="addToCart">{{ trans('labels.add_to_cart') }}</span>
@@ -27,14 +27,14 @@
                 </button>
             </div>
         </div>
-        <div class="col-12 col-lg-6 d-flex justify-content-center">
-            <div class="details-action-wrapper my-5">
+        <div class="col-12 col-lg-6 d-flex justify-content-center add-to-wishlist-wrapper">
+            <div class="details-action-wrapper m-0">
                 <a href="#" class="btn-product btn-wishlist" wire:click.prevent="addToWishlist"
                     title="Wishlist"><span>{{ $product->is_on_customer_wishlist ? trans('labels.remove_from_wishlist') : trans('labels.add_to_wishlist') }}</span></a>
             </div><!-- End .details-action-wrapper -->
         </div>
     </div>
-    <div>
+    <div class="mt-2">
         <a href="#" id="size-guide-gallery">
             <i class="icon-th-list"></i>{{ trans('labels.size_guide') }} <br>
         </a>

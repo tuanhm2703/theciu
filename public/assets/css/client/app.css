@@ -1275,9 +1275,24 @@ input[type=number] {
 #fb-root iframe {
     z-index: 10 !important;
 }
+.filter-item a {
+    font-size: 14px;
+}
+.filter-item a:not(:hover) {
+    color: black;
+}
+.filter-item a.active {
+    color: #c96;
+}
+.add-to-wishlist-wrapper {
+    margin-top: 2rem;
+}
 @media (min-width: 991px) {
     .order-lg-first {
         display: block;
+    }
+    .add-to-wishlist-wrapper {
+        margin-top: 0;
     }
     .desktop-cart-table {
         display: block !important;

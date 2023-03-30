@@ -139,20 +139,25 @@
                         <div class="collapse show" id="widget-1">
                             <div class="widget-body">
                                 <div class="filter-items filter-items-count">
-                                    @foreach ($product_categories as $category)
+                                    @foreach ($product_categories as $product_cate)
                                         <div class="filter-item">
-
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" name="params-categories"
-                                                    value="{{ $category->slug }}" wire:model="category"
-                                                    wire:change="searchProduct(1)" class="custom-control-input"
-                                                    id="cat-{{ $category->slug }}">
-                                                <label class="custom-control-label"
-                                                    for="cat-{{ $category->slug }}">{{ $category->name }}</label>
-                                            </div>
-                                            {{-- <span wire:ignore
+                                            @if ($promotion || $haspromotion)
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" name="params-categories"
+                                                        value="{{ $product_cate->slug }}" wire:model="category"
+                                                        wire:change="searchProduct(1)" class="custom-control-input"
+                                                        id="cat-{{ $product_cate->slug }}">
+                                                    <label class="custom-control-label"
+                                                        for="cat-{{ $product_cate->slug }}">{{ $product_cate->name }}</label>
+                                                </div>
+                                                {{-- <span wire:ignore
                                                 class="item-count">{{ $category->products_count }}</span> --}}
-
+                                            @else
+                                                <a class="{{ $product_cate->slug == $category ? 'active' : '' }}"
+                                                    href="{{ route('client.product_category.index', ['category' => $product_cate->slug, 'keyword' => $keyword]) }}">
+                                                    {{ $product_cate->name }}
+                                                </a>
+                                            @endif
                                         </div><!-- End .filter-item -->
                                     @endforeach
                                 </div><!-- End .filter-items -->
@@ -216,7 +221,7 @@
             const relatedElement = $($(e.relatedTarget)[0])
             const classes = relatedElement.attr('class')?.split(' ')
             if (classes) {
-                if(classes.includes('autocomplete-view-more')) {
+                if (classes.includes('autocomplete-view-more')) {
                     @this.searchProduct(1)
                 }
                 if (classes.includes('keyword-picker')) {

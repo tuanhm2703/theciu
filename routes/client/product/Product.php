@@ -11,6 +11,9 @@ Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
     Route::get('/my-wishlist', [ProductController::class, 'myWishlist'])->name('my_wishlist');
     Route::get('/{slug}', [ProductController::class, 'details'])->name('details');
 });
-Route::group(['prefix' => 'product-category', 'as' => 'product-category.'], function () {
+Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
     Route::get('/{type}', [CategoryController::class, 'viewCategoryTypeProduct'])->name('index');
+});
+Route::group(['prefix' => 'product-category', 'as' => 'product_category.'], function () {
+    Route::get('/{category}', [CategoryController::class, 'viewProductCategory'])->name('index');
 });

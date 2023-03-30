@@ -10,4 +10,7 @@ class CategoryController extends Controller
         $title = trans("labels.$type");
         return view('landingpage.layouts.pages.product.index', compact('type', 'title'));
     }
+    public function viewProductCategory($category) {
+        return view('landingpage.layouts.pages.product.index', compact('category'));
+    }
 }

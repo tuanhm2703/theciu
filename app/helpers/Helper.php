@@ -36,7 +36,7 @@ function renderCategory($category)
 {
     $output = '';
     if ($category->hasProducts()) {
-        $route = route('client.product.index', ['category' => $category->slug]);
+        $route = route('client.product_category.index', ['category' => $category->slug]);
         $output .= "<li><a href='$route'>$category->name</a>";
         if ($category->categories->count() > 0) {
             $output .= "<ul>";

@@ -191,11 +191,13 @@
     <!-- Your Plugin chat code -->
 
 
-    <livewire:client.sticky-voucher-icon-component />
+    @if (!isset($showFooterComponent))
+        <livewire:client.sticky-voucher-icon-component />
+        <livewire:client.list-saved-voucher-component />
+    @endif
 
     <div id="fb-customer-chat" class="fb-customerchat">
     </div>
-    <livewire:client.list-saved-voucher-component />
     <script>
         var chatbox = document.getElementById('fb-customer-chat');
         chatbox.setAttribute("page_id", "108168607735167");
