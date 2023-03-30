@@ -660,7 +660,7 @@ input[type=number] {
 .header-sticky {
     position: sticky;
     top: -1px;
-    z-index: 12;
+    z-index: 10;
 }
 
 .add-to-cart-btn {
