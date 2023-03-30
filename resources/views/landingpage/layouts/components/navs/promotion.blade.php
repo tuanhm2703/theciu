@@ -9,7 +9,7 @@
                         @foreach ($promotions as $p)
                             <li>
                                 <a
-                                    href="{{ route('client.product.index', ['promotion' => $p->slug]) }}">
+                                    href="{{ route('client.sale_off.index', $p->slug) }}">
                                     {{ $p->name }}<span><span class="tip tip-new">New</span></span>
                                 </a>
                             </li>
