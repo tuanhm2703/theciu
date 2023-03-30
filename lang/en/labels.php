@@ -219,4 +219,5 @@ return [
     'voucher_limit_discount_template' => 'Discount to :value',
     'voucher_unlimit_discount' => 'Unlimited promotional value. Maximum promotion',
     'out_of_quantity' => 'Out of Quantity',
+    'no_voucher_available' => 'No Voucher Available',
 ];

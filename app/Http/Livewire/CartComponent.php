@@ -73,7 +73,7 @@ class CartComponent extends Component {
 
     public function mount() {
         $this->cart =  Cart::with(['inventories' => function ($q) {
-            return $q->with('image:path,imageable_id', 'product:id,slug,name');
+            return $q->with('image:path,imageable_id', 'product:id,slug,name')->whereHas('product');
         }])->firstOrCreate([
             'customer_id' => auth('customer')->user()->id
         ]);

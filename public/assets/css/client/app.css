@@ -1248,6 +1248,7 @@ input[type=number] {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     min-height: 40vh;
     opacity: 1;
+    min-width: 350px;
 }
 #save-voucher-component-wrapper.hide {
     bottom: 0%;
