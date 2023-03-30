@@ -21,6 +21,10 @@ trait Imageable {
         })->orderBy('order', 'asc');
     }
 
+    public function phoneImage() {
+        return $this->hasOne(Image::class, 'imageable_id', 'id')->where('type', MediaType::PHONE);
+    }
+
     public function createImages($images, $type = null, $folder = 'images') {
         foreach ($images as $key => $image) {
             $fileName = $image->getClientOriginalName();

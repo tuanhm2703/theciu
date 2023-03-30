@@ -23,7 +23,7 @@
                         </div>
                     </div>
                     @foreach ($vouchers as $voucher)
-                        <div class="custom-control custom-radio voucher-radio row" wire:ignore>
+                        <div class="custom-control custom-radio voucher-radio row">
                             <input type="radio" wire:model="order_voucher_id" value="{{ $voucher->id }}"
                                 id="voucher-{{ $voucher->id }}" class="custom-control-input"
                                 @disabled($voucher->disabled)>
@@ -47,7 +47,7 @@
                         </div><!-- End .custom-control -->
                     @endforeach
                     <div class="row mt-3" style="justify-content: right">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">{{ trans('labels.accept') }}</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('labels.accept') }}</button>
                     </div>
                 </div>
             </div>

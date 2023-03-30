@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-9">
-        <table class="table table-cart table-mobile mb-2">
+        <table class="table table-cart table-mobile mb-2 desktop-cart-table">
             <thead>
                 <tr>
                     <th></th>
@@ -19,6 +19,50 @@
                 @endforeach
             </tbody>
         </table><!-- End .table table-wishlist -->
+        <div class="mobile-cart-table">
+            @foreach ($cart->inventories as $inventory)
+                <div class="row mt-2">
+                    <div class="col-2 col-md-1">
+                        <input wire:change="updateOrderInfo" type="checkbox"
+                            class="form-control custom-checkbox m-auto check-cart-item p-1" value="{{ $inventory->id }}"
+                            wire:model="item_selected">
+                    </div>
+                    <div class="col-9 col-md-10">
+                        <div class="product-col">
+                            <div class="cart-product px-2">
+                                <figure class="product-media mr-1">
+                                    <img src="{{ $inventory->image->path_with_domain }}" alt="">
+                                </figure>
+                            </div>
+
+                            <div>
+                                <h3 class="product-title">
+                                    <a href="{{ route('client.product.details', $inventory->product->slug) }}"
+                                        class="product-cart-title {{ $inventory->pivot->quantity > $inventory->stock_quantity ? 'text-danger' : '' }}">{{ $inventory->name }}</a>
+                                    @if ($inventory->pivot->quantity > $inventory->stock_quantity && $inventory->product->is_reorder == 0)
+                                        <br>
+                                        <small><i
+                                                class="text-danger">{{ trans('errors.cart.dont_have_enough_stock') }}</i></small>
+                                    @endif
+                                </h3><!-- End .product-title -->
+                                <p>{{ $inventory->title }}</p>
+                                @component('components.product-price-label', compact('inventory'))
+                                @endcomponent
+                                <div class="cart-product-quantity mt-1">
+                                    <input type="number" class="form-control" min="1" max="10"
+                                        step="1" data-decimals="0"
+                                        wire:change="itemAdded({{ $inventory->id }}, $event.target.value)"
+                                        data-inventory-id="{{ $inventory->id }}"
+                                        value="{{ $inventory->pivot->quantity }}" required>
+                                </div><!-- End .cart-product-quantity -->
+                            </div>
+                        </div><!-- End .product -->
+                    </div>
+                    <div class="col-1" wire:click="$emit('cart:itemDeleted', {{ $inventory->id }})"><button
+                            class="btn-remove"><i class="icon-close"></i></button></div>
+                </div>
+            @endforeach
+        </div>
         <div class="d-flex justify-content-between">
             <h5 class="d-flex align-items-center">
                 <i class="text-danger fas fa-receipt mr-1"></i> Voucher
@@ -26,8 +70,9 @@
             <h6 class="d-flex align-items-center">
                 @if ($order_voucher)
                     <div class="order-voucher-discount-tag mr-3 d-flex align-items-center wave-border">
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-                            xmlns:svgjs="http://svgjs.com/svgjs" x="0" y="0" viewBox="0 0 100 100"
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+                            x="0" y="0" viewBox="0 0 100 100"
                             style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
                             <g>
                                 <path
@@ -107,7 +152,8 @@
                                         <img src="{{ optional($pm->image)->path_with_domain }}" width="10%"
                                             class="mr-3"alt="">
                                         <span>{{ trans("labels.payment_methods.$pm->code") }} <i wire:ignore
-                                                class="fa fa-question-circle" data-toggle="tooltip" data-placement="top"
+                                                class="fa fa-question-circle" data-toggle="tooltip"
+                                                data-placement="top"
                                                 title="{{ $pm->description }}"></i></span></label>
                                 </div><!-- End .custom-control -->
                             @endforeach
@@ -136,7 +182,8 @@
                     </tr><!-- End .summary-total -->
                 </tbody>
             </table><!-- End .table table-summary -->
-            <button href="#" wire:click.prevent="checkout" class="btn btn-outline-primary-2 btn-order btn-block">
+            <button href="#" wire:click.prevent="checkout"
+                class="btn btn-outline-primary-2 btn-order btn-block">
                 <span wire:loading.remove wire:target="checkout">{{ trans('labels.checkout') }}</span>
                 <span wire:loading wire:target="checkout">Đang tiến hành thanh toán..</span>
             </button>

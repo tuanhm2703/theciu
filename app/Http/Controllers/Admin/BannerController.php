@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\MediaType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateBannerRequest;
 use App\Http\Requests\Admin\DeleteBannerRequest;
@@ -27,6 +28,9 @@ class BannerController extends Controller {
         if ($request->hasFile('image')) {
             $banner->createImages([$request->file('image')]);
         }
+        if ($request->hasFile('phoneImage')) {
+            $banner->createImages([$request->file('phoneImage')], MediaType::PHONE);
+        }
         return BaseResponse::success([
             'message' => 'Tạo banner thành công'
         ]);
@@ -42,11 +46,14 @@ class BannerController extends Controller {
             $banner->image()->delete();
             $banner->createImages([$request->file('image')]);
         }
+        if ($request->hasFile('phoneImage')) {
+            $banner->phoneImage()->delete();
+            $banner->createImages([$request->file('phoneImage')], MediaType::PHONE);
+        }
         return BaseResponse::success([
             'message' => 'Cập nhật banner thành công'
         ]);
     }
-
     public function destroy(DeleteBannerRequest $banner) {
         $banner->delete();
         return BaseResponse::success([

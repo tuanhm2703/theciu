@@ -59,10 +59,19 @@ class CheckoutService {
             if($checkoutModel->getOrderVoucher()) {
                 $discount_amount = $checkoutModel->getOrderVoucher()->getDiscountAmount($order_total);
                 $order_total = $order_total - $discount_amount;
+                $orderVoucher = $checkoutModel->getOrderVoucher();
                 $order->vouchers()->attach($checkoutModel->getOrderVoucherId(), [
-                    'type' => $checkoutModel->getOrderVoucher()->voucher_type->code,
-                    'amount' => $discount_amount
+                    'type' => $orderVoucher->voucher_type->code,
+                    'amount' => $discount_amount,
+                    'customer_id' => $customer->id
                 ]);
+                if($orderVoucher->saveable) {
+                    customer()->saved_vouchers()->sync([
+                        $orderVoucher->id, [
+                            'is_used' => true
+                        ]
+                    ], false);
+                }
             }
             $order->update([
                 'total' => $order_total + $order->shipping_fee,

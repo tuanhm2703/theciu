@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 
 class VoucherController extends Controller {
     public function edit(Voucher $voucher) {
-        $voucher_types = VoucherType::active()->get();
-        return view('admin.pages.promotion.voucher.edit', compact('voucher', 'voucher_types'));
+        return view('admin.pages.promotion.voucher.edit', compact('voucher'));
     }
 
     public function quickView(Voucher $voucher) {
@@ -21,19 +20,26 @@ class VoucherController extends Controller {
     }
 
     public function create() {
-        $voucher_types = VoucherType::active()->get();
-        return view('admin.pages.promotion.voucher.create', compact('voucher_types'));
+        return view('admin.pages.promotion.voucher.create');
     }
 
     public function store(CreateVoucherRequest $request) {
-        Voucher::create($request->all());
+        $input = $request->all();
+        if(!isset($input['max_discount_amount'])) {
+            $input['max_discount_amount'] = null;
+        }
+        Voucher::create($input);
         return BaseResponse::success([
             'message' => 'Tạo mã khuyến mãi thành công'
         ]);
     }
 
     public function update(Voucher $voucher, Request $request) {
-        $voucher->update($request->all());
+        $input = $request->all();
+        if(!isset($input['max_discount_amount'])) {
+            $input['max_discount_amount'] = null;
+        }
+        $voucher->update($input);
         return BaseResponse::success([
             'message' => 'Cập nhật voucher thành công'
         ]);

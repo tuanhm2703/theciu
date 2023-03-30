@@ -69,7 +69,7 @@
                                 @endif
                                 @foreach ($product->images->unique('name') as $image)
                                     <div class="intro-slide" data-hash="{{ $image->name }}">
-                                        <a id="Zoom-1" class="MagicZoom"
+                                        <a class="MagicZoom"
                                             data-options="zoomPosition: inner;"
                                             href="{{ $image->path_with_domain }}"
                                             data-zoom-image-2x="{{ $image->path_with_domain }}"
@@ -84,7 +84,7 @@
                                         $image = (object) $image;
                                     @endphp
                                     <div class="intro-slide" data-hash="{{ $image->name }}">
-                                        <a id="Zoom-1" class="MagicZoom"
+                                        <a class="MagicZoom"
                                             data-options="zoomPosition: inner;"
                                             href="{{ $image->path_with_domain }}"
                                             data-zoom-image-2x="{{ $image->path_with_domain }}"
@@ -132,10 +132,10 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         quantityInputs()
+        MagicZoom.refresh();
         Livewire.hook('message.processed', (message, component) => {
             if (component.fingerprint.name == 'product-pick-item-component') {
                 quantityInputs()
-                MagicZoom.refresh();
             }
             // console.log(component.fingerprint.name, message);
         })

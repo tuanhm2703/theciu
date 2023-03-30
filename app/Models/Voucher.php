@@ -24,6 +24,14 @@ class Voucher extends Model {
         'quantity',
         'max_discount_amount',
         'begin',
+        'end',
+        'saveable'
+    ];
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'begin',
         'end'
     ];
 
@@ -36,7 +44,7 @@ class Voucher extends Model {
     }
 
     public function canApplyForCustomer($customer_id) {
-        return $this->orders()->where('customer_id', $customer_id)->count() < $this->customer_limit && $this->quantity > 0;
+        return $this->orders()->where('orders.customer_id', $customer_id)->count() < $this->customer_limit && $this->quantity > 0;
     }
 
     public function voucher_type() {
@@ -61,5 +69,20 @@ class Voucher extends Model {
 
     public function increaseQuantity() {
         $this->update(['quantity' => DB::raw('quantity + 1')]);
+    }
+
+    public function getDiscountLabelAttribute() {
+        if($this->discount_type == VoucherDiscountType::AMOUNT) {
+            return thousandsCurrencyFormat($this->value);
+        } else {
+            return $this->value . "%";
+        }
+    }
+    public function getDiscountDescriptionAttribute() {
+        if(!$this->max_discount_amount) {
+            return trans('labels.voucher_unlimit_discount');
+        } else {
+            return trans('labels.voucher_limit_discount_template', ['value' => $this->max_discount_amount]);
+        }
     }
 }

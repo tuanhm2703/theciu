@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('order_vouchers', function (Blueprint $table) {
             $table->bigInteger('voucher_id')->unsigned();
             $table->bigInteger('order_id')->unsigned();
+            $table->bigInteger('customer_id')->unsigned();
             $table->foreign('voucher_id')->references('id')->on('vouchers')->onDelete('cascade');
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->string('type');
             $table->float('amount', 20);
             $table->timestamps();

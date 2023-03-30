@@ -216,4 +216,10 @@ return [
     'reward_point' => 'Điểm tích luỹ',
     'save_now' => 'Lưu ngay',
     'login_now' => 'Đăng nhập ngay',
+    'saveable' => 'Có thể lưu',
+    'save' => 'Lưu',
+    'saved' => 'Đã lưu',
+    'voucher_limit_discount_template' => 'Giảm tối đa :value',
+    'voucher_unlimit_discount' => 'Không giới hạn giá trị. Khuyến mãi tối đa',
+    'out_of_quantity' => 'Hết số lượng',
 ];

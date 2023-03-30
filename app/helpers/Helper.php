@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 if (!function_exists('isNavActive')) {
-    function isNavActive(String $routeName) {
+    function isNavActive(String $routeName)
+    {
         if (strpos(Route::currentRouteName(), $routeName) === 0) return true;
         return strpos(Request::url(), $routeName) === 0;
     }
 }
-function stripVN($str) {
+function stripVN($str)
+{
     $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
     $str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
     $str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", 'i', $str);
@@ -30,7 +32,8 @@ function stripVN($str) {
     return $str;
 }
 
-function renderCategory($category) {
+function renderCategory($category)
+{
     $output = '';
     if ($category->hasProducts()) {
         $route = route('client.product.index', ['category' => $category->slug]);
@@ -47,7 +50,8 @@ function renderCategory($category) {
     return $output;
 }
 
-function getLocaleWithCountryCode() {
+function getLocaleWithCountryCode()
+{
     return [
         'af' => 'ZA',
         'am' => 'ET',
@@ -279,23 +283,28 @@ function getLocaleWithCountryCode() {
         'zu' => 'ZA',
     ];
 }
-function isEmail($email) {
+function isEmail($email)
+{
     return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 }
 
-function isPhone($phone) {
+function isPhone($phone)
+{
     return preg_match('/(84|0[3|5|7|8|9])+([0-9]{8})\b/', $phone) > 0;
 }
 
-function format_currency($value, $decimal = 0) {
+function format_currency($value, $decimal = 0)
+{
     return number_format($value, $decimal, ',', '.');
 }
 
-function format_currency_with_label($value, $decimal = 0) {
+function format_currency_with_label($value, $decimal = 0)
+{
     return "₫" . format_currency($value, $decimal);
 }
 
-function isRomanNumber($roman) {
+function isRomanNumber($roman)
+{
     $roman_characters = [
         'M',
         'CM',
@@ -317,7 +326,8 @@ function isRomanNumber($roman) {
     return true;
 }
 
-function convertRomanToInteger($roman) {
+function convertRomanToInteger($roman)
+{
     if (isRomanNumber($roman) == false) return 0;
     $romans = array(
         'M' => 1000,
@@ -344,12 +354,14 @@ function convertRomanToInteger($roman) {
     return $result;
 }
 
-function pickUpAddressOptions() {
+function pickUpAddressOptions()
+{
     $config = Config::select('id')->first();
     return $config->pickup_addresses()->pluck('full_address', 'id')->toArray();
 }
 
-function gen_uuid() {
+function gen_uuid()
+{
     return sprintf(
         '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
         // 32 bits for "time_low"
@@ -375,19 +387,24 @@ function gen_uuid() {
     );
 }
 
-function getAppName() {
+function getAppName()
+{
     return env('APP_NAME');
 }
-function checkAuthCustomer() {
+function checkAuthCustomer()
+{
     return auth('customer')->check();
 }
-function customer() {
+function customer()
+{
     return checkAuthCustomer() ? auth('customer')->user() : null;
 }
-function user() {
+function user()
+{
     return auth('web')->check() ? auth('web')->user() : null;
 }
-function get_placeholder_img($size = 'small') {
+function get_placeholder_img($size = 'small')
+{
     $size = config("image.sizes.{$size}");
 
     if ($size && is_array($size))
@@ -395,7 +412,8 @@ function get_placeholder_img($size = 'small') {
 
     return "/images/placeholders/no_img.png";
 }
-function get_proxy_image_url($path, $size = 600) {
+function get_proxy_image_url($path, $size = 600)
+{
     $info = pathinfo($path);
     if ($path != '' && $info != null && $info['extension'] == 'gif') {
         $extension = 'gif';
@@ -433,8 +451,28 @@ function get_proxy_image_url($path, $size = 600) {
     $proxy_domain = config('services.imgproxy.domain');
     return sprintf("$proxy_domain/%s%s", $signature, $path);
 }
-function random_string($length) {
+function random_string($length)
+{
     $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     $rand_str = substr(str_shuffle($chars), 0, $length);
     return $rand_str;
+}
+function thousandsCurrencyFormat($num)
+{
+
+    if ($num > 1000) {
+
+        $x = round($num);
+        $x_number_format = number_format($x);
+        $x_array = explode(',', $x_number_format);
+        $x_parts = array('k', 'm', 'b', 't');
+        $x_count_parts = count($x_array) - 1;
+        $x_display = $x;
+        $x_display = $x_array[0] . ((int) $x_array[1][0] !== 0 ? '.' . $x_array[1][0] : '');
+        $x_display .= $x_parts[$x_count_parts - 1];
+
+        return $x_display;
+    }
+
+    return $num;
 }

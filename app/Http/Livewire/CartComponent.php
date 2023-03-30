@@ -22,7 +22,8 @@ class CartComponent extends Component {
         'cart:itemDeleted' => 'deleteInventory',
         'cart:refresh' => '$refresh',
         'cart:changeAddress' => 'changeAddress',
-        'cart:itemAdded' => 'updateOrderInfo'
+        'cart:itemAdded' => 'updateOrderInfo',
+        'cart:reloadVoucher' => 'reloadVoucher',
     ];
     public $address;
     public $estimateDeliveryFee = 0;
@@ -47,6 +48,7 @@ class CartComponent extends Component {
 
     public $vouchers;
     public $order_voucher;
+    public $save_voucher_ids = [];
 
     protected $rules = [
         'service_id' => 'required',
@@ -89,13 +91,24 @@ class CartComponent extends Component {
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
         $this->payment_methods = PaymentMethod::active()->with('image:imageable_id,path')->get();
-        $this->vouchers = Voucher::available()->get();
+        $this->save_voucher_ids = customer()->saved_vouchers()->available()->haveNotUsed()->pluck('id')->toArray();
+        $this->vouchers = Voucher::select('vouchers.*')->available()->notSaveable()->union(customer()->saved_vouchers()->select('vouchers.*')->available()->haveNotUsed())->get();
+        $this->updateVoucherDisableStatus();
+    }
+
+    public function reloadVoucher() {
+        $this->save_voucher_ids = customer()->saved_vouchers()->available()->haveNotUsed()->pluck('id')->toArray();
+        $this->vouchers = Voucher::select('vouchers.*')->available()->notSaveable()->union(customer()->saved_vouchers()->select('vouchers.*')->available()->haveNotUsed())->get();
         $this->updateVoucherDisableStatus();
     }
 
     private function updateVoucherDisableStatus() {
         foreach($this->vouchers as $voucher) {
-            if($voucher->canApplyForCustomer(customer()) && count($this->item_selected) > 0) {
+            if (count($this->item_selected) == 0) {
+                $voucher->disabled = true;
+            } else if(in_array($voucher->id, $this->save_voucher_ids)) {
+                $voucher->disabled = false;
+            } else if($voucher->canApplyForCustomer(customer()->id)) {
                 $voucher->disabled = false;
             } else {
                 $voucher->disabled = true;
@@ -224,7 +237,13 @@ class CartComponent extends Component {
     }
 
     public function applyVoucher() {
-        $voucher = Voucher::where('code', $this->voucher_code)->first();
+        $voucher = Voucher::where('code', $this->voucher_code)->where(function($q) {
+            $q->notSavable()->orWhere(function($q) {
+                $q->whereHas('customers', function($q) {
+                    $q->where('customers.id', customer()->id);
+                });
+            });
+        })->first();
         if(!$voucher) {
             $this->dispatchBrowserEvent('openToast', [
                 'message' => 'Voucher không hợp lệ',

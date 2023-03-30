@@ -129,7 +129,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
         View::composer(
             'landingpage.layouts.components.banner-slider',
             function ($view) {
-                $banners = Banner::active()->with('image')->orderBy('order', 'desc')->orderBy('updated_at', 'desc')->get();
+                $banners = Banner::active()->with('image', 'phoneImage')->orderBy('order', 'desc')->orderBy('updated_at', 'desc')->get();
                 $view->with(['banners' => $banners]);
             }
         );

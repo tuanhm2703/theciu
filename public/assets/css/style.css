@@ -13383,33 +13383,33 @@ button:focus {
   padding-top: 3rem;
   padding-bottom: 3rem;
 }
-.table .price-col {
+.cart-row .price-col {
   width: 180px;
   color: #333;
   font-weight: 400;
   font-size: 1.6rem;
 }
-.table .stock-col {
+.cart-row .stock-col {
   width: 160px;
   font-weight: 400;
   font-size: 1.6rem;
 }
-.table .action-col {
+.cart-row .action-col {
   width: 202px;
 }
-.table .action-col .btn {
+.cart-row .action-col .btn {
   height: 40px;
   padding-top: 0.55rem;
   padding-bottom: 0.55rem;
   font-size: 1.3rem;
   text-transform: uppercase;
 }
-.table .action-col .btn i {
+.cart-row .action-col .btn i {
   font-size: 1.8rem;
   margin-right: 1rem !important;
   margin-left: 0 !important;
 }
-.table .action-col .btn.disabled {
+.cart-row .action-col .btn.disabled {
   opacity: 1 !important;
   color: #cccccc !important;
   cursor: default;
@@ -13417,13 +13417,13 @@ button:focus {
   background-color: #fafafa !important;
   border-color: #ebebeb !important;
 }
-.table .remove-col {
+.cart-row .remove-col {
   padding-right: 0;
   padding-left: 0;
   width: 38px;
   text-align: right;
 }
-.table .remove-col .btn-remove {
+.cart-row .remove-col .btn-remove {
   margin-right: -0.7rem;
 }
 .product-col .product {

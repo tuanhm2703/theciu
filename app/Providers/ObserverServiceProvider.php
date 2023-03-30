@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\Promotion;
+use App\Models\Voucher;
 use App\Observers\AddressObserver;
 use App\Observers\BlogObserver;
 use App\Observers\CategoryObserver;
@@ -20,6 +21,7 @@ use App\Observers\OrderObserver;
 use App\Observers\PageObserver;
 use App\Observers\ProductObserver;
 use App\Observers\PromotionObserver;
+use App\Observers\VoucherObserver;
 use Illuminate\Support\ServiceProvider;
 
 class ObserverServiceProvider extends ServiceProvider {
@@ -47,5 +49,6 @@ class ObserverServiceProvider extends ServiceProvider {
         Address::observe(AddressObserver::class);
         Order::observe(OrderObserver::class);
         Page::observe(PageObserver::class);
+        Voucher::observe(VoucherObserver::class);
     }
 }

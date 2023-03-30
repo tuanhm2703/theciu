@@ -95,10 +95,17 @@
 
         const initEditFormFunc = (banner) => {
             const imgSource = banner.image?.path_with_original_size
+            const imgPhoneSource = banner.phone_image?.path_with_original_size
             const file = FilePond.create(document.querySelector('input[name=image]'), {
                 imagePreviewHeight: 170,
                 storeAsFile: true,
                 files: imgSource ? [imgSource] : [],
+                labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
+            })
+            const filePhone = FilePond.create(document.querySelector('input[name=phoneImage]'), {
+                imagePreviewHeight: 170,
+                storeAsFile: true,
+                files: imgPhoneSource ? [imgPhoneSource] : [],
                 labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
             })
 
@@ -107,7 +114,8 @@
                     $('.submit-btn').loading()
                 },
                 data: {
-                    image: file.getFile(1)
+                    image: file.getFile(1),
+                    phoneImage: filePhone.getFile(1)
                 },
                 dataType: 'json',
                 success: (res) => {
@@ -124,12 +132,19 @@
                 labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
             })
 
+            const filePhone = FilePond.create(document.querySelector('input[name=phoneImage]'), {
+                imagePreviewHeight: 170,
+                storeAsFile: true,
+                labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
+            })
+
             $('form').ajaxForm({
                 beforeSend: () => {
                     $('.submit-btn').loading()
                 },
                 data: {
-                    image: file.getFile(1)
+                    image: file.getFile(1),
+                    phoneImage: filePhone.getFile(1)
                 },
                 dataType: 'json',
                 success: (res) => {

@@ -213,4 +213,10 @@ return [
     'reward_point' => 'Reward Point',
     'save_now' => 'Save Now',
     'login_now' => 'Login Now',
+    'saveable' => 'Saveable',
+    'save' => 'Save',
+    'saved' => 'Saved',
+    'voucher_limit_discount_template' => 'Discount to :value',
+    'voucher_unlimit_discount' => 'Unlimited promotional value. Maximum promotion',
+    'out_of_quantity' => 'Out of Quantity',
 ];

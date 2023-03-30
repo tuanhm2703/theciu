@@ -83,7 +83,7 @@
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
 
-    <livewire:client.voucher-popup-component/>
+    <livewire:client.voucher-popup-component />
     <div id="test-popup" class="white-popup mfp-hide">
         <livewire:client.product-detail-info-component></livewire:client.product-detail-info-component>
     </div>
@@ -167,6 +167,7 @@
                     html: true
                 });
             }
+            MagicZoom.refresh();
         });
         window.addEventListener('openToast', (e) => {
             const type = e.detail.type
@@ -190,13 +191,11 @@
     <!-- Your Plugin chat code -->
 
 
-    <div id="sticky-gift-icon">
-        <div class="my-btn-border"></div>
-        <img src="/img/gift-icon.png" class="btn-bell" alt="">
-    </div>
+    <livewire:client.sticky-voucher-icon-component />
 
     <div id="fb-customer-chat" class="fb-customerchat">
     </div>
+    <livewire:client.list-saved-voucher-component />
     <script>
         var chatbox = document.getElementById('fb-customer-chat');
         chatbox.setAttribute("page_id", "108168607735167");

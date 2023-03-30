@@ -105,7 +105,7 @@
         var swiper = new Swiper(".mySwiper", {
             direction: "vertical",
             slidesPerView: 'auto',
-            spaceBetween: 0,
+            spaceBetween: 5,
             loop: true,
             mousewheel: true,
             pagination: {

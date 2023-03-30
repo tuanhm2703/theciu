@@ -10,7 +10,7 @@ use Yajra\DataTables\DataTables;
 class BannerController extends Controller
 {
     public function paginate() {
-        $banners = Banner::query()->with('image');
+        $banners = Banner::query()->with('image', 'phoneImage');
         return DataTables::of($banners)
         ->editColumn('image', function($banner) {
             return view('admin.pages.appearance.banner.components.image', compact('banner'));

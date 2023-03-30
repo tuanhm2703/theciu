@@ -51,7 +51,11 @@ class Customer extends User {
     }
 
     public function vouchers() {
-        return $this->belongsToMany(Voucher::class)->withPivot('type', 'is_used')->withTimestamps();
+        return $this->belongsToMany(Voucher::class, 'order_vouchers');
+    }
+
+    public function saved_vouchers() {
+        return $this->belongsToMany(Voucher::class, 'customer_vouchers')->withPivot('type', 'is_used')->withTimestamps();
     }
 
     public function delivered_orders() {

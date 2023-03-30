@@ -40,8 +40,12 @@
     </div>
 </div>
 <div class="row mt-3">
-    <div class="col-md-12">
-        {!! Form::label('image', trans('labels.image') . ': ', ['class' => 'custom-label-control']) !!}
+    <div class="col-md-6">
+        {!! Form::label('image', trans('labels.image') . ' (Desktop screen): ', ['class' => 'custom-label-control']) !!}
         {!! Form::file('image', ['class' => 'form-control', 'required']) !!}
+    </div>
+    <div class="col-md-6">
+        {!! Form::label('phoneImage', trans('labels.image') . ' (Phone screen): ', ['class' => 'custom-label-control']) !!}
+        {!! Form::file('phoneImage', ['class' => 'form-control', 'required']) !!}
     </div>
 </div>
