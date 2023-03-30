@@ -36,6 +36,7 @@ class VoucherController extends Controller {
 
     public function update(Voucher $voucher, Request $request) {
         $input = $request->all();
+        $input['saveable'] = $input['saveable'] == 'on';
         if(!isset($input['max_discount_amount'])) {
             $input['max_discount_amount'] = null;
         }
