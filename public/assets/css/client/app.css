@@ -1198,6 +1198,8 @@ input[type=number] {
     align-items: center;
     font-size: 14px;
     font-weight: bold;
+    min-width: 30%;
+    justify-content: center;
 }
 .voucher-title span {
     color: #fff;
