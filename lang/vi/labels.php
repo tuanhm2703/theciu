@@ -225,5 +225,6 @@ return [
     'no_voucher_available' => 'Hiện tại chưa có voucher.',
     'back_to_homepage' => 'Quay lại trang chủ',
     'error_404' => 'Không tìm thấy trang',
-    '404_error_message' => "Xin lỗi, trang của bạn tìm kiếm không tồn tại."
+    '404_error_message' => "Xin lỗi, trang của bạn tìm kiếm không tồn tại.",
+    'featured_voucher' => 'Voucher nổi bật'
 ];

@@ -23,4 +23,8 @@ trait VoucherScope {
     public function scopeHaveNotUsed($q) {
         return $q->where('customer_vouchers.is_used', 0);
     }
+
+    public function scopeFeatured($q) {
+        $q->where('vouchers.featured', 1);
+    }
 }

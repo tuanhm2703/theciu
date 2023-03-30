@@ -25,7 +25,8 @@ class Voucher extends Model {
         'max_discount_amount',
         'begin',
         'end',
-        'saveable'
+        'saveable',
+        'featured'
     ];
 
     protected $dates = [

@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('customer_limit')->comment('Maximum times of a customer to use the voucher');
             $table->integer('quantity')->unsigned();
             $table->float('max_discount_amount', 20)->comment('Max discount amount for voucher');
+            $table->boolean('featured');
             $table->dateTime('begin');
             $table->dateTime('end');
             $table->softDeletes();

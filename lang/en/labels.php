@@ -222,5 +222,6 @@ return [
     'no_voucher_available' => 'No Voucher Available',
     'back_to_homepage' => 'Back to Homepage',
     'error_404' => 'Error 404',
-    '404_error_message' => "We are sorry, the page you've requested is not available."
+    '404_error_message' => "We are sorry, the page you've requested is not available.",
+    'featured_voucher' => 'Featured Voucher',
 ];

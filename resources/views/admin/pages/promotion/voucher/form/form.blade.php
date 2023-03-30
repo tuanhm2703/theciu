@@ -153,5 +153,12 @@
                 $('input[name=customer_limit]').val(1)
             }
         })
+        $('input[name=value]').attr('max', $('select[name=discount_type]').val() == "{{ App\Enums\VoucherDiscountType::PERCENT }}" ? 100 : null)
+        $('select[name=discount_type]').on('change', (e) => {
+            $('input[name=value]').attr('max', null)
+            if(e.target.value == "{{ App\Enums\VoucherDiscountType::PERCENT }}") {
+                $('input[name=value]').attr('max', 100)
+            }
+        })
     </script>
 @endpush

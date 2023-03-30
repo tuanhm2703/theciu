@@ -1057,9 +1057,18 @@ input[type=number] {
 .voucher-popup {
     width: 250px !important;
     margin: auto;
-    background-color: #fff;
     padding: 0;
     border-radius: 10px;
+}
+.voucher-popup > div:first-child {
+    background-color: #fff;
+    border-radius: 10px;
+}
+#close-no-reopen {
+    color: white;
+    font-size: 10px;
+    font-size: italic;
+    cursor: pointer;
 }
 
 .newsletter-popup-content {
@@ -1084,7 +1093,7 @@ input[type=number] {
     position: relative;
 }
 
-.voucher-info #voucher-circle-left {
+.voucher-info .voucher-circle-left {
     border: none;
     width: 15px;
     height: 15px;
@@ -1095,7 +1104,7 @@ input[type=number] {
     left: -8px;
 }
 
-.voucher-info #voucher-circle-right {
+.voucher-info .voucher-circle-right {
     border: none;
     width: 15px;
     height: 15px;

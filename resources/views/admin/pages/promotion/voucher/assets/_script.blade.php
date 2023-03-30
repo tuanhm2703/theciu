@@ -34,6 +34,11 @@
                 searchable: false
             }
         ],
+        initComplete: function(settings, json) {
+            $("[data-bs-toggle=tooltip]").tooltip({
+                html: true
+            });
+        }
     });
     const initPromotionProductTable = () => {
         return $('.promotion-table').DataTable({

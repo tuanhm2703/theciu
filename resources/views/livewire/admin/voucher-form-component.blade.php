@@ -79,7 +79,7 @@
                         'discount_type',
                         App\Enums\VoucherDiscountType::getDiscountTypeOptions(),
                         [],
-                        ['class' => 'select2 form-control'],
+                        ['class' => 'select2 form-control', 'wire:model' => 'voucher.discount_type'],
                     ) !!}
                     {!! Form::number('value', null, ['class' => 'form-control', 'required']) !!}
                 </div>
@@ -95,7 +95,7 @@
 
                     </div>
                     <div class="form-check">
-                        {!! Form::radio('is_limit_max_discount', 0, isset($voucher) && !$voucher->max_discount_amount , ['class' => 'form-check-input']) !!}
+                        {!! Form::radio('is_limit_max_discount', 0, !$voucher->max_discount_amount , ['class' => 'form-check-input']) !!}
                         {!! Form::label('is_limit_max_discount', 'Không giới hạn', ['class' => 'custom-control-label']) !!}
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                     ]) !!}
                 </div>
                 <div class="col-8 col-lg-4">
-                    {!! Form::number('customer_limit', 1, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required']) !!}
+                    {!! Form::number('customer_limit', 1, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required', 'disabled' => $voucher->saveable == 1]) !!}
                 </div>
             </div>
             <div class="row mt-3">
@@ -142,7 +142,22 @@
                 </div>
                 <div class="col-8 col-lg-4">
                     <div class="form-check form-switch">
-                        {!! Form::checkbox('saveable', null, false, ['class' => 'form-check-input', 'id' => 'saveable']) !!}
+                        {!! Form::checkbox('saveable', null, $voucher->saveable == 1, ['class' => 'form-check-input', 'id' => 'saveable']) !!}
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
+                    {!! Form::label('featured', trans('labels.featured_voucher'), [
+                        'class' => 'custom-control-label m-0 text-end pe-1',
+                    ]) !!}
+                    <i data-bs-toggle="tooltip" data-bs-placement="top" class="fas fa-question-circle"
+                    title="Voucher sẽ được hiển thị ở popup khi khách hàng truy cập vào website">
+                    </i>
+                </div>
+                <div class="col-8 col-lg-4">
+                    <div class="form-check form-switch">
+                        {!! Form::checkbox('featured', null, $voucher->featured == 1, ['class' => 'form-check-input', 'id' => 'saveable']) !!}
                     </div>
                 </div>
             </div>

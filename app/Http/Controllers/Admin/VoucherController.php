@@ -28,6 +28,8 @@ class VoucherController extends Controller {
         if(!isset($input['max_discount_amount'])) {
             $input['max_discount_amount'] = null;
         }
+        $input['saveable'] = $request->saveable ? $request->saveable == 'on' : false;
+        $input['featured'] = $request->featured ? $request->featured == 'on' : false;
         Voucher::create($input);
         return BaseResponse::success([
             'message' => 'Tạo mã khuyến mãi thành công'
@@ -36,7 +38,8 @@ class VoucherController extends Controller {
 
     public function update(Voucher $voucher, Request $request) {
         $input = $request->all();
-        $input['saveable'] = $input['saveable'] == 'on';
+        $input['saveable'] = $request->saveable ? $request->saveable == 'on' : false;
+        $input['featured'] = $request->featured ? $request->featured == 'on' : false;
         if(!isset($input['max_discount_amount'])) {
             $input['max_discount_amount'] = null;
         }
