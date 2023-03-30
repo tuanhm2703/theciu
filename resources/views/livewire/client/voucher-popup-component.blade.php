@@ -41,7 +41,7 @@
     </div>
 </div>
 <script>
-    if (@json(Session::get('prevent-reopen-voucher-popup') !== true)) {
+    if (@json(Session::has('prevent-reopen-voucher-popup'))) {
         setTimeout(function() {
             $.magnificPopup.open({
                 items: {
