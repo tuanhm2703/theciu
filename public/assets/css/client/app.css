@@ -1202,6 +1202,7 @@ input[type=number] {
 }
 .voucher-title span {
     color: #fff;
+    padding-left: 1rem;
 }
 .voucher-content {
     background-color: white;

@@ -13,12 +13,19 @@ class ListSavedVoucherComponent extends Component
 
     public function mount()
     {
-        $this->vouchers = Voucher::available()->saveable()->get();
         if(customer()) {
-            $saved_voucher_ids = customer()->saved_vouchers()->haveNotUsed()->pluck('id')->toArray();
-            $this->vouchers->each(function($voucher) use ($saved_voucher_ids) {
-                $voucher->saved = in_array($voucher->id, $saved_voucher_ids);
+            $this->vouchers = Voucher::available()->saveable()->get();
+            $saved_vouchers = customer()->saved_vouchers()->get();
+            $this->vouchers->each(function($voucher) use ($saved_vouchers) {
+                $voucher->saved = in_array($voucher->id, $saved_vouchers->pluck('id')->toArray());
+                $voucher->used = $saved_vouchers->where('id', $voucher->id)->where('pivot.is_used', 1)->first() ? true : false;
+                if($voucher->used) $this->vouchers->forget("");
             });
+            $this->vouchers = $this->vouchers->filter(function($value, $key) {
+                return $value->used == false;
+            });
+        } else {
+            $this->vouchers = Voucher::available()->saveable()->get();
         }
     }
     public function updateVoucherStatus() {
