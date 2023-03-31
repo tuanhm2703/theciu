@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\Shipping\GHTKService;
 use App\Mail\FirstTestMail;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use VienThuong\KiotVietClient\Client;
+use VienThuong\KiotVietClient\Model\CustomerGroup;
 use VienThuong\KiotVietClient\Resource\CustomerResource;
 use VienThuong\KiotVietClient\Resource\ProductResource;
 
@@ -18,12 +20,10 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-        $productResource = new ProductResource(App::make(Client::class));
-        $customerResource = new CustomerResource(App::make(Client::class));
-        $customer = $customerResource->getByCode('KH244231');
-        $customer->setRewardPoint(30);
-        dd($customerResource->update($customer));
-        return $customerResource->list()->toArray();
+        $customers = Customer::all();
+        $customers->each(function($customer) {
+            $customer->updateRank();
+        });
     }
 
     public function ipn(Request $request) {

@@ -44,6 +44,7 @@ class OrderObserver {
                 case OrderStatus::DELIVERING:
                     break;
                 case OrderStatus::DELIVERED:
+                    $order->customer->updateRank();
                     break;
             }
         }

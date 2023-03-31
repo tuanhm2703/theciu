@@ -46,7 +46,8 @@ class Order extends Model
         'payment_method_id',
         'canceled_by',
         'sub_status',
-        'payment_status'
+        'payment_status',
+        'rank_discount_value'
     ];
 
     public function customer()
@@ -314,7 +315,7 @@ class Order extends Model
      */
     public function getFinalRevenue()
     {
-        $revenue = $this->subtotal - ($this->getActualShippingFee() - $this->shipping_order->total_fee);
+        $revenue = $this->subtotal - ($this->getActualShippingFee() - $this->shipping_order->total_fee) - $this->rank_discount_value;
         return $this->order_voucher ? $revenue - $this->order_voucher->pivot->amount : $revenue;
     }
 

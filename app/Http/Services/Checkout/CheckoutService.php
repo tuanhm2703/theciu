@@ -73,10 +73,16 @@ class CheckoutService {
                     ], false);
                 }
             }
+            $rank_discount = 0;
+            $subtotal = $order->inventories()->sum('order_items.total');
+            if($customer->available_rank) {
+                $rank_discount = $subtotal * $customer->available_rank->benefit_value / 100;
+            }
             $order->update([
-                'total' => $order_total + $order->shipping_fee,
-                'subtotal' => $order->inventories()->sum('order_items.total'),
+                'total' => $order_total + $order->shipping_fee - $rank_discount,
+                'subtotal' => $subtotal,
                 'origin_subtotal' => $order->inventories()->sum(DB::raw('order_items.origin_price * order_items.quantity')),
+                'rank_discount_value' => $rank_discount
             ]);
             $order->shipping_order()->create([
                 'shipping_service_id' => $checkoutModel->getShippingServiceId(),

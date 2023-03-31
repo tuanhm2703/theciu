@@ -140,6 +140,14 @@
             @endif
             <div class="row">
                 <div class="col-8 border-right">
+                    {{ trans('labels.discount_for_member') }}
+                </div>
+                <div class="col-4 text-right">
+                    - {{ format_currency_with_label($order->rank_discount_value) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 border-right">
                     {{ trans('labels.total') }}
                 </div>
                 <div class="col-4 text-right">

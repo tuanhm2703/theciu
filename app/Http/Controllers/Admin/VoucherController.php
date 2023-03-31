@@ -48,4 +48,11 @@ class VoucherController extends Controller {
             'message' => 'Cập nhật voucher thành công'
         ]);
     }
+
+    public function destroy(Voucher $voucher) {
+        $voucher->delete();
+        return BaseResponse::success([
+            'message' => 'Xoá voucher thành công'
+        ]);
+    }
 }

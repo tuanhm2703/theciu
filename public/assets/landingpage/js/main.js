@@ -1,5 +1,9 @@
 // Main Js File
 const openLoginModal = () => {
+    var mpInstance = $.magnificPopup.instance;
+    if (mpInstance.isOpen) {
+        mpInstance.close();
+    }
     $("#signin-modal").modal("show");
 };
 const reRenderCartDropdown = (html) => {

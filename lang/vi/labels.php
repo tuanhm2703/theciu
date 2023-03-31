@@ -226,5 +226,6 @@ return [
     'back_to_homepage' => 'Quay lại trang chủ',
     'error_404' => 'Không tìm thấy trang',
     '404_error_message' => "Xin lỗi, trang của bạn tìm kiếm không tồn tại.",
-    'featured_voucher' => 'Voucher nổi bật'
+    'featured_voucher' => 'Voucher nổi bật',
+    'discount_for_member' => 'Giảm giá khách hàng thân thiết',
 ];

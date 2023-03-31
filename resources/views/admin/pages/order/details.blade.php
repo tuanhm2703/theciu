@@ -230,6 +230,12 @@
                                 <span> - {{ format_currency_with_label($order->getActualShippingFee()) }}</span>
                             </div>
                             <div class="col-10 turnover-label">
+                                <span>{{ trans('labels.discount_for_member') }}</span>
+                            </div>
+                            <div class="col-2">
+                                <span> - {{ format_currency_with_label($order->rank_discount_value) }}</span>
+                            </div>
+                            <div class="col-10 turnover-label">
                                 <b>Doanh thu đơn hàng</b>
                             </div>
                             <div class="col-2">
@@ -269,6 +275,14 @@
                                 </span>
                             </div>
                         @endif
+                        <div class="col-10 payment-info-label">
+                            <span>{{ trans('labels.discount_for_member') }}</span>
+                        </div>
+                        <div class="col-2">
+                            <span>
+                                - {{ format_currency_with_label($order->rank_discount_value) }}
+                            </span>
+                        </div>
                         <div class="col-10 payment-info-label">
                             <span>Tổng tiền Thanh toán</span>
                         </div>

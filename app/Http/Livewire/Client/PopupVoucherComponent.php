@@ -6,14 +6,13 @@ use App\Models\Voucher;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class SaveVoucherComponent extends Component
+class PopupVoucherComponent extends Component
 {
     public $voucher;
     public function render()
     {
-        return view('livewire.client.save-voucher-component');
+        return view('livewire.client.popup-voucher-component');
     }
-
     public function saveVoucher() {
         if(!auth('customer')->check()) {
             $this->dispatchBrowserEvent('openLoginForm');
@@ -30,10 +29,10 @@ class SaveVoucherComponent extends Component
                 ]);
                 $this->voucher->saved = true;
                 $this->emit('cart:reloadVoucher');
+                $this->emitTo('client.list-saved-voucher-component', 'loadVouchers');
             } else {
                 $this->voucher->quantity = 0;
             }
         }
     }
-
 }

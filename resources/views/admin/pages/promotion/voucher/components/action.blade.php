@@ -32,8 +32,8 @@
 <script>
     $('.ajax-form').ajaxForm({
         success: (res) => {
-            table.ajax.reload()
-            tata.success('{{ trans('toast.action_successful') }}', res.data.message)
+            voucherTable.ajax.reload()
+            voucherTable.success('{{ trans('toast.action_successful') }}', res.data.message)
         }
     })
 </script>

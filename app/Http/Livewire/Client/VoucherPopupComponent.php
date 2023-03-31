@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Voucher;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
@@ -10,7 +11,23 @@ class VoucherPopupComponent extends Component
 {
     public $vouchers;
     public function mount() {
-        $this->vouchers = Voucher::featured()->available()->get();
+       $this->loadVouchers();
+    }
+
+    public function loadVouchers() {
+        if(customer()) {
+            $this->vouchers = Voucher::available()->saveable()->get();
+            $saved_vouchers = customer()->saved_vouchers()->get();
+            $this->vouchers->each(function($voucher) use ($saved_vouchers) {
+                $voucher->saved = in_array($voucher->id, $saved_vouchers->pluck('id')->toArray());
+                $voucher->used = $saved_vouchers->where('id', $voucher->id)->where('pivot.is_used', 1)->first() ? true : false;
+            });
+            $this->vouchers = $this->vouchers->filter(function($value, $key) {
+                return $value->used == false;
+            });
+        } else {
+            $this->vouchers = Voucher::available()->featured()->saveable()->get();
+        }
     }
     public function render()
     {
@@ -21,8 +38,28 @@ class VoucherPopupComponent extends Component
         Session::put('prevent-reopen-voucher-popup', true);
     }
 
-    public function saveVoucher() {
-        $this->dispatchBrowserEvent('openLoginForm');
+    public function saveVoucher($id) {
+        if(!auth('customer')->check()) {
+            $this->dispatchBrowserEvent('openLoginForm');
+        } else {
+            $voucher = $this->vouchers->where('id', $id)->first();
+            if(Voucher::available()->where('quantity', '>', 0)->where('id', $id)->exists()) {
+                customer()->saved_vouchers()->sync([
+                    $voucher->id, [
+                        'is_used' => false,
+                        'type' => $voucher->voucher_type_id
+                    ]
+                ], false);
+                $voucher->update([
+                    'quantity' => DB::raw('quantity - 1')
+                ]);
+                $voucher->saved = true;
+                $this->emit('cart:reloadVoucher');
+                $this->loadVouchers();
+            } else {
+                $voucher->quantity = 0;
+            }
+        }
     }
 
 
