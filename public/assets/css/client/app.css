@@ -1275,9 +1275,6 @@ input[type=number] {
 .cart-product .product-media {
     min-width: 50px;
 }
-.cart-dropdown .dropdown-menu {
-    right: -100% !important;
-}
 .desktop-banner-slider {
     display: none;
 }
@@ -1335,9 +1332,6 @@ input[type=number] {
         right: 0;
         bottom: 0;
         max-height: 80vh;
-    }
-    .cart-dropdown .dropdown-menu {
-        right: 0 !important;
     }
 
     .toolbox-center {

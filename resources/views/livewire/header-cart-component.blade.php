@@ -45,8 +45,6 @@
 
             <div class="dropdown-cart-action">
                 <a href="{{ route('client.auth.cart.index') }}">{{ trans('labels.view_cart') }}</a>
-                {{-- <a href="checkout.html" class="btn btn-outline-primary-2"><span>{{ trans('labels.checkout') }}</span><i
-                        class="icon-long-arrow-right"></i></a> --}}
             </div><!-- End .dropdown-cart-total -->
         </div><!-- End .dropdown-menu -->
     @endif
