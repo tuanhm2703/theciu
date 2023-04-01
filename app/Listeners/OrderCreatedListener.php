@@ -26,7 +26,7 @@ class OrderCreatedListener {
         $order = $event->order;
         $order->createOrderHistory();
         foreach($order->vouchers as $voucher) {
-            $voucher->decreaseQuantity();
+            $voucher->decreaseQuantity($order->customer);
         }
         $order->removeStock();
     }

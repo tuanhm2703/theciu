@@ -64,12 +64,28 @@ class Voucher extends Model {
         return (int) $amount;
     }
 
-    public function decreaseQuantity() {
-        $this->update(['quantity' => DB::raw('quantity - 1')]);
+    public function decreaseQuantity(Customer $customer) {
+        if($this->saveable) {
+            $customer->saved_vouchers()->sync([
+                $this->id, [
+                    'is_used' => true
+                ]
+            ], false);
+        } else {
+            $this->update(['quantity' => DB::raw('quantity - 1')]);
+        }
     }
 
-    public function increaseQuantity() {
-        $this->update(['quantity' => DB::raw('quantity + 1')]);
+    public function increaseQuantity(Customer $customer) {
+        if($this->saveable) {
+            $customer->saved_vouchers()->sync([
+                $this->id, [
+                    'is_used' => false
+                ]
+            ], false);
+        } else {
+            $this->update(['quantity' => DB::raw('quantity + 1')]);
+        }
     }
 
     public function getDiscountLabelAttribute() {

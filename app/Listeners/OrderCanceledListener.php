@@ -29,7 +29,7 @@ class OrderCanceledListener
         $order = $event->order;
         $order->refund();
         foreach($order->vouchers as $voucher) {
-            $voucher->increaseQuantity();
+            $voucher->increaseQuantity($order->customer);
         }
         $order->restock();
         $order->cancelShippingOrder();

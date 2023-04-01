@@ -65,13 +65,6 @@ class CheckoutService {
                     'amount' => $discount_amount,
                     'customer_id' => $customer->id
                 ]);
-                if($orderVoucher->saveable) {
-                    customer()->saved_vouchers()->sync([
-                        $orderVoucher->id, [
-                            'is_used' => true
-                        ]
-                    ], false);
-                }
             }
             $rank_discount = 0;
             $subtotal = $order->inventories()->sum('order_items.total');
