@@ -15,7 +15,7 @@ class Cart extends Model {
     ];
 
     public function inventories() {
-        return $this->belongsToMany(Inventory::class, 'cart_items')->withPivot('quantity');
+        return $this->belongsToMany(Inventory::class, 'cart_items')->whereHas('product')->withPivot('quantity');
     }
 
     public function getTotalWithSelectedItems($item_selected, $voucher = null) {
