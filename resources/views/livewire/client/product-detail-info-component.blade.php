@@ -132,7 +132,11 @@
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         quantityInputs()
-        MagicZoom.refresh();
+        try {
+            MagicZoom.refresh();
+        } catch (error) {
+
+        }
         Livewire.hook('message.processed', (message, component) => {
             if (component.fingerprint.name == 'product-pick-item-component') {
                 quantityInputs()
