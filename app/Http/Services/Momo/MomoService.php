@@ -35,7 +35,7 @@ class MomoService {
     }
 
     public static function checkout(Order $order, $requestType = RequestType::PAY_WITH_ATM) {
-        $env = MomoService::selectEnv('dev');
+        $env = MomoService::selectEnv(env('APP_ENV', 'dev'));
         $requestId = time() + 60;
         $orderId = time();
         $redirectUrl = route('client.auth.profile.order.details', $order->id);
@@ -50,7 +50,7 @@ class MomoService {
     }
 
     public static function refund($order) {
-        $env = MomoService::selectEnv('dev', MomoEndpoints::REFUND);
+        $env = MomoService::selectEnv(env('APP_ENV', 'dev'), MomoEndpoints::REFUND);
         $requestId = time() + 60;
         $orderId = time();
         $description = $order->getRefundDescription();
@@ -58,7 +58,7 @@ class MomoService {
     }
 
     public static function queryStatusTransaction($orderId) {
-        $env = MomoService::selectEnv('dev', MomoEndpoints::QUERY_STATUS_TRANSACTION);
+        $env = MomoService::selectEnv(env('APP_ENV', 'dev'), MomoEndpoints::QUERY_STATUS_TRANSACTION);
         $requestId = time() + 60;
         return QueryStatusTransaction::process($env, $orderId, $requestId);
     }
