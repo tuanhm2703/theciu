@@ -21,12 +21,12 @@ class MomoService {
         switch ($target) {
             case "dev":
                 $devInfo = new PartnerInfo(env('DEV_ACCESS_KEY'), env('DEV_PARTNER_CODE'), env('DEV_SECRET_KEY'));
-                $dev = new Environment("https://test-payment.momo.vn" . $endpoint, $devInfo, env('DEV'), handlers: [new StreamHandler(storage_path('log/momo.log'), Logger::DEBUG)]);
+                $dev = new Environment("https://test-payment.momo.vn" . $endpoint, $devInfo, 'dev', handlers: [new StreamHandler(storage_path('log/momo.log'), Logger::DEBUG)]);
                 return $dev;
 
             case "prod":
                 $productionInfo = new PartnerInfo(env('PROD_ACCESS_KEY'), env('PROD_PARTNER_CODE'), env('PROD_SECRET_KEY'));
-                $production = new Environment(env('PROD_MOMO_ENDPOINT') . $endpoint, $productionInfo, env('PROD'));
+                $production = new Environment(env('PROD_MOMO_ENDPOINT') . $endpoint, $productionInfo, 'prod');
                 return $production;
 
             default:
