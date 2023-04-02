@@ -13,6 +13,7 @@ class CategoryController extends Controller
     }
     public function viewProductCategory($category) {
         $category = Category::whereSlug($category)->firstOrFail();
+        $category = $category->slug;
         return view('landingpage.layouts.pages.product.index', compact('category'));
     }
 }
