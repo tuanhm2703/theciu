@@ -238,7 +238,7 @@ class CartComponent extends Component {
 
     public function applyVoucher() {
         $voucher = Voucher::where('code', $this->voucher_code)->where(function($q) {
-            $q->notSavable()->orWhere(function($q) {
+            $q->notSaveable()->orWhere(function($q) {
                 $q->whereHas('customers', function($q) {
                     $q->where('customers.id', customer()->id);
                 });

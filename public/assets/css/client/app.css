@@ -1,7 +1,12 @@
 :root {
     --swiper-theme-color: #c96 !important;
 }
-
+.btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #ce8031;
+    border-color: #ce8031;
+    box-shadow: none;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -1158,39 +1163,12 @@ input[type=number] {
 }
 
 .voucher-container {
-    background: repeating-linear-gradient(#c4c4c4,
-            #c4c4c4 8px,
-            transparent 0,
-            transparent 28px,
-            #c4c4c4 0,
-            #c4c4c4 42px) 0/1px 100% no-repeat,
-        radial-gradient(circle at 0,
-            at 18px,
-            transparent,
-            transparent 0,
-            #c4c4c4 0,
-            #c4c4c4 11px,
-            currentColor 0) 1px 0/100% 42px repeat-y;
-    background: repeating-linear-gradient(#c4c4c4,
-            #c4c4c4 8px,
-            transparent 0,
-            transparent 28px,
-            #c4c4c4 0,
-            #c4c4c4 42px) 0/1px 100% no-repeat,
-        radial-gradient(circle at 0 18px,
-            transparent,
-            transparent 10px,
-            #c4c4c4 0,
-            #c4c4c4 11px,
-            currentColor 0) 1px 0/100% 42px repeat-y;
     background-clip: padding-box;
     border: 1px solid #c4c4c4;
-    border-left: 0;
     border-radius: 2px;
     display: flex;
-    color: rgb(238, 77, 45);
     overflow: hidden;
-    min-height: 125px;
+    height: 110px;
     width: 100%;
 }
 
@@ -1211,6 +1189,9 @@ input[type=number] {
     width: 30%;
     justify-content: center;
 }
+.voucher-title svg {
+    height: 65px;
+}
 
 .voucher-title span {
     color: #fff;
@@ -1227,7 +1208,7 @@ input[type=number] {
     position: relative;
 }
 
-.voucher-detail-info {
+.ftail-info {
     display: flex;
     justify-content: space-between;
     width: 70%;
@@ -1235,10 +1216,29 @@ input[type=number] {
 
 .voucher-discount-value {
     font-size: 18px;
+    color: #c96;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.voucher-detail-info {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+
 }
 
 .voucher-detail-left {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.voucher-detail-left p {
+    font-size: 14px;
+    color: #000;
+}
+.voucher-detail-left:not(h1) {
+    font-size: 14px;
 }
 
 .voucher-detail-right {
@@ -1246,7 +1246,7 @@ input[type=number] {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 0.5rem;
+    padding: 8px;
 }
 
 .voucher-detail-right button {
@@ -1270,7 +1270,6 @@ input[type=number] {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     min-height: 40vh;
     opacity: 1;
-    min-width: 350px;
 }
 
 #save-voucher-component-wrapper.hide {
@@ -1363,12 +1362,24 @@ input[type=number] {
     .desktop-banner-slider {
         display: block;
     }
+    .voucher-detail-left p {
+        font-size: 16px;
+        color: #000;
+    }
+    .voucher-detail-left:not(h1) {
+        font-size: 16px;
+    }
+
 
     #save-voucher-component-wrapper {
         width: fit-content;
         right: 0;
         bottom: 0;
         max-height: 80vh;
+        width: 450px;
+    }
+    .voucher-container {
+        height: 120px;
     }
 
     .toolbox-center {

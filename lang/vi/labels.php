@@ -220,7 +220,7 @@ return [
     'save' => 'Lưu',
     'saved' => 'Đã lưu',
     'voucher_limit_discount_template' => 'Giảm tối đa :value',
-    'voucher_unlimit_discount' => 'Không giới hạn giá trị. Khuyến mãi tối đa',
+    'voucher_unlimit_discount' => 'Không giới hạn giá trị.',
     'out_of_quantity' => 'Hết số lượng',
     'no_voucher_available' => 'Hiện tại chưa có voucher.',
     'back_to_homepage' => 'Quay lại trang chủ',
