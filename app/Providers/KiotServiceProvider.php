@@ -10,6 +10,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Observers\Kiot\CustomerObserver;
 use App\Observers\Kiot\OrderObserver;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class KiotServiceProvider extends ServiceProvider
@@ -19,15 +20,6 @@ class KiotServiceProvider extends ServiceProvider
      *
      * @return void
      */
-
-     protected $listen = [
-        OrderCreatedEvent::class => [
-            OrderCreatedListener::class
-        ],
-        OrderCanceledEvent::class => [
-            OrderCanceledListener::class
-        ]
-    ];
 
     public function register()
     {
@@ -41,8 +33,19 @@ class KiotServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Customer::observe(CustomerObserver::class);
-        Order::observe(OrderObserver::class);
-        $this->loadRoutesFrom(__DIR__.'/../../routes/kiot/Webhook.php');
+        if (env('APP_ENV') == 'prod') {
+            Event::listen(
+                OrderCreatedEvent::class,
+                [OrderCreatedListener::class, 'handle']
+            );
+            Event::listen(
+                OrderCanceledEvent::class,
+                [OrderCanceledListener::class, 'handle']
+            );
+
+            Customer::observe(CustomerObserver::class);
+            Order::observe(OrderObserver::class);
+            $this->loadRoutesFrom(__DIR__ . '/../../routes/kiot/Webhook.php');
+        }
     }
 }
