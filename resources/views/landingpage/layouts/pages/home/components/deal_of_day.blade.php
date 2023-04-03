@@ -1,6 +1,6 @@
 @if ($flash_sale_products->count() > 0)
     <div class="deal bg-image pt-8 pb-8"
-        style="background-image: url(/assets/landingpage/images/demos/demo-6/deal/bg-1.jpg);">
+        style="background-image: url(/img/promotion-background.png);">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-sm-12 col-md-8 col-lg-6">
