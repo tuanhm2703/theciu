@@ -20,7 +20,7 @@ class SaveVoucherComponent extends Component
         } else {
             if(Voucher::available()->where('quantity', '>', 0)->where('id', $this->voucher->id)->exists()) {
                 customer()->saved_vouchers()->sync([
-                    $this->voucher->id, [
+                    $this->voucher->id => [
                         'is_used' => false,
                         'type' => $this->voucher->voucher_type_id
                     ]

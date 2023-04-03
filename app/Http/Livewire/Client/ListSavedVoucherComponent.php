@@ -10,6 +10,7 @@ class ListSavedVoucherComponent extends Component
     public $vouchers;
     public $show = false;
     protected $listeners = ['showVoucherPool', 'showVoucherPool', 'loadVouchers'];
+    public $numberOfAvailableVoucher = 0;
 
     public function mount()
     {
@@ -27,12 +28,15 @@ class ListSavedVoucherComponent extends Component
             $this->vouchers = $this->vouchers->filter(function($value, $key) {
                 return $value->used == false;
             });
+            $this->numberOfAvailableVoucher = $this->vouchers->where('saved', 0)->count();
         } else {
             $this->vouchers = Voucher::available()->saveable()->get();
+            $this->numberOfAvailableVoucher = $this->vouchers->count();
         }
+        $this->emit('updateVoucherStatus', $this->numberOfAvailableVoucher);
     }
     public function updateVoucherStatus() {
-        $this->emit('updateVoucherStatus', $this->vouchers->where('quantity', '>', 0)->where('saved', 0)->count());
+        $this->emit('updateVoucherStatus', $this->numberOfAvailableVoucher);
     }
     public function render()
     {
