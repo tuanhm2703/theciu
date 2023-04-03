@@ -3,14 +3,14 @@
         style="background-image: url(/img/promotion-background.png);">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-sm-12 col-md-8 col-lg-6">
+                <div class="col-8 col-md-5 col-lg-4">
                     <div class="owl-carousel owl-simple" data-toggle="owl"
                         data-owl-options='{
-                            "nav": false,
+                            "nav": true,
                             "dots": false,
                             "margin": 30,
                             "autoplay": true,
-                            "loop": false,
+                            "loop": true,
                             "autoplayTimeout": 3000,
                             "items": 1
                         }'>
