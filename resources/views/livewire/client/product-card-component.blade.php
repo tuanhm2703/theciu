@@ -46,7 +46,6 @@
             "items": 2,
             "loop": false,
             "nav": false,
-            "center": true,
             "responsive": {
                 "576": {
                     "items": 4
