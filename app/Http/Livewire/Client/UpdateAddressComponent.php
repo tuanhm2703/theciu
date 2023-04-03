@@ -51,6 +51,7 @@ class UpdateAddressComponent extends Component {
 
     public function changeDistrict() {
         $this->wards = Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        $this->address->ward_id = $this->wards->first()->id;
     }
 
 
@@ -69,10 +70,11 @@ class UpdateAddressComponent extends Component {
         $this->address_type = $address->type;
     }
 
-    public function update() {
+    public function updateAddress() {
         $this->validate();
         $this->address->featured = $this->address->featured ? 1 : 0;
         $this->address->save();
+        $this->emitTo('profile-address-info', 'refresh');
         $this->dispatchBrowserEvent('addressUpdated', [
             'message' => 'Cập nhật địa chỉ thành công'
         ]);

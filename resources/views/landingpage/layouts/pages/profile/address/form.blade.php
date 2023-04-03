@@ -68,6 +68,7 @@
                     'wire:model' => 'address.ward_id',
                 ]) !!}
                 <span>Phường</span>
+                {{ $address->ward_id }}
             </label>
         </div>
 

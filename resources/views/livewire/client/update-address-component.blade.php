@@ -23,7 +23,7 @@
                 <a class="ajax-modal-btn btn" id="return-address-list-btn" data-modal-size="modal-md" data-callback="initChangeModal()"
                     data-link="/auth/profile/address/view/change"><i class="fas fa-undo"></i> Quay
                     lại</a>
-                <button wire:click="update" type="button"
+                <button wire:click="updateAddress" type="button"
                     class="btn btn-primary address-update-btn">{{ trans('labels.update') }}</button>
             </div>
             {!! Form::close() !!}

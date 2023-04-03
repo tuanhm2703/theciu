@@ -36,8 +36,6 @@
                                     <i class="icon-edit"></i></a>
                             </p>
                         @endforeach
-                        @if ($shipping_addresses->count() < 10)
-                        @endif
                     </div>
                     <p><a wire:click="updateAddressType('{{ App\Enums\AddressType::SHIPPING }}')" data-toggle="modal"
                         data-target="#createAddressModal"

@@ -33,7 +33,7 @@ class ProfileAddressInfo extends Component {
     }
 
     public function reloadAddress() {
-        $this->address = auth('customer')->user()->primary_address;
-        $this->shipping_addresses = auth('customer')->user()->shipping_addresses;
+        $this->address = customer()->primary_address;
+        $this->shipping_addresses = customer()->shipping_addresses;
     }
 }
