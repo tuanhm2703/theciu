@@ -42,7 +42,6 @@ class KiotServiceProvider extends ServiceProvider
                 OrderCanceledEvent::class,
                 [OrderCanceledListener::class, 'handle']
             );
-
             Order::observe(OrderObserver::class);
             $this->loadRoutesFrom(__DIR__ . '/../../routes/kiot/Webhook.php');
         }
