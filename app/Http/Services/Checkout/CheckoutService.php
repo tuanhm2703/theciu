@@ -56,8 +56,9 @@ class CheckoutService {
                 than 0, then update stock quantity. */
             }
             $order_total = $order->inventories()->sum('order_items.total');
+            $rank_discount = $customer->calculateRankDiscountAmount($order_total);
             if($checkoutModel->getOrderVoucher()) {
-                $discount_amount = $checkoutModel->getOrderVoucher()->getDiscountAmount($order_total);
+                $discount_amount = $checkoutModel->getOrderVoucher()->getDiscountAmount($order_total - $rank_discount);
                 $order_total = $order_total - $discount_amount;
                 $orderVoucher = $checkoutModel->getOrderVoucher();
                 $order->vouchers()->attach($checkoutModel->getOrderVoucherId(), [
@@ -66,11 +67,7 @@ class CheckoutService {
                     'customer_id' => $customer->id
                 ]);
             }
-            $rank_discount = 0;
             $subtotal = $order->inventories()->sum('order_items.total');
-            if($customer->available_rank) {
-                $rank_discount = $subtotal * $customer->available_rank->benefit_value / 100;
-            }
             $order->update([
                 'total' => $order_total + $order->shipping_fee - $rank_discount,
                 'subtotal' => $subtotal,

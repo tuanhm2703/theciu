@@ -35,6 +35,7 @@ class MomoService {
     }
 
     public static function checkout(Order $order, $requestType = RequestType::PAY_WITH_ATM) {
+        \Log::info(env('APP_ENV', 'dev'));
         $env = MomoService::selectEnv(env('APP_ENV', 'dev'));
         $requestId = time() + 60;
         $orderId = time();

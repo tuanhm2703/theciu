@@ -137,12 +137,18 @@ class Customer extends User
         });
         $this->notify(new ResetPasswordNotification($token));
     }
+    public function calculateRankDiscountAmount($amount) {
+        if($this->available_rank) {
+            return $amount * $this->available_rank->benefit_value / 100;
+        }
+        return 0;
+    }
     public function syncKiotInfo()
     {
         $customerResource = new CustomerResource(App::make(Client::class));
         if ($this->phone) {
             try {
-                $info = $customerResource->list(['contactNumber' => $this->phone])->toArray();
+                $info = $customerResource->list(['contactNumber' => $this->phone, 'includeCustomerGroup' => true])->toArray();
                 if (count($info) > 0) {
                     $info = $info[0];
                     $this->kiot_customer()->updateOrCreate([
@@ -152,6 +158,11 @@ class Customer extends User
                         'total_point' => $info['totalPoint'],
                         'reward_point' => $info['rewardPoint'],
                     ]);
+                    $rank_names = explode('|', $info['groups']);
+                    $rank = Rank::whereIn('name', $rank_names)->orderBy('min_value', 'desc')->first();
+                    if($rank) {
+                        $this->ranks()->sync($rank->id);
+                    }
                     return true;
                 }
             } catch (\Throwable $th) {

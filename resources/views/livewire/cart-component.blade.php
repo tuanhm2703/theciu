@@ -63,7 +63,7 @@
                 </div>
             @endforeach
         </div>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between mt-1">
             <h5 class="d-flex align-items-center">
                 <i class="text-danger fas fa-receipt mr-1"></i> Voucher
             </h5>
@@ -81,7 +81,7 @@
                             </g>
                         </svg>
                         <span>
-                            -{{ number_format($order_voucher->getDiscountAmount($cart->getTotalWithSelectedItems($item_selected)) / 1000, 1, '.', ',') }}k
+                            -{{ thousandsCurrencyFormat($order_voucher->getDiscountAmount($total)) }}
                         </span>
                     </div>
                 @endif
@@ -146,7 +146,7 @@
                                 <div class="custom-control custom-radio payment-method-row">
                                     <input type="radio" name="payment_method" wire:model="payment_method_id" required
                                         value="{{ $pm->id }}" id="payment-method-{{ $pm->id }}"
-                                        @disabled($pm->canUse($cart->getTotalWithSelectedItems($item_selected, $order_voucher)) === false) class="custom-control-input">
+                                        @disabled($pm->canUse($total + $shipping_fee + $order_voucher_discount) === false) class="custom-control-input">
                                     <label for="payment-method-{{ $pm->id }}"
                                         class="custom-control-label d-flex align-items-center">
                                         <img src="{{ optional($pm->image)->path_with_domain }}" width="10%"
@@ -161,13 +161,18 @@
                     </tr>
                     <tr class="order-payment-info">
                         <td>{{ trans('labels.subtotal') }}</td>
-                        <td>{{ format_currency_with_label($cart->getTotalWithSelectedItems($item_selected, $order_voucher)) }}
+                        <td>{{ format_currency_with_label($cart->getTotalWithSelectedItems($item_selected)) }}
+                        </td>
+                    </tr>
+                    <tr class="order-payment-info">
+                        <td width="50%">{{ trans('labels.discount_for_member') }}</td>
+                        <td>- {{ format_currency_with_label($rank_discount_amount) }}
                         </td>
                     </tr>
                     @if ($order_voucher)
                         <tr class="order-payment-info">
                             <td>{{ trans('labels.order_discount_amount') }}</td>
-                            <td>{{ format_currency_with_label($order_voucher->getDiscountAmount($cart->getTotalWithSelectedItems($item_selected))) }}
+                            <td>- {{ format_currency_with_label($order_voucher_discount) }}
                             </td>
                         </tr>
                     @endif
@@ -177,7 +182,7 @@
                     </tr>
                     <tr class="summary-total">
                         <td>{{ trans('labels.total') }}:</td>
-                        <td>{{ format_currency_with_label($cart->getTotalWithSelectedItems($item_selected, $order_voucher) + $shipping_fee) }}
+                        <td>{{ format_currency_with_label($total - $order_voucher_discount + $shipping_fee) }}
                         </td>
                     </tr><!-- End .summary-total -->
                 </tbody>

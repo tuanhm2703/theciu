@@ -36,7 +36,9 @@ class CartComponent extends Component {
     public $payment_methods;
     public $payment_method_id;
     public $item_selected = [];
+    public $rank_discount_amount = 0;
     public $total;
+    public $order_voucher_discount = 0;
 
     public $voucher_code;
 
@@ -106,12 +108,18 @@ class CartComponent extends Component {
         foreach($this->vouchers as $voucher) {
             if (count($this->item_selected) == 0) {
                 $voucher->disabled = true;
+            } else if ($this->total < $voucher->min_order_value) {
+                $voucher->disabled = true;
             } else if(in_array($voucher->id, $this->save_voucher_ids)) {
                 $voucher->disabled = false;
             } else if($voucher->canApplyForCustomer(customer()->id)) {
                 $voucher->disabled = false;
             } else {
                 $voucher->disabled = true;
+            }
+            if($voucher->disabled && $this->order_voucher_id == $voucher->id) {
+                $this->order_voucher_id = null;
+                $this->order_voucher = null;
             }
         }
     }
@@ -226,7 +234,10 @@ class CartComponent extends Component {
             $this->service_id = $this->shipping_service_types[0]->service_id;
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
+        $this->rank_discount_amount = customer()->calculateRankDiscountAmount($this->cart->getTotalWithSelectedItems($this->item_selected));
+        $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount;
         $this->updateVoucherDisableStatus();
+        $this->order_voucher_discount = $this->order_voucher ? $this->order_voucher->getDiscountAmount($this->total) : 0;
     }
 
     public function updated($name, $value) {
@@ -259,6 +270,7 @@ class CartComponent extends Component {
                 ]);
             } else {
                 $this->order_voucher_id = $voucher->id;
+                $this->updateOrderInfo();
                 $this->dispatchBrowserEvent('openToast', [
                     'message' => 'Áp dụng voucher thành công',
                     'type' => 'success'
