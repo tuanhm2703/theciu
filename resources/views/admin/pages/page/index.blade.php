@@ -26,6 +26,7 @@
                                 <th>STT</th>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder">
                                     {{ trans('labels.title') }}</th>
+                                    <th>{{ trans('labels.position') }}</th>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder ps-2">
                                     {{ trans('labels.action') }}</th>
                             </tr>
@@ -56,6 +57,9 @@
                 },
                 {
                     data: 'title'
+                },
+                {
+                    data: 'order'
                 },
                 {
                     data: "action",

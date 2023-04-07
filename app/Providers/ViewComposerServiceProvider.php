@@ -140,7 +140,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
             $view->with(['mKeywords' => $mKeywords]);
         });
         View::composer('landingpage.layouts.footer', function ($view) {
-            $pages = Page::select('title', 'slug')->get();
+            $pages = Page::select('title', 'slug')->orderBy('order')->get();
             $view->with(['pages' => $pages]);
         });
     }
