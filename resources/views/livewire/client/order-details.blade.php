@@ -64,8 +64,8 @@
             <div>
                 <div class="border-color-gradient"></div>
             </div>
-            <div class="p-5">
-                <div class="shipping-address-label align-items-baseline">
+            <div>
+                <div class="shipping-address-label align-items-baseline pt-3">
                     <h6>{{ trans('labels.shipping_address') }}</h6>
                     <div class="shipping-address-service-info">
                         <div>
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="d-flex">
+                <div class="d-flex shipping-info">
                     <div class="customer-address-info">
                         <div class="customer-address-name">{{ $order->shipping_address->fullname }}</div>
                         <div class="customer-detail-address">

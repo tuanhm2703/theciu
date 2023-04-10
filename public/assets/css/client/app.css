@@ -238,12 +238,12 @@ input[type=number] {
 }
 
 /* #timeline */
-.stepper {
+.order-details-timeline .stepper {
     position: relative;
     justify-content: space-between;
     box-sizing: border-box;
     flex-wrap: nowrap;
-    display: flex;
+    display: none;
 }
 
 .stepper__step {
@@ -387,7 +387,8 @@ input[type=number] {
 .shipping-order-history-wrapper {
     width: 620px;
     padding: 4px 0 0 12px;
-    border-left: 1px solid rgba(0, 0, 0, 0.09);
+    border-left: none;
+    padding-left: 0;
 }
 
 .shipping-order-history-row {
@@ -422,6 +423,10 @@ input[type=number] {
     width: 100%;
     color: rgba(0, 0, 0, 0.54);
     font-size: 14px;
+}
+.shipping-info {
+    display: flex;
+    flex-direction: column;
 }
 
 .shipping-order-history-icon {
@@ -1065,7 +1070,7 @@ input[type=number] {
 }
 
 .voucher-popup {
-    width: 250px !important;
+    width: 387px !important;
     margin: auto;
     padding: 0;
     border-radius: 10px;
@@ -1351,6 +1356,17 @@ input[type=number] {
 }
 
 @media screen and (min-width: 768px) {
+    .shipping-info {
+        display: flex;
+        flex-direction: row;
+    }
+    .shipping-order-history-wrapper {
+        border-left: 1px solid rgba(0, 0, 0, 0.09);
+        padding-left: 12px;
+    }
+    .order-details-timeline .stepper {
+        display: flex;
+    }
     .quickView-content .product-title {
         margin-top: 0;
     }
