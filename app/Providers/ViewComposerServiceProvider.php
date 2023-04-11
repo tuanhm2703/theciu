@@ -65,14 +65,12 @@ class ViewComposerServiceProvider extends ServiceProvider {
                 }])->get();
                 $best_seller_categories = Category::with("image:imageable_id,path")->whereType(CategoryType::BEST_SELLER)->whereHas('products')->get();
                 $blog_categories = Category::allActiveBlogCategories();
-                $payment_methods = PaymentMethod::active()->with('image:imageable_id,path')->whereHas('image')->get();
                 $view->with([
                     'product_categories' => $product_categories,
                     'new_arrival_categories' => $new_arrival_categories,
                     'promotions' => $promotions,
                     'blog_categories' => $blog_categories,
                     'best_seller_categories' => $best_seller_categories,
-                    'payment_methods' => $payment_methods
                 ]);
             }
         );
