@@ -25,6 +25,7 @@
 <script src="{{ asset('assets/js/fontawesome.js') }}"></script>
 <script src="{{ asset('assets/landingpage/js/jquery.magnific-popup.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap-treeview.min.js') }}"></script>
+<script src="{{ asset('assets/js/summernote-map-plugin.js') }}"></script>
 <script
     src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-{{ App::getLocale() }}-{{ getLocaleWithCountryCode()[App::getLocale()] }}.min.js">
 </script>
