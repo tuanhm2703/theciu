@@ -8,15 +8,28 @@
     const initSummernote = (element) => {
         const correctSummernote = () => {
             $("button[data-toggle='dropdown']").each(function(index) {
-                        $(this).removeAttr("data-toggle").attr("data-bs-toggle", "dropdown");
-                    });
+                $(this).removeAttr("data-toggle").attr("data-bs-toggle", "dropdown");
+            });
             var styleEle = $("style#fixed");
             if (styleEle.length == 0)
-                $("<style id=\"fixed\">.note-editor .dropdown-toggle::after { all: unset; } .note-editor .note-dropdown-menu { box-sizing: content-box; } .note-editor .note-modal-footer { box-sizing: content-box; }</style>").prependTo("body");
+                $(
+                    "<style id=\"fixed\">.note-editor .dropdown-toggle::after { all: unset; } .note-editor .note-dropdown-menu { box-sizing: content-box; } .note-editor .note-modal-footer { box-sizing: content-box; }</style>")
+                .prependTo("body");
             else
                 styleEle.remove();
         }
         element.summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']],
+                ['fontsize', ['fontsize']],
+            ],
             callbacks: {
                 onImageUpload: function(files, editor, welEditable) {
                     const formData = new FormData()
