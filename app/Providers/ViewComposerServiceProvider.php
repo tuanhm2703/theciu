@@ -109,39 +109,10 @@ class ViewComposerServiceProvider extends ServiceProvider {
             }
         );
 
-
-
-        View::composer(
-            'landingpage.layouts.pages.home.components.featured_category',
-            function ($view) {
-                $featured_categories = Category::whereHas('image')->with('image')->where('type', CategoryType::FEATURED)->active()->get();
-                $view->with(['featured_categories' => $featured_categories]);
-            }
-        );
-        View::composer(
-            'landingpage.layouts.pages.home.components.deal_of_day',
-            function ($view) {
-                $flash_sale_products = Product::whereHas('available_flash_sales')->withNeededProductCardData()->get();
-                $view->with(['flash_sale_products' => $flash_sale_products]);
-            }
-        );
-
-        View::composer(
-            'landingpage.layouts.components.banner-slider',
-            function ($view) {
-                $banners = Banner::active()->with('image', 'phoneImage')->orderBy('order', 'desc')->orderBy('updated_at', 'desc')->get();
-                $view->with(['banners' => $banners]);
-            }
-        );
-
         View::composer('landingpage.layouts.meta', function ($view) {
             $keywords = Category::whereType(CategoryType::PRODUCT)->pluck('name')->toArray();
             $mKeywords = implode(', ', $keywords);
             $view->with(['mKeywords' => $mKeywords]);
-        });
-        View::composer('landingpage.layouts.footer', function ($view) {
-            $pages = Page::select('title', 'slug')->orderBy('order')->get();
-            $view->with(['pages' => $pages]);
         });
     }
 }

@@ -40,8 +40,7 @@
         <main class="main">
             @yield('content')
         </main>
-
-        @include('landingpage.layouts.footer')
+        <livewire:client.footer-component/>
     </div><!-- End .page-wrapper -->
     <div class="mobile-menu-overlay">
     </div><!-- End .mobil-menu-overlay -->
