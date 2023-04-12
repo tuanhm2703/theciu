@@ -4,11 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Cart;
 use App\Models\Inventory;
+use App\Traits\Common\LazyloadLivewire;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class HeaderCartComponent extends Component {
+    use LazyloadLivewire;
     public $cart = null;
 
     public $inventories;

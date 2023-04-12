@@ -84,7 +84,7 @@
 
     <livewire:client.voucher-popup-component />
     <div id="test-popup" class="white-popup mfp-hide">
-        <livewire:client.product-detail-info-component></livewire:client.product-detail-info-component>
+        <livewire:client.product-detail-info-component/>
     </div>
     <x-dynamic-modal></x-dynamic-modal>
     <!-- Plugins JS File -->
