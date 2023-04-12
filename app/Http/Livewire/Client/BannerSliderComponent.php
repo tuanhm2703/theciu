@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Banner;
+use App\Traits\Common\LazyloadLivewire;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 

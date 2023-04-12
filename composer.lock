@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40dbeea50c22fd8554970dcb2524e17a",
+    "content-hash": "839e7a7340bc3fcb3594696e4bc87cc6",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -6388,6 +6388,90 @@
             "time": "2023-02-06T21:37:02+00:00"
         },
         {
+            "name": "spatie/laravel-responsecache",
+            "version": "7.4.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-responsecache.git",
+                "reference": "236bcb19a874aea10ba6351a6bd1e306df329c10"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-responsecache/zipball/236bcb19a874aea10ba6351a6bd1e306df329c10",
+                "reference": "236bcb19a874aea10ba6351a6bd1e306df329c10",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/cache": "^8.71|^9.0|^10.0",
+                "illuminate/console": "^8.71|^9.0|^10.0",
+                "illuminate/container": "^8.71|^9.0|^10.0",
+                "illuminate/http": "^8.71|^9.0|^10.0",
+                "illuminate/support": "^8.71|^9.0|^10.0",
+                "nesbot/carbon": "^2.63",
+                "php": "^8.0",
+                "spatie/laravel-package-tools": "^1.9"
+            },
+            "require-dev": {
+                "laravel/framework": "^9.0|^10.0",
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^6.23|^7.0|^8.0",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\ResponseCache\\ResponseCacheServiceProvider"
+                    ],
+                    "aliases": {
+                        "ResponseCache": "Spatie\\ResponseCache\\Facades\\ResponseCache"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\ResponseCache\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Speed up a Laravel application by caching the entire response",
+            "homepage": "https://github.com/spatie/laravel-responsecache",
+            "keywords": [
+                "cache",
+                "laravel",
+                "laravel-responsecache",
+                "performance",
+                "response",
+                "spatie"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/laravel-responsecache/tree/7.4.7"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-04-07T08:26:47+00:00"
+        },
+        {
             "name": "spatie/laravel-sitemap",
             "version": "6.2.5",
             "source": {
@@ -9736,6 +9820,90 @@
     ],
     "packages-dev": [
         {
+            "name": "barryvdh/laravel-debugbar",
+            "version": "v3.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/barryvdh/laravel-debugbar.git",
+                "reference": "aff3235fecb4104203b1e62c32239c56530eee32"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/aff3235fecb4104203b1e62c32239c56530eee32",
+                "reference": "aff3235fecb4104203b1e62c32239c56530eee32",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/routing": "^9|^10",
+                "illuminate/session": "^9|^10",
+                "illuminate/support": "^9|^10",
+                "maximebf/debugbar": "^1.18.2",
+                "php": "^8.0",
+                "symfony/finder": "^6"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.3.3",
+                "orchestra/testbench-dusk": "^5|^6|^7|^8",
+                "phpunit/phpunit": "^8.5.30|^9.0",
+                "squizlabs/php_codesniffer": "^3.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.8-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Barryvdh\\Debugbar\\ServiceProvider"
+                    ],
+                    "aliases": {
+                        "Debugbar": "Barryvdh\\Debugbar\\Facades\\Debugbar"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Barryvdh\\Debugbar\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "PHP Debugbar integration for Laravel",
+            "keywords": [
+                "debug",
+                "debugbar",
+                "laravel",
+                "profiler",
+                "webprofiler"
+            ],
+            "support": {
+                "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
+                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.8.1"
+            },
+            "funding": [
+                {
+                    "url": "https://fruitcake.nl",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/barryvdh",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-02-21T14:21:02+00:00"
+        },
+        {
             "name": "doctrine/instantiator",
             "version": "1.5.0",
             "source": {
@@ -10060,6 +10228,72 @@
                 "source": "https://github.com/laravel/pint"
             },
             "time": "2023-02-14T16:31:02+00:00"
+        },
+        {
+            "name": "maximebf/debugbar",
+            "version": "v1.18.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maximebf/php-debugbar.git",
+                "reference": "17dcf3f6ed112bb85a37cf13538fd8de49f5c274"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/17dcf3f6ed112bb85a37cf13538fd8de49f5c274",
+                "reference": "17dcf3f6ed112bb85a37cf13538fd8de49f5c274",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8",
+                "psr/log": "^1|^2|^3",
+                "symfony/var-dumper": "^4|^5|^6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=7.5.20 <10.0",
+                "twig/twig": "^1.38|^2.7|^3.0"
+            },
+            "suggest": {
+                "kriswallsmith/assetic": "The best way to manage assets",
+                "monolog/monolog": "Log using Monolog",
+                "predis/predis": "Redis storage"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.18-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DebugBar\\": "src/DebugBar/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Maxime Bouroumeau-Fuseau",
+                    "email": "maxime.bouroumeau@gmail.com",
+                    "homepage": "http://maximebf.com"
+                },
+                {
+                    "name": "Barry vd. Heuvel",
+                    "email": "barryvdh@gmail.com"
+                }
+            ],
+            "description": "Debug bar in the browser for php application",
+            "homepage": "https://github.com/maximebf/php-debugbar",
+            "keywords": [
+                "debug",
+                "debugbar"
+            ],
+            "support": {
+                "issues": "https://github.com/maximebf/php-debugbar/issues",
+                "source": "https://github.com/maximebf/php-debugbar/tree/v1.18.2"
+            },
+            "time": "2023-02-04T15:27:00+00:00"
         },
         {
             "name": "mockery/mockery",

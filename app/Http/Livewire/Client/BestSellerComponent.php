@@ -3,13 +3,14 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Product;
+use App\Traits\Common\LazyloadLivewire;
 use App\Traits\Common\ProductPagingComponent;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class BestSellerComponent extends Component
 {
-    use ProductPagingComponent;
+    use ProductPagingComponent, LazyloadLivewire;
     public function render()
     {
         return view('livewire.client.best-seller-component');

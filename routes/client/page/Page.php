@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Client\PageController;
 
-Route::group(['prefix' => 'page', 'as' => 'page.'], function() {
+Route::group(['prefix' => 'page', 'as' => 'page.', 'middleware' => ['cacheResponse:300']], function() {
     Route::get('chinh-sach-bao-hanh-va-doi-san-pham', [PageController::class, 'productExchangeAndWarranty'])->name('product_exchange_and_warranty');
     Route::get('thanh-toan', [PageController::class, 'payment'])->name('payment');
     Route::get('van-chuyen', [PageController::class, 'shipment'])->name('shipment');

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Client;
 
 use App\Enums\CategoryType;
 use App\Models\Category;
+use App\Traits\Common\LazyloadLivewire;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
