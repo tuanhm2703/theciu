@@ -19,7 +19,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        'https://beta.theciu.vn',
+        'https://theciu.vn',
+    ],
 
     'allowed_origins_patterns' => [],
 
