@@ -58,7 +58,16 @@
             {!! Form::label('username', trans('labels.phone_or_email') . '*', []) !!}
             {!! Form::text('username', null, ['class' => 'form-control', 'required']) !!}
         </div><!-- End .form-group -->
-
+        <div class="row">
+            <div class="form-group col-12 col-md-6">
+                {!! Form::label('first_name', trans('labels.first_name') . '*', []) !!}
+                {!! Form::text('first_name', null, ['class' => 'form-control', 'required']) !!}
+            </div><!-- End .form-group -->
+            <div class="form-group col-12 col-md-6">
+                {!! Form::label('last_name', trans('labels.last_name') . '*', []) !!}
+                {!! Form::text('last_name', null, ['class' => 'form-control', 'required']) !!}
+            </div><!-- End .form-group -->
+        </div>
         <div class="form-group">
             {!! Form::label('password', trans('labels.password') . '*', []) !!}
             {!! Form::password('password', ['class' => 'form-control', 'required']) !!}
