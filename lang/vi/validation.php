@@ -169,5 +169,7 @@ return [
     'password_match'            => 'Mật khẩu không khớp',
     'password_new'            => 'Mật khẩu trùng với mật khẩu cũ',
     'username_exists' => 'Tài khoản không tồn tại',
-    'valid_username' => 'Tên tài khoản không hợp lệ'
+    'valid_username' => 'Tên tài khoản không hợp lệ',
+    'correct_password' => 'Mật khẩu không đúng',
+    'username_have_not_been_used' => 'Tài khoản đã tồn tại'
 ];

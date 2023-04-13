@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Customer;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ValidationService {
@@ -36,4 +37,15 @@ class ValidationService {
         return !Hash::check($value, $oldPassword);
     }
 
+    public static function correct_password($attribute, $value, $parameters) {
+        $table = $parameters[0];
+        $username = $parameters[1];
+        $user = DB::table($table)->where(function($q) use ($username) {
+            $q->where('email', $username)->orWhere('phone', $username);
+        })->first();
+        if($user) {
+            return Hash::check($value, $user->password);
+        }
+        return false;
+    }
 }

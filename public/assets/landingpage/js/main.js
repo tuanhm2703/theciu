@@ -1039,61 +1039,6 @@ $(document).ready(function () {
         productImageElement.css("background", `url(${image})`);
     });
 
-    const registerFormValidator = $("#register-form").initValidator();
-    const loginFormValidator = $("#login-form").initValidator();
-    $("#register-form").ajaxForm({
-        beforeSend: () => {
-            if (registerFormValidator.checkAll() == 0) {
-                $("#register-form button[type=submit]").loading();
-            } else {
-                return false;
-            }
-        },
-        success: (res) => {
-            window.location.reload();
-        },
-        error: (err) => {
-            $("#register-form button[type=submit]").loading(false);
-            if (err.status === 422) {
-                const errors = err.responseJSON.errors;
-                Object.keys(err.responseJSON.errors).forEach((key) => {
-                    registerFormValidator.errorTrigger(
-                        $(`#register-form input[name=${key}]`),
-                        errors[key][0]
-                    );
-                });
-            }
-        },
-    });
-    $("#login-form").ajaxForm({
-        beforeSend: () => {
-            if (loginFormValidator.checkAll() == 0) {
-                $("#login-form button[type=submit]").loading();
-            } else {
-                return false;
-            }
-        },
-        success: (res) => {
-            window.location.reload();
-        },
-        error: (err) => {
-            $("#login-form button[type=submit]").loading(false);
-            if (err.status === 422) {
-                const errors = err.responseJSON.errors;
-                Object.keys(err.responseJSON.errors).forEach((key) => {
-                    registerFormValidator.errorTrigger(
-                        $(`#login-form input[name=${key}]`),
-                        errors[key][0]
-                    );
-                });
-            } else if (err.status === 401) {
-                registerFormValidator.errorTrigger(
-                    $(`#login-form input[name=username]`),
-                    err.responseJSON.message
-                );
-            }
-        },
-    });
     $("body").on("click", ".show-detail-order", (e) => {
         window.location.href = $(e.currentTarget).data("orderLink");
     });

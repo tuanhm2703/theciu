@@ -22,7 +22,7 @@
         <div class="header-right">
             <livewire:client.header-wishlist-component/>
             <livewire:header-cart-component/>
-            <livewire:client.auth-component/>
+            <livewire:client.auth-status-component/>
         </div>
     </div><!-- End .container -->
 </div><!-- End .header-bottom -->
