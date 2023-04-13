@@ -4,24 +4,28 @@
         <h6 class="text-uppercase text-danger">{{ $order->getCurrentStatusLabel() }}</h6>
     </div>
     @foreach ($order->inventories as $inventory)
-        <div class="d-flex py-3 justify-content-between">
-            <div class="d-flex">
-                <a href="{{ route('client.product.details', $inventory->product->slug) }}"
-                    style="background: url({{ optional($inventory->image)->path_with_domain }}); width: 70px; height: 70px; background-size: cover; background-position:center"></a>
-                <div class="ml-3" style="line-height: 1rem">
-                    <h5>{{ $inventory->product->name }}</h5>
-                    <p class="text-large">Phân loại hàng: {{ $inventory->title }}</p>
-                    <span class="font-weight-bold text-md">x{{ $inventory->pivot->quantity }}</span>
+        <div class="d-flex py-3 justify-content-between order-row">
+            <div class="row w-100">
+                <div class="col-3 col-md-2">
+                    <a href="{{ route('client.product.details', $inventory->product->slug) }}" class="d-block"
+                        style="background: url({{ optional($inventory->image)->path_with_domain }}); width: 70px; height: 70px; background-size: cover; background-position:center"></a>
                 </div>
-            </div>
-            <div class="product-price">
-                @if ($inventory->pivot->promotion_price < $inventory->pivot->origin_price)
-                    <span class="old-price">{{ format_currency_with_label($inventory->pivot->origin_price) }}</span>
-                    <span
-                        class="new-price ml-1">{{ format_currency_with_label($inventory->pivot->promotion_price) }}</span>
-                @else
-                    {{ format_currency_with_label($inventory->pivot->origin_price) }}
-                @endif
+                <div class="col-9 col-md-8">
+                    <div style="line-height: 1rem">
+                        <h5 class="order-product-title">{{ $inventory->product->name }}</h5>
+                        <p class="text-large">Phân loại hàng: {{ $inventory->title }}</p>
+                        <span class="font-weight-bold text-md">x{{ $inventory->pivot->quantity }}</span>
+                    </div>
+                </div>
+                <div class="product-price d-none d-md-block col-md-2 text-right">
+                    @if ($inventory->pivot->promotion_price < $inventory->pivot->origin_price)
+                        <span class="old-price">{{ format_currency_with_label($inventory->pivot->origin_price) }}</span>
+                        <span
+                            class="new-price ml-1">{{ format_currency_with_label($inventory->pivot->promotion_price) }}</span>
+                    @else
+                        {{ format_currency_with_label($inventory->pivot->origin_price) }}
+                    @endif
+                </div>
             </div>
         </div>
     @endforeach
@@ -76,8 +80,8 @@
                     @break
 
                 @endswitch
-                <a class="btn btn-light ml-2"
-                            href="{{ route('client.auth.profile.order.details', $order->id) }}">{{ trans('labels.view_order_details') }}</a>
+                <a class="btn btn-light ml-2 d-none d-md-block"
+                    href="{{ route('client.auth.profile.order.details', $order->id) }}">{{ trans('labels.view_order_details') }}</a>
             </div>
         </div>
     </div>

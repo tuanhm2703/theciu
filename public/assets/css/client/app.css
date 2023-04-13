@@ -1326,7 +1326,27 @@ input[type=number] {
     position: absolute;
     top: -100%;
 }
-
+#order-type-tab {
+    display: inline-block;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    max-width: 100%;
+    border-bottom: 0;
+}
+#order-type-tab::-webkit-scrollbar {
+    display: none;
+}
+#order-type-tab .nav-item {
+    display: inline-block;
+}
+#order-type-tab .nav-item .nav-link {
+    font-size: 12px;
+    padding: 0.2rem 1rem;
+}
+.order-row .order-product-title {
+    font-size: 1.7em;
+}
 @media (min-width: 991px) {
     .order-lg-first {
         display: block;
@@ -1356,6 +1376,9 @@ input[type=number] {
 }
 
 @media screen and (min-width: 768px) {
+    #order-type-tab .nav-item .nav-link {
+        font-size: 14px;
+    }
     .shipping-info {
         display: flex;
         flex-direction: row;

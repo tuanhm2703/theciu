@@ -1,5 +1,5 @@
 <div>
-    <ul class="nav nav-tabs" id="myTab" role="tablist" wire:ignore>
+    <ul class="nav nav-tabs" id="order-type-tab" role="tablist" wire:ignore>
         <li class="nav-item">
             <a class="nav-link active" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
                 wire:click="changeOrderStatus({{ App\Enums\OrderStatus::ALL }})" aria-controls="order-list"

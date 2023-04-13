@@ -24,7 +24,7 @@
     </aside><!-- End .col-lg-3 -->
     <div class="col-md-9 col-lg-10">
         <div class="tab-content">
-            <div class="tab-pane active pr-3" id="tab-content" role="tabpanel" aria-labelledby="tab-orders-link" style="min-height: 50vh">
+            <div class="tab-pane active" id="tab-content" role="tabpanel" aria-labelledby="tab-orders-link" style="min-height: 50vh">
                 <div class="text-center" wire:loading>Loading...</div>
                 <div class="page-content container w-100" wire:loading.remove>
                     @switch($content)
