@@ -228,10 +228,7 @@ class Product extends Model {
     }
 
     public function getIsOnCustomerWishlistAttribute() {
-        if (auth('customer')->check()) {
-            return $this->wishlists()->where('customer_id', auth('customer')->user()->id)->exists();
-        }
-        return false;
+        return in_array($this->id, customerWishlist());
     }
 
     public function getMetaTags() {

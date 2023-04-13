@@ -15,7 +15,7 @@
         @case(App\Enums\OrderStatus::WAITING_TO_PICK)
             @switch($order->sub_status)
                 @case(App\Enums\OrderSubStatus::PREPARING)
-                    <a class="ajax-modal-btn" href="javascript:;" data-modal-size="sm"
+                <a class="ajax-modal-btn" href="javascript:;" data-modal-size="modal-xl"
                         data-link="{{ route('admin.order.pickup_address.list', ['order' => $order->id]) }}">
                         {{ trans('labels.finish_packaging') }}</a>
                 @break

@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Voucher;
+use App\Traits\Common\LazyloadLivewire;
 use Livewire\Component;
 
 class ListSavedVoucherComponent extends Component
 {
+    use LazyloadLivewire;
     public $vouchers;
     public $show = false;
     protected $listeners = ['showVoucherPool', 'showVoucherPool', 'loadVouchers'];

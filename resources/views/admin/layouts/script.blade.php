@@ -133,7 +133,7 @@
         $('body').on('click', '.ajax-modal-btn', function(e) {
             e.preventDefault();
             const btn = $(this)
-            const modalSize = $(this).data().modalSize ?? 'modal-lg'
+            const modalSize = $(this).attr('data-modal-size') ?? 'modal-lg'
             const modalId = $(this).data().modalId ?? 'myDynamicModal'
             $(this).loading()
             var url = $(this).data('link');

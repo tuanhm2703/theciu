@@ -4,11 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Cart;
 use App\Models\Inventory;
+use App\Traits\Common\LazyloadLivewire;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class HeaderCartComponent extends Component {
+    use LazyloadLivewire;
     public $cart = null;
 
     public $inventories;
@@ -17,7 +19,7 @@ class HeaderCartComponent extends Component {
 
     protected $listeners = ['cart:itemDeleted' => 'deleteInventory', 'cart:itemAdded' => 'addInventory', 'cart:refresh' => '$refresh'];
 
-    public function mount() {
+    public function loadContent() {
         if (auth('customer')->check()) {
             $this->cart =  Cart::with(['inventories' => function ($q) {
                 return $q->with('image:path,imageable_id', 'product:id,slug,name');
@@ -25,6 +27,7 @@ class HeaderCartComponent extends Component {
                 'customer_id' => auth('customer')->user()->id
             ]);
         }
+        $this->readyToLoad = true;
     }
 
     public function addInventory(Inventory $inventory, $quantity = null) {

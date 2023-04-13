@@ -27,5 +27,6 @@ class ValidationServiceProvider extends ServiceProvider {
         Validator::extend('username_have_not_been_used', 'App\Services\ValidationService@usernameHaveNotBeenUsed', trans('validation.username_have_been_used'));
         Validator::extend('password_match', 'App\Services\ValidationService@matchPassword', trans('validation.password_match'));
         Validator::extend('password_new', 'App\Services\ValidationService@passwordNotNew', trans('validation.password_new'));
+        Validator::extend('correct_password','App\Services\ValidationService@correct_password');
     }
 }

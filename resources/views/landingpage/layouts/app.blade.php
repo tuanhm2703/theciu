@@ -40,8 +40,7 @@
         <main class="main">
             @yield('content')
         </main>
-
-        @include('landingpage.layouts.footer')
+        <livewire:client.footer-component/>
     </div><!-- End .page-wrapper -->
     <div class="mobile-menu-overlay">
     </div><!-- End .mobil-menu-overlay -->
@@ -85,7 +84,7 @@
 
     <livewire:client.voucher-popup-component />
     <div id="test-popup" class="white-popup mfp-hide">
-        <livewire:client.product-detail-info-component></livewire:client.product-detail-info-component>
+        <livewire:client.product-detail-info-component/>
     </div>
     <x-dynamic-modal></x-dynamic-modal>
     <!-- Plugins JS File -->

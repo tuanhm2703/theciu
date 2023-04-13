@@ -12,6 +12,15 @@ if (!function_exists('isNavActive')) {
         return strpos(Request::url(), $routeName) === 0;
     }
 }
+function customerWishlist() {
+    $customer = customer();
+    if($customer) {
+        return cache()->remember("customer_wishlist_$customer->id", 300, function() use ($customer) {
+            return $customer->product_wishlists()->pluck('wishlistable_id')->toArray();
+        });
+    }
+    return [];
+}
 function stripVN($str)
 {
     $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);

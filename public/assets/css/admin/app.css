@@ -420,3 +420,11 @@ div.dataTables_processing>div:last-child>div {
     color: red;
     line-height: 1.5em;
 }
+
+.card h5.card-header {
+    background: #f3f3f3;
+    border-left: 4px solid;
+}
+.card-header:first-child {
+    border-radius: 0 !important;
+}

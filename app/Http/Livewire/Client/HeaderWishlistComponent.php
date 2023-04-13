@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Client;
 
+use App\Traits\Common\LazyloadLivewire;
 use Livewire\Component;
 
 class HeaderWishlistComponent extends Component {
+    use LazyloadLivewire;
     public $number_of_wishlists = 0;
 
     protected $listeners = ['refresh' => 'reCount'];

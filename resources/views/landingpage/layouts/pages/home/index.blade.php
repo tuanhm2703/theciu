@@ -1,15 +1,15 @@
 @extends('landingpage.layouts.app', ['headTitle' => 'Trang chủ'])
 @section('content')
     <main class="main">
-        @include('landingpage.layouts.components.banner-slider')
+        <livewire:client.banner-slider-component/>
         <div class="phone-swap">
-            <livewire:new-arrival-component></livewire:new-arrival-component>
-            @include('landingpage.layouts.pages.home.components.featured_category')
+            <livewire:new-arrival-component/>
+            <livewire:client.featured-category-component/>
         </div>
 
         <div class="mb-5"></div><!-- End .mb-5 -->
 
-        @include('landingpage.layouts.pages.home.components.deal_of_day')
+        <livewire:client.deal-of-day-component/>
 
         <div class="pt-4 pb-3" style="background-color: #222;">
             <div class="container">
@@ -21,7 +21,6 @@
                                     <i class="icon-rotate-left"></i>
                                 </span>
                                 <div class="icon-box-content">
-
                                     <h3 class="icon-box-title">{{ trans('labels.payment') }}</h3>
                                     <!-- End .icon-box-title -->
                                     </h3><!-- End .icon-box-title -->

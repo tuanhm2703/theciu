@@ -55,7 +55,7 @@ trait ProductScope
 
     public function scopeWithNeededProductCardData($q)
     {
-        return $q->available()->with('image:path,imageable_id,id,name', 'available_flash_sales', 'inventories.image', 'categories', 'inventories')->select('products.id', 'products.slug', 'products.name');
+        return $q->available()->with('image:path,imageable_id,id,name', 'available_flash_sales', 'inventories.image:id,path,imageable_id,name', 'categories', 'inventories')->select('products.id', 'products.slug', 'products.name');
     }
 
     public function scopeAddSalePrice($q)
