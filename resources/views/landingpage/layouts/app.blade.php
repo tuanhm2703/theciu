@@ -109,7 +109,6 @@
     <script src="{{ asset('assets/js/plugins/tata/tata.js') }}"></script>
     <script src="{{ asset('assets/js/magiczoomplus.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    @stack('js')
     <script>
         $('.lazy').lazyload();
         $(function() {
@@ -221,6 +220,7 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+    @stack('js')
 </body>
 
 </html>
