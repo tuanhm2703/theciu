@@ -25,5 +25,6 @@ return [
     'page_management' => 'Quản lý trang',
     'sync_warehouse' => 'Đồng bộ tồn kho',
     'staff_management' => 'Quản lý nhân viên',
-    'customer_list' => 'Danh sách khách hàng'
+    'customer_list' => 'Danh sách khách hàng',
+    'customer' => 'Khách hàng'
 ];
