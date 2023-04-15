@@ -14,10 +14,6 @@ class ListSavedVoucherComponent extends Component
     protected $listeners = ['showVoucherPool', 'showVoucherPool', 'loadVouchers'];
     public $numberOfAvailableVoucher = 0;
 
-    public function mount()
-    {
-        $this->loadVouchers();
-    }
     public function loadVouchers() {
         if(customer()) {
             $this->vouchers = Voucher::available()->saveable()->get();
