@@ -41,6 +41,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
         include('admin/Setting.php');
         include('admin/Order.php');
         include('admin/Page.php');
+        include('admin/Customer.php');
         Route::get('/{page}', [PageController::class, 'index'])->name('page');
         Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
             include('admin/ajax/Category.php');

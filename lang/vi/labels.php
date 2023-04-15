@@ -228,4 +228,7 @@ return [
     '404_error_message' => "Xin lỗi, trang của bạn tìm kiếm không tồn tại.",
     'featured_voucher' => 'Voucher nổi bật',
     'discount_for_member' => 'Giảm giá khách hàng thân thiết',
+    'customer' => 'Khách hàng',
+    'revenue' => 'Doanh thu',
+    'number_of_orders'=> 'Số lượng đơn hàng',
 ];

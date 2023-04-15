@@ -8,6 +8,15 @@
         </div>
         <div class="collapse {{ isNavActive('admin.setting') ? 'show' : 'hide' }}" id="setting-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                @can('view setting')
+                    <a class="nav-link {{ isNavActive('admin.setting.website.index') ? 'active' : '' }}"
+                        href="{{ route('admin.setting.website.index') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">Website</span>
+                    </a>
+                @endcan
                 @can('view address')
                     <a class="nav-link {{ isNavActive('admin.setting.address.index') ? 'active' : '' }}"
                         href="{{ route('admin.setting.address.index') }}">

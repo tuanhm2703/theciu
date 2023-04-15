@@ -6,4 +6,5 @@ Route::group(['prefix' => 'setting', 'as' => 'setting.'], function() {
     include('setting/Warehouse.php');
     include('setting/Staff.php');
     include('setting/Shop.php');
+    include('setting/Website.php');
 });

@@ -224,4 +224,6 @@ return [
     'error_404' => 'Error 404',
     '404_error_message' => "We are sorry, the page you've requested is not available.",
     'featured_voucher' => 'Featured Voucher',
+    'revenue' => 'Revenue',
+    'number_of_orders'=> 'Number of orders',
 ];
