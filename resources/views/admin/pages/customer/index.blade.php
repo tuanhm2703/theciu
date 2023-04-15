@@ -58,7 +58,8 @@
                     }
                 },
                 {
-                    data: "full_name"
+                    data: "full_name",
+                    name: 'first_name'
                 },
                 {
                     data: "phone"

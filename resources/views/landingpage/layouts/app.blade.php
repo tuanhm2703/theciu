@@ -82,10 +82,6 @@
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
 
-    <livewire:client.voucher-popup-component />
-    <div id="test-popup" class="white-popup mfp-hide">
-        <livewire:client.product-detail-info-component/>
-    </div>
     <x-dynamic-modal></x-dynamic-modal>
     <!-- Plugins JS File -->
     <script src="{{ asset('assets/landingpage/js/bootstrap.bundle.min.js') }}"></script>
@@ -192,6 +188,10 @@
     @if (!isset($showFooterComponent))
         <livewire:client.sticky-voucher-icon-component />
         <livewire:client.list-saved-voucher-component />
+        <livewire:client.voucher-popup-component />
+        <div id="test-popup" class="white-popup mfp-hide">
+            <livewire:client.product-detail-info-component/>
+        </div>
     @endif
 
     <div id="fb-customer-chat" class="fb-customerchat">
