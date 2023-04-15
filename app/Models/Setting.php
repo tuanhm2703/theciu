@@ -26,4 +26,14 @@ class Setting extends Model {
             ]
         ]);
     }
+    public static function getWebsiteSetting() {
+        return Setting::firstOrCreate([
+            'name' => 'website_setting'
+        ], [
+            'data' => [
+                'header_code' => '',
+                'footer_code' => ''
+            ]
+        ]);
+    }
 }

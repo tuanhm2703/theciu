@@ -1,6 +1,7 @@
 <?php
 
 use App\Providers\KiotServiceProvider;
+use App\Providers\SettingServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -207,6 +208,7 @@ return [
         App\Providers\ViewComposerServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         KiotServiceProvider::class,
+        SettingServiceProvider::class
     ],
 
     /*

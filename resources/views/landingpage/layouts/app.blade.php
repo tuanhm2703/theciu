@@ -29,6 +29,7 @@
     <script src="{{ asset('assets/js/jquery.form.min.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     @stack('css')
+    {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles
 </head>
 
@@ -220,6 +221,7 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
     </script>
+    {!! App::get('WebsiteSetting')->data['footer_code'] !!}
     @stack('js')
 </body>
 
