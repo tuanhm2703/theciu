@@ -39,9 +39,6 @@ class AppServiceProvider extends ServiceProvider {
             $client->fetchAccessToken();
             return $client;
         });
-        $this->app->singleton('KiotConfig', function() {
-            return Setting::getKiotSetting();
-        });
         $this->app->singleton('ProductCategory', function() {
             return Category::getMenuCategories();
         });
