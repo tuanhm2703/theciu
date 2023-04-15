@@ -13,7 +13,6 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-
         @this.updateVoucherStatus();
     })
 </script>
