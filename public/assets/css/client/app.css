@@ -1093,7 +1093,6 @@ input[type=number] {
 }
 
 .voucher-info {
-    background: linear-gradient(90deg, rgb(222 50 0) 0%, rgba(252, 141, 8, 1) 68%);
     padding: 1rem;
     height: 150px;
     display: flex;
@@ -1120,7 +1119,11 @@ input[type=number] {
     bottom: 34px;
     left: -8px;
 }
-
+.voucher-info .voucher-discount-info {
+    font-weight: bold;
+    color: #c96;
+    text-transform: uppercase;
+}
 .voucher-info .voucher-circle-right {
     border: none;
     width: 15px;
@@ -1133,19 +1136,17 @@ input[type=number] {
 }
 
 .voucher-info .voucher-tag div {
-    border-top: 1px solid #f3f3f3;
-    border-top-style: dashed;
     font-size: 14px;
 }
 
 .voucher-popup .congrats-content {
-    height: 150px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 2rem;
+    justify-content: start;
+    padding: 1rem 2rem 2rem;
 }
+
 
 .voucher-popup .congrats-content button {
     border-radius: 60px;

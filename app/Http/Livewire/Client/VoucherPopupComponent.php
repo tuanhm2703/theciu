@@ -3,15 +3,23 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Voucher;
+use App\Traits\Common\LazyloadLivewire;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class VoucherPopupComponent extends Component
 {
+    use LazyloadLivewire;
     public $vouchers;
+
+    protected $rules = [
+        'vouchers' => 'nullable'
+    ];
+
     public function mount() {
-       $this->loadVouchers();
+        $this->vouchers = new Collection();
     }
 
     public function loadVouchers() {
@@ -28,6 +36,8 @@ class VoucherPopupComponent extends Component
         } else {
             $this->vouchers = Voucher::available()->featured()->saveable()->get();
         }
+        $this->readyToLoad = true;
+        $this->emit('initPlugin', $this->vouchers);
     }
     public function render()
     {

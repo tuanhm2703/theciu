@@ -215,7 +215,7 @@ return [
     'verification_code' => 'Mã xác nhận',
     'reward_point' => 'Điểm tích luỹ',
     'save_now' => 'Lưu ngay',
-    'login_now' => 'Đăng nhập ngay',
+    'login_now' => 'Đăng nhập ngay thôi',
     'saveable' => 'Có thể lưu',
     'save' => 'Lưu',
     'saved' => 'Đã lưu',
