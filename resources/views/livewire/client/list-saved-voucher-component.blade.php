@@ -1,4 +1,4 @@
-<div id="save-voucher-component-wrapper" class="{{ $show ? '' : 'hide' }}" wire:init="loadContent">
+<div id="save-voucher-component-wrapper" class="{{ $show ? '' : 'hide' }}" wire:init="loadvouchers">
     @if ($readyToLoad)
         <i class="fa fa-angle-double-down" id="close-voucher-list-btn" wire:click="$set('show', {{ !$show }})"></i>
         @if ($vouchers->count() == 0)
@@ -13,6 +13,7 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+
         @this.updateVoucherStatus();
     })
 </script>
