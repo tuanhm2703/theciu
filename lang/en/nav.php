@@ -24,5 +24,7 @@ return [
     'seo_management' => 'Order management',
     'page_management' => 'Page management',
     'sync_warehouse' => 'Sync warehouse',
-    'staff_management' => 'Staff management'
+    'staff_management' => 'Staff management',
+    'customer_list' => 'Customer list',
+    'customer' => 'Customer'
 ];

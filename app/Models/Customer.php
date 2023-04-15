@@ -31,6 +31,10 @@ class Customer extends User
         'reward_point'
     ];
 
+    protected $appends = [
+        'full_name'
+    ];
+
     public function product_wishlists()
     {
         return $this->hasMany(Wishlist::class)->where('wishlistable_type', (new Product)->getMorphClass());

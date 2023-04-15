@@ -17,6 +17,7 @@
             @include('admin.layouts.navbars.auth.nav-group.appearance')
             @include('admin.layouts.navbars.auth.nav-group.setting')
             @include('admin.layouts.navbars.auth.nav-group.order')
+            @include('admin.layouts.navbars.auth.nav-group.customer')
             @include('admin.layouts.navbars.auth.nav-group.page')
         </ul>
     </div>
