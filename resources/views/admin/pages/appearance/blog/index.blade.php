@@ -75,8 +75,9 @@
         });
         $('.blog-table').on('change', '.blog-status', (e) => {
             const status = $(e.target).is(':checked') ? 1 : 0
+            const url = $(e.target).attr('data-submit-url')
             $.ajax({
-                url: `/admin/appearance/blog/${$(e.target).data().blogId}`,
+                url: url,
                 type: 'PUT',
                 data: {
                     status

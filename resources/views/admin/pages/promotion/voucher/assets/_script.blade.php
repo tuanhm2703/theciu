@@ -124,8 +124,9 @@
     let flashSaleTable = initFlashSaleTable()
     $('.voucher-table').on('change', '.voucher-status', (e) => {
         const status = $(e.target).is(':checked') ? 1 : 0
+        const url = $(e.target).attr('data-submit-url')
         $.ajax({
-            url: `/admin/promotion/voucher/${$(e.target).data().voucherId}`,
+            url: url,
             type: 'PUT',
             data: {
                 status

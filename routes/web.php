@@ -21,7 +21,7 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\TestController;
 use App\Http\Livewire\AddressSelectComponent;
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
+Route::group(['prefix' => 'admintheciu', 'as' => 'admin.'], function() {
     include('admin/Auth.php');
     Route::get('/', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth');
     Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');

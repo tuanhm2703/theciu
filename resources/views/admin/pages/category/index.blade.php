@@ -48,8 +48,9 @@
     <script>
         $(document).on('change', '.category-status', function(e) {
             const status = $(this).is(':checked') ? 1 : 0
+            const url = $(e.target).attr('data-submit-url')
             $.ajax({
-                url: `/admin/ajax/category/${$(e.target).data().categoryId}`,
+                url: url,
                 type: 'PUT',
                 data: {
                     status

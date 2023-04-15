@@ -57,7 +57,7 @@ const uploadSummernoteImage = (data, element) => {
         .children(".note-editable");
     editable.loading("show");
     $.ajax({
-        url: "/admin/ajax/image/upload",
+        url: "/admintheciu/ajax/image/upload",
         type: "POST",
         data: data,
         contentType: false,
