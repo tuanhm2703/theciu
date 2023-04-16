@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\CategoryType;
 use App\Traits\Common\Imageable;
+use App\Traits\Common\Metable;
 use App\Traits\Scopes\CategoryScope;
 use App\Traits\Scopes\CustomScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,8 +14,7 @@ use Illuminate\Support\Str;
 
 class Category extends Model
 {
-    use HasFactory, SoftDeletes, Imageable, CategoryScope, CustomScope;
-
+    use HasFactory, SoftDeletes, Imageable, CategoryScope, CustomScope, Metable;
     protected $fillable = [
         'name',
         'parent_id',

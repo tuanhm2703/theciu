@@ -23,6 +23,7 @@ use Illuminate\Support\Str;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Collection\InventoryCollection;
 use VienThuong\KiotVietClient\Resource\ProductResource;
+use Meta;
 
 class Product extends Model {
     use HasFactory, SoftDeletes, Imageable, CustomScope, ProductScope, CommonFunc, Wishlistable;
@@ -236,70 +237,16 @@ class Product extends Model {
         $keywords[] = $this->name;
         $Keywords[] = getAppName();
         $link = $this->detail_link;
-        $tags = array(
-            array(
-                "name" => "description",
-                "content" =>  "$this->short_description"
-            ),
-            array(
-                "name" => "keywords",
-                "content" => implode(', ', $keywords)
-            ),
-            array(
-                "property" => "og:title",
-                "content" => $this->page_title
-            ),
-            array(
-                "property" => "og:description",
-                "content" => "$this->short_description"
-            ),
-            array(
-                "property" => "og:image",
-                "content" => optional($this->image)->path_with_domain
-            ),
-            array(
-                "property" => "og:url",
-                "content" => "$link"
-            ),
-            array(
-                "property" => "og:type",
-                "content" => "product"
-            ),
-            array(
-                'property' => 'o:price:amount',
-                'content' => $this->sale_price,
-            ),
-            array(
-                'property' => 'o:availability',
-                'content' => $this->inventories()->sum('stock_quantity')
-            ),
-            array(
-                "name" => "twitter:card",
-                "content" => "summary"
-            ),
-            array(
-                "name" => "twitter:title",
-                "content" => "$this->name"
-            ),
-            array(
-                "name" => "twitter:description",
-                "content" => "$this->short_description"
-            ),
-            array(
-                "name" => "twitter:image",
-                "content" => optional($this->image)->path_with_domain
-            )
-        );
-        $output = '';
-        foreach ($tags as $tag) {
-            $content = [];
-            foreach ($tag as $key => $meta) {
-                $content[] = "$key='$meta'";
-            }
-            $output .= "<meta " . implode(" ", $content) . ">";
-        }
-        $output .= "<link rel='canonical' href='$link'>";
-        return $output;
+        Meta::set('description', $this->short_description);
+        Meta::set('keywords', implode(', ', $keywords));
+        Meta::set('title', $this->page_title);
+        Meta::set('image', $this->image->path_with_domain);
+        Meta::set('url', $link);
+        Meta::set('product', [
+            'price' => $this->sale_price,
+            'currency' => 'VND'
+        ]);
+        Meta::set('o:availablility', $this->inventories()->sum('stock_quantity'));
     }
 
     public function putKiotWarehouse($decrease = true) {

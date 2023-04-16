@@ -1,5 +1,4 @@
 @extends('landingpage.layouts.app', [
-    'metaTags' => $product->getMetaTags(),
     'headTitle' => $product->page_title,
     'shemaMarkup' => view('components.client.schema-markup', compact('product'))
 ])

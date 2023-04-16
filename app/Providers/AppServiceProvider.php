@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Http\Services\Momo\MomoService;
+use App\Interfaces\AppConfig;
 use App\Models\Category;
+use App\Models\Config;
 use App\Models\Setting;
 use App\Services\BatchService;
 use Carbon\Carbon;
@@ -38,6 +40,9 @@ class AppServiceProvider extends ServiceProvider {
             $client = new Client(config('services.kiotviet.client_id'), config('services.kiotviet.client_secret'), [], config('services.kiotviet.retailer'));
             $client->fetchAccessToken();
             return $client;
+        });
+        $this->app->singleton('AppConfig', function() {
+            return Config::first();
         });
         $this->app->singleton('ProductCategory', function() {
             return Category::getMenuCategories();

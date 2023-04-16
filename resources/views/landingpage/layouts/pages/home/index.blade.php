@@ -15,7 +15,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-3 col-sm-6">
-                        <a href="{{ route('client.page.payment') }}" class="d-block">
+                        <a href="{{ route('client.page.details', 'thanh-toan') }}" class="d-block">
                             <div class="icon-box text-center">
                                 <span class="icon-box-icon">
                                     <i class="icon-rotate-left"></i>
@@ -31,7 +31,7 @@
                     </div><!-- End .col-lg-3 col-sm-6 -->
 
                     <div class="col-lg-3 col-sm-6">
-                        <a href="{{ route('client.page.shipment') }}" class="d-block">
+                        <a href="{{ route('client.page.details', 'van-chuyen') }}" class="d-block">
                             <div class="icon-box text-center">
                                 <span class="icon-box-icon">
                                     <i class="icon-truck"></i>
@@ -46,7 +46,7 @@
                     </div><!-- End .col-lg-3 col-sm-6 -->
 
                     <div class="col-lg-3 col-sm-6">
-                        <a href="{{ route('client.page.product_exchange_and_warranty') }}" class="d-block">
+                        <a href="{{ route('client.page.details', 'chinh-sach-bao-hanh-va-doi-san-pham') }}" class="d-block">
                             <div class="icon-box text-center">
                                 <span class="icon-box-icon">
                                     <i class="icon-unlock"></i>
@@ -61,7 +61,7 @@
                     </div><!-- End .col-lg-3 col-sm-6 -->
 
                     <div class="col-lg-3 col-sm-6">
-                        <a href="{{ route('client.page.customer_service') }}" class="d-block">
+                        <a href="{{ route('client.page.details', 'ho-tro-dich-vu') }}" class="d-block">
                             <div class="icon-box text-center">
                                 <span class="icon-box-icon">
                                     <i class="icon-headphones"></i>

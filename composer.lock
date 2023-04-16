@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "839e7a7340bc3fcb3594696e4bc87cc6",
+    "content-hash": "3e8732a4995f7235d1c33e4d5b508769",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -908,6 +908,65 @@
                 }
             ],
             "time": "2023-01-02T17:26:14+00:00"
+        },
+        {
+            "name": "eusonlito/laravel-meta",
+            "version": "v3.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eusonlito/laravel-Meta.git",
+                "reference": "104c7f6273f953b6b82bd1c0f0aa2d5afb739721"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eusonlito/laravel-Meta/zipball/104c7f6273f953b6b82bd1c0f0aa2d5afb739721",
+                "reference": "104c7f6273f953b6b82bd1c0f0aa2d5afb739721",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Eusonlito\\LaravelMeta\\MetaServiceProvider"
+                    ],
+                    "aliases": {
+                        "Meta": "Eusonlito\\LaravelMeta\\Facade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Eusonlito\\LaravelMeta\\": "src/Eusonlito/LaravelMeta/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lito",
+                    "email": "lito@eordes.com"
+                }
+            ],
+            "description": "A package to manage Header Meta Tags",
+            "keywords": [
+                "head",
+                "laravel",
+                "meta",
+                "tags"
+            ],
+            "support": {
+                "issues": "https://github.com/eusonlito/laravel-Meta/issues",
+                "source": "https://github.com/eusonlito/laravel-Meta/tree/v3.2.3"
+            },
+            "time": "2022-05-13T08:13:41+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
