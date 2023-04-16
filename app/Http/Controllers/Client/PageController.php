@@ -34,6 +34,7 @@ class PageController extends Controller
 
     public function details($slug) {
         $page = Page::whereSlug($slug)->firstOrFail();
+        $page->loadMeta();
         return view('landingpage.layouts.pages.page.details', compact('page'));
     }
 }

@@ -13,7 +13,7 @@
                             <input type="text" wire:model="voucher_code" wire:lazy placeholder="Mã voucher" class="form-control m-0">
                         </div>
                         <div class="col-3 d-flex align-items-center">
-                            <button style="min-width: fit-content" class="btn btn-secondary" wire:click.prevent="applyVoucher">ÁP DỤNG</button>
+                            <button style="min-width: fit-content" class="btn btn-primary" wire:click.prevent="applyVoucher">ÁP DỤNG</button>
                         </div>
                     </div>
                     <div class="my-3 row mt-5">
@@ -47,7 +47,7 @@
                         </div><!-- End .custom-control -->
                     @endforeach
                     <div class="row mt-3" style="justify-content: right">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ trans('labels.accept') }}</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">{{ trans('labels.accept') }}</button>
                     </div>
                 </div>
             </div>

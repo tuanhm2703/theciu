@@ -531,12 +531,12 @@ input[type=number] {
     border-radius: 50%;
     top: 50% !important;
     transform: translate(0, -50%);
-    left: 96%;
+    left: 94%;
 }
 
 .voucher-radio .custom-control-label::after {
     top: 50% !important;
-    left: 96.9% !important;
+    left: calc(94% + 5px) !important;
     transform: translate(0, -50%);
 }
 
@@ -550,6 +550,7 @@ input[type=number] {
 
 .voucher-type-label {
     width: 21%;
+    min-width: 100px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -561,7 +562,7 @@ input[type=number] {
 }
 
 .order-voucher-label {
-    background: #ee4d2d;
+    background: #c96;
 }
 
 .shipping-voucher-label {
@@ -575,8 +576,8 @@ input[type=number] {
 .voucher-description {
     margin-top: 0.875rem;
     padding: 2px;
-    color: red;
-    border: 1px solid red;
+    color: #c96;
+    border: 1px solid #c96;
     border-radius: 4px;
 }
 

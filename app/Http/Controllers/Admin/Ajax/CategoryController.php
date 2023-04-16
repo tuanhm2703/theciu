@@ -10,24 +10,28 @@ use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
-class CategoryController extends Controller {
-    public function getAllCategories(ViewCategoryRequest $request) {
+class CategoryController extends Controller
+{
+    public function getAllCategories(ViewCategoryRequest $request)
+    {
         $type = $request->type;
         $categories = Category::where('parent_id', null)->with(['categories.categories' => function ($q) use ($type) {
-            if($type) {
+            if ($type) {
                 $q->where('type', $type);
             }
         }]);
         if ($type) {
             $categories = $categories->where('type', $type);
         }
+        $categories = $categories->get();
         return BaseResponse::success([
             'message' => 'Thao tác thành công',
-            'data' => $categories->get()
+            'data' => $categories
         ]);
     }
 
-    public function ajaxSearch(Request $request) {
+    public function ajaxSearch(Request $request)
+    {
         $q = $request->q;
         $categories = Category::query();
         $type = $request->type;
@@ -41,7 +45,8 @@ class CategoryController extends Controller {
         return BaseResponse::success($categories->toArray()['data']);
     }
 
-    public function paginate(ViewCategoryRequest $request) {
+    public function paginate(ViewCategoryRequest $request)
+    {
         $type = $request->type;
         $parentId = $request->parentId;
         $categories = Category::where('parent_id', $parentId)->with('categories.categories', 'image')->withCount('products');
@@ -66,7 +71,8 @@ class CategoryController extends Controller {
             ->make(true);
     }
 
-    public function paginateProductCategory(Request $request) {
+    public function paginateProductCategory(Request $request)
+    {
         $type = $request->type;
         $parentId = $request->parentId;
         $categories = Category::where('parent_id', $parentId)->with('categories.categories', 'image')->withCount('products');
@@ -75,7 +81,7 @@ class CategoryController extends Controller {
         } else {
             $categories->whereNotIn('type', [CategoryType::PRODUCT, CategoryType::BLOG]);
         }
-        return DataTables::of($categories)
+        $result = DataTables::of($categories)
             ->editColumn('name', function ($category) {
                 return view('admin.pages.product-category.components.name', compact('category'));
             })
@@ -89,25 +95,36 @@ class CategoryController extends Controller {
                 return view('admin.pages.product-category.components.action', compact('category'));
             })
             ->make(true);
+        if ($parentId) {
+            $category = Category::find($parentId);
+            $category->edit_url = route('admin.category.product.edit', $category->id);
+            $result->original['category'] = $category;
+        }
+        $result->setData($result->original);
+        return $result;
     }
 
-    public function viewCreate(Request $request) {
+    public function viewCreate(Request $request)
+    {
         return view('admin.pages.category.form.create');
     }
 
-    public function update(Category $category, Request $request) {
+    public function update(Category $category, Request $request)
+    {
         $category->update($request->all());
         return BaseResponse::success([
             'message' => 'Cập nhật danh mục thành công'
         ]);
     }
 
-    public function viewAddProduct(Category $category, Request $request) {
+    public function viewAddProduct(Category $category, Request $request)
+    {
         $productIds = $category->products()->pluck('products.id')->toArray();
         return view('admin.pages.category.modal.product', compact('category', 'productIds'));
     }
 
-    public function addProduct(Category $category, Request $request) {
+    public function addProduct(Category $category, Request $request)
+    {
         $category->products()->sync($request->productIds);
         return BaseResponse::success([
             'message' => 'Thêm sản phẩm vào danh mục thành công'

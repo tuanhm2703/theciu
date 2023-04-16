@@ -1,7 +1,9 @@
 <?php
 
+use App\Providers\ClientServiceProvider;
 use App\Providers\KiotServiceProvider;
 use App\Providers\SettingServiceProvider;
+use Eusonlito\LaravelMeta\MetaServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -208,7 +210,9 @@ return [
         App\Providers\ViewComposerServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         KiotServiceProvider::class,
-        SettingServiceProvider::class
+        SettingServiceProvider::class,
+        MetaServiceProvider::class,
+        ClientServiceProvider::class
     ],
 
     /*
@@ -226,6 +230,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+        'Meta'    => Eusonlito\LaravelMeta\Facade::class,
     ])->toArray(),
 
 ];

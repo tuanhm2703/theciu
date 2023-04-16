@@ -17,14 +17,19 @@
                         </div>
                         <div class="text-end mx-3 mt-3">
                             <a class="btn btn-primary btn-sm ms-auto ajax-modal-btn" href="javascript:;"
-                                data-callback="setNullParentId()" data-init-app="false"
-                                data-modal-size="modal-sm"
+                                data-callback="setNullParentId()" data-init-app="false" data-modal-size="modal-sm"
                                 data-link="{{ route('admin.category.product.create') }}"><i class="fas fa-plus"></i>
                                 Tạo danh mục gốc</a>
                         </div>
                     </div>
                     <div class="col-md-8 right-side pe-5">
-                        <div class="text-end">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex category-wrapper d-none">
+                                <h5 class="mb-0 d-flex align-items-center">Danh mục:&nbsp;<span id="category-title"></span>
+                                </h5>
+                                <a data-init-app="false" class="ms-3 ajax-modal-btn update-category-btn"
+                                    href="javascript:;"><i class="fas fa-edit"></i></a>
+                            </div>
                             <a class="btn btn-primary btn-sm ms-auto ajax-modal-btn" href="javascript:;"
                                 data-init-app="false" data-link="{{ route('admin.category.product.create') }}"><i
                                     class="fas fa-plus"></i>
@@ -60,9 +65,10 @@
     <script>
         let categoryTable;
         let parentId;
+        let categories;
         const initTreeview = () => {
             $.getJSON(`{{ route('admin.ajax.category.all', ['type' => App\Enums\CategoryType::PRODUCT]) }}`, (data) => {
-                const categories = data.data.data;
+                categories = data.data.data;
                 categories.forEach(c1 => {
                     c1.text = `${c1.name} (${c1.categories.length})`
                     c1.nodes = c1.categories
@@ -120,6 +126,12 @@
                 order: [
                     [1, 'desc']
                 ],
+                initComplete: function(settings, json) {
+                    let category = json.category
+                    $('.category-wrapper').removeClass('d-none');
+                    $('#category-title').text(category.name)
+                    $('.update-category-btn').attr('data-link', category.edit_url)
+                }
             });
         }
         const setNullParentId = () => {

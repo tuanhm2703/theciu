@@ -15,6 +15,14 @@
 <div class="form-group">
     <input type="file" name="image">
 </div>
+<div class="form-group">
+    {!! Form::label('meta[description]', 'Meta-description', ['class' => 'form-label']) !!}
+    {!! Form::textarea('meta[description]', null, ['class' => 'form-control', 'required']) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('meta[title]', 'Meta-description', ['class' => 'form-label']) !!}
+    {!! Form::text('meta[title]', null, ['class' => 'form-control']) !!}
+</div>
 <script>
     $('.category-form').ajaxForm({
         beforeSend: () => {

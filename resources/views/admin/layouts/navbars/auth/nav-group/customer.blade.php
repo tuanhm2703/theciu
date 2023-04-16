@@ -3,7 +3,7 @@
         <li class="mb-1">
             <div class="btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
                 data-bs-target="#customer-collapse" aria-expanded="{{ isNavActive('admin.customer') ? 'true' : 'false' }}">
-                <i class="opacity-6 fas fa-clipboard-list"></i>
+                <i class="opacity-6 fas fa-users"></i>
                 <h6 class="ms-2 text-uppercase text-xs font-weight-bolder opacity-6 mb-0">
                     {{ trans('nav.customer') }}</h6>
             </div>

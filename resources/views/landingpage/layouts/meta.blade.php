@@ -31,6 +31,7 @@
 <meta name="msapplication-TileColor" content="#cc9966">
 <meta name="msapplication-config" content="{{ asset('assets/landingpage/images/icons/browserconfig.xml') }}">
 <meta name="theme-color" content="#ffffff">
+{!! Meta::tags() !!}
 @if (isset($metaTags))
     {!! $metaTags !!}
 @else
@@ -41,5 +42,5 @@
 <meta proterty="o:locale" content="{{ App::getLocale() }}">
 <meta proterty="o:price:currency" content="VN">
 @if (isset($schemaMarkup))
-    {!! $schemaMarkup!!}
+    {!! $schemaMarkup !!}
 @endif

@@ -29,18 +29,28 @@ class PageController extends Controller {
     }
 
     public function store(StorePageRequest $request) {
-        Page::create($request->all());
+        $page = Page::create($request->all());
+        if($request->has('meta')) {
+            $page->syncMetaTag($request->meta);
+        }
         return BaseResponse::success([
             'message' => 'Tạo trang thành công'
         ]);
     }
 
     public function edit(EditPageRequest $request, Page $page) {
+        $meta_tag = $page->metaTag;
+        if($meta_tag) {
+            $page->meta = $meta_tag->payload;
+        }
         return view('admin.pages.page.components.edit', compact('page'));
     }
 
     public function update(Page $page, UpdatePageRequest $request) {
         $page->update($request->all());
+        if($request->has('meta')) {
+            $page->syncMetaTag($request->meta);
+        }
         return BaseResponse::success([
             'message' => 'Cập nhật trang thành công'
         ]);
