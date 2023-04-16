@@ -20,9 +20,21 @@ class Config extends Model {
     }
 
     public static function loadMeta() {
-        $meta_tag = App::get('AppConfig')->metaTag;
-        foreach ($meta_tag->payload as $key => $content) {
-            Meta::set($key, $content);
+        $config = App::get('AppConfig');
+        $meta_tag = $config->metaTag()->firstOrCreate([
+            'metable_id' => $config->id,
+            'metable_type' => $config->getMorphClass()
+        ], [
+            'payload' => [
+                'title' => config('meta.default_title'),
+                'description' => config('meta.default_description'),
+                'keywords' => config('meta.default_title'),
+            ]
+        ]);
+        if($meta_tag) {
+            foreach ($meta_tag->payload as $key => $content) {
+                Meta::set($key, $content);
+            }
         }
     }
 }
