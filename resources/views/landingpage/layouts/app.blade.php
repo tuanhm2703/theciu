@@ -222,6 +222,7 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
     {!! App::get('WebsiteSetting')->data['footer_code'] !!}
+
     @stack('js')
 </body>
 
