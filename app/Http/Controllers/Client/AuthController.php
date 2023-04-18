@@ -60,14 +60,24 @@ class AuthController extends Controller {
     public function handleProviderCallback() {
         $user = (object) Socialite::driver('facebook')->user()->attributes;
         $customer_names = collect(explode(' ', $user->name));
-        $customer = Customer::firstOrCreate([
-            'email' => $user->email
-        ], [
-            'first_name' => $customer_names->first(),
-            'last_name' => $customer_names->count() > 1 ? $customer_names->last() : null,
-            'provider' => SocialProviderType::FACEBOOK,
-            'socialite_account_id' => $user->id
-        ]);
+        if($user->email) {
+            $customer = Customer::firstOrCreate([
+                'email' => $user->email
+            ], [
+                'first_name' => $customer_names->first(),
+                'last_name' => $customer_names->count() > 1 ? $customer_names->last() : null,
+                'provider' => SocialProviderType::FACEBOOK,
+                'socialite_account_id' => $user->id
+            ]);
+        } else {
+            $customer = Customer::firstOrCreate([
+                'socialite_account_id' => $user->id
+            ], [
+                'first_name' => $customer_names->first(),
+                'last_name' => $customer_names->count() > 1 ? $customer_names->last() : null,
+                'provider' => SocialProviderType::FACEBOOK,
+            ]);
+        }
         $customer->update([
             'socialite_account_id' => $user->id
         ]);
@@ -87,14 +97,24 @@ class AuthController extends Controller {
         $user = Socialite::driver('google')->user()->user;
         $user = (object) $user;
 
-        $customer = Customer::firstOrCreate([
-            'email' => $user->email,
-        ], [
-            'first_name' => $user->given_name,
-            'last_name' => $user->family_name,
-            'provider' => SocialProviderType::GOOGLE,
-            'socialite_account_id' => $user->id
-        ]);
+        if($user->email) {
+            $customer = Customer::firstOrCreate([
+                'email' => $user->email,
+            ], [
+                'first_name' => $user->given_name,
+                'last_name' => $user->family_name,
+                'provider' => SocialProviderType::GOOGLE,
+                'socialite_account_id' => $user->id
+            ]);
+        } else {
+            $customer = Customer::firstOrCreate([
+                'socialite_account_id' => $user->id,
+            ], [
+                'first_name' => $user->given_name,
+                'last_name' => $user->family_name,
+                'provider' => SocialProviderType::GOOGLE
+            ]);
+        }
 
         $customer->update([
             'socialite_account_id' => $user->id
