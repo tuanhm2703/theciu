@@ -249,7 +249,7 @@
                                 @endif
                             </div>
                             <div class="col-5">
-                                <span class="confirm-info">{{ $address->full_address }}</span>
+                                <span class="confirm-info">{{ optional($address)->full_address }}</span>
                             </div>
                         </div>
                     </div>
