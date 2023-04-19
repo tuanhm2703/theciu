@@ -93,8 +93,8 @@
     </div><!-- End .col-lg-9 -->
     <aside class="col-lg-3">
         <div class="summary summary-cart">
-            <h3 class="summary-title d-flex align-items-center"><img src="/img/logo-dark.png" class="mr-3"
-                    width="90" alt="">
+            <h3 class="summary-title d-flex align-items-center">
+                <img src="{{ getLogoUrl() }}" class="mr-3" width="90" alt="">
                 <div class="pl-3">{{ trans('labels.checkout') }}</div>
             </h3><!-- End .summary-title -->
 
@@ -164,11 +164,13 @@
                         <td>{{ format_currency_with_label($cart->getTotalWithSelectedItems($item_selected)) }}
                         </td>
                     </tr>
-                    <tr class="order-payment-info">
-                        <td width="50%">{{ trans('labels.discount_for_member') }}</td>
-                        <td>- {{ format_currency_with_label($rank_discount_amount) }}
-                        </td>
-                    </tr>
+                    @if ($rank_discount_amount)
+                        <tr class="order-payment-info">
+                            <td width="50%">{{ trans('labels.discount_for_member') }}</td>
+                            <td>- {{ format_currency_with_label($rank_discount_amount) }}
+                            </td>
+                        </tr>
+                    @endif
                     @if ($order_voucher)
                         <tr class="order-payment-info">
                             <td>{{ trans('labels.order_discount_amount') }}</td>
@@ -187,10 +189,10 @@
                     </tr><!-- End .summary-total -->
                 </tbody>
             </table><!-- End .table table-summary -->
-            <button href="#" wire:click.prevent="checkout"
+            <button wire:click="checkOrder" href="#" id="checkout-btn"
                 class="btn btn-outline-primary-2 btn-order btn-block">
-                <span wire:loading.remove wire:target="checkout">{{ trans('labels.checkout') }}</span>
-                <span wire:loading wire:target="checkout">Đang tiến hành thanh toán..</span>
+                <span wire:loading.remove wire:target="checkOrder">{{ trans('labels.checkout') }}</span>
+                <span wire:loading wire:target="checkOrder">Đang tiến hành thanh toán..</span>
             </button>
             <div class="d-flex flex-column mt-1">
                 @error('payment_method_id')
@@ -213,14 +215,158 @@
                 class="icon-refresh"></i></a>
     </aside><!-- End .col-lg-3 -->
     @include('landingpage.layouts.pages.cart.components.voucher')
+    <div class="modal fade" id="confirmOrderModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalSignTitle" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header p-0">
+                    <div class="d-flex align-items-center justify-content-center bg-light p-4">
+                        <img src="{{ getLogoUrl() }}" alt="{{ getAppName() }} - Logo" width="20%">
+                    </div>
+                </div>
+                <div class="modal-body p-4 p-md-5 pt-0">
+                    <h6 class="text-uppercase text-center font-weight-bold py-5 mb-0 ">Kiểm tra thông tin đơn hàng</h6>
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-3">
+                                <span class="confirm-label">Ngày tạo đơn</span>
+                            </div>
+                            <div class="col-4">
+                                <span class="confirm-label">Phương thức thanh toán</span>
+                            </div>
+                            <div class="col-5">
+                                <span class="confirm-label">Địa chỉ giao hàng</span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">
+                                <span class="confirm-info">{{ now()->format('d/m/Y') }}</span>
+                            </div>
+                            <div class="col-4">
+                                @if ($payment_method_id)
+                                    <span
+                                        class="confirm-info">{{ trans('labels.payment_methods.' . $payment_methods->where('id', $payment_method_id)->first()->code) }}</span>
+                                @endif
+                            </div>
+                            <div class="col-5">
+                                <span class="confirm-info">{{ $address->full_address }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pr-3">
+                        @foreach ($cart->inventories as $inventory)
+                            @if (in_array($inventory->id, $item_selected))
+                                <div class="row mb-2 pt-2 border-top">
+                                    <div class="col-2">
+                                        <img class="rounded" width="100%"
+                                            src="{{ optional($inventory->image)->path_with_domain }}" alt="">
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="d-flex flex-column">
+                                            <span>{{ $inventory->name }}</span>
+                                            <span class="confirm-label">{{ trans('labels.quantity') }}:
+                                                {{ $inventory->pivot->quantity }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 text-right">
+                                        <span>{{ format_currency_with_label($inventory->sale_price) }}</span>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+
+                    <div class="row mb-3 pr-3 pt-2 border-top">
+                        <div class="col-12 offset-md-4 offset-lg-6 col-md-8 col-lg-6">
+                            <div class="row mb-1">
+                                <div class="col-7">
+                                    <span class="confirm-label">{{ trans('labels.subtotal') }}</span>
+                                </div>
+                                <div class="col-5 text-right">
+                                    <span
+                                        class="confirm-info">{{ format_currency_with_label($cart->getTotalWithSelectedItems($item_selected)) }}</span>
+                                </div>
+                            </div>
+                            @if ($rank_discount_amount)
+                                <div class="row mb-1">
+                                    <div class="col-7">
+                                        <span class="confirm-label">
+                                            {{ trans('labels.discount_for_member') }}
+                                        </span>
+                                    </div>
+                                    <div class="col-5 text-right">
+                                        <span class="confirm-info">
+                                            - {{ format_currency_with_label($rank_discount_amount) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($order_voucher)
+                                <div class="row mb-1">
+                                    <div class="col-7">
+                                        <span class="confirm-label">
+                                            {{ trans('labels.order_discount_amount') }}
+                                        </span>
+                                    </div>
+                                    <div class="col-5 text-right">
+                                        <span class="confirm-info">
+                                            - {{ format_currency_with_label($order_voucher_discount) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="row mb-1">
+                                <div class="col-7">
+                                    <span class="confirm-label">
+                                        {{ trans('labels.shipping_fee') }}
+                                    </span>
+                                </div>
+                                <div class="col-5 text-right">
+                                    <span class="confirm-info">
+                                        {{ format_currency_with_label($shipping_fee) }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-7">
+                                    <span>{{ trans('labels.total') }}</span>
+                                </div>
+                                <div class="col-5 text-right">
+                                    <span>{{ format_currency_with_label($total - $order_voucher_discount + $shipping_fee) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-right">
+                        <button class="btn btn-primary" wire:click="checkout">
+                            <span class="text-white" wire:loading.remove
+                                wire:target="checkout">{{ trans('labels.checkout') }}</span>
+                            <span class="text-white" wire:loading wire:target="checkout">Đang tiến hành thanh
+                                toán..</span>
+                        </button>
+                        <button class="btn btn-default" data-dismiss="modal">
+                            <span>Huỷ</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        quantityInputs()
-        Livewire.hook('message.processed', (message, component) => {
-            if (component.fingerprint.name == 'cart-component') {
-                quantityInputs()
-            };
+@push('js')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            @this.on('open-confirm-order', (e) => {
+                $('#confirmOrderModal').modal('show')
+            })
+            quantityInputs()
+            Livewire.hook('message.processed', (message, component) => {
+                if (component.fingerprint.name == 'cart-component') {
+                    quantityInputs()
+                };
+            })
         })
-    })
-</script>
+    </script>
+@endpush

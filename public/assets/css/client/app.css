@@ -605,6 +605,9 @@ input[type=number] {
 .justify-content-center {
     justify-content: center;
 }
+.justify-content-between {
+    justify-content: space-between;
+}
 
 .error {
     color: red;
@@ -929,6 +932,10 @@ input[type=number] {
     background: #f3f3f3;
     color: #c96;
 }
+.auth-dropdown-menu .btn {
+    border-radius: 0;
+    border: 0;
+}
 
 .auth-dropdown-menu>div>form:hover button {
     background: #f3f3f3;
@@ -1005,6 +1012,7 @@ input[type=number] {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 
 @keyframes bord-pop {
     0% {
@@ -1370,6 +1378,20 @@ input[type=number] {
         padding-left: 1rem;
     }
 }
+#confirmOrderModal span {
+    font-size: 10px;
+    font-weight: bold;
+    color: #2c2a2a;
+}
+#confirmOrderModal .confirm-label {
+    color: #bebebe;
+}
+#confirmOrderModal .confirm-info {
+    color: #2c2a2a;
+}
+.order-item-detail {
+    font-size: 14px;
+}
 
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
@@ -1378,6 +1400,9 @@ input[type=number] {
 }
 
 @media screen and (min-width: 768px) {
+    #confirmOrderModal span {
+        font-size: 12px;
+    }
     #order-type-tab .nav-item .nav-link {
         font-size: 14px;
     }

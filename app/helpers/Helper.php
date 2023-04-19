@@ -400,6 +400,9 @@ function getAppName()
 {
     return env('APP_NAME');
 }
+function getLogoUrl() {
+    return '/img/logo-dark.png';
+}
 function checkAuthCustomer()
 {
     return auth('customer')->check();

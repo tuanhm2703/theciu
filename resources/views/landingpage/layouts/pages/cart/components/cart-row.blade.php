@@ -6,7 +6,7 @@
     <td class="product-col">
         <div class="product">
             <figure class="product-media mr-1">
-                <a href="{{ optional($inventory->image)->path_with_domain }}" class="inventory-img-btn"
+                <a href="{{ optional($inventory->image)->path_with_domain }}" class="inventory-img-btn rounded"
                     style="background: url({{ optional($inventory->image)->path_with_domain }}); width: 50px; height: 50px; background-position: center; background-size: cover"></a>
             </figure>
 
@@ -25,7 +25,7 @@
         <div class="cart-product-quantity">
             <input type="number" class="form-control" min="1" max="10" step="1" data-decimals="0"
                 wire:change="itemAdded({{ $inventory->id }}, $event.target.value)"
-                data-inventory-id="{{ $inventory->id }}" value="{{ $inventory->pivot->quantity }}" required>
+            data-inventory-id="{{ $inventory->id }}" value="{{ $inventory->pivot->quantity }}" required>
         </div><!-- End .cart-product-quantity -->
     </td>
     <td class="total-col">{{ format_currency_with_label($inventory->sale_price * $inventory->pivot->quantity) }}</td>
