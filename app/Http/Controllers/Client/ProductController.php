@@ -17,7 +17,7 @@ class ProductController extends Controller
             return $q->available()->with(['image', 'attributes' => function ($q) {
                 $q->orderBy('attribute_inventory.created_at', 'desc');
             }]);
-        }])->whereSlug($slug)->firstOrFail();
+        }])->available()->whereSlug($slug)->firstOrFail();
         $other_products = Product::where('id', '!=', $product->id)
             ->with(['category', 'inventories' => function ($q) {
                 return $q->available()->with(['image', 'attributes' => function ($q) {

@@ -3,10 +3,14 @@
 namespace App\Services;
 
 use App\Models\Customer;
+use App\Models\Order;
 use App\Models\Rank;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use VienThuong\KiotVietClient\Client;
+use VienThuong\KiotVietClient\Model\Customer as ModelCustomer;
 use VienThuong\KiotVietClient\Resource\CustomerResource;
+use VienThuong\KiotVietClient\Resource\OrderResource;
 
 class KiotService
 {
@@ -15,7 +19,7 @@ class KiotService
         // if($customer->available_rank && $customer->kiot_customer)
     }
 
-    public function syncKiotInfo(Customer $customer)
+    public static function syncKiotInfo(Customer $customer)
     {
         $customerResource = new CustomerResource(App::make(Client::class));
         if ($customer->phone) {
@@ -47,6 +51,28 @@ class KiotService
                 }
             } catch (\Throwable $th) {
                 \Log::info($th);
+            }
+        }
+        return false;
+    }
+
+    public static function cancelKiotInvoice(Order $order) {
+        if($order->kiot_invoice) {
+            $order->kiot_invoice->removeKiotInvoice();
+            return true;
+        }
+        return false;
+    }
+
+    public static function cancelKiotOrder(Order $order, $cancelInvoice = true) {
+        $kiot_order = $order->kiot_order;
+        if($kiot_order) {
+            $orderResource = new OrderResource(App::make(Client::class));
+            try {
+                $orderResource->remove("$kiot_order->kiot_order_id?IsVoidPayment=$cancelInvoice");
+                return true;
+            } catch (\Throwable $th) {
+                Log::error($th);
             }
         }
         return false;

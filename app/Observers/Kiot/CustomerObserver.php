@@ -15,7 +15,7 @@ class CustomerObserver
 
     public function updated(Customer $customer) {
         if($customer->isDirty('phone')) {
-            KiotService::updateCustomerRank($customer);
+            KiotService::syncKiotInfo($customer);
         }
     }
 }

@@ -176,5 +176,5 @@ return [
     'invalid_username'          => 'Invalid username',
     'phone_number'              => 'Phone number is invalid',
     'password_match'            => 'Password is not match',
-    'password_new'            => 'Password is being used'
+    'password_new'            => 'Password is being used',
 ];

@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Mail;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Model\CustomerGroup;
 use VienThuong\KiotVietClient\Resource\CustomerResource;
+use VienThuong\KiotVietClient\Resource\InvoiceResource;
+use VienThuong\KiotVietClient\Resource\OrderResource;
 use VienThuong\KiotVietClient\Resource\ProductResource;
 
 class TestController extends Controller {
@@ -20,10 +22,9 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-        $customers = Customer::all();
-        $customers->each(function($customer) {
-            $customer->updateRank();
-        });
+        $orderResource = new OrderResource(App::make(Client::class));
+        return $orderResource->getByCode('DH000060')->getModelData();
+        // $orderResource->remove("")
     }
 
     public function ipn(Request $request) {

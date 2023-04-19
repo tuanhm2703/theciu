@@ -349,14 +349,6 @@ class Order extends Model
         return true;
     }
 
-    public function cancelKiotInvoice() {
-        if($this->kiot_invoice) {
-            $this->kiot_invoice->removeKiotInvoice();
-            return true;
-        }
-        return false;
-    }
-
     public function createKiotInvoice(ModelOrder $order)
     {
         try {
@@ -390,9 +382,6 @@ class Order extends Model
         return false;
     }
 
-    // public function cancelKiotInvoice() {
-    //     $invoiceResource = new
-    // }
     public function generateKiotInvoiceDetailCollection()
     {
         $arr = [];

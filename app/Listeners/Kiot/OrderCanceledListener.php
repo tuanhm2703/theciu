@@ -3,6 +3,7 @@
 namespace App\Listeners\Kiot;
 
 use App\Events\Kiot\OrderCanceledEvent;
+use App\Services\KiotService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -27,6 +28,6 @@ class OrderCanceledListener
     public function handle(OrderCanceledEvent $event)
     {
         $order = $event->order;
-        $order->cancelKiotInvoice();
+        KiotService::cancelKiotOrder($order);
     }
 }
