@@ -57,4 +57,8 @@ class HeaderCartComponent extends Component {
     public function render() {
         return view('livewire.header-cart-component');
     }
+
+    public function goToCart() {
+        return route('client.auth.cart.index');
+    }
 }

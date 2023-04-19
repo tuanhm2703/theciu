@@ -11,7 +11,7 @@
                 <div class="pt-1"><span class="text-danger mt-3">{{ $message }}</span></div>
             @enderror
             @if (!empty($errorMessage))
-            <div class="mt-1"><i class="text-danger">{{ $errorMessage }}</i></div>
+                <div class="mt-1"><i class="text-danger">{{ $errorMessage }}</i></div>
             @endif
 
         </div><!-- End .form-group -->
@@ -19,7 +19,8 @@
         <div id="recaptcha-container"></div>
         <div class="form-footer text-right">
             <button type="button" id="submitBtn" class="btn btn-outline-primary-2">
-                <span wire:loading wire:target="sendVerify" class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>
+                <span wire:loading wire:target="sendVerify" class="spinner-border spinner-border-sm mr-3" role="status"
+                    aria-hidden="true"></span>
                 <span>{{ trans('labels.next') }}</span>
                 <i class="icon-long-arrow-right"></i>
             </button>
@@ -34,7 +35,8 @@
         </div><!-- End .form-group -->
         <div class="form-footer text-right">
             <button type="button" id="verifyOtpBtn" class="btn btn-outline-primary-2">
-                <span  wire:loading wire:target="verifyOtp, sendVerify" class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>
+                <span wire:loading wire:target="verifyOtp, sendVerify" class="spinner-border spinner-border-sm mr-3"
+                    role="status" aria-hidden="true"></span>
                 <span>{{ trans('labels.next') }}</span>
                 <i class="icon-long-arrow-right"></i>
             </button>
@@ -117,7 +119,10 @@
                 @this.errorMessage = debugErrorMap()[error.code.replace('auth/', '')]
             });
         })
+        $('#forgot-password-form').on('submit', (e) => {
+            e.preventDefault()
+            $('#submitBtn').click();
+        });
     })
-
 
 </script>

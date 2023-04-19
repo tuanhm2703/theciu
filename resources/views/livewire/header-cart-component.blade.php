@@ -1,10 +1,9 @@
 <div class="dropdown cart-dropdown" wire:init="loadContent">
     @if ($readyToLoad)
-        <a href="{{ route('client.auth.cart.index') }}" class="dropdown-toggle" role="button" data-toggle="dropdown"
+        <a href="{{ route('client.auth.cart.index') }}" id="cart-btn" class="dropdown-toggle" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" data-display="static">
             <i class="icon-shopping-cart"></i>
             <span class="cart-count">{{ $cart ? $cart->inventories->count() : 0 }}</span>
-            <span class="cart-txt">{{ $cart ? $cart->formatted_total : 0 }}</span>
         </a>
         @if ($cart)
             <div class="dropdown-menu dropdown-menu-right">
@@ -53,7 +52,15 @@
             aria-haspopup="true" aria-expanded="false" data-display="static">
             <i class="icon-shopping-cart"></i>
             <span class="cart-count">{{ 0 }}</span>
-            <span class="cart-txt">{{ 0 }}</span>
         </a>
     @endif
 </div><!-- End .cart-dropdown -->
+@push('js')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            $('body').on('click', '#cart-btn', (e) => {
+                window.location.href = `{{ route('client.auth.cart.index') }}`
+            })
+        })
+    </script>
+@endpush
