@@ -43,6 +43,8 @@ class KiotService
                     if ($rank) {
                         if ($customer->available_rank && $customer->available_rank->min_value < $rank->min_value) {
                             $customer->ranks()->sync($rank->id);
+                        } else if(!$customer->available_rank) {
+                            $customer->ranks()->sync($rank->id);
                         }
                     } else {
                         if ($customer->available_rank && $customer->available_rank->pivot->value == 0) {
