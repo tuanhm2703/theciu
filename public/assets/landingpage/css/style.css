@@ -6910,6 +6910,8 @@ p {
     border-radius: 0;
     white-space: normal;
     transition: all 0.3s;
+    border-radius: 30px;
+    border: 1px solid lightgrey;
 }
 
 .btn span {

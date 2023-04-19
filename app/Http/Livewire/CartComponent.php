@@ -139,7 +139,10 @@ class CartComponent extends Component {
             'customer_id' => auth('customer')->user()->id
         ]);
     }
-
+    public function checkOrder() {
+        $this->validate();
+        $this->emit('open-confirm-order');
+    }
     public function checkout() {
         $this->validate();
         $this->error = '';

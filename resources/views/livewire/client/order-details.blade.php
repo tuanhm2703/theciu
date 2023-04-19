@@ -60,7 +60,7 @@
                 @break
             @endswitch
         </div>
-        <div class="order-shipping-address mt-3">
+        <div class="order-shipping-address mt-3 mb-3">
             <div>
                 <div class="border-color-gradient"></div>
             </div>
@@ -112,7 +112,35 @@
                 </div>
             </div>
         </div>
-        <div class="order-turnover-info text-right" style="font-size: 14px;">
+        <div class="pt-1 order-item-detail">
+            @foreach ($order->inventories as $index => $inventory)
+                <div class="row mb-2 pt-2 {{ $index == 0 ? 'border-top' : '' }}">
+                    <div class="col-2 col-md-1">
+                        <img class="rounded" width="100%" src="{{ optional($inventory->image)->path_with_domain }}"
+                            alt="">
+                    </div>
+                    <div class="col-10 col-md-11">
+                        <div class="row">
+                            <div class="col-12 col-md-10" style="line-height: 2rem">
+                                <div class="font-weight-bold">{{ $inventory->pivot->name }}</div>
+                                <div class="confirm-label">x{{ $inventory->pivot->quantity }}</div>
+                            </div>
+                            <div class="col-12 col-md-2 text-right">
+                                @if ($inventory->pivot->promotion_price < $inventory->pivot->origin_price)
+                                    <span
+                                        class="old-price">{{ format_currency_with_label($inventory->pivot->origin_price) }}</span>
+                                    <span
+                                        class="new-price ml-1">{{ format_currency_with_label($inventory->pivot->promotion_price) }}</span>
+                                @else
+                                    {{ format_currency_with_label($inventory->pivot->origin_price) }}
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <div class="order-turnover-info text-right border-top pt-2" style="font-size: 14px;">
             <h6>{{ trans('labels.payment_info') }}</h6>
             <div class="row">
                 <div class="col-8 border-right">
