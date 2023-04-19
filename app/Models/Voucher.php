@@ -104,6 +104,6 @@ class Voucher extends Model {
     }
 
     public function getDetailInfoAttribute() {
-        return "$this->discount_description Áp dụng đến ".$this->end->format('d/m/Y H:i'). ". Mỗi tài khoản được sử dụng $this->customer_limit.";
+        return "$this->discount_description Áp dụng đến ".$this->end->format('d/m/Y H:i'). ". Mỗi tài khoản được sử dụng $this->customer_limit lần.";
     }
 }

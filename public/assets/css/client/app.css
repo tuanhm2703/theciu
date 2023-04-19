@@ -1176,6 +1176,9 @@ input[type=number] {
 .voucher-popup small {
     font-size: 10px;
 }
+.voucher-info-wrapper {
+    border-radius: 5px;
+}
 
 .voucher-container {
     background-clip: padding-box;
@@ -1197,11 +1200,11 @@ input[type=number] {
     align-items: center;
     font-size: 14px;
     font-weight: bold;
-    width: 30%;
+    min-width: 100px;
     justify-content: center;
 }
 .voucher-title svg {
-    height: 65px;
+    height: 50px;
 }
 
 .voucher-title span {
@@ -1245,11 +1248,11 @@ input[type=number] {
     justify-content: center;
 }
 .voucher-detail-left p {
-    font-size: 14px;
+    font-size: 13px;
     color: #000;
 }
 .voucher-detail-left:not(h1) {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .voucher-detail-right {
@@ -1262,6 +1265,8 @@ input[type=number] {
 
 .voucher-detail-right button {
     min-width: fit-content;
+    font-size: 13px;
+    padding: 7px 10px;
 }
 
 #save-voucher-component-wrapper {
@@ -1406,7 +1411,7 @@ input[type=number] {
 }
 .voucher-condition-detail .voucher-condition-info-group .info-label {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
 }
 .voucher-condition-detail .voucher-condition-info-group .info-content {
     font-size: 13px;
@@ -1421,6 +1426,9 @@ input[type=number] {
 }
 
 @media screen and (min-width: 768px) {
+    .voucher-title {
+        width: 28%;
+    }
     #confirmOrderModal span {
         font-size: 12px;
     }
@@ -1450,13 +1458,9 @@ input[type=number] {
         display: block;
     }
     .voucher-detail-left p {
-        font-size: 16px;
+        font-size: 13px;
         color: #000;
     }
-    .voucher-detail-left:not(h1) {
-        font-size: 16px;
-    }
-
 
     #save-voucher-component-wrapper {
         width: fit-content;

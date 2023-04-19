@@ -52,7 +52,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="https://www.instagram.com/theciu2016/" class="social-link" title="Instagram"
+                                <a href="https://www.instagram.com/theciusaigon/" class="social-link" title="Instagram"
                                     target="_blank">
                                     <i class="icon-instagram"></i> Instagram
                                 </a>

@@ -17,7 +17,7 @@
 
         <div class="social-icons">
             <a href="https://www.facebook.com/The.C.I.U.2016" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
-            <a href="https://www.instagram.com/theciu2016/" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+            <a href="https://www.instagram.com/theciusaigon/" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
             <a href="https://www.tiktok.com/@theciusaigon" class="social-icon" target="_blank" title="Tiktok">
                 <i style="width: 10px">
                     <svg style="fill: grey;" xmlns="http://www.w3.org/2000/svg"

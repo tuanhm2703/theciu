@@ -127,6 +127,13 @@
                 element.addClass('show')
             }
         })
+        $('body').on('click', '#sticky-gift-icon, #close-voucher-list-btn', (e) => {
+            if($('#save-voucher-component-wrapper').hasClass('hide')) {
+                $('#save-voucher-component-wrapper').removeClass('hide')
+            } else {
+                $('#save-voucher-component-wrapper').addClass('hide')
+            }
+        })
         document.addEventListener("DOMContentLoaded", () => {
             Livewire.hook('message.processed', (message, component) => {
                 $('[data-toggle="tooltip"]').tooltip()

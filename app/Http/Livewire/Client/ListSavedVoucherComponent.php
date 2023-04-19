@@ -16,7 +16,7 @@ class ListSavedVoucherComponent extends Component
 
     public function loadVouchers() {
         if(customer()) {
-            $this->vouchers = Voucher::available()->saveable()->get();
+            $this->vouchers = Voucher::saveable()->notExpired()->get();
             $saved_vouchers = customer()->saved_vouchers()->get();
             $this->vouchers->each(function($voucher) use ($saved_vouchers) {
                 $voucher->saved = in_array($voucher->id, $saved_vouchers->pluck('id')->toArray());
@@ -28,7 +28,7 @@ class ListSavedVoucherComponent extends Component
             });
             $this->numberOfAvailableVoucher = $this->vouchers->where('saved', 0)->count();
         } else {
-            $this->vouchers = Voucher::available()->saveable()->get();
+            $this->vouchers = Voucher::notExpired()->saveable()->get();
             $this->numberOfAvailableVoucher = $this->vouchers->count();
         }
         $this->emit('updateVoucherStatus', $this->numberOfAvailableVoucher);

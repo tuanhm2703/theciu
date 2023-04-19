@@ -8,8 +8,11 @@ trait VoucherScope {
     }
 
     public function scopeAvailable($q) {
-        $now = now();
-        return $q->whereRaw("'$now' between vouchers.begin and vouchers.end");
+        return $q->whereRaw("now() between vouchers.begin and vouchers.end");
+    }
+
+    public function scopeNotExpired($q) {
+        return $q->whereRaw('vouchers.end >= now()');
     }
 
     public function scopeNotSaveable($q) {

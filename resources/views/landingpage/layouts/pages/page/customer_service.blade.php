@@ -72,7 +72,7 @@
 
                         </span>
                         <span class="info-content">
-                            Instagram: <a href="https://www.instagram.com/theciu2016/?hl=en">@theciu2016</a>
+                            Instagram: <a href="https://www.instagram.com/theciusaigon/?hl=en">@theciu2016</a>
                         </span>
                     </p>
                 </div>

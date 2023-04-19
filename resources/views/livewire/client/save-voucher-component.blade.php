@@ -1,4 +1,4 @@
-<div class="w-100 box-shadow p-1">
+<div class="w-100 box-shadow p-1 mb-1 voucher-info-wrapper">
     <article class="voucher-container">
         <div class="voucher-title">
             <span class="text-center">
@@ -27,9 +27,9 @@
         </div>
         <div class="voucher-detail-info">
             <div class="voucher-detail-left">
-                <h1 class="voucher-discount-value">
+                <h3 class="voucher-discount-value mb-1">
                     Giảm {{ $voucher->discount_label }}
-                </h1>
+                </h3>
                 <p>
                     {{ $voucher->discount_description }}
                 </p>
@@ -41,7 +41,7 @@
             </div>
             <div class="voucher-detail-right">
                 <button class="btn btn-primary mb-1" wire:click="saveVoucher" @disabled($voucher->saved || $voucher->quantity == 0)>
-                    <span wire:loading wire:target="saveVoucher" class="spinner-border spinner-border-sm mr-3"
+                    <span wire:loading wire:target="saveVoucher" class="spinner-border spinner-border-sm"
                         role="status" aria-hidden="true"></span>
                     <span wire:loading.remove wire:target="saveVoucher">
                         @if ($voucher->saved)
@@ -74,6 +74,6 @@
             <span class="info-label">Xem chi tiết</span>
             <span class="info-content">{{ $voucher->detail_info }}</span>
         </div>
-        <div class="text-center"><a href="#" class="open-detail-voucher-btn" data-voucher-id="{{ $voucher->id }}"><i class="fas fa-lg fa-times"></i> Đóng</a></div>
+        <div class="text-center"><a href="#" class="open-detail-voucher-btn" data-voucher-id="{{ $voucher->id }}">Đóng</a></div>
     </div>
 </div>
