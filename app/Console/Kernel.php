@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             \Log::info('hello');
-        })->everyMinute();
+        })->everyMinute()->withoutOverlapping();
     }
 
     /**

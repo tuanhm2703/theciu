@@ -16,6 +16,10 @@ class KiotCustomer extends Model
         'kiot_customer_id'
     ];
 
+    protected $casts = [
+        'data' => 'json'
+    ];
+
     public function customer() {
         return $this->belongsTo(Customer::class);
     }

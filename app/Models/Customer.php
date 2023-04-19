@@ -147,32 +147,4 @@ class Customer extends User
         }
         return 0;
     }
-    public function syncKiotInfo()
-    {
-        $customerResource = new CustomerResource(App::make(Client::class));
-        if ($this->phone) {
-            try {
-                $info = $customerResource->list(['contactNumber' => $this->phone, 'includeCustomerGroup' => true])->toArray();
-                if (count($info) > 0) {
-                    $info = $info[0];
-                    $this->kiot_customer()->updateOrCreate([
-                        'code' => $info['code'],
-                        'kiot_customer_id' => $info['id']
-                    ], [
-                        'total_point' => $info['totalPoint'],
-                        'reward_point' => $info['rewardPoint'],
-                    ]);
-                    $rank_names = explode('|', $info['groups']);
-                    $rank = Rank::whereIn('name', $rank_names)->orderBy('min_value', 'desc')->first();
-                    if($rank) {
-                        $this->ranks()->sync($rank->id);
-                    }
-                    return true;
-                }
-            } catch (\Throwable $th) {
-                \Log::info($th);
-            }
-        }
-        return false;
-    }
 }

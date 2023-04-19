@@ -41,6 +41,10 @@ class HeaderCartComponent extends Component {
                 $this->cart->inventories()->sync([$inventory->id => ['quantity' => $quantity ? $quantity : 1, 'customer_id' => $customer->id]], false);
             }
             $this->emit('cart:refresh');
+            $this->dispatchBrowserEvent('openToast', [
+                'message' => 'Thêm vào giỏ hàng thành công',
+                'type' => 'success'
+            ]);
         }
     }
 
