@@ -1192,10 +1192,6 @@ input[type=number] {
     cursor: pointer;
 }
 
-.voucher-container:not(:last-child) {
-    margin-bottom: 1rem;
-}
-
 .voucher-title {
     display: flex;
     align-items: center;
@@ -1357,6 +1353,7 @@ input[type=number] {
 .order-row .order-product-title {
     font-size: 1.7em;
 }
+
 @media (min-width: 991px) {
     .order-lg-first {
         display: block;
@@ -1392,7 +1389,31 @@ input[type=number] {
 .order-item-detail {
     font-size: 14px;
 }
-
+.voucher-condition-detail {
+    height: 0;
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+.voucher-condition-detail.show {
+    height: 300px;
+    margin-top: 1rem;
+}
+.voucher-condition-detail .voucher-condition-info-group {
+    display: flex;
+    flex-direction: column;
+}
+.voucher-condition-detail .voucher-condition-info-group .info-label {
+    font-weight: bold;
+    font-size: 14px;
+}
+.voucher-condition-detail .voucher-condition-info-group .info-content {
+    font-size: 13px;
+}
+.box-shadow {
+    box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0,0,0,.07)
+}
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;
@@ -1446,6 +1467,8 @@ input[type=number] {
     }
     .voucher-container {
         height: 120px;
+        box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0,0,0,.07);
+        border-radius: 5px;
     }
 
     .toolbox-center {

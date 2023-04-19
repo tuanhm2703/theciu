@@ -33,6 +33,7 @@ class ListSavedVoucherComponent extends Component
         }
         $this->emit('updateVoucherStatus', $this->numberOfAvailableVoucher);
         $this->readyToLoad = true;
+
     }
     public function updateVoucherStatus() {
         $this->emit('updateVoucherStatus', $this->numberOfAvailableVoucher);

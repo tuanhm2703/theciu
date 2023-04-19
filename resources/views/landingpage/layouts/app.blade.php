@@ -119,6 +119,14 @@
                 $($(e.target).data('target')).modal('show')
             })
         })
+        $('body').on('click', '.open-detail-voucher-btn', (e) => {
+            const element = $(`.voucher-condition-detail[data-voucher-id=${$(e.target).attr('data-voucher-id')}]`)
+            if(element.hasClass('show')) {
+                element.removeClass('show')
+            } else {
+                element.addClass('show')
+            }
+        })
         document.addEventListener("DOMContentLoaded", () => {
             Livewire.hook('message.processed', (message, component) => {
                 $('[data-toggle="tooltip"]').tooltip()

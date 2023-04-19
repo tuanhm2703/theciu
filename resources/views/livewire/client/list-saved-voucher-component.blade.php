@@ -11,8 +11,10 @@
         @endforeach
     @endif
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        @this.updateVoucherStatus();
-    })
-</script>
+@push('js')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            @this.updateVoucherStatus();
+        })
+    </script>
+@endpush

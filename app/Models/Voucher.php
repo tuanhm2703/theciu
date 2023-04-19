@@ -102,4 +102,8 @@ class Voucher extends Model {
             return trans('labels.voucher_limit_discount_template', ['value' => format_currency($this->max_discount_amount)]);
         }
     }
+
+    public function getDetailInfoAttribute() {
+        return "$this->discount_description Áp dụng đến ".$this->end->format('d/m/Y H:i'). ". Mỗi tài khoản được sử dụng $this->customer_limit.";
+    }
 }
