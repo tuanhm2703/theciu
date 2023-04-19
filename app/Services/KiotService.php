@@ -123,7 +123,7 @@ class KiotService
             $kiotSetting = App::get('KiotConfig');
             $order = new ModelOrder();
             $order->setBranchId($kiotSetting->data['branchId']);
-            $order->setDescription('The ciu order');
+            $order->setDescription("The C.I.U Order: $localOrder->order_number");
             $order->setTotalPayment($localOrder->total);
             $order->setMethod('hello');
             $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
@@ -132,7 +132,9 @@ class KiotService
             if(isset($kiotSetting->data['saleId'])) {
                 $order->setSoldById($kiotSetting->data['saleId']);
             }
-            $kiotOrder = $orderResource->create($order);
+            $kiotOrder = $orderResource->create($order, [
+                'Partner' => 'KVSync'
+            ]);
             $localOrder->kiot_order()->create([
                 'kiot_order_id' => $kiotOrder->getId(),
                 'kiot_code' => $kiotOrder->getCode(),
