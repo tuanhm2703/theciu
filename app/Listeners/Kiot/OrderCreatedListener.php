@@ -3,6 +3,7 @@
 namespace App\Listeners\Kiot;
 
 use App\Events\Kiot\OrderCreatedEvent;
+use App\Services\KiotService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -27,6 +28,6 @@ class OrderCreatedListener
     public function handle(OrderCreatedEvent $event)
     {
         $order = $event->order;
-        $order->createKiotOrder();
+        KiotService::createKiotOrder($order);
     }
 }

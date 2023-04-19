@@ -3,13 +3,17 @@
 namespace App\Services;
 
 use App\Models\Customer;
+use App\Models\KiotInvoice;
 use App\Models\Order;
 use App\Models\Rank;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Model\Customer as ModelCustomer;
+use VienThuong\KiotVietClient\Model\Invoice;
+use VienThuong\KiotVietClient\Model\Order as ModelOrder;
 use VienThuong\KiotVietClient\Resource\CustomerResource;
+use VienThuong\KiotVietClient\Resource\InvoiceResource;
 use VienThuong\KiotVietClient\Resource\OrderResource;
 
 class KiotService
@@ -44,13 +48,14 @@ class KiotService
                         if ($customer->available_rank && $customer->available_rank->pivot->value == 0) {
                             $customer->available_ranks()->where('customer_ranks.value', 0)->detach();
                         }
+                        $customer->kiot_customer()->delete();
                     }
                     return true;
                 } else {
                     $customer->available_ranks()->where('customer_ranks.value', 0)->detach();
                 }
             } catch (\Throwable $th) {
-                \Log::info($th);
+                Log::info($th);
             }
         }
         return false;
@@ -76,5 +81,68 @@ class KiotService
             }
         }
         return false;
+    }
+
+    public static function createKiotInvoice(ModelOrder $order, Order $localOrder)
+    {
+        try {
+            $invoice = new Invoice([
+                'branchId' => $order->getBranchId(),
+                'purchaseDate' => (string) now(),
+                'customerId' => $order->getCustomerId(),
+                'discount' => $order->getDiscount(),
+                'totalPayment' => $order->getTotalPayment(),
+                'saleChannelId' => $order->getSaleChannelId(),
+                'method' => 'test',
+                'usingCod' => false,
+                'soldById' => 422903,
+                'orderId' => $order->getId(),
+                'invoiceDetails' => $localOrder->generateKiotInvoiceDetailCollection(),
+                'status' => 3
+            ]);
+            $invoiceResource = new InvoiceResource(App::make(Client::class));
+            $kiotInvoice = $invoiceResource->create($invoice);
+            KiotInvoice::create([
+                'kiot_invoice_id' => $kiotInvoice->getId(),
+                'kiot_code' => $kiotInvoice->getCode(),
+                'data' => $kiotInvoice->getModelData(),
+                'kiot_order_code' => $order->getCode(),
+                'order_id' => $localOrder->id
+            ]);
+            return true;
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
+        return false;
+    }
+
+    public static function createKiotOrder(Order $localOrder)
+    {
+        try {
+            $orderResource = new OrderResource(App::make(Client::class));
+            $kiotSetting = App::get('KiotConfig');
+            $order = new ModelOrder();
+            $order->setBranchId($kiotSetting->data['branchId']);
+            $order->setDescription('The ciu order');
+            $order->setTotalPayment($localOrder->total);
+            $order->setMethod('hello');
+            $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
+            $order->setMakeInvoice(false);
+            $order->setOrderDetails($localOrder->generateKiotOrderDetailCollection());
+            if(isset($kiotSetting->data['saleId'])) {
+                $order->setSoldById($kiotSetting->data['saleId']);
+            }
+            $kiotOrder = $orderResource->create($order);
+            $localOrder->kiot_order()->create([
+                'kiot_order_id' => $kiotOrder->getId(),
+                'kiot_code' => $kiotOrder->getCode(),
+                'data' => $kiotOrder->getModelData()
+            ]);
+            static::createKiotInvoice($kiotOrder, $localOrder);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return false;
+        }
+        return true;
     }
 }

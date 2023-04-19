@@ -9,7 +9,7 @@ class CustomerObserver
 {
     public function created(Customer $customer) {
         if($customer->phone) {
-            KiotService::updateCustomerRank($customer);
+            KiotService::syncKiotInfo($customer);
         }
     }
 
