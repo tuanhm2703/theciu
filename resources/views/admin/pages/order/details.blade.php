@@ -208,7 +208,7 @@
                                     <span>Mã giảm giá</span>
                                 </div>
                                 <div class="col-2">
-                                    - {{ format_curreny_with_label($order->order_voucher->pivot->amount) }}
+                                    - {{ format_currency_with_label($order->order_voucher->pivot->amount) }}
                                 </div>
                             @endif
                             <div class="col-10 turnover-label">

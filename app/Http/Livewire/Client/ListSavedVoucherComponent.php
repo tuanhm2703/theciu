@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Voucher;
+use App\Models\VoucherType;
 use App\Traits\Common\LazyloadLivewire;
 use Livewire\Component;
 
@@ -11,8 +12,13 @@ class ListSavedVoucherComponent extends Component
     use LazyloadLivewire;
     public $vouchers;
     public $show = false;
+    public $voucher_types;
     protected $listeners = ['showVoucherPool', 'showVoucherPool', 'loadVouchers'];
     public $numberOfAvailableVoucher = 0;
+
+    public function mount() {
+        $this->voucher_types  = VoucherType::active()->get();
+    }
 
     public function loadVouchers() {
         if(customer()) {
