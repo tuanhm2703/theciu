@@ -8,4 +8,5 @@ Route::group(['prefix' => 'promotion', 'as' => 'promotion.'], function() {
     Route::get('/paginate', [PromotionController::class, 'paginate'])->name('paginate');
     Route::get('/views/product', [PromotionController::class, 'viewListProduct'])->name('view.product');
     Route::put('/{promotion}', [PromotionController::class, 'updateStatus'])->name('update.status');
+    Route::put('/{voucher}/update-status', [PromotionController::class, 'updateStatus'])->name('voucher.update.status');
 });

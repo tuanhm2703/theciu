@@ -7,6 +7,7 @@ use App\Enums\StatusType;
 use App\Http\Controllers\Controller;
 use App\Models\Inventory;
 use App\Models\Promotion;
+use App\Models\Voucher;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -57,6 +58,14 @@ class PromotionController extends Controller {
         }
         return BaseResponse::success([
             'message' => 'Cập nhật trạng thái chương trình thành công!'
+        ]);
+    }
+
+    public function updateVoucherStatus(Request $request, Voucher $voucher) {
+        $voucher->status = $request->status;
+        $voucher->save();
+        return BaseResponse::success([
+            'message' => 'Cập nhật trạng thái voucher thành công!'
         ]);
     }
 }

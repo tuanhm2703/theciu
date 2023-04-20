@@ -19,6 +19,9 @@ class ResetPasswordComponent extends Component
     ];
     public function mount() {
         $this->customer = Customer::findByUsername($this->username);
+        if($this->customer) {
+            $this->customer->email = $this->customer->email ? $this->customer->email : $this->customer->phone;
+        }
         if(!app('auth.password.broker')->tokenExists($this->customer, $this->token)) {
             abort(404);
         }

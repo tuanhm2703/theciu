@@ -24,7 +24,7 @@ class VoucherPopupComponent extends Component
 
     public function loadVouchers() {
         if(customer()) {
-            $this->vouchers = Voucher::available()->saveable()->get();
+            $this->vouchers = Voucher::available()->where('quantity', '>', 0)->saveable()->get();
             $saved_vouchers = customer()->saved_vouchers()->get();
             $this->vouchers->each(function($voucher) use ($saved_vouchers) {
                 $voucher->saved = in_array($voucher->id, $saved_vouchers->pluck('id')->toArray());
@@ -34,10 +34,12 @@ class VoucherPopupComponent extends Component
                 return $value->used == false;
             });
         } else {
-            $this->vouchers = Voucher::available()->featured()->saveable()->get();
+            $this->vouchers = Voucher::available()->where('quantity', '>', 0)->featured()->saveable()->get();
         }
         $this->readyToLoad = true;
-        $this->emit('initPlugin', $this->vouchers);
+        if(!Session::has('prevent-reopen-voucher-popup')) {
+            $this->emit('initPlugin', $this->vouchers);
+        }
     }
     public function render()
     {
