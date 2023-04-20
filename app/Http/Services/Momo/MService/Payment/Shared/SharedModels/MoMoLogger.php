@@ -11,10 +11,9 @@ class MoMoLogger extends Logger
 {
     protected $loggingOff;
 
-    public function __construct(string $name = 'MoMoDefault', bool $loggingOff = false, array $handlers = array(), array $processors = array())
+    public function __construct(string $name = 'MoMoDefault', bool $loggingOff = true, array $handlers = array(), array $processors = array())
     {
         $this->loggingOff = $loggingOff;
-
         if ($loggingOff === false && count($handlers) === 0) {
             $consoleHandler = new StreamHandler("php://stdout");
             $consoleHandler->setFormatter(new ColoredLineFormatter());
