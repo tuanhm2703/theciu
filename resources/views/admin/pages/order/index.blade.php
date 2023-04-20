@@ -85,6 +85,7 @@
 @endsection
 @push('js')
     <script>
+        let inited = false;
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             const orderStatus = $(e.target).data('orderStatus')
             initOrderTable(orderStatus)
@@ -143,15 +144,20 @@
                     initStyleTable()
                 },
                 drawCallback: function(settings) {
-                    // console.log(settings);
-                    // initStyleTable()
+                    if(inited === true) {
+                        console.log('hello');
+                        setTimeout(() => {
+                            initStyleTable()
+                        }, 50);
+                    }
                 }
             })
         }
         const initStyleTable = () => {
+            console.log($('.order-header-column').length);
             $('.order-header-column').each((index, e) => {
                 const header = $(e).clone()
-                if (index > 0 || $('.order-header-column').length == 1) {
+                if (index > 0 || (inited == true && index == 0)) {
                     $(`<tr class="order-header-row"><td colspan="8">
                                 ${$(header).html()}
                             </td></tr>`).insertBefore($(e).parents('tr'))
@@ -163,6 +169,7 @@
                     $(e).remove()
                 }
             })
+            inited = true
         }
         initOrderTable(@json(App\Enums\OrderStatus::ALL))
     </script>
