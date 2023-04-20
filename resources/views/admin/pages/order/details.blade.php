@@ -271,7 +271,7 @@
                             </div>
                             <div class="col-2">
                                 <span>
-                                    - {{ format_currency_with_label($order->order_vouchere->pivot->amount) }}
+                                    - {{ format_currency_with_label($order->order_voucher->pivot->amount) }}
                                 </span>
                             </div>
                         @endif
