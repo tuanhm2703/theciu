@@ -102,6 +102,10 @@ class KiotService
                 'invoiceDetails' => $localOrder->generateKiotInvoiceDetailCollection(),
                 'status' => 3
             ]);
+            $customer = $localOrder->customer;
+            if($customer && $customer->kiot_customer) {
+                $invoice->setCustomerId($customer->kiot_customer->kiot_customer_id);
+            }
             $invoiceResource = new InvoiceResource(App::make(Client::class));
             $kiotInvoice = $invoiceResource->create($invoice);
             KiotInvoice::create([
