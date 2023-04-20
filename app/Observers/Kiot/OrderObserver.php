@@ -3,8 +3,10 @@
 namespace App\Observers\Kiot;
 
 use App\Enums\OrderStatus;
+use App\Enums\OrderSubStatus;
 use App\Events\Kiot\OrderCanceledEvent;
 use App\Events\Kiot\OrderDeliveredEvent;
+use App\Events\Kiot\OrderWaitToPickEvent;
 use App\Models\Order;
 
 class OrderObserver
@@ -22,6 +24,11 @@ class OrderObserver
                 case OrderStatus::DELIVERED:
                     event(new OrderDeliveredEvent($order));
                     break;
+            }
+        }
+        if($order->isDirty('sub_status')) {
+            if($order->sub_status == OrderSubStatus::FINISH_PACKAGING) {
+                event(new OrderWaitToPickEvent($order));
             }
         }
     }

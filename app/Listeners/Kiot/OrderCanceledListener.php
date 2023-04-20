@@ -28,6 +28,11 @@ class OrderCanceledListener
     public function handle(OrderCanceledEvent $event)
     {
         $order = $event->order;
-        KiotService::cancelKiotOrder($order);
+        try {
+            KiotService::cancelKiotInvoice($order);
+            KiotService::cancelKiotOrder($order);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

@@ -32,8 +32,8 @@ class ResetPasswordComponent extends Component
     }
 
     public function updatePassword() {
-
         $this->customer->password = Hash::make($this->new_password);
+        $this->customer->save();
         auth('customer')->login($this->customer);
         return redirect('/');
     }

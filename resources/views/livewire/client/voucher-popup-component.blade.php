@@ -10,7 +10,7 @@
         "autoplayTimeout": 3000,
         "items": 1,
         }'>
-            @foreach ($vouchers as $voucher)
+            @foreach ($vouchers->where('saved', false) as $voucher)
                 <livewire:client.popup-voucher-component :voucher="$voucher" />
             @endforeach
         </div>
