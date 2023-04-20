@@ -133,8 +133,9 @@ class Inventory extends Model {
                 foreach ($inventories as $inventory) {
                     if ($inventory->getBranchId() == $kiotSetting->data['branchId']) {
                         $otherProperties = $inventory->getOtherProperties();
+                        $stock_quantity = $inventory->getOnHand() - $inventory->getReserved();
                         $this->update([
-                            'stock_quantity' => $inventory->getOnHand(),
+                            'stock_quantity' => $stock_quantity < 0 ? 0 : $stock_quantity,
                             'status' => $otherProperties['isActive']
                         ]);
                     }
@@ -160,8 +161,9 @@ class Inventory extends Model {
                     foreach ($inventories as $inventory) {
                         if ($inventory['branchId'] == $kiotSetting->data['branchId']) {
                             $otherProperties = $inventory['otherProperties'];
+                            $stock_quantity = $inventory['onHand'] - $inventory['reserved'];
                             $this->update([
-                                'stock_quantity' => $inventory['onHand'],
+                                'stock_quantity' => $stock_quantity < 0 ? 0 : $stock_quantity,
                                 'status' => $otherProperties['isActive']
                             ]);
                         }
