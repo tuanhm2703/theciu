@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Events\Kiot\OrderCanceledEvent;
 use App\Events\Kiot\OrderCreatedEvent;
+use App\Events\Kiot\OrderDeliveredEvent;
 use App\Listeners\Kiot\OrderCanceledListener;
 use App\Listeners\Kiot\OrderCreatedListener;
+use App\Listeners\Kiot\OrderDeliveredListener;
 use App\Models\Customer;
 use App\Models\Order;
 use App\Observers\Kiot\CustomerObserver;
@@ -41,6 +43,10 @@ class KiotServiceProvider extends ServiceProvider
             Event::listen(
                 OrderCanceledEvent::class,
                 [OrderCanceledListener::class, 'handle']
+            );
+            Event::listen(
+                OrderDeliveredEvent::class,
+                [OrderDeliveredListener::class, 'handle']
             );
             Order::observe(OrderObserver::class);
             $this->loadRoutesFrom(__DIR__ . '/../../routes/kiot/Webhook.php');

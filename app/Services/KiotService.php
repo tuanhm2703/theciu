@@ -142,7 +142,6 @@ class KiotService
                 'kiot_code' => $kiotOrder->getCode(),
                 'data' => $kiotOrder->getModelData()
             ]);
-            static::createKiotInvoice($kiotOrder, $localOrder);
         } catch (\Throwable $th) {
             Log::error($th);
             return false;

@@ -99,7 +99,7 @@ class Voucher extends Model {
         if(!$this->max_discount_amount) {
             return trans('labels.voucher_unlimit_discount');
         } else {
-            return trans('labels.voucher_limit_discount_template', ['value' => format_currency($this->max_discount_amount)]);
+            return trans('labels.voucher_limit_discount_template', ['value' => format_currency_with_label($this->max_discount_amount)]);
         }
     }
 

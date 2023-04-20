@@ -4,6 +4,7 @@ namespace App\Observers\Kiot;
 
 use App\Enums\OrderStatus;
 use App\Events\Kiot\OrderCanceledEvent;
+use App\Events\Kiot\OrderDeliveredEvent;
 use App\Models\Order;
 
 class OrderObserver
@@ -19,6 +20,7 @@ class OrderObserver
                 case OrderStatus::DELIVERING:
                     break;
                 case OrderStatus::DELIVERED:
+                    event(new OrderDeliveredEvent($order));
                     break;
             }
         }

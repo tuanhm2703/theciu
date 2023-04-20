@@ -72,6 +72,7 @@
                                     <th>Thời gian tạo</th>
                                     <th>Ngày giao hàng</th>
                                     <th>Thao tác</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                         </table>
@@ -120,32 +121,46 @@
                     },
                     {
                         data: 'action'
+                    },
+                    {
+                        data: 'order_number',
+                        visible: false
                     }
                 ],
-                order: [[5, 'desc']],
-                initComplete: (settings, json) => {
+                order: [
+                    [5, 'desc']
+                ],
+                initComplete: function(settings, json) {
                     json.order_counts.forEach(data => {
-                        $(`[data-order-status=${data.order_status}] .order-count`).text(`(${data.order_count})`)
+                        $(`[data-order-status=${data.order_status}] .order-count`).text(
+                            `(${data.order_count})`)
                     })
                     if ($("[data-bs-toggle=tooltip]").length) {
                         $("[data-bs-toggle=tooltip]").tooltip({
                             html: true
                         });
                     }
-                    $('.order-header-column').each((index, e) => {
-                        const header = $(e).clone()
-                        if (index > 0) {
-                            $(`<tr class="order-header-row"><td colspan="8">
+                    initStyleTable()
+                },
+                drawCallback: function(settings) {
+                    // console.log(settings);
+                    // initStyleTable()
+                }
+            })
+        }
+        const initStyleTable = () => {
+            $('.order-header-column').each((index, e) => {
+                const header = $(e).clone()
+                if (index > 0 || $('.order-header-column').length == 1) {
+                    $(`<tr class="order-header-row"><td colspan="8">
                                 ${$(header).html()}
                             </td></tr>`).insertBefore($(e).parents('tr'))
-                        }
-                    })
-                    $('.order-header-column').remove()
-                    $('.order-header-row').each((index, e) => {
-                        if ($(e).find('.customer-info-wrapper').length == 0) {
-                            $(e).remove()
-                        }
-                    })
+                }
+            })
+            $('.order-header-column').remove()
+            $('.order-header-row').each((index, e) => {
+                if ($(e).find('.customer-info-wrapper').length == 0) {
+                    $(e).remove()
                 }
             })
         }
