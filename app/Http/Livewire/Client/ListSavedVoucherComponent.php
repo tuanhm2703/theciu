@@ -32,10 +32,10 @@ class ListSavedVoucherComponent extends Component
             $this->vouchers = $this->vouchers->filter(function($value, $key) {
                 return $value->used == false;
             });
-            $this->numberOfAvailableVoucher = $this->vouchers->where('saved', 0)->count();
+            $this->numberOfAvailableVoucher = $this->vouchers->where('saved', 0)->where('quantity', '>', 0)->count();
         } else {
             $this->vouchers = Voucher::notExpired()->saveable()->get();
-            $this->numberOfAvailableVoucher = $this->vouchers->count();
+            $this->numberOfAvailableVoucher = $this->vouchers->where('quantity', '>', 0)->count();
         }
         $this->emit('updateVoucherStatus', $this->numberOfAvailableVoucher);
         $this->readyToLoad = true;
