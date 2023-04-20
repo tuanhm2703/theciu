@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Enums\VoucherDiscountType;
+use App\Traits\Scopes\CustomScope;
 use App\Traits\Scopes\VoucherScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class Voucher extends Model {
-    use HasFactory, VoucherScope;
+    use HasFactory, VoucherScope, CustomScope;
 
 
     protected $fillable = [
