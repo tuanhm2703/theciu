@@ -7,16 +7,16 @@
         </div>
         <div class="card-body px-0 pt-0 pb-2">
             <div class="row">
-                <div class="col-4 col-lg-2 d-flex align-items-center justify-content-end">
+                <div class="col-4 col-lg-2 d-flex align-items-center justify-content-end mt-2">
                     {!! Form::label('voucher_type_id', 'Loại khuyến mãi:', ['class' => 'custom-control-label']) !!}
                 </div>
                 <div class="col-8 col-lg-10">
                     @foreach ($voucher_types as $type)
-                        <article class="feature1">
+                        <article class="feature1 me-2 mt-2">
                             {!! Form::radio('voucher_type_id', $type->id, true, ['id' => "radio-btn-$type->id"]) !!}
                             <div class="d-flex justify-content-evenly">
                                 <i class="ni ni-basket text-primary"></i>
-                                <span class="text-bold text-dark pl-3">Voucher đơn hàng</span>
+                                <span class="text-bold text-dark pl-3">Voucher {{ $type->name }}</span>
                             </div>
                             <div class="check-icon">
                                 <div class="icon-ctn"><i class="the-ciu-icon icons"><svg
