@@ -42,6 +42,7 @@ class ProductController extends Controller {
             $product->categories()->attach($request->input('category_id'));
             foreach ($attributes[0]->values as $index => $value) {
                 foreach ($value->inventories as $inventory) {
+                    $inventory->sku = trim($inventory->sku);
                     $newInventory = $product->inventories()->create((array) $inventory);
                     $order = 0;
                     foreach ($inventory->attributes as $attribute) {
@@ -95,6 +96,7 @@ class ProductController extends Controller {
             $inventory_image = null;
             foreach ($attributes[0]->values as $index => $value) {
                 foreach ($value->inventories as $inventory) {
+                    $inventory->sku = trim($inventory->sku);
                     $newInventory = $product->inventories()->updateOrCreate([
                         'id' => $inventory->id
                     ], (array) $inventory);
