@@ -127,7 +127,7 @@
         const url = $(e.target).attr('data-submit-url')
         $.ajax({
             url: url,
-            type: 'PUT',
+            type: 'PATCH',
             data: {
                 status
             },
