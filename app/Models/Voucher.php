@@ -68,7 +68,7 @@ class Voucher extends Model {
     public function decreaseQuantity(Customer $customer) {
         if($this->saveable) {
             $customer->saved_vouchers()->sync([
-                $this->id, [
+                $this->id => [
                     'is_used' => true
                 ]
             ], false);
@@ -80,7 +80,7 @@ class Voucher extends Model {
     public function increaseQuantity(Customer $customer) {
         if($this->saveable) {
             $customer->saved_vouchers()->sync([
-                $this->id, [
+                $this->id => [
                     'is_used' => false
                 ]
             ], false);
