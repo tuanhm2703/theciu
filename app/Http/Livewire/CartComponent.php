@@ -58,7 +58,7 @@ class CartComponent extends Component {
         'payment_method_id' => 'required',
         'address' => 'required',
         'item_selected' => 'array|min:1',
-        'note' => 'regex:/^[a-zA-Z0-9\s\x{00c0}-\x{00ff}\p{P}]+$/u'
+        'note' => 'string'
     ];
 
     protected $messages = [
