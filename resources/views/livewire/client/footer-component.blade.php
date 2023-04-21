@@ -7,7 +7,7 @@
                         <h4 class="widget-title">Chi nhánh</h4><!-- End .widget-title -->
                         <ul class="widget-list">
                             <li>
-                                Alley 29 Nguyen Gia Tri, Binh Thanh District, HCM City <br>Hotline: 0901.246.912
+                                32 Nguyen Gia Tri, Binh Thanh District, HCM City <br>Hotline: 0901.246.912
                             </li>
                             <li>
                                 73 Nguyen Van Bao, Go Vap District, HCM City <br>Hotline: 0707.987.912

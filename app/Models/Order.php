@@ -47,7 +47,8 @@ class Order extends Model
         'canceled_by',
         'sub_status',
         'payment_status',
-        'rank_discount_value'
+        'rank_discount_value',
+        'note'
     ];
 
     public function customer()

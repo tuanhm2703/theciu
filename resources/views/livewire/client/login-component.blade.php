@@ -31,7 +31,7 @@
         </button>
 
         <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input">
+            <input type="checkbox" class="custom-control-input" name="remember" id="signin-remember">
             <label class="custom-control-label" for="signin-remember">{{ trans('labels.remember_me') }}</label>
         </div><!-- End .custom-checkbox -->
 

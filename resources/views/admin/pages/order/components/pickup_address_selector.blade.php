@@ -13,7 +13,7 @@
                 'class' => 'custom-label-control m-0',
             ]) !!}
             <div>
-                {!! Form::select('pickup_address_id', pickUpAddressOptions(), [], ['class' => 'select2']) !!}
+                {!! Form::select('pickup_address_id', pickUpAddressOptions(), [$pickup_addresses->where('featured', 1)->first()->id], ['class' => 'select2']) !!}
             </div>
         </div>
         <div class="mt-3">

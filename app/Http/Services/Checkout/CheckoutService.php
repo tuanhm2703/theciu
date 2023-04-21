@@ -24,7 +24,8 @@ class CheckoutService {
                 'origin_subtotal' => 0,
                 'shipping_fee' => $checkoutModel->getShippingFee(),
                 'order_status' => OrderStatus::WAIT_TO_ACCEPT,
-                'payment_method_id' => $checkoutModel->getPaymentMethodId()
+                'payment_method_id' => $checkoutModel->getPaymentMethodId(),
+                'note' => $checkoutModel->getNote()
             ]);
             $order->addresses()->create([
                 'type' => AddressType::SHIPPING,

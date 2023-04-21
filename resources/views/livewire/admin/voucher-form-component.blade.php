@@ -78,8 +78,8 @@
                     {!! Form::select(
                         'discount_type',
                         App\Enums\VoucherDiscountType::getDiscountTypeOptions(),
-                        [],
-                        ['class' => 'select2 form-control', 'wire:model' => 'voucher.discount_type'],
+                        isset($voucher) ? $voucher->discount_type : null,
+                        ['class' => 'select2 form-control'],
                     ) !!}
                     {!! Form::number('value', null, ['class' => 'form-control', 'required']) !!}
                 </div>

@@ -50,20 +50,23 @@ class CartComponent extends Component {
 
     public $vouchers;
     public $order_voucher;
+    public $note;
     public $save_voucher_ids = [];
 
     protected $rules = [
         'service_id' => 'required',
         'payment_method_id' => 'required',
         'address' => 'required',
-        'item_selected' => 'array|min:1'
+        'item_selected' => 'array|min:1',
+        'note' => 'regex:/^[a-zA-Z0-9\s\x{00c0}-\x{00ff}\p{P}]+$/u'
     ];
 
     protected $messages = [
         'service_id.required' =>  'Vui lòng chọn :attribute',
         'payment_method_id.required' => 'Vui lòng chọn :attribute',
         'address.required' => 'Vui lòng chọn :attribute',
-        'item_selected.min' => 'Vui lòng chọn ít nhất 1 sản phẩm'
+        'item_selected.min' => 'Vui lòng chọn ít nhất 1 sản phẩm',
+        'note.regex' => 'Chú thích không được có ký tự đặc biệt'
     ];
 
 
@@ -154,7 +157,8 @@ class CartComponent extends Component {
             'shipping_service_id' => $this->shipping_service_id,
             'service_id' => $this->service_id,
             'item_selected' => $this->item_selected,
-            'order_voucher_id' => $this->order_voucher_id
+            'order_voucher_id' => $this->order_voucher_id,
+            'note' => $this->note
         ]);
         try {
             $redirectUrl = CheckoutService::checkout($checkoutModel);

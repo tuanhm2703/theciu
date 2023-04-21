@@ -56,11 +56,6 @@
             <span wire:loading.remove wire:target="register">{{ trans('labels.signin') }}<i class="icon-long-arrow-right"></i></span>
         </button>
 
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input">
-            <label class="custom-control-label" for="signin-remember">{{ trans('labels.remember_me') }}</label>
-        </div><!-- End .custom-checkbox -->
-
         <a href="#" class="forgot-link">{{ trans('labels.forgot_password') }} ?</a>
     </div><!-- End .form-footer -->
     {!! Form::close() !!}

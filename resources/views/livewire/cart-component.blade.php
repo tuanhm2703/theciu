@@ -189,6 +189,10 @@
                     </tr><!-- End .summary-total -->
                 </tbody>
             </table><!-- End .table table-summary -->
+            <div class="form-group">
+                <label for="note" class="form-label">Chú thích đơn hàng</label>
+                <textarea name="note" class="form-control w-100" wire:model.lazy="note" cols="30" rows="5"></textarea>
+            </div>
             <button wire:click="checkOrder" href="#" id="checkout-btn"
                 class="btn btn-outline-primary-2 btn-order btn-block">
                 <span wire:loading.remove wire:target="checkOrder">{{ trans('labels.checkout') }}</span>
@@ -205,6 +209,9 @@
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
                 @error('item_selected')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+                @error('note')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
@@ -275,8 +282,12 @@
                             @endif
                         @endforeach
                     </div>
-
-                    <div class="row mb-3 pr-3 pt-2 border-top">
+                    <div class="border-top py-3">
+                        <span class="confirm-label">Chú thích đơn hàng</span>
+                        <br>
+                        <span><i class="font-weight-normal">{{ $note }}</i></span>
+                    </div>
+                    <div class="row mb-3 pr-3 pt-2">
                         <div class="col-12 offset-md-4 offset-lg-6 col-md-8 col-lg-6">
                             <div class="row mb-1">
                                 <div class="col-7">
@@ -337,9 +348,8 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="text-right">
-                        <button class="btn btn-primary" wire:click="checkout">
+                        <button class="btn btn-primary mr-2" wire:click="checkout">
                             <span class="text-white" wire:loading.remove
                                 wire:target="checkout">{{ trans('labels.checkout') }}</span>
                             <span class="text-white" wire:loading wire:target="checkout">Đang tiến hành thanh

@@ -15,6 +15,7 @@ class CheckoutModel {
     private $order_voucher_id;
     private $order_voucher;
     private $service_id;
+    private $note;
 
     public function __construct($properties) {
         $this->mapProperties($properties);
@@ -186,6 +187,26 @@ class CheckoutModel {
     public function setServiceId($service_id)
     {
         $this->service_id = $service_id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of note
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * Set the value of note
+     *
+     * @return  self
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
 
         return $this;
     }
