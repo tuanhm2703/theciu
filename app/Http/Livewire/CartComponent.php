@@ -104,7 +104,7 @@ class CartComponent extends Component {
 
     public function reloadVoucher() {
         $this->save_voucher_ids = customer()->saved_vouchers()->notExpired()->haveNotUsed()->pluck('id')->toArray();
-        $this->vouchers = Voucher::with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union(customer()->with('voucher_type')->saved_vouchers()->select('vouchers.*')->notExpired()->haveNotUsed())->get();
+        $this->vouchers = Voucher::with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union(customer()->saved_vouchers()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed())->get();
         $this->updateVoucherDisableStatus();
     }
 
