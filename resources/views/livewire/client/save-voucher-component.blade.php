@@ -35,7 +35,7 @@
                 </p>
                 <div>
                     <div>
-                        <span>HSD: {{ $voucher->begin->format('d/m/Y') }}</span>
+                        <span>HSD: {{ $voucher->begin->format('d/m') }} - {{ $voucher->end->format('d/m') }}</span>
                     </div>
                 </div>
             </div>
