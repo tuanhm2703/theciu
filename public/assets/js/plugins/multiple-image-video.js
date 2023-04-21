@@ -171,6 +171,7 @@
                 update: (event, ui) => {
                     initThumb();
                     updateInputOrder();
+                    elemRef.sortableOptions.update();
                 },
                 start: function (e, ui) {
                     $(this).attr("data-previndex", ui.item.index());
