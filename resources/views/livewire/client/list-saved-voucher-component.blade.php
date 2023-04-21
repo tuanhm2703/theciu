@@ -8,7 +8,6 @@
         @endif
         @foreach ($voucher_types as $type)
             @if ($vouchers->where('voucher_type_id', $type->id)->count() > 0)
-                <h6 class="text-left font-weight-bold w-100">Voucher {{ $type->name }}</h6>
                 @foreach ($vouchers->where('voucher_type_id', $type->id) as $voucher)
                     <livewire:client.save-voucher-component :voucher="$voucher"
                         wire:key="save-voucher-item-{{ $voucher->id }}" />

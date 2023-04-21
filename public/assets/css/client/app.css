@@ -1205,6 +1205,7 @@ input[type=number] {
 }
 .voucher-title svg {
     height: 50px;
+    width: 50px;
 }
 
 .voucher-title span {

@@ -21,6 +21,9 @@ function customerWishlist() {
     }
     return [];
 }
+function getAssetUrl($path) {
+    return asset($path)."?v=".env('ASSET_VERSION', 1);
+}
 function stripVN($str)
 {
     $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);

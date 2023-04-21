@@ -4,29 +4,29 @@
 <head>
     @include('landingpage.layouts.meta')
     <link rel="stylesheet"
-        href="{{ asset('assets/landingpage/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css') }}">
+        href="{{ getAssetUrl('assets/landingpage/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css') }}">
     <!-- Plugins CSS File -->
-    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/plugins/owl-carousel/owl.carousel.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/plugins/magnific-popup/magnific-popup.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/plugins/jquery.countdown.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/plugins/owl-carousel/owl.carousel.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/plugins/magnific-popup/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/plugins/jquery.countdown.css') }}">
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/skins/skin-demo-6.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/demos/demo-6.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/client/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/landingpage/vendor/font-awesome/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/landingpage/css/floating-labels.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/bs4Toast.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/admin/tata.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/magiczoomplus.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/style.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/skins/skin-demo-6.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/demos/demo-6.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/css/client/app.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/vendor/font-awesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/floating-labels.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/css/bs4Toast.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/css/admin/tata.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/css/magiczoomplus.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Mulish:wght@500&family=Roboto:ital,wght@0,300;1,300&display=swap"
         rel="stylesheet">
-    <script src="{{ asset('assets/landingpage/js/jquery.min.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.form.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/jquery.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/js/jquery.form.min.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     @stack('css')
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
@@ -85,26 +85,26 @@
 
     <x-dynamic-modal></x-dynamic-modal>
     <!-- Plugins JS File -->
-    <script src="{{ asset('assets/landingpage/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/js/jquery.hoverIntent.min.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/js/jquery.waypoints.min.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/js/superfish.min.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/js/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/js/bootstrap-input-spinner.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/js/jquery.plugin.min.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/js/jquery.magnific-popup.min.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/js/jquery.countdown.min.js') }}"></script>
-    <script src="{{ asset('assets/js/jbvalidator.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/jquery.hoverIntent.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/superfish.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/bootstrap-input-spinner.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/jquery.plugin.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/jquery.countdown.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/js/jbvalidator.js') }}"></script>
     <!-- Main JS File -->
-    <script src="{{ asset('assets/landingpage/js/main.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/js/demos/demo-6.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/js/jquery.elevateZoom.min.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.lazyload.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/api-service.js') }}"></script>
-    <script src="{{ asset('assets/landingpage/cart.js') }}"></script>
-    <script src="{{ asset('assets/js/bs4Toast.js') }}"></script>
-    <script src="{{ asset('assets/js/plugins/tata/tata.js') }}"></script>
-    <script src="{{ asset('assets/js/magiczoomplus.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/main.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/demos/demo-6.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/js/jquery.elevateZoom.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/js/jquery.lazyload.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/api-service.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/landingpage/cart.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/js/bs4Toast.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/js/plugins/tata/tata.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/js/magiczoomplus.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script>
         $('.lazy').lazyload();

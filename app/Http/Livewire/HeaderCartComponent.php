@@ -63,6 +63,7 @@ class HeaderCartComponent extends Component {
     }
 
     public function goToCart() {
-        return route('client.auth.cart.index');
+        if(customer()) return route('client.auth.cart.index');
+        $this->dispatchBrowserEvent('openLoginForm');
     }
 }
