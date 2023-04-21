@@ -23,7 +23,8 @@ class TestController extends Controller {
 
     public function test(Request $request) {
         $orderResource = new OrderResource(App::make(Client::class));
-        return $orderResource->getByCode('DH000060')->getModelData();
+        $productResource = new ProductResource(App::make(Client::class));
+        return $productResource->getByCode('SP083396')->getModelData();
         // $orderResource->remove("")
     }
 

@@ -46,7 +46,7 @@ class SyncKiotWarehouseComponent extends Component
     public function downloadKiotData()
     {
         $kiotProduct = KiotProduct::orderBy('updated_at')->first();
-        if (now()->diffInHours($kiotProduct->updated_at) >= 24) {
+        if (!$kiotProduct || now()->diffInHours($kiotProduct->updated_at) >= 24) {
             $productResource = new ProductResource(App::make(Client::class));
             $data = $productResource->list(['pageSize' => '1']);
             $total = $data->getTotal();
