@@ -11,6 +11,7 @@ use App\Models\Cart;
 use App\Models\Inventory;
 use App\Models\PaymentMethod;
 use App\Models\Voucher;
+use App\Models\VoucherType;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -38,18 +39,18 @@ class CartComponent extends Component {
     public $item_selected = [];
     public $rank_discount_amount = 0;
     public $total;
-    public $order_voucher_discount = 0;
 
     public $voucher_code;
 
-    public $freeship_vouchers;
-
-    public $order_vouchers;
-
+    public $order_voucher;
     public $order_voucher_id;
+    public $order_voucher_discount = 0;
+
+    public $freeship_voucher;
+    public $freeship_voucher_id;
+    public $freeship_voucher_discount = 0;
 
     public $vouchers;
-    public $order_voucher;
     public $note;
     public $save_voucher_ids = [];
 
@@ -58,7 +59,7 @@ class CartComponent extends Component {
         'payment_method_id' => 'required',
         'address' => 'required',
         'item_selected' => 'array|min:1',
-        'note' => 'string'
+        'note' => 'string|nullable'
     ];
 
     protected $messages = [
@@ -96,20 +97,22 @@ class CartComponent extends Component {
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
         $this->payment_methods = PaymentMethod::active()->with('image:imageable_id,path')->get();
-        $this->save_voucher_ids = customer()->saved_vouchers()->available()->haveNotUsed()->pluck('id')->toArray();
-        $this->vouchers = Voucher::select('vouchers.*')->available()->notSaveable()->union(customer()->saved_vouchers()->select('vouchers.*')->available()->haveNotUsed())->get();
+        $this->save_voucher_ids = customer()->saved_vouchers()->notExpired()->haveNotUsed()->pluck('id')->toArray();
+        $this->vouchers = Voucher::with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union(customer()->saved_vouchers()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed())->get();
         $this->updateVoucherDisableStatus();
     }
 
     public function reloadVoucher() {
-        $this->save_voucher_ids = customer()->saved_vouchers()->available()->haveNotUsed()->pluck('id')->toArray();
-        $this->vouchers = Voucher::select('vouchers.*')->available()->notSaveable()->union(customer()->saved_vouchers()->select('vouchers.*')->available()->haveNotUsed())->get();
+        $this->save_voucher_ids = customer()->saved_vouchers()->notExpired()->haveNotUsed()->pluck('id')->toArray();
+        $this->vouchers = Voucher::with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union(customer()->with('voucher_type')->saved_vouchers()->select('vouchers.*')->notExpired()->haveNotUsed())->get();
         $this->updateVoucherDisableStatus();
     }
 
     private function updateVoucherDisableStatus() {
         foreach($this->vouchers as $voucher) {
             if (count($this->item_selected) == 0) {
+                $voucher->disabled = true;
+            } else if(!$voucher->isValidTime()){
                 $voucher->disabled = true;
             } else if ($this->total < $voucher->min_order_value) {
                 $voucher->disabled = true;
@@ -123,6 +126,10 @@ class CartComponent extends Component {
             if($voucher->disabled && $this->order_voucher_id == $voucher->id) {
                 $this->order_voucher_id = null;
                 $this->order_voucher = null;
+            }
+            if($voucher->disabled && $this->freeship_voucher_id == $voucher->id) {
+                $this->freeship_voucher_id = null;
+                $this->freeship_voucher = null;
             }
         }
     }
@@ -158,6 +165,7 @@ class CartComponent extends Component {
             'service_id' => $this->service_id,
             'item_selected' => $this->item_selected,
             'order_voucher_id' => $this->order_voucher_id,
+            'freeship_voucher_id' => $this->freeship_voucher_id,
             'note' => $this->note
         ]);
         try {
@@ -245,6 +253,7 @@ class CartComponent extends Component {
         $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount;
         $this->updateVoucherDisableStatus();
         $this->order_voucher_discount = $this->order_voucher ? $this->order_voucher->getDiscountAmount($this->total) : 0;
+        $this->freeship_voucher_discount = $this->freeship_voucher ? $this->freeship_voucher->getDiscountAmount($this->shipping_fee) : 0;
     }
 
     public function updated($name, $value) {
@@ -252,10 +261,14 @@ class CartComponent extends Component {
             $this->order_voucher = Voucher::find($value);
             $this->updateOrderInfo($this->address);
         }
+        if($name == 'freeship_voucher_id') {
+            $this->freeship_voucher = Voucher::find($value);
+            $this->updateOrderInfo($this->address);
+        }
     }
 
     public function applyVoucher() {
-        $voucher = Voucher::where('code', $this->voucher_code)->where(function($q) {
+        $voucher = Voucher::available()->where('code', $this->voucher_code)->where(function($q) {
             $q->notSaveable()->orWhere(function($q) {
                 $q->whereHas('customers', function($q) {
                     $q->where('customers.id', customer()->id);
@@ -276,7 +289,11 @@ class CartComponent extends Component {
                     'type' => 'error'
                 ]);
             } else {
-                $this->order_voucher_id = $voucher->id;
+                if($voucher->voucher_type->code == VoucherType::ORDER) {
+                    $this->order_voucher_id = $voucher->id;
+                } else {
+                    $this->freeship_voucher_id = $voucher->id;
+                }
                 $this->updateOrderInfo();
                 $this->dispatchBrowserEvent('openToast', [
                     'message' => 'Áp dụng voucher thành công',

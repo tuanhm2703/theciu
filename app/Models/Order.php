@@ -112,6 +112,27 @@ class Order extends Model
         })->first();
     }
 
+    /**
+     * This function calculates the customer's shipping fee amount after deducting any applicable
+     * freeship voucher amount.
+     *
+     * @return the customer shipping fee amount after deducting the amount of the freeship voucher if
+     * it exists, otherwise it returns the original shipping fee amount.
+     */
+    public function getCustomerShippingFeeAmountAttribute() {
+        if($this->freeship_voucher) {
+            return $this->shipping_fee - $this->freeship_voucher->pivot->amount;
+        }
+        return $this->shipping_fee;
+    }
+
+    public function getFreeshipVoucherAttribute() {
+        if($this->relationLoaded('vouchers')) {
+            return $this->vouchers->where('pivot.type', VoucherType::FREESHIP)->first();
+        }
+        return $this->vouchers()->where('order_vouchers.type', VoucherType::FREESHIP)->first();
+    }
+
     public function vouchers()
     {
         return $this->belongsToMany(Voucher::class, 'order_vouchers')->withPivot([
@@ -317,6 +338,9 @@ class Order extends Model
     public function getFinalRevenue()
     {
         $revenue = $this->subtotal - ($this->getActualShippingFee() - $this->shipping_order->total_fee) - $this->rank_discount_value;
+        if($this->freeship_voucher) {
+            $revenue -= $this->freeship_voucher->pivot->amount;
+        }
         return $this->order_voucher ? $revenue - $this->order_voucher->pivot->amount : $revenue;
     }
 
@@ -353,5 +377,9 @@ class Order extends Model
     public function canAction() {
         if($this->payment_method->code == 'cod') return true;
         return $this->isPaid();
+    }
+
+    public function getCustomerPaymentAmountAttribute() {
+        return $this->total;
     }
 }

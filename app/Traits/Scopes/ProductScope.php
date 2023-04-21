@@ -87,6 +87,7 @@ trait ProductScope
     }
     public function scopeFilterByPriceRange($q, $min, $max)
     {
+        $min = $min ? $min : 0;
         $max = $max ? $max : 10000000000;
         $q->addSalePrice()->having('sale_price', '>=', $min)->having('sale_price', '<=', $max);
     }

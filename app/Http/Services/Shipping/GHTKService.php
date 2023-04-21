@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 use stdClass;
 
-class GHTKService extends ShippingServiceAbstract {
+class GHTKService extends ShippingServiceAbstract
+{
     const PICKUP_TIME_ESTIMATE = 4;
 
     const INNER_CITY_ROUTE_DELIVERY_HOURS = 6;
@@ -62,7 +63,8 @@ class GHTKService extends ShippingServiceAbstract {
         'fly' => 'Nhanh'
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct(ShippingServiceType::GIAO_HANG_TIET_KIEM_ALIAS);
         /* Setting the path to create an order. */
         $this->create_order_path = '/services/shipment/order';
@@ -158,7 +160,8 @@ class GHTKService extends ShippingServiceAbstract {
      *
      * @param order_id The order ID you want to render.
      */
-    public function renderShippingOrderDataFromOrder(int $order_id) {
+    public function renderShippingOrderDataFromOrder(int $order_id)
+    {
         $order = Order::with(['pickup_address', 'shipping_address' => function ($q) {
             return $q->with('ward', 'district', 'province');
         }, 'shipping_order'])->findOrFail($order_id);
@@ -205,18 +208,18 @@ class GHTKService extends ShippingServiceAbstract {
                 /* A required field. */
                 "hamlet" => "Khác",
                 /* The order is free shipping. */
-                "is_freeship" => $order->is_freeship || $order->isPaid(),
+                "is_freeship" => $this->isOrderFreeship($order),
                 /* Pickup date. */
                 // "pick_date" => "2016-09-30",
                 /* The money that the receiver will pay to the sender. */
-                "pick_money" => $order->isPaid() ? doubleval(0) :  doubleval($order->subtotal),
+                "pick_money" => $this->getOrderPickMoney($order),
                 /* Checking if the pickup shift is not null, then it will return the session. */
                 "pick_work_shift" => optional($pickup_shift)->session,
                 /* Checking if the pickup_shift->date is not empty, if it is not empty, it will format
                 the date to Y/m/d. */
                 "pick_date" => !empty($pickup_shift->date) ? $pickup_shift->date->format('Y/m/d') : null,
                 /* A note that is being sent to the GHTK API. */
-                "note" => $order->shipping_order->shipping_time_note,
+                "note" => $order->note,
                 /* The value of the order. */
                 "value" => doubleval($order->origin_subtotal > $this->max_order_value ? $this->max_order_value : $order->origin_subtotal),
                 /* The transport method. */
@@ -224,14 +227,59 @@ class GHTKService extends ShippingServiceAbstract {
             ]
         ];
     }
-    public function renderShippingOrderDataFromJson(array $data) {
+
+    /**
+     * This function calculates the amount of money to be picked up for an order, taking into account
+     * any applicable vouchers or free shipping.
+     *
+     * @param Order order The  parameter is an instance of the Order class, which represents an
+     * order placed by a customer on an e-commerce website. It contains information such as the
+     * customer's details, the items ordered, the shipping address, and the payment status.
+     *
+     * @return the total amount of money that needs to be picked up for an order, taking into account
+     * any applicable discounts or vouchers. If the order has already been paid, it returns 0.
+     */
+    private function getOrderPickMoney(Order $order)
+    {
+        if ($order->isPaid()) return 0;
+        $total = $order->subtotal;
+        if ($order->freeship_voucher) {
+            $total = $total + $order->customer_shipping_fee_amount;
+        }
+        if ($order->order_voucher) {
+            $total = $total - $order->order_voucher->pivot->amount;
+        }
+        return $total;
+    }
+
+    /**
+     * This function checks if an order is eligible for free shipping based on whether it has been paid
+     * for or has a freeship voucher.
+     *
+     * @param Order order  is an object of the class Order, which contains information about an
+     * order placed by a customer, such as the items purchased, the total cost, and the shipping
+     * address. The function isOrderFreeship takes this object as a parameter and checks if the order
+     * is eligible for free shipping based on
+     *
+     * @return The function `isOrderFreeship` returns a boolean value (`true` or `false`). It returns
+     * `true` if the order is paid or if it has a freeship voucher, and `false` otherwise.
+     */
+    private function isOrderFreeship(Order $order)
+    {
+        if ($order->isPaid()) return true;
+        if ($order->freeship_voucher) return true;
+        return false;
+    }
+    public function renderShippingOrderDataFromJson(array $data)
+    {
     }
     /**
      * It takes an order object and returns an array of items
      *
      * @param order The order object
      */
-    public function getOrderItems($order) {
+    public function getOrderItems($order)
+    {
         $items = [];
         $inventories = $order->inventories()->withTrashed()->with(['product' => function ($q) {
             $q->withTrashed()->select('products.id', 'length', 'width', 'height', 'weight');
@@ -253,7 +301,8 @@ class GHTKService extends ShippingServiceAbstract {
      *
      * @return The response is being returned.
      */
-    public function cancelOrder($order_code) {
+    public function cancelOrder($order_code)
+    {
         $response = $this->post("$this->cancel_order_path/$order_code");
         Log::info("Cancel shipping order on $this->service_slug successful with order code: $order_code");
         return json_decode((string) $response->getBody());
@@ -265,11 +314,13 @@ class GHTKService extends ShippingServiceAbstract {
      *
      * @return The order array.
      */
-    public function getOrder($code) {
+    public function getOrder($code)
+    {
         $data = parent::getOrder($code);
         return $data ? $data->order : null;
     }
-    public function storeShippingOrder($data_after_created_response, $order) {
+    public function storeShippingOrder($data_after_created_response, $order)
+    {
         $service_order = $this->getOrder($data_after_created_response->order->label);
         $shipping_order = $order->shipping_order;
         if ($service_order) {
@@ -292,7 +343,8 @@ class GHTKService extends ShippingServiceAbstract {
         return null;
     }
 
-    public function post($path, $data = [], $headers = []) {
+    public function post($path, $data = [], $headers = [])
+    {
         $response = parent::post($path, $data, $headers);
         if ($response->getStatusCode() >= 400) {
 
@@ -306,7 +358,8 @@ class GHTKService extends ShippingServiceAbstract {
         return $response;
     }
 
-    public function get($path, $headers = []) {
+    public function get($path, $headers = [])
+    {
         $response = parent::get($path, $headers);
         if ($response->getStatusCode() >= 400) {
             Log::error((string) $response->getBody());
@@ -326,17 +379,20 @@ class GHTKService extends ShippingServiceAbstract {
      *
      * @return A PDF file
      */
-    public function printOrder($code) {
+    public function printOrder($code)
+    {
         $response = $this->get("/services/label/$code");
         return response((string) $response->getBody())->header('Content-Type', 'application/pdf');
     }
-    public function pushShippingOrder($order) {
+    public function pushShippingOrder($order)
+    {
         $order_id = $order->id;
         $result = parent::pushShippingOrder($order);
         ShippingOrder::where('order_id', $order_id)->update(['code' => $result->order->label]);
         return $result->order;
     }
-    public function createShippingOrderHistory($data) {
+    public function createShippingOrderHistory($data)
+    {
         $order = ShippingOrder::where('code', DB::raw("'" . $data['label_id'] . "'"))->firstOrFail();
         $shipping_order_history_data = new ShippingOrderHistoryData();
         $shipping_order_history_data->shipping_order_id = $order->id;
@@ -357,7 +413,8 @@ class GHTKService extends ShippingServiceAbstract {
         $shipping_order_history_data->status_code = $data['status_id'];
         parent::createShippingOrderHistory($shipping_order_history_data);
     }
-    public function getShipServices(Address $shipping_address) {
+    public function getShipServices(Address $shipping_address)
+    {
         // if($shipping_address->ward->support_type != 0) {
         $services = new stdClass();
         $services->data = [
@@ -380,12 +437,14 @@ class GHTKService extends ShippingServiceAbstract {
         return [];
     }
 
-    public function getShipServiceNameById($id) {
+    public function getShipServiceNameById($id)
+    {
         return self::SHIP_SERVICE_LIST[$id];
     }
 
 
-    public function estimatePickTime() {
+    public function estimatePickTime()
+    {
         $now = Carbon::now();
         /* Checking if the current time is less than 10:30am. */
         if ($now < Carbon::createFromTime(10, 30)) {
@@ -401,7 +460,8 @@ class GHTKService extends ShippingServiceAbstract {
         }
         return new PickupShift($title, $id);
     }
-    public function getListPickupTime() {
+    public function getListPickupTime()
+    {
         $now = now();
         $pickup_shifts = [];
         /* Checking if the current time is less than 10:30am. */
@@ -424,7 +484,8 @@ class GHTKService extends ShippingServiceAbstract {
         }
         return $pickup_shifts;
     }
-    public function calculateDeliveryFee($data) {
+    public function calculateDeliveryFee($data)
+    {
         $new_data = [
             "pick_province" => $this->config->pickup_address->province->name,
             "pick_district" => $this->config->pickup_address->district->name_with_type,
@@ -438,7 +499,8 @@ class GHTKService extends ShippingServiceAbstract {
         $data = parent::calculateDeliveryFee($new_data)->fee;
         return new DeliveryFeeResponseData($data->fee, $data->ship_fee_only, $data->insurance_fee);
     }
-    public function get_route_code($shipping_address) {
+    public function get_route_code($shipping_address)
+    {
         if ($this->config->pickup_address->province->id == $shipping_address->province->id)
             return self::INNER_CITY_ROUTE_CODE;
         if ($this->config->pickup_address->province->domain_code == $shipping_address->province->domain_code)
@@ -447,7 +509,8 @@ class GHTKService extends ShippingServiceAbstract {
             return self::SPECIAL_ROUTE_CODE;
         return self::OUTER_DOMAIN_ROUTE_CODE;
     }
-    public function calculateDeliveryTime($data) {
+    public function calculateDeliveryTime($data)
+    {
         $shipping_address = $data->shipping_address;
         $route_code = self::get_route_code($shipping_address);
         switch ($route_code) {
@@ -467,6 +530,4 @@ class GHTKService extends ShippingServiceAbstract {
                 return Carbon::now()->addHours(self::PICKUP_TIME_ESTIMATE + $hours);
         }
     }
-
-
 }

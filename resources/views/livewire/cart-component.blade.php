@@ -63,30 +63,27 @@
                 </div>
             @endforeach
         </div>
-        <div class="d-flex justify-content-between mt-1">
-            <h5 class="d-flex align-items-center">
-                <i class="text-danger fas fa-receipt mr-1"></i> Voucher
-            </h5>
-            <h6 class="d-flex align-items-center">
-                @if ($order_voucher)
-                    <div class="order-voucher-discount-tag mr-3 d-flex align-items-center wave-border">
-                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
-                            x="0" y="0" viewBox="0 0 100 100"
-                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
-                            <g>
-                                <path
-                                    d="M96.74 28.63c.78-.06 1.39-.71 1.39-1.5V25c0-.83-.67-1.5-1.5-1.5H3.37c-.83 0-1.5.67-1.5 1.5v2.15c0 .77.58 1.41 1.34 1.49 1.34.14 2.35 1.25 2.35 2.59s-1.01 2.44-2.35 2.59c-.76.08-1.34.72-1.34 1.49v4.36c0 .77.58 1.41 1.34 1.49 1.34.14 2.35 1.25 2.35 2.59s-1.01 2.44-2.35 2.59c-.76.08-1.34.72-1.34 1.49v4.36c0 .77.58 1.41 1.34 1.49 1.34.14 2.35 1.25 2.35 2.59s-1.01 2.44-2.35 2.59c-.76.08-1.34.72-1.34 1.49v4.36c0 .77.58 1.41 1.34 1.49 1.34.14 2.35 1.25 2.35 2.59s-1.01 2.44-2.35 2.59c-.76.08-1.34.72-1.34 1.49v2.15c0 .83.67 1.5 1.5 1.5h93.26c.83 0 1.5-.67 1.5-1.5v-2.13c0-.78-.6-1.44-1.39-1.5-1.36-.1-2.43-1.24-2.43-2.59s1.07-2.49 2.43-2.59c.78-.06 1.39-.71 1.39-1.5v-4.34c0-.78-.6-1.44-1.39-1.5-1.36-.1-2.43-1.24-2.43-2.59s1.07-2.49 2.43-2.59c.78-.06 1.39-.71 1.39-1.5v-4.34c0-.78-.6-1.44-1.39-1.5-1.36-.1-2.43-1.24-2.43-2.59s1.07-2.49 2.43-2.59c.78-.06 1.39-.71 1.39-1.5v-4.34c0-.78-.6-1.44-1.39-1.5-1.36-.1-2.43-1.24-2.43-2.59s1.07-2.49 2.43-2.59zm-1.61 7.9v1.92c-2.22.76-3.81 2.87-3.81 5.3s1.59 4.54 3.81 5.3v1.92c-2.22.76-3.81 2.87-3.81 5.3s1.59 4.54 3.81 5.3v1.92c-2.22.76-3.81 2.87-3.81 5.3 0 1.97 1.04 3.72 2.61 4.72H5.96c1.57-1 2.6-2.75 2.6-4.72 0-2.4-1.51-4.47-3.69-5.26v-2c2.17-.79 3.69-2.86 3.69-5.26s-1.51-4.47-3.69-5.26v-2c2.17-.79 3.69-2.86 3.69-5.26s-1.51-4.47-3.69-5.26v-2a5.6 5.6 0 0 0 3.69-5.26c0-1.98-1.02-3.73-2.6-4.72h87.97c-1.57 1-2.61 2.76-2.61 4.72 0 2.43 1.59 4.54 3.81 5.3z"
-                                    fill="#f93a3a" data-original="#000000" class=""></path>
-                            </g>
-                        </svg>
-                        <span>
-                            -{{ thousandsCurrencyFormat($order_voucher->getDiscountAmount($total)) }}
-                        </span>
-                    </div>
-                @endif
-                <a data-toggle="modal" data-target="#voucherListModal"
-                    href="#">{{ trans('labels.pick_voucher') }}</a>
+        <div class="d-flex justify-content-between bg-light mt-1 rounded cursor-pointer voucher-selector"
+            data-toggle="modal" data-target="#voucherListModal">
+            <h6 class="d-flex align-items-center mb-0 p-3 text-primary">
+                <i class="text-primary fas fa-receipt mr-3"></i> Voucher
+            </h6>
+            <h6 class="d-flex align-items-center mb-0 p-3">
+                <ul class="tags">
+                    @if ($order_voucher)
+                        <li><a
+                                href="#">-{{ thousandsCurrencyFormat($order_voucher->getDiscountAmount($total)) }}</a>
+                        </li>
+                    @endif
+                    @if ($freeship_voucher_id)
+                        <li><a href="#">Miễn phí vận chuyển</a></li>
+                    @endif
+                </ul>
+                <a href="#" class="text-light ml-3">
+                    <i class="fas fa-angle-right"></i>
+                </a>
+                {{-- <a data-toggle="modal" data-target="#voucherListModal" class="ml-1"
+                    href="#">{{ trans('labels.pick_voucher') }}</a> --}}
             </h6>
         </div>
 
@@ -120,15 +117,15 @@
                                         class="custom-control-label">{{ $type['short_name'] }}</label>
                                 </div><!-- End .custom-control -->
                             </td>
-                            <td>{{ format_currency_with_label($type['fee']) }}</td>
+                            <td><span>{{ format_currency_with_label($type['fee']) }}</span></td>
                         </tr><!-- End .summary-shipping-row -->
                         <tr class="summary-shipping-row">
                             <td>
                                 <div class="custom-control custom-radio">
-                                    {{ trans('labels.received_date') }}
+                                    <span>{{ trans('labels.received_date') }} </span>
                                 </div><!-- End .custom-control -->
                             </td>
-                            <td>{{ $type['delivery_date'] }}</td>
+                            <td><span>{{ $type['delivery_date'] }}</span></td>
                         </tr><!-- End .summary-shipping-row -->
                     @endforeach
                     <tr class="summary-shipping-estimate">
@@ -137,7 +134,7 @@
                             <br>
                             <a class="ajax-modal-btn" data-modal-size="modal-md" data-callback="initChangeModal()"
                                 data-link="{{ route('client.auth.profile.address.view.change', ['selected_address_id' => $address ? $address->id : null]) }}">
-                                {{ $address ? trans('labels.change_address') : trans('labels.pick_address') }}</a>
+                                <span>{{ $address ? trans('labels.change_address') : trans('labels.pick_address') }}</span></a>
                         </td>
                     </tr><!-- End .summary-shipping-estimate -->
                     <tr>
@@ -150,41 +147,46 @@
                                     <label for="payment-method-{{ $pm->id }}"
                                         class="custom-control-label d-flex align-items-center">
                                         <img src="{{ optional($pm->image)->path_with_domain }}" width="10%"
-                                            class="mr-3"alt="">
+                                            class="mr-3 rounded" alt="">
                                         <span>{{ trans("labels.payment_methods.$pm->code") }} <i wire:ignore
-                                                class="fa fa-question-circle" data-toggle="tooltip"
-                                                data-placement="top"
+                                                class="fa fa-question-circle" data-toggle="tooltip" data-placement="top"
                                                 title="{{ $pm->description }}"></i></span></label>
                                 </div><!-- End .custom-control -->
                             @endforeach
                         </td>
                     </tr>
                     <tr class="order-payment-info">
-                        <td>{{ trans('labels.subtotal') }}</td>
-                        <td>{{ format_currency_with_label($cart->getTotalWithSelectedItems($item_selected)) }}
+                        <td><span>{{ trans('labels.subtotal') }}</span></td>
+                        <td><span>{{ format_currency_with_label($cart->getTotalWithSelectedItems($item_selected)) }}</span>
                         </td>
                     </tr>
                     @if ($rank_discount_amount)
                         <tr class="order-payment-info">
-                            <td width="50%">{{ trans('labels.discount_for_member') }}</td>
-                            <td>- {{ format_currency_with_label($rank_discount_amount) }}
-                            </td>
+                            <td width="50%"><span>{{ trans('labels.discount_for_member') }}</span></td>
+                            <td><span>- {{ format_currency_with_label($rank_discount_amount) }}</span></td>
                         </tr>
                     @endif
                     @if ($order_voucher)
                         <tr class="order-payment-info">
-                            <td>{{ trans('labels.order_discount_amount') }}</td>
-                            <td>- {{ format_currency_with_label($order_voucher_discount) }}
-                            </td>
+                            <td><span>{{ trans('labels.order_discount_amount') }}</span></td>
+                            <td><span>- {{ format_currency_with_label($order_voucher_discount) }}</span></td>
                         </tr>
                     @endif
                     <tr class="order-payment-info">
-                        <td>{{ trans('labels.shipping_fee') }}</td>
-                        <td>{{ format_currency_with_label($shipping_fee) }}</td>
+                        <td><span>{{ trans('labels.shipping_fee') }}</span></td>
+                        @if ($freeship_voucher_discount)
+                            <td>
+                                <span
+                                    class="text-line-through text-light">{{ format_currency_with_label($shipping_fee) }}</span>
+                                <span>{{ format_currency_with_label($shipping_fee - $freeship_voucher_discount) }}</span>
+                            </td>
+                        @else
+                            <td><span>{{ format_currency_with_label($shipping_fee) }}</span></td>
+                        @endif
                     </tr>
                     <tr class="summary-total">
                         <td>{{ trans('labels.total') }}:</td>
-                        <td>{{ format_currency_with_label($total - $order_voucher_discount + $shipping_fee) }}
+                        <td>{{ format_currency_with_label($total - $order_voucher_discount + $shipping_fee - $freeship_voucher_discount) }}
                         </td>
                     </tr><!-- End .summary-total -->
                 </tbody>
@@ -333,9 +335,19 @@
                                     </span>
                                 </div>
                                 <div class="col-5 text-right">
-                                    <span class="confirm-info">
-                                        {{ format_currency_with_label($shipping_fee) }}
-                                    </span>
+                                    @if ($freeship_voucher_discount)
+                                        <span class="confirm-info text-line-through text-light">
+                                            {{ format_currency_with_label($shipping_fee) }}
+                                        </span>
+                                        <span class="confirm-info">
+                                            {{ format_currency_with_label($shipping_fee - $freeship_voucher_discount) }}
+                                        </span>
+                                    @else
+                                        <span class="confirm-info">
+                                            {{ format_currency_with_label($shipping_fee) }}
+                                        </span>
+                                    @endif
+
                                 </div>
                             </div>
                             <div class="row mb-1">
@@ -343,7 +355,7 @@
                                     <span>{{ trans('labels.total') }}</span>
                                 </div>
                                 <div class="col-5 text-right">
-                                    <span>{{ format_currency_with_label($total - $order_voucher_discount + $shipping_fee) }}</span>
+                                    <span>{{ format_currency_with_label($total + $shipping_fee - $order_voucher_discount - $freeship_voucher_discount) }}</span>
                                 </div>
                             </div>
                         </div>

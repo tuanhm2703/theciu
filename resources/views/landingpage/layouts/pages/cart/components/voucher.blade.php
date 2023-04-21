@@ -24,7 +24,7 @@
                     </div>
                     @foreach ($vouchers as $voucher)
                         <div class="custom-control custom-radio voucher-radio row">
-                            <input type="radio" wire:model="order_voucher_id" value="{{ $voucher->id }}"
+                            <input type="radio" wire:model="{{ $voucher->voucher_type->code == App\Models\VoucherType::ORDER ? 'order_voucher_id' : 'freeship_voucher_id' }}" value="{{ $voucher->id }}"
                                 id="voucher-{{ $voucher->id }}" class="custom-control-input"
                                 @disabled($voucher->disabled)>
                             <label for="voucher-{{ $voucher->id }}"
@@ -39,7 +39,7 @@
                                     <h6 class="text-bold voucher-name mb-0">{{ $voucher->name }}</h6>
                                     <div><span>Đơn tối thiểu {{ format_currency_with_label($voucher->min_order_value) }}</span></div>
                                     <div class="voucher-description">
-                                        Giảm giá -
+                                        Giảm giá {{ $voucher->getDiscountLabelAttribute() }} -
                                         {{ $voucher->max_discount_amount ? trans('labels.max') . ' ' . format_currency_with_label($voucher->max_discount_amount) : trans('labels.unlimit') }}
                                     </div>
                                 </div>

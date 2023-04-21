@@ -159,7 +159,12 @@
                     {{ trans('labels.shipping_fee') }}
                 </div>
                 <div class="col-4">
-                    {{ format_currency_with_label($order->shipping_fee) }}
+                    @if ($order->freeship_voucher)
+                    <span class="text-line-through text-light">{{ format_currency_with_label($order->shipping_fee) }}</span>
+                    <span>{{ format_currency_with_label($order->shipping_fee - $order->freeship_voucher->pivot->amount) }}</span>
+                    @else
+
+                    @endif
                 </div>
             </div>
             @if ($order->order_voucher)

@@ -34,7 +34,7 @@ class ProductListComponent extends Component
 
     public $total;
 
-    public $min_price = 0;
+    public $min_price;
 
     public $max_price;
 
@@ -56,7 +56,6 @@ class ProductListComponent extends Component
         'categories',
         'min_price',
         'max_price',
-        'category' => ['except' => '']
     ];
 
     protected $listeners = ['updateKeyword', 'updateKeyword'];

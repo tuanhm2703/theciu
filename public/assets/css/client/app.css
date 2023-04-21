@@ -1,12 +1,19 @@
 :root {
     --swiper-theme-color: #c96 !important;
 }
-.btn-primary:hover, .btn-primary:focus, .btn-primary.focus, .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show>.btn-primary.dropdown-toggle {
     color: #fff;
     background-color: #ce8031;
     border-color: #ce8031;
     box-shadow: none;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -424,6 +431,7 @@ input[type=number] {
     color: rgba(0, 0, 0, 0.54);
     font-size: 14px;
 }
+
 .shipping-info {
     display: flex;
     flex-direction: column;
@@ -605,6 +613,7 @@ input[type=number] {
 .justify-content-center {
     justify-content: center;
 }
+
 .justify-content-between {
     justify-content: space-between;
 }
@@ -932,6 +941,7 @@ input[type=number] {
     background: #f3f3f3;
     color: #c96;
 }
+
 .auth-dropdown-menu .btn {
     border-radius: 0;
     border: 0;
@@ -1128,11 +1138,13 @@ input[type=number] {
     bottom: 34px;
     left: -8px;
 }
+
 .voucher-info .voucher-discount-info {
     font-weight: bold;
     color: #c96;
     text-transform: uppercase;
 }
+
 .voucher-info .voucher-circle-right {
     border: none;
     width: 15px;
@@ -1176,6 +1188,7 @@ input[type=number] {
 .voucher-popup small {
     font-size: 10px;
 }
+
 .voucher-info-wrapper {
     border-radius: 5px;
 }
@@ -1203,6 +1216,7 @@ input[type=number] {
     min-width: 100px;
     justify-content: center;
 }
+
 .voucher-title svg {
     height: 50px;
     width: 50px;
@@ -1235,6 +1249,7 @@ input[type=number] {
     text-transform: uppercase;
     font-weight: bold;
 }
+
 .voucher-detail-info {
     display: flex;
     justify-content: space-between;
@@ -1248,10 +1263,12 @@ input[type=number] {
     flex-direction: column;
     justify-content: center;
 }
+
 .voucher-detail-left p {
     font-size: 13px;
     color: #000;
 }
+
 .voucher-detail-left:not(h1) {
     font-size: 13px;
 }
@@ -1338,6 +1355,7 @@ input[type=number] {
     position: absolute;
     top: -100%;
 }
+
 #order-type-tab {
     display: inline-block;
     white-space: nowrap;
@@ -1346,16 +1364,20 @@ input[type=number] {
     max-width: 100%;
     border-bottom: 0;
 }
+
 #order-type-tab::-webkit-scrollbar {
     display: none;
 }
+
 #order-type-tab .nav-item {
     display: inline-block;
 }
+
 #order-type-tab .nav-item .nav-link {
     font-size: 12px;
     padding: 0.2rem 1rem;
 }
+
 .order-row .order-product-title {
     font-size: 1.7em;
 }
@@ -1381,20 +1403,25 @@ input[type=number] {
         padding-left: 1rem;
     }
 }
+
 #confirmOrderModal span {
     font-size: 10px;
     font-weight: bold;
     color: #2c2a2a;
 }
+
 #confirmOrderModal .confirm-label {
     color: #bebebe;
 }
+
 #confirmOrderModal .confirm-info {
     color: #2c2a2a;
 }
+
 .order-item-detail {
     font-size: 14px;
 }
+
 .voucher-condition-detail {
     height: 0;
     width: 100%;
@@ -1402,23 +1429,101 @@ input[type=number] {
     padding: 0;
     transition: all 0.3s ease;
 }
+
 .voucher-condition-detail.show {
     height: 300px;
     margin-top: 1rem;
 }
+
 .voucher-condition-detail .voucher-condition-info-group {
     display: flex;
     flex-direction: column;
 }
+
 .voucher-condition-detail .voucher-condition-info-group .info-label {
     font-weight: bold;
     font-size: 13px;
 }
+
 .voucher-condition-detail .voucher-condition-info-group .info-content {
     font-size: 13px;
 }
+
 .box-shadow {
-    box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0,0,0,.07)
+    box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, .07)
+}
+
+.summary-cart span {
+    font-size: 14px;
+    font-weight: lighter;
+}
+
+.tags {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.tags li,
+.tags a {
+    float: left;
+    height: 26px;
+    line-height: 24px;
+    position: relative;
+    font-size: 14px;
+}
+
+.tags a {
+    margin-left: 20px;
+    padding: 0 10px 0 12px;
+    background: #c96;
+    color: #fff;
+    text-decoration: none;
+    -moz-border-radius-bottomright: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    -webkit-border-top-right-radius: 4px;
+    border-top-right-radius: 4px;
+    font-size: 11px;
+}
+
+.tags a:before {
+    content: "";
+    float: left;
+    position: absolute;
+    top: 0;
+    left: -12px;
+    width: 0;
+    height: 0;
+    border-color: transparent #c96 transparent transparent;
+    border-style: solid;
+    border-width: 12px 12px 14px 0;
+}
+.tags a:after {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 0;
+    float: left;
+    width: 4px;
+    height: 4px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    background: #fff;
+    -moz-box-shadow: -1px -1px 2px #004977;
+    -webkit-box-shadow: -1px -1px 2px #004977;
+    box-shadow: -1px -1px 2px #004977;
+}
+.voucher-selector {
+    transition: 0.3s ease all;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.text-line-through {
+    text-decoration: line-through;
 }
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
@@ -1430,23 +1535,32 @@ input[type=number] {
     .voucher-title {
         width: 28%;
     }
+    .voucher-selector:hover {
+
+    }
+
     #confirmOrderModal span {
         font-size: 12px;
     }
+
     #order-type-tab .nav-item .nav-link {
         font-size: 14px;
     }
+
     .shipping-info {
         display: flex;
         flex-direction: row;
     }
+
     .shipping-order-history-wrapper {
         border-left: 1px solid rgba(0, 0, 0, 0.09);
         padding-left: 12px;
     }
+
     .order-details-timeline .stepper {
         display: flex;
     }
+
     .quickView-content .product-title {
         margin-top: 0;
     }
@@ -1458,6 +1572,7 @@ input[type=number] {
     .desktop-banner-slider {
         display: block;
     }
+
     .voucher-detail-left p {
         font-size: 13px;
         color: #000;
@@ -1470,9 +1585,10 @@ input[type=number] {
         max-height: 80vh;
         width: 450px;
     }
+
     .voucher-container {
         height: 120px;
-        box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0,0,0,.07);
+        box-shadow: 0.125rem 0.125rem 0.3125rem rgba(0, 0, 0, .07);
         border-radius: 5px;
     }
 

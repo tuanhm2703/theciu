@@ -13,8 +13,10 @@ use App\Models\Config;
 use App\Models\VoucherType;
 use Illuminate\Support\Facades\DB;
 
-class CheckoutService {
-    public static function checkout(CheckoutModel $checkoutModel) {
+class CheckoutService
+{
+    public static function checkout(CheckoutModel $checkoutModel)
+    {
         DB::beginTransaction();
         $customer = auth('customer')->user();
         try {
@@ -58,16 +60,30 @@ class CheckoutService {
             }
             $order_total = $order->inventories()->sum('order_items.total');
             $rank_discount = $customer->calculateRankDiscountAmount($order_total);
-            if($checkoutModel->getOrderVoucher()) {
-                $discount_amount = $checkoutModel->getOrderVoucher()->getDiscountAmount($order_total - $rank_discount);
-                $order_total = $order_total - $discount_amount;
+            $attach_vouchers = [];
+            $order_discount_amount = 0;
+            $freeship_discount_amount = 0;
+            if ($checkoutModel->getOrderVoucher()) {
+                $order_discount_amount = $checkoutModel->getOrderVoucher()->getDiscountAmount($order_total - $rank_discount);
+                $order_total = $order_total - $order_discount_amount;
                 $orderVoucher = $checkoutModel->getOrderVoucher();
-                $order->vouchers()->attach($checkoutModel->getOrderVoucherId(), [
+                $attach_vouchers[$checkoutModel->getOrderVoucherId()] = [
                     'type' => $orderVoucher->voucher_type->code,
-                    'amount' => $discount_amount,
+                    'amount' => $order_discount_amount,
                     'customer_id' => $customer->id
-                ]);
+                ];
             }
+            if ($checkoutModel->getFreeshipVoucher()) {
+                $freeship_discount_amount = $checkoutModel->getFreeshipVoucher()->getDiscountAmount($checkoutModel->getShippingFee());
+                $order_total = $order_total - $freeship_discount_amount;
+                $freeshipVoucher = $checkoutModel->getFreeshipVoucher();
+                $attach_vouchers[$checkoutModel->getFreeshipVoucherId()] = [
+                    'type' => $freeshipVoucher->voucher_type->code,
+                    'amount' => $freeship_discount_amount,
+                    'customer_id' => $customer->id
+                ];
+            }
+                $order->vouchers()->attach($attach_vouchers);
             $subtotal = $order->inventories()->sum('order_items.total');
             $order->update([
                 'total' => $order_total + $order->shipping_fee - $rank_discount,

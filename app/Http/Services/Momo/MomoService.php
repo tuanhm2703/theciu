@@ -41,17 +41,16 @@ class MomoService
 
     public static function checkout(Order $order, $requestType = RequestType::PAY_WITH_ATM)
     {
-        \Log::info(env('APP_ENV', 'dev'));
         $env = MomoService::selectEnv(env('APP_ENV', 'dev'));
         $requestId = time() + 60;
         $orderId = time();
         $redirectUrl = route('client.auth.profile.order.details', $order->id);
         switch ($requestType) {
             case RequestType::CAPTURE_MOMO_WALLET:
-                return CaptureMoMo::process($env, $orderId, $order->getCheckoutDescription(), (int)  $order->total, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
+                return CaptureMoMo::process($env, $orderId, $order->getCheckoutDescription(), (int)  $order->customer_payment_amount, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
                 break;
             case RequestType::PAY_WITH_ATM:
-                return PayATM::process($env, $orderId, $order->getCheckoutDescription(), (int) $order->total, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
+                return PayATM::process($env, $orderId, $order->getCheckoutDescription(), (int) $order->customer_payment_amount, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
                 break;
         }
     }
