@@ -4,13 +4,10 @@
             <div class="dropdown cart-dropdown">
                 <a href="{{ route('client.auth.profile.index') }}" class="dropdown-toggle d-flex align-items-end"
                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                    <i class="icon-user mr-2"></i> <span
-                        class="cart-txt ml-0 position-relative">{{ customer()->full_name }}
-                        @if (customer()->available_rank)
-                            <img id="customer-rank-icon" src="{{ customer()->available_rank->image->path_with_domain }}"
-                                alt="{{ getAppName() . ' - ' . customer()->available_rank->name }}">
-                        @endif
-                    </span>
+                    <i class="icon-user mr-2"></i>
+                    @if (customer()->available_rank)
+                        <span class="cart-txt ml-0 position-relative">{{ customer()->available_rank->name }}
+                    @endif
                 </a>
 
                 <div class="dropdown-menu auth-dropdown-menu p-0 dropdown-menu-right"

@@ -21,6 +21,7 @@
 @endsection
 @push('js')
     <script>
+        var form = $('form').initValidator()
         $('.voucher-form').ajaxForm({
             beforeSend: () => {
                 $('.submit-btn').loading()
@@ -30,6 +31,18 @@
                 setTimeout(() => {
                     window.location.href = `{{ route('admin.promotion.index') }}#voucher-list`
                 }, 1500);
+            },
+            error: (err) => {
+                if (err.status === 422) {
+                    const errors = err.responseJSON.errors;
+                    Object.keys(err.responseJSON.errors).forEach((key) => {
+                        form.errorTrigger(
+                            $(`form .form-control[name=${key}]`),
+                            errors[key][0]
+                        );
+                    });
+                }
+                $('.submit-btn').loading(false)
             }
         })
     </script>

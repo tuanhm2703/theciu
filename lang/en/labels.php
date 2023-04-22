@@ -226,4 +226,7 @@ return [
     'featured_voucher' => 'Featured Voucher',
     'revenue' => 'Revenue',
     'number_of_orders'=> 'Number of orders',
+    'rank_list' => 'Rank list',
+    'create_rank' => 'Create rank',
+    'update_rank' => 'Update rank',
 ];

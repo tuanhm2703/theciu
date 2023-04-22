@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateVoucherRequest;
+use App\Http\Requests\Admin\UpdateVoucherRequest;
 use App\Models\Voucher;
 use App\Models\VoucherType;
 use App\Responses\Admin\BaseResponse;
@@ -37,7 +38,7 @@ class VoucherController extends Controller {
         ]);
     }
 
-    public function update(Voucher $voucher, Request $request) {
+    public function update(Voucher $voucher, UpdateVoucherRequest $request) {
         $input = $request->all();
         $input['saveable'] = $request->saveable ? $request->saveable == 'on' : false;
         $input['featured'] = $request->featured ? $request->featured == 'on' : false;

@@ -26,5 +26,6 @@ return [
     'sync_warehouse' => 'Sync warehouse',
     'staff_management' => 'Staff management',
     'customer_list' => 'Customer list',
-    'customer' => 'Customer'
+    'customer' => 'Customer',
+    'rank' => 'Rank',
 ];

@@ -249,6 +249,7 @@ class GHTKService extends ShippingServiceAbstract
         if ($order->order_voucher) {
             $total = $total - $order->order_voucher->pivot->amount;
         }
+        $total = $total - $order->rank_discount_value;
         return $total;
     }
 

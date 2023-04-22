@@ -24,7 +24,8 @@ class TestController extends Controller {
     public function test(Request $request) {
         $orderResource = new OrderResource(App::make(Client::class));
         $productResource = new ProductResource(App::make(Client::class));
-        return $productResource->getByCode('SP083396')->getModelData();
+        $customerResource = new CustomerResource(App::make(Client::class));
+        return $customerResource->list(['contactNumber' => '0703004307', 'includeCustomerGroup' => true])->toArray();
         // $orderResource->remove("")
     }
 

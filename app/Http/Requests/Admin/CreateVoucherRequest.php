@@ -11,7 +11,7 @@ class CreateVoucherRequest extends FormRequest {
      * @return bool
      */
     public function authorize() {
-        return true;
+        return user()->can('create voucher');
     }
 
     /**

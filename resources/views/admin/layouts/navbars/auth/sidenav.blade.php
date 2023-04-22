@@ -14,6 +14,7 @@
             @include('admin.layouts.navbars.auth.nav-group.policy')
             @include('admin.layouts.navbars.auth.nav-group.module')
             @include('admin.layouts.navbars.auth.nav-group.promotion')
+            @include('admin.layouts.navbars.auth.nav-group.rank')
             @include('admin.layouts.navbars.auth.nav-group.appearance')
             @include('admin.layouts.navbars.auth.nav-group.setting')
             @include('admin.layouts.navbars.auth.nav-group.order')

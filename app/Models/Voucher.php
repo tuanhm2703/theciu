@@ -93,6 +93,7 @@ class Voucher extends Model {
         if($this->discount_type == VoucherDiscountType::AMOUNT) {
             return thousandsCurrencyFormat($this->value);
         } else {
+            if($this->voucher_type->code == VoucherType::FREESHIP && $this->value == 100) return 'Miễn phí vận chuyển';
             return $this->value . "%";
         }
     }

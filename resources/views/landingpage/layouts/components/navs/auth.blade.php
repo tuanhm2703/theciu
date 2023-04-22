@@ -2,9 +2,10 @@
     <div class="dropdown cart-dropdown">
         <a href="{{ route('client.auth.profile.index') }}" class="dropdown-toggle d-flex align-items-end" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-            <i class="icon-user mr-2"></i> <span class="cart-txt ml-0 position-relative">{{ customer()->full_name }}
+            <i class="icon-user mr-2"></i>
+            {{-- <span class="cart-txt ml-0 position-relative">{{ customer()->full_name }} --}}
             @if (customer()->available_rank)
-                <img id="customer-rank-icon" src="{{ customer()->available_rank->image->path_with_domain }}" alt="{{ getAppName() .' - '. customer()->available_rank->name }}">
+                <span class="cart-txt ml-0 position-relative">{{ customer()->available_rank->name }}
             @endif
             </span>
         </a>
@@ -29,8 +30,6 @@
             </div>
         </div><!-- End .dropdown-menu -->
     </div><!-- End .cart-dropdown -->
-
-
 @else
     <div class="dropdown cart-dropdown">
         <ul class="top-menu top-link-menu">

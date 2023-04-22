@@ -231,4 +231,8 @@ return [
     'customer' => 'Khách hàng',
     'revenue' => 'Doanh thu',
     'number_of_orders'=> 'Số lượng đơn hàng',
+    'rank' => 'Hạng thành viên',
+    'rank_list' => 'Danh sách hạng thành viên',
+    'create_rank' => 'Tạo hạng khách hàng',
+    'update_rank' => 'Cập nhật hạng thành viên',
 ];
