@@ -31,7 +31,7 @@
                         <div class="product-col">
                             <div class="cart-product px-2">
                                 <figure class="product-media mr-1">
-                                    <img src="{{ $inventory->image->path_with_domain }}" alt="">
+                                    <img src="{{ optional($inventory->image)->path_with_domain }}" alt="">
                                 </figure>
                             </div>
 
