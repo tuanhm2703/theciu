@@ -16,7 +16,7 @@
                             {!! Form::radio('voucher_type_id', $type->id, true, ['id' => "radio-btn-$type->id"]) !!}
                             <div class="d-flex justify-content-evenly">
                                 <i class="ni ni-basket text-primary"></i>
-                                <span class="text-bold text-dark pl-3">Voucher {{ $type->name }}</span>
+                                <span class="text-bold text-dark pl-3" style="z-index: 1">Voucher {{ $type->name }}</span>
                             </div>
                             <div class="check-icon">
                                 <div class="icon-ctn"><i class="the-ciu-icon icons"><svg
