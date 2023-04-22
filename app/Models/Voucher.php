@@ -103,13 +103,7 @@ class Voucher extends Model
         if ($this->discount_type == VoucherDiscountType::AMOUNT) {
             return "Giảm " . thousandsCurrencyFormat($this->value);
         } else {
-            if ($this->voucher_type->code == VoucherType::FREESHIP && $this->value == 100) {
-                if($this->min_order) {
-                    return 'Freeship';
-                } else {
-                    return 'Freeship mọi đơn hàng';
-                }
-            }
+            if ($this->voucher_type->code == VoucherType::FREESHIP && $this->value == 100) return 'FREESHIP';
             return "Giảm " . $this->value . "%";
         }
     }
