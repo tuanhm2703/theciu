@@ -26,7 +26,7 @@ class UpdateVoucherRequest extends FormRequest
         return [
             'name' => 'required',
             'discount_type' => 'string|required',
-            'code' => 'string|unique:vouchers,code,'.$this->route('voucher')->code,
+            'code' => 'string|unique:vouchers,code,'.$this->route('voucher')->id,
             'status' => 'required',
             'value' => 'numeric',
             'min_order_value' => 'numeric'
