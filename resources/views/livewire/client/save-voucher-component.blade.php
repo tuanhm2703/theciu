@@ -20,7 +20,7 @@
         <div class="voucher-detail-info">
             <div class="voucher-detail-left">
                 <h3 class="voucher-discount-value mb-1">
-                    Giảm {{ $voucher->discount_label }}
+                    {{ $voucher->discount_label }}
                 </h3>
                 <p>
                     {{ $voucher->discount_description }}

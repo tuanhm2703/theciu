@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Voucher extends Model {
+class Voucher extends Model
+{
     use HasFactory, VoucherScope, CustomScope;
 
 
@@ -37,36 +38,42 @@ class Voucher extends Model {
         'end'
     ];
 
-    public function orders() {
+    public function orders()
+    {
         return $this->belongsToMany(Order::class, 'order_vouchers')->withPivot('type')->withTimestamps();
     }
 
-    public function customers() {
+    public function customers()
+    {
         return $this->belongsToMany(Customer::class, 'customer_vouchers')->withPivot('type', 'is_used')->withTimestamps();
     }
 
-    public function canApplyForCustomer($customer_id) {
+    public function canApplyForCustomer($customer_id)
+    {
         return $this->orders()->where('orders.customer_id', $customer_id)->count() < $this->customer_limit && $this->quantity > 0;
     }
 
-    public function voucher_type() {
+    public function voucher_type()
+    {
         return $this->belongsTo(VoucherType::class);
     }
 
-    public function getDiscountAmount($total) {
-        if($this->discount_type == VoucherDiscountType::PERCENT) {
+    public function getDiscountAmount($total)
+    {
+        if ($this->discount_type == VoucherDiscountType::PERCENT) {
             $amount = $total * $this->value / 100;
         } else {
             $amount = $this->value;
         }
-        if($this->max_discount_amount && $this->max_discount_amount < $amount) {
+        if ($this->max_discount_amount && $this->max_discount_amount < $amount) {
             $amount = $this->max_discount_amount;
         }
         return (int) $amount;
     }
 
-    public function decreaseQuantity(Customer $customer) {
-        if($this->saveable) {
+    public function decreaseQuantity(Customer $customer)
+    {
+        if ($this->saveable) {
             $customer->saved_vouchers()->sync([
                 $this->id => [
                     'is_used' => true
@@ -77,8 +84,9 @@ class Voucher extends Model {
         }
     }
 
-    public function increaseQuantity(Customer $customer) {
-        if($this->saveable) {
+    public function increaseQuantity(Customer $customer)
+    {
+        if ($this->saveable) {
             $customer->saved_vouchers()->sync([
                 $this->id => [
                     'is_used' => false
@@ -89,26 +97,30 @@ class Voucher extends Model {
         }
     }
 
-    public function getDiscountLabelAttribute() {
-        if($this->discount_type == VoucherDiscountType::AMOUNT) {
-            return thousandsCurrencyFormat($this->value);
+    public function getDiscountLabelAttribute()
+    {
+        if ($this->discount_type == VoucherDiscountType::AMOUNT) {
+            return "Giảm " . thousandsCurrencyFormat($this->value);
         } else {
-            if($this->voucher_type->code == VoucherType::FREESHIP && $this->value == 100) return 'Miễn phí vận chuyển';
-            return $this->value . "%";
+            if ($this->voucher_type->code == VoucherType::FREESHIP && $this->value == 100) return 'Freeship';
+            return "Giảm " . $this->value . "%";
         }
     }
-    public function getDiscountDescriptionAttribute() {
-        if(!$this->max_discount_amount) {
+    public function getDiscountDescriptionAttribute()
+    {
+        if (!$this->max_discount_amount) {
             return trans('labels.voucher_unlimit_discount');
         } else {
             return trans('labels.voucher_limit_discount_template', ['value' => format_currency_with_label($this->max_discount_amount)]);
         }
     }
 
-    public function getDetailInfoAttribute() {
-        return "$this->discount_description Áp dụng đến ".$this->end->format('d/m/Y H:i'). ". Mỗi tài khoản được sử dụng $this->customer_limit lần.";
+    public function getDetailInfoAttribute()
+    {
+        return "$this->discount_description Áp dụng đến " . $this->end->format('d/m/Y H:i') . ". Mỗi tài khoản được sử dụng $this->customer_limit lần.";
     }
-    public function isValidTime() {
+    public function isValidTime()
+    {
         return now()->between($this->begin, $this->end);
     }
 }

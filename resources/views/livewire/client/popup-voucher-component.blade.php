@@ -21,7 +21,7 @@
                 </svg>
             </div>
             <h6 class="font-weight-bold my-3">Chúc mừng bạn!</h6>
-            <h5 class="text-center voucher-discount-info mb-0">Giảm {{ $voucher->discount_label }}</h5>
+            <h5 class="text-center voucher-discount-info mb-0">{{ $voucher->discount_label }}</h5>
         </div>
     </div>
     <div class="congrats-content pt-0">
