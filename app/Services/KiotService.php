@@ -124,32 +124,26 @@ class KiotService
 
     public static function createKiotOrder(Order $localOrder)
     {
-        try {
-            $orderResource = new OrderResource(App::make(Client::class));
-            $kiotSetting = App::get('KiotConfig');
-            $order = new ModelOrder();
-            $order->setBranchId($kiotSetting->data['branchId']);
-            $order->setDescription("The C.I.U Order: $localOrder->order_number");
-            $order->setTotalPayment($localOrder->total);
-            $order->setMethod('hello');
-            $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
-            $order->setMakeInvoice(false);
-            $order->setOrderDetails($localOrder->generateKiotOrderDetailCollection());
-            if(isset($kiotSetting->data['saleId'])) {
-                $order->setSoldById($kiotSetting->data['saleId']);
-            }
-            $kiotOrder = $orderResource->create($order, [
-                'Partner' => 'KVSync'
-            ]);
-            $localOrder->kiot_order()->create([
-                'kiot_order_id' => $kiotOrder->getId(),
-                'kiot_code' => $kiotOrder->getCode(),
-                'data' => $kiotOrder->getModelData()
-            ]);
-        } catch (\Throwable $th) {
-            Log::error($th);
-            return false;
+        $orderResource = new OrderResource(App::make(Client::class));
+        $kiotSetting = App::get('KiotConfig');
+        $order = new ModelOrder();
+        $order->setBranchId($kiotSetting->data['branchId']);
+        $order->setDescription("The C.I.U Order: $localOrder->order_number");
+        $order->setTotalPayment($localOrder->total);
+        $order->setMethod('hello');
+        $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
+        $order->setMakeInvoice(false);
+        $order->setOrderDetails($localOrder->generateKiotOrderDetailCollection());
+        if(isset($kiotSetting->data['saleId'])) {
+            $order->setSoldById($kiotSetting->data['saleId']);
         }
-        return true;
+        $kiotOrder = $orderResource->create($order, [
+            'Partner' => 'KVSync'
+        ]);
+        $localOrder->kiot_order()->create([
+            'kiot_order_id' => $kiotOrder->getId(),
+            'kiot_code' => $kiotOrder->getCode(),
+            'data' => $kiotOrder->getModelData()
+        ]);
     }
 }
