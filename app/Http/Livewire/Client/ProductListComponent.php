@@ -9,20 +9,15 @@ use App\Models\Product;
 use App\Models\Promotion;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ProductListComponent extends Component
 {
-    use KeywordCount;
+    use KeywordCount, WithPagination;
 
     public $title;
 
-    public $pageSize = 12;
-
     public $hasNext;
-
-    public $page = 1;
-
-    public $products;
 
     public $categories = [];
 
@@ -48,10 +43,11 @@ class ProductListComponent extends Component
 
     public $haspromotion;
 
+    public $baseUrl;
+
     public $search_products = [];
 
     protected $queryString = [
-        'page' => ['except' => 1, 'as' => 'page'],
         'keyword',
         'categories',
         'min_price',
@@ -65,13 +61,26 @@ class ProductListComponent extends Component
         $this->product_categories = Category::whereHas('products', function ($q) {
             $q->available();
         })->whereType(CategoryType::PRODUCT)->orderBy('categories.name')->select('id', 'name', 'slug')->withCount('products')->get();
-        $this->products = new Collection();
-        $this->searchProduct();
         $this->resfreshAutocompleteKeywords();
     }
     public function render()
     {
-        return view('livewire.client.product-list-component');
+        $products = $this->searchProduct();
+
+        $products = $products->paginate(12)->withPath(request()->requestUri)->withQueryString()->onEachSide(3)->appends($this->getParams());
+        return view('livewire.client.product-list-component', compact('products'));
+    }
+
+    private function getParams() {
+        $arr = [];
+        foreach ($this->queryString as $key) {
+            if($this->{$key}) {
+                $arr = array_merge($arr, [
+                    $key => $this->{$key}
+                ]);
+            }
+        }
+        return $arr;
     }
 
     public function nextPage()
@@ -82,10 +91,6 @@ class ProductListComponent extends Component
 
     public function searchProduct($page = null)
     {
-        if ($page) {
-            $this->products = new Collection();
-            $this->page = $page;
-        }
         $products = Product::query();
         if ($this->category) {
             $category = Category::whereSlug($this->category)->with('categories.categories')->firstOrFail();
@@ -115,22 +120,19 @@ class ProductListComponent extends Component
         if (!empty($this->keyword)) {
             $products->search('products.name', $this->keyword);
         }
-        $this->total = (clone $products)->filterByPriceRange($this->min_price, $this->max_price)->count();
         $products = $products
             ->withNeededProductCardData()
-            ->filterByPriceRange($this->min_price, $this->max_price)
-            ->getPage($this->page, $this->pageSize)->get();
-        $this->products = $this->products->merge($products);
-        $this->hasNext = $this->products->count() < $this->total;
+            ->filterByPriceRange($this->min_price, $this->max_price);
+        return $products;
     }
 
     public function clearAllFilter()
     {
         $this->categories = [];
-        $this->searchProduct(1);
     }
 
-    private function searchProducts() {
+    private function searchProducts()
+    {
         $products = Product::query();
         if ($this->category) {
             $category = Category::whereSlug($this->category)->with('categories.categories')->firstOrFail();
@@ -165,10 +167,10 @@ class ProductListComponent extends Component
             ->filterByPriceRange($this->min_price, $this->max_price)
             ->with(['inventories.image:path,imageable_id', 'images:path,imageable_id'])->limit(15)->get();
     }
-    public function updated($name, $value)
-    {
-        if ($name == 'keyword') {
-            $this->searchProducts();
-        }
-    }
+    // public function updated($name, $value)
+    // {
+    //     if ($name == 'keyword') {
+    //         $this->searchProducts();
+    //     }
+    // }
 }

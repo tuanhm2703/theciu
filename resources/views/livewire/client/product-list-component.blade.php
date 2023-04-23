@@ -90,27 +90,12 @@
                                 </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
                             @endforeach
                         </div>
-                        <div>
-                            <div class="toolbox-info text-center">
-                                {!! trans('labels.product_paging_description', [
-                                    'current' => $products->count(),
-                                    'total' => $total,
-                                ]) !!}
-                            </div><!-- End .toolbox-info -->
-                        </div>
                     </div><!-- End .products -->
 
                     <div class="load-more-container text-center">
                         <div class="text-center">
-                            @if ($hasNext)
-                                <button class="btn" wire:click="nextPage">
-                                    <div class="text-center" wire:loading>
-                                        <div class="spinner-border" role="status">
-                                            <span class="sr-only">{{ trans('labels.loading') }}...</span>
-                                        </div>
-                                    </div>
-                                    <span wire:loading.remove>Xem thêm</span>
-                                </button>
+                            @if ($products->count() > 0)
+                                {!! $products->onEachSide(2)->links('components.pagination') !!}
                             @endif
                         </div>
                     </div><!-- End .load-more-container -->
@@ -178,8 +163,8 @@
                                     <div class="filter-price-text d-flex align-items-center" wire:ignore>
                                         <div>
                                             <input type="number" wire:model.lazy="min_price" step="50000"
-                                            wire:change="searchProduct(1)"
-                                            placeholder="{{ trans('placeholder.min_price') }}">
+                                                wire:change="searchProduct(1)"
+                                                placeholder="{{ trans('placeholder.min_price') }}">
                                         </div>
                                         <div class="mx-1"
                                             style="
@@ -191,8 +176,8 @@
                                         </div>
                                         <div>
                                             <input type="number" wire:model.lazy="max_price" step="50000"
-                                            wire:change="searchProduct(1)"
-                                            placeholder="{{ trans('placeholder.max_price') }}">
+                                                wire:change="searchProduct(1)"
+                                                placeholder="{{ trans('placeholder.max_price') }}">
                                         </div>
                                     </div><!-- End .filter-price-text -->
 
