@@ -4,7 +4,7 @@
             <li class="page-item {{ $paginator->onFirstPage() ? 'disabled' : '' }}">
                 <a class="page-link page-link-prev"
                     href="{{ $paginator->previousPageUrl() }}" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                    <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Trước
+                    <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>
                 </a>
             </li>
             @foreach ($elements as $element)
@@ -29,7 +29,7 @@
 
             <li class="page-item {{ $paginator->hasMorePages() ? '' : 'disabled' }}">
                 <a class="page-link page-link-next" href="{{ $paginator->nextPageUrl() }}" aria-label="Next">
-                    Tiếp theo <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                    <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
                 </a>
             </li>
         </ul>

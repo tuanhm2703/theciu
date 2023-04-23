@@ -95,7 +95,7 @@
                     <div class="load-more-container text-center">
                         <div class="text-center">
                             @if ($products->count() > 0)
-                                {!! $products->onEachSide(2)->links('components.pagination') !!}
+                                {!! $products->onEachSide(0)->links('components.pagination') !!}
                             @endif
                         </div>
                     </div><!-- End .load-more-container -->
