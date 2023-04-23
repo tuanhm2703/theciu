@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
     <nav aria-label="Page navigation">
-        <ul class="pagination">
+        <ul class="pagination justify-content-center">
             <li class="page-item {{ $paginator->onFirstPage() ? 'disabled' : '' }}">
                 <a class="page-link page-link-prev"
                     href="{{ $paginator->previousPageUrl() }}" aria-label="Previous" tabindex="-1" aria-disabled="true">
