@@ -298,7 +298,7 @@ class Order extends Model
                 $inventory->update([
                     'stock_quantity' => DB::raw("stock_quantity + " . $inventory->pivot->quantity)
                 ]);
-                $inventory->product->putKiotWarehouse(false);
+                // $inventory->product->putKiotWarehouse(false);
             }
         }
     }
@@ -311,7 +311,7 @@ class Order extends Model
                 $inventory->update([
                     'stock_quantity' => DB::raw("stock_quantity - " . $inventory->pivot->quantity)
                 ]);
-                $inventory->product->putKiotWarehouse(true);
+                // $inventory->product->putKiotWarehouse(true);
             }
         }
     }
