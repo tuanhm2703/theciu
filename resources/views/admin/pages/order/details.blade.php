@@ -123,7 +123,7 @@
                 </div>
                 <div class="card-header py-0">
                     <h6>
-                        <i class="fas fa-sticky-note text-danger opacity-6 order-label-icon pe-1"></i>Chú thích đơn hangg
+                        <i class="fas fa-sticky-note text-danger opacity-6 order-label-icon pe-1"></i>Chú thích đơn hàng
                     </h6>
                 </div>
                 <div class="card-body pt-1">

@@ -84,7 +84,7 @@
                         <div class="row" wire:loading.remove wire:target="searchProduct">
                             @foreach ($products as $product)
                                 <div class="col-6 col-md-3">
-                                    <livewire:client.product-card-component
+                                    <livewire:client.product-card-component wire:ignore
                                         wire:key="product-{{ $product->id . time() }}" :product="$product">
                                     </livewire:client.product-card-component>
                                 </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
@@ -176,9 +176,11 @@
                             <div class="widget-body">
                                 <div class="filter-price">
                                     <div class="filter-price-text d-flex align-items-center" wire:ignore>
-                                        <input type="number" wire:model.lazy="min_price" step="50000"
+                                        <div>
+                                            <input type="number" wire:model.lazy="min_price" step="50000"
                                             wire:change="searchProduct(1)"
                                             placeholder="{{ trans('placeholder.min_price') }}">
+                                        </div>
                                         <div class="mx-1"
                                             style="
                                             background-color: #dadada;
@@ -187,9 +189,11 @@
                                             align-self: center;
                                         ">
                                         </div>
-                                        <input type="number" wire:model.lazy="max_price" step="50000"
+                                        <div>
+                                            <input type="number" wire:model.lazy="max_price" step="50000"
                                             wire:change="searchProduct(1)"
                                             placeholder="{{ trans('placeholder.max_price') }}">
+                                        </div>
                                     </div><!-- End .filter-price-text -->
 
                                     <div id="price-slider"></div><!-- End #price-slider -->
