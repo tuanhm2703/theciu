@@ -218,7 +218,6 @@
     letter-spacing: 0.1em;
     background-color: transparent;
     border: none;
-    border-bottom: 0.2rem solid #222;
 }
 .btn-more:hover,
 .btn-more:focus {

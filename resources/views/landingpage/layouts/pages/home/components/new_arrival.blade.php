@@ -13,6 +13,6 @@
 
     <div class="more-container text-center mt-2">
         <a href="#"
-            class="btn btn-outline-dark-2 btn-more"><span>Xem thêm</span></a>
+            class="btn btn-more"><span>Xem thêm</span></a>
     </div><!-- End .more-container -->
 </div><!-- End .container -->

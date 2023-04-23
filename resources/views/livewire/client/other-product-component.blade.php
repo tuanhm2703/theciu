@@ -10,7 +10,7 @@
 
     <div class="text-center">
         @if ($hasNext)
-            <a href="#" class="btn btn-outline-dark-2 btn-more" wire:click.prevent="nextPage()">
+            <a href="#" class="btn btn-more" wire:click.prevent="nextPage()">
                 <div wire:loading class="spinner-border" role="status">
                     <span class="sr-only">Loading...</span>
                 </div>
