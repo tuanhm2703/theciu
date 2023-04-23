@@ -8,7 +8,7 @@
         {!! Form::textarea('meta[description]', null, ['class' => 'form-control', 'required']) !!}
     </div>
     <div class="form-group">
-        {!! Form::label('meta[title]', 'Meta-description', ['class' => 'form-label']) !!}
+        {!! Form::label('meta[title]', 'Meta-title', ['class' => 'form-label']) !!}
         {!! Form::text('meta[title]', null, ['class' => 'form-control']) !!}
     </div>
     {!! Form::hidden('parent_id', null, []) !!}
