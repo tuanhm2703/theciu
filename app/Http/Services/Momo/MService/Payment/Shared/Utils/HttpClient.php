@@ -26,7 +26,11 @@ class HttpClient
             . ', RequestBody: ' . $payload);
         $logger->info('[HTTP Response from MoMoServer] HttpStatusCode: ' . $statusCode
             . ', ResponseBody: ' . $result);
-        \Log::error($result);
+        \Log::info('[HTTP Post to MoMoServer] Endpoint: ' . curl_getinfo($ch, CURLINFO_EFFECTIVE_URL)
+        . ', RequestBody: ' . $payload);
+        \Log::error('[HTTP Response from MoMoServer] HttpStatusCode: ' . $statusCode
+        . ', ResponseBody: ' . $result);
+
         curl_close($ch);
 
         return new HttpResponse($statusCode, $result);
