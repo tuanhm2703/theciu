@@ -11,6 +11,7 @@ use App\Exceptions\InventoryOutOfStockException;
 use App\Http\Services\Payment\PaymentService;
 use App\Models\Config;
 use App\Models\VoucherType;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class CheckoutService
@@ -116,7 +117,7 @@ class CheckoutService
             return $redirectUrl;
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
+            throw new Exception($th->getMessage());
         }
     }
 }
