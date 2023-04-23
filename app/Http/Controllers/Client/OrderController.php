@@ -29,7 +29,7 @@ class OrderController extends Controller {
             \Log::info($th);
             DB::rollBack();
             return BaseResponse::error([
-                'message' => 'Huỷ đơn hàng thành công'
+                'message' => 'Huỷ đơn hàng thành công, vui lòng liên hệ bộ phận chăm sóc khách hàng để xử lý'
             ]);
         }
         return BaseResponse::success([

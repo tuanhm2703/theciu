@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Request;
 use App\Enums\OrderCanceler;
 use App\Enums\PaymentStatus;
 use App\Http\Services\Payment\PaymentService;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -271,7 +272,12 @@ class Order extends Model
 
     public function refund()
     {
-        return PaymentService::refund($this);
+        try {
+            return PaymentService::refund($this);
+        } catch (\Throwable $th) {
+            throw new Exception('Đã có lỗi xảy ra vui lòng thử lại sau');
+            return false;
+        }
     }
 
     public function getRefundDescription()

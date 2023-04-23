@@ -3,6 +3,7 @@
 
 namespace MService\Payment\AllInOne\Processors;
 
+use Exception;
 use Illuminate\Support\Facades\App;
 use MService\Payment\AllInOne\Models\RefundMoMoRequest;
 use MService\Payment\AllInOne\Models\RefundMoMoResponse;
@@ -29,6 +30,7 @@ class RefundMoMo extends Process {
 
             return $refundMoMoResponse;
         } catch (MoMoException $exception) {
+            throw new Exception($exception->getErrorMessage());
             $refundMoMo->logger->error($exception->getErrorMessage());
         }
     }
