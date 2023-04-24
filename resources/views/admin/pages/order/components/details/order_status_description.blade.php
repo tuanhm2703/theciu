@@ -66,6 +66,11 @@
             <b>{{ trans('labels.cancel_reason') }}: </b> <i class="ps-3">{{ $order->cancel_reason }}</i>
         </div>
     @break
+    @case(App\Enums\OrderStatus::PICKING)
+        <div style="height: 50px; background: #f4f4f4" class="d-flex align-items-center px-3 rounded">
+            <b>{{ trans('labels.cancel_reason') }}: </b> <i class="ps-3">{{ $order->cancel_reason }}</i>
+        </div>
+    @break
 
     @default
 @endswitch
