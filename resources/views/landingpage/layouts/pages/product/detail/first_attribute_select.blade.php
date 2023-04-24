@@ -1,11 +1,11 @@
 <div class="details-filter-row details-row-size">
-    <label>{{ $product->inventories->first()->attributes->first()->name }}:</label>
+    <label class="mt-1">{{ $product->inventories->first()->attributes->first()->name }}:</label>
     <div>
         @foreach ($first_attributes as $attribute)
             @php
                 $attribute = (object) $attribute;
             @endphp
-            <div class="radio-container">
+            <div class="radio-container mt-1">
                 <input @disabled($attribute->out_of_stock) wire:change="changeFirstAttributeId({{ $attribute->id }})"
                     name="first_attribute_value" id="first-attribute-{{ $attribute->value }}" type="radio"
                     class="square-radio-input" wire:model="first_attribute_value" value="{{ $attribute->value }}">
