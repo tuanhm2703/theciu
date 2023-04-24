@@ -45,7 +45,14 @@ class Invoice extends BaseModel
         5 => 'Đã hoàn',
         6 => 'Đã hủy'
     ];
-
+    /**
+     * @var string
+     */
+    private $method;
+    /**
+     * @var \VienThuong\KiotVietClient\Model\Customer
+     */
+    private $customer;
 
     /**
      * @var float
@@ -486,6 +493,54 @@ class Invoice extends BaseModel
     public function setDiscount(float $discount)
     {
         $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of customer
+     *
+     * @return  VienThuong\KiotVietClient\Model\Customer
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
+    }
+
+    /**
+     * Set the value of customer
+     *
+     * @param  VienThuong\KiotVietClient\Model\Customer  $customer
+     *
+     * @return  self
+     */
+    public function setCustomer(\VienThuong\KiotVietClient\Model\Customer $customer)
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of method
+     *
+     * @return  string
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * Set the value of method
+     *
+     * @param  string  $method
+     *
+     * @return  self
+     */
+    public function setMethod(string $method)
+    {
+        $this->method = $method;
 
         return $this;
     }

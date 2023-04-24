@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\PaymentMethodType;
 use App\Models\Customer;
 use App\Models\KiotInvoice;
 use App\Models\Order;
@@ -90,35 +91,50 @@ class KiotService
         try {
             $kiotSetting = App::get('KiotConfig');
             $discount = $localOrder->order_voucher ? $localOrder->order_voucher->pivot->amount : 0;
-            $invoice = new Invoice([
-                'branchId' => $order->getBranchId(),
-                'purchaseDate' => (string) now(),
-                'customerId' => $order->getCustomerId(),
-                'discount' => $order->getDiscount(),
-                'totalPayment' => $order->getTotalPayment(),
-                'saleChannelId' => $order->getSaleChannelId(),
-                'soldById' => $kiotSetting->data['salerId'],
-                'method' => 'test',
-                'usingCod' => false,
-                'soldById' => $kiotSetting->data['salerId'],
-                'discount' => $discount,
-                'orderId' => $order->getId(),
-                'invoiceDetails' => $localOrder->generateKiotInvoiceDetailCollection(),
-                'status' => 3
+            $kiotCustomer = new ModelCustomer([
+                'name' => $localOrder->shipping_address->fullname,
+                'gender' => false,
+                "contactNumber" => $localOrder->shipping_address->phone,
+                'address' => $localOrder->shipping_address->full_address
             ]);
-            $customer = $localOrder->customer;
-            if($customer && $customer->kiot_customer) {
-                $invoice->setCustomerId($customer->kiot_customer->kiot_customer_id);
-            }
-            $invoiceResource = new InvoiceResource(App::make(Client::class));
-            $kiotInvoice = $invoiceResource->create($invoice);
-            KiotInvoice::create([
-                'kiot_invoice_id' => $kiotInvoice->getId(),
-                'kiot_code' => $kiotInvoice->getCode(),
-                'data' => $kiotInvoice->getModelData(),
-                'kiot_order_code' => $order->getCode(),
-                'order_id' => $localOrder->id
-            ]);
+            $order->setDiscount($discount);
+            $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
+            $order->setMakeInvoice(true);
+            $order->setCustomer($kiotCustomer);
+            $orderResource = new OrderResource(App::make(Client::class));
+            $orderResource->update($order);
+            // $invoice = new Invoice([
+            //     'branchId' => $order->getBranchId(),
+            //     'purchaseDate' => (string) now(),
+            //     'customerId' => $order->getCustomerId(),
+            //     'customerName' => $localOrder->shipping_address->fullname,
+            //     'description' => $localOrder->note,
+            //     'method' => PaymentMethodType::getKiotMethodType($localOrder->payment_method->type),
+            //     'discount' => $order->getDiscount(),
+            //     'totalPayment' => $order->getTotalPayment(),
+            //     'saleChannelId' => $order->getSaleChannelId(),
+            //     'soldById' => $kiotSetting->data['salerId'],
+            //     'method' => 'test',
+            //     'usingCod' => false,
+            //     'soldById' => $kiotSetting->data['salerId'],
+            //     'discount' => $discount,
+            //     'orderId' => $order->getId(),
+            //     'invoiceDetails' => $localOrder->generateKiotInvoiceDetailCollection(),
+            //     'status' => 3
+            // ]);
+            // $customer = $localOrder->customer;
+            // if($customer && $customer->kiot_customer) {
+            //     $invoice->setCustomerId($customer->kiot_customer->kiot_customer_id);
+            // }
+            // $invoiceResource = new InvoiceResource(App::make(Client::class));
+            // $kiotInvoice = $invoiceResource->create($invoice);
+            // KiotInvoice::create([
+            //     'kiot_invoice_id' => $kiotInvoice->getId(),
+            //     'kiot_code' => $kiotInvoice->getCode(),
+            //     'data' => $kiotInvoice->getModelData(),
+            //     'kiot_order_code' => $order->getCode(),
+            //     'order_id' => $localOrder->id
+            // ]);
             return true;
         } catch (\Throwable $th) {
             Log::error($th);
@@ -131,14 +147,22 @@ class KiotService
         $orderResource = new OrderResource(App::make(Client::class));
         $kiotSetting = App::get('KiotConfig');
         $order = new ModelOrder();
+        $kiotCustomer = new ModelCustomer([
+            'name' => $localOrder->shipping_address->fullname,
+            'gender' => false,
+            "contactNumber" => $localOrder->shipping_address->phone,
+            'address' => $localOrder->shipping_address->full_address
+        ]);
         $order->setBranchId($kiotSetting->data['branchId']);
         $order->setDescription("The C.I.U Order: $localOrder->order_number");
         $order->setTotalPayment($localOrder->total);
-        $order->setMethod('hello');
+        $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
         $order->setSoldById($kiotSetting->data['salerId']);
         $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
         $order->setMakeInvoice(false);
+        $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
         $order->setOrderDetails($localOrder->generateKiotOrderDetailCollection());
+        $order->setCustomer($kiotCustomer);
         if(isset($kiotSetting->data['saleId'])) {
             $order->setSoldById($kiotSetting->data['saleId']);
         }
