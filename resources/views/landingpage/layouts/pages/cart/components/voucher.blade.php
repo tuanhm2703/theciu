@@ -47,7 +47,9 @@
                         </div><!-- End .custom-control -->
                     @endforeach
                     <div class="row mt-3" style="justify-content: right">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">{{ trans('labels.accept') }}</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">
+                            <span class="text-white" wire:loading wire:target="order_voucher_id,freeship_voucher_id">Đang kiểm tra voucher...</span>
+                            <span wire:loading.remove wire:target="order_voucher_id, freeship_voucher_id">{{ trans('labels.accept') }}</span></button>
                     </div>
                 </div>
             </div>
