@@ -32,7 +32,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider {
                         $shipping_order_number = $payload['label_id'];
                     }
                     if(isset($payload['partner_id'])) {
-                        $order_number = substr($payload['partner_id'], 1);
+                        $order_number = $payload['partner_id'];
                     }
                     return ['shipping_webhook', "shipping_webhook:$order_number", "shipping_webhook:$shipping_order_number"];
                 }
