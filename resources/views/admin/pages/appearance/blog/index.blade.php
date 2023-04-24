@@ -83,7 +83,7 @@
                     status
                 },
                 success: (res) => {
-                    tata.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                    toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                 }
             })
         })
@@ -105,7 +105,7 @@
                 },
                 dataType: 'json',
                 success: (res) => {
-                    tata.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                    toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                     $('.submit-btn').loading(false)
                     blogTable.ajax.reload()
                     $('.modal').modal('hide')
@@ -128,7 +128,7 @@
                 },
                 dataType: 'json',
                 success: (res) => {
-                    tata.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                    toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                     $('.submit-btn').loading(false)
                     $('.modal').modal('hide')
                 }

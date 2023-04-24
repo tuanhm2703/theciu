@@ -64,7 +64,7 @@
                 $('input[type=submit]').loading()
             },
             success: (res) => {
-                tata.success(`{{trans('toast.action_successful')}}`, res.data.message)
+                toast.success(`{{trans('toast.action_successful')}}`, res.data.message)
                 $('.modal.show').modal('hide')
                 if (typeof orderTable !== 'undefined') {
                     orderTable.ajax.reload()

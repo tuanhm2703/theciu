@@ -22,7 +22,7 @@
             $('.role-form button[type=submit]').loading()
         },
         success: (res) => {
-            tata.success(@json(trans('toast.action_successful')), res.data.message)
+            toast.success(@json(trans('toast.action_successful')), res.data.message)
             $('.modal.show').modal('hide')
             table.ajax.reload()
         },

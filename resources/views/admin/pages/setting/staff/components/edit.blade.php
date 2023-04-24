@@ -25,7 +25,7 @@
             },
             success: (res) => {
                 $('.modal.show').modal('hide')
-                tata.success(@json(trans('toast.action_successful')), res.data.message)
+                toast.success(@json(trans('toast.action_successful')), res.data.message)
                 table.ajax.reload()
             },
             error: (err) => {
@@ -39,7 +39,7 @@
                         );
                     });
                 } else {
-                    tata.success(@json(trans('toast.action_failed')), err.responesJSON.message)
+                    toast.success(@json(trans('toast.action_failed')), err.responesJSON.message)
                 }
             }
         })

@@ -43,7 +43,7 @@
     $('.change-status-form').ajaxForm({
         success: (res) => {
             orderTable.ajax.reload()
-            tata.success("{{ trans('toast.action_successful') }}", res.data.message)
+            toast.success("{{ trans('toast.action_successful') }}", res.data.message)
         },
         error: (err) => {
             tata.error("{{ trans('toast.action_failed') }}", err.responseJSON.message)

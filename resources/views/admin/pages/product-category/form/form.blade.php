@@ -22,7 +22,7 @@
                 $('.submit-btn').loading()
             },
             success: (res) => {
-                tata.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                 categoryTable.ajax.reload()
                 initTreeview()
                 $('.category-form').parents('.modal').modal('hide')

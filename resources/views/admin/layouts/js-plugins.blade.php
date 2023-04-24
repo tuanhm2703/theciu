@@ -26,11 +26,52 @@
 <script src="{{ asset('assets/landingpage/js/jquery.magnific-popup.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap-treeview.min.js') }}"></script>
 <script src="{{ asset('assets/js/summernote-map-plugin.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js"></script>
 <script
     src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-{{ App::getLocale() }}-{{ getLocaleWithCountryCode()[App::getLocale()] }}.min.js">
 </script>
-<script src="{{asset('assets/js/argon-dashboard.js')}}"></script>
+<script src="{{ asset('assets/js/argon-dashboard.js') }}"></script>
 <script>
+    const toast = {
+        success: (title, content) => {
+            new Notify({
+                status: 'success',
+                title: title,
+                text: content,
+                effect: 'fade',
+                speed: 300,
+                customClass: '',
+                customIcon: '',
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 2000,
+                gap: 20,
+                distance: 20,
+                type: 1,
+                position: 'center'
+            })
+        },
+        error: (title, content) => {
+            new Notify({
+                status: 'error',
+                title: title,
+                text: content,
+                effect: 'fade',
+                speed: 300,
+                customClass: '',
+                customIcon: '',
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 2000,
+                gap: 20,
+                distance: 20,
+                type: 1,
+                position: 'center'
+            })
+        }
+    }
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
         var options = {
@@ -38,5 +79,4 @@
         }
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
-
 </script>

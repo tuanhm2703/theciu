@@ -72,7 +72,7 @@
                 contentType: false,
                 processData: false,
                 success: (res) => {
-                    tata.success(`{{trans('toast.action_successful')}}`, res.data.message)
+                    toast.success(`{{trans('toast.action_successful')}}`, res.data.message)
                     setTimeout(() => {
                         $('.batch-create-form').parents('.modal').modal('hide')
                         table.ajax.reload()

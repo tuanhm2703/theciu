@@ -22,7 +22,7 @@
             },
             dataType: 'json',
             success: (res) => {
-                tata.success('{{ trans('toast.action_successful') }}', res.data.message)
+                toast.success('{{ trans('toast.action_successful') }}', res.data.message)
                 $('.submit-btn').loading(false)
                 table.ajax.reload()
                 $('.modal').modal('hide')

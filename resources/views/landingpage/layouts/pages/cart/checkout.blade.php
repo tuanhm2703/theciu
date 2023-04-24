@@ -32,7 +32,7 @@
             $('#createAddressModal form').trigger('reset')
         })
         window.addEventListener('addressUpdated', (e) => {
-            tata.success(@json(trans('toast.action_successful')), e.detail.message)
+            toast.success(@json(trans('toast.action_successful')), e.detail.message)
             $('#return-address-list-btn').trigger('click')
         });
         const initChangeModal = () => {
@@ -55,7 +55,7 @@
             })
             $('.delete-address-form').ajaxForm({
                 success: (res, statusText, xhr, $form) => {
-                    tata.success(@json(trans('toast.action_successful')), res.data.message)
+                    toast.success(@json(trans('toast.action_successful')), res.data.message)
                     $($form).parents('.address-row').remove()
                 }
             })

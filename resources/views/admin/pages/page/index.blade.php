@@ -76,7 +76,7 @@
                     $('.page-form button[type=submit]').loading()
                 },
                 success: (res) => {
-                    tata.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                    toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                     $('.modal.show').modal('hide')
                     table.ajax.reload()
                 },

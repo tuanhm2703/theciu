@@ -112,6 +112,46 @@
     <script src="{{ getAssetUrl('assets/js/magiczoomplus.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script>
+        const toast = {
+            success: (title, content) => {
+                new Notify({
+                    status: 'success',
+                    title: title,
+                    text: content,
+                    effect: 'fade',
+                    speed: 300,
+                    customClass: '',
+                    customIcon: '',
+                    showIcon: true,
+                    showCloseButton: true,
+                    autoclose: true,
+                    autotimeout: 2000,
+                    gap: 20,
+                    distance: 20,
+                    type: 1,
+                    position: 'center'
+                })
+            },
+            error: (title, content) => {
+                new Notify({
+                    status: 'error',
+                    title: title,
+                    text: content,
+                    effect: 'fade',
+                    speed: 300,
+                    customClass: '',
+                    customIcon: '',
+                    showIcon: true,
+                    showCloseButton: true,
+                    autoclose: true,
+                    autotimeout: 2000,
+                    gap: 20,
+                    distance: 20,
+                    type: 1,
+                    position: 'center'
+                })
+            }
+        }
         $('.lazy').lazyload();
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
@@ -188,23 +228,7 @@
             const type = e.detail.type
             const label = type == 'success' ? `{{ trans('toast.action_successful') }}` :
                 `{{ trans('toast.action_failed') }}`
-            new Notify({
-                status: type,
-                title: label,
-                text: e.detail.message,
-                effect: 'fade',
-                speed: 300,
-                customClass: '',
-                customIcon: '',
-                showIcon: true,
-                showCloseButton: true,
-                autoclose: true,
-                autotimeout: 2000,
-                gap: 20,
-                distance: 20,
-                type: 1,
-                position: 'center'
-            })
+            toast[type](label, e.detail.message);
         });
         window.addEventListener("initQuantityInput", (e) => {
             quantityInputs()

@@ -18,7 +18,7 @@
                     paths: sources
                 },
                 success: (res) => {
-                    tata.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                    toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                 }
             })
         }
@@ -575,7 +575,7 @@
                 contentType: false,
                 processData: false,
                 success: (res) => {
-                    tata.success('{{ trans('toast.action_successful') }}', res.data.message)
+                    toast.success('{{ trans('toast.action_successful') }}', res.data.message)
                     setTimeout(() => {
                         window.location.href = `{{ route('admin.product.index') }}`
                     }, 600);

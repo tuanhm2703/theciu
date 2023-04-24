@@ -26,7 +26,7 @@
                 $('.submit-btn').loading()
             },
             success: (res) => {
-                tata.success('{{ trans('toast.action_successful') }}', res.data.message)
+                toast.success('{{ trans('toast.action_successful') }}', res.data.message)
                 setTimeout(() => {
                     window.location.href = `{{ route('admin.promotion.index') }}#voucher-list`
                 }, 1500);

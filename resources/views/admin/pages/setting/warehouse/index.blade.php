@@ -124,7 +124,7 @@
                 $('button[type=submit]').loading()
             },
             success: (res) => {
-                tata.success(@json(trans('toast.action_successful')), res.data.message)
+                toast.success(@json(trans('toast.action_successful')), res.data.message)
                 setTimeout(() => {
                     window.location.reload()
                 }, 1000);
@@ -156,7 +156,7 @@
                         $('.progress-bar').css('width', `${syncPercent}%`)
                         $('.progress-bar').text(`${syncPercent}%`)
                         if (syncPercent == 100) {
-                            tata.success(`{{ trans('toast.action_successful') }}`, 'Đồng bộ hoàn tất')
+                            toast.success(`{{ trans('toast.action_successful') }}`, 'Đồng bộ hoàn tất')
                             setTimeout(() => {
                                 $('.progress').css('opacity', 0)
                                 $('.progress').css('height', 0)

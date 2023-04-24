@@ -44,7 +44,7 @@
         success: (res) => {
             promotionProductTable.ajax.reload()
             flashSaleTable.ajax.reload()
-            tata.success('{{ trans('toast.action_successful') }}', res.data.message)
+            toast.success('{{ trans('toast.action_successful') }}', res.data.message)
         }
     })
 </script>

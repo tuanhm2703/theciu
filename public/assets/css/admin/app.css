@@ -428,3 +428,9 @@ div.dataTables_processing>div:last-child>div {
 .card-header:first-child {
     border-radius: 0 !important;
 }
+.notify__title {
+    font-size: 15px !important;
+}
+.notify__text {
+    font-size: 14px !important;
+}

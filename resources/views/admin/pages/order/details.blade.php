@@ -361,7 +361,7 @@
                 $('.update-order-status-form input[type=submit]').loading()
             },
             success: (res) => {
-                tata.success(@json(trans('toast.action_successful')), res.data.message)
+                toast.success(@json(trans('toast.action_successful')), res.data.message)
                 setTimeout(() => {
                     window.location.reload()
                 }, 1000);

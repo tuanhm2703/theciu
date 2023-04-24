@@ -56,7 +56,7 @@
                     status
                 },
                 success: (res) => {
-                    tata.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                    toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                 }
             })
         })
