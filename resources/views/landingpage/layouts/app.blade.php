@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/style.css') }}">
     <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/skins/skin-demo-6.css') }}">
     <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/demos/demo-6.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js"></script>
     <link rel="stylesheet" href="{{ getAssetUrl('assets/css/client/app.css') }}">
     <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/vendor/font-awesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ getAssetUrl('assets/landingpage/css/floating-labels.css') }}">
@@ -25,6 +26,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Mulish:wght@500&family=Roboto:ital,wght@0,300;1,300&display=swap"
         rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.css" />
+
+    <!-- JS -->
     <script src="{{ getAssetUrl('assets/landingpage/js/jquery.min.js') }}"></script>
     <script src="{{ getAssetUrl('assets/js/jquery.form.min.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
@@ -121,14 +126,14 @@
         })
         $('body').on('click', '.open-detail-voucher-btn', (e) => {
             const element = $(`.voucher-condition-detail[data-voucher-id=${$(e.target).attr('data-voucher-id')}]`)
-            if(element.hasClass('show')) {
+            if (element.hasClass('show')) {
                 element.removeClass('show')
             } else {
                 element.addClass('show')
             }
         })
         $('body').on('click', '#sticky-gift-icon, #close-voucher-list-btn', (e) => {
-            if($('#save-voucher-component-wrapper').hasClass('hide')) {
+            if ($('#save-voucher-component-wrapper').hasClass('hide')) {
                 $('#save-voucher-component-wrapper').removeClass('hide')
             } else {
                 $('#save-voucher-component-wrapper').addClass('hide')
@@ -183,7 +188,23 @@
             const type = e.detail.type
             const label = type == 'success' ? `{{ trans('toast.action_successful') }}` :
                 `{{ trans('toast.action_failed') }}`
-            tata[e.detail.type](label, e.detail.message)
+            new Notify({
+                status: type,
+                title: label,
+                text: e.detail.message,
+                effect: 'fade',
+                speed: 300,
+                customClass: '',
+                customIcon: '',
+                showIcon: true,
+                showCloseButton: true,
+                autoclose: true,
+                autotimeout: 2000,
+                gap: 20,
+                distance: 20,
+                type: 1,
+                position: 'center'
+            })
         });
         window.addEventListener("initQuantityInput", (e) => {
             quantityInputs()

@@ -1525,6 +1525,12 @@ input[type=number] {
 .text-line-through {
     text-decoration: line-through;
 }
+.notify__title {
+    font-size: 15px !important;
+}
+.notify__text {
+    font-size: 14px !important;
+}
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;
