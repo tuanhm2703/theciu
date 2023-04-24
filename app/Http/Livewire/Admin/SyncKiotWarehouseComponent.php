@@ -45,23 +45,20 @@ class SyncKiotWarehouseComponent extends Component
     }
     public function downloadKiotData()
     {
-        $kiotProduct = KiotProduct::orderBy('updated_at')->first();
-        if (!$kiotProduct || now()->diffInHours($kiotProduct->updated_at) >= 24) {
-            $productResource = new ProductResource(App::make(Client::class));
-            $data = $productResource->list(['pageSize' => '1']);
-            $total = $data->getTotal();
-            $numbeOfPage = $total % 100 == 0 ? $total / 100 : (int) ($total / 100) + 1;
-            for ($i = 0; $i < $numbeOfPage; $i++) {
-                $currentItem = $i * 100;
-                $products = $productResource->list(['pageSize' => 100, 'currentItem' => $currentItem, 'includeInventory' => true])->getItems();
-                foreach ($products as $product) {
-                    KiotProduct::updateOrCreate([
-                        'kiot_product_id' => $product->getId(),
-                        'kiot_code' => $product->getCode()
-                    ], [
-                        'data' => $product->getModelData()
-                    ]);
-                }
+        $productResource = new ProductResource(App::make(Client::class));
+        $data = $productResource->list(['pageSize' => '1']);
+        $total = $data->getTotal();
+        $numbeOfPage = $total % 100 == 0 ? $total / 100 : (int) ($total / 100) + 1;
+        for ($i = 0; $i < $numbeOfPage; $i++) {
+            $currentItem = $i * 100;
+            $products = $productResource->list(['pageSize' => 100, 'currentItem' => $currentItem, 'includeInventory' => true])->getItems();
+            foreach ($products as $product) {
+                KiotProduct::updateOrCreate([
+                    'kiot_product_id' => $product->getId(),
+                    'kiot_code' => $product->getCode()
+                ], [
+                    'data' => $product->getModelData()
+                ]);
             }
         }
         $this->dispatchBrowserEvent('startSyncKiot');
