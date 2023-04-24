@@ -31,14 +31,10 @@ class OrderWaitToPickListener
     public function handle($event)
     {
         $order = $event->order;
-        if ($order->kiot_order) {
-            $orderResource = new OrderResource(App::make(Client::class));
-            try {
-                $kiotOrder = $orderResource->getByCode($order->kiot_order->kiot_code);
-                KiotService::createKiotInvoice($kiotOrder, $order);
-            } catch (\Throwable $th) {
-                Log::error($th);
-            }
+        try {
+            KiotService::createKiotInvoice($order);
+        } catch (\Throwable $th) {
+            \Log::error($th);
         }
     }
 }

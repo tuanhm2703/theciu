@@ -44,7 +44,7 @@ class KiotService
                     if ($rank) {
                         if ($customer->available_rank && $customer->available_rank->min_value < $rank->min_value) {
                             $customer->ranks()->sync($rank->id);
-                        } else if(!$customer->available_rank) {
+                        } else if (!$customer->available_rank) {
                             $customer->ranks()->sync($rank->id);
                         }
                     } else {
@@ -64,17 +64,19 @@ class KiotService
         return false;
     }
 
-    public static function cancelKiotInvoice(Order $order) {
-        if($order->kiot_invoice) {
+    public static function cancelKiotInvoice(Order $order)
+    {
+        if ($order->kiot_invoice) {
             $order->kiot_invoice->removeKiotInvoice();
             return true;
         }
         return false;
     }
 
-    public static function cancelKiotOrder(Order $order, $cancelInvoice = true) {
+    public static function cancelKiotOrder(Order $order, $cancelInvoice = true)
+    {
         $kiot_order = $order->kiot_order;
-        if($kiot_order) {
+        if ($kiot_order) {
             $orderResource = new OrderResource(App::make(Client::class));
             try {
                 $orderResource->remove("$kiot_order->kiot_order_id?IsVoidPayment=$cancelInvoice");
@@ -86,10 +88,19 @@ class KiotService
         return false;
     }
 
-    public static function createKiotInvoice(ModelOrder $order, Order $localOrder)
+    public static function getOrderById($id) {
+        $orderResource = new OrderResource(App::make(Client::class));
+        try {
+            return $orderResource->getById($id);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return null;
+        }
+    }
+
+    public static function createKiotInvoice(Order $localOrder)
     {
         try {
-            $kiotSetting = App::get('KiotConfig');
             $discount = $localOrder->order_voucher ? $localOrder->order_voucher->pivot->amount : 0;
             $kiotCustomer = new ModelCustomer([
                 'name' => $localOrder->shipping_address->fullname,
@@ -97,12 +108,21 @@ class KiotService
                 "contactNumber" => $localOrder->shipping_address->phone,
                 'address' => $localOrder->shipping_address->full_address
             ]);
-            $order->setDiscount($discount);
-            $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
-            $order->setMakeInvoice(true);
-            $order->setCustomer($kiotCustomer);
-            $orderResource = new OrderResource(App::make(Client::class));
-            $orderResource->update($order);
+            if(!$localOrder->kiot_order) {
+                $order = static::createKiotOrder($localOrder);
+            } else {
+                $order = static::getOrderById($localOrder->kiot_order->kiot_order_id);
+            }
+            if($order) {
+                $order->setDiscount($discount);
+                $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
+                $order->setMakeInvoice(true);
+                $order->setCustomer($kiotCustomer);
+                $orderResource = new OrderResource(App::make(Client::class));
+                $orderResource->update($order);
+            } else {
+                return false;
+            }
             // $invoice = new Invoice([
             //     'branchId' => $order->getBranchId(),
             //     'purchaseDate' => (string) now(),
@@ -163,16 +183,22 @@ class KiotService
         $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
         $order->setOrderDetails($localOrder->generateKiotOrderDetailCollection());
         $order->setCustomer($kiotCustomer);
-        if(isset($kiotSetting->data['saleId'])) {
+        if (isset($kiotSetting->data['saleId'])) {
             $order->setSoldById($kiotSetting->data['saleId']);
         }
-        $kiotOrder = $orderResource->create($order, [
-            'Partner' => 'KVSync'
-        ]);
-        $localOrder->kiot_order()->create([
-            'kiot_order_id' => $kiotOrder->getId(),
-            'kiot_code' => $kiotOrder->getCode(),
-            'data' => $kiotOrder->getModelData()
-        ]);
+        try {
+            $kiotOrder = $orderResource->create($order, [
+                'Partner' => 'KVSync'
+            ]);
+            $localOrder->kiot_order()->create([
+                'kiot_order_id' => $kiotOrder->getId(),
+                'kiot_code' => $kiotOrder->getCode(),
+                'data' => $kiotOrder->getModelData()
+            ]);
+            return $kiotOrder;
+        } catch (\Throwable $th) {
+            Log::error($th);
+            return false;
+        }
     }
 }
