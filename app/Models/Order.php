@@ -229,11 +229,11 @@ class Order extends Model
             $order_history->executable_type = ShippingService::class;
             $order_history->executable_id = $this->shipping_service->id;
             if ($this->order_status == OrderStatus::CANCELED) {
-                $this->canceler = OrderCanceler::SHIPPING_SERVICE;
+                $this->canceled_by = OrderCanceler::SHIPPING_SERVICE;
             }
         } else {
             if ($this->order_status == OrderStatus::CANCELED) {
-                $this->canceler = OrderCanceler::SYSTEM;
+                $this->canceled_by = OrderCanceler::SYSTEM;
             }
         }
         $executor_label = $order_history->executorLabel();
