@@ -173,6 +173,7 @@ class KiotService
             "contactNumber" => $localOrder->shipping_address->phone,
             'address' => $localOrder->shipping_address->full_address
         ]);
+        $order->setIsApplyVoucher($localOrder->order_voucher ? true : false);
         $order->setBranchId($kiotSetting->data['branchId']);
         $order->setDescription("The C.I.U Order: $localOrder->order_number");
         $order->setTotalPayment($localOrder->total);
