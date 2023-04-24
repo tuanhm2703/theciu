@@ -40,6 +40,11 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
+                        data-order-status="{{ App\Enums\OrderStatus::PICKING }}" aria-controls="order-list"
+                        aria-selected="true">Đang lấy hàng <span class="order-count"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
                         data-order-status="{{ App\Enums\OrderStatus::DELIVERING }}" aria-controls="order-list"
                         aria-selected="true">Đang giao <span class="order-count"></span></a>
                 </li>

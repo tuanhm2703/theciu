@@ -20,6 +20,12 @@
         <li class="nav-item">
             <a class="nav-link" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
                 wire:click="changeOrderStatus({{ App\Enums\OrderStatus::PICKING }})" aria-controls="order-list"
+                aria-selected="true">Đang lấy hàng
+                ({{ $order_counts->where('order_status', App\Enums\OrderStatus::PICKING)->first() ? $order_counts->where('order_status', App\Enums\OrderStatus::PICKINNG)->first()->order_count : 0 }})</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="order-list-tab" data-toggle="tab" href="#order-list" role="tab"
+                wire:click="changeOrderStatus({{ App\Enums\OrderStatus::PICKING }})" aria-controls="order-list"
                 aria-controls="order-list" aria-selected="true">Đang lấy hàng
                 ({{ $order_counts->where('order_status', App\Enums\OrderStatus::PICKING)->first() ? $order_counts->where('order_status', App\Enums\OrderStatus::PICKING)->first()->order_count : 0 }})</a>
         </li>
