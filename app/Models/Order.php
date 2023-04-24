@@ -293,7 +293,7 @@ class Order extends Model
     }
 
     public function migrateOrderNumber() {
-        $this->order_number = (time() + (10 * 24 * 60 * 60))."";
+        $this->order_number = (time() + (10 * 24 * 60 * 60)) + rand(0, 10);
     }
 
     public function restock()
