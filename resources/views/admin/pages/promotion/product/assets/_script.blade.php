@@ -130,9 +130,16 @@
         const inventory = product.inventories.find(i => {
             return i.id = inventoryId
         })
-        inventory.promotion_status = $(element).is(":checked") ? 1 : 0
-        $(`.promotion-price-input[data-inventory-id=${inventory.id}]`).attr('disabled', !$(element).is(":checked"))
-        $(`.promotion-percent-input[data-inventory-id=${inventory.id}]`).attr('disabled', !$(element).is(
+        products.forEach((p) => {
+            p.inventories.forEach((i) => {
+                if(i.id == inventoryId) {
+                    i.promotion_status = $(element).is(":checked") ? 1 : 0
+                }
+            })
+        });
+
+        $(`.promotion-price-input[data-inventory-id=${inventoryId}]`).attr('disabled', !$(element).is(":checked"))
+        $(`.promotion-percent-input[data-inventory-id=${inventoryId}]`).attr('disabled', !$(element).is(
             ":checked"))
 
     }
