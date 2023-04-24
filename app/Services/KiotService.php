@@ -75,11 +75,21 @@ class KiotService
 
     public static function cancelKiotOrder(Order $order, $cancelInvoice = true)
     {
+
         $kiot_order = $order->kiot_order;
         if ($kiot_order) {
-            $orderResource = new OrderResource(App::make(Client::class));
             try {
-                $orderResource->remove("$kiot_order->kiot_order_id?IsVoidPayment=$cancelInvoice");
+                $orderResource = new OrderResource(App::make(Client::class));
+                $invoiceResource = new InvoiceResource(App::make(Client::class));
+                $order = $orderResource->getByCode($kiot_order->kiot_code);
+                if ($order->getOtherProperties()) {
+                    $data = $order->getOtherProperties();
+                    if (isset($data['invoices']) && count($data['invoices']) > 0) {
+                        $invoice = $data['invoices'][0];
+                        $invoiceResource->remove($invoice['invoiceId']);
+                        $orderResource->remove($order->getId());
+                    }
+                };
                 return true;
             } catch (\Throwable $th) {
                 Log::error($th);
@@ -88,7 +98,8 @@ class KiotService
         return false;
     }
 
-    public static function getOrderById($id) {
+    public static function getOrderById($id)
+    {
         $orderResource = new OrderResource(App::make(Client::class));
         try {
             return $orderResource->getById($id);
@@ -108,12 +119,12 @@ class KiotService
                 "contactNumber" => $localOrder->shipping_address->phone,
                 'address' => $localOrder->shipping_address->full_address
             ]);
-            if(!$localOrder->kiot_order) {
+            if (!$localOrder->kiot_order) {
                 $order = static::createKiotOrder($localOrder);
             } else {
                 $order = static::getOrderById($localOrder->kiot_order->kiot_order_id);
             }
-            if($order) {
+            if ($order) {
                 $order->setDiscount($discount);
                 $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
                 $order->setMakeInvoice(true);
