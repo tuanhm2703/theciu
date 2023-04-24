@@ -117,6 +117,7 @@ class KiotService
                 $order->setDiscount($discount);
                 $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
                 $order->setMakeInvoice(true);
+                $order->setTotalPayment($localOrder->subtotal);
                 $order->setCustomer($kiotCustomer);
                 $orderResource = new OrderResource(App::make(Client::class));
                 $orderResource->update($order);
