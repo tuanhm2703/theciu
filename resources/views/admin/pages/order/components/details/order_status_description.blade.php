@@ -66,10 +66,14 @@
             <b>{{ trans('labels.cancel_reason') }}: </b> <i class="ps-3">{{ $order->cancel_reason }}</i>
         </div>
     @break
+
     @case(App\Enums\OrderStatus::PICKING)
-        <div style="height: 50px; background: #f4f4f4" class="d-flex align-items-center px-3 rounded">
-            <b>{{ trans('labels.cancel_reason') }}: </b> <i class="ps-3">{{ $order->cancel_reason }}</i>
-        </div>
+        <button class="btn btn-default m-0 me-3 bg-white ajax-modal-btn" data-modal-size="sm"
+            data-link="{{ route('admin.order.view.cancel', $order->id) }}">
+            Huỷ đơn hàng
+        </button>
+        <a class="btn btn-primary ajax-modal-btn m-0" href="javascript:;"
+            data-link="{{ route('admin.order.shipping_order', ['order' => $order->id]) }}">{{ trans('labels.shipping_info') }}</a>
     @break
 
     @default
