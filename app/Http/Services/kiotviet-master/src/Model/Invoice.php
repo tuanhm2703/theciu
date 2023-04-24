@@ -46,6 +46,12 @@ class Invoice extends BaseModel
         6 => 'Đã hủy'
     ];
 
+
+    /**
+     * @var float
+     */
+    private $discount;
+
     /**
      * @var SaleChannel
      */
@@ -456,6 +462,30 @@ class Invoice extends BaseModel
     public function setSaleChannelId(int $saleChannelId)
     {
         $this->saleChannelId = $saleChannelId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of discount
+     *
+     * @return  float
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    /**
+     * Set the value of discount
+     *
+     * @param  float  $discount
+     *
+     * @return  self
+     */
+    public function setDiscount(float $discount)
+    {
+        $this->discount = $discount;
 
         return $this;
     }
