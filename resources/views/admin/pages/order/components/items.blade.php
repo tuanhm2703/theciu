@@ -15,7 +15,7 @@
     </div>
 @endforeach
 @if ($order->note)
-    <div class="mx-1 mt-3">
-        <i>Chú thích: {{ $order->note }}</i>
+    <div class="mx-1 mt-3 w-100">
+        <i style="white-space: normal;">Chú thích: {{ $order->note }}</i>
     </div>
 @endif

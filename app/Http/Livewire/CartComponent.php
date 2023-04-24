@@ -59,7 +59,7 @@ class CartComponent extends Component {
         'payment_method_id' => 'required',
         'address' => 'required',
         'item_selected' => 'array|min:1',
-        'note' => 'string|nullable'
+        'note' => 'string|nullable|max:120'
     ];
 
     protected $messages = [
