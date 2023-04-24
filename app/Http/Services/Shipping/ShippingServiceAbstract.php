@@ -232,7 +232,7 @@ abstract class ShippingServiceAbstract {
         $shipping_order = ShippingOrder::with('shipping_service', 'order')->findOrFail($shipping_order_data->shipping_order_id);
         if ($order_status != null) {
             if ($order_status == OrderStatus::CANCELED) {
-                $shipping_order->order->reason_cancel = $shipping_order_data->reason;
+                $shipping_order->order->cancel_reason = $shipping_order_data->reason;
                 $shipping_order->order->canceled_by = OrderCanceler::SHIPPING_SERVICE;
             }
             if ($order_status != $shipping_order->order->order_status) {
