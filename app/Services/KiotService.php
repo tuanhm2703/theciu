@@ -177,7 +177,7 @@ class KiotService
         $order->setBranchId($kiotSetting->data['branchId']);
         $order->setDiscount($localOrder->order_voucher ? $localOrder->order_voucher->amount : 0);
         $order->setDescription("The C.I.U Order: $localOrder->order_number");
-        $order->setTotalPayment($localOrder->total);
+        $order->setTotalPayment($localOrder->subtotal);
         $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
         $order->setSoldById($kiotSetting->data['salerId']);
         $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
