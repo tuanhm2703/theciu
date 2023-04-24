@@ -206,7 +206,7 @@ class GHTKService extends ShippingServiceAbstract
                 /* Getting the ward of the receiver. */
                 "ward" => $ward_name,
                 /* A required field. */
-                "hamlet" => "Khác",
+                "hamlet" => $order->shipping_address->details,
                 /* The order is free shipping. */
                 "is_freeship" => $this->isOrderFreeship($order),
                 /* Pickup date. */
