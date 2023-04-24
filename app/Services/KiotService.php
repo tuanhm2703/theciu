@@ -88,6 +88,8 @@ class KiotService
     public static function createKiotInvoice(ModelOrder $order, Order $localOrder)
     {
         try {
+            $kiotSetting = App::get('KiotConfig');
+            $discount = $localOrder->order_voucher ? $localOrder->order_voucher->pivot->amount : 0;
             $invoice = new Invoice([
                 'branchId' => $order->getBranchId(),
                 'purchaseDate' => (string) now(),
@@ -95,9 +97,11 @@ class KiotService
                 'discount' => $order->getDiscount(),
                 'totalPayment' => $order->getTotalPayment(),
                 'saleChannelId' => $order->getSaleChannelId(),
+                'soldById' => $kiotSetting->data['salerId'],
                 'method' => 'test',
                 'usingCod' => false,
-                'soldById' => 422903,
+                'soldById' => $kiotSetting->data['salerId'],
+                'discount' => $discount,
                 'orderId' => $order->getId(),
                 'invoiceDetails' => $localOrder->generateKiotInvoiceDetailCollection(),
                 'status' => 3
@@ -131,6 +135,7 @@ class KiotService
         $order->setDescription("The C.I.U Order: $localOrder->order_number");
         $order->setTotalPayment($localOrder->total);
         $order->setMethod('hello');
+        $order->setSoldById($kiotSetting->data['salerId']);
         $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
         $order->setMakeInvoice(false);
         $order->setOrderDetails($localOrder->generateKiotOrderDetailCollection());
