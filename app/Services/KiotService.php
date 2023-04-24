@@ -175,6 +175,7 @@ class KiotService
         ]);
         $order->setIsApplyVoucher($localOrder->order_voucher ? true : false);
         $order->setBranchId($kiotSetting->data['branchId']);
+        $order->setDiscount($localOrder->order_voucher ? $localOrder->order_voucher->amount : 0);
         $order->setDescription("The C.I.U Order: $localOrder->order_number");
         $order->setTotalPayment($localOrder->total);
         $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
