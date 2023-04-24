@@ -27,10 +27,10 @@ class HttpClient
             . ', RequestBody: ' . $payload);
         $logger->info('[HTTP Response from MoMoServer] HttpStatusCode: ' . $statusCode
             . ', ResponseBody: ' . $result);
-        Log::channel('momo')->info('[HTTP Post to MoMoServer] Endpoint: ' . curl_getinfo($ch, CURLINFO_EFFECTIVE_URL)
-            . ', RequestBody: ' . $payload);
-        Log::channel('momo')->error('[HTTP Response from MoMoServer] HttpStatusCode: ' . $statusCode
-            . ', ResponseBody: ' . $result);
+        // Log::channel('momo')->info('[HTTP Post to MoMoServer] Endpoint: ' . curl_getinfo($ch, CURLINFO_EFFECTIVE_URL)
+        //     . ', RequestBody: ' . $payload);
+        // Log::channel('momo')->error('[HTTP Response from MoMoServer] HttpStatusCode: ' . $statusCode
+        //     . ', ResponseBody: ' . $result);
 
         curl_close($ch);
 
