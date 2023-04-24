@@ -294,6 +294,9 @@ class Order extends Model
 
     public function migrateOrderNumber() {
         $this->order_number = (time() + (10 * 24 * 60 * 60) + rand(0, 10))."" ;
+        while(Order::where('order_number', $this->order_number)->exists()) {
+            $this->order_number = (time() + (10 * 24 * 60 * 60) + rand(0, 10))."";
+        }
     }
 
     public function restock()
