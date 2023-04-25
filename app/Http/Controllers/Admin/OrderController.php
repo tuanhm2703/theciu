@@ -48,7 +48,7 @@ class OrderController extends Controller {
     public function acceptOrder(Order $order, UpdateOrderRequest $request) {
         DB::beginTransaction();
         try {
-            $address = Address::find($request->pickup_address_id);
+            $address = $request->has('pickup_address_id') ? Address::find($request->pickup_address_id) : App::get('AppConfig')->pickup_address;
             $data = $address->toArray();
             $data['addressable_id'] = $order->id;
             $order->addresses()->create($data);
@@ -107,5 +107,13 @@ class OrderController extends Controller {
 
     public function printShippingOrderInfo(Order $order, ViewOrderRequest $request) {
         return App::make(GHTKService::class)->printOrder($order->shipping_order->code);
+    }
+
+    public function batchFinishPackaging(Request $request) {
+        $orders = Order::whereIn('id', $request->order_ids)->get();
+        $orders->each(function($order) {
+            $order->action_url = route('admin.order.accept', $order->id);
+        });
+        return view('admin.pages.order.components.batch.finish_packaging', compact('orders'));
     }
 }

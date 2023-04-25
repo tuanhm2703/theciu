@@ -48,6 +48,9 @@ class OrderObserver {
                     break;
             }
         }
+        if($order->isDirty('order_status') && $order->order_status != OrderStatus::WAITING_TO_PICK) {
+            throw new Exception("Thao tác không hợp lệ", 400);
+        }
         if($order->isDirty('sub_status')) {
             if($order->sub_status == OrderSubStatus::FINISH_PACKAGING) {
                 $order->pushShippingOrder();

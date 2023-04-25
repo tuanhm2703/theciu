@@ -138,11 +138,17 @@
             $(this).loading()
             var url = $(this).data('link');
             const callback = $(this).data('callback')
+            const getDataFunc = $(this).attr('data-get-data-function');
+            let payload = null;
+            if(getDataFunc) {
+                payload = eval(getDataFunc)
+            }
             var ajaxElement = this
             if (url.indexOf('#') == 0) {
                 $(url).modal('open');
             } else {
-                $.get(url, function(data) {
+                $.get(url, payload)
+                    .done(function(data) {
                         $(`#${modalId} .modal-body`).html(data);
                         $(`#${modalId} .modal-dialog`).addClass(modalSize)
                         $(`#${modalId}`).modal('show');
@@ -154,9 +160,6 @@
                             initAppPlugins();
                         }
                         if (callback) eval(callback)
-
-                    })
-                    .done(function() {
                         $(btn).loading(false)
                     })
                     .fail(function(response) {

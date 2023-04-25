@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\AddressType;
 use App\Interfaces\AppConfig;
+use App\Traits\Common\Addressable;
 use App\Traits\Common\Metable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,13 +12,7 @@ use Illuminate\Support\Facades\App;
 use Meta;
 
 class Config extends Model {
-    use HasFactory, Metable;
-    public function pickup_address() {
-        return $this->morphOne(Address::class, 'addressable')->where('type', AddressType::PICKUP);
-    }
-    public function pickup_addresses() {
-        return $this->morphMany(Address::class, 'addressable')->where('type', AddressType::PICKUP);
-    }
+    use HasFactory, Metable, Addressable;
 
     public static function loadMeta() {
         $config = App::get('AppConfig');

@@ -73,6 +73,11 @@
                                 aria-controls="order-sub-list" aria-selected="true">Đã xử lý</span></a>
                         </li>
                     </ul>
+                    <div class="text-end">
+                        <button class="btn btn-primary ajax-modal-btn d-none" id="batch-finish-batching-btn"
+                            data-get-data-function="getOrderId()"
+                            data-link="{{ route('admin.order.batch.finish_packaging') }}">Đóng gói hàng loạt</button>
+                    </div>
                     <div class="table-responsive">
                         <table class="table order-table w-100">
                             <thead>
@@ -98,15 +103,25 @@
 @endsection
 @push('js')
     <script>
+        const getOrderId = () => {
+            return {
+                order_ids: $('input[name="orderListItem[]"]:checked').map(function() {
+                    return $(this).val()
+                }).get()
+            };
+        }
         let inited = false;
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             const orderStatus = $(e.target).data('orderStatus')
-            console.log(orderStatus);
+            $('#batch-finish-batching-btn').addClass('d-none')
             if (orderStatus != null) {
                 $('#sub-status-tab').addClass('d-none')
                 if (orderStatus == `{{ App\Enums\OrderStatus::WAITING_TO_PICK }}`) {
                     $('#sub-status-tab').removeClass('d-none')
                     const subStatus = $('#sub-status-tab a.active').attr('data-order-sub-status')
+                    if (subStatus == `{{ App\Enums\OrderSubStatus::PREPARING }}`) {
+                        $('#batch-finish-batching-btn').removeClass('d-none')
+                    }
                     initOrderTable(orderStatus, subStatus)
                 } else {
                     initOrderTable(orderStatus)
@@ -114,6 +129,9 @@
             } else {
                 const orderStatus = $('#order-status-tab a.active').attr('data-order-status');
                 const subStatus = $('#sub-status-tab a.active').attr('data-order-sub-status')
+                if (subStatus == `{{ App\Enums\OrderSubStatus::PREPARING }}`) {
+                    $('#batch-finish-batching-btn').removeClass('d-none')
+                }
                 initOrderTable(orderStatus, subStatus)
             }
         });
@@ -180,7 +198,6 @@
             })
         }
         const initStyleTable = () => {
-            console.log($('.order-header-column').length);
             $('.order-header-column').each((index, e) => {
                 const header = $(e).clone()
                 if (index > 0 || (inited == true && index == 0)) {
@@ -198,5 +215,53 @@
             inited = true
         }
         initOrderTable(@json(App\Enums\OrderStatus::ALL))
+        $('body').on('click', '#submit-action-btn', (e) => {
+            $('.status-label').html(
+                `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`
+            )
+            const orderIds = getOrderId().order_ids
+            let totalFinished = 0;
+            $(`#submit-action-btn`).loading()
+            orderIds.forEach((id) => {
+                $.ajax({
+                    url: `/admintheciu/order/${id}/accept`,
+                    type: 'PUT',
+                    success: (res) => {
+                        const total = totalFinished + 1;
+                        if (total > totalFinished) {
+                            totalFinished = total
+                        }
+                        $(`div[data-order-id=${id}]`).html(
+                            `<i class="text-success fas fa-check-circle"></i>`
+                        )
+                        if (totalFinished == orderIds.length) {
+                            toast.success(`{{ trans('toast.action_successful') }}`,
+                                'Thao tác thành công')
+                            orderTable.ajax.reload()
+                            setTimeout(() => {
+                                $('.modal.show').modal('hide')
+                            }, 1000);
+                        }
+                    },
+                    error: (err) => {
+                        const total = totalFinished + 1;
+                        if (total > totalFinished) {
+                            totalFinished = total
+                        }
+                        if (totalFinished == orderIds.length) {
+                            toast.success(`{{ trans('action_successful') }}`,
+                                'Thao tác thành công')
+                            orderTable.ajax.reload()
+                            setTimeout(() => {
+                                $('.modal.show').modal('hide')
+                            }, 1000);
+                        }
+                        $(`div[data-order-id=${id}]`).html(
+                            `<i class="text-danger fas fa-times-circle"></i>`
+                        )
+                    }
+                })
+            });
+        })
     </script>
 @endpush

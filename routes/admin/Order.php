@@ -11,6 +11,7 @@ Route::group(['prefix' => 'order', 'as' => 'order.'], function() {
     Route::put('{order}/cancel', [OrderController::class, 'cancelOrder'])->name('cancel');
     Route::get('{order}/shipping-order', [OrderController::class, 'getShippingInfo'])->name('shipping_order');
     Route::get('{order}/shipping-order/print', [OrderController::class, 'printShippingOrderInfo'])->name('shipping_order.print');
+    Route::get('batch/finish-packaging', [OrderController::class, 'batchFinishPackaging'])->name('batch.finish_packaging');
 });
 
 Route::resource('order', OrderController::class);
