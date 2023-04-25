@@ -29,4 +29,7 @@ trait Addressable {
     public function pickup_address() {
         return $this->morphOne(Address::class, 'addressable')->where('type', AddressType::PICKUP)->orderBy('featured', 'desc');
     }
+    public function pickup_addresses() {
+        return $this->morphMany(Address::class, 'addressable')->where('type', AddressType::PICKUP)->orderBy('featured', 'desc');
+    }
 }

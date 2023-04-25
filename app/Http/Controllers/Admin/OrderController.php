@@ -41,7 +41,7 @@ class OrderController extends Controller {
     public function choosePickupAddress(UpdateOrderRequest $request, Order $order) {
         $pickup_shifts = App::make(GHTKService::class)->getListPickupTime();
         $pickup_shifts = collect($pickup_shifts)->pluck('time', 'id')->toArray();
-        $pickup_addresses = Config::select('id')->first()->pickup_addresses()->get();
+        $pickup_addresses = App::get('AppConfig')->pickup_addresses()->get();
         return view('admin.pages.order.components.pickup_address_selector', compact('order', 'pickup_shifts', 'pickup_addresses'));
     }
 
