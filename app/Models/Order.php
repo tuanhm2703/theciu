@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use App\Enums\OrderCanceler;
+use App\Enums\PaymentMethodType;
 use App\Enums\PaymentStatus;
 use App\Http\Services\Payment\PaymentService;
 use Exception;
@@ -390,5 +391,14 @@ class Order extends Model
 
     public function getCustomerPaymentAmountAttribute() {
         return $this->total;
+    }
+
+    public static function cancelNotPaidOrder() {
+        $orders = Order::where('order_status', OrderStatus::WAIT_TO_ACCEPT)->where('created_at', '<=', now()->subDay())->get();
+        foreach ($orders as $order) {
+            $order->cancel_reason = 'Đơn hàng bị huỷ vì chưa hoàn thành thanh toán trong 24h';
+            $order->order_status = OrderStatus::CANCELED;
+            $order->save();
+        }
     }
 }

@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header pb-0">
         <h6 class="d-flex justify-content-between align-items-center">Hoàn tất đóng gói hàng loạt
-            <button class="btn btn-primary" id="submit-action-btn">Thực hiện xác nhận</button>
+            <button class="btn btn-primary" id="submit-action-btn">Thực hiện thao tác</button>
         </h6>
     </div>
     <div class="card-body">
