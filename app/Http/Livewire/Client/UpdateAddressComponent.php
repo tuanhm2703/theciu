@@ -79,6 +79,11 @@ class UpdateAddressComponent extends Component {
     public function updateAddress() {
         $this->validate();
         $this->address->featured = $this->address->featured ? 1 : 0;
+        if($this->address->featured) {
+            customer()->addresses()->update([
+                'featured' => 0
+            ]);
+        }
         $this->address->save();
         $this->emitTo('profile-address-info', 'refresh');
         $this->dispatchBrowserEvent('addressUpdated', [
