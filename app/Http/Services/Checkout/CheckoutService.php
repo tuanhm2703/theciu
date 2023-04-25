@@ -13,6 +13,7 @@ use App\Models\Config;
 use App\Models\VoucherType;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutService
 {
@@ -119,8 +120,15 @@ class CheckoutService
             event(new KiotOrderCreatedEvent($order));
             return $redirectUrl;
         } catch (\Throwable $th) {
+            Log::error($th);
             DB::rollBack();
-            throw new Exception($th->getMessage());
+            $error =  "";
+            if ($th->getCode() !== 500) {
+                $error = $th->getMessage();
+            } else {
+                $error = 'Đã có lỗi xảy ra, vui lòng liên hệ bộ phận chăm sóc khách hàng để nhận hỗ trợ.';
+            }
+            throw new Exception($error);
         }
     }
 }

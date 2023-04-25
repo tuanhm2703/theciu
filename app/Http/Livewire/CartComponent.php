@@ -172,12 +172,7 @@ class CartComponent extends Component {
             $redirectUrl = CheckoutService::checkout($checkoutModel);
             return redirect()->to($redirectUrl);
         } catch (\Throwable $th) {
-            Log::error($th);
-            if ($th->getCode() !== 500) {
-                $this->error = $th->getMessage();
-            } else {
-                $this->error = 'Đã có lỗi xảy ra, vui lòng liên hệ bộ phận chăm sóc khách hàng để nhận hỗ trợ.';
-            }
+            $this->error = $th->getMessage();
         }
     }
 
