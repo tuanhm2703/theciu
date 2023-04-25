@@ -15,6 +15,7 @@ class OrderController extends Controller {
             $q->withTrashed();
         }]);
         if($order_status != OrderStatus::ALL) $orders->where('order_status', $order_status);
+        if($request->has('order_sub_status')) $orders->where('sub_status', $request->order_sub_status);
         $order_counts = Order::selectRaw('count(id) as order_count, order_status')->groupBy('order_status')->get();
         $order_counts[] = [
             'order_status' => OrderStatus::ALL,

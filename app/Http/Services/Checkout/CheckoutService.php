@@ -4,12 +4,15 @@ namespace App\Http\Services\Checkout;
 
 use App\Enums\AddressType;
 use App\Enums\OrderStatus;
+use App\Enums\OrderSubStatus;
+use App\Enums\PaymentMethodType;
 use App\Enums\PaymentStatus;
 use App\Events\Kiot\OrderCreatedEvent as KiotOrderCreatedEvent;
 use App\Events\OrderCreatedEvent;
 use App\Exceptions\InventoryOutOfStockException;
 use App\Http\Services\Payment\PaymentService;
 use App\Models\Config;
+use App\Models\PaymentMethod;
 use App\Models\VoucherType;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -22,12 +25,14 @@ class CheckoutService
         DB::beginTransaction();
         $customer = auth('customer')->user();
         try {
+            $payment_method = PaymentMethod::find($checkoutModel->getPaymentMethodId());
             $order = $customer->orders()->create([
                 'total' => 0,
                 'subtotal' => 0,
                 'origin_subtotal' => 0,
                 'shipping_fee' => $checkoutModel->getShippingFee(),
-                'order_status' => OrderStatus::WAIT_TO_ACCEPT,
+                'order_status' => $payment_method->type == PaymentMethodType::COD ? OrderStatus::WAITING_TO_PICK : OrderStatus::WAIT_TO_ACCEPT,
+                'sub_status' => $payment_method->type == PaymentMethodType::COD ? OrderSubStatus::PREPARING : null,
                 'payment_method_id' => $checkoutModel->getPaymentMethodId(),
                 'note' => $checkoutModel->getNote()
             ]);
