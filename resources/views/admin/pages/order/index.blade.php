@@ -101,7 +101,7 @@
         let inited = false;
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             const orderStatus = $(e.target).data('orderStatus')
-            if (orderStatus) {
+            if (orderStatus != null) {
                 $('#sub-status-tab').addClass('d-none')
                 if (orderStatus == `{{ App\Enums\OrderStatus::WAITING_TO_PICK }}`) {
                     $('#sub-status-tab').removeClass('d-none')
