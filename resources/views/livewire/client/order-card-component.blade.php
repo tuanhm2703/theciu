@@ -1,7 +1,7 @@
 <div class="order-card px-3 pt-3 mb-3 show-detail-order"
     data-order-link="{{ route('client.auth.profile.order.details', $order->id) }}">
     <div class="text-right border-bottom">
-        <h6 class="text-uppercase text-danger">{{ $order->getCurrentStatusLabel() }}</h6>
+        <h6 class="text-uppercase text-danger">{{ $order->getCurrentStatusLabel() }} | {{ $order->order_number }}</h6>
     </div>
     @foreach ($order->inventories as $inventory)
         <div class="d-flex py-3 justify-content-between order-row">
