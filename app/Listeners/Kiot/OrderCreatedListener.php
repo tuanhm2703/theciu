@@ -4,6 +4,7 @@ namespace App\Listeners\Kiot;
 
 use App\Events\Kiot\OrderCreatedEvent;
 use App\Services\KiotService;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -28,6 +29,9 @@ class OrderCreatedListener
     public function handle(OrderCreatedEvent $event)
     {
         $order = $event->order;
-        KiotService::createKiotOrder($order);
+        $result = KiotService::createKiotOrder($order);
+        if($result == false) {
+            throw new Exception('Đã có lỗi xảy ra, vui lòng liên hệ bộ phận chăm sóc khách hàng để nhận hỗ trợ.', 422);
+        }
     }
 }
