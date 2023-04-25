@@ -18,7 +18,7 @@ class OrderHistory extends Model {
     }
 
     public function executorLabel() {
-        switch (get_class($this->executable)) {
+        switch ($this->executable ? get_class($this->executable) : "") {
             case Customer::class:
                 return 'Khách hàng';
             case User::class:
