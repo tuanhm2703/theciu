@@ -88,6 +88,7 @@
                                     <th>Trạng thái</th>
                                     <th>Đơn vị vận chuyển</th>
                                     <th>Thời gian tạo</th>
+                                    <th class="d-none"></th>
                                     <th>Ngày giao hàng</th>
                                     <th>Thao tác</th>
                                     <th></th>
@@ -160,7 +161,11 @@
                         data: 'shipping_service'
                     },
                     {
-                        data: 'created_at'
+                        data: 'created_at',
+                    },
+                    {
+                        data: 'updated_at',
+                        visible: false,
                     },
                     {
                         data: 'delivery_date',
@@ -174,7 +179,7 @@
                     }
                 ],
                 order: [
-                    [5, 'desc']
+                    [6, 'desc']
                 ],
                 initComplete: function(settings, json) {
                     json.order_counts.forEach(data => {
