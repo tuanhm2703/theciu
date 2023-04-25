@@ -102,7 +102,7 @@ class AuthController extends Controller {
                 'email' => $user->email,
             ], [
                 'first_name' => $user->given_name,
-                'last_name' => $user->family_name,
+                'last_name' => isset($user->family_name) ? $user->family_name : '',
                 'provider' => SocialProviderType::GOOGLE,
                 'socialite_account_id' => $user->id
             ]);
