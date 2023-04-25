@@ -101,11 +101,12 @@
         let inited = false;
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
             const orderStatus = $(e.target).data('orderStatus')
+            console.log(orderStatus);
             if (orderStatus != null) {
                 $('#sub-status-tab').addClass('d-none')
                 if (orderStatus == `{{ App\Enums\OrderStatus::WAITING_TO_PICK }}`) {
                     $('#sub-status-tab').removeClass('d-none')
-                    const sub_status = $('#sub-status-tab a.active').attr('data-order-sub-status')
+                    const subStatus = $('#sub-status-tab a.active').attr('data-order-sub-status')
                     initOrderTable(orderStatus, subStatus)
                 } else {
                     initOrderTable(orderStatus)
@@ -171,7 +172,6 @@
                 },
                 drawCallback: function(settings) {
                     if (inited === true) {
-                        console.log('hello');
                         setTimeout(() => {
                             initStyleTable()
                         }, 50);
