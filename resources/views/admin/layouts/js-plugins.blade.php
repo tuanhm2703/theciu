@@ -52,7 +52,7 @@
                 position: 'center'
             })
         },
-        error: (title, content) => {
+        error: (title, content, duration = 2000) => {
             new Notify({
                 status: 'error',
                 title: title,
