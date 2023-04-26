@@ -123,7 +123,7 @@ return [
     'featured' => 'Nổi bật',
     'pick_address' => 'Chọn địa chỉ',
     'payment_methods' => [
-        'momo' => 'Ví Momo',
+        'momo' => 'Ví MoMo',
         'cod' => 'Thanh toán khi nhận hàng',
         'ebank' => 'Thanh toán bằng thẻ ATM',
         'vnpay' => 'VNPay'

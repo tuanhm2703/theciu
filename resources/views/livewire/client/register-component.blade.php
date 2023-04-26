@@ -6,7 +6,7 @@
     ]) !!}
     <div class="form-group">
         {!! Form::label('username', trans('labels.phone_or_email') . '*', []) !!}
-        {!! Form::text('username', null, ['class' => 'form-control', 'required', 'wire:model' => 'username']) !!}
+        {!! Form::text('username', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'username']) !!}
         @error('username')
             <div class="mt-1">
                 <span class="text-danger">{{ $message }}</span>
@@ -16,7 +16,7 @@
     <div class="row">
         <div class="form-group col-12 col-md-6">
             {!! Form::label('first_name', trans('labels.first_name') . '*', []) !!}
-            {!! Form::text('first_name', null, ['class' => 'form-control', 'required', 'wire:model' => 'first_name']) !!}
+            {!! Form::text('first_name', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'first_name']) !!}
             @error('first_name')
                 <div class="mt-1">
                     <span class="text-danger">{{ $message }}</span>
@@ -25,7 +25,7 @@
         </div><!-- End .form-group -->
         <div class="form-group col-12 col-md-6">
             {!! Form::label('last_name', trans('labels.last_name') . '*', []) !!}
-            {!! Form::text('last_name', null, ['class' => 'form-control', 'required', 'wire:model' => 'last_name']) !!}
+            {!! Form::text('last_name', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'last_name']) !!}
             @error('last_name')
                 <div class="mt-1">
                     <span class="text-danger">{{ $message }}</span>
@@ -35,7 +35,7 @@
     </div>
     <div class="form-group">
         {!! Form::label('password', trans('labels.password') . '*', []) !!}
-        {!! Form::password('password', ['class' => 'form-control', 'required', 'wire:model' => 'password']) !!}
+        {!! Form::password('password', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'password']) !!}
         @error('password')
             <div class="mt-1">
                 <span class="text-danger">{{ $message }}</span>
@@ -47,7 +47,7 @@
         {!! Form::password('password_confirmation', [
             'class' => 'form-control',
             'required',
-            'wire:model' => 'password_confirmation',
+            'wire:model.lazy' => 'password_confirmation',
         ]) !!}
     </div><!-- End .form-group -->
     <div class="form-footer">
