@@ -63,7 +63,7 @@ class OrderController extends Controller {
             ], 400);
         }
         return BaseResponse::success([
-            'message' => 'Đơn hàng đã chuyển trạng thái chờ vận chuyển'
+            'message' => "Đơn hàng $order->order_number đã chuyển trạng thái chờ vận chuyển"
         ]);
     }
 

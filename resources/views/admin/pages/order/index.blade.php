@@ -232,6 +232,7 @@
                     url: `/admintheciu/order/${id}/accept`,
                     type: 'PUT',
                     success: (res) => {
+                        toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                         const total = totalFinished + 1;
                         if (total > totalFinished) {
                             totalFinished = total
@@ -243,23 +244,20 @@
                             toast.success(`{{ trans('toast.action_successful') }}`,
                                 'Thao tác thành công')
                             orderTable.ajax.reload()
-                            setTimeout(() => {
-                                $('.modal.show').modal('hide')
-                            }, 1000);
+                            $('#submit-action-btn').remove()
                         }
                     },
                     error: (err) => {
+                        toast.error(`{{ trans('toast.action_failed') }}`, error.responseJSON.message)
                         const total = totalFinished + 1;
                         if (total > totalFinished) {
                             totalFinished = total
                         }
                         if (totalFinished == orderIds.length) {
-                            toast.success(`{{ trans('action_successful') }}`,
+                            toast.success(`{{ trans('toast.action_successful') }}`,
                                 'Thao tác thành công')
                             orderTable.ajax.reload()
-                            setTimeout(() => {
-                                $('.modal.show').modal('hide')
-                            }, 1000);
+                            $('#submit-action-btn').remove()
                         }
                         $(`div[data-order-id=${id}]`).html(
                             `<i class="text-danger fas fa-times-circle"></i>`
