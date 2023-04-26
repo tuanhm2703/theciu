@@ -248,7 +248,7 @@
                         }
                     },
                     error: (err) => {
-                        toast.error(`{{ trans('toast.action_failed') }}`, error.responseJSON.message)
+                        toast.error(`{{ trans('toast.action_failed') }}`, err.responseJSON.message)
                         const total = totalFinished + 1;
                         if (total > totalFinished) {
                             totalFinished = total
