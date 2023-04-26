@@ -51,7 +51,7 @@ class PaymentMethodSeeder extends Seeder {
             'max_value' => null,
         ]);
         $atm->images()->delete();
-        $atm->createImagesFromUrls([public_path('/img/momo.png')]);
+        $atm->createImagesFromUrls([public_path('/img/momo-atm.png')]);
         $vnpay = PaymentMethod::updateOrCreate([
             'name' => 'VNPay'
         ], [
