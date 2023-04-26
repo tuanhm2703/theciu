@@ -1,9 +1,11 @@
 <?php
 
 use App\Models\Config;
+use App\Models\Image;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 if (!function_exists('isNavActive')) {
     function isNavActive(String $routeName)
@@ -490,4 +492,8 @@ function thousandsCurrencyFormat($num)
     }
 
     return $num;
+}
+function resize_image(Image $image, $size) {
+    $content = file_get_contents(get_proxy_image_url(Storage::url($image->path), $size));
+    return Storage::put("$size/$image->path", $content);
 }

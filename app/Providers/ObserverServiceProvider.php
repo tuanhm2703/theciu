@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\Image;
 use App\Models\Inventory;
 use App\Models\Order;
 use App\Models\Page;
@@ -16,6 +17,7 @@ use App\Observers\AddressObserver;
 use App\Observers\BlogObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\EditByObserver;
+use App\Observers\ImageObserver;
 use App\Observers\InventoryObserver;
 use App\Observers\OrderObserver;
 use App\Observers\PageObserver;
@@ -50,5 +52,6 @@ class ObserverServiceProvider extends ServiceProvider {
         Order::observe(OrderObserver::class);
         Page::observe(PageObserver::class);
         Voucher::observe(VoucherObserver::class);
+        Image::observe(ImageObserver::class);
     }
 }
