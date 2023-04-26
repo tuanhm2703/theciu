@@ -33,7 +33,7 @@
 <script src="{{ asset('assets/js/argon-dashboard.js') }}"></script>
 <script>
     const toast = {
-        success: (title, content) => {
+        success: (title, content, duration = 2000) => {
             new Notify({
                 status: 'success',
                 title: title,
@@ -45,7 +45,7 @@
                 showIcon: true,
                 showCloseButton: true,
                 autoclose: true,
-                autotimeout: 2000,
+                autotimeout: duration,
                 gap: 20,
                 distance: 20,
                 type: 1,
@@ -64,7 +64,7 @@
                 showIcon: true,
                 showCloseButton: true,
                 autoclose: true,
-                autotimeout: 2000,
+                autotimeout: duration,
                 gap: 20,
                 distance: 20,
                 type: 1,

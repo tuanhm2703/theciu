@@ -232,7 +232,7 @@
                     url: `/admintheciu/order/${id}/accept`,
                     type: 'PUT',
                     success: (res) => {
-                        toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                        toast.success(`{{ trans('toast.action_successful') }}`, res.data.message, 4000)
                         const total = totalFinished + 1;
                         if (total > totalFinished) {
                             totalFinished = total
@@ -248,7 +248,7 @@
                         }
                     },
                     error: (err) => {
-                        toast.error(`{{ trans('toast.action_failed') }}`, err.responseJSON.message)
+                        toast.error(`{{ trans('toast.action_failed') }}`, err.responseJSON.message, 4000)
                         const total = totalFinished + 1;
                         if (total > totalFinished) {
                             totalFinished = total
