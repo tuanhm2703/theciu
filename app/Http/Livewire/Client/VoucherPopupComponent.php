@@ -37,7 +37,7 @@ class VoucherPopupComponent extends Component
             $this->vouchers = Voucher::notExpired()->where('quantity', '>', 0)->featured()->saveable()->get();
         }
         $this->readyToLoad = true;
-        if(!Session::has('prevent-reopen-voucher-popup') && $this->vouchers->where('saved', 0)->where('quantuty', '>', 0)->count() > 0) {
+        if(!Session::has('prevent-reopen-voucher-popup') && $this->vouchers->where('saved', 0)->where('quantity', '>', 0)->count() > 0) {
             $this->emit('initPlugin', $this->vouchers);
         }
     }
