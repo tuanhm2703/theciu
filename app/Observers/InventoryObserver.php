@@ -15,7 +15,7 @@ class InventoryObserver
     public function updated(Inventory $inventory)
     {
         if ($inventory->isDirty('sku')) {
-            dispatch(new SyncKiotVietProductWarehouse($inventory));
+            dispatch(new SyncKiotVietProductWarehouse($inventory))->onQueue('syncKiotStock');
         }
     }
 }
