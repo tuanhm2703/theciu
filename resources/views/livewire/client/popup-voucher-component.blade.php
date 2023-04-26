@@ -26,7 +26,7 @@
     </div>
     <div class="congrats-content pt-0">
         <p class="text-center mb-1 text-center text-dark">Đơn tối thiểu từ
-            {{ thousandsCurrencyFormat($voucher->min_order_value) }}</p>
+            {{ format_currency_with_label($voucher->min_order_value) }}</p>
         <div class="text-center">
             <button @disabled($voucher->saved || $voucher->quantity == 0) wire:click="saveVoucher({{ $voucher->id }})"
                 class="btn btn-primary font-weight-bold text-uppercase">
