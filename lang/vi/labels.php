@@ -125,7 +125,7 @@ return [
     'payment_methods' => [
         'momo' => 'Ví Momo',
         'cod' => 'Thanh toán khi nhận hàng',
-        'ebank' => 'E-Banking',
+        'ebank' => 'Thanh toán bằng thẻ ATM',
         'vnpay' => 'VNPay'
     ],
     'information' => 'Thông tin',
