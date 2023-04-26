@@ -1,7 +1,4 @@
 <div class="d-flex align-items-center">
-    <div class="mb-3 form-check">
-        <input type="checkbox" name="orderListItem[]" value="{{ $order->id }}" class="form-check-input" id="order-{{ $order->id }}">
-      </div>
     <div>
         @foreach ($order->inventories as $inventory)
             <div class="row mb-2">

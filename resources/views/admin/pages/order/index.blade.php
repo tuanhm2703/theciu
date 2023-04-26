@@ -83,6 +83,12 @@
                             <thead>
                                 <tr>
                                     <th class="d-none"></th>
+                                    <th>
+                                        <div class="form-check text-center form-check-info">
+                                            <input type="checkbox" name="mass-checkbox-btn"
+                                                class="editor-active form-check-input mass-checkbox-btn">
+                                        </div>
+                                    </th>
                                     <th>Sản phẩm</th>
                                     <th>Doanh thu đơn hàng</th>
                                     <th>Trạng thái</th>
@@ -148,6 +154,11 @@
                         className: 'order-header-column',
                     },
                     {
+                        data: "checkbox",
+                        searchable: false,
+                        sortable: false,
+                    },
+                    {
                         data: "items",
                     },
                     {
@@ -179,7 +190,7 @@
                     }
                 ],
                 order: [
-                    [6, 'desc']
+                    [7, 'desc']
                 ],
                 initComplete: function(settings, json) {
                     json.order_counts.forEach(data => {
@@ -194,6 +205,7 @@
                     initStyleTable()
                 },
                 drawCallback: function(settings) {
+                    $('.mass-checkbox-btn').prop('checked', false)
                     if (inited === true) {
                         setTimeout(() => {
                             initStyleTable()
@@ -206,7 +218,7 @@
             $('.order-header-column').each((index, e) => {
                 const header = $(e).clone()
                 if (index > 0 || (inited == true && index == 0)) {
-                    $(`<tr class="order-header-row"><td colspan="8">
+                    $(`<tr class="order-header-row"><td colspan="9">
                                 ${$(header).html()}
                             </td></tr>`).insertBefore($(e).parents('tr'))
                 }
@@ -232,7 +244,8 @@
                     url: `/admintheciu/order/${id}/accept`,
                     type: 'PUT',
                     success: (res) => {
-                        toast.success(`{{ trans('toast.action_successful') }}`, res.data.message, 4000)
+                        toast.success(`{{ trans('toast.action_successful') }}`, res.data
+                            .message, 4000)
                         const total = totalFinished + 1;
                         if (total > totalFinished) {
                             totalFinished = total
@@ -248,7 +261,8 @@
                         }
                     },
                     error: (err) => {
-                        toast.error(`{{ trans('toast.action_failed') }}`, err.responseJSON.message, 4000)
+                        toast.error(`{{ trans('toast.action_failed') }}`, err.responseJSON
+                            .message, 4000)
                         const total = totalFinished + 1;
                         if (total > totalFinished) {
                             totalFinished = total

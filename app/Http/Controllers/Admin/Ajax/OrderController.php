@@ -46,6 +46,9 @@ class OrderController extends Controller {
         ->addColumn('action', function($order) {
             return view('admin.pages.order.components.action', compact('order'));
         })
+        ->addColumn('checkbox', function($order) {
+            return view('admin.pages.order.components.checkbox', compact('order'));
+        })
         ->make(true);
         $result->original['order_counts'] = $order_counts;
         $result->setData($result->original);
