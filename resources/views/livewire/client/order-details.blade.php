@@ -68,11 +68,24 @@
                 <div class="shipping-address-label align-items-baseline pt-3">
                     <h6>{{ trans('labels.shipping_address') }}</h6>
                     <div class="shipping-address-service-info">
-                        <div>
+                        <div class="d-flex flex-column">
                             <h6>{{ trans('labels.shipping_info') }}</h6>
                             <div>{{ $order->shipping_service->name }}</div>
                             <div>{{ $order->shipping_order->code }}</div>
-                            {{-- <div>Tài xế: Nguyễn Thái Dương, 84903691278</div> --}}
+                            <div class="order-history-phone mt-1">
+                                @if ($order->order_histories->first())
+                                    <ul class="mb-1">
+                                        <li class="text-success">
+                                            {{ $order->order_histories->sortByDesc('created_at')->first()->action->description }}
+                                        </li>
+                                    </ul>
+
+                                    <a class="ajax-modal-btn" href="javascript:;" data-modal-size="modal-md"
+                                        data-link="{{ route('client.auth.profile.order.shipping.detail', $order->id) }}">
+                                        {{ trans('labels.see_more') }}
+                                    </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

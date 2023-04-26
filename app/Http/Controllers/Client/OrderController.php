@@ -47,4 +47,8 @@ class OrderController extends Controller {
         }])->first());
         return view('landingpage.layouts.pages.order.details', compact('order'));
     }
+
+    public function getShippingOrderDetail(Request $request, Order $order) {
+        return view('landingpage.layouts.pages.order.shipping_detail', compact('order'));
+    }
 }
