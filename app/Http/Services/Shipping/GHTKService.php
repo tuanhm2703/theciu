@@ -200,9 +200,9 @@ class GHTKService extends ShippingServiceAbstract
                 /* Setting the address of the receiver. */
                 "address" => $order->shipping_address->details,
                 /* Setting the province of the receiver. */
-                "province" => $order->shipping_address->province->name_with_type,
+                "province" => $order->shipping_address->ward->district->province->name_with_type,
                 /* Getting the district of the receiver. */
-                "district" => $order->shipping_address->district->name_with_type,
+                "district" => $order->shipping_address->ward->district->name_with_type,
                 /* Getting the ward of the receiver. */
                 "ward" => $ward_name,
                 /* A required field. */
