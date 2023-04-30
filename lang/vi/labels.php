@@ -235,4 +235,7 @@ return [
     'rank_list' => 'Danh sách hạng thành viên',
     'create_rank' => 'Tạo hạng khách hàng',
     'update_rank' => 'Cập nhật hạng thành viên',
+    'change_phone' => 'Cập nhật số điện thoại',
+    'otp' => 'Mã xác nhận',
+    "send_otp" => 'Gửi mã xác nhận',
 ];

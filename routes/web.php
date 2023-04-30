@@ -25,7 +25,7 @@ Route::group(['prefix' => 'admintheciu', 'as' => 'admin.'], function() {
     include('admin/Auth.php');
     Route::get('/', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth');
     Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
-    Route::group(['middleware' => 'auth'], function () {
+    Route::group(['middleware' => 'auth:web'], function () {
         Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
         Route::get('/rtl', [PageController::class, 'rtl'])->name('rtl');
         include('admin/Profile.php');

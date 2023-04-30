@@ -24,6 +24,7 @@ class Customer extends User
         'last_name',
         'password',
         'phone',
+        'phone_verified',
         'email',
         'status',
         'provider',
