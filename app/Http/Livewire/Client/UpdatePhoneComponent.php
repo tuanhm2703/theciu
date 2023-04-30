@@ -88,7 +88,7 @@ class UpdatePhoneComponent extends Component
                 'type' => 'success',
                 'message' => 'Cập nhật số điện thoại thành công'
             ]);
-            return route('client.auth.profile.index');
+            return redirect()->route('client.auth.profile.index');
         } catch (\GuzzleHttp\Exception\ClientException $th) {
             $code = json_decode($th->getResponse()->getBody()->getContents())->error->message;
             switch ($code) {
