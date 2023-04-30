@@ -15,7 +15,7 @@
         </div><!-- End .col-sm-6 -->
         <div class="col-12 col-lg-6">
             <label>{{ trans('labels.otp') }} *</label>
-            <div class="position-relative">
+            <div class="position-relative mb-1">
                 {!! Form::text('otp', null, ['class' => 'form-control mb-0', 'wire:model.lazy' => 'otp']) !!}
                 <a class="d-flex align-items-center" href="#" id="sendOtpBtn"
                     style="position: absolute;
