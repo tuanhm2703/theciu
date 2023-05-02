@@ -32,7 +32,7 @@
             <div class="col-12 col-lg-6">
                 <label>{{ trans('labels.phone') }} *</label>
                 <div class="position-relative">
-                    <span>{{ $user->phone }}</span>
+                    <span class="form-control">{{ $user->phone }}</span>
                     <a class="d-flex align-items-center" href="{{ route('client.auth.profile.phone') }}"
                         style="position: absolute;
                                top: 50%;

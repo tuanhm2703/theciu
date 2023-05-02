@@ -48,7 +48,7 @@
             {{ trans('labels.return') }}
         </button>
         <button wire:click="updatePhone" class="btn btn-outline-primary-2" @disabled($verified == 0 || empty($phone) || empty($otp))>
-            <div wire:loading wire:target="updatePassword" class="spinner-grow" style="width: 3rem; height: 3rem;"
+            <div wire:loading wire:target="updatePhone" class="spinner-grow" style="width: 3rem; height: 3rem;"
                 role="status">
                 <span class="sr-only">Loading...</span>
             </div>

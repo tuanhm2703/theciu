@@ -17,9 +17,18 @@ class UpdatePhoneComponent extends Component
     public $errorMessage;
     public $verified;
 
-    protected $rules = [
-        'phone' => 'required|phone_number',
-    ];
+    protected function rules()
+    {
+        return [
+            'phone' => "required|phone_number|unique:customers,phone,".customer()->id,
+        ];
+    }
+
+    protected function messages() {
+        return [
+            'phone.unique' => 'Số điện thoại đã được sử dụng'
+        ];
+    }
 
     public function render()
     {
