@@ -22,7 +22,6 @@ class HomeController extends Controller {
      * @return \Illuminate\View\View
      */
     public function index() {
-        return auth()->user();
         return view('admin.pages.dashboard');
     }
 
