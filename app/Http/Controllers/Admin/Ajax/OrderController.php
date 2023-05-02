@@ -22,6 +22,11 @@ class OrderController extends Controller {
             'order_count' => $order_counts->sum('order_count')
         ];
         $result = DataTables::of($orders)
+        ->filterColumn('phone', function($query, $keyword) {
+            $query->whereHas('shipping_address', function($q) use ($keyword) {
+                $q->where('addresses.phone', $keyword);
+            });
+        })
         ->addColumn('header', function($order) {
             return view('admin.pages.order.components.order_header', compact('order'));
         })
