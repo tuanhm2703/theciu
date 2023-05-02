@@ -404,7 +404,7 @@ class GHTKService extends ShippingServiceAbstract
             if (empty($data['reason_code'])) {
                 $shipping_order_history_data->reason = $this->status_string_array[strval($data['status_id'])];
             } else {
-                $shipping_order_history_data->reason = $this->reason_code['reason_code'];
+                $shipping_order_history_data->reason = $this->reason_code[$data['reason_code']];
             }
         } else {
             $shipping_order_history_data->reason = $data['reason'];
