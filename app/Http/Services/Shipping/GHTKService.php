@@ -104,6 +104,8 @@ class GHTKService extends ShippingServiceAbstract
         ];
         $this->fail_order_status = [
             '-1',
+            '20',
+            '21'
         ];
         $this->update_order_reason_code = [];
         $this->max_order_value = 20000000;
