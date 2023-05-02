@@ -229,4 +229,7 @@ return [
     'rank_list' => 'Rank list',
     'create_rank' => 'Create rank',
     'update_rank' => 'Update rank',
+    'change_phone' => 'Change phone number',
+    'otp' => 'Otp Code',
+    "send_otp" => 'Send OTP Code',
 ];
