@@ -1,18 +1,25 @@
 <div>
     <h6>{{ trans('labels.change_password') }}</h6>
-    <div class="row">
-        <div class="col-12 col-lg-6">
-            <label>{{ trans('labels.old_password') }} *</label>
-            {!! Form::password('old_password', ['class' => 'form-control', 'required', 'wire:model' => 'old_password']) !!}
-            @error('old_password')
-                <span class="error">{{ $message }}</span>
-            @enderror
-        </div><!-- End .col-12 col-lg-6 -->
-    </div><!-- End .row -->
+    @if (Session::has('success'))
+        <div class="text-success">
+            {{ Session::get('success') }}
+        </div>
+    @endif
+    @if (!empty($user->password))
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <label>{{ trans('labels.old_password') }} *</label>
+                {!! Form::password('old_password', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'old_password']) !!}
+                @error('old_password')
+                    <span class="error">{{ $message }}</span>
+                @enderror
+            </div><!-- End .col-12 col-lg-6 -->
+        </div><!-- End .row -->
+    @endif
     <div class="row">
         <div class="col-12 col-lg-6">
             <label>{{ trans('labels.new_password') }} *</label>
-            {!! Form::password('new_password', ['class' => 'form-control', 'required', 'wire:model' => 'new_password']) !!}
+            {!! Form::password('new_password', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'new_password']) !!}
             @error('new_password')
                 <span class="error">{{ $message }}</span>
             @enderror
@@ -22,7 +29,7 @@
             {!! Form::password('new_password_confirmation', [
                 'class' => 'form-control',
                 'required',
-                'wire:model' => 'new_password_confirmation',
+                'wire:model.lazy' => 'new_password_confirmation',
             ]) !!}
             @error('new_password_confirmation')
                 <span class="error">{{ $message }}</span>
