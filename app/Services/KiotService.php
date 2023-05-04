@@ -127,6 +127,7 @@ class KiotService
             if ($order) {
                 $order->setMakeInvoice(true);
                 $order->setCustomer($kiotCustomer);
+                $order->setTotalPayment($localOrder->total - $localOrder->customer_shipping_fee_amount);
                 $orderResource = new OrderResource(App::make(Client::class));
                 $orderResource->update($order);
             } else {
