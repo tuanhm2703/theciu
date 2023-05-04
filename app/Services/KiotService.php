@@ -125,6 +125,7 @@ class KiotService
                 $order = static::getOrderById($localOrder->kiot_order->kiot_order_id);
             }
             if ($order) {
+                $order->setDiscount($discount);
                 $order->setMakeInvoice(true);
                 $order->setCustomer($kiotCustomer);
                 $order->setTotalPayment($localOrder->total - $localOrder->customer_shipping_fee_amount);
