@@ -24,11 +24,8 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-        $images = Image::where('imageable_type', 'App\Models\Product')->limit(10)->get();
-        foreach ($images as $image) {
-            dispatch(new ResizeImageJob($image, 1000))->onQueue('resizeImage');
-        }
-        // $orderResource->remove("")
+        $orderResource = new OrderResource(App::make(Client::class));
+        return $orderResource->getByCode('DH000620')->getModelData();
     }
 
     public function ipn(Request $request) {
