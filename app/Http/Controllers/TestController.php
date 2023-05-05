@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\Shipping\GHTKService;
+use App\Jobs\ResizeImageJob;
 use App\Mail\FirstTestMail;
 use App\Models\Customer;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
@@ -23,10 +25,7 @@ class TestController extends Controller {
 
     public function test(Request $request) {
         $orderResource = new OrderResource(App::make(Client::class));
-        $productResource = new ProductResource(App::make(Client::class));
-        $customerResource = new CustomerResource(App::make(Client::class));
-        return $customerResource->list(['contactNumber' => '0703004307', 'includeCustomerGroup' => true])->toArray();
-        // $orderResource->remove("")
+        return $orderResource->getByCode('DH000620')->getModelData();
     }
 
     public function ipn(Request $request) {

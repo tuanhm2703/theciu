@@ -6,7 +6,7 @@
     ]) !!}
     <div class="form-group">
         {!! Form::label('username', trans('labels.phone_or_email') . '*', []) !!}
-        {!! Form::text('username', null, ['class' => 'form-control', 'required', 'wire:model' => 'username']) !!}
+        {!! Form::text('username', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'username']) !!}
         @error('username')
             <div class="mt-1">
                 <span class="text-danger">{{ $message }}</span>
@@ -16,7 +16,7 @@
 
     <div class="form-group">
         {!! Form::label('password', trans('labels.password') . '*', []) !!}
-        {!! Form::password('password', ['class' => 'form-control', 'required', 'wire:model' => 'password']) !!}
+        {!! Form::password('password', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'password']) !!}
         @error('password')
             <div class="mt-1">
                 <span class="text-danger">{{ $message }}</span>

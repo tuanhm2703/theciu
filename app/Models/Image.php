@@ -27,7 +27,6 @@ class Image extends Model {
     ];
 
     public function getPathWithDomainAttribute() {
-        return StorageService::url($this->path);
         if ($this->type == MediaType::VIDEO) {
             return StorageService::url($this->path);
         } else {
@@ -36,7 +35,8 @@ class Image extends Model {
                     if (isNavActive('admin.product.edit') || isNavActive('admin.ajax.product.inventories')) {
                         return StorageService::url($this->path);
                     }
-                    return get_proxy_image_url(StorageService::url($this->path), $this->getImageableSize());
+                    $size = $this->getImageableSize();
+                    return StorageService::url("$size/$this->path");
                 }
             } catch (\Throwable $th) {
                 return asset('img/image-not-available.png');
@@ -50,6 +50,9 @@ class Image extends Model {
             return StorageService::url($this->path);
         }
         return asset('img/image-not-available.png');
+    }
+    public function getImageBySize() {
+
     }
 
     public function getImageableSize() {

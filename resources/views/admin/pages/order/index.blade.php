@@ -97,6 +97,7 @@
                                     <th class="d-none"></th>
                                     <th>Ngày giao hàng</th>
                                     <th>Thao tác</th>
+                                    <th class="d-none"></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -187,6 +188,11 @@
                     {
                         data: 'order_number',
                         visible: false
+                    },
+                    {
+                        data: 'id',
+                        name: 'phone',
+                        visible: false
                     }
                 ],
                 order: [
@@ -218,7 +224,7 @@
             $('.order-header-column').each((index, e) => {
                 const header = $(e).clone()
                 if (index > 0 || (inited == true && index == 0)) {
-                    $(`<tr class="order-header-row"><td colspan="9">
+                    $(`<tr class="order-header-row"><td colspan="10">
                                 ${$(header).html()}
                             </td></tr>`).insertBefore($(e).parents('tr'))
                 }

@@ -18,7 +18,10 @@ class CustomerController extends Controller
     public function paginate() {
         $customers = Customer::withCount(['orders' => function($q) {
             $q->where('orders.order_status', OrderStatus::DELIVERED);
-        }])->leftJoin('orders', 'customers.id', '=', 'orders.id')->addSelect(DB::raw('sum(orders.total) as total_revenue'))->groupBy('customers.id');
+        }])->leftJoin('orders', function($q) {
+            $q->on('orders.customer_id', 'customers.id')->where('orders.order_status', OrderStatus::DELIVERED);
+        })
+        ->addSelect(DB::raw('sum(orders.total) as total_revenue'))->groupBy('customers.id');
         return DataTables::of($customers)
         ->editColumn('total_revenue', function($customer) {
             return view('admin.pages.customer.components.revenue', compact('customer'));

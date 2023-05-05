@@ -126,10 +126,9 @@ class KiotService
             }
             if ($order) {
                 $order->setDiscount($discount);
-                $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
                 $order->setMakeInvoice(true);
-                $order->setTotalPayment($localOrder->total - $localOrder->customer_shipping_fee_amount);
                 $order->setCustomer($kiotCustomer);
+                $order->setTotalPayment($localOrder->total - $localOrder->customer_shipping_fee_amount);
                 $orderResource = new OrderResource(App::make(Client::class));
                 $orderResource->update($order);
             } else {
@@ -189,7 +188,6 @@ class KiotService
         $order->setBranchId($kiotSetting->data['branchId']);
         $order->setDiscount($localOrder->order_voucher ? $localOrder->order_voucher->amount : 0);
         $order->setDescription("The C.I.U Order: $localOrder->order_number");
-        $order->setTotalPayment($localOrder->total - $localOrder->customer_shipping_fee_amount);
         $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
         $order->setSoldById($kiotSetting->data['salerId']);
         $order->setSaleChannelId(isset($kiotSetting->data['saleChannelId']) ? $kiotSetting->data['saleChannelId'] : null);
