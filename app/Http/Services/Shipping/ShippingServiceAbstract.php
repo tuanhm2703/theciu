@@ -279,7 +279,7 @@ abstract class ShippingServiceAbstract {
      */
     public function getOrderStatusByShippingOrderStatus($shipping_order_status, $reason_code = null) {
         if (in_array($shipping_order_status, $this->fail_order_status)) {
-            if (in_array($reason_code, $this->update_order_reason_code)) return null;
+            // if (in_array($reason_code, $this->update_order_reason_code)) return null;
             return OrderStatus::CANCELED;
         }
         if (in_array($shipping_order_status, $this->picking_status)) return OrderStatus::PICKING;
