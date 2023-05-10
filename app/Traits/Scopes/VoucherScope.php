@@ -2,6 +2,8 @@
 
 namespace App\Traits\Scopes;
 
+use App\Enums\DisplayType;
+
 trait VoucherScope {
     public function scopeCanApplyForCustomer($q, $customer_id) {
 
@@ -28,6 +30,10 @@ trait VoucherScope {
     }
 
     public function scopeFeatured($q) {
-        $q->where('vouchers.featured', 1);
+        return $q->where('vouchers.featured', 1);
+    }
+
+    public function scopePublic($q) {
+        return $q->where('vouchers.display', DisplayType::PUBLIC);
     }
 }

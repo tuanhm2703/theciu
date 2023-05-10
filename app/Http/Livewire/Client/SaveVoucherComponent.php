@@ -18,7 +18,7 @@ class SaveVoucherComponent extends Component
         if(!auth('customer')->check()) {
             $this->dispatchBrowserEvent('openLoginForm');
         } else {
-            if( Voucher::notExpired()->where('quantity', '>', 0)->where('id', $this->voucher->id)->exists()) {
+            if( Voucher::public()->notExpired()->where('quantity', '>', 0)->where('id', $this->voucher->id)->exists()) {
                 customer()->saved_vouchers()->sync([
                     $this->voucher->id => [
                         'is_used' => false,

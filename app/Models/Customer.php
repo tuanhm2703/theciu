@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\App;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Resource\CustomerResource;
 use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class Customer extends User
 {
@@ -147,5 +149,12 @@ class Customer extends User
             return $amount * $this->available_rank->benefit_value / 100;
         }
         return 0;
+    }
+    public function getVoucherUsed() {
+        return Cache::remember("voucher_used_$this->id", 600, function() {
+            return $this->vouchers()->select('vouchers.id', DB::raw('count(vouchers.id) as used_quantity'))->groupBy('vouchers.id')->whereHas('orders', function($q) {
+                $q->where('orders.order_status', '!=', OrderStatus::CANCELED)->where('orders.customer_id', $this->id);
+            })->get();
+        });
     }
 }

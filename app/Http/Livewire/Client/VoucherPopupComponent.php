@@ -24,7 +24,7 @@ class VoucherPopupComponent extends Component
 
     public function loadVouchers() {
         if(customer()) {
-            $this->vouchers = Voucher::notExpired()->where('quantity', '>', 0)->with('voucher_type')->saveable()->get();
+            $this->vouchers = Voucher::public()->notExpired()->where('quantity', '>', 0)->with('voucher_type')->saveable()->get();
             $saved_vouchers = customer()->saved_vouchers()->get();
             $this->vouchers->each(function($voucher) use ($saved_vouchers) {
                 $voucher->saved = in_array($voucher->id, $saved_vouchers->pluck('id')->toArray());
@@ -34,7 +34,7 @@ class VoucherPopupComponent extends Component
                 return $value->used == false;
             });
         } else {
-            $this->vouchers = Voucher::notExpired()->where('quantity', '>', 0)->with('voucher_type')->featured()->saveable()->get();
+            $this->vouchers = Voucher::public()->notExpired()->where('quantity', '>', 0)->with('voucher_type')->featured()->saveable()->get();
         }
         $this->readyToLoad = true;
         if(!Session::has('prevent-reopen-voucher-popup') && $this->vouchers->where('saved', 0)->where('quantity', '>', 0)->count() > 0) {
@@ -55,7 +55,7 @@ class VoucherPopupComponent extends Component
             $this->dispatchBrowserEvent('openLoginForm');
         } else {
             $voucher = $this->vouchers->where('id', $id)->first();
-            if(Voucher::available()->where('quantity', '>', 0)->where('id', $id)->exists()) {
+            if(Voucher::public()->available()->where('quantity', '>', 0)->where('id', $id)->exists()) {
                 customer()->saved_vouchers()->sync([
                     $voucher->id, [
                         'is_used' => false,

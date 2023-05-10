@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\DisplayType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateVoucherRequest;
 use App\Http\Requests\Admin\UpdateVoucherRequest;
@@ -26,13 +27,20 @@ class VoucherController extends Controller {
 
     public function store(CreateVoucherRequest $request) {
         $input = $request->all();
-        if(!isset($input['max_discount_amount'])) {
-            $input['max_discount_amount'] = null;
-        }
         $input['saveable'] = $request->saveable ? $request->saveable == 'on' : false;
-        $input['featured'] = $request->featured ? $request->featured == 'on' : false;
-        $input['status'] = $request->status ? $request->status == 'on' : false;
-        Voucher::create($input);
+            $input['featured'] = $request->featured ? $request->featured == 'on' : false;
+            $input['status'] = $request->status ? $request->status == 'on' : false;
+        if ($request->has('batch-create') && $input['batch-create'] === 'on' && $request->display === DisplayType::PRIVATE) {
+            foreach ($request->codes as $code) {
+                $input['code'] = $code;
+                Voucher::create($input);
+            }
+        } else {
+            if (!isset($input['max_discount_amount'])) {
+                $input['max_discount_amount'] = null;
+            }
+            Voucher::create($input);
+        }
         return BaseResponse::success([
             'message' => 'Tạo mã khuyến mãi thành công'
         ]);
@@ -43,7 +51,7 @@ class VoucherController extends Controller {
         $input['saveable'] = $request->saveable ? $request->saveable == 'on' : false;
         $input['featured'] = $request->featured ? $request->featured == 'on' : false;
         $input['status'] = $request->status ? $request->status == 'on' : false;
-        if(!isset($input['max_discount_amount'])) {
+        if (!isset($input['max_discount_amount'])) {
             $input['max_discount_amount'] = null;
         }
         $voucher->update($input);

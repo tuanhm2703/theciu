@@ -15,8 +15,13 @@
                         <article class="feature1 me-2 mt-2">
                             {!! Form::radio('voucher_type_id', $type->id, true, ['id' => "radio-btn-$type->id"]) !!}
                             <div class="d-flex justify-content-evenly">
-                                <i class="ni ni-basket text-primary"></i>
-                                <span class="text-bold text-dark pl-3" style="z-index: 1">Voucher {{ $type->name }}</span>
+                                @if ($type->code === App\Models\VoucherType::ORDER)
+                                    <i class="ni ni-basket text-primary"></i>
+                                @elseif ($type->code === App\Models\VoucherType::FREESHIP)
+                                    <i class="fas fa-truck text-primary"></i>
+                                @endif
+                                <span class="text-bold text-dark pl-3" style="z-index: 1">Voucher
+                                    {{ $type->name }}</span>
                             </div>
                             <div class="check-icon">
                                 <div class="icon-ctn"><i class="the-ciu-icon icons"><svg
@@ -63,6 +68,21 @@
                     ]) !!}
                 </div>
             </div>
+            <div class="row mt-3">
+                <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
+                    {!! Form::label('display', 'Hiển thị ', ['class' => 'custom-control-label m-0 pe-1']) !!}
+
+                    <i data-bs-toggle="tooltip" data-bs-placement="top" class="fas fa-question-circle" data-html="true"
+                        title="Public: Voucher được hiển thị rộng rãi tới mọi khách hàng, Private: Voucher chỉ được hiện khi khách hàng áp dụng đúng mã Voucher"></i>
+                </div>
+                <div class="col-8 col-lg-4">
+                    {!! Form::select('display', App\Enums\DisplayType::getDisplayOptions(), [], ['class' => 'form-control']) !!}
+                </div>
+            </div>
+            @if (empty($voucher->id))
+                <livewire:admin.batch-create-voucher-component />
+            @endif
+
         </div>
     </div>
     <div class="card container">
@@ -90,12 +110,14 @@
                 </div>
                 <div class="col-6 col-lg-3 d-flex justify-content-between">
                     <div class="form-check mb-3">
-                        {!! Form::radio('is_limit_max_discount', 1, isset($voucher) && $voucher->max_discount_amount ?: true, ['class' => 'form-check-input']) !!}
+                        {!! Form::radio('is_limit_max_discount', 1, isset($voucher) && $voucher->max_discount_amount ?: true, [
+                            'class' => 'form-check-input',
+                        ]) !!}
                         {!! Form::label('is_limit_max_discount', 'Giới hạn', ['class' => 'custom-control-label']) !!}
 
                     </div>
                     <div class="form-check">
-                        {!! Form::radio('is_limit_max_discount', 0, !$voucher->max_discount_amount , ['class' => 'form-check-input']) !!}
+                        {!! Form::radio('is_limit_max_discount', 0, !$voucher->max_discount_amount, ['class' => 'form-check-input']) !!}
                         {!! Form::label('is_limit_max_discount', 'Không giới hạn', ['class' => 'custom-control-label']) !!}
                     </div>
                 </div>
@@ -115,10 +137,21 @@
             </div>
             <div class="row mt-3">
                 <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
-                    {!! Form::label('quantity', 'Lượt sử dụng tối đa:', ['class' => 'custom-control-label m-0']) !!}
+                    {!! Form::label('quantity', 'Số lượng phát hành:', ['class' => 'custom-control-label m-0']) !!}
                 </div>
                 <div class="col-8 col-lg-4">
                     {!! Form::number('quantity', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required']) !!}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
+                    {!! Form::label('total_can_use', 'Lượt sử dụng tối đa', ['class' => 'custom-control-label m-0 pe-1']) !!}
+                    <i data-bs-toggle="tooltip" data-bs-placement="top" class="fas fa-question-circle"
+                        title="Số lượng voucher được sử dụng tối đa trên tổng số lượng voucher được phát hành">
+                    </i>
+                </div>
+                <div class="col-8 col-lg-4">
+                    {!! Form::number('total_can_use', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required']) !!}
                 </div>
             </div>
             <div class="row mt-3">
@@ -128,36 +161,47 @@
                     ]) !!}
                 </div>
                 <div class="col-8 col-lg-4">
-                    {!! Form::number('customer_limit', 1, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required', 'disabled' => $voucher->saveable == 1]) !!}
+                    {!! Form::number('customer_limit', 1, [
+                        'class' => 'form-control',
+                        'placeholder' => 'Nhập vào',
+                        'required',
+                        'disabled' => $voucher->saveable == 1,
+                    ]) !!}
                 </div>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-3 private-hidden">
                 <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
                     {!! Form::label('saveable', trans('labels.saveable'), [
                         'class' => 'custom-control-label m-0 text-end pe-1',
                     ]) !!}
                     <i data-bs-toggle="tooltip" data-bs-placement="top" class="fas fa-question-circle"
-                    title="Khách hàng có thể lưu voucher vào kho voucher riêng của khách hàng">
+                        title="Khách hàng có thể lưu voucher vào kho voucher riêng của khách hàng">
                     </i>
                 </div>
                 <div class="col-8 col-lg-4">
                     <div class="form-check form-switch">
-                        {!! Form::checkbox('saveable', null, $voucher->saveable == 1, ['class' => 'form-check-input', 'id' => 'saveable']) !!}
+                        {!! Form::checkbox('saveable', null, $voucher->saveable == 1, [
+                            'class' => 'form-check-input',
+                            'id' => 'saveable',
+                        ]) !!}
                     </div>
                 </div>
             </div>
-            <div class="row mt-3">
+            <div class="row mt-3 private-hidden">
                 <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
                     {!! Form::label('featured', trans('labels.featured_voucher'), [
                         'class' => 'custom-control-label m-0 text-end pe-1',
                     ]) !!}
                     <i data-bs-toggle="tooltip" data-bs-placement="top" class="fas fa-question-circle"
-                    title="Voucher sẽ được hiển thị ở popup khi khách hàng truy cập vào website">
+                        title="Voucher sẽ được hiển thị ở popup khi khách hàng truy cập vào website">
                     </i>
                 </div>
                 <div class="col-8 col-lg-4">
                     <div class="form-check form-switch">
-                        {!! Form::checkbox('featured', null, $voucher->featured == 1, ['class' => 'form-check-input', 'id' => 'saveable']) !!}
+                        {!! Form::checkbox('featured', null, $voucher->featured == 1, [
+                            'class' => 'form-check-input',
+                            'id' => 'saveable',
+                        ]) !!}
                     </div>
                 </div>
             </div>
@@ -167,7 +211,7 @@
                         'class' => 'custom-control-label m-0 text-end pe-1',
                     ]) !!}
                     <i data-bs-toggle="tooltip" data-bs-placement="top" class="fas fa-question-circle"
-                    title="Trạng thái Kích hoạt/Huỷ kích hoạt">
+                        title="Trạng thái Kích hoạt/Huỷ kích hoạt">
                     </i>
                 </div>
                 <div class="col-8 col-lg-4">

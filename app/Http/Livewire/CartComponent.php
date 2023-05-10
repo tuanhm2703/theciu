@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\OrderStatus;
 use App\Http\Services\Checkout\CheckoutModel;
 use App\Http\Services\Checkout\CheckoutService;
 use App\Http\Services\Shipping\GHTKService;
@@ -97,37 +98,47 @@ class CartComponent extends Component {
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
         $this->payment_methods = PaymentMethod::active()->with('image:imageable_id,path')->get();
-        $this->save_voucher_ids = customer()->saved_vouchers()->notExpired()->haveNotUsed()->pluck('id')->toArray();
-        $this->vouchers = Voucher::with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union(customer()->saved_vouchers()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed())->get();
+        $this->save_voucher_ids = customer()->saved_vouchers()->public()->notExpired()->haveNotUsed()->pluck('id')->toArray();
+        $this->vouchers = Voucher::public()->with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union(customer()->saved_vouchers()->public()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed())->get();
         $this->updateVoucherDisableStatus();
     }
 
     public function reloadVoucher() {
-        $this->save_voucher_ids = customer()->saved_vouchers()->notExpired()->haveNotUsed()->pluck('id')->toArray();
-        $this->vouchers = Voucher::with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union(customer()->saved_vouchers()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed())->get();
+        $this->save_voucher_ids = customer()->saved_vouchers()->public()->notExpired()->haveNotUsed()->pluck('id')->toArray();
+        $this->vouchers = Voucher::public()->with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union(customer()->saved_vouchers()->public()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed())->get();
         $this->updateVoucherDisableStatus();
     }
 
     private function updateVoucherDisableStatus() {
-        foreach($this->vouchers as $voucher) {
+        $validate_voucher_data = Voucher::whereIn('id', $this->vouchers->pluck('id')->toArray())->withCount(['orders' => function($q) {
+            $q->where('orders.order_status', '!=', OrderStatus::CANCELED);
+        }])->get();
+        foreach ($this->vouchers as $voucher) {
             if (count($this->item_selected) == 0) {
                 $voucher->disabled = true;
-            } else if(!$voucher->isValidTime()){
+                $voucher->disable_reason = "Vui lòng chọn sản phẩm để áp dụng voucher";
+            } else if ($voucher->total_can_use <= $validate_voucher_data->where('id', $voucher->id)->first()->orders_count) {
                 $voucher->disabled = true;
+                $voucher->disable_reason = "Voucher đã hết lượt sử dụng";
+            } else if (!$voucher->isValidTime()) {
+                $voucher->disabled = true;
+                $voucher->disable_reason = "Thời gian áp dụng voucher không hợp lệ";
             } else if ($this->total < $voucher->min_order_value) {
                 $voucher->disabled = true;
-            } else if(in_array($voucher->id, $this->save_voucher_ids)) {
+                $voucher->disable_reason = "Đơn hàng chưa đạt giá trị tối thiểu (" . format_currency_with_label($voucher->min_order_value) . ")";
+            } else if (in_array($voucher->id, $this->save_voucher_ids)) {
                 $voucher->disabled = false;
-            } else if($voucher->canApplyForCustomer(customer()->id)) {
+            } else if ($voucher->canApplyForCustomer(customer()->id)) {
                 $voucher->disabled = false;
             } else {
                 $voucher->disabled = true;
+                $voucher->disable_reason = "Bạn đã sử dụng hết số lượt voucher";
             }
-            if($voucher->disabled && $this->order_voucher_id == $voucher->id) {
+            if ($voucher->disabled && $this->order_voucher_id == $voucher->id) {
                 $this->order_voucher_id = null;
                 $this->order_voucher = null;
             }
-            if($voucher->disabled && $this->freeship_voucher_id == $voucher->id) {
+            if ($voucher->disabled && $this->freeship_voucher_id == $voucher->id) {
                 $this->freeship_voucher_id = null;
                 $this->freeship_voucher = null;
             }
@@ -240,7 +251,7 @@ class CartComponent extends Component {
             $shipping_service_type->fee = $data['fee'];
             $shipping_service_type->delivery_date = $data['date'];
         }
-        if(count($this->shipping_service_types) > 0) {
+        if (count($this->shipping_service_types) > 0) {
             $this->service_id = $this->shipping_service_types[0]->service_id;
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
@@ -252,39 +263,38 @@ class CartComponent extends Component {
     }
 
     public function updated($name, $value) {
-        if($name == 'order_voucher_id') {
+        if ($name == 'order_voucher_id') {
             $this->order_voucher = Voucher::find($value);
             $this->updateOrderInfo($this->address);
         }
-        if($name == 'freeship_voucher_id') {
+        if ($name == 'freeship_voucher_id') {
             $this->freeship_voucher = Voucher::find($value);
             $this->updateOrderInfo($this->address);
         }
     }
 
     public function applyVoucher() {
-        $voucher = Voucher::available()->where('code', $this->voucher_code)->where(function($q) {
-            $q->notSaveable()->orWhere(function($q) {
-                $q->whereHas('customers', function($q) {
-                    $q->where('customers.id', customer()->id);
-                });
-            });
+        $voucher = Voucher::available()->where('code', $this->voucher_code)->where(function ($q) {
+            $q->notSaveable();
         })->first();
-        if(!$voucher) {
+        if (!$voucher) {
             $this->dispatchBrowserEvent('openToast', [
                 'message' => 'Voucher không hợp lệ',
                 'type' => 'error'
             ]);
         } else {
+            if($voucher->isPrivate()) {
+                $this->vouchers->push($voucher);
+            }
             $this->updateVoucherDisableStatus();
             $voucher = $this->vouchers->where('id', $voucher->id)->first();
-            if($voucher->disabled) {
+            if ($voucher->disabled) {
                 $this->dispatchBrowserEvent('openToast', [
-                    'message' => 'Đơn hàng chưa đủ điều kiện áp dụng voucher',
+                    'message' => $voucher->disable_reason,
                     'type' => 'error'
                 ]);
             } else {
-                if($voucher->voucher_type->code == VoucherType::ORDER) {
+                if ($voucher->voucher_type->code == VoucherType::ORDER) {
                     $this->order_voucher_id = $voucher->id;
                 } else {
                     $this->freeship_voucher_id = $voucher->id;
