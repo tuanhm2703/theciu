@@ -28,9 +28,14 @@ class VoucherController extends Controller {
     public function store(CreateVoucherRequest $request) {
         $input = $request->all();
         $input['saveable'] = $request->saveable ? $request->saveable == 'on' : false;
-            $input['featured'] = $request->featured ? $request->featured == 'on' : false;
-            $input['status'] = $request->status ? $request->status == 'on' : false;
+        $input['featured'] = $request->featured ? $request->featured == 'on' : false;
+        $input['status'] = $request->status ? $request->status == 'on' : false;
         if ($request->has('batch-create') && $input['batch-create'] === 'on' && $request->display === DisplayType::PRIVATE) {
+            $input['quantity'] = 1;
+            $input['total_can_use'] = 1;
+            $input['customer_limit'] = 1;
+            $input['saveable'] = false;
+            $input['featured'] = false;
             foreach ($request->codes as $code) {
                 $input['code'] = $code;
                 Voucher::create($input);

@@ -283,7 +283,7 @@ class CartComponent extends Component {
                 'type' => 'error'
             ]);
         } else {
-            if($voucher->isPrivate()) {
+            if($voucher->isPrivate() && !$this->vouchers->where('id', $voucher->id)->first()) {
                 $this->vouchers->push($voucher);
             }
             $this->updateVoucherDisableStatus();

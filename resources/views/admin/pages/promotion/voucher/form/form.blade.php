@@ -133,7 +133,8 @@
         .voucher-info-container .custom-control-label {
             line-height: 1rem;
         }
-        input[name=voucher_type_id]:checked + div span {
+
+        input[name=voucher_type_id]:checked+div span {
             color: #f5365c !important;
         }
     </style>
@@ -169,20 +170,32 @@
             $('#batch-create-wrapper').addClass('d-none');
             $('input[name=code]').attr('disabled', false);
             $('.private-hidden').removeClass('d-none');
-            if(e.target.value === @json(App\Enums\DisplayType::PRIVATE)) {
+            $('input[name=quantity]').attr('disabled', false);
+            $('input[name=total_can_use]').attr('disabled', false);
+            $('input[name=customer_limit]').attr('disabled', false);
+            if (e.target.value === @json(App\Enums\DisplayType::PRIVATE)) {
                 $('#batch-create-wrapper').removeClass('d-none');
                 $('.private-hidden').addClass('d-none');
             }
         })
         $('#voucher-code-list').addClass('d-none')
         $('input[name=batch-create]').on('change', (e) => {
-            if($(e.target).is(':checked')) {
+            if ($(e.target).is(':checked')) {
                 $('#voucher-code-list').removeClass('d-none')
                 $('input[name=code]').attr('disabled', true);
+                $('input[name=quantity]').val(1)
+                $('input[name=quantity]').attr('disabled', true);
+                $('input[name=total_can_use]').val(1)
+                $('input[name=total_can_use]').attr('disabled', true);
+                $('input[name=customer_limit]').val(1)
+                $('input[name=customer_limit]').attr('disabled', true);
             } else {
                 $('#voucher-code-list').addClass('d-none')
                 $('input[name=code]').attr('disabled', false);
+                $('input[name=quantity]').attr('disabled', false);
+                $('input[name=total_can_use]').attr('disabled', false);
+                $('input[name=customer_limit]').attr('disabled', false);
             }
-         })
+        })
     </script>
 @endpush
