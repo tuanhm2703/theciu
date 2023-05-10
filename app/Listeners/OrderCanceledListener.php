@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\OrderCanceled;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 
 class OrderCanceledListener
 {
@@ -32,6 +33,10 @@ class OrderCanceledListener
             $voucher->increaseQuantity($order->customer);
         }
         $order->restock();
-        $order->cancelShippingOrder();
+        try {
+            $order->cancelShippingOrder();
+        } catch (\Throwable $th) {
+            Log::error($th);
+        }
     }
 }
