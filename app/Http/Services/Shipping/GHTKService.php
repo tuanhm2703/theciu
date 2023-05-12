@@ -112,7 +112,10 @@ class GHTKService extends ShippingServiceAbstract {
             '3',
             '4'
         ];
-        $this->delivered_status = '5';
+        $this->delivered_status = [
+            '5',
+            '6'
+        ];
 
         $this->reason_code = [
             100 => 'Nhà cung cấp (NCC) hẹn lấy vào ca tiếp theo',

@@ -284,7 +284,7 @@ abstract class ShippingServiceAbstract {
         }
         if (in_array($shipping_order_status, $this->picking_status)) return OrderStatus::PICKING;
         if (in_array($shipping_order_status, $this->picked_status)) return OrderStatus::DELIVERING;
-        if ($shipping_order_status == $this->delivered_status) return OrderStatus::DELIVERED;
+        if (in_array($shipping_order_status, $this->delivered_status)) return OrderStatus::DELIVERED;
         return null;
     }
 
