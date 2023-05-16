@@ -10,7 +10,7 @@ use Yajra\DataTables\DataTables;
 
 class VoucherController extends Controller {
     public function paginate() {
-        $vouchers = Voucher::query();
+        $vouchers = Voucher::with('voucher_type');
         return DataTables::of($vouchers)
         ->editColumn('name', function($voucher) {
             return view('admin.pages.promotion.voucher.components.name', compact('voucher'));

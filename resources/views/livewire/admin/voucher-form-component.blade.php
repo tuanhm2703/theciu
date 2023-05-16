@@ -76,7 +76,7 @@
                         title="Public: Voucher được hiển thị rộng rãi tới mọi khách hàng, Private: Voucher chỉ được hiện khi khách hàng áp dụng đúng mã Voucher"></i>
                 </div>
                 <div class="col-8 col-lg-4">
-                    {!! Form::select('display', App\Enums\DisplayType::getDisplayOptions(), [], ['class' => 'form-control']) !!}
+                    {!! Form::select('display', App\Enums\DisplayType::getDisplayOptions(), $voucher->display, ['class' => 'form-control']) !!}
                 </div>
             </div>
             @if (empty($voucher->id))

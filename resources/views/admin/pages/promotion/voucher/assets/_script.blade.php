@@ -19,6 +19,9 @@
                 data: "code"
             },
             {
+                data: "voucher_type.name"
+            },
+            {
                 data: "begin",
             },
             {
