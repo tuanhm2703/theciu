@@ -22,6 +22,9 @@
                 data: "voucher_type.name"
             },
             {
+                data: "display"
+            },
+            {
                 data: "begin",
             },
             {

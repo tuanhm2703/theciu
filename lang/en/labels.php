@@ -233,4 +233,5 @@ return [
     'otp' => 'Otp Code',
     "send_otp" => 'Send OTP Code',
     'voucher_type' => 'Voucher Type',
+    'display' => 'Display'
 ];

@@ -18,6 +18,7 @@ use App\Models\Ward;
 use Carbon\Carbon;
 use Exception;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 abstract class ShippingServiceAbstract {
@@ -57,7 +58,7 @@ abstract class ShippingServiceAbstract {
     public function __construct($service_slug) {
         $this->service_slug = $service_slug;
         $this->client = new Client();
-        $this->config = Config::select('id')->first();
+        $this->config = App::get('AppConfig');
         $this->shipping_service = ShippingService::where('alias', $service_slug)->first();
     }
     /**

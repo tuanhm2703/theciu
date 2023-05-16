@@ -18,6 +18,9 @@ class VoucherController extends Controller {
         ->editColumn('status', function($voucher) {
             return view('admin.pages.promotion.voucher.components.status', compact('voucher'));
         })
+        ->editColumn('display', function($voucher) {
+            return view('admin.pages.promotion.voucher.components.display', compact('voucher'));
+        })
         ->editColumn('action', function($voucher) {
             return view('admin.pages.promotion.voucher.components.action', compact('voucher'));
         })

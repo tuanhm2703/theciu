@@ -296,8 +296,10 @@ class CartComponent extends Component {
             } else {
                 if ($voucher->voucher_type->code == VoucherType::ORDER) {
                     $this->order_voucher_id = $voucher->id;
+                    $this->order_voucher = $voucher;
                 } else {
                     $this->freeship_voucher_id = $voucher->id;
+                    $this->freeship_voucher = $voucher;
                 }
                 $this->updateOrderInfo();
                 $this->dispatchBrowserEvent('openToast', [
