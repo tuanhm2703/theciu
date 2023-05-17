@@ -1,4 +1,4 @@
-<div id="batch-create-wrapper">
+<div id="batch-create-wrapper" wire:ignore.self>
     <div class="row mt-3">
         <div class="offset-4 col-8 offset-lg-2 col-lg-4" wire:ignore>
             <div class="form-check">
