@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\DisplayType;
 use App\Enums\VoucherDiscountType;
 use App\Traits\Scopes\CustomScope;
 use App\Traits\Scopes\VoucherScope;
@@ -29,7 +30,9 @@ class Voucher extends Model
         'begin',
         'end',
         'saveable',
-        'featured'
+        'featured',
+        'display',
+        'total_can_use'
     ];
 
     protected $dates = [
@@ -51,7 +54,13 @@ class Voucher extends Model
 
     public function canApplyForCustomer($customer_id)
     {
-        return $this->orders()->where('orders.customer_id', $customer_id)->count() < $this->customer_limit && $this->quantity > 0;
+        $customer = Customer::find($customer_id);
+        $voucher_used = $customer->getVoucherUsed();
+        $data = $voucher_used->where('id', $this->id)->first();
+        if($data) {
+            return $data->used_quantity < $this->customer_limit && $this->quantity > 0;
+        }
+        return true;
     }
 
     public function voucher_type()
@@ -123,5 +132,8 @@ class Voucher extends Model
     public function isValidTime()
     {
         return now()->between($this->begin, $this->end);
+    }
+    public function isPrivate() {
+        return $this->display === DisplayType::PRIVATE;
     }
 }

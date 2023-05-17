@@ -6,6 +6,7 @@ use App\Events\OrderCanceled;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Cache;
 
 class OrderCanceledListener
 {
@@ -32,6 +33,7 @@ class OrderCanceledListener
         foreach($order->vouchers as $voucher) {
             $voucher->increaseQuantity($order->customer);
         }
+        Cache::forget("voucher_used_$order->customer_id");
         $order->restock();
         try {
             $order->cancelShippingOrder();

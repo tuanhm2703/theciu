@@ -133,12 +133,16 @@
         .voucher-info-container .custom-control-label {
             line-height: 1rem;
         }
+
+        input[name=voucher_type_id]:checked+div span {
+            color: #f5365c !important;
+        }
     </style>
 @endpush
 @if (isset($voucher))
     <livewire:admin.voucher-form-component :voucher="$voucher" />
 @else
-    <livewire:admin.voucher-form-component/>
+    <livewire:admin.voucher-form-component />
 @endif
 
 @push('js')
@@ -149,15 +153,48 @@
         })
         $('input[name=saveable]').on('change', (e) => {
             $('input[name=customer_limit]').attr('disabled', $('input[name=saveable]').is(':checked'))
-            if($('input[name=saveable]').is(':checked')) {
+            if ($('input[name=saveable]').is(':checked')) {
                 $('input[name=customer_limit]').val(1)
             }
         })
-        $('input[name=value]').attr('max', $('select[name=discount_type]').val() == "{{ App\Enums\VoucherDiscountType::PERCENT }}" ? 100 : null)
+        $('input[name=value]').attr('max', $('select[name=discount_type]').val() ==
+            "{{ App\Enums\VoucherDiscountType::PERCENT }}" ? 100 : null)
         $('select[name=discount_type]').on('change', (e) => {
             $('input[name=value]').attr('max', null)
-            if(e.target.value == "{{ App\Enums\VoucherDiscountType::PERCENT }}") {
+            if (e.target.value == "{{ App\Enums\VoucherDiscountType::PERCENT }}") {
                 $('input[name=value]').attr('max', 100)
+            }
+        })
+        $('#batch-create-wrapper').addClass('d-none');
+        $('select[name=display]').on('change', (e) => {
+            $('#batch-create-wrapper').addClass('d-none');
+            $('input[name=code]').attr('disabled', false);
+            $('.private-hidden').removeClass('d-none');
+            $('input[name=quantity]').attr('disabled', false);
+            $('input[name=total_can_use]').attr('disabled', false);
+            $('input[name=customer_limit]').attr('disabled', false);
+            if (e.target.value === @json(App\Enums\DisplayType::PRIVATE)) {
+                $('#batch-create-wrapper').removeClass('d-none');
+                $('.private-hidden').addClass('d-none');
+            }
+        })
+        $('#voucher-code-list').addClass('d-none')
+        $('input[name=batch-create]').on('change', (e) => {
+            if ($(e.target).is(':checked')) {
+                $('#voucher-code-list').removeClass('d-none')
+                $('input[name=code]').attr('disabled', true);
+                $('input[name=quantity]').val(1)
+                $('input[name=quantity]').attr('disabled', true);
+                $('input[name=total_can_use]').val(1)
+                $('input[name=total_can_use]').attr('disabled', true);
+                $('input[name=customer_limit]').val(1)
+                $('input[name=customer_limit]').attr('disabled', true);
+            } else {
+                $('#voucher-code-list').addClass('d-none')
+                $('input[name=code]').attr('disabled', false);
+                $('input[name=quantity]').attr('disabled', false);
+                $('input[name=total_can_use]').attr('disabled', false);
+                $('input[name=customer_limit]').attr('disabled', false);
             }
         })
     </script>

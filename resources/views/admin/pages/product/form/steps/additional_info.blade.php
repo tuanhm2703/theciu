@@ -20,7 +20,6 @@
             {!! Form::textarea('shipping_and_return', null, [
                 'class' => 'form-control summernote',
                 'required',
-                'data-v-max-length' => 1000,
                 'placeholder' => 'Hướng dẫn vận chuyển và trả hàng',
             ]) !!}
         </div>

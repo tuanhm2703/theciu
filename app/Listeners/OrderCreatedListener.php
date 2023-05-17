@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\OrderCreatedEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Cache;
 
 class OrderCreatedListener {
     /**
@@ -28,6 +29,7 @@ class OrderCreatedListener {
         foreach($order->vouchers as $voucher) {
             $voucher->decreaseQuantity($order->customer);
         }
+        Cache::forget("voucher_used_$order->customer_id");
         $order->removeStock();
     }
 }
