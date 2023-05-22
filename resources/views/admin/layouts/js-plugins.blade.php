@@ -27,9 +27,9 @@
 <script src="{{ asset('assets/js/bootstrap-treeview.min.js') }}"></script>
 <script src="{{ asset('assets/js/summernote-map-plugin.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.js"></script>
-<script
+{{-- <script
     src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-{{ App::getLocale() }}-{{ getLocaleWithCountryCode()[App::getLocale()] }}.min.js">
-</script>
+</script> --}}
 <script src="{{ asset('assets/js/argon-dashboard.js') }}"></script>
 <script>
     const toast = {
