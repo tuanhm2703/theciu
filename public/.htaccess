@@ -5,6 +5,14 @@
 
     RewriteEngine On
 
+    # Redirect www to non-www
+    RewriteCond %{HTTP_HOST} ^www\. [NC]
+    RewriteRule ^(.*)$ https://theciu.vn/$1 [L,R=301]
+
+    # Redirect http to https
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://theciu.vn/$1 [L,R=301]
+
     # 301 --- https://theciu.vn/3-cach-phoi-do-voi-quan-ong-rong-dai-chuan-nhu-fashionista/ => https://theciu.vn/blog/3-cach-phoi-do-voi-quan-ong-rong-dai-chuan-nhu-fashionista/
     RewriteRule ^3\-cach\-phoi\-do\-voi\-quan\-ong\-rong\-dai\-chuan\-nhu\-fashionista/$ /blog/3-cach-phoi-do-voi-quan-ong-rong-dai-chuan-nhu-fashionista/? [L,R=301]
 
