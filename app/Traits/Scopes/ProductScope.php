@@ -77,7 +77,7 @@ trait ProductScope
             $q->on('promotion_inventories.product_id', 'products.id')
                 ->where('promotion_inventories.stock_quantity', '>', 0)
                 ->where('promotion_inventories.promotion_status', 1)
-                ->whereRaw('now() between inventories.promotion_from and inventories.promotion_to')
+                ->whereRaw('now() between promotion_inventories.promotion_from and promotion_inventories.promotion_to')
                 ->whereNull('promotion_inventories.deleted_at');
         })
         ->where('promotions.status', StatusType::ACTIVE)
