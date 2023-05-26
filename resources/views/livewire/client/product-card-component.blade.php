@@ -8,7 +8,7 @@
             style="background: url({{ optional($product->image)->path_with_domain }});"></a>
         @if ($product->available_flash_sales->first())
             <div class="product-countdown"
-                data-until="{{ $product->available_flash_sales->first()->to->format('Y, m, d') }}"></div>
+                data-until="{{ $product->available_flash_sales->first()->to->format('Y, m, d, H, i, s') }}"></div>
         @endif
 
         <div class="product-action-vertical">

@@ -360,10 +360,7 @@ $(document).ready(function () {
             var $this = $(this),
                 untilDate = $this.data("until"),
                 compact = $this.data("compact"),
-                dateFormat = !$this.data("format")
-                    ? "DHMS"
-                    : $this.data("format"),
-                newLabels = !$this.data("labels-short")
+                dateFormat = !$this.data("format") ? "DHMS" : $this.data("format"),newLabels = !$this.data("labels-short")
                     ? [
                           "Years",
                           "Months",
@@ -395,19 +392,19 @@ $(document).ready(function () {
                     : ["Year", "Month", "Week", "Day", "Hour", "Min", "Sec"];
 
             var newDate;
-
             // Split and created again for ie and edge
             if (!$this.data("relative")) {
                 var untilDateArr = untilDate.split(", "), // data-until 2019, 10, 8 - yy,mm,dd
                     newDate = new Date(
                         untilDateArr[0],
                         untilDateArr[1] - 1,
-                        untilDateArr[2]
+                        untilDateArr[2],
+                        untilDateArr[3],
+                        untilDateArr[4],
                     );
             } else {
                 newDate = untilDate;
             }
-
             $this.countdown({
                 until: newDate,
                 format: dateFormat,
