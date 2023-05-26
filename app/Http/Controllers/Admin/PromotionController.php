@@ -175,12 +175,16 @@ class PromotionController extends Controller {
                     $inventory = Inventory::find($i['id']);
                     $inventory->fill($i);
                     $inventory->promotion_from = $from;
-                    $inventory->promotion_to = $to;
+                    $inventory->promotion_to = $to  ;
                     $inventory->save();
                 }
                 $product_ids[] = $p['id'];
             }
             $promotion->products()->sync($product_ids);
+            $promotion->update([
+                'from' => $from,
+                'to' => $to
+            ]);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
