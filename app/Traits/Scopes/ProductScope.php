@@ -81,7 +81,7 @@ trait ProductScope
             $q->on('promotion_inventories.product_id', 'products.id')
                 ->where('promotion_inventories.stock_quantity', '>', 0)
                 ->where('promotion_inventories.promotion_status', 1)
-                ->whereRaw('now() between inventories.promotion_from and inventories.promotion_to')
+                ->whereRaw('now() between promotion_inventories.promotion_from and inventories.promotion_to')
                 ->whereNull('promotion_inventories.deleted_at');
         })->addSelect(DB::raw('case when promotions.id is null then min(inventories.price) else min(promotion_inventories.promotion_price) end as sale_price'))->groupBy('products.id');
     }
