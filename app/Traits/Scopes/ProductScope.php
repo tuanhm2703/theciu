@@ -64,7 +64,11 @@ trait ProductScope
         $q->leftJoin('promotion_product', function ($q) {
             $q->on('promotion_product.product_id', 'products.id');
         })->leftJoin('promotions', function ($q) {
-            $q->on('promotions.id', 'promotion_product.promotion_id')->where('promotions.status', StatusType::ACTIVE)->whereRaw("now() between `promotions`.`from` and `promotions`.`to`");
+            $q->on('promotions.id', 'promotion_product.promotion_id')
+                ->where('promotions.status', StatusType::ACTIVE)
+                ->whereRaw("now() between `promotions`.`from` and `promotions`.`to`")
+                ->whereNull('promotions.updated_at')
+                ->whereNotNull('promotions.from')->whereNotNull('promotions.to');
         })->leftJoin('inventories', function ($q) {
             $q->on('inventories.product_id', 'products.id')
                 ->where('inventories.stock_quantity', '>', 0)->where(function ($q) {
