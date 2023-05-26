@@ -44,7 +44,7 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider {
         $this->hideSensitiveRequestDetails();
 
         Telescope::filter(function (IncomingEntry $entry) {
-            if ($this->app->environment('local')) {
+            if (env('APP_ENV') != 'prod') {
                 return true;
             }
             return $entry->hasMonitoredTag();
