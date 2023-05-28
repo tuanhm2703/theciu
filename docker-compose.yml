@@ -15,18 +15,8 @@ services:
       - '/home/theciu-data:/var/lib/mysql'
       - ./mariadb/init:/docker-entrypoint-initdb.d
     network_mode: bridge
-    networks:
-      - network1
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
       timeout: 5s
-
-networks:
-  network1:
-     ipam:
-      config:
-        - subnet: 58.187.188.0/24
-          gateway: 58.187.188.1
-          ip_range: 58.187.188.20/32
 
