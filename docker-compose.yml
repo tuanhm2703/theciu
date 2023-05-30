@@ -19,4 +19,11 @@ services:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
       timeout: 5s
-
+  backup:
+    image: tuanhm2703/google-drive-backup:latest
+    volumes:
+      - 'credentials.json:/credentials.json'
+      - '/home/theciu-data:/backup'
+      - 'crontab.txt:/crontab.txt'
+      - 'my-script.sh:/my-script.sh'
+    command: tail -f /dev/null
