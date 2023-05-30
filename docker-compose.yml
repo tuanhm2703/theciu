@@ -31,3 +31,6 @@ services:
     command: tail -f /dev/null
     networks:
       - theciu-db
+networks:
+  theciu-db:
+    driver: bridge
