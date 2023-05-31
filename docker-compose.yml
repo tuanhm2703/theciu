@@ -18,6 +18,7 @@ services:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
       timeout: 5s
+    restart: always
     networks:
       - theciu-db
   backup:
@@ -28,6 +29,7 @@ services:
       - './crontab.txt:/crontab.txt'
       - './my-script.sh:/my-script.sh'
     command: tail -f /dev/null
+    restart: always
     networks:
       - theciu-db
 networks:
