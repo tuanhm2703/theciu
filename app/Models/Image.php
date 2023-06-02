@@ -26,6 +26,10 @@ class Image extends Model {
         'path_with_original_size'
     ];
 
+    public function imageable() {
+        return $this->morphTo();
+    }
+
     public function getPathWithDomainAttribute() {
         if ($this->type == MediaType::VIDEO) {
             return StorageService::url($this->path);
@@ -43,6 +47,15 @@ class Image extends Model {
             }
             return asset('img/image-not-available.png');
         }
+    }
+
+    public function getPathWithSize($size) {
+        if(StorageService::exists("$size/$this->path")) {
+            return StorageService::url("$size/$this->path");
+        } else if(StorageService::exists($this->path)) {
+            return StorageService::url($this->path);
+        }
+        return asset('img/image-not-available.png');
     }
 
     public function getPathWithOriginalSizeAttribute() {

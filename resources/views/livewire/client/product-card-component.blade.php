@@ -60,9 +60,9 @@
                     $image = (object) $image;
                 @endphp
                 <div class="p-1">
-                    <a href="{{ $image->path_with_domain }}"
+                    <a href="{{ $image->getPathWithSize(100) }}"
                         class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
-                        style="background: url({{ $image ->path_with_domain }});">
+                        style="background: url({{ $image ->getPathWithSize(100) }});">
                         {{-- <img src="{{ optional($inventory->image)->path_with_domain }}" alt="{{ $product->snake_name }}"> --}}
                     </a>
                 </div>
