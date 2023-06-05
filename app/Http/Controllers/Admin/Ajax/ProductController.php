@@ -30,10 +30,15 @@ class ProductController extends Controller
             return $q->with('attributes');
         }])->select('products.id', 'products.name', 'products.sku', 'products.updated_at');
         if ($request->ids) $products->whereIn('id', $request->ids);
-        if($request->selected && count($request->selected) > 0) {
-            $products->orderByField('id', $request->selected, 'desc');
+        $selected = $request->selected;
+        if($selected && count($selected) > 0) {
+            \Log::info(json_encode($selected));
+            $products->orderByField('id', array_reverse($selected), 'desc');
         }
         return DataTables::of($products)
+            ->addColumn('checkbox', function($product) use ($selected) {
+                return view('admin.pages.category.modal.checkbox', compact('product', 'selected'));
+            })
             ->editColumn('name', function ($product) {
                 return view('admin.pages.product.components.name', compact('product'));
             })
