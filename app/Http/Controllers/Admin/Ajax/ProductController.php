@@ -30,7 +30,7 @@ class ProductController extends Controller
             return $q->with('attributes');
         }])->select('products.id', 'products.name', 'products.sku', 'products.updated_at');
         if ($request->ids) $products->whereIn('id', $request->ids);
-        $selected = $request->selected;
+        $selected = $request->selected ?? [];
         if($selected && count($selected) > 0) {
             \Log::info(json_encode($selected));
             $products->orderByField('id', array_reverse($selected), 'desc');
