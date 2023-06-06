@@ -84,7 +84,8 @@
             ],
         });
         $('body').on('click', '.child-checkbox', (e) => {
-            const productId = $(e.target).attr('data-product-id')
+            const productId = parseInt($(e.target).attr('data-product-id'))
+
             if ($(e.target).is(':checked')) {
                 selectedProductIds.push(productId)
             } else {

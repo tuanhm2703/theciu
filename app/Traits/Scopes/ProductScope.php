@@ -27,14 +27,14 @@ trait ProductScope
     {
         $q->whereHas('other_categories', function($q) {
             $q->where('categories.type', CategoryType::NEW_ARRIVAL);
-        });
+        })->orderBy('created_at', 'desc');
     }
 
     public function scopeBestSeller($q)
     {
         $q->whereHas('other_categories', function($q) {
             $q->where('categories.type', CategoryType::BEST_SELLER);
-        });
+        })->orderBy('created_at', 'desc');
     }
 
     public function scopeAvailable($q)
