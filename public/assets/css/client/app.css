@@ -1329,7 +1329,9 @@ input[type=number] {
 .desktop-banner-slider {
     display: none;
 }
-
+.fb_dialog {
+    z-index: 10 !important;
+}
 #fb-root iframe {
     z-index: 10 !important;
 }
