@@ -121,7 +121,7 @@ class ProductListComponent extends Component
         }
         $products = $products
             ->withNeededProductCardData()
-            ->filterByPriceRange($this->min_price, $this->max_price);
+            ->orderBy('products.created_at', 'desc')->filterByPriceRange($this->min_price, $this->max_price);
         return $products;
     }
 
