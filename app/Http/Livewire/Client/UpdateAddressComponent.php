@@ -97,7 +97,7 @@ class UpdateAddressComponent extends Component {
         $this->validate();
         $this->address->featured = $this->address->featured ? 1 : 0;
         if($this->address->featured) {
-            customer()->addresses()->update([
+            customer()->addresses()->where('addresses.id', '!=', $this->address->id)->update([
                 'featured' => 0
             ]);
         }
