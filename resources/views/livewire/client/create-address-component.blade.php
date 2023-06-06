@@ -15,7 +15,10 @@
         <hr class="my-3">
         <a class="ajax-modal-btn btn" id="return-address-list-btn" data-modal-size="modal-md" data-callback="initChangeModal()"
             data-link="{{ route('client.auth.profile.address.view.change') }}"><i class="fas fa-undo"></i> Quay lại</a>
-        <button type="button" class="btn btn-primary" wire:click="store">{{ trans('labels.add_address') }}</button>
+        <button type="button" class="btn btn-primary" wire:click.prevent="store" wire:loading.attr="disabled" wire:target="store">
+            {{ trans('labels.add_address') }}
+            <span wire:loading wire:target="store" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </button>
     </div>
     {!! Form::close() !!}
 </div>
