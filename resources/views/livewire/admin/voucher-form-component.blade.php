@@ -137,10 +137,10 @@
             </div>
             <div class="row mt-3">
                 <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
-                    {!! Form::label('quantity', 'Số lượng phát hành:', ['class' => 'custom-control-label m-0']) !!}
+                    {!! Form::label('total_quantity', 'Số lượng phát hành:', ['class' => 'custom-control-label m-0']) !!}
                 </div>
                 <div class="col-8 col-lg-4">
-                    {!! Form::number('quantity', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required']) !!}
+                    {!! Form::number('total_quantity', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required']) !!}
                 </div>
             </div>
             <div class="row mt-3">
