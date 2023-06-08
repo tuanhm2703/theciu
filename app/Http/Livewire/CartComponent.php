@@ -78,6 +78,10 @@ class CartComponent extends Component {
         'address' => 'địa chỉ giao hàng'
     ];
 
+    public function boot(GHTKService $shipping_service) {
+        $this->shipping_service = $shipping_service;
+    }
+
     public function mount() {
         $this->cart =  Cart::with(['inventories' => function ($q) {
             return $q->with('image:path,imageable_id', 'product:id,slug,name')->whereHas('product');
@@ -85,14 +89,14 @@ class CartComponent extends Component {
             'customer_id' => auth('customer')->user()->id
         ]);
         $this->address = auth('customer')->user()->shipping_address;
-        $this->shipping_service = App::make(GHTKService::class);
         $this->shipping_service_id = $this->shipping_service->shipping_service->id;
         if ($this->address) {
             $this->shipping_service_types = $this->shipping_service->getShipServices($this->address);
             foreach ($this->shipping_service_types as $shipping_service_type) {
                 $data = $this->calculateShippingInfo($shipping_service_type);
                 $shipping_service_type->fee = $data['fee'];
-                $shipping_service_type->delivery_date = $data['date'];
+                $shipping_service_type->delivery_date = now()->diffInDays($data['default_format_date']) <= 1 ? now()->addDays(2 - now()->diffInDays($data['default_format_date'])) : $data['default_format_date'];
+                $shipping_service_type->delivery_date = $shipping_service_type->delivery_date->clone()->format('d/m'). " - " . $shipping_service_type->delivery_date->clone()->addDays(2)->format('d/m');
             }
             $this->service_id = $this->shipping_service_types[0]->service_id;
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
@@ -214,11 +218,12 @@ class CartComponent extends Component {
             $package_info->width,
             $package_info->height
         );
-        $fee = App::make(GHTKService::class)->calculateDeliveryFee($deliveryData)->total;
-        $date = App::make(GHTKService::class)->calculateDeliveryTime($deliveryData)->format('d/m/Y');
+        $fee = $this->shipping_service->calculateDeliveryFee($deliveryData)->total;
+        $date = $this->shipping_service->calculateDeliveryTime($deliveryData);
         return [
             'fee' => $fee,
-            'date' => $date
+            'date' => $date->clone()->format('d-m-Y'),
+            'default_format_date' => $date
         ];
     }
 
@@ -244,12 +249,14 @@ class CartComponent extends Component {
         $this->emitTo('header-cart-component', 'cart:refresh');
     }
 
-    public function updateOrderInfo(Address $address = null) {
+    public function updateOrderInfo() {
         $this->shipping_service_types = $this->address ? App::make(GHTKService::class)->getShipServices($this->address) : [];
         foreach ($this->shipping_service_types as $shipping_service_type) {
             $data = $this->calculateShippingInfo($shipping_service_type);
             $shipping_service_type->fee = $data['fee'];
             $shipping_service_type->delivery_date = $data['date'];
+            $shipping_service_type->delivery_date = now()->diffInDays($data['default_format_date']) <= 1 ? now()->addDays(2 - now()->diffInDays($data['default_format_date'])) : $data['default_format_date'];
+            $shipping_service_type->delivery_date = $shipping_service_type->delivery_date->clone()->format('d/m'). " - " . $shipping_service_type->delivery_date->clone()->addDays(2)->format('d/m');
         }
         if (count($this->shipping_service_types) > 0) {
             $this->service_id = $this->shipping_service_types[0]->service_id;
