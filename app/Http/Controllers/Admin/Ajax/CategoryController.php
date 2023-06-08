@@ -125,7 +125,8 @@ class CategoryController extends Controller
 
     public function addProduct(Category $category, Request $request)
     {
-        $category->products()->sync($request->productIds);
+        $category->products()->detach();
+        $category->products()->attach($request->productIds);
         return BaseResponse::success([
             'message' => 'Thêm sản phẩm vào danh mục thành công'
         ]);

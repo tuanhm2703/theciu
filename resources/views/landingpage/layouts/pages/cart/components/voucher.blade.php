@@ -10,10 +10,16 @@
                             <label class="m-0" for="">Mã voucher</label>
                         </div>
                         <div class="col-6 d-flex align-items-center">
-                            <input type="text" wire:model="voucher_code" wire:lazy placeholder="Mã voucher" class="form-control m-0">
+                            <input type="text" wire:model="voucher_code" wire:lazy placeholder="Mã voucher"
+                                class="form-control m-0">
                         </div>
                         <div class="col-3 d-flex align-items-center">
-                            <button style="min-width: fit-content" class="btn btn-primary" wire:click.prevent="applyVoucher">ÁP DỤNG</button>
+                            <button style="min-width: fit-content" class="btn btn-primary"
+                            wire:loading.attr="disabled" wire:click.prevent="applyVoucher">
+                                <span>
+                                    ÁP DỤNG <span wire:loading wire:target="applyVoucher" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </span>
+                            </button>
                         </div>
                     </div>
                     <div class="my-3 row mt-5">
@@ -24,9 +30,10 @@
                     </div>
                     @foreach ($vouchers as $voucher)
                         <div class="custom-control custom-radio voucher-radio row">
-                            <input type="radio" wire:model="{{ $voucher->voucher_type->code == App\Models\VoucherType::ORDER ? 'order_voucher_id' : 'freeship_voucher_id' }}" value="{{ $voucher->id }}"
-                                id="voucher-{{ $voucher->id }}" class="custom-control-input"
-                                @disabled($voucher->disabled)>
+                            <input type="radio"
+                                wire:model="{{ $voucher->voucher_type->code == App\Models\VoucherType::ORDER ? 'order_voucher_id' : 'freeship_voucher_id' }}"
+                                value="{{ $voucher->id }}" id="voucher-{{ $voucher->id }}"
+                                class="custom-control-input" @disabled($voucher->disabled)>
                             <label for="voucher-{{ $voucher->id }}"
                                 class="custom-control-label {{ $voucher->disabled ? 'voucher-label-disabled' : '' }}">
                                 <div class="voucher-type-label order-voucher-label">
@@ -37,7 +44,8 @@
                                 </div>
                                 <div>
                                     <h6 class="text-bold voucher-name mb-0">{{ $voucher->name }}</h6>
-                                    <div><span>Đơn tối thiểu {{ format_currency_with_label($voucher->min_order_value) }}</span></div>
+                                    <div><span>Đơn tối thiểu
+                                            {{ format_currency_with_label($voucher->min_order_value) }}</span></div>
                                     <div class="voucher-description">
                                         {{ $voucher->getDiscountLabelAttribute() }} -
                                         {{ $voucher->max_discount_amount ? trans('labels.max') . ' ' . format_currency_with_label($voucher->max_discount_amount) : trans('labels.unlimit') }}
@@ -48,8 +56,10 @@
                     @endforeach
                     <div class="row mt-3" style="justify-content: right">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">
-                            <span class="text-white" wire:loading wire:target="order_voucher_id,freeship_voucher_id">Đang kiểm tra voucher...</span>
-                            <span wire:loading.remove wire:target="order_voucher_id, freeship_voucher_id">{{ trans('labels.accept') }}</span></button>
+                            <span class="text-white" wire:loading
+                                wire:target="order_voucher_id,freeship_voucher_id">Đang kiểm tra voucher...</span>
+                            <span wire:loading.remove
+                                wire:target="order_voucher_id, freeship_voucher_id">{{ trans('labels.accept') }}</span></button>
                     </div>
                 </div>
             </div>

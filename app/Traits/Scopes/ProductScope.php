@@ -27,14 +27,14 @@ trait ProductScope
     {
         $q->whereHas('other_categories', function($q) {
             $q->where('categories.type', CategoryType::NEW_ARRIVAL);
-        });
+        })->orderBy('created_at', 'desc');
     }
 
     public function scopeBestSeller($q)
     {
         $q->whereHas('other_categories', function($q) {
             $q->where('categories.type', CategoryType::BEST_SELLER);
-        });
+        })->orderBy('created_at', 'desc');
     }
 
     public function scopeAvailable($q)
@@ -64,9 +64,10 @@ trait ProductScope
         $q->leftJoin('promotion_product', function ($q) {
             $q->on('promotion_product.product_id', 'products.id');
         })->leftJoin('promotions', function ($q) {
-            $q->on('promotions.id', 'promotion_product.promotion_id')->where('promotions.status', StatusType::ACTIVE)
-            ->whereRaw("now() between `promotions`.`from` and `promotions`.`to`")
-            ->whereNotNull('promotions.from')->whereNotNull('promotions.to');
+            $q->on('promotions.id', 'promotion_product.promotion_id')
+                ->where('promotions.status', StatusType::ACTIVE)
+                ->whereRaw("now() between `promotions`.`from` and `promotions`.`to`")
+                ->whereNotNull('promotions.from')->whereNotNull('promotions.to');
         })->leftJoin('inventories', function ($q) {
             $q->on('inventories.product_id', 'products.id')
                 ->where('inventories.stock_quantity', '>', 0)->where(function ($q) {
@@ -79,7 +80,7 @@ trait ProductScope
             $q->on('promotion_inventories.product_id', 'products.id')
                 ->where('promotion_inventories.stock_quantity', '>', 0)
                 ->where('promotion_inventories.promotion_status', 1)
-                ->whereRaw('now() between promotion_inventories.promotion_from and promotion_inventories.promotion_to')
+                ->whereRaw('now() between inventories.promotion_from and inventories.promotion_to')
                 ->whereNull('promotion_inventories.deleted_at');
         })->addSelect(DB::raw('case when promotions.id is null then min(inventories.price) else min(promotion_inventories.promotion_price) end as sale_price'))->groupBy('products.id');
     }

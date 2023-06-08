@@ -62,7 +62,7 @@
                 <div class="p-1">
                     <a href="{{ $image->path_with_domain }}"
                         class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
-                        style="background: url({{ $image ->path_with_domain }});">
+                        style="background: url({{ getPathWithSize(100, $image->path) }});">
                         {{-- <img src="{{ optional($inventory->image)->path_with_domain }}" alt="{{ $product->snake_name }}"> --}}
                     </a>
                 </div>

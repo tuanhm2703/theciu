@@ -89,6 +89,7 @@
                                 </li>
                             @endforeach
                         </ul><!-- End .widget-list -->
+                        <div id="70Gl35" style="text-align:center"></div>
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
             </div><!-- End .row -->

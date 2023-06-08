@@ -2,6 +2,7 @@
 
 use App\Models\Config;
 use App\Models\Image;
+use App\Services\StorageService;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -496,4 +497,7 @@ function thousandsCurrencyFormat($num)
 function resize_image(Image $image, $size) {
     $content = file_get_contents(get_proxy_image_url(Storage::url($image->path), $size));
     return Storage::put("$size/$image->path", $content);
+}
+function getPathWithSize($size, $path) {
+    return StorageService::getPathWithSize($size, $path);
 }

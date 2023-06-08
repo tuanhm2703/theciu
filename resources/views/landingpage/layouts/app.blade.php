@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ getAssetUrl('assets/css/bs4Toast.css') }}">
     <link rel="stylesheet" href="{{ getAssetUrl('assets/css/admin/tata.css') }}">
     <link rel="stylesheet" href="{{ getAssetUrl('assets/css/magiczoomplus.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/css/notyf.min.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -110,46 +111,21 @@
     <script src="{{ getAssetUrl('assets/js/bs4Toast.js') }}"></script>
     <script src="{{ getAssetUrl('assets/js/plugins/tata/tata.js') }}"></script>
     <script src="{{ getAssetUrl('assets/js/magiczoomplus.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/js/notyf.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script>
         const toast = {
-            success: (title, content) => {
-                new Notify({
-                    status: 'success',
-                    title: title,
-                    text: content,
-                    effect: 'fade',
-                    speed: 300,
-                    customClass: '',
-                    customIcon: '',
-                    showIcon: true,
-                    showCloseButton: true,
-                    autoclose: true,
-                    autotimeout: 2000,
-                    gap: 20,
-                    distance: 20,
-                    type: 1,
-                    position: 'center'
-                })
+            success: (title = '', content) => {
+                var notyf = new Notyf();
+                notyf.open({
+                    type: 'success',
+                    message: content,
+                    background: '#c96'
+                });
             },
             error: (title, content) => {
-                new Notify({
-                    status: 'error',
-                    title: title,
-                    text: content,
-                    effect: 'fade',
-                    speed: 300,
-                    customClass: '',
-                    customIcon: '',
-                    showIcon: true,
-                    showCloseButton: true,
-                    autoclose: true,
-                    autotimeout: 2000,
-                    gap: 20,
-                    distance: 20,
-                    type: 1,
-                    position: 'center'
-                })
+                var notyf = new Notyf();
+                notyf.error(content);
             }
         }
         $('.lazy').lazyload();

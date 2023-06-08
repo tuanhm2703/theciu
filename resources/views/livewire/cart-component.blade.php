@@ -195,7 +195,7 @@
                 <label for="note" class="form-label">Chú thích đơn hàng</label>
                 <textarea name="note" class="form-control w-100" wire:model.lazy="note" cols="30" rows="5"></textarea>
             </div>
-            <button wire:click="checkOrder" href="#" id="checkout-btn"
+            <button wire:click="checkOrder" href="#" id="checkout-btn" wire:loading.attr="disabled" wire:target="checkOrder"
                 class="btn btn-outline-primary-2 btn-order btn-block">
                 <span wire:loading.remove wire:target="checkOrder">{{ trans('labels.checkout') }}</span>
                 <span wire:loading wire:target="checkOrder">Đang tiến hành thanh toán..</span>
@@ -361,7 +361,7 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <button class="btn btn-primary mr-2" wire:click="checkout">
+                        <button class="btn btn-primary mr-2" wire:click="checkout" wire:loading.attr="disabled" wire:target="checkout">
                             <span class="text-white" wire:loading.remove
                                 wire:target="checkout">{{ trans('labels.checkout') }}</span>
                             <span class="text-white" wire:loading wire:target="checkout">Đang tiến hành thanh

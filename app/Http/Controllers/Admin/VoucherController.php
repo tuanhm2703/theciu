@@ -31,7 +31,7 @@ class VoucherController extends Controller {
         $input['featured'] = $request->featured ? $request->featured == 'on' : false;
         $input['status'] = $request->status ? $request->status == 'on' : false;
         if ($request->has('batch-create') && $input['batch-create'] === 'on' && $request->display === DisplayType::PRIVATE) {
-            $input['quantity'] = 1;
+            $input['total_quantity'] = 1;
             $input['total_can_use'] = 1;
             $input['customer_limit'] = 1;
             $input['saveable'] = false;

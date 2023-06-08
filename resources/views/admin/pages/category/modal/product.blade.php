@@ -62,20 +62,12 @@
             "ajax": {
                 url: "{{ route('admin.ajax.product.paginate') }}",
                 type: "GET",
-                data: {
-                    selected: selectedProductIds
+                data: function(d) {
+                    d.selected = selectedProductIds;
                 }
             },
             "columns": [{
-                    data: "id",
-                    render: function(data, type, row) {
-                        if (type === 'display') {
-                            return `<div class="form-check text-center form-check-info">
-                                        <input type="checkbox" data-product-id="${data}" ${selectedProductIds.includes(data) ? 'checked' : ''} class="editor-active form-check-input child-checkbox">
-                                    </div>`
-                        }
-                        return data;
-                    },
+                    data: "checkbox",
                     className: "dt-body-center",
                     orderable: false,
                     searchable: false
@@ -92,8 +84,9 @@
             ],
         });
         $('body').on('click', '.child-checkbox', (e) => {
-            const productId = $(e.target).attr('data-product-id')
-            if($(e.target).is(':checked')) {
+            const productId = parseInt($(e.target).attr('data-product-id'))
+
+            if ($(e.target).is(':checked')) {
                 selectedProductIds.push(productId)
             } else {
                 const productIdIndex = selectedProductIds.indexOf(productId)
@@ -106,13 +99,6 @@
         });
         $('#add-product-btn').on('click', (e) => {
             e.preventDefault()
-            // let productIds = []
-            // const checkboxes = $('.category-product-table .child-checkbox')
-            // Array.from(checkboxes).forEach(checkbox => {
-            //     if ($(checkbox).is(':checked')) {
-            //         productIds.push($(checkbox).data().productId)
-            //     }
-            // });
             if (selectedProductIds.length > 0) {
                 addProductFromIdArray(selectedProductIds)
             }

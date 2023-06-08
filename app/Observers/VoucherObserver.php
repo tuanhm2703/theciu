@@ -7,7 +7,7 @@ use App\Models\Voucher;
 class VoucherObserver
 {
     public function creating(Voucher $voucher) {
-        $voucher->total_quantity = $voucher->quantity;
+        $voucher->quantity = $voucher->total_quantity;
         if($voucher->isPrivate()) {
             $voucher->saveable = false;
             $voucher->featured = false;

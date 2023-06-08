@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Ward;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class UpdateAddressComponent extends Component {
@@ -35,22 +36,32 @@ class UpdateAddressComponent extends Component {
 
     public function mount() {
         $this->address = $this->address ? $this->address : new Address();
-        $this->provinces = Province::select('name', 'id')->orderBy('name', 'desc')->get();
+        $this->provinces = Cache::remember('provinces', 600, function () {
+            return Province::select('name', 'id')->orderBy('name', 'desc')->get();
+        });
         $this->address->province_id = $this->address->province_id ? $this->address->province_id : $this->provinces->first()->id;
-        $this->districts = District::where('parent_id', $this->address->province_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        $this->districts = Cache::remember("districts:". $this->address->province_id, 600, function() {
+            return District::where('parent_id', $this->address->province_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        });
         $this->address->district_id = $this->address->district_id ? $this->address->district_id : $this->districts->first()->id;
-        $this->wards = Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        $this->wards = Cache::remember("wards:".$this->address->district_id, 600, function () {
+            return Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        });
         $this->address->ward_id = $this->address->ward_id ? $this->address->ward_id : $this->wards->first()->id;
     }
 
     public function changeProvince() {
-        $this->districts = District::where('parent_id', $this->address->province_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        $this->districts = Cache::remember("districts:". $this->address->province_id, 600, function() {
+            return District::where('parent_id', $this->address->province_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        });
         $this->address->district_id = $this->districts->first()->id;
         $this->changeDistrict();
     }
 
     public function changeDistrict() {
-        $this->wards = Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        $this->wards = Cache::remember("wards:".$this->address->district_id, 600, function () {
+            return Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        });
         $this->address->ward_id = $this->wards->first()->id;
     }
 
@@ -68,11 +79,17 @@ class UpdateAddressComponent extends Component {
     public function changeAddress(Address $address) {
         $this->address = $address;
         $this->address_type = $address->type;
-        $this->provinces = Province::select('name', 'id')->orderBy('name', 'desc')->get();
+        $this->provinces = Cache::remember('provinces', 600, function () {
+            return Province::select('name', 'id')->orderBy('name', 'desc')->get();
+        });
         $this->address->province_id = $this->address->province_id ? $this->address->province_id : $this->provinces->first()->id;
-        $this->districts = District::where('parent_id', $this->address->province_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        $this->districts = Cache::remember("districts:". $this->address->province_id, 600, function() {
+            return District::where('parent_id', $this->address->province_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        });
         $this->address->district_id = $this->address->district_id ? $this->address->district_id : $this->districts->first()->id;
-        $this->wards = Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        $this->wards = Cache::remember("wards:".$this->address->district_id, 600, function () {
+            return Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+        });
         $this->address->ward_id = $this->address->ward_id ? $this->address->ward_id : $this->wards->first()->id;
     }
 
@@ -80,7 +97,7 @@ class UpdateAddressComponent extends Component {
         $this->validate();
         $this->address->featured = $this->address->featured ? 1 : 0;
         if($this->address->featured) {
-            customer()->addresses()->update([
+            customer()->addresses()->where('addresses.id', '!=', $this->address->id)->update([
                 'featured' => 0
             ]);
         }
