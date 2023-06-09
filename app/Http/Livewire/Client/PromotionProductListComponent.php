@@ -66,7 +66,7 @@ class PromotionProductListComponent extends Component {
             $this->page = $page;
         }
         $products = Product::query()->whereHas('promotions', function($q) {
-            $q->available();
+            $q->haveNotEnded();
             if($this->promotion) {
                 $q->where('promotions.id', $this->promotion->id);
             }
