@@ -60,7 +60,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
             function ($view) {
                 $product_categories = App::get('ProductCategory');
                 $new_arrival_categories = Category::with('image:imageable_id,path')->whereType(CategoryType::TRENDING)->get();
-                $promotions = Promotion::available()->whereHas('products')->with(['products' => function ($q) {
+                $promotions = Promotion::haveNotEnded()->whereHas('products')->with(['products' => function ($q) {
                     $q->withNeededProductCardData();
                 }])->get();
                 $best_seller_categories = Category::with("image:imageable_id,path")->whereType(CategoryType::BEST_SELLER)->whereHas('products')->get();

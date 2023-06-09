@@ -239,5 +239,7 @@ return [
     'otp' => 'Mã xác nhận',
     "send_otp" => 'Gửi mã xác nhận',
     'voucher_type' => 'Loại voucher',
-    'display' => 'Hiển thị'
+    'display' => 'Hiển thị',
+    'comming_soon' => 'Sắp diễn ra',
+    'happenning' => 'Đang diễn ra',
 ];

@@ -1,5 +1,6 @@
 <li class="{{ isNavActive('client.product.sale_off') ? 'active' : '' }}">
-    <a href="{{ route('client.product.sale_off') }}">Sale off</a>
+    <a href="{{ route('client.product.sale_off') }}">Sale off
+    </a>
 
     <div class="megamenu megamenu-sm">
         <div class="row no-gutters">
@@ -10,7 +11,12 @@
                             <li>
                                 <a
                                     href="{{ route('client.product.sale_off', $p->slug) }}">
-                                    {{ $p->name }}<span><span class="tip tip-new">New</span></span>
+                                    {{ $p->name }}
+                                    @if (now()->isBefore($p->from))
+                                        <span><span class="tip tip-new" style="width: max-content">{{ __('labels.comming_soon') }}</span></span>
+                                    @else
+                                        <span><span class="tip tip-hot" style="width: max-content">{{ __('labels.happenning') }}</span></span>
+                                    @endif
                                 </a>
                             </li>
                         @endforeach
