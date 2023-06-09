@@ -2,7 +2,7 @@
     @if (isset($inventory) && $inventory)
         @if ($inventory->price > $inventory->sale_price)
             <span class="new-price">{{ number_format($inventory->sale_price, 0, ',', '.') }}</span>
-            <span class="old-price">{{ number_format($inventory->promotion_price, 0, ',', '.') }}</span>
+            <span class="old-price">{{ number_format($inventory->price, 0, ',', '.') }}</span>
         @else
             {{ format_currency_with_label($inventory->price, 0, ',', '.') }}
         @endif
