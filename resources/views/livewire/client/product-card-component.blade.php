@@ -1,7 +1,7 @@
 <div class="product product-7 text-center">
     <figure class="product-media">
         @if ($product->is_has_sale)
-            <span class="product-label label-sale">{{ $product->discount_percent }}% off</span>
+            <span class="product-label label-sale">{{ round($product->discount_percent) }}% off</span>
         @endif
         <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}"
             class="product-image image-loading lazy"

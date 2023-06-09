@@ -148,7 +148,7 @@ class ProductListComponent extends Component
             });
         }
         if ($this->haspromotion) {
-            $products->hasAvailablePromotions();
+            $products->haveNotEnded();
         }
         if ($this->promotion) {
             $products->whereHas('promotions', function ($q) {
