@@ -60,7 +60,23 @@
         border-radius: 5px;
         overflow: hidden;
     }
+
     .promotion-setting-header label {
         line-height: 1rem;
+    }
+
+    .text-sm {
+        font-size: 0.75rem !important;
+    }
+
+    [name=discountType] {
+        border-radius: 0;
+        border: 0;
+        padding: 0 3px;
+    }
+    [name=discountType]:focus {
+        background: transparent;
+        border-right: none !important;
+        box-shadow: none !important;
     }
 </style>

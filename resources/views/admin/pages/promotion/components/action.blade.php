@@ -4,13 +4,13 @@
         <i class="fas fa-ellipsis-v"></i>
     </button>
     <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
-        @if (now()->between($promotion->from, $promotion->to))
+        {{-- @if (now()->between($promotion->from, $promotion->to)) --}}
             <li>
                 <a href="{{ route('admin.promotion.edit', $promotion->id) }}" class="dropdown-item"><span
                         class="badge badge-warning d-block text-warning"><i
                             class="far fa-edit p-1"></i>{{ trans('labels.edit') }}</span></a>
             </li>
-        @endif
+        {{-- @endif --}}
         @if (now()->between($promotion->from, $promotion->to))
             <li>
                 {!! Form::open([

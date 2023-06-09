@@ -6,15 +6,12 @@ use App\Enums\CategoryType;
 use App\Enums\StatusType;
 use Illuminate\Support\Facades\DB;
 
-trait ProductScope
-{
-    public function scopeFindBySlug($q, $slug)
-    {
+trait ProductScope {
+    public function scopeFindBySlug($q, $slug) {
         return $q->where('products.slug', $slug);
     }
 
-    public function scopeDontHavePromotion($q)
-    {
+    public function scopeDontHavePromotion($q) {
         $now = now();
         return $q->whereDoesntHave('promotions', function ($q) use ($now) {
             return $q->whereNotNull('promotions.from')->whereNotNull('promotions.to')->where(function ($q) use ($now) {
@@ -23,22 +20,19 @@ trait ProductScope
         });
     }
 
-    public function scopeNewArrival($q)
-    {
-        $q->whereHas('other_categories', function($q) {
+    public function scopeNewArrival($q) {
+        $q->whereHas('other_categories', function ($q) {
             $q->where('categories.type', CategoryType::NEW_ARRIVAL);
         })->orderBy('created_at', 'desc');
     }
 
-    public function scopeBestSeller($q)
-    {
-        $q->whereHas('other_categories', function($q) {
+    public function scopeBestSeller($q) {
+        $q->whereHas('other_categories', function ($q) {
             $q->where('categories.type', CategoryType::BEST_SELLER);
         })->orderBy('created_at', 'desc');
     }
 
-    public function scopeAvailable($q)
-    {
+    public function scopeAvailable($q) {
         return $q->where(function ($q) {
             $q->whereHas('inventories', function ($q) {
                 $q->where('stock_quantity', '>', 0)->where('inventories.status', 1);
@@ -46,20 +40,23 @@ trait ProductScope
         });
     }
 
-    public function scopeHasAvailablePromotions($q)
-    {
+    public function scopeHasAvailablePromotions($q) {
         return $q->whereHas('promotions', function ($q) {
             $q->available();
         });
     }
 
-    public function scopeWithNeededProductCardData($q)
-    {
+    public function scopeHasIncommingpromotions($q) {
+        return $q->whereHas('promotions', function($q) {
+            $q->incomming();
+        });
+    }
+
+    public function scopeWithNeededProductCardData($q) {
         return $q->available()->with('image:path,imageable_id,id,name', 'available_flash_sales', 'inventories.image:id,path,imageable_id,name', 'categories', 'inventories')->select('products.id', 'products.slug', 'products.name');
     }
 
-    public function scopeAddSalePrice($q)
-    {
+    public function scopeAddSalePrice($q) {
         /* Adding a column called `sale_price` to the query. */
         $q->leftJoin('promotion_product', function ($q) {
             $q->on('promotion_product.product_id', 'products.id');
@@ -84,8 +81,7 @@ trait ProductScope
                 ->whereNull('promotion_inventories.deleted_at');
         })->addSelect(DB::raw('case when promotions.id is null then min(inventories.price) else min(promotion_inventories.promotion_price) end as sale_price'))->groupBy('products.id');
     }
-    public function scopeFilterByPriceRange($q, $min, $max)
-    {
+    public function scopeFilterByPriceRange($q, $min, $max) {
         $min = $min ? $min : 0;
         $max = $max ? $max : 10000000000;
         $q->addSalePrice()->having('sale_price', '>=', $min)->having('sale_price', '<=', $max);

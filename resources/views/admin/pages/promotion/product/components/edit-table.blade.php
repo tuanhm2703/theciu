@@ -76,13 +76,18 @@
         <div class="promotion-setting-header row">
             <div class="col-3">
                 <h6>Thiết lập hàng loạt</h6>
-                <div><strong>0</strong> Sản phẩm đã chọn</div>
+                <div><strong id="numberOfCheckedProducts">0</strong> Sản phẩm đã chọn</div>
             </div>
             <div class="col-2">
                 <label for="">Khuyến mãi</label>
                 <div class="input-group height-fit-content">
                     <input min="1" max="100" type="number" class="form-control" name="general-discount-percent">
-                    <span class="input-group-text" id="basic-addon2"><span class="before-prefix-split"></span>%GIẢM</span>
+                    <span class="input-group-text" id="basic-addon2">
+                        <select name="discountType" id="" class="form-control" style="border-right: none !important; border-left: 1px solid lightgray;">
+                            <option value="percent">%</option>
+                            <option value="price"><i class="fas fa-dollar-sign"></i>$</option>
+                        </select>
+                    </span>
                 </div>
             </div>
             {{-- <div class="col-2">
@@ -105,7 +110,14 @@
             </div>
         </div>
         <div class="promotion-setting-header row mt-3">
-            @include('admin.pages.promotion.product.components.promotion-table-header')
+            <div class="col-1">
+                <div class="form-check text-center form-check-info">
+                    <input type="checkbox" class="editor-active form-check-input" id="checkAllProduct">
+                </div>
+            </div>
+            <div class="col-11 d-flex flex-row">
+                @include('admin.pages.promotion.product.components.promotion-table-header')
+            </div>
         </div>
         <div class="promotion-setting-wrapper">
         </div>
