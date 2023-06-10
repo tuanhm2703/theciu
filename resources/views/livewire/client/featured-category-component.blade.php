@@ -11,16 +11,7 @@
             "autoplay": true,
             "autoplayTimeout": 3000,
             "items": 1,
-            "loop": true,
-            "responsive": {
-                "992": {
-                    "nav": true,
-                    "items": 3
-                },
-                "576": {
-                    "items": 2
-                }
-            }
+            "loop": true
         }'>
             @foreach ($featured_categories as $c)
                 <div class="banner banner-overlay h-100">
