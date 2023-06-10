@@ -33,7 +33,7 @@ class Promotion extends Model {
     }
 
     public function generateUniqueSlug() {
-        $base_slug = Str::snake(stripVN($this->name), '-');
+        $base_slug = stripVN($this->name);
         $slug = $base_slug;
         while(Category::where('slug', $slug)->where('id', '!=', $this->id)->exists()) {
             $slug = "$base_slug-".now()->timestamp;

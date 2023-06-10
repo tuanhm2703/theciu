@@ -10,12 +10,12 @@ class BlogObserver {
         if ($blog->code == null) {
             $blog->migrateUniqueCode();
         }
-        $blog->slug = Str::snake(stripVN($blog->title), '-');
+        $blog->slug = stripVN($blog->title);
     }
 
     public function updating(Blog $blog) {
         if ($blog->isDirty('title')) {
-            $blog->slug = Str::snake(stripVN($blog->title), '-');
+            $blog->slug = stripVN($blog->title);
         }
     }
 }

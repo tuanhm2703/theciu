@@ -11,13 +11,13 @@ class ProductObserver
         if($product->code == null) {
             $product->migrateUniqueCode();
         }
-        $product->slug = Str::snake(stripVN($product->name), '-');
+        $product->slug = stripVN($product->name);
     }
 
 
     public function updating(Product $product) {
         if($product->isDirty('name')) {
-            $product->slug = Str::snake(stripVN($product->name), '-');
+            $product->slug = stripVN($product->name);
         }
     }
 }
