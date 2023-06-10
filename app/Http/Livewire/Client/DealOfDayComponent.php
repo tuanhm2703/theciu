@@ -12,7 +12,7 @@ class DealOfDayComponent extends Component
 
     public function mount() {
         $this->flash_sale_products = Cache::remember("deal_of_day", env('CACHE_EXPIRE', 600), function() {
-            return Product::whereHas('available_flash_sales')->withNeededProductCardData()->get();
+            return Product::whereHas('flash_sale')->withNeededProductCardData()->get();
         });
     }
 
