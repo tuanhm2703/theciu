@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Services\BatchService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use VienThuong\KiotVietClient\Client;
@@ -42,7 +43,9 @@ class AppServiceProvider extends ServiceProvider {
             return $client;
         });
         $this->app->singleton('AppConfig', function() {
-            return Config::first();
+            return Cache::remember('app_config', 600, function () {
+                return Config::first();
+            });;
         });
         $this->app->singleton('ProductCategory', function() {
             return Category::getMenuCategories();
