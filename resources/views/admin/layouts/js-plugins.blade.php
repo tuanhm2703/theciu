@@ -40,7 +40,7 @@
             notyf.open({
                 type: 'success',
                 message: content,
-                background: '#c96'
+                background: '#2dce89'
             });
         },
         error: (title, content) => {
