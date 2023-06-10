@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Banner;
 use App\Models\Blog;
+use App\Models\Category;
 use App\Models\Page;
 use App\Models\Product;
 use App\Models\Promotion;
@@ -64,6 +65,14 @@ class GenerateSeoSlugForAll extends Command {
                 $promotion->slug = stripVN($promotion->name)."-".random_int(100000, 999999);
             }
             $promotion->save();
+        }
+        $categories = Category::all();
+        foreach ($categories as $category) {
+            $category->slug = stripVN($category->name);
+            while (Category::where('slug', $category->slug)->where('id', '!=', $category->id)->exists()) {
+                $category->slug = stripVN($category->name)."-".random_int(100000, 999999);
+            }
+            $category->save();
         }
         $this->info('Service created successfully!');
     }
