@@ -26,6 +26,7 @@
 <script src="{{ asset('assets/landingpage/js/jquery.magnific-popup.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap-treeview.min.js') }}"></script>
 <script src="{{ asset('assets/js/summernote-map-plugin.js') }}"></script>
+<script src="{{ getAssetUrl('assets/js/notyf.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.js"></script>
 <script
@@ -34,43 +35,17 @@
 <script src="{{ asset('assets/js/argon-dashboard.js') }}"></script>
 <script>
     const toast = {
-        success: (title, content, duration = 2000) => {
-            new Notify({
-                status: 'success',
-                title: title,
-                text: content,
-                effect: 'fade',
-                speed: 300,
-                customClass: '',
-                customIcon: '',
-                showIcon: true,
-                showCloseButton: true,
-                autoclose: true,
-                autotimeout: duration,
-                gap: 20,
-                distance: 20,
-                type: 1,
-                position: 'center'
-            })
+        success: (title = '', content) => {
+            var notyf = new Notyf();
+            notyf.open({
+                type: 'success',
+                message: content,
+                background: '#c96'
+            });
         },
-        error: (title, content, duration = 2000) => {
-            new Notify({
-                status: 'error',
-                title: title,
-                text: content,
-                effect: 'fade',
-                speed: 300,
-                customClass: '',
-                customIcon: '',
-                showIcon: true,
-                showCloseButton: true,
-                autoclose: true,
-                autotimeout: duration,
-                gap: 20,
-                distance: 20,
-                type: 1,
-                position: 'center'
-            })
+        error: (title, content) => {
+            var notyf = new Notyf();
+            notyf.error(content);
         }
     }
     var win = navigator.platform.indexOf('Win') > -1;

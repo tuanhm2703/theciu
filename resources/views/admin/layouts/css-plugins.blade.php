@@ -25,4 +25,5 @@
 <link rel="stylesheet" href="{{ asset('assets/landingpage/css/plugins/magnific-popup/magnific-popup.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-treeview.min.css') }}">
 <link rel="stylesheet" href="{{asset('assets/landingpage/css/floating-labels.css')}}">
+<link rel="stylesheet" href="{{ getAssetUrl('assets/css/notyf.min.css') }}">
 @livewireStyles
