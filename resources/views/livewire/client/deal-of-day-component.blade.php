@@ -3,7 +3,7 @@
         <div class="deal bg-image pt-8 pb-8" style="background-image: url(/img/promotion-background.png);">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-8 col-md-5 col-lg-4">
+                    <div class="col-10">
                         <div class="owl-carousel owl-simple" data-toggle="owl"
                             data-owl-options='{
                             "nav": true,
@@ -12,7 +12,16 @@
                             "autoplay": true,
                             "loop": true,
                             "autoplayTimeout": 3000,
-                            "items": 1
+                            "items": 1,
+                            "responsive": {
+                                "992": {
+                                    "nav": true,
+                                    "items": 3
+                                },
+                                "576": {
+                                    "items": 2
+                                }
+                            }
                         }'>
                             @foreach ($flash_sale_products as $product)
                                 <div>
