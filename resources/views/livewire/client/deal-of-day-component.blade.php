@@ -12,7 +12,16 @@
                             "autoplay": true,
                             "loop": true,
                             "autoplayTimeout": 3000,
-                            "items": 1
+                            "items": 1,
+                            "responsive": {
+                                "992": {
+                                    "nav": true,
+                                    "items": 3
+                                },
+                                "576": {
+                                    "items": 2
+                                }
+                            }
                         }'>
                             @foreach ($flash_sale_products as $product)
                                 <div>
