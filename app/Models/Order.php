@@ -376,7 +376,7 @@ class Order extends Model
             $arr[] = new OrderDetail([
                 'productCode' => $inventory->sku,
                 'quantity' => $inventory->pivot->quantity,
-                'price' => $inventory->pivot->total,
+                'price' => $inventory->pivot->origin_price,
                 'discountRatio' => 100 - ($inventory->pivot->promotion_price / $inventory->pivot->origin_price) * 100,
                 'discount' => $inventory->pivot->origin_price - $inventory->pivot->promotion_price,
             ]);
