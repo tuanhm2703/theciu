@@ -154,13 +154,19 @@
     })
 
     $('#promotion-update-btn').on('click', (e) => {
+
         if (validator.checkAll() == 0) {
             $(e.target).loading()
             $.ajax({
                 url: $('.promotion-form').attr('action'),
                 type: @json(isset($promotion) ? 'PUT' : 'POST'),
                 data: {
-                    products: products,
+                    products: products.map(function(product) {
+                        return {
+                            id: product.id,
+                            inventories: product.inventories
+                        }
+                    }),
                     from: $('input[name=from]').val(),
                     to: $('input[name=to]').val(),
                     name: $('input[name=name]').val(),
