@@ -12,7 +12,6 @@
 
     .product-name {
         display: inline-block;
-        width: 180px;
         white-space: nowrap;
         overflow: hidden !important;
         text-overflow: ellipsis;
