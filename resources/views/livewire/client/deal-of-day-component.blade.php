@@ -1,6 +1,6 @@
 <div>
     @if ($flash_sale_products->count() > 0)
-        <div class="deal bg-image pt-8 pb-8" style="background-image: url(/img/promotion-background.png);">
+        <div class="deal bg-image pt-8 pb-8" style="background-color: #faf2e8">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-10">
@@ -16,7 +16,7 @@
                             "responsive": {
                                 "992": {
                                     "nav": true,
-                                    "items": 3
+                                    "items": 4
                                 },
                                 "576": {
                                     "items": 2
