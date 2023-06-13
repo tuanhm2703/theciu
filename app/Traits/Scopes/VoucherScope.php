@@ -10,7 +10,7 @@ trait VoucherScope {
     }
 
     public function scopeAvailable($q) {
-        return $q->whereRaw("now() between vouchers.begin and vouchers.end");
+        return $q->whereRaw("now() between vouchers.begin and vouchers.end")->active();
     }
 
     public function scopeNotExpired($q) {
