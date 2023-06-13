@@ -1,7 +1,7 @@
 <div>
     @if ($flash_sale_products->count() > 0)
         <div class="deal bg-image pt-8 pb-8" style="background-color: #faf2e8">
-            <div class="container">
+            <div class="">
                 <div class="row justify-content-center">
                     <div class="col-10">
                         <div class="owl-carousel owl-simple" data-toggle="owl"
@@ -14,9 +14,13 @@
                             "autoplayTimeout": 3000,
                             "items": 1,
                             "responsive": {
-                                "992": {
+                                "1208": {
                                     "nav": true,
                                     "items": 4
+                                },
+                                "992": {
+                                    "nav": true,
+                                    "items": 3
                                 },
                                 "576": {
                                     "items": 2
