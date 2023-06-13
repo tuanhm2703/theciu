@@ -7,6 +7,7 @@
         }
         .page-content * {
             max-width: 100% !important;
+            font-family: 'Mulish', sans-serif !important;
         }
     </style>
 @endpush
