@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Config;
+use App\Models\Customer;
 use App\Models\Image;
 use App\Services\StorageService;
 use Illuminate\Support\Facades\App;
@@ -418,7 +419,7 @@ function getLogoUrl() {
 function checkAuthCustomer() {
     return auth('customer')->check();
 }
-function customer() {
+function customer(): ?Customer {
     return checkAuthCustomer() ? auth('customer')->user() : null;
 }
 function user() {

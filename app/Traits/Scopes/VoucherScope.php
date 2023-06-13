@@ -3,6 +3,7 @@
 namespace App\Traits\Scopes;
 
 use App\Enums\DisplayType;
+use App\Models\Customer;
 
 trait VoucherScope {
     public function scopeCanApplyForCustomer($q, $customer_id) {
@@ -35,5 +36,9 @@ trait VoucherScope {
 
     public function scopePublic($q) {
         return $q->where('vouchers.display', DisplayType::PUBLIC);
+    }
+
+    public function scopeVoucherForCart($q, Customer $customer) {
+        return $q->active()->public()->with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union($customer->saved_vouchers()->active()->public()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed());
     }
 }

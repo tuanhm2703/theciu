@@ -102,14 +102,14 @@ class CartComponent extends Component {
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
         $this->payment_methods = PaymentMethod::active()->with('image:imageable_id,path')->get();
-        $this->save_voucher_ids = customer()->saved_vouchers()->public()->notExpired()->haveNotUsed()->pluck('id')->toArray();
-        $this->vouchers = Voucher::public()->with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union(customer()->saved_vouchers()->public()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed())->get();
+        $this->save_voucher_ids = customer()->saved_vouchers()->active()->public()->notExpired()->haveNotUsed()->pluck('id')->toArray();
+        $this->vouchers = Voucher::voucherForCart(customer())->get();
         $this->updateVoucherDisableStatus();
     }
 
     public function reloadVoucher() {
         $this->save_voucher_ids = customer()->saved_vouchers()->public()->notExpired()->haveNotUsed()->pluck('id')->toArray();
-        $this->vouchers = Voucher::public()->with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union(customer()->saved_vouchers()->public()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed())->get();
+        $this->vouchers = Voucher::voucherForCart(customer())->get();
         $this->updateVoucherDisableStatus();
     }
 
@@ -271,11 +271,11 @@ class CartComponent extends Component {
 
     public function updated($name, $value) {
         if ($name == 'order_voucher_id') {
-            $this->order_voucher = Voucher::find($value);
+            $this->order_voucher = Voucher::active()->find($value);
             $this->updateOrderInfo($this->address);
         }
         if ($name == 'freeship_voucher_id') {
-            $this->freeship_voucher = Voucher::find($value);
+            $this->freeship_voucher = Voucher::active()->find($value);
             $this->updateOrderInfo($this->address);
         }
     }
