@@ -24,6 +24,7 @@
         document.addEventListener("DOMContentLoaded", () => {
             @this.on('initPlugin', (e) => {
                 if (e.length > 0 && @json(!Session::has('prevent-reopen-voucher-popup'))) {
+                    $('.voucher-popup').css('opacity', 0)
                     owlCarousels()
                     setTimeout(function() {
                         $.magnificPopup.open({
@@ -39,6 +40,9 @@
                                         "padding-right",
                                         "1.7rem"
                                     );
+                                    setTimeout(() => {
+                                        $('.voucher-popup').css('opacity', 1)
+                                    }, 500);
                                 },
                                 close: function() {
                                     $("body").css("overflow-x", "hidden");
