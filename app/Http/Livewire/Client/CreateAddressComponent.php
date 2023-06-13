@@ -24,22 +24,22 @@ class CreateAddressComponent extends Component {
     public function mount() {
         $this->address = new Address();
         $this->provinces = Cache::remember('provinces', 600, function () {
-            return Province::select('name', 'id')->orderBy('name', 'desc')->get();
+            return Province::select('name', 'id')->orderBy('name', 'asc')->get();
         });
         $this->address->province_id = $this->address->province_id ? $this->address->province_id : $this->provinces->first()->id;
         $this->districts = Cache::remember("districts:". $this->address->province_id, 600, function() {
-            return District::where('parent_id', $this->address->province_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+            return District::where('parent_id', $this->address->province_id)->select('name', 'id')->orderBy('name', 'asc')->get();
         });
         $this->address->district_id = $this->address->district_id ? $this->address->district_id : $this->districts->first()->id;
         $this->wards = Cache::remember("wards:".$this->address->district_id, 600, function () {
-            return Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+            return Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'asc')->get();
         });
         $this->address->ward_id = $this->address->ward_id ? $this->address->ward_id : $this->wards->first()->id;
     }
 
     public function changeProvince() {
         $this->districts = Cache::remember("districts:". $this->address->province_id, 600, function() {
-            return District::where('parent_id', $this->address->province_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+            return District::where('parent_id', $this->address->province_id)->select('name', 'id')->orderBy('name', 'asc')->get();
         });
         $this->address->district_id = $this->districts->first()->id;
         $this->changeDistrict();
@@ -47,7 +47,7 @@ class CreateAddressComponent extends Component {
 
     public function changeDistrict() {
         $this->wards = Cache::remember("wards:".$this->address->district_id, 600, function () {
-            return Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'desc')->get();
+            return Ward::where('parent_id', $this->address->district_id)->select('name', 'id')->orderBy('name', 'asc')->get();
         });
         $this->address->ward_id = $this->wards->first()->id;
     }
@@ -77,8 +77,8 @@ class CreateAddressComponent extends Component {
     }
 
     public function store() {
-        $this->validate();
         $this->address->featured = $this->address->featured ? 1 : 0;
+        $this->address->type = AddressType::SHIPPING;
         auth('customer')->user()->addresses()->create($this->address->toArray());
         $this->dispatchBrowserEvent('addressUpdated', [
             'message' => 'Tạo địa chỉ thành công'
