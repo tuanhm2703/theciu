@@ -9,6 +9,9 @@
             max-width: 100% !important;
             font-family: 'Mulish', sans-serif !important;
         }
+        .page-content span {
+            font-size: 1.4rem !important;
+        }
     </style>
 @endpush
 @section('content')
