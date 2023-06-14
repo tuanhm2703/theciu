@@ -10,6 +10,10 @@
                     @include('landingpage.layouts.components.navs.product-category')
                     @include('landingpage.layouts.components.navs.best-seller-category')
                     @include('landingpage.layouts.components.navs.promotion')
+                    <li class="{{ isNavActive('client.blog.index') ? 'active' : '' }}">
+                        <a href="{{ route('client.blog.index') }}">Blog
+                        </a>
+                    </li>
                 </ul><!-- End .menu -->
             </nav><!-- End .main-nav -->
 
