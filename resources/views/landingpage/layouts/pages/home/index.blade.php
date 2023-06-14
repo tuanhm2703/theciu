@@ -1,15 +1,15 @@
 @extends('landingpage.layouts.app', ['headTitle' => 'Trang chủ'])
 @section('content')
     <main class="main">
-        <livewire:client.banner-slider-component/>
+        <livewire:client.banner-slider-component />
         <div class="phone-swap">
-            <livewire:new-arrival-component/>
-            <livewire:client.featured-category-component/>
+            <livewire:new-arrival-component />
+            <livewire:client.featured-category-component />
         </div>
 
         <div class="mb-5"></div><!-- End .mb-5 -->
 
-        <livewire:client.deal-of-day-component/>
+        <livewire:client.deal-of-day-component />
 
         <div class="pt-4 pb-3" style="background-color: #222;">
             <div class="container">
@@ -80,11 +80,10 @@
 
         <div class="mb-6"></div><!-- End .mb-5 -->
         <div class="container">
-            <livewire:client.best-seller-component/>
+            <livewire:client.best-seller-component />
         </div><!-- End .container -->
         <div class="mb-2"></div><!-- End .mb-5 -->
 
-        <div class="container">
-        </div><!-- End .container -->
+        <livewire:client.theciu-blog-component />
     </main><!-- End .main -->
 @endsection
