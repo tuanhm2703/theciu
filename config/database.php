@@ -92,6 +92,25 @@ return [
             // 'encrypt' => env('DB_ENCRYPT', 'yes'),
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
+        'thec_blog' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_BLOG_URL'),
+            'host' => env('DB_BLOG_HOST', '127.0.0.1'),
+            'port' => env('DB_BLOG_PORT', '3306'),
+            'database' => env('DB_BLOG_DATABASE', 'forge'),
+            'username' => env('DB_BLOG_USERNAME', 'forge'),
+            'password' => env('DB_BLOG_PASSWORD', ''),
+            'unix_socket' => env('DB_BLOG_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => false,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ]
 
     ],
 
