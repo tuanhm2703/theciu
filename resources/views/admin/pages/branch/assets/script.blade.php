@@ -105,8 +105,10 @@
             $('.submit-btn').loading(false)
         },
         success: (res) => {
-            $('.submit-btn').loading(false)
             toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+            setTimeout(() => {
+                window.location.href = res.data.url
+            }, 1000);
         }
     })
 </script>

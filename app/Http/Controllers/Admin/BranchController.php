@@ -33,7 +33,8 @@ class BranchController extends Controller
         ]);
         $branch->createImages([$request->file('image')]);
         return BaseResponse::success([
-            'message' => 'Tạo chi nhánh thành công'
+            'message' => 'Tạo chi nhánh thành công',
+            'url' => route('admin.branch.index')
         ]);
     }
 
@@ -47,7 +48,8 @@ class BranchController extends Controller
         ]);
         $branch->createImages([$request->file('image')]);
         return BaseResponse::success([
-            'message' => 'Cập nhật thông tin chi nhánh thành công'
+            'message' => 'Cập nhật thông tin chi nhánh thành công',
+            'url' => route('admin.branch.edit', $branch->id)
         ]);
     }
 
