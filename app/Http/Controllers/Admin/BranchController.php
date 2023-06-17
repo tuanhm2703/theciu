@@ -20,6 +20,9 @@ class BranchController extends Controller
 
     public function edit(Branch $branch) {
         $branch->with('image');
+        $branch['province_id'] = $branch->address?->province_id;
+        $branch['district_id'] = $branch->address?->district_id;
+        $branch['ward_id'] = $branch->address?->ward_id;
         return view('admin.pages.branch.edit', compact('branch'));
     }
 
