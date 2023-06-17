@@ -28,7 +28,7 @@ class Branch extends Model {
     ];
 
     protected $casts = [
-        'open_time' => 'datetime:H:i'
+        // 'open_time' => 'datetime:H:i',
     ];
     public function getIsOpenAttribute() {
         return now()->between($this->open_time, $this->close_time);
