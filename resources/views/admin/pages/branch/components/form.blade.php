@@ -64,7 +64,11 @@
             </div>
         </div>
         <div class="row mt-5">
-            <livewire:address-select-component />
+            @if (isset($branch))
+            <livewire:address-select-component :address="$branch->address"/>
+            @else
+                <livewire:address-select-component/>
+            @endif
         </div>
         <div class="row">
             <div class="form-group">
