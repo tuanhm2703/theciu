@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\SeoController;
+use App\Http\Controllers\Client\BranchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('branches', [BranchController::class, 'ajaxGetBranches']);
 Route::group(['prefix' => 'seo'], function() {
     Route::get('product-xlsx', [SeoController::class, 'getProductExcelFile']);
 });

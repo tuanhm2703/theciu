@@ -4,6 +4,7 @@ use App\Models\Config;
 use App\Models\Customer;
 use App\Models\Image;
 use App\Services\StorageService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -496,8 +497,13 @@ function thousandsCurrencyFormat($num) {
 }
 function resize_image(Image $image, $size) {
     $content = file_get_contents(get_proxy_image_url(Storage::url($image->path), $size));
+    \Log::info($size);
     return Storage::put("$size/$image->path", $content);
 }
 function getPathWithSize($size, $path) {
     return StorageService::getPathWithSize($size, $path);
+}
+
+function carbon($time) {
+    return new Carbon($time);
 }

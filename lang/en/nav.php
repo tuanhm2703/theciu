@@ -28,4 +28,5 @@ return [
     'customer_list' => 'Customer list',
     'customer' => 'Customer',
     'rank' => 'Rank',
+    'branch_management' => 'Branches management',
 ];

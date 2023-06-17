@@ -14,7 +14,7 @@
             if (styleEle.length == 0)
                 $(
                     "<style id=\"fixed\">.note-editor .dropdown-toggle::after { all: unset; } .note-editor .note-dropdown-menu { box-sizing: content-box; } .note-editor .note-modal-footer { box-sizing: content-box; }</style>"
-                    )
+                )
                 .prependTo("body");
             else
                 styleEle.remove();
@@ -63,6 +63,14 @@
         $('.datetimepicker').flatpickr({
             enableTime: true,
             minDate: `{{ now()->format('Y-m-d') }}`,
+        })
+        $('.hourPicker').flatpickr({
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            minTime: "00:00",
+            maxTime: "23:30",
+            time_24hr: true
         })
         $('.datepicker').flatpickr({
             minDate: `{{ now()->format('Y-m-d') }}`,
@@ -140,7 +148,7 @@
             const callback = $(this).data('callback')
             const getDataFunc = $(this).attr('data-get-data-function');
             let payload = null;
-            if(getDataFunc) {
+            if (getDataFunc) {
                 payload = eval(getDataFunc)
             }
             var ajaxElement = this

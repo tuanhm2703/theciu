@@ -43,6 +43,7 @@ Route::group(['prefix' => 'admintheciu', 'as' => 'admin.'], function() {
         include('admin/Page.php');
         include('admin/Customer.php');
         include('admin/Rank.php');
+        include('admin/Branch.php');
         Route::get('/{page}', [PageController::class, 'index'])->name('page');
         Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
             include('admin/ajax/Category.php');

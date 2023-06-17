@@ -31,9 +31,9 @@ class AppServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        if (env('APP_ENV') != 'local') {
+        // if (env('APP_ENV') != 'local') {
             URL::forceScheme('https');
-        }
+        // }
         Carbon::setLocale(App::getLocale());
         $this->app->singleton(BatchService::class);
         $this->app->singleton(MomoService::class);
