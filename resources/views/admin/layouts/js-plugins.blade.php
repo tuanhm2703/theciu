@@ -17,7 +17,8 @@
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/js/flatpickr.min.js') }}"></script>
 <script src="{{ asset('assets/js/filepond-plugin-image-preview.js') }}"></script>
-<script src="{{ asset('assets/js/summernote.js') }}"></script>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <script src="{{ asset('assets/js/filepond.jquery.js') }}"></script>
 <script src="{{ asset('assets/js/jbvalidator.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.withinviewport.js') }}"></script>
@@ -28,7 +29,6 @@
 <script src="{{ asset('assets/js/summernote-map-plugin.js') }}"></script>
 <script src="{{ getAssetUrl('assets/js/notyf.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote.min.js"></script>
 <script
     src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-{{ App::getLocale() }}-{{ getLocaleWithCountryCode()[App::getLocale()] }}.min.js">
 </script>
