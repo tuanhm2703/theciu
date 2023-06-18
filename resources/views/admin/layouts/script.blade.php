@@ -185,7 +185,12 @@
             const result = await showConfirm(undefined, content)
             if (result) {
                 const form = $(e.target).parents('form')
-                form.submit()
+                if (form.length) {
+                    form.submit()
+                } else {
+                    const callback = $(e.currentTarget).attr('data-callback')
+                    if(callback) eval(callback);
+                }
             }
         })
         $(document).on('click', '.mass-checkbox-btn', (e) => {

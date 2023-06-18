@@ -74,9 +74,10 @@
                                 <div class="form-check text-center form-check-info">
                                     <input type="checkbox" name="mass-checkbox-btn"
                                         class="editor-active form-check-input mass-checkbox-btn">
-                                        <label for="mass-checkbox-btn">Chọn tất cả</label>
+                                    <label for="mass-checkbox-btn">Chọn tất cả</label>
                                 </div>
-                                <button class="btn btn-default" id="massDeleteBtn"><i class="far fa-trash-alt me-2" aria-hidden="true"></i> Xoá</button>
+                                <button class="btn btn-default ajax-confirm" id="massDeleteBtn" data-callback="massDeleteProduct()">
+                                    <i class="far fa-trash-alt me-2" aria-hidden="true"></i> Xoá</button>
                             </div>
                         </div>
                     </div>
@@ -89,77 +90,77 @@
 @push('js')
     <script>
         const initProductTable = (productType = `{{ App\Enums\ProductType::ALL }}`) => {
-                $('.product-table tbody').html('')
-                return $('.product-table').DataTable({
-                    "processing": true,
-                    "serverSide": true,
-                    "destroy": true,
-                    "ajax": `{{ route('admin.ajax.product.paginate') }}?product_type=${productType}`,
-                    "columns": [{
-                            data: "updated_at",
-                            visible: false,
-                        },
-                        {
-                            data: "checkbox",
-                            sortable: false,
-                            searchable: false
-                        },
-                        {
-                            data: "name"
-                        },
-                        {
-                            data: "id"
-                        },
-                        {
-                            data: "inventory_sku"
-                        },
-                        {
-                            data: "attribute_description",
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: "price_info",
-                            orderable: false,
-                            name: 'inventories.price'
-                        },
-                        {
-                            data: 'quantity_info',
-                            orderable: false,
-                            name: 'inventories.stock_quantity'
-                        },
-                        {
-                            data: 'sales',
-                            orderable: false,
-                            searchable: false
-                        },
-                        {
-                            data: 'actions',
-                            orderable: false,
-                            searchable: false,
-                        }
-                    ],
-                    order: [
-                        [0, 'desc']
-                    ],
-                    initComplete: function(settings, json) {
-                        $('.magnifig-img').magnificPopup({
-                            type: "image",
-                        });
-                        $('.ajax-form-confirm').ajaxForm({
-                            success: (res) => {
-                                table.ajax.reload()
-                            }
-                        })
+            $('.product-table tbody').html('')
+            return $('.product-table').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "destroy": true,
+                "ajax": `{{ route('admin.ajax.product.paginate') }}?product_type=${productType}`,
+                "columns": [{
+                        data: "updated_at",
+                        visible: false,
+                    },
+                    {
+                        data: "checkbox",
+                        sortable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "id"
+                    },
+                    {
+                        data: "inventory_sku"
+                    },
+                    {
+                        data: "attribute_description",
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: "price_info",
+                        orderable: false,
+                        name: 'inventories.price'
+                    },
+                    {
+                        data: 'quantity_info',
+                        orderable: false,
+                        name: 'inventories.stock_quantity'
+                    },
+                    {
+                        data: 'sales',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'actions',
+                        orderable: false,
+                        searchable: false,
                     }
-                });
-            }
+                ],
+                order: [
+                    [0, 'desc']
+                ],
+                initComplete: function(settings, json) {
+                    $('.magnifig-img').magnificPopup({
+                        type: "image",
+                    });
+                    $('.ajax-form-confirm').ajaxForm({
+                        success: (res) => {
+                            table.ajax.reload()
+                        }
+                    })
+                }
+            });
+        }
         let table = initProductTable()
         $('#product-tab .nav-link').on('click', function() {
             initProductTable($(this).attr('data-product-type'))
         })
-        $('#massDeleteBtn').on('click', function() {
-            $(this).loading()
+        const massDeleteProduct = () => {
+            $('#massDeleteBtn').loading()
             const productIds = $('.child-checkbox:checked').map(function() {
                 return $(this).attr('data-product-id');
             }).get()
@@ -170,18 +171,19 @@
                     product_ids: productIds
                 },
                 error: (err) => {
-                    $(this).loading(false)
+                    $('#massDeleteBtn').loading(false)
                 },
                 success: (res) => {
                     initProductTable($('#product-tab .nav-link.active').attr('data-product-id'))
                     toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                     table.ajax.reload()
-                    $(this).loading(false)
+                    $('#massDeleteBtn').loading(false)
                 }
             })
-        })
+        }
         $(document).on('click', '.mass-checkbox-btn', (e) => {
-            $('.product-table').children('tbody').find('.child-checkbox').prop('checked', $(e.target).is(':checked'))
+            $('.product-table').children('tbody').find('.child-checkbox').prop('checked', $(e.target).is(
+                ':checked'))
         })
     </script>
 @endpush
