@@ -767,7 +767,7 @@ input[type=number] {
 .page-title {
     font-weight: bold;
     text-align: center;
-    padding: 72px 0;
+    padding: 2rem 0;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
