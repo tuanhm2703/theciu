@@ -1699,6 +1699,6 @@ input[type=number] {
         flex-direction: column-reverse;
     }
 }
-a[data-f-id="pbf"] {
+[data-f-id="pbf"] {
     display: none !important;
 }
