@@ -29,7 +29,7 @@
             imageUploadParams: {
                 id: "my_editor"
             },
-
+            imageDefaultWidth: "100%",
             // Set request type.
             imageUploadMethod: "POST",
 
