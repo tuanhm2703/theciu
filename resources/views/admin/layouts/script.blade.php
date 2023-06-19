@@ -19,36 +19,61 @@
             else
                 styleEle.remove();
         }
-        element.summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['fontname', ['fontname']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']],
-                ['fontsize', ['fontsize']],
-            ],
-            callbacks: {
-                onImageUpload: function(files, editor, welEditable) {
-                    const formData = new FormData()
-                    for (let index = 0; index < files.length; index++) {
-                        const element = files[index];
-                        formData.append('images[]', element)
-                    }
-                    var data = uploadSummernoteImage(formData, this)
-                },
-                onChange: function(contents, $editable) {
-                    $($editable).parents('.note-editor').prev().trigger('input')
-                },
-                onInit: function() {
-                    correctSummernote()
-                }
+        new FroalaEditor(element, {
+            imageUploadParam: "image",
+
+            // Set the image upload URL.
+            imageUploadURL: `{{ route('admin.ajax.image.upload') }}`,
+
+            // Additional upload params.
+            imageUploadParams: {
+                id: "my_editor"
             },
-            lang: `{{ App::getLocale() }}-{{ getLocaleWithCountryCode()[App::getLocale()] }}`
-        });
+
+            // Set request type.
+            imageUploadMethod: "POST",
+
+            // Set max image size to 5MB.
+            imageMaxSize: 5 * 1024 * 1024,
+
+            // Allow to upload PNG and JPG.
+            imageAllowedTypes: ["jpeg", "jpg", "png"],
+            events: {
+                "image.error": function (error, response) {
+                    console.log(error);
+                }
+            }
+        })
+        // element.summernote({
+        //     toolbar: [
+        //         ['style', ['style']],
+        //         ['font', ['bold', 'underline', 'clear']],
+        //         ['fontname', ['fontname']],
+        //         ['color', ['color']],
+        //         ['para', ['ul', 'ol', 'paragraph']],
+        //         ['table', ['table']],
+        //         ['insert', ['link', 'picture', 'video']],
+        //         ['view', ['fullscreen', 'codeview', 'help']],
+        //         ['fontsize', ['fontsize']],
+        //     ],
+        //     callbacks: {
+        //         onImageUpload: function(files, editor, welEditable) {
+        //             const formData = new FormData()
+        //             for (let index = 0; index < files.length; index++) {
+        //                 const element = files[index];
+        //                 formData.append('images[]', element)
+        //             }
+        //             var data = uploadSummernoteImage(formData, this)
+        //         },
+        //         onChange: function(contents, $editable) {
+        //             $($editable).parents('.note-editor').prev().trigger('input')
+        //         },
+        //         onInit: function() {
+        //             correctSummernote()
+        //         }
+        //     },
+        //     lang: `{{ App::getLocale() }}-{{ getLocaleWithCountryCode()[App::getLocale()] }}`
+        // });
     }
     const initAppPlugins = () => {
         $.ajaxSetup({
@@ -75,7 +100,7 @@
         $('.datepicker').flatpickr({
             minDate: `{{ now()->format('Y-m-d') }}`,
         })
-        initSummernote($('body .summernote'))
+        initSummernote('body .summernote')
         if ($("[data-bs-toggle=tooltip]").length) {
             $("[data-bs-toggle=tooltip]").tooltip({
                 html: true
@@ -189,7 +214,7 @@
                     form.submit()
                 } else {
                     const callback = $(e.currentTarget).attr('data-callback')
-                    if(callback) eval(callback);
+                    if (callback) eval(callback);
                 }
             }
         })

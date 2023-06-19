@@ -434,3 +434,6 @@ div.dataTables_processing>div:last-child>div {
 .notify__text {
     font-size: 14px !important;
 }
+a[href="https://www.froala.com/wysiwyg-editor?k=u"] {
+    display: none !important;
+}

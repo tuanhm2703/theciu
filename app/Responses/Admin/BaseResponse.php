@@ -14,4 +14,8 @@ class BaseResponse {
         $message = $code == 500 ? trans('errors.http_error.500') : '';
         return response()->json($data, $code);
     }
+
+    public static function successWithRawData($data) {
+        return response()->json($data);
+    }
 }
