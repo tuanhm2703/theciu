@@ -1699,3 +1699,6 @@ input[type=number] {
         flex-direction: column-reverse;
     }
 }
+a[href="https://www.froala.com/wysiwyg-editor?pb=1"] {
+    display: none !important;
+}
