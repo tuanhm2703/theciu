@@ -63,6 +63,9 @@ class BranchController extends Controller
     public function paginate() {
         $branches = Branch::query()->with('address');
         return DataTables::of($branches)
+        ->editColumn('name', function($branch) {
+            return view('admin.pages.branch.components.name', compact('branch'));
+        })
         ->addColumn('action', function($branch) {
             return view('admin.pages.branch.components.action', compact('branch'));
         })
