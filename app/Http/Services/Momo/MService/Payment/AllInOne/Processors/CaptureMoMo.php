@@ -26,6 +26,7 @@ class CaptureMoMo extends Process {
             $captureMoMoResponse = $captureMoMoWallet->execute($captureMoMoRequest);
             return $captureMoMoResponse;
         } catch (MoMoException $exception) {
+            \log::error(json_encode($exception));
             $captureMoMoWallet->logger->error($exception->getErrorMessage());
         }
     }
