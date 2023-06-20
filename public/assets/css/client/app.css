@@ -1757,6 +1757,12 @@ input[type=number] {
 .loading-card.is-loading p {
     height: 70px;
 }
+.product-card-image {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    left: 0;
+}
 
 @-webkit-keyframes shine {
     to {

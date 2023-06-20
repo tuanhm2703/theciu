@@ -4,8 +4,9 @@
             <span class="product-label label-sale">{{ round($product->discount_percent) }}% off</span>
         @endif
         <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}"
-            class="product-image image-loading lazy">
-            <img src="{{ $product->image?->path_with_domain }}" alt="{{ $product->name }}" class="h-100">
+            class="product-image image-loading lazy position-relative"
+            style="background: url({{ asset('img/big-logo.jpg') }});">
+            <img class="product-card-image" src="{{ $product->image?->path_with_domain }}" alt="{{ $product->name }}">
         </a>
         @if ($product->available_flash_sales->first())
             <div class="product-countdown"
