@@ -25,17 +25,18 @@
             @endif
         </div><!-- End .more-container -->
     @else
-        <div class="d-flex justify-content-center h-100">
-            <div wire:loading>
-                <div class="spinner-grow" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
+        <div class="row justify-content-center">
+            <div class="col-6 col-md-4 col-lg-3">
+                <x-loading-card-component/>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <x-loading-card-component/>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <x-loading-card-component/>
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <x-loading-card-component/>
             </div>
         </div>
     @endif

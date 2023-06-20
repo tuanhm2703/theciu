@@ -1330,9 +1330,11 @@ input[type=number] {
 .desktop-banner-slider {
     display: none;
 }
+
 .fb_dialog {
     z-index: 10 !important;
 }
+
 #fb-root iframe {
     z-index: 10 !important;
 }
@@ -1503,6 +1505,7 @@ input[type=number] {
     border-style: solid;
     border-width: 12px 12px 14px 0;
 }
+
 .tags a:after {
     content: "";
     position: absolute;
@@ -1519,21 +1522,27 @@ input[type=number] {
     -webkit-box-shadow: -1px -1px 2px #004977;
     box-shadow: -1px -1px 2px #004977;
 }
+
 .voucher-selector {
     transition: 0.3s ease all;
 }
+
 .cursor-pointer {
     cursor: pointer;
 }
+
 .text-line-through {
     text-decoration: line-through;
 }
+
 .notify__title {
     font-size: 15px !important;
 }
+
 .notify__text {
     font-size: 14px !important;
 }
+
 .timeline__row {
     display: flex;
     position: relative;
@@ -1598,15 +1607,18 @@ input[type=number] {
     color: #f44336;
     border-color: #f44336;
 }
+
 .order-history-phone {
     display: flex;
     flex-direction: column;
     align-items: end;
 }
+
 .order-history-phone ul {
     list-style: disc;
     width: fit-content;
 }
+
 @media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;
@@ -1617,12 +1629,12 @@ input[type=number] {
     .voucher-title {
         width: 28%;
     }
+
     .order-history-phone {
         display: none;
     }
-    .voucher-selector:hover {
 
-    }
+    .voucher-selector:hover {}
 
     #confirmOrderModal span {
         font-size: 12px;
@@ -1699,6 +1711,61 @@ input[type=number] {
         flex-direction: column-reverse;
     }
 }
+
 [data-f-id="pbf"] {
     display: none !important;
+}
+
+.loading-card {
+    margin: 10px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.loading-card .image img {
+    max-width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.loading-card .content {
+    padding: 20px 30px;
+}
+
+.loading-card.is-loading .image,
+.loading-card.is-loading h2,
+.loading-card.is-loading p {
+    background: #eee;
+    background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+    border-radius: 5px;
+    background-size: 200% 100%;
+    -webkit-animation: 1.5s shine linear infinite;
+    animation: 1.5s shine linear infinite;
+}
+
+.loading-card.is-loading .image {
+    height: 200px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.loading-card.is-loading h2 {
+    height: 30px;
+}
+
+.loading-card.is-loading p {
+    height: 70px;
+}
+
+@-webkit-keyframes shine {
+    to {
+        background-position-x: -200%;
+    }
+}
+
+@keyframes shine {
+    to {
+        background-position-x: -200%;
+    }
 }

@@ -3,8 +3,12 @@
     <main class="main">
         <livewire:client.banner-slider-component />
         <div class="phone-swap">
-            <livewire:new-arrival-component />
-            <livewire:client.featured-category-component />
+            <div class="lazy">
+                <livewire:new-arrival-component />
+            </div>
+            <div class="lazy">
+                <livewire:client.featured-category-component />
+            </div>
         </div>
 
         <div class="mb-5"></div><!-- End .mb-5 -->
@@ -79,11 +83,15 @@
         </div><!-- End .bg-light pt-2 pb-2 -->
 
         <div class="mb-6"></div><!-- End .mb-5 -->
-        <div class="container">
+        <div class="container lazy">
             <livewire:client.best-seller-component />
         </div><!-- End .container -->
         <div class="mb-2"></div><!-- End .mb-5 -->
 
-        <livewire:client.theciu-blog-component />
+        <div class="lazy">
+            <livewire:client.theciu-blog-component />
+        </div>
     </main><!-- End .main -->
 @endsection
+@push('js')
+@endpush
