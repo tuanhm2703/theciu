@@ -32,7 +32,7 @@
                                         <a href="#{{ $image->name }}"
                                             style="background-image: url({{ $image->product_lazy_load_path }}); background-size: cover;"
                                             class="carousel-dot swiper-slide {{ $index === 0 ? 'active' : '' }}">
-                                            <img src="{{ $image->path_with_domain }}">
+                                            <img class="h-100 " src="{{ $image->path_with_domain }}">
                                         </a>
                                     @endforeach
                                     @foreach ($inventory_images->unique('name') as $index => $image)
