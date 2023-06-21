@@ -238,5 +238,6 @@ return [
     'happenning' => 'Happenning',
     'branch_list' => 'Branch List',
     'create_branch' => 'Create branch',
-    'address_detail' => 'Address detail'
+    'address_detail' => 'Address detail',
+    'confirm' => "Confirm"
 ];

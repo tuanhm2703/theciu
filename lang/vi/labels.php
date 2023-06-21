@@ -245,4 +245,5 @@ return [
     'branch_list' => 'Danh sách chi nhánh',
     'create_branch' => 'Tạo chi nhánh',
     'address_detail' => 'Địa chỉ chi tiết',
+    'confirm' => "Xác nhận"
 ];

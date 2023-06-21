@@ -363,7 +363,7 @@
                     <div class="text-right">
                         <button class="btn btn-primary mr-2" wire:click="checkout" wire:loading.attr="disabled" wire:target="checkout">
                             <span class="text-white" wire:loading.remove
-                                wire:target="checkout">{{ trans('labels.checkout') }}</span>
+                                wire:target="checkout">{{ trans('labels.confirm') }}</span>
                             <span class="text-white" wire:loading wire:target="checkout">Đang tiến hành thanh
                                 toán..</span>
                         </button>
