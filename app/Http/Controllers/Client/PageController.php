@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
@@ -36,5 +37,10 @@ class PageController extends Controller
         $page = Page::whereSlug($slug)->firstOrFail();
         $page->loadMeta();
         return view('landingpage.layouts.pages.page.details', compact('page'));
+    }
+
+    public function branch() {
+        $branches = Branch::active()->get();
+        return view('landingpage.layouts.pages.page.branch', compact('branches'));
     }
 }

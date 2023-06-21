@@ -236,4 +236,8 @@ return [
     'display' => 'Display',
     'comming_soon' => 'Comming soon',
     'happenning' => 'Happenning',
+    'branch_list' => 'Branch List',
+    'create_branch' => 'Create branch',
+    'address_detail' => 'Address detail',
+    'confirm' => "Confirm"
 ];

@@ -5,10 +5,10 @@
         .page-content .footer {
             background: white;
         }
-        .page-content * {
+        /* .page-content * {
             max-width: 100% !important;
             font-family: 'Mulish', sans-serif !important;
-        }
+        } */
         .page-content span {
             font-size: 1.4rem !important;
         }

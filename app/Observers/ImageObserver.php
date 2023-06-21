@@ -13,5 +13,8 @@ class ImageObserver
         if(get_class($image->imageable) == Inventory::class) {
             dispatch(new ResizeImageJob($image, 100))->onQueue('resizeImage');
         }
+        if(get_class($image->imageable) == Product::class) {
+            dispatch(new ResizeImageJob($image, 30))->onQueue('resizeImage');
+        }
     }
 }

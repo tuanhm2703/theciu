@@ -20,6 +20,7 @@
             @include('admin.layouts.navbars.auth.nav-group.order')
             @include('admin.layouts.navbars.auth.nav-group.customer')
             @include('admin.layouts.navbars.auth.nav-group.page')
+            @include('admin.layouts.navbars.auth.nav-group.branch')
         </ul>
     </div>
 </aside>

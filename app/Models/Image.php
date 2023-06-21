@@ -23,7 +23,8 @@ class Image extends Model {
 
     protected $appends = [
         'path_with_domain',
-        'path_with_original_size'
+        'path_with_original_size',
+        'product_lazy_load_path'
     ];
 
     public function imageable() {
@@ -63,6 +64,9 @@ class Image extends Model {
             return StorageService::url($this->path);
         }
         return asset('img/image-not-available.png');
+    }
+    public function getProductLazyloadPathAttribute() {
+        return getPathWithSize(30, $this->path);
     }
     public function getImageBySize() {
 

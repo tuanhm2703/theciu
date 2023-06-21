@@ -26,4 +26,9 @@
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-treeview.min.css') }}">
 <link rel="stylesheet" href="{{asset('assets/landingpage/css/floating-labels.css')}}">
 <link rel="stylesheet" href="{{ getAssetUrl('assets/css/notyf.min.css') }}">
+<link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
+
+  <!-- Include editor styles. -->
+  <link href="{{ asset('assets/css/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
+  <link href="{{ asset('assets/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
 @livewireStyles

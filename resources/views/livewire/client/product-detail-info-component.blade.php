@@ -30,6 +30,7 @@
                                     @endif
                                     @foreach ($product->images->unique('name') as $index => $image)
                                         <a href="#{{ $image->name }}"
+                                            style="background-image: url({{ $image->product_lazy_load_path }}); background-size: cover;"
                                             class="carousel-dot swiper-slide {{ $index === 0 ? 'active' : '' }}">
                                             <img src="{{ $image->path_with_domain }}">
                                         </a>
@@ -72,6 +73,7 @@
                                         <a class="MagicZoom"
                                             data-options="zoomPosition: inner;"
                                             href="{{ $image->path_with_domain }}"
+                                            style="background-image: {{ $product->image?->product_lazy_load_path }}"
                                             data-zoom-image-2x="{{ $image->path_with_domain }}"
                                             data-image-2x="{{ $image->path_with_domain }}">
                                             <img src="{{ $image->path_with_domain }}" alt="Image Desc"

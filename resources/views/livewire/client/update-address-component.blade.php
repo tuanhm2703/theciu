@@ -23,7 +23,7 @@
                 <a class="ajax-modal-btn btn" id="return-address-list-btn" data-modal-size="modal-md" data-callback="initChangeModal()"
                     data-link="/auth/profile/address/view/change"><i class="fas fa-undo"></i> Quay
                     lại</a>
-                <button wire:click.prevent="updateAddress" wire:loading.attr="disabled" wire:target="updateAddress,changeProvince,changeDistrict,address.ward_id" type="button"
+                <button wire:click.prevent="updateAddress" wire:loading.attr="disabled" wire:target="updateAddress,changeProvince,changeDistrict,address" type="button"
                     class="btn btn-primary address-update-btn">
                     {{ trans('labels.update') }}
                     <span wire:loading wire:target="updateAddress" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>

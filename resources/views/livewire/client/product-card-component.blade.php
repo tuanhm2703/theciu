@@ -4,8 +4,10 @@
             <span class="product-label label-sale">{{ round($product->discount_percent) }}% off</span>
         @endif
         <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}"
-            class="product-image image-loading lazy"
-            style="background: url({{ optional($product->image)->path_with_domain }});"></a>
+            class="product-image image-loading lazy position-relative"
+            style="background: url({{ $product->image?->product_lazy_load_path }});">
+        <img class="product-card-image" src="{{ $product->image?->path_with_domain }}" alt="{{ $product->name }}"[]>
+        </a>
         @if ($product->available_flash_sales->first())
             <div class="product-countdown"
                 data-until="{{ $product->available_flash_sales->first()->to->format('Y, m, d, H, i, s') }}"></div>
@@ -61,9 +63,8 @@
                 @endphp
                 <div class="p-1">
                     <a href="{{ $image->path_with_domain }}"
-                        class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn"
-                        style="background: url({{ getPathWithSize(100, $image->path) }});">
-                        {{-- <img src="{{ optional($inventory->image)->path_with_domain }}" alt="{{ $product->snake_name }}"> --}}
+                        class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn">
+                        <img loading="lazy" src="{{ getPathWithSize(100, $image->path) }}" alt="{{ $product->snake_name }}">
                     </a>
                 </div>
             @endforeach

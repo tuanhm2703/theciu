@@ -34,6 +34,7 @@ class PayATM extends Process
             return $payATMResponse;
 
         } catch (MoMoException $exception) {
+            \log::error(json_encode($exception));
             $payATM->logger->error($exception->getErrorMessage());
         }
     }

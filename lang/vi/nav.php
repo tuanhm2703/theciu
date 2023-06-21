@@ -26,5 +26,6 @@ return [
     'sync_warehouse' => 'Đồng bộ tồn kho',
     'staff_management' => 'Quản lý nhân viên',
     'customer_list' => 'Danh sách khách hàng',
-    'customer' => 'Khách hàng'
+    'customer' => 'Khách hàng',
+    'branch_management' => 'Quản lý chi nhánh',
 ];

@@ -24,5 +24,20 @@
             @else
             @endif
         </div><!-- End .more-container -->
+    @else
+        <div class="row justify-content-center">
+            <div class="col-6 col-md-4 col-lg-3">
+                <x-loading-card-component />
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <x-loading-card-component />
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <x-loading-card-component />
+            </div>
+            <div class="col-6 col-md-4 col-lg-3">
+                <x-loading-card-component />
+            </div>
+        </div>
     @endif
 </div><!-- End .container -->

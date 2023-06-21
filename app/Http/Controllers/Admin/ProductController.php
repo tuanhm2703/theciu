@@ -167,4 +167,12 @@ class ProductController extends Controller {
         $productSizeRuleSrc = $product->size_rule_images->pluck('path_with_domain')->toArray();
         return view('admin.pages.product.edit', compact('product', 'listImgSources', 'productSizeRuleSrc'));
     }
+
+    public function massDelete(Request $request) {
+        $productIds = $request->product_ids;
+        Product::whereIn('id', $productIds)->delete();
+        return BaseResponse::success([
+            'message' => 'Sản phẩm đã được xoá thành công'
+        ]);
+    }
 }

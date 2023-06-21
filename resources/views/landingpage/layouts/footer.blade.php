@@ -31,7 +31,7 @@
                                 <li><a href="{{ route('client.page.details', $page->slug) }}"
                                         class="sf-with-ul">{{ $page->title }}</a></li>
                                 @if ($index == 0)
-                                    <li><a href="{{ route('client.blog.index') }}" target="_blank">Blog</a></li>
+                                    {{-- <li><a href="{{ route('client.blog.index') }}" target="_blank">Blog</a></li> --}}
                                 @endif
                                 @if($index == $pages->count() - 2 || $pages->count() == 1)
                                     <li><a href="https://www.facebook.com/HR.THECIU" target="_blank">Tuyển dụng</a></li>

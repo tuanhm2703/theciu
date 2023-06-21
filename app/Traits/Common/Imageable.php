@@ -18,7 +18,7 @@ trait Imageable {
     public function image() {
         return $this->morphOne(Image::class, 'imageable')->where(function ($q) {
             $q->where('type', '!=', MediaType::VIDEO)->orWhere('type', null);
-        })->orderBy('order', 'asc');
+        })->orderBy('order', 'asc')->orderBy('id', 'desc');
     }
 
     public function phoneImage() {

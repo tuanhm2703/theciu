@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Ajax;
 
+use App\Enums\ProductType;
 use App\Http\Controllers\Controller;
 use App\Imports\ProductBatchImport;
 use App\Models\Attribute;
@@ -29,10 +30,15 @@ class ProductController extends Controller
         $products = Product::with(['category', 'image:path,imageable_id', 'images:path,imageable_id', 'inventories' => function ($q) {
             return $q->with('attributes');
         }])->select('products.id', 'products.name', 'products.sku', 'products.updated_at');
+        $productType = $request->product_type ?? ProductType::ALL;
+        if($productType == ProductType::OUT_OF_STOCK) {
+            $products->whereDoesntHave('inventories', function($q) {
+                $q->where('stock_quantity', '>', 0);
+            });
+        }
         if ($request->ids) $products->whereIn('id', $request->ids);
         $selected = $request->selected ?? [];
         if($selected && count($selected) > 0) {
-            \Log::info(json_encode($selected));
             $products->orderByField('id', array_reverse($selected), 'desc');
         }
         return DataTables::of($products)

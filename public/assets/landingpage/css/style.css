@@ -11724,7 +11724,7 @@ button:focus {
 }
 
 .quickView-content .product-left img {
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 }
 
 .quickView-content .product-right {

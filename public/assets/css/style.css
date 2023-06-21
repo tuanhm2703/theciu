@@ -9748,7 +9748,7 @@ button:focus {
   max-width: 19.2%;
 }
 .quickView-content .product-left img {
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 }
 .quickView-content .product-right {
   padding-left: 0.5rem;
