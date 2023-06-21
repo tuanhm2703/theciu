@@ -22,10 +22,10 @@
                             top: 50%;
                             right: 0;
                             transform: translate(-10%, -50%);}">
-                    <button id="recaptcha-container" wire:loading wire:target="sendVerify" class="spinner-border spinner-border-sm mr-1"
+                    <div wire:loading wire:target="sendVerify" class="spinner-border spinner-border-sm mr-1"
                         role="status">
                         <span class="sr-only">Loading...</span>
-                    </button>
+                    </div>
                     {{ trans('labels.send_otp') }}
                 </a>
             </div>
@@ -35,7 +35,7 @@
             @error('otp')
                 <span class="error">{{ $message }}</span>
             @enderror
-            {{-- <div id="recaptcha-container" wire:ignore></div> --}}
+            <div id="recaptcha-container" wire:ignore></div>
         </div><!-- End .col-sm-6 -->
     </div>
     <div class="text-right">
@@ -93,7 +93,6 @@
             window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
                 'size': 'invisible',
                 'callback': (response) => {
-                    console.log(response);
                     const appVerifier = window.recaptchaVerifier;
                     @this.apiKey = appVerifier.auth.config.apiKey
                     @this.recaptchaToken = response
@@ -101,16 +100,20 @@
                     @this.sendVerify();
                 },
             }, auth);
-
-            $('body').on('click', '#sendOtpBtn', (e) => {
-                e.preventDefault();
-                if (window.recaptchaWidgetId == null) {
-                    recaptchaVerifier.render().then((widgetId) => {
+            recaptchaVerifier.render().then((widgetId) => {
                         window.recaptchaWidgetId = widgetId;
                     });
-                } else {
-                    recaptchaVerifier.recaptcha.reset()
-                }
+            $('body').on('click', '#sendOtpBtn', async (e) => {
+                e.preventDefault();
+                var appVerifier = window.recaptchaVerifier;
+                const response = await signInWithPhoneNumber(auth, $('[name=phone]'), appVerifier);
+                // if (window.recaptchaWidgetId == null) {
+                //     recaptchaVerifier.render().then((widgetId) => {
+                //         window.recaptchaWidgetId = widgetId;
+                //     });
+                // } else {
+                //     recaptchaVerifier.recaptcha.reset()
+                // }
             })
             @this.on('verifyPhone', (event) => {
             signInWithPhoneNumber(auth, `+84${$('input[name=username]').val()}`, window.recaptchaVerifier)
