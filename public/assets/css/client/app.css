@@ -1759,8 +1759,9 @@ input[type=number] {
 }
 .product-card-image {
     position: absolute;
-    min-width: 100%;
-    min-height: 100%;
+    height: 100%;
+    max-width: none !important;
+    width: auto;
     left: 0;
 }
 
