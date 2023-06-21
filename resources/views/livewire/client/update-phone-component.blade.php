@@ -91,8 +91,9 @@
             let apiKey;
 
             window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-                'size': 'normal',
+                'size': 'invisible',
                 'callback': (response) => {
+                    console.log(response);
                     const appVerifier = window.recaptchaVerifier;
                     @this.apiKey = appVerifier.auth.config.apiKey
                     @this.recaptchaToken = response
