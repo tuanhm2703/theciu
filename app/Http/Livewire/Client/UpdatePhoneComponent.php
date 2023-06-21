@@ -52,7 +52,7 @@ class UpdatePhoneComponent extends Component
             $response = $client->post($url, [
                 'body' => json_encode([
                     'phoneNumber' => "+84" . $this->phone,
-                    // 'recaptchaToken' => $this->recaptchaToken
+                    'recaptchaToken' => $this->recaptchaToken
                 ])
             ]);
             if ($response->getStatusCode() == 200) {
