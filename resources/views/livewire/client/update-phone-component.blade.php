@@ -106,7 +106,7 @@
             $('body').on('click', '#sendOtpBtn', async (e) => {
                 e.preventDefault();
                 var appVerifier = window.recaptchaVerifier;
-                const response = await signInWithPhoneNumber(auth, $('[name=phone]'), appVerifier);
+                const response = await signInWithPhoneNumber(auth, $('[name=phone]').val(), appVerifier);
                 // if (window.recaptchaWidgetId == null) {
                 //     recaptchaVerifier.render().then((widgetId) => {
                 //         window.recaptchaWidgetId = widgetId;
