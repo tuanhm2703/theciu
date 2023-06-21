@@ -1762,7 +1762,9 @@ input[type=number] {
     height: 100%;
     max-width: none !important;
     width: auto;
-    left: 0;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 @-webkit-keyframes shine {
