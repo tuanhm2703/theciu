@@ -5,8 +5,8 @@
         @endif
         <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}"
             class="product-image image-loading lazy position-relative"
-            style="background: url({{ asset('img/big-logo.jpg') }});">
-            <img class="product-card-image" src="{{ $product->image?->path_with_domain }}" alt="{{ $product->name }}">
+            style="background: url({{ $product->image?->product_lazy_load_path }});">
+        <img class="product-card-image" src="{{ $product->image?->path_with_domain }}" alt="{{ $product->name }}"[]>
         </a>
         @if ($product->available_flash_sales->first())
             <div class="product-countdown"
