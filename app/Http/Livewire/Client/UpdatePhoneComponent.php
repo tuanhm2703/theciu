@@ -93,6 +93,7 @@ class UpdatePhoneComponent extends Component
             ]);
             return redirect()->route('client.auth.profile.index');
         } catch (\GuzzleHttp\Exception\ClientException $th) {
+            Log::error($th);
             $code = json_decode($th->getResponse()->getBody()->getContents())->error->message;
             $this->errorMessage = FirebaseErrorCode::getErrorMessageFromCode($code);
         }
