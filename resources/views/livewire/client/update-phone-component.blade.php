@@ -86,6 +86,7 @@
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
             const auth = getAuth();
+            auth.settings.appVerificationDisabledForTesting = true;
             let sessionInfo;
             let confirmation;
             let apiKey;

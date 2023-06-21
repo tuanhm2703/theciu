@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Customer;
+use App\Services\Models\FirebaseErrorCode;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
@@ -51,7 +52,7 @@ class UpdatePhoneComponent extends Component
             $response = $client->post($url, [
                 'body' => json_encode([
                     'phoneNumber' => "+84" . $this->phone,
-                    'recaptchaToken' => $this->recaptchaToken
+                    // 'recaptchaToken' => $this->recaptchaToken
                 ])
             ]);
             if ($response->getStatusCode() == 200) {
@@ -65,14 +66,7 @@ class UpdatePhoneComponent extends Component
         } catch (\GuzzleHttp\Exception\ClientException $th) {
             Log::error($th->getMessage());
             $code = json_decode($th->getResponse()->getBody()->getContents())->error->message;
-            switch ($code) {
-                case 'SESSION_EXPIRED':
-                    $this->errorMessage = 'Mã xác nhận đã hết hạn';
-                    break;
-                default:
-                    $this->errorMessage = 'Đã có lỗi xảy ra, vui lòng thử lại sau.';
-                    break;
-            }
+            $this->errorMessage = FirebaseErrorCode::getErrorMessageFromCode($code);
         }
     }
     public function updatePhone()
@@ -100,14 +94,7 @@ class UpdatePhoneComponent extends Component
             return redirect()->route('client.auth.profile.index');
         } catch (\GuzzleHttp\Exception\ClientException $th) {
             $code = json_decode($th->getResponse()->getBody()->getContents())->error->message;
-            switch ($code) {
-                case 'SESSION_EXPIRED':
-                    $this->errorMessage = 'Mã xác nhận đã hết hạn';
-                    break;
-                default:
-                    $this->errorMessage = 'Mã xác nhận không đúng';
-                    break;
-            }
+            $this->errorMessage = FirebaseErrorCode::getErrorMessageFromCode($code);
         }
     }
 }
