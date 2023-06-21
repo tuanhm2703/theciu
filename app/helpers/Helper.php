@@ -495,10 +495,9 @@ function thousandsCurrencyFormat($num) {
 
     return $num;
 }
-function resize_image(Image $image, $size) {
-    $content = file_get_contents(get_proxy_image_url(Storage::url($image->path), $size));
-    \Log::info($size);
-    return Storage::put("$size/$image->path", $content);
+function resize_image($path, $size) {
+    $content = file_get_contents(get_proxy_image_url(Storage::url($path), $size));
+    return Storage::put("$size/$path", $content);
 }
 function getPathWithSize($size, $path) {
     return StorageService::getPathWithSize($size, $path);
