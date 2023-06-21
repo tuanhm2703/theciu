@@ -22,10 +22,10 @@
                             top: 50%;
                             right: 0;
                             transform: translate(-10%, -50%);}">
-                    <div wire:loading wire:target="sendVerify" class="spinner-border spinner-border-sm mr-1"
+                    <button id="recaptcha-container" wire:loading wire:target="sendVerify" class="spinner-border spinner-border-sm mr-1"
                         role="status">
                         <span class="sr-only">Loading...</span>
-                    </div>
+                    </button>
                     {{ trans('labels.send_otp') }}
                 </a>
             </div>
@@ -35,7 +35,7 @@
             @error('otp')
                 <span class="error">{{ $message }}</span>
             @enderror
-            <div id="recaptcha-container" wire:ignore></div>
+            {{-- <div id="recaptcha-container" wire:ignore></div> --}}
         </div><!-- End .col-sm-6 -->
     </div>
     <div class="text-right">

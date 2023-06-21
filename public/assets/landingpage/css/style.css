@@ -11731,7 +11731,8 @@ button:focus {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     flex: 0 0 80.8%;
-    max-width: 80.8%;
+    /* max-width: 80.8%; */
+    overflow: hidden;
 }
 
 .quickView-content .intro-slider-container,
