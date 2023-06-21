@@ -91,7 +91,7 @@
             let apiKey;
 
             window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-                'size': 'normal',
+                'size': 'invisible',
                 'callback': (response) => {
                     const appVerifier = window.recaptchaVerifier;
                     @this.apiKey = appVerifier.auth.config.apiKey
@@ -100,16 +100,20 @@
                     @this.sendVerify();
                 },
             }, auth);
-
-            $('body').on('click', '#sendOtpBtn', (e) => {
-                e.preventDefault();
-                if (window.recaptchaWidgetId == null) {
-                    recaptchaVerifier.render().then((widgetId) => {
+            recaptchaVerifier.render().then((widgetId) => {
                         window.recaptchaWidgetId = widgetId;
                     });
-                } else {
-                    recaptchaVerifier.recaptcha.reset()
-                }
+            $('body').on('click', '#sendOtpBtn', async (e) => {
+                e.preventDefault();
+                var appVerifier = window.recaptchaVerifier;
+                const response = await signInWithPhoneNumber(auth, $('[name=phone]').val(), appVerifier);
+                // if (window.recaptchaWidgetId == null) {
+                //     recaptchaVerifier.render().then((widgetId) => {
+                //         window.recaptchaWidgetId = widgetId;
+                //     });
+                // } else {
+                //     recaptchaVerifier.recaptcha.reset()
+                // }
             })
             @this.on('verifyPhone', (event) => {
             signInWithPhoneNumber(auth, `+84${$('input[name=username]').val()}`, window.recaptchaVerifier)
