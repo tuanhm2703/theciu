@@ -18,7 +18,9 @@ class Image extends Model {
         'path',
         'name',
         'size',
-        'order'
+        'order',
+        'width',
+        'height'
     ];
 
     protected $appends = [

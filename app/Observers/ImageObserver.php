@@ -5,15 +5,20 @@ namespace App\Observers;
 use App\Jobs\ResizeImageJob;
 use App\Models\Image;
 use App\Models\Inventory;
+use App\Services\StorageService;
 
-class ImageObserver
-{
+class ImageObserver {
+    public function creating(Image $image) {
+        $imageSizeInfo = getimagesize(StorageService::url($image->path));
+        $image->width = $imageSizeInfo[0];
+        $image->height = $imageSizeInfo[1];
+    }
     public function created(Image $image) {
         dispatch(new ResizeImageJob($image, $image->getImageableSize()))->onQueue('resizeImage');
-        if(get_class($image->imageable) == Inventory::class) {
+        if (get_class($image->imageable) == Inventory::class) {
             dispatch(new ResizeImageJob($image, 100))->onQueue('resizeImage');
         }
-        if(get_class($image->imageable) == Product::class) {
+        if (get_class($image->imageable) == Product::class) {
             dispatch(new ResizeImageJob($image, 30))->onQueue('resizeImage');
         }
     }
