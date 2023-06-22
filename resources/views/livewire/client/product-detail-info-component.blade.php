@@ -32,7 +32,7 @@
                                         <a href="#{{ $image->name }}"
                                             style="background-image: url({{ $image->product_lazy_load_path }}); background-size: cover;"
                                             class="carousel-dot swiper-slide {{ $index === 0 ? 'active' : '' }}">
-                                            <img src="{{ $image->path_with_domain }}">
+                                            <img width="1000" height="{{ $image->getHeightFromRatio($image->width) }}" src="{{ $image->path_with_domain }}">
                                         </a>
                                     @endforeach
                                     @foreach ($inventory_images->unique('name') as $index => $image)
@@ -40,7 +40,7 @@
                                             $image = (object) $image;
                                         @endphp
                                         <a href="#{{ $image->name }}" class="carousel-dot swiper-slide">
-                                            <img src="{{ $image->path_with_domain }}">
+                                            <img width="1000" height="{{ $image->getHeightFromRatio($image->width) }}" src="{{ $image->path_with_domain }}">
                                         </a>
                                     @endforeach
                                 </div>
@@ -76,8 +76,7 @@
                                             style="background-image: {{ $product->image?->product_lazy_load_path }}"
                                             data-zoom-image-2x="{{ $image->path_with_domain }}"
                                             data-image-2x="{{ $image->path_with_domain }}">
-                                            <img src="{{ $image->path_with_domain }}" alt="Image Desc"
-                                                style="max-height: 600px">
+                                            <img width="1000" height="{{ $image->getHeightFromRatio($image->width) }}" src="{{ $image->path_with_domain }}" style="max-height: 600px">
                                         </a>
                                     </div><!-- End .intro-slide -->
                                 @endforeach
@@ -91,8 +90,7 @@
                                             href="{{ $image->path_with_domain }}"
                                             data-zoom-image-2x="{{ $image->path_with_domain }}"
                                             data-image-2x="{{ $image->path_with_domain }}">
-                                            <img src="{{ $image->path_with_domain }}" alt="Image Desc"
-                                                style="max-height: 600px">
+                                            <img width="1000" height="{{ $image->getHeightFromRatio($image->width) }}" src="{{ $image->path_with_domain }}" style="max-height: 600px">
                                         </a>
                                     </div><!-- End .intro-slide -->
                                 @endforeach

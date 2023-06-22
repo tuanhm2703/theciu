@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Request;
 
 class Image extends Model {
     use HasFactory;
-
     protected $fillable = [
         'imageable_id',
         'imageable_type',
@@ -83,5 +82,11 @@ class Image extends Model {
                 return 1000;
                 break;
         }
+    }
+    public function getHeightFromRatio($width) {
+        if($width) {
+            return intval($width * $this->height / $this->width);
+        }
+        return null;
     }
 }
