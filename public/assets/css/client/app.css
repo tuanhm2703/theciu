@@ -1757,11 +1757,15 @@ input[type=number] {
 .loading-card.is-loading p {
     height: 70px;
 }
+.owl-carousel .owl-item img {
+    width: 100% !important;
+    height: auto !important;
+}
 .product-card-image {
     position: absolute;
     height: 100%;
     max-width: none !important;
-    width: auto !important;
+    width: auto;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
