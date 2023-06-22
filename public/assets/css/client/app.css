@@ -1757,7 +1757,7 @@ input[type=number] {
 .loading-card.is-loading p {
     height: 70px;
 }
-.owl-carousel .owl-item img {
+.owl-carousel .owl-item .deal-products img {
     width: 100% !important;
     height: auto !important;
 }
