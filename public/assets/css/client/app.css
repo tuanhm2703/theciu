@@ -1761,7 +1761,7 @@ input[type=number] {
     position: absolute;
     height: 100%;
     max-width: none !important;
-    width: auto;
+    width: auto !important;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
