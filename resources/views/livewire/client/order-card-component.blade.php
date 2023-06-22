@@ -7,7 +7,7 @@
         <div class="d-flex py-3 justify-content-between order-row">
             <div class="row w-100">
                 <div class="col-3 col-md-2">
-                    <a href="{{ route('client.product.details', $inventory->product->slug) }}" class="d-block"
+                    <a href="{{ route('client.product.details', $inventory->product?->slug) }}" class="d-block"
                         style="background: url({{ optional($inventory->image)->path_with_domain }}); width: 70px; height: 70px; background-size: cover; background-position:center"></a>
                 </div>
                 <div class="col-9 col-md-8">
