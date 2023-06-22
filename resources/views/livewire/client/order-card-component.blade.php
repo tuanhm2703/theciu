@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-9 col-md-8">
                     <div style="line-height: 1rem">
-                        <h5 class="order-product-title">{{ $inventory->product->name }}</h5>
+                        <h5 class="order-product-title">{{ $inventory->product?->name }}</h5>
                         <p class="text-large">Phân loại hàng: {{ $inventory->title }}</p>
                         <span class="font-weight-bold text-md">x{{ $inventory->pivot->quantity }}</span>
                     </div>
