@@ -84,7 +84,7 @@ class Image extends Model {
         }
     }
     public function getHeightFromRatio($width) {
-        if($width != 0) {
+        if($this->width != 0) {
             return intval($width * $this->height / $this->width);
         }
         return null;
