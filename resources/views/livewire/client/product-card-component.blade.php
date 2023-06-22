@@ -65,7 +65,7 @@
                 <div class="p-1">
                     <a href="{{ $image->path_with_domain }}"
                         class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn">
-                        <img width="{{ $image->width }}" height="{{ $image->getHeightFromRatio(100) }}" loading="lazy" src="{{ getPathWithSize(100, $image->path) }}"
+                        <img width="100" height="{{ $image->getHeightFromRatio(100) }}" loading="lazy" src="{{ getPathWithSize(100, $image->path) }}"
                             alt="{{ $product->snake_name }}">
                     </a>
                 </div>
