@@ -6,7 +6,7 @@
         <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}"
             class="product-image image-loading lazy position-relative"
             style="background: url({{ $product->image?->product_lazy_load_path }});">
-            <img width="1000" height="{{ $product->image?->getHeightFromRatio($product->image?->width) }}"
+            <img width="1000" height="{{ $product->image?->getHeightFromRatio(1000) }}"
                 class="product-card-image" src="{{ $product->image?->path_with_domain }}" alt="{{ $product->name }}">
         </a>
         @if ($product->available_flash_sales->first())
@@ -65,7 +65,7 @@
                 <div class="p-1">
                     <a href="{{ $image->path_with_domain }}"
                         class="{{ $index == 0 ? 'active' : '' }} inventory-img-btn">
-                        <img width="{{ $image->width }}" height="{{ $image->getHeightFromRatio($product->image?->width) }}" loading="lazy" src="{{ getPathWithSize(100, $image->path) }}"
+                        <img width="{{ $image->width }}" height="{{ $image->getHeightFromRatio(100) }}" loading="lazy" src="{{ getPathWithSize(100, $image->path) }}"
                             alt="{{ $product->snake_name }}">
                     </a>
                 </div>
