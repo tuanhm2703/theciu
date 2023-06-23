@@ -69,7 +69,7 @@ class UpdatePhoneComponent extends Component
             $this->errorMessage = FirebaseErrorCode::getErrorMessageFromCode($code);
         }
     }
-    public function updatePhone()
+    public function updatePhone($otp)
     {
         $this->validate();
         $url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPhoneNumber?key=$this->apiKey";
@@ -78,7 +78,7 @@ class UpdatePhoneComponent extends Component
             $client->post($url, [
                 'body' => json_encode(
                     [
-                        'code' => $this->otp,
+                        'code' => $otp,
                         'sessionInfo' => $this->sessionInfo
                     ],
                 )
