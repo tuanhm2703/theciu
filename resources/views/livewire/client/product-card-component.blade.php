@@ -46,7 +46,7 @@
         <div class="product-nav product-nav-thumbs intro-slider owl-carousel owl-theme owl-nav-inside owl-light"
             data-toggle="owl"
             data-owl-options='{
-            "items": 4,
+            "items": {{ isset($minItem) ? $minItem : 2 }},
             "loop": false,
             "nav": false,
             "responsive": {
