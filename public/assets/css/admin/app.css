@@ -192,6 +192,20 @@ div.dataTables_processing>div:last-child>div {
 .product-price {
     justify-content: center;
 }
+.deal-product {
+    width: 300px;
+    height: calc(300px * 5 / 3);
+    position: relative;
+    background-color: #fff;
+    margin: auto;
+}
+.deal-product .product.product-7 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
 
 .deal-product .new-price,
 .deal-product .old-price {
