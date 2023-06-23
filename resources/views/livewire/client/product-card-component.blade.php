@@ -7,8 +7,8 @@
             class="product-image image-loading lazy position-relative"
             style="background: url({{ $product->image?->product_lazy_load_path }});">
             <picture>
-                <source media="(max-width: 600px)" srcset="{{ $product->image?->getHeightFromRatio(600) }}">
-                <img class="product-card-image" src="{{ $product->image?->getHeightFromRatio(1000) }}" alt="{{ $product->name }}">
+                <source media="(max-width: 600px)" srcset="{{ $product->image?->getPathWithSize(600) }}">
+                <img class="product-card-image" src="{{ $product->image?->getPathWithSize(1000) }}" alt="{{ $product->name }}">
              </picture>
             {{-- <img width="600" height="{{ $product->image?->getHeightFromRatio(600) }}"
                 class="product-card-image" src="{{ $product->image?->getPathWithSize(600) }}" alt="{{ $product->name }}"> --}}
