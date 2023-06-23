@@ -129,7 +129,6 @@
                 notyf.error(content);
             }
         }
-        $('.lazy').lazyload();
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
             $('body').on('click', 'a[data-toggle=modal]', (e) => {
