@@ -1761,19 +1761,22 @@ input[type=number] {
     width: 100% !important;
     height: auto !important;
 }
-.deal-product {
+.deal-products {
     width: 300px;
     height: calc(300px * 5 / 3);
     position: relative;
     background-color: #fff;
     margin: auto;
 }
-.deal-product .product.product-7 {
+.deal-products .product.product-7 {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+}
+.deal-products .product.product-7 .product-media {
+    height: 65%;
 }
 
 .product-card-image {
