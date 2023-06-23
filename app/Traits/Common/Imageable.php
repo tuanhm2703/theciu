@@ -10,6 +10,11 @@ use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 
 trait Imageable {
+    public function getImageSizesAttribute() {
+        return [
+            1000
+        ];
+    }
     public function images() {
         return $this->morphMany(Image::class, 'imageable')->where(function ($q) {
             $q->where('type', '!=', MediaType::VIDEO)->orWhere('type', null);

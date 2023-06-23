@@ -17,4 +17,9 @@ class Banner extends Model {
         'order',
         'status'
     ];
+    public function getImageSizesAttribute() {
+        return [
+            1600
+        ];
+    }
 }

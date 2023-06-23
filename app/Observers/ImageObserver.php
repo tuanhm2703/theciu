@@ -14,7 +14,10 @@ class ImageObserver {
         $image->height = $imageSizeInfo[1];
     }
     public function created(Image $image) {
-        dispatch(new ResizeImageJob($image, $image->getImageableSize()))->onQueue('resizeImage');
+        foreach($image->imageable->image_sizes as $size) {
+            dispatch(new ResizeImageJob($image, $size))->onQueue('resizeImage');
+        }
+
         if (get_class($image->imageable) == Inventory::class) {
             dispatch(new ResizeImageJob($image, 100))->onQueue('resizeImage');
         }

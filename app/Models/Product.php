@@ -51,6 +51,13 @@ class Product extends Model {
         'status'
     ];
 
+    public function getImageSizesAttribute() {
+        return [
+            300,
+            1000
+        ];
+    }
+
     public function unique_attribute_inventories() {
         return $this->inventories()->leftJoin('attribute_inventory', function ($q) {
             $q->on('attribute_inventory.inventory_id', 'inventories.id');

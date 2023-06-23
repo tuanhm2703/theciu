@@ -16,7 +16,6 @@ use VienThuong\KiotVietClient\Resource\ProductResource;
 
 class Inventory extends Model {
     use HasFactory, SoftDeletes, Imageable, InventoryScope, CustomScope;
-
     protected $fillable = [
         'product_id',
         'stock_quantity',
@@ -38,6 +37,14 @@ class Inventory extends Model {
         'has_promotion',
         'formatted_price'
     ];
+
+    public function getImageSizesAttribute() {
+        return [
+            100,
+            30,
+            1000
+        ];
+    }
 
     public function attributes() {
         return $this->belongsToMany(Attribute::class)->orderBy('attribute_inventory.created_at')->withPivot('value')->withTimestamps();
@@ -178,4 +185,5 @@ class Inventory extends Model {
             }
         }
     }
+
 }

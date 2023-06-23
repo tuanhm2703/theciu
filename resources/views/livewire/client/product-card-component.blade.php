@@ -6,8 +6,8 @@
         <a href="{{ route('client.product.details', ['slug' => $product->slug]) }}"
             class="product-image image-loading lazy position-relative"
             style="background: url({{ $product->image?->product_lazy_load_path }});">
-            <img width="1000" height="{{ $product->image?->getHeightFromRatio(1000) }}"
-                class="product-card-image" src="{{ $product->image?->path_with_domain }}" alt="{{ $product->name }}">
+            <img width="1000" height="{{ $product->image?->getHeightFromRatio(300) }}"
+                class="product-card-image" src="{{ $product->image?->getPathWithSize(300) }}" alt="{{ $product->name }}">
         </a>
         @if ($product->available_flash_sales->first())
             <div class="product-countdown"
