@@ -9,7 +9,7 @@
                             "nav": true,
                             "dots": false,
                             "margin": 30,
-                            "autoplay": true,
+                            "autoplay": false,
                             "loop": true,
                             "autoplayTimeout": 3000,
                             "items": 1,
