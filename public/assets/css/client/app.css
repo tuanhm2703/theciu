@@ -1619,11 +1619,11 @@ input[type=number] {
     width: fit-content;
 }
 
-/* @media screen and (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .product-media a.product-image {
         height: 30vh;
     }
-} */
+}
 
 @media screen and (min-width: 768px) {
     .voucher-title {
@@ -1786,6 +1786,11 @@ input[type=number] {
 }
 .deal-products .product.product-7 .product-media {
     height: 65%;
+}
+@media screen and (max-width: 768px) {
+    .deal-products .product.product-7 .product-media a.product-image {
+        height: 100% !important;
+    }
 }
 
 @-webkit-keyframes shine {
