@@ -53,7 +53,7 @@ class Product extends Model {
 
     public function getImageSizesAttribute() {
         return [
-            300,
+            600,
             1000
         ];
     }
