@@ -32,6 +32,7 @@ class KiotVietResponse
         ?string $collectionClass = null
     ) {
         $this->response = $response;
+        \Log::channel('kiot')->info((string) $response->getBody());
         $this->expectedClass = $expectedClass;
         $this->collectionClass = $collectionClass;
         $this->parseResponse();
