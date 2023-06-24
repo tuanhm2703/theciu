@@ -58,7 +58,7 @@ class KiotService
                     $customer->available_ranks()->where('customer_ranks.value', 0)->detach();
                 }
             } catch (\Throwable $th) {
-                Log::info($th);
+                Log::channel('kiot')->error($th);
             }
         }
         return false;
@@ -92,7 +92,7 @@ class KiotService
                 };
                 return true;
             } catch (\Throwable $th) {
-                Log::error($th);
+                Log::channel('kiot')->error($th);
             }
         }
         return false;
@@ -104,7 +104,7 @@ class KiotService
         try {
             return $orderResource->getById($id);
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::channel('kiot')->error($th);
             return null;
         }
     }
@@ -168,7 +168,7 @@ class KiotService
             // ]);
             return true;
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::channel('kiot')->error($th);
         }
         return false;
     }
@@ -209,7 +209,7 @@ class KiotService
             ]);
             return $kiotOrder;
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::channel('kiot')->error($th);
             return false;
         }
     }
