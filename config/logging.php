@@ -66,9 +66,15 @@ return [
             'driver' => 'daily',
             'path' => storage_path('logs/momo/momo.log')
         ],
+        'kiot' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/kiot/kiot.log'),
+            'days' => 14,
+        ],
         'vnpay' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/vnpay/vnpay.log')
+            'path' => storage_path('logs/vnpay/vnpay.log'),
+            'days' => 14,
         ],
         'daily' => [
             'driver' => 'daily',
