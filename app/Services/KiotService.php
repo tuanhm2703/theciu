@@ -87,9 +87,9 @@ class KiotService
                     if (isset($data['invoices']) && count($data['invoices']) > 0) {
                         $invoice = $data['invoices'][0];
                         $invoiceResource->remove($invoice['invoiceId']);
-                        $orderResource->remove($order->getId());
                     }
                 };
+                $orderResource->remove($order->getId());
                 return true;
             } catch (\Throwable $th) {
                 Log::channel('kiot')->error($th);
