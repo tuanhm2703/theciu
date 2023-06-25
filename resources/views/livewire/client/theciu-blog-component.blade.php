@@ -28,7 +28,7 @@
                         </div><!-- End .entry-meta -->
 
                         <h2 class="entry-title">
-                            <a href="{{ $blog->detail_url }}">{{ $blog->post_title }}.</a>
+                            <a href="{{ $blog->detail_url }}">{!! $blog->post_title !!}</a>
                         </h2><!-- End .entry-title -->
                     </div><!-- End .entry-body -->
                 </article><!-- End .entry -->
