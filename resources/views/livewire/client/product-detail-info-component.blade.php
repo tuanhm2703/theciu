@@ -22,7 +22,7 @@
                                 <div class="swiper-wrapper px-0">
                                     @if ($product->video)
                                         <a href="#{{ $product->video->name }}"
-                                            class="carousel-dot d-block swiper-slide">
+                                            class="carousel-dot d-block swiper-slide image-wrapper">
                                             <video controls autoplay width="100%" height="100%">
                                                 <source src="{{ $product->video->path_with_domain }}" type="video/mp4">
                                             </video>
@@ -31,16 +31,16 @@
                                     @foreach ($product->images->unique('name') as $index => $image)
                                         <a href="#{{ $image->name }}"
                                             style="background-image: url({{ $image->product_lazy_load_path }}); background-size: cover;"
-                                            class="carousel-dot swiper-slide {{ $index === 0 ? 'active' : '' }}">
-                                            <img width="1000" height="{{ $image->getHeightFromRatio(1000) }}" src="{{ $image->path_with_domain }}">
+                                            class="carousel-dot swiper-slide {{ $index === 0 ? 'active' : '' }} image-wrapper">
+                                            <img src="{{ $image->path_with_domain }}">
                                         </a>
                                     @endforeach
                                     @foreach ($inventory_images->unique('name') as $index => $image)
                                         @php
                                             $image = (object) $image;
                                         @endphp
-                                        <a href="#{{ $image->name }}" class="carousel-dot swiper-slide">
-                                            <img width="1000" height="{{ $image->getHeightFromRatio(1000) }}" src="{{ $image->path_with_domain }}">
+                                        <a href="#{{ $image->name }}" class="carousel-dot swiper-slide image-wrapper">
+                                            <img src="{{ $image->path_with_domain }}">
                                         </a>
                                     @endforeach
                                 </div>
@@ -73,10 +73,10 @@
                                         <a class="MagicZoom"
                                             data-options="zoomPosition: inner;"
                                             href="{{ $image->path_with_domain }}"
-                                            style="background-image: {{ $product->image?->product_lazy_load_path }}"
+                                            style="background-image: url({{ $product->image?->product_lazy_load_path }}); background-size: cover"
                                             data-zoom-image-2x="{{ $image->path_with_domain }}"
                                             data-image-2x="{{ $image->path_with_domain }}">
-                                            <img width="1000" height="{{ $image->getHeightFromRatio(1000) }}" src="{{ $image->path_with_domain }}" style="max-height: 600px">
+                                            <img src="{{ $image->path_with_domain }}" style="max-height: 600px">
                                         </a>
                                     </div><!-- End .intro-slide -->
                                 @endforeach
@@ -90,7 +90,7 @@
                                             href="{{ $image->path_with_domain }}"
                                             data-zoom-image-2x="{{ $image->path_with_domain }}"
                                             data-image-2x="{{ $image->path_with_domain }}">
-                                            <img width="1000" height="{{ $image->getHeightFromRatio(1000) }}" src="{{ $image->path_with_domain }}" style="max-height: 600px">
+                                            <img src="{{ $image->path_with_domain }}" style="max-height: 600px">
                                         </a>
                                     </div><!-- End .intro-slide -->
                                 @endforeach
