@@ -15,7 +15,8 @@
     <div class="quickView-content px-0 pt-0" wire:loading.remove>
         @if ($product)
             <div class="row">
-                <div class="col-lg-7 col-md-6">
+                <div class="col-lg-7 col-md-6" style="    max-height: 630px;
+                overflow: hidden;">
                     <div class="row product-image-wrapper">
                         <div class="product-left">
                             <div class="swiper mySwiper h-100">
