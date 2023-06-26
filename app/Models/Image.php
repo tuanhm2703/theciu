@@ -33,6 +33,7 @@ class Image extends Model {
     }
 
     public function getPathWithDomainAttribute() {
+        return StorageService::url($this->path);
         if ($this->type == MediaType::VIDEO) {
             return StorageService::url($this->path);
         } else {
@@ -52,6 +53,7 @@ class Image extends Model {
     }
 
     public function getPathWithSize($size) {
+        return StorageService::url("$size/$this->path");
         if(StorageService::exists("$size/$this->path")) {
             return StorageService::url("$size/$this->path");
         } else if(StorageService::exists($this->path)) {
