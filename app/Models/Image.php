@@ -33,6 +33,10 @@ class Image extends Model {
     }
 
     public function getPathWithDomainAttribute() {
+        if($this->imageable?->image_default_size) {
+            $size = $this->imageable?->image_default_size;
+            return StorageService::url("$size/$this->path");
+        }
         return StorageService::url($this->path);
         if ($this->type == MediaType::VIDEO) {
             return StorageService::url($this->path);

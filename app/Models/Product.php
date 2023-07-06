@@ -57,6 +57,9 @@ class Product extends Model {
             1000
         ];
     }
+    public function getImageDefaultSizeAttribute() {
+        return 1000;
+    }
 
     public function unique_attribute_inventories() {
         return $this->inventories()->leftJoin('attribute_inventory', function ($q) {
