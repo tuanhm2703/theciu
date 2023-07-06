@@ -45,6 +45,7 @@ class Inventory extends Model {
             1000
         ];
     }
+    const DEFAULT_IMAGE_SIZE = 1000;
 
     public function attributes() {
         return $this->belongsToMany(Attribute::class)->orderBy('attribute_inventory.created_at')->withPivot('value')->withTimestamps();

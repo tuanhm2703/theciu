@@ -57,6 +57,7 @@ class Product extends Model {
             1000
         ];
     }
+    const DEFAULT_IMAGE_SIZE = 1000;
 
     public function unique_attribute_inventories() {
         return $this->inventories()->leftJoin('attribute_inventory', function ($q) {
