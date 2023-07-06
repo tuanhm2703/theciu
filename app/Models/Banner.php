@@ -22,4 +22,7 @@ class Banner extends Model {
             1600
         ];
     }
+    public function getImageDefaultSizeAttribute() {
+        return 1600;
+    }
 }

@@ -45,6 +45,9 @@ class Inventory extends Model {
             1000
         ];
     }
+    public function getImageDefaultSizeAttribute() {
+        return 1000;
+    }
 
     public function attributes() {
         return $this->belongsToMany(Attribute::class)->orderBy('attribute_inventory.created_at')->withPivot('value')->withTimestamps();
