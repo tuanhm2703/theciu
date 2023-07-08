@@ -1625,6 +1625,14 @@ input[type=number] {
     }
 }
 
+@media screen and (max-width: 575px) {
+    .quickView-content .product-left .carousel-dot.active img {
+        height: 100%;
+        width: auto !important;
+        max-width: none !important;
+    }
+}
+
 @media screen and (min-width: 768px) {
     .voucher-title {
         width: 28%;
@@ -1757,10 +1765,12 @@ input[type=number] {
 .loading-card.is-loading p {
     height: 70px;
 }
+
 .owl-carousel .owl-item .deal-products img {
     width: 100% !important;
     height: auto !important;
 }
+
 .product-card-image {
     position: absolute;
     height: 100%;
@@ -1770,6 +1780,7 @@ input[type=number] {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
 .deal-products {
     width: 300px;
     height: calc(300px * 5 / 3);
@@ -1777,6 +1788,7 @@ input[type=number] {
     background-color: #fff;
     margin: auto;
 }
+
 .deal-products .product.product-7 {
     position: absolute;
     top: 0;
@@ -1784,9 +1796,11 @@ input[type=number] {
     right: 0;
     bottom: 0;
 }
+
 .deal-products .product.product-7 .product-media {
     height: 65%;
 }
+
 .drag-area {
     margin: 5px;
     height: 80px;
@@ -1849,13 +1863,16 @@ input[type=number] {
     border-color: 1px dashed #ee4d2d;
     background: #fff5f4;
 }
+
 .product-image-wrapper .image-wrapper {
     height: 120px !important;
     position: relative !important;
     overflow: hidden !important;
     margin-bottom: 3px;
 }
-.product-image-wrapper .image-wrapper img, .product-image-wrapper .image-wrapper video {
+
+.product-image-wrapper .image-wrapper img,
+.product-image-wrapper .image-wrapper video {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -1863,9 +1880,30 @@ input[type=number] {
     transform: translate(-50%, -50%);
     opacity: 1;
 }
+
+.review-form .rating.js-wc-star-rating {
+    flex-direction: row-reverse !important;
+}
+
+.review-form .rating .js-wc-label {
+    font-size: 1.3rem;
+    padding-left: 1rem;
+    color: #FFC107;
+    margin-bottom: 0 !important;
+}
+
+.review-form .rating .js-wc-rating-value {
+    display: none !important;
+}
+
 @media screen and (max-width: 768px) {
     .deal-products .product.product-7 .product-media a.product-image {
         height: 100% !important;
+    }
+
+    .review-form .rating {
+        justify-content: left !important;
+        margin-top: 1rem;
     }
 }
 
