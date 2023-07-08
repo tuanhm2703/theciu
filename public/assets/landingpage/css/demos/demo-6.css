@@ -691,6 +691,11 @@
         padding-left: 0;
         padding-right: 0;
     }
+    .quickView-content .product-left .carousel-dot.active img {
+        height: 100%;
+        width: auto !important;
+        max-width: none !important;
+    }
 }
 @media screen and (min-width: 1536px) {
     .intro-slider-container,
