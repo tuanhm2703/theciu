@@ -218,9 +218,18 @@
                 }
             }
         })
+        $('body').on('click', '.submit-loading', function() {
+            $(this).loading();
+            $(this).parents('form').submit()
+        })
         $(document).on('click', '.mass-checkbox-btn', (e) => {
             $(e.target).parents('table').children('tbody').find('.child-checkbox').prop('checked', $(e
                 .target).is(':checked'))
         })
     })
 </script>
+@if (Session::has('success'))
+    <script>
+        toast.success(`{{ trans('toast.action_successful') }}`, `{{ session()->get('success')}}`);
+    </script>
+@endif
