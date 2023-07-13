@@ -1,8 +1,25 @@
 <footer class="footer">
     <div class="footer-middle">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-6 col-lg-4">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="widget">
+                        <h4 class="widget-title mb-1">CÔNG TY TNHH THUONG MAI THE C.I.U</h4><!-- End .widget-title -->
+                        <h4 class="widget-title">THE C.I.U TRADING COMPANY LIMITED</h4><!-- End .widget-title -->
+                        <ul class="widget-list">
+                            <li>
+                                Địa chỉ; 285/24 Cách Mạng Tháng 8, Phường 12, Quận 10 10, Thành Phố Hồ Chí Minh
+                            </li>
+                            <li>
+                                Mã số thuế: 0317478388
+                            </li>
+                            <li>Người ĐDPL: Nguyễn Đức Huy</li>
+                            <li>Ngày hoạt động: 16/09/2022</li>
+                            <li>Giấy phép kinh doanh: 0317478388</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
                     <div class="widget widget-about">
                         <h4 class="widget-title">Chi nhánh</h4><!-- End .widget-title -->
                         <ul class="widget-list">
@@ -21,8 +38,7 @@
                         </ul>
                     </div><!-- End .widget about-widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
-
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-2">
                     <div class="widget">
                         <h4 class="widget-title">{{ trans('labels.information') }}</h4><!-- End .widget-title -->
 
@@ -74,7 +90,7 @@
                         </ul><!-- End .widget-list -->
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
-                <div class="col-sm-6 col-lg-3">
+                <div class="col-sm-6 col-lg-2">
                     <div class="widget">
                         <h4 class="widget-title">Phương thức thanh toán</h4><!-- End .widget-title -->
 
