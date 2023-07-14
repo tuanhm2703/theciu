@@ -8,7 +8,7 @@ class VoucherObserver
 {
     public function creating(Voucher $voucher) {
         $voucher->quantity = $voucher->total_quantity;
-        if($voucher->isPrivate()) {
+        if($voucher->isPrivate() || $voucher->isSystem()) {
             $voucher->saveable = false;
             $voucher->featured = false;
         } else if($voucher->saveable) {

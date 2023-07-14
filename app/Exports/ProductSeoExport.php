@@ -16,9 +16,9 @@ class ProductSeoExport implements FromCollection
     {
         $domain = env('APP_URL');
         $bucket = StorageService::url('');
-        return Product::select('products.id', 'products.name', DB::raw("concat('$domain/product/', products.slug)"))
+        return Product::available()->select('products.id', 'products.name', DB::raw("concat('$domain/product/', products.slug)"))
         ->leftJoin('images', function($q) {
-            $q->on('images.imageable_id', 'products.id')->where('images.imageable_type', (new Product)->getMorphClass())->whereIn('order', [0, 1]);
+            $q->on('images.imageable_id', 'products.id')->where('images.imageable_type', (new Product)->getMorphClass())->orderBy('images.order')->where('images.type', null);
         })
         ->addSalePrice()
         ->addSelect(DB::raw("concat('$bucket', images.path)"))

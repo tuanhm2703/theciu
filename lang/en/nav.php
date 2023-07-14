@@ -29,4 +29,6 @@ return [
     'customer' => 'Customer',
     'rank' => 'Rank',
     'branch_management' => 'Branches management',
+    'review_manager' => 'Review Manager',
+    'review_list' => 'Review list',
 ];

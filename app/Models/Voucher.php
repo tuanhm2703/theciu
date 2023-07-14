@@ -136,4 +136,7 @@ class Voucher extends Model
     public function isPrivate() {
         return $this->display === DisplayType::PRIVATE;
     }
+    public function isSystem() {
+        return $this->display === DisplayType:: SYSTEM;
+    }
 }

@@ -10,6 +10,8 @@ class ProductCardComponent extends Component {
 
     public $inventory_images;
 
+    public $minItem = 2;
+
     public function render() {
         return view('livewire.client.product-card-component');
     }

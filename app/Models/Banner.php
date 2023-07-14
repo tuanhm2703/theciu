@@ -22,4 +22,5 @@ class Banner extends Model {
             1600
         ];
     }
+    const DEFAULT_IMAGE_SIZE = 1600;
 }

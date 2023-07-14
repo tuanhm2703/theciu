@@ -173,8 +173,10 @@
             $('input[name=quantity]').attr('disabled', false);
             $('input[name=total_can_use]').attr('disabled', false);
             $('input[name=customer_limit]').attr('disabled', false);
-            if (e.target.value === @json(App\Enums\DisplayType::PRIVATE)) {
-                $('#batch-create-wrapper').removeClass('d-none');
+            if (e.target.value === @json(App\Enums\DisplayType::PRIVATE) || e.target.value === @json(App\ENums\DisplayType::SYSTEM)) {
+                if(e.target.value === @json(App\Enums\DisplayType::PRIVATE)) {
+                    $('#batch-create-wrapper').removeClass('d-none');
+                }
                 $('.private-hidden').addClass('d-none');
             }
         })

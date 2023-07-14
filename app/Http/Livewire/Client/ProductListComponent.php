@@ -122,7 +122,7 @@ class ProductListComponent extends Component
             $products->search('products.name', $this->keyword);
         }
         $products = $products
-            ->withNeededProductCardData();
+            ->withNeededProductCardData()->orderBy('created_at', 'desc');
         return $products;
     }
 

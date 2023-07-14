@@ -29,6 +29,9 @@ trait Imageable {
     public function phoneImage() {
         return $this->hasOne(Image::class, 'imageable_id', 'id')->where('type', MediaType::PHONE);
     }
+    public function desktopImage() {
+        return $this->hasOne(Image::class, 'imageable_id', 'id')->where('type', null);
+    }
 
     public function createImages($images, $type = null, $folder = 'images') {
         foreach ($images as $key => $image) {

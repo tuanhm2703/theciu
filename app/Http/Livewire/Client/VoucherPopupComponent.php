@@ -57,7 +57,7 @@ class VoucherPopupComponent extends Component
             $voucher = $this->vouchers->where('id', $id)->first();
             if(Voucher::public()->available()->where('quantity', '>', 0)->where('id', $id)->exists()) {
                 customer()->saved_vouchers()->sync([
-                    $voucher->id, [
+                    $voucher->id => [
                         'is_used' => false,
                         'type' => $voucher->voucher_type_id
                     ]

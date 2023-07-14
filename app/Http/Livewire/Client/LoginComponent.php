@@ -10,7 +10,7 @@ class LoginComponent extends Component
     public $username;
 
     public $password;
-
+    public $remember = false;
     protected $rules = [
         'username' => 'required|username_exists',
         'password' => 'required|correct_password',
@@ -27,7 +27,7 @@ class LoginComponent extends Component
             'password' => 'required|correct_password:customers,'.$this->username,
         ]);
         $customer = Customer::findByUserName($this->username);
-        auth('customer')->login($customer);
+        auth('customer')->login($customer, $this->remember);
         return redirect()->intended();
     }
 }

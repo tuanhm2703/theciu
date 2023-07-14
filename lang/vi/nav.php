@@ -28,4 +28,6 @@ return [
     'customer_list' => 'Danh sách khách hàng',
     'customer' => 'Khách hàng',
     'branch_management' => 'Quản lý chi nhánh',
+    'review_manager' => 'Quản lý review',
+    'review_list' => 'Danh sách review',
 ];

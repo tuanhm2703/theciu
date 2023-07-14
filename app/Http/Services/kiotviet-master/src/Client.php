@@ -300,7 +300,7 @@ class Client
             $response = $client->send($request);
         } catch (BadResponseException $exception) {
             if ($response = $exception->getResponse()) {
-                $responseContent = json_decode($response->getBody()->getContents(), true);
+                $responseContent = json_decode((string) $response->getBody(), true);
                 $kvException = new KiotVietException(
                     $responseContent['responseStatus']['message'] ?? $exception->getMessage(),
                     $response->getStatusCode()

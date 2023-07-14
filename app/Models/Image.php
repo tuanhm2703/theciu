@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Enums\MediaType;
 use App\Services\StorageService;
+use FFMpeg\Coordinate\TimeCode;
+use FFMpeg\FFMpeg;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
@@ -19,7 +21,8 @@ class Image extends Model {
         'size',
         'order',
         'width',
-        'height'
+        'height',
+        'thumbnail'
     ];
 
     protected $appends = [
@@ -33,6 +36,11 @@ class Image extends Model {
     }
 
     public function getPathWithDomainAttribute() {
+        if ($this->type == MediaType::VIDEO)  return StorageService::url($this->path);
+        if (defined("$this->imageable_type::DEFAULT_IMAGE_SIZE")) {
+            $size = $this->imageable_type::DEFAULT_IMAGE_SIZE;
+            return StorageService::url("$size/$this->path");
+        }
         if ($this->type == MediaType::VIDEO) {
             return StorageService::url($this->path);
         } else {
@@ -52,16 +60,17 @@ class Image extends Model {
     }
 
     public function getPathWithSize($size) {
-        if(StorageService::exists("$size/$this->path")) {
+        return StorageService::url("$size/$this->path");
+        if (StorageService::exists("$size/$this->path")) {
             return StorageService::url("$size/$this->path");
-        } else if(StorageService::exists($this->path)) {
+        } else if (StorageService::exists($this->path)) {
             return StorageService::url($this->path);
         }
         return asset('img/image-not-available.png');
     }
 
     public function getPathWithOriginalSizeAttribute() {
-        if(StorageService::exists($this->path)) {
+        if (StorageService::exists($this->path)) {
             return StorageService::url($this->path);
         }
         return asset('img/image-not-available.png');
@@ -70,7 +79,6 @@ class Image extends Model {
         return getPathWithSize(30, $this->path);
     }
     public function getImageBySize() {
-
     }
 
     public function getImageableSize() {
@@ -84,9 +92,35 @@ class Image extends Model {
         }
     }
     public function getHeightFromRatio($width) {
-        if($this->width != 0) {
+        if ($this->width != 0) {
             return intval($width * $this->height / $this->width);
         }
         return null;
+    }
+    public function migrateThumbnail() {
+        if ($this->type === MediaType::VIDEO) {
+            try {
+                $sec = 0;
+                $movie = StorageService::url($this->path);
+                $thumbnail = public_path(uuid_create() . '.jpeg');
+                $ffmpeg = FFMpeg::create();
+                $video = $ffmpeg->open($movie);
+                $frame = $video->frame(TimeCode::fromSeconds($sec));
+                $frame->save($thumbnail);
+                $path = StorageService::putFile('/images', $thumbnail);
+                $this->thumbnail = $path;
+                $this->save();
+                unlink($thumbnail);
+                return true;
+            } catch (\Throwable $th) {
+                throw $th;
+                \Log::error($th);
+            }
+        }
+        return false;
+    }
+
+    public function getThumbnailUrlAttribute() {
+        return StorageService::url($this->thumbnail);
     }
 }

@@ -9,8 +9,11 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class VoucherController extends Controller {
-    public function paginate() {
+    public function paginate(Request $request) {
         $vouchers = Voucher::with('voucher_type');
+        if($request->forReview) {
+            $vouchers->canApplyForReview();
+        }
         return DataTables::of($vouchers)
         ->editColumn('name', function($voucher) {
             return view('admin.pages.promotion.voucher.components.name', compact('voucher'));

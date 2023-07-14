@@ -163,8 +163,8 @@ class ProductController extends Controller {
             $category_ids = [];
         }
         $product['category_ids'] = $category_ids;
-        $listImgSources = $product->images->pluck('path_with_domain')->toArray();
-        $productSizeRuleSrc = $product->size_rule_images->pluck('path_with_domain')->toArray();
+        $listImgSources = $product->images->pluck('path_with_original_size')->toArray();
+        $productSizeRuleSrc = $product->size_rule_images->pluck('path_with_original_size')->toArray();
         return view('admin.pages.product.edit', compact('product', 'listImgSources', 'productSizeRuleSrc'));
     }
 

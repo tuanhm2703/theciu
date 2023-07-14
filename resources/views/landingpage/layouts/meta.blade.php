@@ -17,6 +17,9 @@
 <link rel="manifest" href="{{ asset('assets/landingpage/images/icons/site.webmanifest') }}">
 <link rel="mask-icon" href="{{ asset('/img/safari-pinned-tab.svg') }}" color="#666666">
 <link rel="icon" type="image/png" href="/img/theciu-logo-16x16.jpg">
+<link rel="icon" type="image/png" href="/img/theciu-logo-32x32.jpg">
+<link rel="mask-icon" href="/img/theciu-logo-32x32.jpg" color="#000000">
+
 <meta name="apple-mobile-web-app-title" content="THE C.I.U">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <meta name="application-name" content="THE C.I.U">

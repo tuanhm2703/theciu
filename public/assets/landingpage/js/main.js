@@ -1017,6 +1017,20 @@ $(document).ready(function () {
         type: "image",
     });
 
+    $(".img-popup").magnificPopup({
+        type: "image",
+    });
+    $('.popup-vimeo').magnificPopup({
+        disableOn: 700,
+        type: 'iframe',
+        mainClass: 'mfp-fade',
+        removalDelay: 160,
+        preloader: false,
+
+        fixedContentPos: false
+    });
+
+
     $("body").on("click", ".inventory-img-btn", (e) => {
         e.preventDefault();
         $(e.currentTarget)
