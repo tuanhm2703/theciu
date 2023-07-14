@@ -22,6 +22,7 @@
         "livewire/livewire": "^2.10",
         "maatwebsite/excel": "^3.1",
         "mservice/payment": "*",
+        "php-ffmpeg/php-ffmpeg": "^1.1",
         "phpoffice/phpexcel": "^1.8",
         "phpoffice/phpspreadsheet": "^1.26",
         "psr/simple-cache": "^2.0",

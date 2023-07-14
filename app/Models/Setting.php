@@ -36,4 +36,12 @@ class Setting extends Model {
             ]
         ]);
     }
+    public static function getReviewVoucher() {
+        $setting = Setting::firstOrCreate([
+            'name' => 'review_voucher'
+        ], [
+            'data' => ""
+        ]);
+        return Voucher::find($setting->data);
+    }
 }

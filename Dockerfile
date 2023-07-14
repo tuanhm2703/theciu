@@ -3,6 +3,7 @@ FROM php:8.0-fpm
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     curl \
+    ffmpeg \
     libpng-dev \
     libonig-dev \
     libxml2-dev \

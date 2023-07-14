@@ -1,12 +1,41 @@
 @extends('landingpage.layouts.app', [
     'headTitle' => $product->page_title,
-    'shemaMarkup' => view('components.client.schema-markup', compact('product'))
+    'shemaMarkup' => view('components.client.schema-markup', compact('product')),
 ])
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/nouislider/nouislider.css') }}">
     <style>
         .swiper-slide {
             height: fit-content !important;
+        }
+
+        .popup-media {
+            position: relative;
+            display: block;
+            height: 100px;
+            width: 100px;
+            background: #fff;
+            max-width: 100px;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+
+        .popup-media img,
+        .popup-media video {
+            max-width: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .popup-media .video-icon-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2rem;
         }
     </style>
 @endpush
@@ -91,6 +120,62 @@
                 <div>
                     {!! $product->shipping_and_return !!}
                 </div>
+            </div>
+            <div class="bg-light p-5 mb-3">
+                <h6 class="text-uppercase mb-3">{{ trans('labels.product_review') }}</h6>
+                <div class="reviews">
+                    @foreach ($reviews as $review)
+                        <div class="review">
+                            <div class="row no-gutters">
+                                <div class="col-auto">
+                                    <div class="text-center">
+                                        <a class="social-icon" target="_blank" title="Facebook"><img
+                                                src="{{ $review->customer->avatar_path }}" alt=""></a>
+                                    </div>
+                                    <h4 class="mb-0"><a href="#">{{ $review->customer->full_name }}</a></h4>
+                                    <div class="ratings-container">
+                                        <div class="ratings">
+                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                        </div><!-- End .ratings -->
+                                    </div><!-- End .rating-container -->
+                                </div><!-- End .col -->
+                                <div class="col">
+                                    <span class="review-date">{{ carbon($review->created_at)->format('d-m-y H:i:s') }} |
+                                        Phân loại hàng: {{ $review->order->inventories[0]->title }}</span>
+                                    <p>Màu sắc: <span class="font-weight-bold">{{ $review->color }}</span></p>
+                                    <p>Đúng với mô tả: <span class="font-weight-bold">{{ $review->reality }}</span></p>
+                                    <p>Chất lượng sản phẩm: <span class="font-weight-bold">{{ $review->material }}</span>
+                                    </p>
+                                    <div class="review-content">
+                                        <p class="font-weight-bold">{{ $review->details }}</p>
+                                    </div><!-- End .review-content -->
+                                    <div class="d-flex flex-nowrap">
+                                        @if ($review->video)
+                                            <div class="p-1">
+                                                <a class="popup-vimeo popup-media" style="background: url({{ $review->video->thumbnail_url }})"
+                                                    href="{{ $review->video->path_with_domain }}">
+                                                    <div class="video-icon-label">
+                                                        <i class="far fa-play-circle"></i>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        @endif
+                                        @foreach ($review->images as $image)
+                                            <div class="p-1">
+                                                <a href="{{ $image->path_with_domain }}" class="img-popup popup-media" style="background: url({{ $image->path_with_domain }})">
+                                                    {{-- <img src="{{ $image->path_with_domain }}" alt=""> --}}
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="review-action">
+                                        <a href="#"><i class="icon-thumbs-up"></i>({{ $review->likes }})</a>
+                                    </div><!-- End .review-action -->
+                                </div><!-- End .col-auto -->
+                            </div><!-- End .row -->
+                        </div><!-- End .review -->
+                    @endforeach
+                </div><!-- End .reviews -->
             </div>
 
             <h2 class="title text-center mb-4">Sản phẩm tương tự</h2><!-- End .title text-center -->

@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\DisplayType;
+use App\Enums\StatusType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,8 +17,8 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('customer_id');
-            $table->bigInteger('inventory_id');
+            $table->bigInteger('customer_id')->unsigned();
+            $table->bigInteger('order_id')->unsigned();
             $table->integer('product_score');
             $table->enum('display', [DisplayType::PUBLIC, DisplayType::PRIVATE]);
             $table->integer('customer_service_score');
@@ -26,8 +27,12 @@ return new class extends Migration
             $table->mediumText('reality');
             $table->mediumText('material');
             $table->mediumText('details');
+            $table->mediumText('reply');
+            $table->tinyInteger('status')->default(StatusType::ACTIVE);
+            $table->bigInteger('reply_by')->unsigned()->nullable();
+            $table->integer('likes')->default(0)->unsigned();
             $table->foreign('customer_id')->references('id')->on('customers');
-            $table->foreign('inventory_id')->references('id')->on('inventories');
+            $table->foreign('order_id')->references('id')->on('orders');
             $table->timestamps();
         });
     }

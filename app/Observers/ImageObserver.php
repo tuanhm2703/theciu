@@ -27,5 +27,6 @@ class ImageObserver {
         if (get_class($image->imageable) == Product::class) {
             dispatch(new ResizeImageJob($image, 30))->onQueue('resizeImage');
         }
+        $image->migrateThumbnail();
     }
 }

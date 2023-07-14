@@ -8,4 +8,5 @@ Route::group(['prefix' => 'order', 'as' => 'order.'], function() {
     Route::get('/{order}/cancel', [OrderController::class, 'showCancelForm'])->name('cancel.show');
     Route::put('{order}/cancel', [OrderController::class, 'cancel'])->name('cancel');
     Route::get('{order}/shipping-detail', [OrderController::class, 'getShippingOrderDetail'])->name('shipping.detail');
+    Route::get('{order}/review', [OrderController::class, 'getReviewForm'])->name('review');
 });

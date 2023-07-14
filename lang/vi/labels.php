@@ -245,5 +245,9 @@ return [
     'branch_list' => 'Danh sách chi nhánh',
     'create_branch' => 'Tạo chi nhánh',
     'address_detail' => 'Địa chỉ chi tiết',
-    'confirm' => "Xác nhận"
+    'confirm' => "Xác nhận",
+    'product_review' => 'Đánh giá sản phẩm',
+    'review_manager' => 'Quản lý review',
+    'color' => 'Màu sắc',
+    'reply' => 'Trả lời'
 ];
