@@ -8,7 +8,7 @@
                         <h4 class="widget-title">THE C.I.U TRADING COMPANY LIMITED</h4><!-- End .widget-title -->
                         <ul class="widget-list">
                             <li>
-                                Địa chỉ; 285/24 Cách Mạng Tháng 8, Phường 12, Quận 10 10, Thành Phố Hồ Chí Minh
+                                Địa chỉ; 285/24 Cách Mạng Tháng 8, Phường 12, Quận 10, Thành Phố Hồ Chí Minh
                             </li>
                             <li>
                                 Mã số thuế: 0317478388
