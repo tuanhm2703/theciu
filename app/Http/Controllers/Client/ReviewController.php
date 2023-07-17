@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class ReviewController extends Controller
 {
     public function store(CreateReviewRequest $request) {
-        customer()->gainReviewVoucher();
+        $voucher = customer()->gainReviewVoucher();
         $review = customer()->reviews()->create($request->all());
         if($request->hasFile('video')) {
             $review->createImages([$request->file('video')], MediaType::VIDEO, 'videos');
@@ -21,7 +21,8 @@ class ReviewController extends Controller
             $review->createImages($request->file('images'), MediaType::IMAGE, 'images');
         }
         return BaseResponse::success([
-            'message' => 'Tạo review thành công'
+            'message' => 'Tạo review thành công',
+            'voucher_view' => $voucher ? view('components.client.review-voucher-gift-component', compact('voucher'))->render() : null
         ]);
     }
 }

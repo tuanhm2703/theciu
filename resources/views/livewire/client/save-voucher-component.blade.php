@@ -7,9 +7,7 @@
 
                    @endcomponent
                 @else
-                   @component('components.client.icons.shipping-voucher-icon')
-
-                   @endcomponent
+                   @component('components.client.icons.shipping-voucher-icon')@endcomponent
                 @endif
             </span>
         </div>
