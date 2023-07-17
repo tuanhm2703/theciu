@@ -103,7 +103,10 @@ class Image extends Model {
                 $sec = 0;
                 $movie = StorageService::url($this->path);
                 $thumbnail = public_path(uuid_create() . '.jpeg');
-                $ffmpeg = FFMpeg::create();
+                $ffmpeg = FFMpeg::create([
+                    'ffmpeg.binaries'  => exec('which ffmpeg'),
+                    'ffprobe.binaries' => exec('which ffprobe')
+                ]);
                 $video = $ffmpeg->open($movie);
                 $frame = $video->frame(TimeCode::fromSeconds($sec));
                 $frame->save($thumbnail);
