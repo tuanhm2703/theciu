@@ -102,7 +102,7 @@
             labelIdle: '<label>Upload hình ảnh</label>',
             maxFiles: 5,
             required: true,
-            maxFileSize: '100kb',
+            maxFileSize: '5mb',
             acceptedFileTypes: ['image/*'],
         })
         const video = FilePond.create(document.querySelector('input[name=video]'), {
@@ -113,7 +113,7 @@
             files: [],
             labelIdle: '<label>Upload video</label>',
             maxFiles: 1,
-            maxFileSize: '5mb',
+            maxFileSize: '10mb',
             labelMaxFileSizeExceeded: 'Video quá lớn, vui lòng sử dụng video dưới 5MB'
         })
         $('.product-rate').starRating({
