@@ -155,7 +155,7 @@ class ProductController extends Controller {
         $category = $product->category;
         if($category) {
             $category_ids = [$category->id];
-            while ($category->category) {
+            while ($category->category && $category->category->id !== $category->id) {
                 $category = $category->category;
                 array_unshift($category_ids, $category->id);
             }
