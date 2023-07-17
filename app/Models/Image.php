@@ -129,4 +129,5 @@ class Image extends Model {
         }
         return asset('img/image-not-available.png');
     }
+
 }
