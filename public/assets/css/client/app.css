@@ -1623,14 +1623,14 @@ input[type=number] {
     .product-media a.product-image {
         height: 30vh;
     }
+}
+
+@media screen and (max-width: 575px) {
     .quickView-content .product-left .carousel-dot img {
         height: 100%;
         width: auto !important;
         max-width: none !important;
     }
-}
-
-@media screen and (max-width: 575px) {
 }
 
 @media screen and (min-width: 768px) {
