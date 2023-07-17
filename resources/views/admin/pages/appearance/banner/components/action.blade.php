@@ -28,7 +28,7 @@
 <script>
     $('.ajax-form').ajaxForm({
         success: (res) => {
-            table.ajax.reload()
+            bannerTable.ajax.reload()
             toast.success('{{ trans('toast.action_successful') }}', res.data.message)
         }
     })
