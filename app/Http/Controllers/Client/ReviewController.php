@@ -22,11 +22,7 @@ class ReviewController extends Controller
         }
         return BaseResponse::success([
             'message' => 'Tạo review thành công',
-            'gain_voucher' => true,
-            'alert' => [
-                'title' => '<img src="https://cdn-icons-png.flaticon.com/512/3258/3258504.png"/>',
-                'content' => 'Bạn đã nhận được voucher khuyến mãi đơn hàng, mau sử dụng ngay!'
-            ]
+            'voucher_view' => $voucher ? view('components.client.review-voucher-gift-component', compact('voucher'))->render() : null
         ]);
     }
 }

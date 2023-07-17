@@ -168,22 +168,32 @@
                 $('.modal').modal('hide')
                 toast.success(`{{ trans('toast.action_successful') }}`, res.data.message);
                 $('[data-review-order-id={{ $order->id }}]').remove()
-                if (res.data.gain_voucher) {
-                    Swal.fire({
-                        title: res.data.alert.title,
-                        html: res.data.alert.content,
-                        showDenyButton: true,
-                        showCancelButton: true,
-                        confirmButtonText: 'Save',
-                        denyButtonText: `Don't save`,
-                    }).then((result) => {
-                        /* Read more about isConfirmed, isDenied below */
-                        if (result.isConfirmed) {
-                            Swal.fire('Saved!', '', 'success')
-                        } else if (result.isDenied) {
-                            Swal.fire('Changes are not saved', '', 'info')
-                        }
-                    })
+                if (res.data.voucher_view) {
+                    $('#review-voucher-gift').html(res.data.voucher_view)
+                    $('#review-voucher-gift').removeClass('d-none')
+                    $.magnificPopup.open({
+                        items: {
+                            src: "#review-voucher-gift",
+                        },
+                        type: "inline",
+                        removalDelay: 350,
+                        callbacks: {
+                            open: function() {
+                                $("body").css("overflow-x", "visible");
+                                $(".sticky-header.fixed").css(
+                                    "padding-right",
+                                    "1.7rem"
+                                );
+                                setTimeout(() => {
+                                    $('.voucher-popup').css('opacity', 1)
+                                }, 500);
+                            },
+                            close: function() {
+                                $("body").css("overflow-x", "hidden");
+                                $(".sticky-header.fixed").css("padding-right", "0");
+                            },
+                        },
+                    });
                 }
             },
             error: (err) => {
