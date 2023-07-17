@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Enums\MediaType;
+use App\Jobs\MigrateThumbnail;
 use App\Jobs\ResizeImageJob;
 use App\Models\Image;
 use App\Models\Inventory;
@@ -27,6 +28,8 @@ class ImageObserver {
         if (get_class($image->imageable) == Product::class) {
             dispatch(new ResizeImageJob($image, 30))->onQueue('resizeImage');
         }
-        $image->migrateThumbnail();
+        if ($image->type === MediaType::VIDEO) {
+            dispatch(new MigrateThumbnail($image))->onQueue('resizeImage');
+        }
     }
 }
