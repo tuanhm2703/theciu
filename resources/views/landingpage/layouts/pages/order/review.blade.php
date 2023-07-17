@@ -2,7 +2,7 @@
     'url' => route('client.review.store'),
     'method' => 'POST',
     'id' => 'review-form',
-    'style' => 'max-height: 100vh; overflow: scroll',
+    'style' => 'max-height: 90vh; overflow: scroll',
     'enctype' => 'multipart/form-data',
 ]) !!}
 <div class="card p-5 review-form">
