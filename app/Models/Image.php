@@ -124,6 +124,9 @@ class Image extends Model {
     }
 
     public function getThumbnailUrlAttribute() {
-        return StorageService::url($this->thumbnail);
+        if($this->thumbnail) {
+            return StorageService::url($this->thumbnail);
+        }
+        return asset('img/image-not-available.png');
     }
 }
