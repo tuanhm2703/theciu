@@ -56,7 +56,7 @@
                     <input type="file" name="images" multiple>
                 </div>
                 <div class="col-12 col-md-6">
-                    <input type="file" name="video" multiple data-max-file-size="5MB">
+                    <input type="file" name="video" multiple data-max-file-size="10MB">
                 </div>
             </div>
         </div>
@@ -113,8 +113,8 @@
             files: [],
             labelIdle: '<label>Upload video</label>',
             maxFiles: 1,
-            maxFileSize: '10mb',
-            labelMaxFileSizeExceeded: 'Video quá lớn, vui lòng sử dụng video dưới 5MB'
+            maxFileSize: '10MB',
+            labelMaxFileSizeExceeded: 'Video quá lớn, vui lòng sử dụng video dưới 10MB'
         })
         $('.product-rate').starRating({
             initialRating: 100,
