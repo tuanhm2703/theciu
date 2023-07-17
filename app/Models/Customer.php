@@ -163,9 +163,9 @@ class Customer extends User {
                 $review_voucher->update([
                     'quantity' => DB::raw('quantity - 1')
                 ]);
-                return true;
+                return $review_voucher;
             }
         }
-        return false;
+        return null;
     }
 }

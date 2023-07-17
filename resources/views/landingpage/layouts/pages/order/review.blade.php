@@ -119,7 +119,7 @@
         $('.product-rate').starRating({
             initialRating: 100,
             starIconEmpty: 'far fa-star',
-            wrapperClasses:'.product-rate',
+            wrapperClasses: '.product-rate',
             starIconFull: 'fas fa-star',
             starColorEmpty: 'lightgray',
             starColorFull: '#FFC107',
@@ -131,7 +131,7 @@
         });
         $('.customer-service-rate').starRating({
             initialRating: 5,
-            wrapperClasses:'.customer-service-rate',
+            wrapperClasses: '.customer-service-rate',
             starIconEmpty: 'far fa-star',
             starIconFull: 'fas fa-star',
             starColorEmpty: 'lightgray',
@@ -144,7 +144,7 @@
         });
         $('.shipping-service-rate').starRating({
             initialRating: 5,
-            wrapperClasses:'.shipping-service-rate',
+            wrapperClasses: '.shipping-service-rate',
             starIconEmpty: 'far fa-star',
             starIconFull: 'fas fa-star',
             starColorEmpty: 'lightgray',
@@ -168,6 +168,23 @@
                 $('.modal').modal('hide')
                 toast.success(`{{ trans('toast.action_successful') }}`, res.data.message);
                 $('[data-review-order-id={{ $order->id }}]').remove()
+                if (res.data.gain_voucher) {
+                    Swal.fire({
+                        title: res.data.alert.title,
+                        html: res.data.alert.content,
+                        showDenyButton: true,
+                        showCancelButton: true,
+                        confirmButtonText: 'Save',
+                        denyButtonText: `Don't save`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            Swal.fire('Saved!', '', 'success')
+                        } else if (result.isDenied) {
+                            Swal.fire('Changes are not saved', '', 'info')
+                        }
+                    })
+                }
             },
             error: (err) => {
                 $('#review-form .submit-btn').loading(false)
