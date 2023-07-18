@@ -81,4 +81,13 @@ class Category extends Model
         }
         return $ids;
     }
+
+    public static function getCategoryOptionsGroupByType() {
+        $types = Category::where('type', '!=', CategoryType::PRODUCT)->select('type')->groupBy('type')->get()->pluck('type')->toArray();
+        $options = [];
+        foreach ($types as $type) {
+            $options[__('labels.'.$type)] = Category::where('type', $type)->pluck('name', 'id')->toArray();
+        }
+        return $options;
+    }
 }

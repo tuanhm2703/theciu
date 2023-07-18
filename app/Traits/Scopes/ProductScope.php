@@ -21,13 +21,11 @@ trait ProductScope {
     }
 
     public function scopeNewArrival($q) {
-        $q->whereHas('other_categories', function ($q) {
-            $q->where('categories.type', CategoryType::NEW_ARRIVAL);
-        })->orderBy('created_at', 'desc');
+        return $q->orderBy('created_at', 'desc');
     }
 
     public function scopeBestSeller($q) {
-        $q->whereHas('other_categories', function ($q) {
+        return $q->whereHas('other_categories', function ($q) {
             $q->where('categories.type', CategoryType::BEST_SELLER);
         })->orderBy('created_at', 'desc');
     }
@@ -58,7 +56,7 @@ trait ProductScope {
 
     public function scopeAddSalePrice($q) {
         /* Adding a column called `sale_price` to the query. */
-        $q->leftJoin('promotion_product', function ($q) {
+        return $q->leftJoin('promotion_product', function ($q) {
             $q->on('promotion_product.product_id', 'products.id');
         })->leftJoin('promotions', function ($q) {
             $q->on('promotions.id', 'promotion_product.promotion_id')
@@ -84,6 +82,6 @@ trait ProductScope {
     public function scopeFilterByPriceRange($q, $min, $max) {
         $min = $min ? $min : 0;
         $max = $max ? $max : 10000000000;
-        $q->addSalePrice()->having('sale_price', '>=', $min)->having('sale_price', '<=', $max);
+        return $q->addSalePrice()->having('sale_price', '>=', $min)->having('sale_price', '<=', $max);
     }
 }
