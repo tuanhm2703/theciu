@@ -6,4 +6,5 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.', 'middleware' => ['phoneVerifi
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     include('Profile.php');
     include('Cart.php');
+    include('Review.php');
 });

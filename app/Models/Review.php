@@ -30,7 +30,12 @@ class Review extends Model {
         'material',
         'details',
         'reply',
-        'reply_by'
+        'reply_by',
+        'customer_liked'
+    ];
+
+    protected $casts = [
+        'customer_liked' => 'json'
     ];
 
     public function order() {

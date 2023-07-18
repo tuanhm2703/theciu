@@ -21,6 +21,7 @@ return new class extends Migration
             $table->bigInteger('order_id')->unsigned();
             $table->integer('product_score');
             $table->enum('display', [DisplayType::PUBLIC, DisplayType::PRIVATE]);
+            $table->json('customer_liked')->default(json_encode([]));
             // $table->integer('customer_service_score');
             // $table->integer('shipping_service_score');
             // $table->mediumText('color');

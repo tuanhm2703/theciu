@@ -1,5 +1,5 @@
 {!! Form::open([
-    'url' => route('client.review.store'),
+    'url' => route('client.auth.review.store'),
     'method' => 'POST',
     'id' => 'review-form',
     'style' => 'max-height: 90vh; overflow: scroll',

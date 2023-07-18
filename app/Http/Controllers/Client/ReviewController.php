@@ -25,4 +25,17 @@ class ReviewController extends Controller
             'voucher_view' => $voucher ? view('components.client.review-voucher-gift-component', compact('voucher'))->render() : null
         ]);
     }
+
+    public function like(Review $review) {
+        if(!$review->customer_liked || !in_array(customer()->id, $review->customer_liked)) {
+            $arr = $review->customer_liked ?? [];
+            array_push($arr, customer()->id);
+            $review->likes = count(array_unique($arr));
+            $review->customer_liked = $arr;
+            $review->save();
+        }
+        return BaseResponse::success([
+            'liked' => count($review->customer_liked)
+        ]);
+    }
 }
