@@ -239,5 +239,9 @@ return [
     'branch_list' => 'Branch List',
     'create_branch' => 'Create branch',
     'address_detail' => 'Address detail',
-    'confirm' => "Confirm"
+    'confirm' => "Confirm",
+    'product_review' => 'Product Review',
+    'review_manager' => 'Review Manager',
+    'color' => 'Color',
+    'reply' => 'Reply',
 ];
