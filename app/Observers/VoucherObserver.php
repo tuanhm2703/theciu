@@ -11,8 +11,6 @@ class VoucherObserver
         if($voucher->isPrivate()) {
             $voucher->saveable = false;
             $voucher->featured = false;
-        } else if($voucher->saveable) {
-            $voucher->customer_limit = 1;
         }
     }
 }
