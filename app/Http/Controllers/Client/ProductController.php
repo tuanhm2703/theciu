@@ -66,4 +66,22 @@ class ProductController extends Controller {
         $title = trans('labels.new_arrival');
         return view('landingpage.layouts.pages.product.new-arrival.index', compact('categoryType', 'title'));
     }
+
+    public function paginateReviews($slug) {
+        $product = Product::whereSlug($slug)->firstOrFail();
+        $reviews = Review::with(['customer', 'images', 'order.inventories' => function ($q) use ($product) {
+            return $q->where('inventories.product_id', $product->id)->with('product:name');
+        }])->whereHas('order', function ($q) use ($product) {
+            $q->whereHas('inventories', function ($q) use ($product) {
+                return $q->where('inventories.product_id', $product->id);
+            });
+        })->active()->orderBy('created_at', 'desc')->paginate(4)->items();
+        $results = [];
+        foreach ($reviews as $review) {
+            $results[] = view('components.client.review-row-component', compact('review'))->render();
+        }
+        return response()->json([
+            'content' => $results
+        ]);
+    }
 }
