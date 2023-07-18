@@ -40,7 +40,7 @@
             </div>
             <div class="review-action">
                 <a href="#">
-                    @if (in_array(customer()?->id, $review->customer_liked))
+                    @if ($review->customer_linked && in_array(customer()?->id, $review->customer_liked))
                         <button type="button"
                             class="icon-thumbs-up btn btn-link border-0 px-0">{{ $review->likes ? $review->likes : '' }}</button>
                     @else
