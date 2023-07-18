@@ -135,7 +135,7 @@
                                     <h4 class="mb-0"><a href="#">{{ $review->customer->full_name }}</a></h4>
                                     <div class="ratings-container">
                                         <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
+                                            <div class="ratings-val" style="width: {{ $review->product_score * 20 }}%;"></div><!-- End .ratings-val -->
                                         </div><!-- End .ratings -->
                                     </div><!-- End .rating-container -->
                                 </div><!-- End .col -->
