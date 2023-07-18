@@ -82,7 +82,7 @@ trait Imageable {
     public function getAvatarPathAttribute() {
         if ($this->avatar) {
             if(StorageService::exists($this->avatar->path)) {
-                return $this->avatar->path_with_domain;
+                return $this->avatar->path_with_original_size;
             }
         }
         return asset('assets/images/default-avatar.png');
