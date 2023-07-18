@@ -28,7 +28,7 @@
                 @endif
             </div>
         </div>
-        <div class="order-detail-action-wrapper mt-3">
+        <div class="order-detail-action-wrapper mt-3 justify-content-end">
             @switch($order->order_status)
                 @case(App\Enums\OrderStatus::CANCELED)
                 @break

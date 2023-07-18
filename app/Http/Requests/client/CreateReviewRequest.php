@@ -22,11 +22,11 @@ class CreateReviewRequest extends FormRequest {
     public function rules() {
         return [
             'product_score' => 'required',
-            'customer_service_score' => 'required',
-            'shipping_service_score' => 'required',
-            'color' => 'required',
-            'reality' => 'required',
-            'material' => 'required',
+            // 'customer_service_score' => 'required',
+            // 'shipping_service_score' => 'required',
+            // 'color' => 'required',
+            // 'reality' => 'required',
+            // 'material' => 'required',
             'details' => 'required'
         ];
     }

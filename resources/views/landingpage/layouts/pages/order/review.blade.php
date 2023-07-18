@@ -33,7 +33,7 @@
         @endforeach
         <div class="bg-light p-3 mt-3">
             <div class="p-3 border bg-white">
-                <div class="form-group mb-1">
+                {{-- <div class="form-group mb-1">
                     <label for="color" class="mb-0 font-weight-bold">Màu sắc</label>
                     <input type="text" name="color" class="form-control border-0 pl-0"
                         placeholder="Để lại đánh giá">
@@ -45,7 +45,7 @@
                 <div class="form-group mb-1">
                     <label for="material" class="mb-0 font-weight-bold">Chất liệu</label>
                     <input name="material" type="text" class="form-control border-0 pl-0">
-                </div>
+                </div> --}}
                 <div class="form-group border-top">
                     <textarea name="details" class="form-control border-0 pl-0"
                         placeholder="Hãy chia sẻ những điều bạn thích về sản phẩm này với những người mua khác nhé."></textarea>
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="d-flex mt-3">
+        {{-- <div class="d-flex mt-3">
             <div class="pr-3">
                 <input name="display" value="{{ \App\Enums\DisplayType::PUBLIC }}" type="checkbox"
                     class="form-control custom-checkbox m-auto check-cart-item m-0">
@@ -86,7 +86,7 @@
             <div class="col-12 col-md-8 md-mb-3">
                 <div class="shipping-service-rate rating"></div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <div class="mt-3 text-right position-sticky bg-white py-3" style="bottom: 0">
         <button type="submit" class="submit-btn btn btn-primary">Hoàn thành</button>
@@ -102,8 +102,9 @@
             labelIdle: '<label>Upload hình ảnh</label>',
             maxFiles: 5,
             required: true,
-            maxFileSize: '5mb',
+            maxFileSize: '5MB',
             acceptedFileTypes: ['image/*'],
+            labelMaxFileSizeExceeded: 'Hình ảnh quá lớn, vui lòng sử dụng video dưới 5MB'
         })
         const video = FilePond.create(document.querySelector('input[name=video]'), {
             imagePreviewHeight: 50,
@@ -129,32 +130,32 @@
             inputName: 'product_score',
             titles: ["Tệ", "Không hài lòng", "Bình thường", "Hài lòng", "Tuyệt vời"],
         });
-        $('.customer-service-rate').starRating({
-            initialRating: 5,
-            wrapperClasses: '.customer-service-rate',
-            starIconEmpty: 'far fa-star',
-            starIconFull: 'fas fa-star',
-            starColorEmpty: 'lightgray',
-            starColorFull: '#FFC107',
-            starsSize: 2, // em
-            stars: 5,
-            initStar: 5,
-            inputName: 'customer_service_score',
-            titles: ["Tệ", "Không hài lòng", "Bình thường", "Hài lòng", "Tuyệt vời"],
-        });
-        $('.shipping-service-rate').starRating({
-            initialRating: 5,
-            wrapperClasses: '.shipping-service-rate',
-            starIconEmpty: 'far fa-star',
-            starIconFull: 'fas fa-star',
-            starColorEmpty: 'lightgray',
-            starColorFull: '#FFC107',
-            starsSize: 2, // em
-            stars: 5,
-            initStar: 5,
-            inputName: 'shipping_service_score',
-            titles: ["Tệ", "Không hài lòng", "Bình thường", "Hài lòng", "Tuyệt vời"],
-        });
+        // $('.customer-service-rate').starRating({
+        //     initialRating: 5,
+        //     wrapperClasses: '.customer-service-rate',
+        //     starIconEmpty: 'far fa-star',
+        //     starIconFull: 'fas fa-star',
+        //     starColorEmpty: 'lightgray',
+        //     starColorFull: '#FFC107',
+        //     starsSize: 2, // em
+        //     stars: 5,
+        //     initStar: 5,
+        //     inputName: 'customer_service_score',
+        //     titles: ["Tệ", "Không hài lòng", "Bình thường", "Hài lòng", "Tuyệt vời"],
+        // });
+        // $('.shipping-service-rate').starRating({
+        //     initialRating: 5,
+        //     wrapperClasses: '.shipping-service-rate',
+        //     starIconEmpty: 'far fa-star',
+        //     starIconFull: 'fas fa-star',
+        //     starColorEmpty: 'lightgray',
+        //     starColorFull: '#FFC107',
+        //     starsSize: 2, // em
+        //     stars: 5,
+        //     initStar: 5,
+        //     inputName: 'shipping_service_score',
+        //     titles: ["Tệ", "Không hài lòng", "Bình thường", "Hài lòng", "Tuyệt vời"],
+        // });
         $('#review-form').ajaxForm({
             beforeSend: function(xhr, options) {
                 $('#review-form .submit-btn').loading()
