@@ -187,8 +187,6 @@
                 $('input[name=code]').attr('disabled', true);
                 $('input[name=quantity]').val(1)
                 $('input[name=quantity]').attr('disabled', true);
-                $('input[name=total_can_use]').val(1)
-                $('input[name=total_can_use]').attr('disabled', true);
                 $('input[name=customer_limit]').val(1)
                 $('input[name=customer_limit]').attr('disabled', true);
             } else {
