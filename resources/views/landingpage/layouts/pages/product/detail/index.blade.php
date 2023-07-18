@@ -142,7 +142,7 @@
                                 <div class="col">
                                     <span class="review-date">{{ carbon($review->created_at)->format('d-m-y H:i:s') }} |
                                         Phân loại hàng: {{ $review->order->inventories[0]->title }}</span>
-                                    <p>Đánh giá: <span class="font-weight-bold">{{ $review->$review->details }}</span>
+                                    <p>Đánh giá: <span class="font-weight-bold">{{ $review->details }}</span>
                                     </p>
                                     <div class="d-flex flex-nowrap">
                                         @if ($review->video)
