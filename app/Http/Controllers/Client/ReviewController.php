@@ -35,7 +35,8 @@ class ReviewController extends Controller
             $review->save();
         }
         return BaseResponse::success([
-            'liked' => count($review->customer_liked)
+            'likes' => count($review->customer_liked)
         ]);
     }
+
 }

@@ -34,11 +34,12 @@
         rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/css/scrollpagination.css') }}">
 
     <!-- JS -->
     <script src="{{ getAssetUrl('assets/landingpage/js/jquery.min.js') }}"></script>
     <script src="{{ getAssetUrl('assets/js/jquery.form.min.js') }}"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     @stack('css')
     <style>
         .filepond--credits {
@@ -127,9 +128,11 @@
     <script src="{{ getAssetUrl('assets/js/jquery.star-rating.js') }}"></script>
     <script src="{{ asset('assets/js/plugins/filepond/filepond.js') }}"></script>
     <script src="{{ asset('assets/js/filepond-plugin-image-preview.js') }}"></script>
+    <script src="{{ asset('assets/js/scrollpagination.js') }}"></script>
     <script src="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+
 
 
     <script>

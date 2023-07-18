@@ -37,6 +37,10 @@
             color: white;
             font-size: 2rem;
         }
+
+        .reviews li {
+            list-style: none;
+        }
     </style>
 @endpush
 @section('content')
@@ -124,65 +128,10 @@
             <div class="bg-light p-5 mb-3">
                 <h6 class="text-uppercase mb-3">{{ trans('labels.product_review') }}</h6>
                 <div class="reviews">
-                    @foreach ($reviews as $review)
-                        <div class="review">
-                            <div class="row no-gutters">
-                                <div class="col-auto">
-                                    <div class="text-center">
-                                        <a class="social-icon" target="_blank" style="overflow: hidden"><img
-                                                src="{{ $review->customer->avatar_path }}" alt=""></a>
-                                    </div>
-                                    <h4 class="mb-0"><a href="#">{{ $review->customer->full_name }}</a></h4>
-                                    <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: {{ $review->product_score * 20 }}%;">
-                                            </div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                    </div><!-- End .rating-container -->
-                                </div><!-- End .col -->
-                                <div class="col">
-                                    <span class="review-date">{{ carbon($review->created_at)->format('d-m-y H:i:s') }} |
-                                        Phân loại hàng: {{ $review->order->inventories[0]->title }}</span>
-                                    <p>Đánh giá: <span class="font-weight-bold">{{ $review->details }}</span>
-                                    </p>
-                                    <div class="d-flex flex-nowrap">
-                                        @if ($review->video)
-                                            <div class="p-1">
-                                                <a class="popup-vimeo popup-media"
-                                                    style="background: url({{ $review->video->thumbnail_url }})"
-                                                    href="{{ $review->video->path_with_domain }}">
-                                                    <div class="video-icon-label">
-                                                        <i class="far fa-play-circle"></i>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        @endif
-                                        @foreach ($review->images as $image)
-                                            <div class="p-1">
-                                                <a href="{{ $image->path_with_domain }}" class="img-popup popup-media"
-                                                    style="background: url({{ $image->path_with_domain }})">
-                                                    {{-- <img src="{{ $image->path_with_domain }}" alt=""> --}}
-                                                </a>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    <div class="review-action">
-                                        <a href="#">
-                                            {!! Form::open([
-                                                'url' => route('client.auth.review.like', $review->id),
-                                                'method' => 'PUT',
-                                                'class' => 'review-react-form'
-                                            ]) !!}
-                                                <button type="submit" class="icon-thumbs-up btn btn-link border-0 px-0 text-dark"></button>
-                                            {{ $review->likes ? $review->likes : '' }}
-                                            {!! Form::close() !!}
-                                        </a>
-                                    </div><!-- End .review-action -->
-                                </div><!-- End .col-auto -->
-                            </div><!-- End .row -->
-                        </div><!-- End .review -->
-                    @endforeach
                 </div><!-- End .reviews -->
+                <div class="text-center">
+                    <a href="#" class="read-more loadmore-review">Xem thêm</a>
+                </div>
             </div>
 
             <h2 class="title text-center mb-4">Sản phẩm tương tự</h2><!-- End .title text-center -->
@@ -204,19 +153,43 @@
                 clickable: true,
             }
         });
-        $('.review-react-form').ajaxForm({
-            beforeSend: function(xhr, options, $i) {
-                console.log(xhr, options, $i);
-                console.log(this);
+        $('.reviews').scrollPagination({
+            url: `{{ route('client.product.review.paginate', $product->slug) }}`,
+            data: {
+                page: 1, // which entry to load on init,
+                size: 5,
             },
-            success: function(response, statusText, xhr, $form) {
-                console.log($form);
-            },
-            error: (err) => {
-                if(err.status === 401) {
-                    openLoginModal()
-                }
+            autoload: false,
+            loading: '.loadmore-review',
+            loadingNomoreText: '',
+            manuallyText: 'Xem thêm',
+            'after': function(elementsLoaded) {
+                $(".img-popup").magnificPopup({
+                    type: "image",
+                });
+                $('.popup-vimeo').magnificPopup({
+                    disableOn: 700,
+                    type: 'iframe',
+                    mainClass: 'mfp-fade',
+                    removalDelay: 160,
+                    preloader: false,
+
+                    fixedContentPos: false
+                });
+                $(elementsLoaded).fadeInWithDelay();
+                $('.review-react-form').ajaxForm({
+                    success: function(response, statusText, xhr, $form) {
+                        $($form).find('[type=submit]').text(response.data.likes)
+                        $($form).find('[type=submit]').removeClass('text-dark')
+                    },
+                    error: (err) => {
+                        if (err.status === 401) {
+                            openLoginModal()
+                        }
+                    }
+                })
             }
-        })
+
+        });
     </script>
 @endpush
