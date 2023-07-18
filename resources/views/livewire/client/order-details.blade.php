@@ -56,6 +56,16 @@
                     </div>
                 @break
 
+                @case(App\Enums\OrderStatus::DELIVERED)
+                    <div class="d-flex" style="justify-content: right">
+                        <button data-review-order-id="{{ $order->id }}" type="button"
+                            class="d-block btn btn-primary ajax-modal-btn" data-modal-size="modal-lg"
+                            data-link="{{ route('client.auth.profile.order.review', ['order' => $order->id]) }}">
+                            Đánh giá
+                        </button>
+                    </div>
+                @break
+
                 @default
                 @break
             @endswitch
@@ -217,4 +227,6 @@
             </div>
         </div>
     @endif
+    <div class="voucher-popup container newsletter-popup-container d-none" id="review-voucher-gift">
+    </div>
 </div>
