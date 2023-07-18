@@ -129,7 +129,7 @@
                             <div class="row no-gutters">
                                 <div class="col-auto">
                                     <div class="text-center">
-                                        <a class="social-icon" target="_blank" title="Facebook"><img
+                                        <a class="social-icon" target="_blank" style="overflow: hidden" ><img
                                                 src="{{ $review->customer->avatar_path }}" alt=""></a>
                                     </div>
                                     <h4 class="mb-0"><a href="#">{{ $review->customer->full_name }}</a></h4>
