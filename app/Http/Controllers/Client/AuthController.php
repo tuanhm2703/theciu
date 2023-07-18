@@ -83,7 +83,11 @@ class AuthController extends Controller {
         ]);
 
         if (!$customer->avatar) {
-            $customer->createImagesFromUrls([$user->avatar], MediaType::AVATAR);
+            try {
+                $customer->createImagesFromUrls([$user->avatar], MediaType::AVATAR);
+            } catch (\Throwable $th) {
+                \Log::error($th);
+            }
         }
         auth('customer')->login($customer);
         return redirect()->intended();
