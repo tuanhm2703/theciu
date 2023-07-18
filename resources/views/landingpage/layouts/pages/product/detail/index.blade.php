@@ -142,13 +142,8 @@
                                 <div class="col">
                                     <span class="review-date">{{ carbon($review->created_at)->format('d-m-y H:i:s') }} |
                                         Phân loại hàng: {{ $review->order->inventories[0]->title }}</span>
-                                    <p>Màu sắc: <span class="font-weight-bold">{{ $review->color }}</span></p>
-                                    <p>Đúng với mô tả: <span class="font-weight-bold">{{ $review->reality }}</span></p>
-                                    <p>Chất lượng sản phẩm: <span class="font-weight-bold">{{ $review->material }}</span>
+                                    <p>Đánh giá: <span class="font-weight-bold">{{ $review->$review->details }}</span>
                                     </p>
-                                    <div class="review-content">
-                                        <p class="font-weight-bold">{{ $review->details }}</p>
-                                    </div><!-- End .review-content -->
                                     <div class="d-flex flex-nowrap">
                                         @if ($review->video)
                                             <div class="p-1">
