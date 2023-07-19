@@ -34,6 +34,29 @@
 </script>
 <script type="text/javascript" src="{{ asset('assets/js/froala_editor.pkgd.min.js') }}"></script>
 <script src="{{ asset('assets/js/argon-dashboard.js') }}"></script>
+
+<script
+type="text/javascript"
+src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"
+></script>
+<script
+type="text/javascript"
+src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/file.min.js"
+></script>
+<script
+type="text/javascript"
+src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/plugins/image.min.js"
+></script>
+
+<script
+type="text/javascript"
+src="https://cdn.jsdelivr.net/gh/edsdk/froala-file-manager@latest/js/froala-file-manager.js"
+></script>
+<script
+type="text/javascript"
+src="https://cdn.jsdelivr.net/gh/edsdk/froala-image-editor@latest/js/froala-image-editor.js"
+></script>
+
 <script>
     const toast = {
         success: (title = '', content) => {

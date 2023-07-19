@@ -33,4 +33,14 @@
   <!-- Include editor styles. -->
   <link href="{{ asset('assets/css/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
   <link href="{{ asset('assets/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
+  <link
+            href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/plugins/file.min.css"
+            rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/plugins/image.min.css"
+            rel="stylesheet"
+            type="text/css"
+        />
 @livewireStyles

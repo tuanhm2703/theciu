@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "edsdk/flmngr-server-php": "^1.5",
         "eusonlito/laravel-meta": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
         "kreait/firebase-php": "^6.9",

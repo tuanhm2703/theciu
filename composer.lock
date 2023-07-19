@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dc12cd27a92824fb930a6edb505943da",
+    "content-hash": "61f338a0d80a76f72d724058860cfa0b",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -841,6 +841,59 @@
                 }
             ],
             "time": "2022-09-10T18:51:20+00:00"
+        },
+        {
+            "name": "edsdk/flmngr-server-php",
+            "version": "1.5.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/edsdk/flmngr-server-php.git",
+                "reference": "9bd4f9df6448b6ccd3f8203f56a4087458da93e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/edsdk/flmngr-server-php/zipball/9bd4f9df6448b6ccd3f8203f56a4087458da93e2",
+                "reference": "9bd4f9df6448b6ccd3f8203f56a4087458da93e2",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-exif": "*",
+                "ext-gd": "*",
+                "ext-json": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EdSDK\\FlmngrServer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "EdSDK / N1ED / Flmngr team",
+                    "email": "support@n1ed.zendesk.com"
+                }
+            ],
+            "description": "Flmngr file manager PHP backend",
+            "homepage": "https://flmngr.com",
+            "keywords": [
+                "file",
+                "finder",
+                "image",
+                "imgpen",
+                "manager",
+                "server",
+                "upload"
+            ],
+            "support": {
+                "issues": "https://github.com/edsdk/flmngr-server-php/issues",
+                "source": "https://github.com/edsdk/flmngr-server-php/tree/1.5.9"
+            },
+            "time": "2023-06-07T13:42:22+00:00"
         },
         {
             "name": "egulias/email-validator",

@@ -24,16 +24,15 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-        return \App\Models\TheciuBlog::where('post_type', 'post')
-        ->where('ping_status', 'open')
-        ->whereHas('meta_attachment')
-        ->with('meta_attachment', function($q) {
-            return $q->with('meta_attachment');
-        })
-        ->orderBy('post_date', 'desc')
-        ->limit(10)->get();
+        \EdSDK\FlmngrServer\FlmngrServer::flmngrRequest(
+            array(
+                'dirFiles' => '/var/www/html/public/img',
+            )
+            );
     }
-
+    public function viewTest() {
+        return view('admin.test');
+    }
     public function ipn(Request $request) {
     }
 

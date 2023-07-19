@@ -63,5 +63,6 @@ Route::group(['prefix' => 'admintheciu', 'as' => 'admin.'], function() {
 include('client/Client.php');
 include('Webhook.php');
 
-Route::get('test', [TestController::class, 'test']);
+Route::post('test', [TestController::class, 'test']);
+Route::get('test', [TestController::class, 'viewTest']);
 Route::get('test-ipn', [TestController::class, 'ipn']);
