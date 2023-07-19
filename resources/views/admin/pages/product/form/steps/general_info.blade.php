@@ -62,7 +62,7 @@
             {!! Form::label('categories', 'Danh mục', ['class' => 'custom-control-label label-required']) !!}
         </div>
         <div class="col-md-10">
-            {!! Form::select('categories', App\Models\Category::getCategoryOptionsGroupByType(), isset($product) ? $product->other_categories()->pluck('categories.id')->toArray() : [], ['class' => 'select2 form-control', 'multiple']) !!}
+            {!! Form::select('categories[]', App\Models\Category::getCategoryOptionsGroupByType(), isset($product) ? $product->other_categories()->pluck('categories.id')->toArray() : [], ['class' => 'select2 form-control', 'multiple']) !!}
         </div>
     </div>
     <div class="row mt-3">

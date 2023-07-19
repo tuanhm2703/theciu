@@ -12,6 +12,7 @@ use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Http\Requests\Admin\ViewProductRequest;
 use App\Models\Attribute;
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\Inventory;
 use App\Models\Product;
@@ -30,7 +31,10 @@ class ProductController extends Controller {
         try {
             $product = new Product($input);
             $product->save();
-            $product->other_categories()->sync($request->categories);
+            $product->other_categories()->delete();
+            foreach(Category::whereIn('id', $request->categories)->get() as $category) {
+                $category->products()->attach($product->id);
+            }
             if ($request->hasFile('images')) {
                 $product->createImages($request->images);
             }
@@ -82,7 +86,10 @@ class ProductController extends Controller {
         try {
             $product->fill($input);
             $product->save();
-            $product->other_categories()->sync($request->categories);
+            $product->other_categories()->delete();
+            foreach(Category::whereIn('id', $request->categories)->get() as $category) {
+                $category->products()->attach($product->id);
+            }
             if ($request->hasFile('images')) {
                 $product->createImages($request->images);
             }
