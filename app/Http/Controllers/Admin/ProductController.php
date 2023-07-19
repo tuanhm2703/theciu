@@ -30,6 +30,7 @@ class ProductController extends Controller {
         try {
             $product = new Product($input);
             $product->save();
+            $product->other_categories()->sync($request->categories);
             if ($request->hasFile('images')) {
                 $product->createImages($request->images);
             }
@@ -81,6 +82,7 @@ class ProductController extends Controller {
         try {
             $product->fill($input);
             $product->save();
+            $product->other_categories()->sync($request->categories);
             if ($request->hasFile('images')) {
                 $product->createImages($request->images);
             }
