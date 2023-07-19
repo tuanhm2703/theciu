@@ -32,7 +32,7 @@ class ProductController extends Controller {
             $product = new Product($input);
             $product->save();
             $product->other_categories()->delete();
-            foreach(Category::whereIn('id', $request->categories)->get() as $category) {
+            foreach(Category::whereIn('id', $request->categories ?? [])->get() as $category) {
                 $category->products()->attach($product->id);
             }
             if ($request->hasFile('images')) {
@@ -87,7 +87,7 @@ class ProductController extends Controller {
             $product->fill($input);
             $product->save();
             $product->other_categories()->delete();
-            foreach(Category::whereIn('id', $request->categories)->get() as $category) {
+            foreach(Category::whereIn('id', $request->categories ?? [])->get() as $category) {
                 $category->products()->attach($product->id);
             }
             if ($request->hasFile('images')) {
