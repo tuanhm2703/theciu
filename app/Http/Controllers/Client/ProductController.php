@@ -27,14 +27,7 @@ class ProductController extends Controller {
             ->whereHas('categories', function ($q) use ($product) {
                 $q->whereIn('categories.id', $product->categories->pluck('id')->toArray());
             })->limit(8)->orderBy('created_at', 'desc')->get();
-        $reviews = Review::with(['customer', 'images', 'order.inventories' => function ($q) use ($product) {
-            return $q->where('inventories.product_id', $product->id)->with('product:name');
-        }])->whereHas('order', function ($q) use ($product) {
-            $q->whereHas('inventories', function ($q) use ($product) {
-                return $q->where('inventories.product_id', $product->id);
-            });
-        })->active()->orderBy('created_at', 'desc')->paginate(10);
-        return view('landingpage.layouts.pages.product.detail.index', compact('product', 'other_products', 'reviews'));
+        return view('landingpage.layouts.pages.product.detail.index', compact('product', 'other_products'));
     }
 
     public function index(Request $request) {
