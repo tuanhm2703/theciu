@@ -18,10 +18,10 @@
                 Phân loại hàng: {{ $review->order->inventories[0]->title }}</span>
             <p>Đánh giá: <span class="font-weight-bold">{{ $review->details }}</span>
             </p>
-            <div class="d-flex flex-nowrap">
+            <div class="d-flex flex-nowrap py-2">
                 @if ($review->video)
                     <div class="p-1">
-                        <a class="popup-vimeo popup-media" style="background: url({{ $review->video->thumbnail_url }})"
+                        <a class="popup-vimeo popup-media border rounded-lg" style="background: url({{ $review->video->thumbnail_url }})"
                             href="{{ $review->video->path_with_domain }}">
                             <div class="video-icon-label">
                                 <i class="far fa-play-circle"></i>
@@ -31,7 +31,7 @@
                 @endif
                 @foreach ($review->images as $image)
                     <div class="p-1">
-                        <a href="{{ $image->path_with_domain }}" class="img-popup popup-media"
+                        <a href="{{ $image->path_with_domain }}" class="img-popup popup-media border rounded-lg"
                             style="background: url({{ $image->path_with_domain }})">
                             {{-- <img src="{{ $image->path_with_domain }}" alt=""> --}}
                         </a>
@@ -42,14 +42,14 @@
                 <a href="#">
                     @if ($review->customer_linked && in_array(customer()?->id, $review->customer_liked))
                         <button type="button"
-                            class="icon-thumbs-up btn btn-link border-0 px-0">{{ $review->likes ? $review->likes : '' }}</button>
+                            class="btn btn-link border-0 px-0"><i class="icon-thumbs-up"></i><span>{{ $review->likes ? $review->likes : '' }} Hữu ích</span></button>
                     @else
                         {!! Form::open([
                             'url' => route('client.auth.review.like', $review->id),
                             'method' => 'PUT',
                             'class' => 'review-react-form',
                         ]) !!}<button type="submit"
-                            class="icon-thumbs-up btn btn-link border-0 px-0 text-dark">{{ $review->likes ? $review->likes : '' }}</button>
+                            class="btn btn-link border-0 px-0 text-dark"><i class="icon-thumbs-up"></i><span>{{ $review->likes ? $review->likes : '' }} Hữu ích?</span></button>
                         {!! Form::close() !!}
                     @endif
                 </a>
