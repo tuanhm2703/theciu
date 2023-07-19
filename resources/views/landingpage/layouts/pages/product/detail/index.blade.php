@@ -179,7 +179,7 @@
                 $(elementsLoaded).fadeInWithDelay();
                 $('.review-react-form').ajaxForm({
                     success: function(response, statusText, xhr, $form) {
-                        $($form).find('[type=submit]').text(response.data.likes)
+                        $($form).find('[type=submit] span').text(`${response.data.likes} Hữu ích`)
                         $($form).find('[type=submit]').removeClass('text-dark')
                     },
                     error: (err) => {
