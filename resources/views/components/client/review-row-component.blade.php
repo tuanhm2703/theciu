@@ -42,14 +42,14 @@
                 <a href="#">
                     @if ($review->customer_linked && in_array(customer()?->id, $review->customer_liked))
                         <button type="button"
-                            class="btn btn-link border-0 px-0"><i class="icon-thumbs-up"></i><span>{{ $review->likes ? $review->likes : '' }} Hữu ích</span></button>
+                            class="btn btn-link border-0 px-0"><i class="icon-thumbs-up mr-1"></i><span>{{ $review->likes ? $review->likes : '' }} Hữu ích</span></button>
                     @else
                         {!! Form::open([
                             'url' => route('client.auth.review.like', $review->id),
                             'method' => 'PUT',
                             'class' => 'review-react-form',
                         ]) !!}<button type="submit"
-                            class="btn btn-link border-0 px-0 text-dark"><i class="icon-thumbs-up"></i><span>{{ $review->likes ? $review->likes : '' }} Hữu ích?</span></button>
+                            class="btn btn-link border-0 px-0 text-dark"><i class="icon-thumbs-up mr-1"></i><span>{{ $review->likes ? $review->likes : '' }} Hữu ích?</span></button>
                         {!! Form::close() !!}
                     @endif
                 </a>
