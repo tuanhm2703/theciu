@@ -41,6 +41,14 @@ return [
             'retry_after' => 90,
             'after_commit' => false,
         ],
+        'database-internal' => [
+            'connection' => 'interal-mysql',
+            'driver' => 'database',
+            'table' => 'jobs',
+            'queue' => 'default',
+            'retry_after' => 90,
+            'after_commit' => false,
+        ],
 
         'beanstalkd' => [
             'driver' => 'beanstalkd',
@@ -70,7 +78,6 @@ return [
             'block_for' => null,
             'after_commit' => false,
         ],
-
     ],
 
     /*
