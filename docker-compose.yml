@@ -33,6 +33,13 @@ services:
     restart: always
     networks:
       - theciu-db
+  redis:
+    image: redis:alpine
+    volumes:
+    - ./home/beta.theciu.vn/theciu-redis:/data
+    networks:
+      - theciu-db
+    restart: always
 networks:
   theciu-db:
     driver: bridge
