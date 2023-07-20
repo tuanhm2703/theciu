@@ -74,7 +74,9 @@ class Category extends Model
         $ids = [$this->id];
         if($this->categories) {
             foreach ($this->categories as $c) {
-                $ids = array_merge($ids, $c->getAllChildId());
+                if($c->id != $this->id) {
+                    $ids = array_merge($ids, $c->getAllChildId());
+                }
             }
         } else {
             return [$this->id];
