@@ -58,7 +58,7 @@ class AuthController extends Controller {
     }
 
     public function handleProviderCallback() {
-        $user = (object) Socialite::driver('facebook')->user()->attributes;
+        $user = (object) Socialite::driver('facebook')->stateless()->user()->attributes;
         $customer_names = collect(explode(' ', $user->name));
         if($user->email) {
             $customer = Customer::firstOrCreate([
@@ -98,7 +98,7 @@ class AuthController extends Controller {
     }
 
     public function handleGoogleCallback(Request $request) {
-        $user = Socialite::driver('google')->user()->user;
+        $user = Socialite::driver('google')->stateless()->user()->user;
         $user = (object) $user;
 
         if($user->email) {
