@@ -33,13 +33,16 @@ services:
     restart: always
     networks:
       - theciu-db
-  redis:
-    image: redis:alpine
+  supervisor:
+    build:
+      context: ./supervisor
+      dockerfile: Dockerfile
+    container_name: supervisor
     volumes:
-    - ./home/beta.theciu.vn/theciu-redis:/data
+      - /home/theciu.vn/public_html:/var/www/html
+      - ./supervisor/supervisord.conf:/etc/supervisor/supervisord.conf
     networks:
       - theciu-db
-    restart: always
 networks:
   theciu-db:
     driver: bridge
