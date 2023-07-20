@@ -31,7 +31,7 @@ class ProductController extends Controller {
         try {
             $product = new Product($input);
             $product->save();
-            $product->other_categories()->detach($product->other_categories()->pluck('id')->toArray());
+            $product->other_categories()->detach($product->other_categories()->pluck('categories.id')->toArray());
             foreach(Category::whereIn('id', $request->categories ?? [])->get() as $category) {
                 $category->products()->attach($product->id);
             }
@@ -86,7 +86,7 @@ class ProductController extends Controller {
         try {
             $product->fill($input);
             $product->save();
-            $product->other_categories()->detach($product->other_categories()->pluck('id')->toArray());
+            $product->other_categories()->detach($product->other_categories()->pluck('categories.id')->toArray());
             foreach(Category::whereIn('id', $request->categories ?? [])->get() as $category) {
                 $category->products()->attach($product->id);
             }
