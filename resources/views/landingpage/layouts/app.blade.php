@@ -243,12 +243,12 @@
                 html: true
             });
         }
-        window.onload = function() {
-            var iPhone = (navigator.userAgent.match(/(iPhone|iPod)/i) ? true : false);
-            if (iPhone) {
+        window.addEventListener("load", function() {
+            setTimeout(function() {
+                // Hide the address bar:
                 window.scrollTo(0, 1);
-            }
-        }
+            }, 0);
+        });
     </script>
     <livewire:scripts />
     <!-- Messenger Plugin chat Code -->
