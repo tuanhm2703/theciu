@@ -27,8 +27,10 @@
     <link rel="stylesheet" href="{{ getAssetUrl('assets/css/client/wpmap.css') }}">
     <link rel="stylesheet" href="{{ getAssetUrl('assets/css/multiple-image-video.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/filepond/filepond.css') }}">
-    <link rel="stylesheet" href="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.css">
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.css">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Mulish:wght@500&family=Roboto:ital,wght@0,300;1,300&display=swap"
         rel="stylesheet">
@@ -129,7 +131,8 @@
     <script src="{{ asset('assets/js/plugins/filepond/filepond.js') }}"></script>
     <script src="{{ asset('assets/js/filepond-plugin-image-preview.js') }}"></script>
     <script src="{{ asset('assets/js/scrollpagination.js') }}"></script>
-    <script src="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.js"></script>
+    <script src="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.js">
+    </script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
 
@@ -239,6 +242,12 @@
             $("[data-bs-toggle=tooltip]").tooltip({
                 html: true
             });
+        }
+        window.onload = function() {
+            var iPhone = (navigator.userAgent.match(/(iPhone|iPod)/i) ? true : false);
+            if (iPhone) {
+                window.scrollTo(0, 1);
+            }
         }
     </script>
     <livewire:scripts />
