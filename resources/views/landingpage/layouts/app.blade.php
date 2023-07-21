@@ -43,6 +43,10 @@
         body {
             overflow-x: visible !important;
         }
+        html:has(.modal-open),html:has(.mfp-ready) {
+            height: 100vh;
+            overflow-y: hidden;
+        }
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles
