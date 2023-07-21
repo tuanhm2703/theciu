@@ -17,6 +17,9 @@
         .owl-carousel .owl-stage {
             height: 100%;
         }
+        .owl-carousel .owl-stage-outer {
+            height: 100%;
+        }
         .owl-carousel {
             height: 100%;
         }
