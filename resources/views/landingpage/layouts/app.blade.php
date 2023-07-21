@@ -47,21 +47,6 @@
         .filepond--credits {
             display: none !important;
         }
-
-        html {
-            height: 100%;
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-            position: fixed;
-            width: 100%;
-        }
-
-        .hide-toolbar {
-            position: fixed !important;
-            top: -60px !important;
-            /* Change this value to hide the toolbar */
-            transition: top 0.3s;
-        }
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles
@@ -258,18 +243,6 @@
                 html: true
             });
         }
-        var lastScrollTop = 0;
-        window.addEventListener("scroll", function() {
-            var st = window.pageYOffset || document.documentElement.scrollTop;
-            if (st > lastScrollTop) {
-                // Scrolling Down
-                document.documentElement.classList.add("hide-toolbar");
-            } else {
-                // Scrolling Up
-                document.documentElement.classList.remove("hide-toolbar");
-            }
-            lastScrollTop = st <= 0 ? 0 : st; // Prevents negative values
-        });
     </script>
     <livewire:scripts />
     <!-- Messenger Plugin chat Code -->
