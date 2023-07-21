@@ -20,11 +20,6 @@
                 styleEle.remove();
         }
         new FroalaEditor(element, {
-            Flmngr: {
-                apiKey: "9Us7prCb", // default free key
-                urlFileManager: "{{ url('test') }}", // demo server
-                urlFiles: "{{ Storage::url('') }}", // demo file storage
-            },
             imageUploadParam: "image",
 
             // Set the image upload URL.
