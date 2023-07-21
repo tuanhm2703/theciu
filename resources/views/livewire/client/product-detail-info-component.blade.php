@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="product-right" id="product-zoom-gallery">
-                            <div class="owl-carousel owl-theme owl-nav-inside owl-light mb-0" data-toggle="owl"
+                            <div class="owl-carousel owl-theme owl-nav-inside owl-light mb-0" data-toggle="owl" style="overflow: hidden"
                                 data-owl-options='{
                                     "dots": false,
                                     "nav": false,
