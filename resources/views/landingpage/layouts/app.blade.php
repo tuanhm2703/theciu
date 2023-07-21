@@ -47,6 +47,9 @@
         .filepond--credits {
             display: none !important;
         }
+        body {
+            overflow-x: visible !important;
+        }
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles
