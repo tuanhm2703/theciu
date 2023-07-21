@@ -27,6 +27,8 @@
 <meta name="msapplication-TileColor" content="#cc9966">
 <meta name="msapplication-config" content="{{ asset('assets/landingpage/images/icons/browserconfig.xml') }}">
 <meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
 {!! Meta::tags() !!}
 <meta proterty="o:locale" content="{{ App::getLocale() }}">
 <meta proterty="o:price:currency" content="VN">
