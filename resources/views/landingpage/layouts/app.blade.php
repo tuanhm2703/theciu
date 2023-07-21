@@ -243,12 +243,6 @@
                 html: true
             });
         }
-        window.addEventListener("load", function() {
-            setTimeout(function() {
-                // Hide the address bar:
-                window.scrollTo(0, 1);
-            }, 0);
-        });
     </script>
     <livewire:scripts />
     <!-- Messenger Plugin chat Code -->
