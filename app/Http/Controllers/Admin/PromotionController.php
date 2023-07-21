@@ -172,11 +172,13 @@ class PromotionController extends Controller {
             ]);
             foreach ($products as $p) {
                 foreach ($p['inventories'] as $i) {
-                    $inventory = Inventory::find($i['id']);
-                    $inventory->fill($i);
-                    $inventory->promotion_from = $from;
-                    $inventory->promotion_to = $to  ;
-                    $inventory->save();
+                    if (isset($i['id'])) {
+                        $inventory = Inventory::find($i['id']);
+                        $inventory->fill($i);
+                        $inventory->promotion_from = $from;
+                        $inventory->promotion_to = $to;
+                        $inventory->save();
+                    }
                 }
                 $product_ids[] = $p['id'];
             }
