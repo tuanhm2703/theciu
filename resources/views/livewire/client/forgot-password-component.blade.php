@@ -79,6 +79,7 @@
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth();
+        auth.languageCode = 'vi';
         let sessionInfo;
         let confirmation;
         let apiKey;
