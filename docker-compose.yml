@@ -43,6 +43,16 @@ services:
       - ./supervisor/supervisord.conf:/etc/supervisor/supervisord.conf
     networks:
       - theciu-db
+  supervisor-beta:
+    build:
+      context: ./supervisor
+      dockerfile: Dockerfile
+    container_name: beta-supervisor
+    volumes:
+      - /home/beta.theciu.vn/public_html:/var/www/html
+      - ./supervisor/beta-supervisord.conf:/etc/supervisor/supervisord.conf
+    networks:
+      - theciu-db
 networks:
   theciu-db:
     driver: bridge
