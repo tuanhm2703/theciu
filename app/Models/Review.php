@@ -42,7 +42,7 @@ class Review extends Model {
         return $this->belongsTo(Order::class);
     }
 
-    public function review_by() {
+    public function replier() {
         return $this->belongsTo(User::class, 'reply_by');
     }
 

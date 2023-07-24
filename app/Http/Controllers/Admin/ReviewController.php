@@ -67,7 +67,10 @@ class ReviewController extends Controller
 
     public function replyReview(Review $review, Request $request) {
         $input = $request->all();
-        $review->update($request->all());
+        if($request->reply && !empty($request->review)) {
+            $input['reply_by'] = user()->id;
+        }
+        $review->update($input);
         return BaseResponse::success([
             'message' => "Đã trả lời review #$review->id"
         ]);
