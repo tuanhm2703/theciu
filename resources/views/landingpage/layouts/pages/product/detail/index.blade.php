@@ -145,7 +145,7 @@
                 <div class="reviews">
                 </div><!-- End .reviews -->
                 <div class="text-center">
-                    <a href="#" class="read-more loadmore-review">Xem thêm</a>
+                    <a href="javascript::void()" class="read-more loadmore-review">Xem thêm</a>
                 </div>
             </div>
 

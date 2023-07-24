@@ -6,9 +6,9 @@
                     <img src="{{ $review->replier?->avatar_path }}" alt=""></a>
             </div>
         </div><!-- End .col -->
-        <div>
+        <div class="fr-view">
             <p><h4 class="mb-0"><a href="#">{{ $review->replier?->full_name }} <img src="{{ asset('img/verified-icon.png') }}" width="10px" alt=""></a></h4></p>
-            <p>{{ $review->reply }}</p>
+            <p>{!! $review->reply !!}</p>
         </div><!-- End .col-auto -->
 
     </div><!-- End .row -->

@@ -42,15 +42,20 @@
     <!-- JS -->
     <script src="{{ getAssetUrl('assets/landingpage/js/jquery.min.js') }}"></script>
     <script src="{{ getAssetUrl('assets/js/jquery.form.min.js') }}"></script>
-    @stack('css')
+    <link href="{{ asset('assets/css/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
+    @stack('css')˝
     <style>
         .filepond--credits {
             display: none !important;
         }
+
         body {
             overflow-x: visible !important;
         }
-        html:has(.modal-open),html:has(.mfp-ready) {
+
+        html:has(.modal-open),
+        html:has(.mfp-ready) {
             height: 100vh;
             overflow-y: hidden;
         }
@@ -142,7 +147,7 @@
     </script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
-
+    <script type="text/javascript" src="{{ asset('assets/js/froala_editor.pkgd.min.js') }}"></script>
 
 
     <script>
