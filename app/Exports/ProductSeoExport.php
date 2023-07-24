@@ -22,7 +22,9 @@ class ProductSeoExport implements FromCollection
         })
         ->addSalePrice()
         ->addSelect(DB::raw("concat('$bucket', images.path)"))
+        ->addSelect(DB::raw("min(images.order) as min_order"))
         ->groupBy('products.name')
+        ->groupBy('min_order')
         ->get();
     }
 }
