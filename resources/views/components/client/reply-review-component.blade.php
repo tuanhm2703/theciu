@@ -2,8 +2,8 @@
     <div class="row no-gutters">
         <div class="col-auto">
             <div class="text-center">
-                <a class="social-icon" target="_blank" style="overflow: hidden"><img
-                        src="{{ $review->customer->avatar_path }}" alt=""></a>
+                <a class="social-icon" target="_blank" style="overflow: hidden">
+                    <img src="{{ $review->customer->avatar_path }}" alt=""></a>
             </div>
             <h4 class="mb-0"><a href="#">{{ $review->customer->full_name }}</a></h4>
             <div class="ratings-container">
@@ -18,7 +18,7 @@
                 Phân loại hàng: {{ $review->order->inventories[0]->title }}</span>
             <p>Đánh giá: <span class="font-weight-bold">{{ $review->details }}</span>
             </p>
-            <div class="d-flex flex-nowrap py-2" style="overflow-x: auto">
+            <div class="d-flex flex-nowrap py-2">
                 @if ($review->video)
                     <div class="p-1">
                         <a class="popup-vimeo popup-media border rounded-lg" style="background: url({{ $review->video->thumbnail_url }})"

@@ -70,7 +70,7 @@
                         html += "<li style='opacity:0;-moz-opacity: 0;filter: alpha(opacity=0);'><p>" + value + "</p></li>";
                     });
                     $(obj).append(html);
-                    if(data.content.length > 0){
+                    if(data.next){
                         opts.data.page++;
                     } else{
                         $.fn.stopScrollPagination(obj, opts);

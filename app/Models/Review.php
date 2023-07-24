@@ -42,6 +42,10 @@ class Review extends Model {
         return $this->belongsTo(Order::class);
     }
 
+    public function review_by() {
+        return $this->belongsTo(User::class, 'reply_by');
+    }
+
     public function customer() {
         return $this->belongsTo(Customer::class);
     }

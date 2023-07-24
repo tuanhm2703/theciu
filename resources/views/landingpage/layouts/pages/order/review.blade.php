@@ -27,7 +27,7 @@
                 </div>
                 <div>
                     <h6 class="mb-1">{{ $inventory->name }}</h6>
-                    <p>Phân loại hàn: {{ $inventory->title }}</p>
+                    <p>Phân loại hàng: {{ $inventory->title }}</p>
                 </div>
             </div>
         @endforeach
