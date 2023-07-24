@@ -77,6 +77,7 @@ class CreateAddressComponent extends Component {
     }
 
     public function store() {
+        $this->validate();
         $this->address->featured = $this->address->featured ? 1 : 0;
         $this->address->type = AddressType::SHIPPING;
         auth('customer')->user()->addresses()->create($this->address->toArray());

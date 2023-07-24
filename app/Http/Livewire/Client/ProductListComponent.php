@@ -155,9 +155,13 @@ class ProductListComponent extends Component
             });
         }
         if ($this->type) {
-            $products->whereHas('other_categories', function ($q) {
-                $q->where('categories.type', $this->type);
-            });
+            if($this->type === CategoryType::NEW_ARRIVAL) {
+                $products->orderBy('created_at', 'desc');
+            } else {
+                $products->whereHas('other_categories', function ($q) {
+                    $q->where('categories.type', $this->type);
+                });
+            }
         }
         if (!empty($this->keyword)) {
             $products->search('products.name', $this->keyword);

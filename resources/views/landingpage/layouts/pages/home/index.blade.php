@@ -92,6 +92,7 @@
             <livewire:client.theciu-blog-component />
         </div>
     </main><!-- End .main -->
+    <livewire:client.voucher-popup-component />
 @endsection
 @push('js')
 @endpush

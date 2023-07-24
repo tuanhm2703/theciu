@@ -164,8 +164,7 @@
                     {!! Form::number('customer_limit', 1, [
                         'class' => 'form-control',
                         'placeholder' => 'Nhập vào',
-                        'required',
-                        'disabled' => $voucher->saveable == 1,
+                        'required'
                     ]) !!}
                 </div>
             </div>

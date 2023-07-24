@@ -1103,7 +1103,7 @@ input[type=number] {
 
 #close-no-reopen {
     color: white;
-    font-size: 10px;
+    font-size: 14px;
     font-size: italic;
     cursor: pointer;
 }
@@ -1626,7 +1626,7 @@ input[type=number] {
 }
 
 @media screen and (max-width: 575px) {
-    .quickView-content .product-left .carousel-dot.active img {
+    .quickView-content .product-left .carousel-dot img {
         height: 100%;
         width: auto !important;
         max-width: none !important;

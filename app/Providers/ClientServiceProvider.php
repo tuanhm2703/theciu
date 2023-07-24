@@ -6,6 +6,7 @@ use App\Models\Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use PhpParser\Node\Stmt\TryCatch;
 
 class ClientServiceProvider extends ServiceProvider
 {
@@ -26,6 +27,10 @@ class ClientServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Config::loadMeta();
+        try {
+            Config::loadMeta();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

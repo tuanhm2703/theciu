@@ -12,6 +12,7 @@ use App\Http\Requests\Admin\StoreProductRequest;
 use App\Http\Requests\Admin\UpdateProductRequest;
 use App\Http\Requests\Admin\ViewProductRequest;
 use App\Models\Attribute;
+use App\Models\Category;
 use App\Models\Image;
 use App\Models\Inventory;
 use App\Models\Product;
@@ -30,6 +31,10 @@ class ProductController extends Controller {
         try {
             $product = new Product($input);
             $product->save();
+            $product->other_categories()->detach($product->other_categories()->pluck('categories.id')->toArray());
+            foreach(Category::whereIn('id', $request->categories ?? [])->get() as $category) {
+                $category->products()->attach($product->id);
+            }
             if ($request->hasFile('images')) {
                 $product->createImages($request->images);
             }
@@ -81,6 +86,10 @@ class ProductController extends Controller {
         try {
             $product->fill($input);
             $product->save();
+            $product->other_categories()->detach($product->other_categories()->pluck('categories.id')->toArray());
+            foreach(Category::whereIn('id', $request->categories ?? [])->get() as $category) {
+                $category->products()->attach($product->id);
+            }
             if ($request->hasFile('images')) {
                 $product->createImages($request->images);
             }
@@ -155,7 +164,7 @@ class ProductController extends Controller {
         $category = $product->category;
         if($category) {
             $category_ids = [$category->id];
-            while ($category->category) {
+            while ($category->category && $category->category->id !== $category->id) {
                 $category = $category->category;
                 array_unshift($category_ids, $category->id);
             }

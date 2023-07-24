@@ -41,6 +41,21 @@
         .reviews li {
             list-style: none;
         }
+        .intro-slide {
+            height: 100% !important;
+        }
+        .owl-carousel .owl-item {
+            height: 100%;
+        }
+        .owl-carousel .owl-stage {
+            height: 100%;
+        }
+        .owl-carousel .owl-stage-outer {
+            height: 100%;
+        }
+        .owl-carousel {
+            height: 100%;
+        }
     </style>
 @endpush
 @section('content')

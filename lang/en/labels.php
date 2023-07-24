@@ -243,5 +243,5 @@ return [
     'product_review' => 'Product Review',
     'review_manager' => 'Review Manager',
     'color' => 'Color',
-    'reply' => 'Reply'
+    'reply' => 'Reply',
 ];

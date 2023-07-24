@@ -74,11 +74,22 @@ class Category extends Model
         $ids = [$this->id];
         if($this->categories) {
             foreach ($this->categories as $c) {
-                $ids = array_merge($ids, $c->getAllChildId());
+                if($c->id != $this->id) {
+                    $ids = array_merge($ids, $c->getAllChildId());
+                }
             }
         } else {
             return [$this->id];
         }
         return $ids;
+    }
+
+    public static function getCategoryOptionsGroupByType() {
+        $types = Category::where('type', '!=', CategoryType::PRODUCT)->select('type')->groupBy('type')->get()->pluck('type')->toArray();
+        $options = [];
+        foreach ($types as $type) {
+            $options[__('labels.'.$type)] = Category::where('type', $type)->pluck('name', 'id')->toArray();
+        }
+        return $options;
     }
 }

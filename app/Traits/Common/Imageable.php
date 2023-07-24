@@ -49,6 +49,7 @@ trait Imageable {
     }
 
     public function createImagesFromUrls(array $urls, $type = null, $folder = 'images') {
+        set_time_limit(1);
         $records = [];
         foreach ($urls as $url) {
             $basename = pathinfo($url)['basename'];

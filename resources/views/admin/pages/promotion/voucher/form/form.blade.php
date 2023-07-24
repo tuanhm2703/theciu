@@ -151,12 +151,6 @@
         $('input[name=is_limit_max_discount]').on('change', (e) => {
             $('input[name=max_discount_amount]').attr('disabled', e.target.value == 0)
         })
-        $('input[name=saveable]').on('change', (e) => {
-            $('input[name=customer_limit]').attr('disabled', $('input[name=saveable]').is(':checked'))
-            if ($('input[name=saveable]').is(':checked')) {
-                $('input[name=customer_limit]').val(1)
-            }
-        })
         $('input[name=value]').attr('max', $('select[name=discount_type]').val() ==
             "{{ App\Enums\VoucherDiscountType::PERCENT }}" ? 100 : null)
         $('select[name=discount_type]').on('change', (e) => {
@@ -187,8 +181,6 @@
                 $('input[name=code]').attr('disabled', true);
                 $('input[name=quantity]').val(1)
                 $('input[name=quantity]').attr('disabled', true);
-                $('input[name=total_can_use]').val(1)
-                $('input[name=total_can_use]').attr('disabled', true);
                 $('input[name=customer_limit]').val(1)
                 $('input[name=customer_limit]').attr('disabled', true);
             } else {

@@ -1,7 +1,7 @@
 <div class="my-5 container">
     <h2 class="title text-center mb-4">Blog</h2>
     <div class="row justify-content-center">
-        <div class="col-12 col-md-6 owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
+        <div class="col-12 col-md-6 owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl" style="overflow: hidden"
             data-owl-options='{
             "dots": false,
             "nav": false,
