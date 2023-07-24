@@ -1,10 +1,12 @@
 <div class="review">
-    <div class="row no-gutters">
-        <div class="col-auto">
+    <div class="no-gutters d-flex">
+        <div class="mr-5">
             <div class="text-center">
                 <a class="social-icon" target="_blank" style="overflow: hidden"><img
                         src="{{ $review->customer->avatar_path }}" alt=""></a>
             </div>
+        </div><!-- End .col -->
+        <div>
             <h4 class="mb-0"><a href="#">{{ $review->customer->full_name }}</a></h4>
             <div class="ratings-container">
                 <div class="ratings">
@@ -12,11 +14,9 @@
                     </div><!-- End .ratings-val -->
                 </div><!-- End .ratings -->
             </div><!-- End .rating-container -->
-        </div><!-- End .col -->
-        <div class="col">
             <span class="review-date">{{ carbon($review->created_at)->format('d-m-y H:i:s') }} |
                 Phân loại hàng: {{ $review->order->inventories[0]->title }}</span>
-            <p>Đánh giá: <span class="font-weight-bold">{{ $review->details }}</span>
+            <p>Đánh giá: <span>{{ $review->details }}</span>
             </p>
             <div class="d-flex flex-nowrap py-2" style="overflow-x: auto">
                 @if ($review->video)
@@ -54,6 +54,9 @@
                     @endif
                 </a>
             </div><!-- End .review-action -->
+            @if ($review->reply && $review->replier)
+                <x-client.reply-review-component :review="$review"/>
+            @endif
         </div><!-- End .col-auto -->
     </div><!-- End .row -->
 </div><!-- End .review -->

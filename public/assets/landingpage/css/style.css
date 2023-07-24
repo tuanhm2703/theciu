@@ -13669,7 +13669,7 @@ button:focus {
     }
 
     .review .row {
-        flex-direction: column;
+        /* flex-direction: column; */
     }
 
     .details-filter-row .select-custom {

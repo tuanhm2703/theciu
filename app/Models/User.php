@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\StorageService;
 use App\Traits\Common\Imageable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -68,5 +69,16 @@ class User extends Authenticatable {
 
     public function getRoleAttribute() {
         return $this->roles()->first();
+    }
+    public function getFullnameAttribute() {
+        return "$this->lastname $this->firstname";
+    }
+    public function getAvatarPathAttribute() {
+        if ($this->avatar) {
+            if(StorageService::exists($this->avatar->path)) {
+                return $this->avatar->path_with_original_size;
+            }
+        }
+        return asset('img/default-user-avatar.png');
     }
 }
