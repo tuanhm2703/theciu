@@ -50,6 +50,10 @@
         body {
             overflow-x: visible !important;
         }
+        html:has(.modal-open),html:has(.mfp-ready) {
+            height: 100vh;
+            overflow-y: hidden;
+        }
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles
@@ -257,7 +261,6 @@
     @if (!isset($showFooterComponent))
         <livewire:client.sticky-voucher-icon-component />
         <livewire:client.list-saved-voucher-component />
-        <livewire:client.voucher-popup-component />
         <div id="test-popup" class="white-popup mfp-hide">
             <livewire:client.product-detail-info-component />
         </div>

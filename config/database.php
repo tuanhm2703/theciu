@@ -66,7 +66,7 @@ return [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => 'mariadb',
-            'port' => env('DB_PORT', '3306'),
+            'port' => '3306',
             'database' => env('DB_DATABASE', 'forge'),
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),

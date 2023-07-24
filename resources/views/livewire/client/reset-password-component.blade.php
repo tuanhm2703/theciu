@@ -6,11 +6,11 @@
     ]) !!}
     <div class="form-group">
         {!! Form::label('new_password', trans('labels.new_password') . '*', []) !!}
-        {!! Form::text('new_password', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'new_password']) !!}
+        {!! Form::password('new_password', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'new_password']) !!}
     </div><!-- End .form-group -->
     <div class="form-group">
         {!! Form::label('new_password_confirmation', trans('labels.new_password_confirmation') . '*', []) !!}
-        {!! Form::text('new_password_confirmation', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'new_password_confirmation']) !!}
+        {!! Form::password('new_password_confirmation', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'new_password_confirmation']) !!}
     </div><!-- End .form-group -->
     <input type="hidden" wire:model="token">
     <input type="hidden" wire:model="username">
