@@ -18,7 +18,7 @@
                 Phân loại hàng: {{ $review->order->inventories[0]->title }}</span>
             <p>Đánh giá: <span class="font-weight-bold">{{ $review->details }}</span>
             </p>
-            <div class="d-flex flex-nowrap py-2">
+            <div class="d-flex flex-nowrap py-2" style="overflow-x: auto">
                 @if ($review->video)
                     <div class="p-1">
                         <a class="popup-vimeo popup-media border rounded-lg" style="background: url({{ $review->video->thumbnail_url }})"
