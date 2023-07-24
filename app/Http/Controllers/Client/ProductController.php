@@ -68,13 +68,15 @@ class ProductController extends Controller {
             $q->whereHas('inventories', function ($q) use ($product) {
                 return $q->where('inventories.product_id', $product->id);
             });
-        })->active()->orderBy('created_at', 'desc')->paginate(4)->items();
+        })->active()->orderBy('created_at', 'desc')->paginate(4);
+        $items = $reviews->items();
         $results = [];
-        foreach ($reviews as $review) {
+        foreach ($items as $review) {
             $results[] = view('components.client.review-row-component', compact('review'))->render();
         }
         return response()->json([
-            'content' => $results
+            'content' => $results,
+            'next' => $reviews->hasMorePages()
         ]);
     }
 }
