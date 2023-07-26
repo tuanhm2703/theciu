@@ -32,6 +32,9 @@ class ReviewController extends Controller
         ->editColumn('details', function($review) {
             return view('admin.pages.review.components.details', compact('review'));
         })
+        ->addColumn('review_star', function($review) {
+            return view('admin.pages.review.components.review_star', compact('review'));
+        })
         ->make(true);
     }
 

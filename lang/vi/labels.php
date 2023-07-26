@@ -250,4 +250,5 @@ return [
     'review_manager' => 'Quản lý review',
     'color' => 'Màu sắc',
     'reply' => 'Trả lời',
+    'review_star' => 'Sao đánh giá',
 ];
