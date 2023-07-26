@@ -4,6 +4,13 @@
         .video-js {
             width: 100% !important;
         }
+
+        .review-products h6 {
+            text-overflow: ellipsis !important;
+            overflow: hidden !important;
+            width: 200px !important;
+            white-space: nowrap !important;
+        }
     </style>
 @endpush
 @section('content')
@@ -16,15 +23,15 @@
                     data-modal-size="modal-xl" data-link="{{ route('admin.review.setting.voucher') }}">
                     <i class="far fas fa-cog me-1"></i>Cài đặt review</a>
             </h6>
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <table class="review-table table">
                     <thead>
                         <th>No.</th>
-                        <th>{{ __('labels.customer') }}</th>
+                        <th></th>
+                        <th>Sản phẩm</th>
                         <th>{{ __('labels.status') }}</th>
-                        <th>{{ __('labels.reply') }}</th>
                         <th>{{ __('labels.details') }}</th>
-                        <th>{{ __('labels.review_star') }}</th>
+                        <th>{{ __('labels.reply') }}</th>
                         <th>{{ __('labels.action') }}</th>
                     </thead>
                     <tbody></tbody>
@@ -46,35 +53,37 @@
                         const info = table.page.info()
                         const rowNumber = meta.row + 1;
                         return (info.page) * info.length + rowNumber
-
-                    }
+                    },
+                    width: '5%'
                 },
                 {
-                    data: "customer.full_name"
+                    data: 'created_at',
+                    visible: false
                 },
                 {
-                    data: 'status'
+                    data: 'products',
+                    width: '10%'
                 },
                 {
-                    data: 'reply',
-                    sortable: false,
-                    searchable: false
+                    data: 'status',
+                    width: '7%'
                 },
                 {
                     data: "details",
+                    width: "30%"
                 },
                 {
-                    data: "review_star",
-                    name: 'product_score'
+                    data: "reply",
                 },
                 {
                     data: 'action',
                     sortable: false,
-                    searchable: false
+                    searchable: false,
+                    width: '5%'
                 },
             ],
             order: [
-                [0, 'desc']
+                [1, 'desc']
             ],
             initComplete: function(settings, json) {
                 $("[data-bs-toggle=tooltip]").tooltip({

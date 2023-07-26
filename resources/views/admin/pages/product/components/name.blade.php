@@ -1,3 +1,4 @@
+<p>Khách hàng: {{ $review->customer->full_name }}</p>
 <div class="d-flex px-2 py-1">
         <a href="{{ optional($product->image)->path_with_domain }}" class="magnifig-img product-img img-thumbnail mx-1"
             style="background: url({{ optional($product->image)->path_with_domain }})"></a>

@@ -4,10 +4,6 @@
         <i class="fas fa-ellipsis-v"></i>
     </button>
     <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
-        <li>
-            <a class="dropdown-item ajax-modal-btn" href="javascript:void(0)" data-modal-size="modal-md"
-                data-link="{{ route('admin.review.reply.edit', $review->id) }}">Trả lời</a>
-        </li>
         @if ($review->status === App\Enums\StatusType::ACTIVE)
             <li>
                 {!! Form::open([

@@ -18,7 +18,9 @@ class ReviewController extends Controller
     }
 
     public function paginate() {
-        $reviews = Review::query()->with('customer', 'order.products');
+        $reviews = Review::query()->with(['customer', 'order.inventories' => function($q) {
+            $q->with('product', 'image');
+        }]);
         return DataTables::of($reviews)
         ->editColumn('status', function($review) {
             return view('admin.pages.review.components.status', compact('review'));
@@ -34,6 +36,9 @@ class ReviewController extends Controller
         })
         ->addColumn('review_star', function($review) {
             return view('admin.pages.review.components.review_star', compact('review'));
+        })
+        ->addColumn('products', function($review) {
+            return view('admin.pages.review.components.product', compact('review'));
         })
         ->make(true);
     }
