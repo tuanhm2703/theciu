@@ -23,6 +23,9 @@ class ReviewController extends Controller
         ->editColumn('status', function($review) {
             return view('admin.pages.review.components.status', compact('review'));
         })
+        ->editColumn('reply', function($review) {
+            return view('admin.pages.review.components.reply', compact('review'));
+        })
         ->addColumn('action', function($review) {
             return view('admin.pages.review.components.action', compact('review'));
         })

@@ -57,13 +57,15 @@
                 @break
 
                 @case(App\Enums\OrderStatus::DELIVERED)
-                    <div class="d-flex" style="justify-content: right">
-                        <button data-review-order-id="{{ $order->id }}" type="button"
-                            class="d-block btn btn-primary ajax-modal-btn" data-modal-size="modal-lg"
-                            data-link="{{ route('client.auth.profile.order.review', ['order' => $order->id]) }}">
-                            Đánh giá
-                        </button>
-                    </div>
+                    @if (!customer()->reviews()->whereOrderId($order->id)->exists())
+                        <div class="d-flex" style="justify-content: right">
+                            <button data-review-order-id="{{ $order->id }}" type="button"
+                                class="d-block btn btn-primary ajax-modal-btn" data-modal-size="modal-lg"
+                                data-link="{{ route('client.auth.profile.order.review', ['order' => $order->id]) }}">
+                                Đánh giá
+                            </button>
+                        </div>
+                    @endif
                 @break
 
                 @default
