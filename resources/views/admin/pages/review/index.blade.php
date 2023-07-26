@@ -20,7 +20,6 @@
                 <table class="review-table table">
                     <thead>
                         <th>No.</th>
-                        <th></th>
                         <th>{{ __('labels.customer') }}</th>
                         <th>{{ __('labels.status') }}</th>
                         <th>{{ __('labels.reply') }}</th>
