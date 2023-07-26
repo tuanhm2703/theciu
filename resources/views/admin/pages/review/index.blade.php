@@ -22,6 +22,7 @@
                             <th>No.</th>
                             <th>{{ __('labels.customer') }}</th>
                             <th>{{ __('labels.status') }}</th>
+                            <th>{{ __('labels.reply') }}</th>
                             <th>{{ __('labels.details') }}</th>
                             <th>{{ __('labels.action') }}</th>
                         </thead>

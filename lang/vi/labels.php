@@ -249,5 +249,5 @@ return [
     'product_review' => 'Đánh giá sản phẩm',
     'review_manager' => 'Quản lý review',
     'color' => 'Màu sắc',
-    'reply' => 'Trả lời'
+    'reply' => 'Trả lời',
 ];
