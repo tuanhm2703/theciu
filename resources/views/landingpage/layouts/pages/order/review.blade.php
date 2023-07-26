@@ -99,7 +99,7 @@
             imagePreviewHeight: 50,
             storeAsFile: true,
             files: [],
-            labelIdle: '<label>Upload hình ảnh</label>',
+            labelIdle: 'Upload hình ảnh',
             maxFiles: 5,
             required: true,
             maxFileSize: '5MB',
@@ -112,7 +112,7 @@
             storeAsFile: true,
             acceptedFileTypes: ['video/*'],
             files: [],
-            labelIdle: '<label>Upload video</label>',
+            labelIdle: 'Upload video',
             maxFiles: 1,
             maxFileSize: '10MB',
             labelMaxFileSizeExceeded: 'Video quá lớn, vui lòng sử dụng video dưới 10MB'

@@ -21,9 +21,6 @@
                         <thead>
                             <th>No.</th>
                             <th>{{ __('labels.customer') }}</th>
-                            <th>{{ __('labels.color') }}</th>
-                            <th>{{ __('labels.reality') }}</th>
-                            <th>{{ __('labels.material') }}</th>
                             <th>{{ __('labels.status') }}</th>
                             <th>{{ __('labels.details') }}</th>
                             <th>{{ __('labels.action') }}</th>
@@ -54,16 +51,12 @@
                     data: "customer.full_name"
                 },
                 {
-                    data: "color"
-                },
-                {
-                    data: "reality",
-                },
-                {
-                    data: "material",
-                },
-                {
                     data: 'status'
+                },
+                {
+                    data: 'reply',
+                    sortable: false,
+                    searchable: false
                 },
                 {
                     data: "details",
