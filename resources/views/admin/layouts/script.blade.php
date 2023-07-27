@@ -77,7 +77,7 @@
     }
     const initSimpleSummernote = (element) => {
         new FroalaEditor(element, {
-            toolbarButtons: ['bold', 'italic', 'emoticons']
+            toolbarButtons: ['emoticons']
         })
     }
     const initAppPlugins = () => {
