@@ -56,7 +56,7 @@ class ReviewController extends Controller
                 });
             }
             if($value == 2) {
-                $query->whereNotNull('reply');
+                $query->whereNotNull('reply')->where('reply', '!=', '');
             }
         })
         ->make(true);
