@@ -25,16 +25,6 @@ class ReviewController extends Controller
         if($star) {
             $reviews->where('product_score', $star);
         }
-        if($request->has('replied')) {
-            if($request->replied == 1) {
-                $reviews->where(function($q) {
-                    $q->whereNull('reply')->orWhere('reply', '');
-                });
-            }
-            if($request->replied == 2) {
-                $reviews->whereNotNull('reply');
-            }
-        }
         $review_counts = Review::selectRaw('count(id) as review_count, product_score')->groupBy('product_score')->get();
         $review_counts[] = [
             'product_score' => 0,
@@ -61,7 +51,9 @@ class ReviewController extends Controller
         })
         ->filterColumn('reply', function($query, $value) {
             if($value == 1) {
-                $query->whereNull('reply');
+                $query->where(function($q) {
+                    $q->whereNull('reply')->orWhere('reply', '');
+                });
             }
             if($value == 2) {
                 $query->whereNotNull('reply');
