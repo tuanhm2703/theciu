@@ -105,7 +105,6 @@
                     {
                         data: "reply",
                         searchable: false,
-                        sortable: false
                     },
                     {
                         data: 'action',
