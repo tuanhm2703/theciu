@@ -27,7 +27,9 @@ class ReviewController extends Controller
         }
         if($request->has('replied')) {
             if($request->replied == 1) {
-                $reviews->whereNull('reply');
+                $reviews->where(function($q) {
+                    $q->whereNull('reply')->orWhere('reply', '');
+                });
             }
             if($request->replied == 2) {
                 $reviews->whereNotNull('reply');
