@@ -167,6 +167,7 @@
                 $('#myDynamicModal .modal-dialog').removeClass()
                 $('#myDynamicModal>div').addClass('modal-dialog modal-dialog-centered')
             }
+            $(e.currentTarget).find('modal-body').html('')
         })
 
         $('body').on('click', '.ajax-modal-btn', function(e) {
