@@ -117,6 +117,9 @@
                     [1, 'desc']
                 ],
                 initComplete: function(settings, json) {
+                    $('.magnifig-img').magnificPopup({
+                        type: "image",
+                    });
                     $("[data-bs-toggle=tooltip]").tooltip({
                         html: true
                     });
