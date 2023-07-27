@@ -120,7 +120,7 @@
         }
         let inited = false;
         $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-            const orderStatus = $(e.target).data('orderStatus')
+            const orderStatus = $(e.currentTarget).data('orderStatus')
             $('#batch-finish-batching-btn').addClass('d-none')
             if (orderStatus != null) {
                 $('#sub-status-tab').addClass('d-none')

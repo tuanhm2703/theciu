@@ -17,11 +17,28 @@ class ReviewController extends Controller
         return view('admin.pages.review.index');
     }
 
-    public function paginate() {
+    public function paginate(Request $request) {
+        $star = $request->star ?? 0;
         $reviews = Review::query()->with(['customer', 'order.inventories' => function($q) {
             $q->with('product', 'image');
         }]);
-        return DataTables::of($reviews)
+        if($star) {
+            $reviews->where('product_score', $star);
+        }
+        if($request->has('replied')) {
+            if($request->replied == 1) {
+                $reviews->whereNull('reply');
+            }
+            if($request->replied == 2) {
+                $reviews->whereNotNull('reply');
+            }
+        }
+        $review_counts = Review::selectRaw('count(id) as review_count, product_score')->groupBy('product_score')->get();
+        $review_counts[] = [
+            'product_score' => 0,
+        'review_count' => $review_counts->sum('review_count')
+        ];
+        $result =  DataTables::of($reviews)
         ->editColumn('status', function($review) {
             return view('admin.pages.review.components.status', compact('review'));
         })
@@ -40,7 +57,18 @@ class ReviewController extends Controller
         ->addColumn('products', function($review) {
             return view('admin.pages.review.components.product', compact('review'));
         })
+        ->filterColumn('reply', function($query, $value) {
+            if($value == 1) {
+                $query->whereNull('reply');
+            }
+            if($value == 2) {
+                $query->whereNotNull('reply');
+            }
+        })
         ->make(true);
+        $result->original['review_counts'] = $review_counts;
+        $result->setData($result->original);
+        return $result;
     }
 
     public function settingVoucher() {
