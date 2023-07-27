@@ -116,6 +116,11 @@
                 order: [
                     [1, 'desc']
                 ],
+                "drawCallback": function(settings) {
+                    $('.magnifig-img').magnificPopup({
+                        type: "image",
+                    });
+                },
                 initComplete: function(settings, json) {
                     $('.magnifig-img').magnificPopup({
                         type: "image",
