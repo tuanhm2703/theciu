@@ -106,7 +106,8 @@
                     },
                     {
                         data: "reply",
-                        sortable: false
+                        sortable: false,
+                        name: 'order.order_number'
                     },
                     {
                         data: 'action',
