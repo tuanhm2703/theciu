@@ -31,6 +31,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.3.0/video.min.js"></script>
 
   <!-- Include editor styles. -->
-  <link href="{{ asset('assets/css/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
-  <link href="{{ asset('assets/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.19/css/froala_editor.css" integrity="sha512-T0p7rfs/fWCbyl+616Bmm3AXZ11hXnT+2jGacEk3RowcFxaXSzBR2rUeND064wIK7s1dqRQ9iQJrvVvqM0/sbg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  {{-- <link href="{{ asset('assets/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" /> --}}
 @livewireStyles
