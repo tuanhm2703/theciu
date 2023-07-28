@@ -6,7 +6,7 @@
     <div class="card-body pt-0">
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
-                @if ($image->type === App\Enums\MediaType::VIDEO)
+                @if ($review->video?->type === App\Enums\MediaType::VIDEO)
                     <div class="w-100 carousel-item">
                         <video id="my-player" class="video-js" controls preload="auto" data-setup='{}'>
                             <source src="{{ $review->video->path_with_domain }}" type="video/mp4" />
