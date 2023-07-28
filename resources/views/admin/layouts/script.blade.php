@@ -132,6 +132,15 @@
         $('.magnifig-img').magnificPopup({
             type: "image",
         });
+        $('.magnifig-video').magnificPopup({
+            disableOn: 700,
+            type: 'iframe',
+            mainClass: 'mfp-fade',
+            removalDelay: 160,
+            preloader: false,
+
+            fixedContentPos: false
+        });
     }
     const showConfirm = (title = 'Xác nhận thao tác', content) => {
         return new Promise((resolve, reject) => {

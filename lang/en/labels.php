@@ -245,4 +245,5 @@ return [
     'color' => 'Color',
     'reply' => 'Reply',
     'review_star' => 'Review Star',
+    'detail_review' => 'Detail Review',
 ];

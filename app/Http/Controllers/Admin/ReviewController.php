@@ -19,7 +19,7 @@ class ReviewController extends Controller
 
     public function paginate(Request $request) {
         $star = $request->star ?? 0;
-        $reviews = Review::query()->with(['customer', 'order.inventories' => function($q) {
+        $reviews = Review::query()->with(['images', 'customer', 'order.inventories' => function($q) {
             $q->with('product', 'image');
         }]);
         if($star) {

@@ -53,13 +53,13 @@
             <div class="card-body table-responsive">
                 <table class="review-table table">
                     <thead>
-                        <th>No.</th>
-                        <th></th>
-                        <th>Sản phẩm</th>
-                        <th>{{ __('labels.status') }}</th>
-                        <th>{{ __('labels.details') }}</th>
-                        <th>{{ __('labels.reply') }}</th>
-                        <th>{{ __('labels.action') }}</th>
+                        <th class="text-center">No.</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Sản phẩm</th>
+                        <th class="text-center">{{ __('labels.status') }}</th>
+                        <th class="text-center">{{ __('labels.detail_review') }}</th>
+                        <th class="text-center">{{ __('labels.reply') }}</th>
+                        <th class="text-center">{{ __('labels.action') }}</th>
                     </thead>
                     <tbody></tbody>
                 </table>
@@ -100,7 +100,9 @@
                     },
                     {
                         data: "details",
-                        width: "30%"
+                        width: "30%",
+                        sortable: false,
+                        searchable: false
                     },
                     {
                         data: "reply",
@@ -119,6 +121,15 @@
                 "drawCallback": function(settings) {
                     $('.magnifig-img').magnificPopup({
                         type: "image",
+                    });
+                    $('.magnifig-video').magnificPopup({
+                        disableOn: 700,
+                        type: 'iframe',
+                        mainClass: 'mfp-fade',
+                        removalDelay: 160,
+                        preloader: false,
+
+                        fixedContentPos: false
                     });
                 },
                 initComplete: function(settings, json) {
