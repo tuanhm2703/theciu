@@ -7,5 +7,6 @@ Route::group(['prefix' => 'auth', 'as' => 'auth.'], function () {
     Route::group(['middleware' => ['phoneVerification', 'auth:customer']], function() {
         include('Profile.php');
         include('Cart.php');
+        include('Review.php');
     });
 });
