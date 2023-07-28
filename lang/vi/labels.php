@@ -251,4 +251,5 @@ return [
     'color' => 'Màu sắc',
     'reply' => 'Trả lời',
     'review_star' => 'Sao đánh giá',
+    'detail_review' => 'Chi tiết đánh giá',
 ];
