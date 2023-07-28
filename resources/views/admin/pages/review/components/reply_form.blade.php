@@ -6,19 +6,19 @@
     <div class="card-body pt-0">
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
+                @if ($review->video?->type === App\Enums\MediaType::VIDEO)
+                    <div class="w-100 carousel-item">
+                        <video id="my-player" class="video-js" controls preload="auto" data-setup='{}'>
+                            <source src="{{ $review->video->path_with_domain }}" type="video/mp4" />
+                        </video>
+                    </div>
+                @endif
                 @foreach ($review->images as $index => $image)
-                    @if ($image->type === App\Enums\MediaType::VIDEO)
-                        <div class="w-100 carousel-item">
-                            <video id="my-player" class="video-js" controls preload="auto" data-setup='{}'>
-                                <source src="{{ $review->video->path_with_domain }}" type="video/mp4" />
-                            </video>
-                        </div>
-                    @else
-                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                            <img src="{{ $image->path_with_domain }}" class="d-block w-100" alt="...">
-                        </div>
-                    @endif
+                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                        <img src="{{ $image->path_with_domain }}" class="d-block w-100" alt="...">
+                    </div>
                 @endforeach
+
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
