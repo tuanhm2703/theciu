@@ -2,29 +2,22 @@
     <div class="card-header">
         <h6 class="mb-1">Review #{{ $review->id }}</h6>
         <i>{{ $review->details }}</i>
-        @if ($review->video)
-            <div class="w-100">
-                <video id="my-player" class="video-js" controls preload="auto" data-setup='{}'>
-                    <source src="{{ $review->video->path_with_domain }}" type="video/mp4" />
-                    <p class="vjs-no-js">
-                        To view this video please enable JavaScript, and consider upgrading to a
-                        web browser that
-                        <a href="https://videojs.com/html5-video-support/" target="_blank">
-                            supports HTML5 video
-                        </a>
-                    </p>
-                </video>
-            </div>
-        @endif
     </div>
     <div class="card-body pt-0">
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
                 @foreach ($review->images as $index => $image)
-                    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                        <img src="{{ $image->path_with_domain }}"
-                            class="d-block w-100" alt="...">
-                    </div>
+                    @if ($image->type === App\Enums\MediaType::VIDEO)
+                        <div class="w-100 carousel-item">
+                            <video id="my-player" class="video-js" controls preload="auto" data-setup='{}'>
+                                <source src="{{ $review->video->path_with_domain }}" type="video/mp4" />
+                            </video>
+                        </div>
+                    @else
+                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                            <img src="{{ $image->path_with_domain }}" class="d-block w-100" alt="...">
+                        </div>
+                    @endif
                 @endforeach
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
