@@ -60,6 +60,7 @@
                         <th class="text-center">{{ __('labels.detail_review') }}</th>
                         <th class="text-center">{{ __('labels.reply') }}</th>
                         <th class="text-center">{{ __('labels.action') }}</th>
+                        <th></th>
                     </thead>
                     <tbody></tbody>
                 </table>
@@ -114,6 +115,10 @@
                         searchable: false,
                         width: '5%'
                     },
+                    {
+                        data: 'order.order_number',
+                        visible: false
+                    }
                 ],
                 order: [
                     [1, 'desc']
