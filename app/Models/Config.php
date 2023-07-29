@@ -31,5 +31,6 @@ class Config extends Model {
                 Meta::set($key, $content);
             }
         }
+        Meta::set('image', asset('img/theciu-meta.png'));
     }
 }
