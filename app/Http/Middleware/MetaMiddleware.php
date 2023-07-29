@@ -22,5 +22,6 @@ class MetaMiddleware
         } catch (\Throwable $th) {
             //throw $th;
         }
+        return $next($request);
     }
 }
