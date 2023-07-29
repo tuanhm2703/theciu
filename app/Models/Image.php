@@ -95,4 +95,8 @@ class Image extends Model {
         }
         return null;
     }
+
+    public function downloadImage() {
+
+    }
 }
