@@ -31,6 +31,7 @@ class RegisterComponent extends Component {
 
     public $sessionInfo;
 
+    public $requestPhone;
 
     protected $rules = [
         'phone' => 'required|unique:customers,phone|phone_number',
@@ -71,6 +72,10 @@ class RegisterComponent extends Component {
         $url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPhoneNumber?key=$key";
         $client = new Client();
         try {
+            if($this->requestPhone !== $this->phone) {
+                $this->errorMessage = 'Mã xác nhận không đúng';
+                return false;
+            }
             $client->post($url, [
                 'body' => json_encode(
                     [
@@ -107,6 +112,7 @@ class RegisterComponent extends Component {
                     'recaptchaToken' => $this->recaptchaToken
                 ])
             ]);
+            $this->requestPhone = $this->phone;
             $this->sessionInfo = json_decode($response->getBody()->getContents())->sessionInfo;
             $this->dispatchBrowserEvent('openToast', [
                 'type' => 'success',
