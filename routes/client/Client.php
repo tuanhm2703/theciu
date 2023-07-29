@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['as' => 'client.'], function() {
+Route::group(['as' => 'client.', 'middleware' => ['meta']], function() {
     include('Home.php');
     include('product/Product.php');
     include('blog/Blog.php');

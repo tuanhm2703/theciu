@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Client\CheckCustomerPhoneVerifyStatus;
+use App\Http\Middleware\MetaMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'white_list_shipping' => \App\Http\Middleware\WhitelistIpAddressShippingMiddleware::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
-        'phoneVerification' => CheckCustomerPhoneVerifyStatus::class
+        'phoneVerification' => CheckCustomerPhoneVerifyStatus::class,
+        'meta' => MetaMiddleware::class
     ];
 }

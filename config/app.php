@@ -212,7 +212,7 @@ return [
         KiotServiceProvider::class,
         SettingServiceProvider::class,
         MetaServiceProvider::class,
-        ClientServiceProvider::class
+        // ClientServiceProvider::class
     ],
 
     /*
