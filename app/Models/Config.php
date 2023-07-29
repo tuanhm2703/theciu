@@ -31,8 +31,6 @@ class Config extends Model {
                 Meta::set($key, $content);
             }
         }
-        if(\Route::currentRouteName() == 'client.home') {
-            Meta::set('image', asset('img/theciu-meta.png'));
-        }
+        Meta::set('image', asset('img/theciu-meta.png'));
     }
 }
