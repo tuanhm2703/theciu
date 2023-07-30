@@ -20,6 +20,6 @@ class ProfileController extends Controller
     public function phone(Request $request)
     {
         $phone = $request->update && $request->update == false ? customer()->phone : '';
-        return view('landingpage.layouts.pages.profile.phone', $phone);
+        return view('landingpage.layouts.pages.profile.phone', compact('phone'));
     }
 }
