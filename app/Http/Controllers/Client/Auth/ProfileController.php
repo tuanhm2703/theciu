@@ -19,7 +19,7 @@ class ProfileController extends Controller
     }
     public function phone(Request $request)
     {
-        $phone = $request->update && $request->update == false ? customer()->phone : '';
+        $phone = $request->update === '0' ? customer()->phone : '';
         return view('landingpage.layouts.pages.profile.phone', compact('phone'));
     }
 }
