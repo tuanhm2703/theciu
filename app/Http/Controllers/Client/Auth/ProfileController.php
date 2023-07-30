@@ -17,8 +17,9 @@ class ProfileController extends Controller
     {
         return view('landingpage.layouts.pages.profile.password');
     }
-    public function phone()
+    public function phone(Request $request)
     {
-        return view('landingpage.layouts.pages.profile.phone');
+        $phone = $request->update && $request->update == false ? customer()->phone : '';
+        return view('landingpage.layouts.pages.profile.phone', $phone);
     }
 }

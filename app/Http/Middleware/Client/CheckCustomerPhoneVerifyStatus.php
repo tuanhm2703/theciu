@@ -21,7 +21,7 @@ class CheckCustomerPhoneVerifyStatus
         if (auth('customer')->check()) {
             if (customer()->phone_verified)
                 return $next($request);
-            else return redirect()->route('client.auth.profile.phone');
+            else return redirect()->route('client.auth.profile.phone', ['update' => false]);
         }
         return $next($request);
     }

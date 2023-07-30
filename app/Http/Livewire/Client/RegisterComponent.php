@@ -53,7 +53,8 @@ class RegisterComponent extends Component {
                 'email' => $this->email,
                 'phone' => $this->phone,
                 'first_name' => $this->first_name,
-                'last_name' => $this->last_name
+                'last_name' => $this->last_name,
+                'phone_verified' => 1
             ];
             $customer = Customer::create($input);
             if($this->verifyOtp()) {
