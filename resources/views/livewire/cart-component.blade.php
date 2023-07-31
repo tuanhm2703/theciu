@@ -178,7 +178,7 @@
                             <td>
                                 <span
                                     class="text-line-through text-light">{{ format_currency_with_label($shipping_fee) }}</span>
-                                <span>{{ format_currency_with_label($shipping_fee - $freeship_voucher_discount) }}</span>
+                                <span>{{ format_currency_with_label($shipping_fee - $freeship_voucher_discount < 0 ? 0 : $shipping_fee - $freeship_voucher_discount) }}</span>
                             </td>
                         @else
                             <td><span>{{ format_currency_with_label($shipping_fee) }}</span></td>
