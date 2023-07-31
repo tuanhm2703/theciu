@@ -62,10 +62,24 @@
                     </div>
                     <div class="card-body">
                         {!! Form::model(user(), [
-                            'url' => '',
+                            'url' => route('admin.profile.update'),
                             'method' => 'PUT',
                         ]) !!}
                         <p class="text-uppercase text-sm">{{ trans('labels.user_informations') }}</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {!! Form::label('firstname', trans('labels.first_name'), ['class' => 'form-control-label']) !!}
+                                    {!! Form::text('firstname', null, ['class' => 'form-control']) !!}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    {!! Form::label('lastname', trans('labels.last_name'), ['class' => 'form-control-label']) !!}
+                                    {!! Form::text('lastname', null, ['class' => 'form-control', 'required']) !!}
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -77,12 +91,6 @@
                                 <div class="form-group">
                                     {!! Form::label('email', trans('labels.email_address'), ['class' => 'form-control-label']) !!}
                                     {!! Form::email('email', null, ['class' => 'form-control', 'required']) !!}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    {!! Form::label('name', trans('labels.name'), ['class' => 'form-control-label'])!!}
-                                    {!! Form::text('name', null, ['class' => 'form-control'])!!}
                                 </div>
                             </div>
                         </div>

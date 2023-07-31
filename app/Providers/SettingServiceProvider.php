@@ -30,5 +30,8 @@ class SettingServiceProvider extends ServiceProvider
         $this->app->singleton('WebsiteSetting', function() {
             return Setting::getWebsiteSetting();
         });
+        $this->app->singleton('ReviewVoucher', function() {
+            return Setting::getReviewVoucher();
+        });
     }
 }

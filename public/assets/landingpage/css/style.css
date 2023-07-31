@@ -10907,7 +10907,7 @@ small.form-text {
 
 @media screen and (min-width: 768px) {
     .modal-dialog {
-        max-width: 575px;
+        /* max-width: 575px; */
     }
 }
 
@@ -13669,7 +13669,7 @@ button:focus {
     }
 
     .review .row {
-        flex-direction: column;
+        /* flex-direction: column; */
     }
 
     .details-filter-row .select-custom {

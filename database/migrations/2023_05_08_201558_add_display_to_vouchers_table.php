@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('vouchers', function (Blueprint $table) {
-            $table->enum('display', [DisplayType::PUBLIC, DisplayType::PRIVATE])->default(DisplayType::PUBLIC)->comment('Voucher is public or private');
+            $table->enum('display', [DisplayType::PUBLIC, DisplayType::PRIVATE, DisplayType::SYSTEM])->default(DisplayType::PUBLIC)->comment('Voucher is public or private');
             $table->integer('total_can_use')->comment('Total number of voucher that customer can use on all voucher that released');
         });
     }

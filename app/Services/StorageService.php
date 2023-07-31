@@ -8,4 +8,10 @@ class StorageService extends Storage {
     public static function getPathWithSize($size, $path) {
         return parent::url("$size/$path");
     }
+
+    public static function exists($path)
+    {
+        if(env('APP_ENV') == 'local') return true;
+        return parent::exists($path);
+    }
 }

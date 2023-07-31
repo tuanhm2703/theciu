@@ -24,26 +24,36 @@
     <link rel="stylesheet" href="{{ getAssetUrl('assets/css/notyf.min.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="{{ getAssetUrl('assets/css/client/wpmap.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/css/client/wpmap.css') }}">
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/css/multiple-image-video.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/filepond/filepond.css') }}">
+    <link rel="stylesheet" href="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.css">
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Mulish:wght@500&family=Roboto:ital,wght@0,300;1,300&display=swap"
         rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="{{ getAssetUrl('assets/css/scrollpagination.css') }}">
 
     <!-- JS -->
     <script src="{{ getAssetUrl('assets/landingpage/js/jquery.min.js') }}"></script>
     <script src="{{ getAssetUrl('assets/js/jquery.form.min.js') }}"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-    @stack('css')
+    <link href="{{ asset('assets/css/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
+    @stack('css')˝
     <style>
         .filepond--credits {
             display: none !important;
         }
+
         body {
             overflow-x: visible !important;
         }
-        html:has(.modal-open),html:has(.mfp-ready) {
+
+        html:has(.modal-open),
+        html:has(.mfp-ready) {
             height: 100vh;
             overflow-y: hidden;
         }
@@ -125,8 +135,24 @@
     <script src="{{ getAssetUrl('assets/js/plugins/tata/tata.js') }}"></script>
     <script src="{{ getAssetUrl('assets/js/magiczoomplus.js') }}"></script>
     <script src="{{ getAssetUrl('assets/js/notyf.min.js') }}"></script>
+    <script src="{{ getAssetUrl('assets/js/plugins/multiple-image-video.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="{{ getAssetUrl('assets/js/jquery.star-rating.js') }}"></script>
+    <script src="{{ asset('assets/js/plugins/filepond/filepond.js') }}"></script>
+    <script src="{{ asset('assets/js/filepond-plugin-image-preview.js') }}"></script>
+    <script src="{{ asset('assets/js/scrollpagination.js') }}"></script>
+    <script src="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/froala_editor.pkgd.min.js') }}"></script>
+
+
     <script>
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        FilePond.registerPlugin(FilePondPluginMediaPreview);
+        FilePond.registerPlugin(FilePondPluginFileValidateType);
+        FilePond.registerPlugin(FilePondPluginFileValidateSize);
+
         const toast = {
             success: (title = '', content) => {
                 var notyf = new Notyf();

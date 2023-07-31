@@ -24,7 +24,8 @@ class OrderListComponent extends Component {
         $this->page = 1;
         $this->orders = auth('customer')->user()->orders()->with(['inventories' => function ($q) {
             $q->with('image:path,imageable_id', 'product:id,name,slug', 'attributes:id,name');
-        }])->latest()->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize);
+        }])->withCount('review')->latest()->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize);
+
         if($this->status != 0) {
             $this->orders->where('order_status', $this->status);
         }
@@ -53,7 +54,7 @@ class OrderListComponent extends Component {
         $this->page = 1;
         $this->orders = auth('customer')->user()->orders()->with(['inventories' => function ($q) {
             $q->with('image:path,imageable_id', 'product:id,name,slug', 'attributes:id,name');
-        }])->latest()->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize);
+        }])->withCount('review')->latest()->skip(($this->page - 1) * $this->pageSize)->take($this->pageSize);
         if($this->status != OrderStatus::ALL) {
             $this->orders->where('order_status', $this->status);
         }

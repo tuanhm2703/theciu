@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
+use App\Models\Inventory;
 use App\Models\Order;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
@@ -50,5 +51,9 @@ class OrderController extends Controller {
 
     public function getShippingOrderDetail(Request $request, Order $order) {
         return view('landingpage.layouts.pages.order.shipping_detail', compact('order'));
+    }
+
+    public function getReviewForm(Order $order) {
+        return view('landingpage.layouts.pages.order.review', compact('order'));
     }
 }

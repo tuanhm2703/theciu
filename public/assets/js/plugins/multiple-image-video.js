@@ -15,6 +15,7 @@
                 onUploaded: (files) => {},
                 onDeleted: (element) => {},
                 showThumb: false,
+                closeIcon: 'fa fa-close'
             },
             options
         );
@@ -50,7 +51,7 @@
             if (elemRef.type == "img") {
                 $(className).append(
                     `<div class='apnd-img'>
-                    <img src='${preview}' id='img${index}' class='img-responsive media-preview'><i class='fa fa-close delfile'></i>
+                    <img src='${preview}' id='img${index}' class='img-responsive media-preview'><i class='${elemRef.closeIcon} delfile'></i>
                     </div>`
                 );
             } else {

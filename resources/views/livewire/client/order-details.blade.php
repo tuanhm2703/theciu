@@ -28,7 +28,7 @@
                 @endif
             </div>
         </div>
-        <div class="order-detail-action-wrapper mt-3">
+        <div class="order-detail-action-wrapper mt-3 justify-content-end">
             @switch($order->order_status)
                 @case(App\Enums\OrderStatus::CANCELED)
                 @break
@@ -54,6 +54,18 @@
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
                             data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">{{ trans('labels.cancel_order') }}</button>
                     </div>
+                @break
+
+                @case(App\Enums\OrderStatus::DELIVERED)
+                    @if (!customer()->reviews()->whereOrderId($order->id)->exists())
+                        <div class="d-flex" style="justify-content: right">
+                            <button data-review-order-id="{{ $order->id }}" type="button"
+                                class="d-block btn btn-primary ajax-modal-btn" data-modal-size="modal-lg"
+                                data-link="{{ route('client.auth.profile.order.review', ['order' => $order->id]) }}">
+                                Đánh giá
+                            </button>
+                        </div>
+                    @endif
                 @break
 
                 @default
@@ -217,4 +229,6 @@
             </div>
         </div>
     @endif
+    <div class="voucher-popup container newsletter-popup-container d-none" id="review-voucher-gift">
+    </div>
 </div>

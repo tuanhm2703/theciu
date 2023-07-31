@@ -8,3 +8,4 @@ Route::group(['as' => 'client.'], function() {
     include('auth/Auth.php');
     include('page/Page.php');
 });
+
