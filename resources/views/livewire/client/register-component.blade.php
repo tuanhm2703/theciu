@@ -43,6 +43,24 @@
         @enderror
     </div><!-- End .form-group -->
     <div class="form-group">
+        {!! Form::label('register_password', trans('labels.password') . '*', []) !!}
+        {!! Form::password('register_password', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'password']) !!}
+        @error('password')
+            <div class="mt-1">
+                <span class="text-danger">{{ $message }}</span>
+            </div>
+        @enderror
+    </div><!-- End .form-group -->
+    <div class="form-group">
+        {!! Form::label('register_password_confirmation', trans('labels.password_confirmation') . '*', []) !!}
+        {!! Form::password('register_password_confirmation', [
+            'class' => 'form-control',
+            'required',
+            'wire:model.lazy' => 'password_confirmation',
+        ]) !!}
+        <div id="recaptcha-container" wire:ignore></div>
+    </div><!-- End .form-group -->
+    <div class="form-group">
         {!! Form::label('register_otp', 'Mã xác nhận' . '*', []) !!}
         <div class="position-relative mb-1">
             {!! Form::text('register_otp', null, ['class' => 'form-control mb-0', 'wire:model.lazy' => 'otp']) !!}
@@ -68,24 +86,6 @@
             </div>
         @endif
     </div>
-    <div class="form-group">
-        {!! Form::label('register_password', trans('labels.password') . '*', []) !!}
-        {!! Form::password('register_password', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'password']) !!}
-        @error('password')
-            <div class="mt-1">
-                <span class="text-danger">{{ $message }}</span>
-            </div>
-        @enderror
-    </div><!-- End .form-group -->
-    <div class="form-group">
-        {!! Form::label('register_password_confirmation', trans('labels.password_confirmation') . '*', []) !!}
-        {!! Form::password('register_password_confirmation', [
-            'class' => 'form-control',
-            'required',
-            'wire:model.lazy' => 'password_confirmation',
-        ]) !!}
-        <div id="recaptcha-container" wire:ignore></div>
-    </div><!-- End .form-group -->
     <div class="form-footer">
         <button type="button" wire:click.prevent="register" class="btn btn-outline-primary-2">
             <span wire:loading wire:target="register" class="spinner-border spinner-border-sm mr-3" role="status"
@@ -97,7 +97,7 @@
         <a href="#" class="forgot-link">{{ trans('labels.forgot_password') }} ?</a>
     </div><!-- End .form-footer -->
     {!! Form::close() !!}
-    <div class="form-choice">
+    {{-- <div class="form-choice">
         <p class="text-center">{{ trans('labels.or_signin_with') }}</p>
         <div class="row">
             <div class="col-sm-6">
@@ -113,7 +113,7 @@
                 </a>
             </div><!-- End .col-6 -->
         </div><!-- End .row -->
-    </div><!-- End .form-choice -->
+    </div><!-- End .form-choice --> --}}
 </div>
 @push('js')
     <script type="module">

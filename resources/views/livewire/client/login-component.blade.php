@@ -38,7 +38,7 @@
         <a href="{{ route('client.auth.forgot_password') }}" class="forgot-link">{{ trans('labels.forgot_password') }}?</a>
     </div><!-- End .form-footer -->
     {!! Form::close() !!}
-    <div class="form-choice">
+    {{-- <div class="form-choice">
         <p class="text-center">{{ trans('labels.or_signin_with') }}</p>
         <div class="row">
             <div class="col-sm-6">
@@ -54,5 +54,5 @@
                 </a>
             </div><!-- End .col-6 -->
         </div><!-- End .row -->
-    </div><!-- End .form-choice -->
+    </div><!-- End .form-choice --> --}}
 </div>
