@@ -4,7 +4,7 @@
     </div>
     <div class="card-body pt-0">
         <div class="table-responsive">
-            <table class="voucher-table">
+            <table class="voucher-table w-100">
                 <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder">No.</th>
