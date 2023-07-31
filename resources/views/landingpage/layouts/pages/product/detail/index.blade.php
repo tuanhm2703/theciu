@@ -41,18 +41,23 @@
         .reviews li {
             list-style: none;
         }
+
         .intro-slide {
             height: 100% !important;
         }
+
         .owl-carousel .owl-item {
             height: 100%;
         }
+
         .owl-carousel .owl-stage {
             height: 100%;
         }
+
         .owl-carousel .owl-stage-outer {
             height: 100%;
         }
+
         .owl-carousel {
             height: 100%;
         }
@@ -140,14 +145,16 @@
                     {!! $product->shipping_and_return !!}
                 </div>
             </div>
-            <div class="bg-light p-5 mb-3">
-                <h6 class="text-uppercase mb-3">{{ trans('labels.product_review') }}</h6>
-                <div class="reviews">
-                </div><!-- End .reviews -->
-                <div class="text-center">
-                    <a href="javascript::void()" class="read-more loadmore-review">Xem thêm</a>
+            @if ($has_review)
+                <div class="bg-light p-5 mb-3" id="review-wrapper">
+                    <h6 class="text-uppercase mb-3">{{ trans('labels.product_review') }}</h6>
+                    <div class="reviews">
+                    </div><!-- End .reviews -->
+                    <div class="text-center">
+                        <a href="javascript::void()" class="read-more loadmore-review">Xem thêm</a>
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <h2 class="title text-center mb-4">Sản phẩm tương tự</h2><!-- End .title text-center -->
 
@@ -168,43 +175,47 @@
                 clickable: true,
             }
         });
-        $('.reviews').scrollPagination({
-            url: `{{ route('client.product.review.paginate', $product->slug) }}`,
-            data: {
-                page: 1, // which entry to load on init,
-                size: 5,
-            },
-            autoload: false,
-            loading: '.loadmore-review',
-            loadingNomoreText: '',
-            manuallyText: 'Xem thêm',
-            'after': function(elementsLoaded) {
-                $(".img-popup").magnificPopup({
-                    type: "image",
-                });
-                $('.popup-vimeo').magnificPopup({
-                    disableOn: 700,
-                    type: 'iframe',
-                    mainClass: 'mfp-fade',
-                    removalDelay: 160,
-                    preloader: false,
-
-                    fixedContentPos: false
-                });
-                $(elementsLoaded).fadeInWithDelay();
-                $('.review-react-form').ajaxForm({
-                    success: function(response, statusText, xhr, $form) {
-                        $($form).find('[type=submit] span').text(`${response.data.likes} Hữu ích`)
-                        $($form).find('[type=submit]').removeClass('text-dark')
-                    },
-                    error: (err) => {
-                        if (err.status === 401) {
-                            openLoginModal()
-                        }
-                    }
-                })
-            }
-
-        });
     </script>
+    @if ($has_review)
+        <script>
+            $('.reviews').scrollPagination({
+                url: `{{ route('client.product.review.paginate', $product->slug) }}`,
+                data: {
+                    page: 1, // which entry to load on init,
+                    size: 5,
+                },
+                autoload: false,
+                loading: '.loadmore-review',
+                loadingNomoreText: '',
+                manuallyText: 'Xem thêm',
+                'after': function(elementsLoaded) {
+                    $(".img-popup").magnificPopup({
+                        type: "image",
+                    });
+                    $('.popup-vimeo').magnificPopup({
+                        disableOn: 700,
+                        type: 'iframe',
+                        mainClass: 'mfp-fade',
+                        removalDelay: 160,
+                        preloader: false,
+
+                        fixedContentPos: false
+                    });
+                    $(elementsLoaded).fadeInWithDelay();
+                    $('.review-react-form').ajaxForm({
+                        success: function(response, statusText, xhr, $form) {
+                            $($form).find('[type=submit] span').text(`${response.data.likes} Hữu ích`)
+                            $($form).find('[type=submit]').removeClass('text-dark')
+                        },
+                        error: (err) => {
+                            if (err.status === 401) {
+                                openLoginModal()
+                            }
+                        }
+                    })
+                }
+
+            });
+        </script>
+    @endif
 @endpush
