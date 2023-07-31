@@ -51,7 +51,7 @@
                 </li>
             </ul>
             <div class="card-body table-responsive">
-                <table class="review-table table">
+                <table class="review-table table w-100">
                     <thead>
                         <th class="text-center">No.</th>
                         <th class="text-center"></th>
