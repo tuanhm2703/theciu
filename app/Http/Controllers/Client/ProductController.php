@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Promotion;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Meta;
 
 class ProductController extends Controller {
     public function details($slug) {
