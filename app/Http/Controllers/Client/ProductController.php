@@ -8,7 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
-
+use Meta;
 class ProductController extends Controller
 {
     public function details($slug)
@@ -34,7 +34,8 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $title = trans('labels.product_list');
-        return view('landingpage.layouts.pages.product.index', compact('title'));
+        Meta::set('title', getAppName()." - $title");
+    return view('landingpage.layouts.pages.product.index', compact('title'));
     }
 
     public function saleOff($slug = null)
@@ -45,6 +46,7 @@ class ProductController extends Controller
             $promotion = Promotion::whereSlug($slug)->firstOrFail();
             $title = $promotion->name;
         }
+        Meta::set('title', getAppName()." - $title");
         $haspromotion = true;
         return view('landingpage.layouts.pages.product.index', compact('promotion', 'title', 'haspromotion'));
     }
@@ -52,10 +54,12 @@ class ProductController extends Controller
     {
         $categoryType = CategoryType::BEST_SELLER;
         $title = trans('labels.best_seller');
+        Meta::set('title', getAppName()." - ".$title);
         return view('landingpage.layouts.pages.product.best-seller.index', compact('categoryType', 'title'));
     }
     public function myWishlist()
     {
+        Meta::set('title', getAppName()." - My wishlist");
         return view('landingpage.layouts.pages.product.wishlist.index');
     }
 
@@ -63,6 +67,7 @@ class ProductController extends Controller
     {
         $categoryType = CategoryType::NEW_ARRIVAL;
         $title = trans('labels.new_arrival');
+        Meta::set('title', getAppName()." - ".$title);
         return view('landingpage.layouts.pages.product.new-arrival.index', compact('categoryType', 'title'));
     }
 }
