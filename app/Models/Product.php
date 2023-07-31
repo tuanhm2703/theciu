@@ -245,6 +245,7 @@ class Product extends Model {
         $keywords[] = $this->name;
         $Keywords[] = getAppName();
         $link = $this->detail_link;
+        Meta::remove('image');
         Meta::set('description', $this->short_description);
         Meta::set('keywords', implode(', ', $keywords));
         Meta::set('title', $this->page_title);
