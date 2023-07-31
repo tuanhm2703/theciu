@@ -6,8 +6,8 @@
     ]) !!}
     <div class="row">
         <div class="form-group col-12 col-md-6">
-            {!! Form::label('first_name', trans('labels.first_name') . '*', []) !!}
-            {!! Form::text('first_name', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'first_name']) !!}
+            {!! Form::label('register_first_name', trans('labels.first_name') . '*', []) !!}
+            {!! Form::text('register_first_name', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'first_name']) !!}
             @error('first_name')
                 <div class="mt-1">
                     <span class="text-danger">{{ $message }}</span>
@@ -15,8 +15,8 @@
             @enderror
         </div><!-- End .form-group -->
         <div class="form-group col-12 col-md-6">
-            {!! Form::label('last_name', trans('labels.last_name') . '*', []) !!}
-            {!! Form::text('last_name', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'last_name']) !!}
+            {!! Form::label('register_last_name', trans('labels.last_name') . '*', []) !!}
+            {!! Form::text('register_last_name', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'last_name']) !!}
             @error('last_name')
                 <div class="mt-1">
                     <span class="text-danger">{{ $message }}</span>
@@ -25,8 +25,8 @@
         </div><!-- End .form-group -->
     </div>
     <div class="form-group">
-        {!! Form::label('email', trans('labels.email_address') . '*', []) !!}
-        {!! Form::email('email', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'email']) !!}
+        {!! Form::label('register_email', trans('labels.email_address') . '*', []) !!}
+        {!! Form::email('register_email', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'email']) !!}
         @error('email')
             <div class="mt-1">
                 <span class="text-danger">{{ $message }}</span>
@@ -34,8 +34,8 @@
         @enderror
     </div><!-- End .form-group -->
     <div class="form-group">
-        {!! Form::label('phone', trans('labels.phone') . '*', []) !!}
-        {!! Form::text('phone', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'phone']) !!}
+        {!! Form::label('register_phone', trans('labels.phone') . '*', []) !!}
+        {!! Form::text('register_phone', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'phone']) !!}
         @error('phone')
             <div class="mt-1">
                 <span class="text-danger">{{ $message }}</span>
@@ -43,9 +43,9 @@
         @enderror
     </div><!-- End .form-group -->
     <div class="form-group">
-        {!! Form::label('otp', 'Mã xác nhận' . '*', []) !!}
+        {!! Form::label('register_otp', 'Mã xác nhận' . '*', []) !!}
         <div class="position-relative mb-1">
-            {!! Form::text('otp', null, ['class' => 'form-control mb-0', 'wire:model.lazy' => 'otp']) !!}
+            {!! Form::text('register_otp', null, ['class' => 'form-control mb-0', 'wire:model.lazy' => 'otp']) !!}
             <a class="d-flex align-items-center" href="#" id="sendRegisterOtpBtn"
                 style="position: absolute;
                             top: 50%;
@@ -69,8 +69,8 @@
         @endif
     </div>
     <div class="form-group">
-        {!! Form::label('password', trans('labels.password') . '*', []) !!}
-        {!! Form::password('password', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'password']) !!}
+        {!! Form::label('register_password', trans('labels.password') . '*', []) !!}
+        {!! Form::password('register_password', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'password']) !!}
         @error('password')
             <div class="mt-1">
                 <span class="text-danger">{{ $message }}</span>
@@ -78,8 +78,8 @@
         @enderror
     </div><!-- End .form-group -->
     <div class="form-group">
-        {!! Form::label('password_confirmation', trans('labels.password_confirmation') . '*', []) !!}
-        {!! Form::password('password_confirmation', [
+        {!! Form::label('register_password_confirmation', trans('labels.password_confirmation') . '*', []) !!}
+        {!! Form::password('register_password_confirmation', [
             'class' => 'form-control',
             'required',
             'wire:model.lazy' => 'password_confirmation',
@@ -164,7 +164,7 @@
             $('body').on('click', '#sendRegisterOtpBtn', async (e) => {
                 e.preventDefault();
                 var appVerifier = window.recaptchaVerifier;
-                const response = await signInWithPhoneNumber(auth, $('[name=phone]').val(), appVerifier);
+                const response = await signInWithPhoneNumber(auth, '+84' + $('[name=phone]').val(), appVerifier);
             })
             $('#forgot-password-form').on('submit', (e) => {
                 e.preventDefault()
