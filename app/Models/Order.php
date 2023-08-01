@@ -81,6 +81,22 @@ class Order extends Model
             'is_reorder'
         ]);
     }
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'order_items')->withTrashed()->withPivot([
+            'total',
+            'quantity',
+            'origin_price',
+            'promotion_price',
+            'title',
+            'name',
+            'is_reorder'
+        ]);
+    }
+
+    public function review() {
+        return $this->hasOne(Review::class);
+    }
 
     public function payment()
     {

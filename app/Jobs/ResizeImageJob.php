@@ -39,7 +39,7 @@ class ResizeImageJob implements ShouldQueue
         try {
             resize_image($this->image->path, $this->size);
         } catch (\Throwable $th) {
-            Log::error($th);
+            Log::error($th->getMessage());
         }
     }
 }

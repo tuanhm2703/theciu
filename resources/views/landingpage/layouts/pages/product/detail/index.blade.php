@@ -1,6 +1,6 @@
 @extends('landingpage.layouts.app', [
     'headTitle' => $product->page_title,
-    'shemaMarkup' => view('components.client.schema-markup', compact('product'))
+    'shemaMarkup' => view('components.client.schema-markup', compact('product')),
 ])
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/nouislider/nouislider.css') }}">
@@ -8,18 +8,56 @@
         .swiper-slide {
             height: fit-content !important;
         }
+
+        .popup-media {
+            position: relative;
+            display: block;
+            height: 100px;
+            width: 100px;
+            background: #fff;
+            max-width: 100px;
+            background-size: cover !important;
+            background-position: center !important;
+        }
+
+        .popup-media img,
+        .popup-media video {
+            max-width: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .popup-media .video-icon-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2rem;
+        }
+
+        .reviews li {
+            list-style: none;
+        }
+
         .intro-slide {
             height: 100% !important;
         }
+
         .owl-carousel .owl-item {
             height: 100%;
         }
+
         .owl-carousel .owl-stage {
             height: 100%;
         }
+
         .owl-carousel .owl-stage-outer {
             height: 100%;
         }
+
         .owl-carousel {
             height: 100%;
         }
@@ -107,6 +145,16 @@
                     {!! $product->shipping_and_return !!}
                 </div>
             </div>
+            @if ($has_review)
+                <div class="bg-light p-5 mb-3" id="review-wrapper">
+                    <h6 class="text-uppercase mb-3">{{ trans('labels.product_review') }}</h6>
+                    <div class="reviews">
+                    </div><!-- End .reviews -->
+                    <div class="text-center">
+                        <a href="javascript::void()" class="read-more loadmore-review">Xem thêm</a>
+                    </div>
+                </div>
+            @endif
 
             <h2 class="title text-center mb-4">Sản phẩm tương tự</h2><!-- End .title text-center -->
 
@@ -128,4 +176,46 @@
             }
         });
     </script>
+    @if ($has_review)
+        <script>
+            $('.reviews').scrollPagination({
+                url: `{{ route('client.product.review.paginate', $product->slug) }}`,
+                data: {
+                    page: 1, // which entry to load on init,
+                    size: 5,
+                },
+                autoload: false,
+                loading: '.loadmore-review',
+                loadingNomoreText: '',
+                manuallyText: 'Xem thêm',
+                'after': function(elementsLoaded) {
+                    $(".img-popup").magnificPopup({
+                        type: "image",
+                    });
+                    $('.popup-vimeo').magnificPopup({
+                        disableOn: 700,
+                        type: 'iframe',
+                        mainClass: 'mfp-fade',
+                        removalDelay: 160,
+                        preloader: false,
+
+                        fixedContentPos: false
+                    });
+                    $(elementsLoaded).fadeInWithDelay();
+                    $('.review-react-form').ajaxForm({
+                        success: function(response, statusText, xhr, $form) {
+                            $($form).find('[type=submit] span').text(`${response.data.likes} Hữu ích`)
+                            $($form).find('[type=submit]').removeClass('text-dark')
+                        },
+                        error: (err) => {
+                            if (err.status === 401) {
+                                openLoginModal()
+                            }
+                        }
+                    })
+                }
+
+            });
+        </script>
+    @endif
 @endpush

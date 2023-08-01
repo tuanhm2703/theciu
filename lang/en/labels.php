@@ -244,4 +244,6 @@ return [
     'review_manager' => 'Review Manager',
     'color' => 'Color',
     'reply' => 'Reply',
+    'review_star' => 'Review Star',
+    'detail_review' => 'Detail Review',
 ];

@@ -10,7 +10,7 @@
                     {!! Form::text('name', null, ['class' => 'form-control']) !!}
                 </div>
                 <div class="form-group">
-                    {!! Form::label('name', __('labels.name'), ['class' => 'custom-label']) !!}
+                    {!! Form::label('name', 'Giờ mở cửa', ['class' => 'custom-label']) !!}
                     <div class="d-flex">
                         {!! Form::datetime('open_time', null, [
                             'class' => 'form-control hourPicker me-3',

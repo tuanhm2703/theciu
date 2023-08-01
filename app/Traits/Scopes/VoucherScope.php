@@ -38,7 +38,19 @@ trait VoucherScope {
         return $q->where('vouchers.display', DisplayType::PUBLIC);
     }
 
+    public function scopePrivate($q) {
+        return $q->where('vouchers.display', DisplayType::PRIVATE);
+    }
+
     public function scopeVoucherForCart($q, Customer $customer) {
-        return $q->active()->public()->with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()->union($customer->saved_vouchers()->active()->public()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed());
+        return $q->active()->public()->with('voucher_type')->select('vouchers.*')->notExpired()->notSaveable()
+        ->union($customer->saved_vouchers()->active()->public()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed()
+        ->union($customer->review_vouchers()->active()->with('voucher_type')->select('vouchers.*')->notExpired()->haveNotUsed()));
+    }
+    public function scopeSystem($q) {
+        return $q->where('vouchers.display', DisplayType::SYSTEM);
+    }
+    public function scopeCanApplyForReview($q) {
+        return $q->where('total_quantity', '>', 1)->system()->notExpired();
     }
 }

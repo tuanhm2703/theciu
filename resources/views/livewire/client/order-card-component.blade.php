@@ -76,13 +76,21 @@
                             hàng</button>
                     @break
 
-                    @default
-                    @break
+                    @case(App\Enums\OrderStatus::DELIVERED)
+                        @if ($order->review_count === 0)
+                            <button data-review-order-id="{{ $order->id }}" type="button" class="d-block btn btn-primary ajax-modal-btn" data-modal-size="modal-lg"
+                                data-link="{{ route('client.auth.profile.order.review', ['order' => $order->id]) }}">
+                                Đánh giá
+                            </button>
+                        @endif
 
-                @endswitch
-                <a class="btn btn-light ml-2 d-none d-md-block"
-                    href="{{ route('client.auth.profile.order.details', $order->id) }}">{{ trans('labels.view_order_details') }}</a>
+                        @default
+                        @break
+
+                    @endswitch
+                    <a class="btn btn-light ml-2 d-none d-md-block"
+                        href="{{ route('client.auth.profile.order.details', $order->id) }}">{{ trans('labels.view_order_details') }}</a>
+                </div>
             </div>
         </div>
     </div>
-</div>

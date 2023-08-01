@@ -39,7 +39,7 @@
             // Allow to upload PNG and JPG.
             imageAllowedTypes: ["jpeg", "jpg", "png"],
             events: {
-                "image.error": function (error, response) {
+                "image.error": function(error, response) {
                     console.log(error);
                 }
             }
@@ -75,6 +75,11 @@
         //     lang: `{{ App::getLocale() }}-{{ getLocaleWithCountryCode()[App::getLocale()] }}`
         // });
     }
+    const initSimpleSummernote = (element) => {
+        new FroalaEditor(element, {
+            toolbarButtons: ['emoticons']
+        })
+    }
     const initAppPlugins = () => {
         $.ajaxSetup({
             cache: false,
@@ -101,6 +106,7 @@
             minDate: `{{ now()->format('Y-m-d') }}`,
         })
         initSummernote('body .summernote')
+        initSimpleSummernote('body .summernote-simple')
         if ($("[data-bs-toggle=tooltip]").length) {
             $("[data-bs-toggle=tooltip]").tooltip({
                 html: true
@@ -125,6 +131,15 @@
         })
         $('.magnifig-img').magnificPopup({
             type: "image",
+        });
+        $('.magnifig-video').magnificPopup({
+            disableOn: 700,
+            type: 'iframe',
+            mainClass: 'mfp-fade',
+            removalDelay: 160,
+            preloader: false,
+
+            fixedContentPos: false
         });
     }
     const showConfirm = (title = 'Xác nhận thao tác', content) => {
@@ -161,6 +176,7 @@
                 $('#myDynamicModal .modal-dialog').removeClass()
                 $('#myDynamicModal>div').addClass('modal-dialog modal-dialog-centered')
             }
+            $(e.currentTarget).find('.modal-body').html('')
         })
 
         $('body').on('click', '.ajax-modal-btn', function(e) {
@@ -187,6 +203,8 @@
                         $(`#${modalId}`).modal('show');
                         $('.modal-body input:text:visible:first').focus();
                         //Initialize application plugins after ajax load the content
+                        console.log($(ajaxElement).attr(
+                            'data-init-app') == null);
                         if (typeof initAppPlugins == 'function' && $(ajaxElement).attr(
                                 'data-init-app') == null) {
                             $(ajaxElement).attr('data-init-app') == null
@@ -230,6 +248,6 @@
 </script>
 @if (Session::has('success'))
     <script>
-        toast.success(`{{ trans('toast.action_successful') }}`, `{{ session()->get('success')}}`);
+        toast.success(`{{ trans('toast.action_successful') }}`, `{{ session()->get('success') }}`);
     </script>
 @endif
