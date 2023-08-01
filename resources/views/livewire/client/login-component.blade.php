@@ -24,7 +24,7 @@
         @enderror
     </div><!-- End .form-group -->
 
-    <div class="form-footer">
+    <div class="form-footer border-bottom-0">
         <button type="button" wire:click.prevent="login" class="btn btn-outline-primary-2">
             <span wire:loading wire:target="login" class="spinner-border spinner-border-sm mr-3" role="status" aria-hidden="true"></span>
             <span wire:loading.remove wire:target="login">{{ trans('labels.login') }} <i class="icon-long-arrow-right"></i></span>
