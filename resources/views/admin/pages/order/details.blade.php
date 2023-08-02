@@ -239,7 +239,8 @@
                             </div>
                             <div class="col-2">
                                 @if ($order->freeship_voucher)
-                                    <span class="text-decoration-line-through">{{ format_currency_with_label($order->shipping_fee) }}</span>
+                                    <span
+                                        class="text-decoration-line-through">{{ format_currency_with_label($order->shipping_fee) }}</span>
                                     <span>{{ format_currency_with_label($order->customer_shipping_fee_amount) }}</span>
                                 @else
                                     <span>{{ format_currency_with_label($order->customer_shipping_fee_amount) }}</span>
@@ -248,9 +249,11 @@
                             <div class="col-10 turnover-label">
                                 <span>Phí vận chuyển thực tế</span>
                             </div>
-                            <div class="col-2">
-                                <span> - {{ format_currency_with_label($order->getActualShippingFee()) }}</span>
-                            </div>
+                            @if ($order->freeship_voucher)
+                                <div class="col-2">
+                                    <span> - {{ format_currency_with_label($order->getActualShippingFee()) }}</span>
+                                </div>
+                            @endif
                             <div class="col-10 turnover-label">
                                 <span>{{ trans('labels.discount_for_member') }}</span>
                             </div>
