@@ -161,7 +161,7 @@
                     ]) !!}
                 </div>
                 <div class="col-8 col-lg-4">
-                    {!! Form::number('customer_limit', 1, [
+                    {!! Form::number('customer_limit', null, [
                         'class' => 'form-control',
                         'placeholder' => 'Nhập vào',
                         'required'
