@@ -2,7 +2,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 @if (env('APP_ENV') === 'prod')
-    <meta name="robots" content="index,follow">
+    <meta name="robots" content="index,follow,noindex">
 @else
     <meta name="robots" content="noindex">
     <meta name="googlebot" content="noindex">
