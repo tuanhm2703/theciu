@@ -2,6 +2,9 @@
     'headTitle' => $product->page_title,
     'shemaMarkup' => view('components.client.schema-markup', compact('product')),
 ])
+@section('schema')
+    {!! $product->getSchemaOrg() !!}
+@endsection
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/nouislider/nouislider.css') }}">
     <style>
