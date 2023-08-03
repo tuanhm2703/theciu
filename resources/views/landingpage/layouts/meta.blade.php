@@ -10,7 +10,9 @@
 
 <meta name="author" content="p-themes">
 <meta name="locale" content="{{ App::getLocale() }}">
-
+@foreach (app()->get('organization_schema') as $schema)
+    {!! $schema !!}
+@endforeach
 <!-- Favicon -->
 
 <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/img/apple-touch-icon.png') }}">
