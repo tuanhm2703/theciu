@@ -279,14 +279,19 @@ class Product extends Model {
                 $q->where('products.id', $this->id);
             });
         })->average('product_score');
+        $reviewCount = $this->orders()->whereHas('review')->count();
         $schema = Schema::product()->description($this->short_description)->sku($this->slug)
+        ->name($this->name)
         ->image($this->images->pluck('path_with_domain')->toArray())->brand((new Brand())
-        ->name(getAppName()))->aggregateRating((new AggregateRating())
-        ->reviewCount($this->orders()->whereHas('review')->count())
-        ->reviewValue($reviewScore))
+        ->name(getAppName()))
         ->offers([
             (new Offer())->price($this->sale_price)->priceCurrency('VND')->url($this->detail_link)
-        ])->toScript();
+        ]);
+        if($reviewScore > 0) {
+            $schema->aggregateRating((new AggregateRating())
+            ->reviewCount($reviewCount)
+            ->ratingValue($reviewScore));
+        }
         return $schema;
     }
 
