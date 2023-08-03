@@ -30,28 +30,36 @@ class Config extends Model {
             ]
         ]);
         if ($meta_tag) {
-            $organization1 = Schema::organization()
-                ->url('http://www.your-company-site.com')
-                ->sameAs([
-                    'https://www.facebook.com/The.C.I.U.2016/',
-                    'https://www.instagram.com/theciusaigon/',
-                    'https://www.tiktok.com/@theciusaigon'
-                ])
-                ->contactPoint(Schema::contactPoint()->email('info@company.com'))->toScript();
-            $website = Schema::webSite()->potentialAction((new SearchAction())->target(route('admin.product.index') . "?keyword={search_item}")->query('required name=search_item'));
-            $payload = collect($meta_tag->payload);
-            $organization2 = Schema::organization()->url(url(''))->logo(asset('/img/apple-touch-icon.png'))->toScript();
-            $branches = Branch::all();
-            $organization3 = Schema::organization()->url(url(''))->logo(asset('/img/apple-touch-icon.png'));
-            $contactPoints = [];
-            foreach ($branches as $branch) {
-                $contactPoints[] = (new ContactPoint())->telephone($branch->phone)->areaServed('VN')->availableLanguage('VN')->contactType('sale');
-            }
-            $organization3->contactPoints($contactPoints);
-            // dd($organization3->toScript());
+            app()->bind('organization_schema', function() use ($meta_tag) {
+                $schemas = [];
+                $payload = $meta_tag->payload;
+                $schemas[] = Schema::webSite()->potentialAction((new SearchAction())->target(route('admin.product.index') . "?keyword={search_item}")->query('required name=search_item'))->toScript();
+                $schemas[] = Schema::organization()
+                                    ->url(url(''))
+                                    ->name($payload['title'])
+                                    ->sameAs([
+                                        'https://www.facebook.com/The.C.I.U.2016/',
+                                        'https://www.instagram.com/theciusaigon/',
+                                        'https://www.tiktok.com/@theciusaigon'
+                                    ])
+                                    ->contactPoint(Schema::contactPoint()->email('cskh@theciu.vn'))->toScript();
+                $schemas[] = Schema::organization()->url(url(''))->logo(asset('/img/apple-touch-icon.png'))->toScript();
+                $branches = Branch::all();
+                $organization3 = Schema::organization()->url(url(''))->logo(asset('/img/apple-touch-icon.png'));
+                $contactPoints = [];
+                foreach ($branches as $branch) {
+                    $contactPoints[] = (new ContactPoint())->telephone($branch->phone)->areaServed('VN')->availableLanguage('VN')->contactType('sale');
+                }
+                $schemas[] = $organization3->contactPoints($contactPoints)->toScript();
+                return $schemas;
+            });
             foreach ($meta_tag->payload as $key => $content) {
                 Meta::set($key, $content);
             }
+        } else {
+            app()->bind('organization_schema', function() {
+                return [];
+            });
         }
         Meta::set('image', asset('img/theciu-meta.png'));
     }
