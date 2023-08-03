@@ -174,14 +174,17 @@
         }
 
         #spin:after {
+            content: 'Xoay';
             text-align: center;
             line-height: 68px;
-            color: #fff;
+            color: #b14664;
             position: relative;
             z-index: 100000;
             width: 68px;
             height: 68px;
             display: block;
+            font-family: "super-comic";
+            font-size: 13px;
         }
 
         #spin:before {
@@ -206,8 +209,8 @@
             border-radius: 50%;
             z-index: 999;
             /* box-shadow: rgba(255, 255, 255, 1) 0px -2px 0px inset,
-                                                                            rgba(255, 255, 255, 1) 0px 2px 0px inset,
-                                                                            rgba(0, 0, 0, 0.4) 0px 0px 5px; */
+                                                                                rgba(255, 255, 255, 1) 0px 2px 0px inset,
+                                                                                rgba(0, 0, 0, 0.4) 0px 0px 5px; */
             background: radial-gradient(ellipse at center,
                     rgba(230, 73, 107, 1) 0%,
                     rgba(230, 73, 107, 1) 100%);
@@ -245,7 +248,7 @@
             }
 
             50% {
-                transform: rotate(7deg);
+                transform: rotate(18deg);
             }
         }
 
@@ -300,9 +303,10 @@
             }
 
             #spin:after {
-                line-height: 68px;
+                line-height: 34px;
                 width: 34px;
                 height: 34px;
+                font-size: 8px !important;
             }
         }
     </style>
