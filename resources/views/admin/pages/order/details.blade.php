@@ -249,7 +249,7 @@
                                 <span>Phí vận chuyển thực tế</span>
                             </div>
                             <div class="col-2">
-                                <span> - {{ format_currency_with_label($order->getActualShippingFee()) }}</span>
+                                <span> {{ format_currency_with_label($order->getActualShippingFee()) }}</span>
                             </div>
                             <div class="col-10 turnover-label">
                                 <span>{{ trans('labels.discount_for_member') }}</span>

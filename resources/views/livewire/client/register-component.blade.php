@@ -86,7 +86,7 @@
             </div>
         @endif
     </div>
-    <div class="form-footer">
+    <div class="form-footer border-bottom-0">
         <button type="button" wire:click.prevent="register" class="btn btn-outline-primary-2">
             <span wire:loading wire:target="register" class="spinner-border spinner-border-sm mr-3" role="status"
                 aria-hidden="true"></span>
