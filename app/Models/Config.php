@@ -33,7 +33,7 @@ class Config extends Model {
             app()->bind('organization_schema', function() use ($meta_tag) {
                 $schemas = [];
                 $payload = $meta_tag->payload;
-                $schemas[] = Schema::webSite()->potentialAction((new SearchAction())->target(route('admin.product.index') . "?keyword={search_item}")->query('required name=search_item'))->toScript();
+                $schemas[] = Schema::webSite()->url(url(''))->potentialAction((new SearchAction())->target(route('admin.product.index') . "?keyword={search_item}")->setProperty('query-input', 'required name=search_item'))->toScript();
                 $schemas[] = Schema::organization()
                                     ->url(url(''))
                                     ->name($payload['title'])

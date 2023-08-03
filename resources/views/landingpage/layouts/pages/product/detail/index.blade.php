@@ -3,7 +3,9 @@
     'shemaMarkup' => view('components.client.schema-markup', compact('product')),
 ])
 @section('schema')
-    {!! $product->getSchemaOrg() !!}
+    @foreach ($product->getSchemaOrg() as $schema)
+        {!! $schema !!}
+    @endforeach
 @endsection
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/plugins/nouislider/nouislider.css') }}">

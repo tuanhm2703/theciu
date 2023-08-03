@@ -22,11 +22,13 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Spatie\SchemaOrg\AggregateRating;
 use Spatie\SchemaOrg\Brand;
+use Spatie\SchemaOrg\BreadcrumbList;
 use Spatie\SchemaOrg\Offer;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Collection\InventoryCollection;
 use VienThuong\KiotVietClient\Resource\ProductResource;
 use Meta;
+use Spatie\SchemaOrg\ListItem;
 use Spatie\SchemaOrg\Schema;
 
 class Product extends Model {
@@ -274,6 +276,7 @@ class Product extends Model {
         Meta::set('o:availablility', $this->inventories()->sum('stock_quantity'));
     }
     public function getSchemaOrg() {
+        $schemas = [];
         $reviewScore = Review::whereHas('order', function($q) {
             $q->whereHas('products', function($q) {
                 $q->where('products.id', $this->id);
@@ -292,7 +295,13 @@ class Product extends Model {
             ->reviewCount($reviewCount)
             ->ratingValue($reviewScore));
         }
-        return $schema;
+        $schemas[] = $schema->toScript();
+        $schemas[] = Schema::breadcrumbList()->itemListElement([
+            (new ListItem)->position(1)->item(Schema::thing()->setProperty('@id', route('client.home'))->setProperty('name', getAppName())),
+            (new ListItem)->position(1)->item(Schema::thing()->setProperty('@id', route('client.product.index'))->setProperty('name', 'Danh sách sản phẩm')),
+            (new ListItem)->position(1)->item(Schema::thing()->setProperty('@id', $this->detail_link)->setProperty('name', $this->name))
+        ])->toScript();
+        return $schemas;
     }
 
     public function putKiotWarehouse($decrease = true) {
