@@ -20,10 +20,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use Spatie\SchemaOrg\AggregateRating;
+use Spatie\SchemaOrg\Brand;
+use Spatie\SchemaOrg\Offer;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Collection\InventoryCollection;
 use VienThuong\KiotVietClient\Resource\ProductResource;
 use Meta;
+use Spatie\SchemaOrg\Schema;
 
 class Product extends Model {
     use HasFactory, SoftDeletes, Imageable, CustomScope, ProductScope, CommonFunc, Wishlistable;
@@ -69,6 +73,18 @@ class Product extends Model {
 
     public function inventories() {
         return $this->hasMany(Inventory::class);
+    }
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class, 'order_items')->withPivot([
+            'total',
+            'quantity',
+            'origin_price',
+            'promotion_price',
+            'title',
+            'name',
+            'is_reorder'
+        ]);
     }
 
     public function inventory() {
@@ -256,6 +272,22 @@ class Product extends Model {
             'currency' => 'VND'
         ]);
         Meta::set('o:availablility', $this->inventories()->sum('stock_quantity'));
+    }
+    public function getSchemaOrg() {
+        $reviewScore = Review::whereHas('order', function($q) {
+            $q->whereHas('products', function($q) {
+                $q->where('products.id', $this->id);
+            });
+        })->average('product_score');
+        $schema = Schema::product()->description($this->short_description)->sku($this->slug)
+        ->image($this->images->pluck('path_with_domain')->toArray())->brand((new Brand())
+        ->name(getAppName()))->aggregateRating((new AggregateRating())
+        ->reviewCount($this->orders()->whereHas('review')->count())
+        ->reviewValue($reviewScore))
+        ->offers([
+            (new Offer())->price($this->sale_price)->priceCurrency('VND')->url($this->detail_link)
+        ])->toScript();
+        return $schema;
     }
 
     public function putKiotWarehouse($decrease = true) {

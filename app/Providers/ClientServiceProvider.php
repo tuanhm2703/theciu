@@ -6,17 +6,14 @@ use App\Models\Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use PhpParser\Node\Stmt\TryCatch;
 
-class ClientServiceProvider extends ServiceProvider
-{
+class ClientServiceProvider extends ServiceProvider {
     /**
      * Register services.
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
         //
     }
 
@@ -25,8 +22,7 @@ class ClientServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
         try {
             Config::loadMeta();
         } catch (\Throwable $th) {

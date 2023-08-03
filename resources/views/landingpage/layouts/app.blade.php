@@ -3,6 +3,7 @@
 
 <head>
     @include('landingpage.layouts.meta')
+    @yield('schema')
     <link rel="stylesheet"
         href="{{ getAssetUrl('assets/landingpage/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css') }}">
     <!-- Plugins CSS File -->
