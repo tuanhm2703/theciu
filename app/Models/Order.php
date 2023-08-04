@@ -10,27 +10,16 @@ use App\Http\Services\Shipping\GHTKService;
 use App\Traits\Common\Addressable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use App\Enums\OrderCanceler;
-use App\Enums\PaymentMethodType;
 use App\Enums\PaymentStatus;
 use App\Http\Services\Payment\PaymentService;
 use Exception;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use VienThuong\KiotVietClient\Client;
-use VienThuong\KiotVietClient\Collection\InvoiceDetailCollection;
 use VienThuong\KiotVietClient\Collection\OrderDetailCollection;
-use VienThuong\KiotVietClient\Model\Customer as ModelKiotCustomer;
-use VienThuong\KiotVietClient\Model\Invoice;
 use VienThuong\KiotVietClient\Model\InvoiceDetail;
-use VienThuong\KiotVietClient\Model\Order as ModelOrder;
 use VienThuong\KiotVietClient\Model\OrderDetail;
-use VienThuong\KiotVietClient\Resource\InvoiceResource;
-use VienThuong\KiotVietClient\Resource\OrderResource;
 
 class Order extends Model
 {
@@ -50,7 +39,8 @@ class Order extends Model
         'sub_status',
         'payment_status',
         'rank_discount_value',
-        'note'
+        'note',
+        'bonus_note'
     ];
 
     public function customer()
@@ -134,7 +124,7 @@ class Order extends Model
      * This function calculates the customer's shipping fee amount after deducting any applicable
      * freeship voucher amount.
      *
-     * @return the customer shipping fee amount after deducting the amount of the freeship voucher if
+     * @return float customer shipping fee amount after deducting the amount of the freeship voucher if
      * it exists, otherwise it returns the original shipping fee amount.
      */
     public function getCustomerShippingFeeAmountAttribute() {
@@ -293,7 +283,6 @@ class Order extends Model
             return PaymentService::refund($this);
         } catch (\Throwable $th) {
             throw new Exception('Đã có lỗi xảy ra vui lòng thử lại sau');
-            return false;
         }
     }
 
@@ -359,7 +348,7 @@ class Order extends Model
     /**
      * It calculates the final revenue of an order.
      *
-     * @return The final revenue of the order.
+     * @return float final revenue of the order.
      */
     public function getFinalRevenue()
     {
