@@ -57,11 +57,13 @@ class ForgotPasswordComponent extends Component
         }
     }
 
-    public function sendVerify()
+    public function sendVerify($username, $apiKey, $recaptchaToken)
     {
         $this->validate();
-        if (isPhone($this->username)) {
-            $this->sendForgetPhoneRequest($this->apiKey, $this->recaptchaToken);
+        if (isPhone($username)) {
+            $this->apiKey = $apiKey;
+            $this->recaptchaToken = $recaptchaToken;
+            $this->sendForgetPhoneRequest();
         } else {
             $customer = Customer::findByUserName($this->username);
             $token = app('auth.password.broker')->createToken($customer);

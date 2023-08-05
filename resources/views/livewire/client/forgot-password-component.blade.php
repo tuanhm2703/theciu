@@ -90,7 +90,7 @@
                 @this.apiKey = appVerifier.auth.config.apiKey
                 @this.recaptchaToken = response
                 @this.errorMessage = ''
-                @this.sendVerify();
+                @this.sendVerify($('input[name=username]').val(), appVerifier.auth.config.apiKey, response);
             },
         }, auth);
 
