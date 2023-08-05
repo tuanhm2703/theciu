@@ -75,15 +75,7 @@
         } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
         document.addEventListener('livewire:load', function() {
             (() => {
-                const firebaseConfig = {
-                    apiKey: "AIzaSyAdswi_EUpzO0_Q2QTksJ7j65M26KsZMg4",
-                    authDomain: "the-ciu.firebaseapp.com",
-                    projectId: "the-ciu",
-                    storageBucket: "the-ciu.appspot.com",
-                    messagingSenderId: "54503914857",
-                    appId: "1:54503914857:web:b49d474c74b68603f7d1f8",
-                    measurementId: "G-501SNCMP9N"
-                };
+                const firebaseConfig = @json(config('app.firebase'))
                 // Initialize Firebase
                 const app = initializeApp(firebaseConfig);
                 const analytics = getAnalytics(app);
