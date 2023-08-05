@@ -57,13 +57,10 @@ class ForgotPasswordComponent extends Component
         }
     }
 
-    public function sendVerify($username, $apiKey, $recaptchaToken)
+    public function sendVerify()
     {
         $this->validate();
-        if (isPhone($username)) {
-            $this->username = $username;
-            $this->apiKey = $apiKey;
-            $this->recaptchaToken = $recaptchaToken;
+        if (isPhone($this->username)) {
             $this->sendForgetPhoneRequest();
         } else {
             $customer = Customer::findByUserName($this->username);
