@@ -39,9 +39,7 @@ class ForgotPasswordComponent extends Component
                     'recaptchaToken' => $this->recaptchaToken
                 ])
             ]);
-            if ($response->getStatusCode() == 200) {
-                $this->verified = true;
-            }
+            $this->verified = true;
             $this->sessionInfo = json_decode($response->getBody()->getContents())->sessionInfo;
         } catch (\GuzzleHttp\Exception\ClientException $th) {
             \Log::error($th->getMessage());
