@@ -116,7 +116,7 @@
                 // }
             })
             @this.on('verifyPhone', (event) => {
-            signInWithPhoneNumber(auth, `+84${$('input[name=username]').val()}`, window.recaptchaVerifier)
+            signInWithPhoneNumber(auth, `+84${$('input[name=phone]').val()}`, window.recaptchaVerifier)
                 .then((confirmationResult) => {
                     window.confirmationResult = confirmationResult;
                     sessionInfo = confirmationResult.verificationId
