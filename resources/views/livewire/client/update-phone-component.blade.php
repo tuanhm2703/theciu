@@ -47,7 +47,7 @@
             <i class="fas fa-undo mr-3"></i>
             {{ trans('labels.return') }}
         </button>
-        <button class="update-phone-btn btn btn-outline-primary-2" @disabled($verified == 0 || empty($phone))>
+        <button class="update-phone-btn btn btn-outline-primary-2" @disabled(empty($phone))>
             <div wire:loading wire:target="updatePhone" class="spinner-grow" style="width: 3rem; height: 3rem;"
                 role="status">
                 <span class="sr-only">Loading...</span>
@@ -106,7 +106,7 @@
             $('body').on('click', '#sendOtpBtn', async (e) => {
                 e.preventDefault();
                 var appVerifier = window.recaptchaVerifier;
-                const response = await signInWithPhoneNumber(auth, $('[name=phone]').val(), appVerifier);
+                const response = await signInWithPhoneNumber(auth, '+84'+$('[name=phone]').val(), appVerifier);
                 // if (window.recaptchaWidgetId == null) {
                 //     recaptchaVerifier.render().then((widgetId) => {
                 //         window.recaptchaWidgetId = widgetId;
@@ -116,7 +116,7 @@
                 // }
             })
             @this.on('verifyPhone', (event) => {
-            signInWithPhoneNumber(auth, `+84${$('input[name=username]').val()}`, window.recaptchaVerifier)
+            signInWithPhoneNumber(auth, `+84${$('input[name=phone]').val()}`, window.recaptchaVerifier)
                 .then((confirmationResult) => {
                     window.confirmationResult = confirmationResult;
                     sessionInfo = confirmationResult.verificationId

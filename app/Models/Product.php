@@ -277,30 +277,34 @@ class Product extends Model {
     }
     public function getSchemaOrg() {
         $schemas = [];
-        $reviewScore = Review::whereHas('order', function($q) {
-            $q->whereHas('products', function($q) {
-                $q->where('products.id', $this->id);
-            });
-        })->average('product_score');
-        $reviewCount = $this->orders()->whereHas('review')->count();
-        $schema = Schema::product()->description($this->short_description)->sku($this->slug)
-        ->name($this->name)
-        ->image($this->images->pluck('path_with_domain')->toArray())->brand((new Brand())
-        ->name(getAppName()))
-        ->offers([
-            (new Offer())->price($this->sale_price)->priceCurrency('VND')->url($this->detail_link)
-        ]);
-        if($reviewScore > 0) {
-            $schema->aggregateRating((new AggregateRating())
-            ->reviewCount($reviewCount)
-            ->ratingValue($reviewScore));
+        try {
+            $reviewScore = Review::whereHas('order', function($q) {
+                $q->whereHas('products', function($q) {
+                    $q->where('products.id', $this->id);
+                });
+            })->average('product_score');
+            $reviewCount = $this->orders()->whereHas('review')->count();
+            $schema = Schema::product()->description($this->short_description)->sku($this->slug)
+            ->name($this->name)
+            ->image($this->images->pluck('path_with_domain')->toArray())->brand((new Brand())
+            ->name(getAppName()))
+            ->offers([
+                (new Offer())->price($this->sale_price)->priceCurrency('VND')->url($this->detail_link)
+            ]);
+            if($reviewScore > 0) {
+                $schema->aggregateRating((new AggregateRating())
+                ->reviewCount($reviewCount)
+                ->ratingValue($reviewScore));
+            }
+            $schemas[] = $schema->toScript();
+            $schemas[] = Schema::breadcrumbList()->itemListElement([
+                (new ListItem)->position(1)->item(Schema::thing()->setProperty('@id', route('client.home'))->setProperty('name', getAppName())),
+                (new ListItem)->position(1)->item(Schema::thing()->setProperty('@id', route('client.product.index'))->setProperty('name', 'Danh sách sản phẩm')),
+                (new ListItem)->position(1)->item(Schema::thing()->setProperty('@id', $this->detail_link)->setProperty('name', $this->name))
+            ])->toScript();
+        } catch (\Throwable $th) {
+            \Log::error($th->getMessage());
         }
-        $schemas[] = $schema->toScript();
-        $schemas[] = Schema::breadcrumbList()->itemListElement([
-            (new ListItem)->position(1)->item(Schema::thing()->setProperty('@id', route('client.home'))->setProperty('name', getAppName())),
-            (new ListItem)->position(1)->item(Schema::thing()->setProperty('@id', route('client.product.index'))->setProperty('name', 'Danh sách sản phẩm')),
-            (new ListItem)->position(1)->item(Schema::thing()->setProperty('@id', $this->detail_link)->setProperty('name', $this->name))
-        ])->toScript();
         return $schemas;
     }
 

@@ -208,6 +208,8 @@
                             errors[key][0]
                         );
                     });
+                } else {
+                    toast.error(`{{ trans('toast.action_failed') }}`, err.responseJSON.message)
                 }
             }
         })

@@ -7,7 +7,11 @@
     <div class="row">
         <div class="form-group col-12 col-md-6">
             {!! Form::label('register_first_name', trans('labels.first_name') . '*', []) !!}
-            {!! Form::text('register_first_name', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'first_name']) !!}
+            {!! Form::text('register_first_name', null, [
+                'class' => 'form-control',
+                'required',
+                'wire:model.lazy' => 'first_name',
+            ]) !!}
             @error('first_name')
                 <div class="mt-1">
                     <span class="text-danger">{{ $message }}</span>
@@ -16,7 +20,11 @@
         </div><!-- End .form-group -->
         <div class="form-group col-12 col-md-6">
             {!! Form::label('register_last_name', trans('labels.last_name') . '*', []) !!}
-            {!! Form::text('register_last_name', null, ['class' => 'form-control', 'required', 'wire:model.lazy' => 'last_name']) !!}
+            {!! Form::text('register_last_name', null, [
+                'class' => 'form-control',
+                'required',
+                'wire:model.lazy' => 'last_name',
+            ]) !!}
             @error('last_name')
                 <div class="mt-1">
                     <span class="text-danger">{{ $message }}</span>
@@ -44,7 +52,11 @@
     </div><!-- End .form-group -->
     <div class="form-group">
         {!! Form::label('register_password', trans('labels.password') . '*', []) !!}
-        {!! Form::password('register_password', ['class' => 'form-control', 'required', 'wire:model.lazy' => 'password']) !!}
+        {!! Form::password('register_password', [
+            'class' => 'form-control',
+            'required',
+            'wire:model.lazy' => 'password',
+        ]) !!}
         @error('password')
             <div class="mt-1">
                 <span class="text-danger">{{ $message }}</span>
@@ -97,7 +109,7 @@
         <a href="#" class="forgot-link">{{ trans('labels.forgot_password') }} ?</a>
     </div><!-- End .form-footer -->
     {!! Form::close() !!}
-    {{-- <div class="form-choice">
+    <div class="form-choice">
         <p class="text-center">{{ trans('labels.or_signin_with') }}</p>
         <div class="row">
             <div class="col-sm-6">
@@ -113,11 +125,11 @@
                 </a>
             </div><!-- End .col-6 -->
         </div><!-- End .row -->
-    </div><!-- End .form-choice --> --}}
+    </div><!-- End .form-choice -->
 </div>
 @push('js')
     <script type="module">
-    // Import the functions you need from the SDKs you need
+        // Import the functions you need from the SDKs you need
         import {
             initializeApp
         } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
@@ -130,8 +142,8 @@
             signInWithPhoneNumber,
             debugErrorMap
         } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
-            document.addEventListener('livewire:load', function () {
-                const firebaseConfig = {
+        document.addEventListener('livewire:load', function() {
+            const firebaseConfig = {
                 apiKey: "AIzaSyAdswi_EUpzO0_Q2QTksJ7j65M26KsZMg4",
                 authDomain: "the-ciu.firebaseapp.com",
                 projectId: "the-ciu",
@@ -140,7 +152,7 @@
                 appId: "1:54503914857:web:b49d474c74b68603f7d1f8",
                 measurementId: "G-501SNCMP9N"
             };
-        // Initialize Firebase
+            // Initialize Firebase
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
             const auth = getAuth();
@@ -159,12 +171,13 @@
                 },
             }, auth);
             recaptchaVerifier.render().then((widgetId) => {
-                        window.recaptchaWidgetId = widgetId;
-                    });
+                window.recaptchaWidgetId = widgetId;
+            });
             $('body').on('click', '#sendRegisterOtpBtn', async (e) => {
                 e.preventDefault();
                 var appVerifier = window.recaptchaVerifier;
-                const response = await signInWithPhoneNumber(auth, '+84' + $('[name=phone]').val(), appVerifier);
+                const response = await signInWithPhoneNumber(auth, '+84' + $('[name=phone]').val(),
+                    appVerifier);
             })
             $('#forgot-password-form').on('submit', (e) => {
                 e.preventDefault()
@@ -174,6 +187,5 @@
                 @this.updatePhone($('[name=otp]').val())
             })
         })
-
     </script>
 @endpush
