@@ -143,48 +143,51 @@
             debugErrorMap
         } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
         document.addEventListener('livewire:load', function() {
-            const firebaseConfig = {
-                apiKey: "AIzaSyAdswi_EUpzO0_Q2QTksJ7j65M26KsZMg4",
-                authDomain: "the-ciu.firebaseapp.com",
-                projectId: "the-ciu",
-                storageBucket: "the-ciu.appspot.com",
-                messagingSenderId: "54503914857",
-                appId: "1:54503914857:web:b49d474c74b68603f7d1f8",
-                measurementId: "G-501SNCMP9N"
-            };
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
-            const auth = getAuth();
-            let sessionInfo;
-            let confirmation;
-            let apiKey;
+            (() => {
+                const firebaseConfig = {
+                    apiKey: "AIzaSyAdswi_EUpzO0_Q2QTksJ7j65M26KsZMg4",
+                    authDomain: "the-ciu.firebaseapp.com",
+                    projectId: "the-ciu",
+                    storageBucket: "the-ciu.appspot.com",
+                    messagingSenderId: "54503914857",
+                    appId: "1:54503914857:web:b49d474c74b68603f7d1f8",
+                    measurementId: "G-501SNCMP9N"
+                };
+                // Initialize Firebase
+                const app = initializeApp(firebaseConfig);
+                const analytics = getAnalytics(app);
+                const auth = getAuth();
+                let sessionInfo;
+                let confirmation;
+                let apiKey;
 
-            window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-                'size': 'invisible',
-                'callback': (response) => {
-                    const appVerifier = window.recaptchaVerifier;
-                    @this.apiKey = appVerifier.auth.config.apiKey
-                    @this.recaptchaToken = response
-                    @this.errorMessage = ''
-                    @this.sendVerify();
-                },
-            }, auth);
-            recaptchaVerifier.render().then((widgetId) => {
-                window.recaptchaWidgetId = widgetId;
-            });
-            $('body').on('click', '#sendRegisterOtpBtn', async (e) => {
-                e.preventDefault();
-                const response = await signInWithPhoneNumber(auth, '+84' + $('[name=phone]').val(),
-                    window.recaptchaVerifier);
-            })
-            $('#forgot-password-form').on('submit', (e) => {
-                e.preventDefault()
-                $('#submitBtn').click();
-            });
-            $('body').on('click', '.update-phone-btn', (e) => {
-                @this.updatePhone($('[name=otp]').val())
-            })
+                window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+                    'size': 'invisible',
+                    'callback': (response) => {
+                        const appVerifier = window.recaptchaVerifier;
+                        @this.apiKey = appVerifier.auth.config.apiKey
+                        @this.recaptchaToken = response
+                        @this.errorMessage = ''
+                        @this.sendVerify();
+                    },
+                }, auth);
+                recaptchaVerifier.render().then((widgetId) => {
+                    window.recaptchaWidgetId = widgetId;
+                });
+                $('body').on('click', '#sendRegisterOtpBtn', async (e) => {
+                    e.preventDefault();
+                    const response = await signInWithPhoneNumber(auth, '+84' + $('[name=phone]')
+                        .val(),
+                        window.recaptchaVerifier);
+                })
+                $('#forgot-password-form').on('submit', (e) => {
+                    e.preventDefault()
+                    $('#submitBtn').click();
+                });
+                $('body').on('click', '.update-phone-btn', (e) => {
+                    @this.updatePhone($('[name=otp]').val())
+                })
+            })()
         })
     </script>
 @endpush
