@@ -28,8 +28,10 @@
     <link rel="stylesheet" href="{{ getAssetUrl('assets/css/client/wpmap.css') }}">
     <link rel="stylesheet" href="{{ getAssetUrl('assets/css/multiple-image-video.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/filepond/filepond.css') }}">
-    <link rel="stylesheet" href="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.css">
-<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.css">
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Mulish:wght@500&family=Roboto:ital,wght@0,300;1,300&display=swap"
         rel="stylesheet">
@@ -83,36 +85,37 @@
 
 
     <!-- Sign in / Register Modal -->
-    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class="icon-close"></i></span>
-                    </button>
+    @if (auth('customer')->check())
+        <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><i class="icon-close"></i></span>
+                        </button>
 
-                    <div class="form-box">
-                        <div class="form-tab">
-                            <ul class="nav nav-pills nav-fill" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin"
-                                        role="tab" aria-controls="signin"
-                                        aria-selected="true">{{ trans('labels.login') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register"
-                                        role="tab" aria-controls="register"
-                                        aria-selected="false">{{ trans('labels.register') }}</a>
-                                </li>
-                            </ul>
-                            @include('landingpage.layouts.components.login')
-                        </div><!-- End .form-tab -->
-                    </div><!-- End .form-box -->
-                </div><!-- End .modal-body -->
-            </div><!-- End .modal-content -->
-        </div><!-- End .modal-dialog -->
-    </div><!-- End .modal -->
-
+                        <div class="form-box">
+                            <div class="form-tab">
+                                <ul class="nav nav-pills nav-fill" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin"
+                                            role="tab" aria-controls="signin"
+                                            aria-selected="true">{{ trans('labels.login') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="register-tab" data-toggle="tab" href="#register"
+                                            role="tab" aria-controls="register"
+                                            aria-selected="false">{{ trans('labels.register') }}</a>
+                                    </li>
+                                </ul>
+                                @include('landingpage.layouts.components.login')
+                            </div><!-- End .form-tab -->
+                        </div><!-- End .form-box -->
+                    </div><!-- End .modal-body -->
+                </div><!-- End .modal-content -->
+            </div><!-- End .modal-dialog -->
+        </div><!-- End .modal -->
+    @endif
     <x-dynamic-modal></x-dynamic-modal>
     <!-- Plugins JS File -->
     <script src="{{ getAssetUrl('assets/landingpage/js/bootstrap.bundle.min.js') }}"></script>
@@ -142,7 +145,8 @@
     <script src="{{ asset('assets/js/plugins/filepond/filepond.js') }}"></script>
     <script src="{{ asset('assets/js/filepond-plugin-image-preview.js') }}"></script>
     <script src="{{ asset('assets/js/scrollpagination.js') }}"></script>
-    <script src="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.js"></script>
+    <script src="https://nielsboogaard.github.io/filepond-plugin-media-preview/dist/filepond-plugin-media-preview.js">
+    </script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
     <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
     <script type="text/javascript" src="{{ asset('assets/js/froala_editor.pkgd.min.js') }}"></script>
