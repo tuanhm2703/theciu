@@ -108,7 +108,7 @@
             $('#submitForgotBtn').on('click', async (e) => {
                 e.preventDefault();
                 if (!isValidEmail($('[name=username]').val())) {
-                    recaptchaVerifier.parameters.callback()
+                    recaptchaVerifier.verify()
                 } else {
                     @this.sendVerify();
                 }

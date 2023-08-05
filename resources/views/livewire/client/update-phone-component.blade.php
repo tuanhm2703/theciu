@@ -106,7 +106,7 @@
                 });
                 $('body').on('click', '#sendOtpBtn', async (e) => {
                     e.preventDefault();
-                    recaptchaVerifier.parameters.callback()
+                    recaptchaVerifier.verify()
                 })
                 $('#forgot-password-form').on('submit', (e) => {
                     e.preventDefault()
