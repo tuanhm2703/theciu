@@ -2,7 +2,8 @@
     <h6>{{ trans('labels.change_phone') }}</h6>
     @if (!customer()->phone_verified)
         <div class="alert alert-warning mb-3" role="alert">
-            Số điện thoại của quý khách chưa được xác nhận, vui lòng xác nhận số điện thoại để tiến hành mua hàng cũng như chức năng khác!
+            Số điện thoại của quý khách chưa được xác nhận, vui lòng xác nhận số điện thoại để tiến hành mua hàng cũng
+            như chức năng khác!
         </div>
     @endif
     <div class="row mb-2">
@@ -35,7 +36,7 @@
             @error('otp')
                 <span class="error">{{ $message }}</span>
             @enderror
-            <div id="recaptcha-container" wire:ignore></div>
+            <div id="recaptcha-phone-container" wire:ignore></div>
         </div><!-- End .col-sm-6 -->
     </div>
     <div class="text-right">
@@ -59,7 +60,7 @@
 </div>
 @push('js')
     <script type="module">
-    // Import the functions you need from the SDKs you need
+        // Import the functions you need from the SDKs you need
         import {
             initializeApp
         } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
@@ -72,60 +73,64 @@
             signInWithPhoneNumber,
             debugErrorMap
         } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
-            document.addEventListener('livewire:load', function () {
+        document.addEventListener('livewire:load', function() {
+            (() => {
                 const firebaseConfig = {
-                apiKey: "AIzaSyAdswi_EUpzO0_Q2QTksJ7j65M26KsZMg4",
-                authDomain: "the-ciu.firebaseapp.com",
-                projectId: "the-ciu",
-                storageBucket: "the-ciu.appspot.com",
-                messagingSenderId: "54503914857",
-                appId: "1:54503914857:web:b49d474c74b68603f7d1f8",
-                measurementId: "G-501SNCMP9N"
-            };
-        // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
-            const auth = getAuth();
-            let sessionInfo;
-            let confirmation;
-            let apiKey;
+                    apiKey: "AIzaSyAdswi_EUpzO0_Q2QTksJ7j65M26KsZMg4",
+                    authDomain: "the-ciu.firebaseapp.com",
+                    projectId: "the-ciu",
+                    storageBucket: "the-ciu.appspot.com",
+                    messagingSenderId: "54503914857",
+                    appId: "1:54503914857:web:b49d474c74b68603f7d1f8",
+                    measurementId: "G-501SNCMP9N"
+                };
+                // Initialize Firebase
+                const app = initializeApp(firebaseConfig);
+                const analytics = getAnalytics(app);
+                const auth = getAuth();
+                let sessionInfo;
+                let confirmation;
+                let apiKey;
 
-            window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-                'size': 'invisible',
-                'callback': (response) => {
-                    const appVerifier = window.recaptchaVerifier;
-                    @this.apiKey = appVerifier.auth.config.apiKey
-                    @this.recaptchaToken = response
-                    @this.errorMessage = ''
-                    @this.sendVerify();
-                },
-            }, auth);
-            recaptchaVerifier.render().then((widgetId) => {
-                        window.recaptchaWidgetId = widgetId;
-                    });
-            $('body').on('click', '#sendOtpBtn', async (e) => {
-                e.preventDefault();
-                var appVerifier = window.recaptchaVerifier;
-                const response = await signInWithPhoneNumber(auth, `+84${$('[name=phone]').val()}`, appVerifier);
-            })
-            @this.on('verifyPhone', (event) => {
-            signInWithPhoneNumber(auth, `+84${$('input[name=phone]').val()}`, window.recaptchaVerifier)
-                .then((confirmationResult) => {
-                    window.confirmationResult = confirmationResult;
-                    sessionInfo = confirmationResult.verificationId
-                    @this.verified = true;
-                }).catch((error) => {
-                    @this.errorMessage = debugErrorMap()[error.code.replace('auth/', '')]
+                window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-phone-container', {
+                    'size': 'invisible',
+                    'callback': (response) => {
+                        const appVerifier = window.recaptchaVerifier;
+                        @this.apiKey = appVerifier.auth.config.apiKey
+                        @this.recaptchaToken = response
+                        @this.errorMessage = ''
+                        @this.sendVerify();
+                    },
+                }, auth);
+                recaptchaVerifier.render().then((widgetId) => {
+                    window.recaptchaWidgetId = widgetId;
                 });
-            })
-            $('#forgot-password-form').on('submit', (e) => {
-                e.preventDefault()
-                $('#submitBtn').click();
-            });
-            $('body').on('click', '.update-phone-btn', (e) => {
-                @this.updatePhone($('[name=otp]').val())
-            })
+                $('body').on('click', '#sendOtpBtn', async (e) => {
+                    e.preventDefault();
+                    var appVerifier = window.recaptchaVerifier;
+                    const response = await signInWithPhoneNumber(auth,
+                        `+84${$('[name=phone]').val()}`,
+                        appVerifier);
+                })
+                @this.on('verifyPhone', (event) => {
+                    signInWithPhoneNumber(auth, `+84${$('input[name=phone]').val()}`, window
+                            .recaptchaVerifier)
+                        .then((confirmationResult) => {
+                            window.confirmationResult = confirmationResult;
+                            sessionInfo = confirmationResult.verificationId
+                            @this.verified = true;
+                        }).catch((error) => {
+                            @this.errorMessage = debugErrorMap()[error.code.replace('auth/', '')]
+                        });
+                })
+                $('#forgot-password-form').on('submit', (e) => {
+                    e.preventDefault()
+                    $('#submitBtn').click();
+                });
+                $('body').on('click', '.update-phone-btn', (e) => {
+                    @this.updatePhone($('[name=otp]').val())
+                })
+            })()
         })
-
     </script>
 @endpush

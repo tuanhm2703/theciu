@@ -66,58 +66,60 @@
         debugErrorMap
     } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
     document.addEventListener('livewire:load', function() {
-        const firebaseConfig = {
-            apiKey: "AIzaSyAdswi_EUpzO0_Q2QTksJ7j65M26KsZMg4",
-            authDomain: "the-ciu.firebaseapp.com",
-            projectId: "the-ciu",
-            storageBucket: "the-ciu.appspot.com",
-            messagingSenderId: "54503914857",
-            appId: "1:54503914857:web:b49d474c74b68603f7d1f8",
-            measurementId: "G-501SNCMP9N"
-        };
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth();
-        let sessionInfo;
-        let confirmation;
-        let apiKey;
+        (() => {
+            const firebaseConfig = {
+                apiKey: "AIzaSyAdswi_EUpzO0_Q2QTksJ7j65M26KsZMg4",
+                authDomain: "the-ciu.firebaseapp.com",
+                projectId: "the-ciu",
+                storageBucket: "the-ciu.appspot.com",
+                messagingSenderId: "54503914857",
+                appId: "1:54503914857:web:b49d474c74b68603f7d1f8",
+                measurementId: "G-501SNCMP9N"
+            };
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            const auth = getAuth();
+            let sessionInfo;
+            let confirmation;
+            let apiKey;
 
-        function isValidEmail(email) {
-            var emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-            return emailRegex.test(email);
-        }
-        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-forgot-container', {
-            'size': 'invisible',
-            'callback': (response) => {
-                console.log(response);
-                const appVerifier = window.recaptchaVerifier;
-                @this.apiKey = appVerifier.auth.config.apiKey
-                @this.recaptchaToken = response
-                @this.errorMessage = ''
-                @this.sendVerify();
-            },
-        }, auth);
-        recaptchaVerifier.render().then((widgetId) => {
-            window.recaptchaWidgetId = widgetId;
-        });
-        $('body').on('click', '#verifyForgotPasswordOtpBtn', (e) => {
-            @this.verifyOtp($('input[name=otp]').val(), apiKey, sessionInfo)
-        })
-
-        $('#submitForgotBtn').on('click', async (e) => {
-            e.preventDefault();
-            if (!isValidEmail($('[name=username]').val())) {
-                const response = await signInWithPhoneNumber(auth,
-                    `+84${$('[name=username]').val()}`,
-                    window.recaptchaVerifier);
-            } else {
-                @this.sendVerify();
+            function isValidEmail(email) {
+                var emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+                return emailRegex.test(email);
             }
-        })
-        $('#forgot-password-form').on('submit', (e) => {
-            e.preventDefault()
-            $('#submitForgotBtn').click();
-        });
+            window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-forgot-container', {
+                'size': 'invisible',
+                'callback': (response) => {
+                    console.log(response);
+                    const appVerifier = window.recaptchaVerifier;
+                    @this.apiKey = appVerifier.auth.config.apiKey
+                    @this.recaptchaToken = response
+                    @this.errorMessage = ''
+                    @this.sendVerify();
+                },
+            }, auth);
+            recaptchaVerifier.render().then((widgetId) => {
+                window.recaptchaWidgetId = widgetId;
+            });
+            $('body').on('click', '#verifyForgotPasswordOtpBtn', (e) => {
+                @this.verifyOtp($('input[name=otp]').val(), apiKey, sessionInfo)
+            })
+
+            $('#submitForgotBtn').on('click', async (e) => {
+                e.preventDefault();
+                if (!isValidEmail($('[name=username]').val())) {
+                    const response = await signInWithPhoneNumber(auth,
+                        `+84${$('[name=username]').val()}`,
+                        window.recaptchaVerifier);
+                } else {
+                    @this.sendVerify();
+                }
+            })
+            $('#forgot-password-form').on('submit', (e) => {
+                e.preventDefault()
+                $('#submitForgotBtn').click();
+            });
+        })()
     })
 </script>
