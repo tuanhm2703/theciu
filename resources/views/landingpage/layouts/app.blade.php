@@ -108,7 +108,9 @@
                                             aria-selected="false">{{ trans('labels.register') }}</a>
                                     </li>
                                 </ul>
-                                @include('landingpage.layouts.components.login')
+                                @if (!isNavActive('client.auth.forgot_password'))
+                                    <livewire:client.auth-component />
+                                @endif
                             </div><!-- End .form-tab -->
                         </div><!-- End .form-box -->
                     </div><!-- End .modal-body -->
@@ -300,7 +302,11 @@
         }(document, 'script', 'facebook-jssdk'));
     </script>
     {!! App::get('WebsiteSetting')->data['footer_code'] !!}
-
+    @if (request('authenticated') === '0')
+        <script>
+            openLoginModal()
+        </script>
+    @endif
     @stack('js')
 </body>
 

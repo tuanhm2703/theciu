@@ -91,22 +91,28 @@
                 let sessionInfo;
                 let confirmation;
                 let apiKey;
-
-                let recaptchaVerifier = new RecaptchaVerifier('recaptcha-phone-container', {
-                    'size': 'invisible',
-                    'callback': (response) => {
-                        @this.apiKey = recaptchaVerifier.auth.config.apiKey
-                        @this.recaptchaToken = response
-                        @this.errorMessage = ''
-                        @this.sendVerify();
-                    },
-                }, auth);
-                recaptchaVerifier.render().then((widgetId) => {
-                    window.recaptchaWidgetId = widgetId;
-                });
                 $('body').on('click', '#sendOtpBtn', async (e) => {
                     e.preventDefault();
-                    recaptchaVerifier.verify()
+                    if (window.recaptchaVerifier) {
+                        window.recaptchaVerifier?.recaptcha?.reset()
+                    } else {
+                        window.recaptchaVerifier = new RecaptchaVerifier(
+                            'recaptcha-phone-container', {
+                                'size': 'invisible',
+                                'callback': (response) => {
+                                    @this.apiKey = window.recaptchaVerifier.auth
+                                        .config
+                                        .apiKey
+                                    @this.recaptchaToken = response
+                                    @this.errorMessage = ''
+                                    @this.sendVerify();
+                                },
+                            }, auth);
+                    }
+                    window.recaptchaVerifier.render().then((widgetId) => {
+                        window.recaptchaWidgetId = widgetId;
+                        window.recaptchaVerifier.verify()
+                    });
                 })
                 $('#forgot-password-form').on('submit', (e) => {
                     e.preventDefault()

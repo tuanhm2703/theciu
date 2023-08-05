@@ -65,8 +65,13 @@
         signInWithPhoneNumber,
         debugErrorMap
     } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+    $('[href="#signin-modal"]').attr('data-toggle', '')
     document.addEventListener('livewire:load', function() {
-        (() => {
+        (async () => {
+            $('[href="#signin-modal"]').on('click', (e) => {
+                e.preventDefault()
+                window.location.href = `{{ route('client.home', ['authenticated' => '0']) }}`
+            })
             const firebaseConfig = {
                 apiKey: "AIzaSyAdswi_EUpzO0_Q2QTksJ7j65M26KsZMg4",
                 authDomain: "the-ciu.firebaseapp.com",
@@ -88,19 +93,7 @@
                 var emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
                 return emailRegex.test(email);
             }
-            window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-forgot-container', {
-                'size': 'invisible',
-                'callback': (response) => {
-                    const appVerifier = window.recaptchaVerifier;
-                    @this.apiKey = appVerifier.auth.config.apiKey
-                    @this.recaptchaToken = response
-                    @this.errorMessage = ''
-                    @this.sendVerify();
-                },
-            }, auth);
-            recaptchaVerifier.render().then((widgetId) => {
-                window.recaptchaWidgetId = widgetId;
-            });
+
             $('body').on('click', '#verifyForgotPasswordOtpBtn', (e) => {
                 @this.verifyOtp($('input[name=otp]').val(), apiKey, sessionInfo)
             })
@@ -108,7 +101,26 @@
             $('#submitForgotBtn').on('click', async (e) => {
                 e.preventDefault();
                 if (!isValidEmail($('[name=username]').val())) {
-                    recaptchaVerifier.verify()
+                    if (window.recaptchaVerifier) {
+                        window.recaptchaVerifier?.recaptcha?.reset()
+                    } else {
+                        window.recaptchaVerifier = new RecaptchaVerifier(
+                            'recaptcha-forgot-container', {
+                                'size': 'invisible',
+                                'callback': (response) => {
+                                    @this.apiKey = window.recaptchaVerifier.auth
+                                        .config
+                                        .apiKey
+                                    @this.recaptchaToken = response
+                                    @this.errorMessage = ''
+                                    @this.sendVerify();
+                                },
+                            }, auth);
+                    }
+                    await window.recaptchaVerifier.render().then((widgetId) => {
+                        window.recaptchaWidgetId = widgetId;
+                        window.recaptchaVerifier.verify()
+                    });
                 } else {
                     @this.sendVerify();
                 }

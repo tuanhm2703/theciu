@@ -161,24 +161,28 @@
                 let confirmation;
                 let apiKey;
 
-                window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-                    'size': 'invisible',
-                    'callback': (response) => {
-                        const appVerifier = window.recaptchaVerifier;
-                        @this.apiKey = appVerifier.auth.config.apiKey
-                        @this.recaptchaToken = response
-                        @this.errorMessage = ''
-                        @this.sendVerify();
-                    },
-                }, auth);
-                recaptchaVerifier.render().then((widgetId) => {
-                    window.recaptchaWidgetId = widgetId;
-                });
                 $('body').on('click', '#sendRegisterOtpBtn', async (e) => {
                     e.preventDefault();
-                    const response = await signInWithPhoneNumber(auth, '+84' + $('[name=phone]')
-                        .val(),
-                        window.recaptchaVerifier);
+                    if (window.recaptchaVerifier) {
+                        window.recaptchaVerifier?.recaptcha?.reset()
+                    } else {
+                        window.recaptchaVerifier = new RecaptchaVerifier(
+                            'recaptcha-container', {
+                                'size': 'invisible',
+                                'callback': (response) => {
+                                    @this.apiKey = window.recaptchaVerifier.auth
+                                        .config
+                                        .apiKey
+                                    @this.recaptchaToken = response
+                                    @this.errorMessage = ''
+                                    @this.sendVerify();
+                                },
+                            }, auth);
+                    }
+                    window.recaptchaVerifier.render().then((widgetId) => {
+                        window.recaptchaWidgetId = widgetId;
+                        window.recaptchaVerifier.verify()
+                    });
                 })
                 $('#forgot-password-form').on('submit', (e) => {
                     e.preventDefault()
