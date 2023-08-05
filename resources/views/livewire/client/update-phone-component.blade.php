@@ -99,7 +99,7 @@
                         @this.apiKey = appVerifier.auth.config.apiKey
                         @this.recaptchaToken = response
                         @this.errorMessage = ''
-                        @this.sendVerify();
+                        // @this.sendVerify();
                     },
                 }, auth);
                 recaptchaVerifier.render().then((widgetId) => {
@@ -110,18 +110,24 @@
                     var appVerifier = window.recaptchaVerifier;
                     const response = await signInWithPhoneNumber(auth,
                         `+84${$('[name=phone]').val()}`,
-                        appVerifier);
-                })
-                @this.on('verifyPhone', (event) => {
-                    signInWithPhoneNumber(auth, `+84${$('input[name=phone]').val()}`, window
-                            .recaptchaVerifier)
-                        .then((confirmationResult) => {
+                        appVerifier).then((confirmationResult) => {
                             window.confirmationResult = confirmationResult;
-                            sessionInfo = confirmationResult.verificationId
+                            @this.sessionInfo = confirmationResult.verificationId
                             @this.verified = true;
                         }).catch((error) => {
                             @this.errorMessage = debugErrorMap()[error.code.replace('auth/', '')]
-                        });
+                        });;
+                })
+                // @this.on('verifyPhone', (event) => {
+                //     signInWithPhoneNumber(auth, `+84${$('input[name=phone]').val()}`, window
+                //             .recaptchaVerifier)
+                //         .then((confirmationResult) => {
+                //             window.confirmationResult = confirmationResult;
+                //             sessionInfo = confirmationResult.verificationId
+                //             @this.verified = true;
+                //         }).catch((error) => {
+                //             @this.errorMessage = debugErrorMap()[error.code.replace('auth/', '')]
+                //         });
                 })
                 $('#forgot-password-form').on('submit', (e) => {
                     e.preventDefault()
