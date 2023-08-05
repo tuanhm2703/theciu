@@ -91,7 +91,6 @@
             window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-forgot-container', {
                 'size': 'invisible',
                 'callback': (response) => {
-                    console.log(response);
                     const appVerifier = window.recaptchaVerifier;
                     @this.apiKey = appVerifier.auth.config.apiKey
                     @this.recaptchaToken = response
@@ -109,9 +108,7 @@
             $('#submitForgotBtn').on('click', async (e) => {
                 e.preventDefault();
                 if (!isValidEmail($('[name=username]').val())) {
-                    const response = await signInWithPhoneNumber(auth,
-                        `+84${$('[name=username]').val()}`,
-                        window.recaptchaVerifier);
+                    recaptchaVerifier.parameters.callback()
                 } else {
                     @this.sendVerify();
                 }

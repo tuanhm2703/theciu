@@ -92,11 +92,10 @@
                 let confirmation;
                 let apiKey;
 
-                window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-phone-container', {
+                let recaptchaVerifier = new RecaptchaVerifier('recaptcha-phone-container', {
                     'size': 'invisible',
                     'callback': (response) => {
-                        const appVerifier = window.recaptchaVerifier;
-                        @this.apiKey = appVerifier.auth.config.apiKey
+                        @this.apiKey = recaptchaVerifier.auth.config.apiKey
                         @this.recaptchaToken = response
                         @this.errorMessage = ''
                         @this.sendVerify();
@@ -107,10 +106,7 @@
                 });
                 $('body').on('click', '#sendOtpBtn', async (e) => {
                     e.preventDefault();
-                    var appVerifier = window.recaptchaVerifier;
-                    const response = await signInWithPhoneNumber(auth,
-                        `+84${$('[name=phone]').val()}`,
-                        appVerifier);
+                    recaptchaVerifier.parameters.callback()
                 })
                 $('#forgot-password-form').on('submit', (e) => {
                     e.preventDefault()
