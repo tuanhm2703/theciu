@@ -47,7 +47,7 @@
             <i class="fas fa-undo mr-3"></i>
             {{ trans('labels.return') }}
         </button>
-        <button class="update-phone-btn btn btn-outline-primary-2" @disabled($verified == 0 || empty($phone))>
+        <button class="update-phone-btn btn btn-outline-primary-2" @disabled(empty($phone))>
             <div wire:loading wire:target="updatePhone" class="spinner-grow" style="width: 3rem; height: 3rem;"
                 role="status">
                 <span class="sr-only">Loading...</span>
