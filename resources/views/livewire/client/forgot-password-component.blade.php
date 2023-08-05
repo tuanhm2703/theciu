@@ -98,15 +98,21 @@
             @this.verifyOtp($('input[name=otp]').val(), apiKey, sessionInfo)
         })
 
+        function isValidEmail(email) {
+            // Regular expression for email validation
+            var emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+
+            // Test the email against the regex pattern
+            return emailRegex.test(email);
+        }
         $('#submitBtn').on('click', (e) => {
             e.preventDefault();
-            console.log(window.recaptchaWidgetId);
-            if (window.recaptchaWidgetId != null) {
-                @this.sendVerify();
+            var appVerifier = window.recaptchaVerifier;
+            if (!isValidEmail($('[name=username]').val())) {
+                const response = await signInWithPhoneNumber(auth, '+84' + $('[name=username]').val(),
+                    appVerifier);
             } else {
-                recaptchaVerifier.render().then((widgetId) => {
-                    window.recaptchaWidgetId = widgetId;
-                });
+                @this.sendVerify();
             }
         })
         @this.on('verifyPhone', (event) => {
