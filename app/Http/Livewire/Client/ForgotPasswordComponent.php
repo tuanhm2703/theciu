@@ -61,6 +61,7 @@ class ForgotPasswordComponent extends Component
     {
         $this->validate();
         if (isPhone($username)) {
+            $this->username = $username;
             $this->apiKey = $apiKey;
             $this->recaptchaToken = $recaptchaToken;
             $this->sendForgetPhoneRequest();
