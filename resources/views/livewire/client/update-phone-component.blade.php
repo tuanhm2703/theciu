@@ -106,14 +106,7 @@
             $('body').on('click', '#sendOtpBtn', async (e) => {
                 e.preventDefault();
                 var appVerifier = window.recaptchaVerifier;
-                const response = await signInWithPhoneNumber(auth, '+84'+$('[name=phone]').val(), appVerifier);
-                // if (window.recaptchaWidgetId == null) {
-                //     recaptchaVerifier.render().then((widgetId) => {
-                //         window.recaptchaWidgetId = widgetId;
-                //     });
-                // } else {
-                //     recaptchaVerifier.recaptcha.reset()
-                // }
+                const response = await signInWithPhoneNumber(auth, `+84${$('[name=phone]').val()}`, appVerifier);
             })
             @this.on('verifyPhone', (event) => {
             signInWithPhoneNumber(auth, `+84${$('input[name=phone]').val()}`, window.recaptchaVerifier)

@@ -175,9 +175,8 @@
             });
             $('body').on('click', '#sendRegisterOtpBtn', async (e) => {
                 e.preventDefault();
-                var appVerifier = window.recaptchaVerifier;
                 const response = await signInWithPhoneNumber(auth, '+84' + $('[name=phone]').val(),
-                    appVerifier);
+                    window.recaptchaVerifier);
             })
             $('#forgot-password-form').on('submit', (e) => {
                 e.preventDefault()

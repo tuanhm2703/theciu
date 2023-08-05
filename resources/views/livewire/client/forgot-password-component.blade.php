@@ -16,7 +16,7 @@
 
         </div><!-- End .form-group -->
 
-        <div id="recaptcha-container"></div>
+        <div id="recaptcha-forgot-container"></div>
         <div class="form-footer text-right">
             <button type="button" id="submitBtn" class="btn btn-outline-primary-2">
                 <span wire:loading wire:target="sendVerify" class="spinner-border spinner-border-sm mr-3" role="status"
@@ -82,9 +82,12 @@
         let sessionInfo;
         let confirmation;
         let apiKey;
-
-        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
-            'size': 'normal',
+        function isValidEmail(email) {
+            var emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
+            return emailRegex.test(email);
+        }
+        window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-forgot-container', {
+            'size': 'invisible',
             'callback': (response) => {
                 const appVerifier = window.recaptchaVerifier;
                 @this.apiKey = appVerifier.auth.config.apiKey
@@ -93,38 +96,21 @@
                 @this.sendVerify();
             },
         }, auth);
-
+        recaptchaVerifier.render().then((widgetId) => {
+                window.recaptchaWidgetId = widgetId;
+            });
         $('body').on('click', '#verifyOtpBtn', (e) => {
             @this.verifyOtp($('input[name=otp]').val(), apiKey, sessionInfo)
         })
 
-        function isValidEmail(email) {
-            // Regular expression for email validation
-            var emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-
-            // Test the email against the regex pattern
-            return emailRegex.test(email);
-        }
-        $('#submitBtn').on('click', (e) => {
+        $('#submitBtn').on('click', async (e) => {
             e.preventDefault();
-            var appVerifier = window.recaptchaVerifier;
             if (!isValidEmail($('[name=username]').val())) {
-                const response = await signInWithPhoneNumber(auth, '+84' + $('[name=username]').val(),
-                    appVerifier);
+                const response = await signInWithPhoneNumber(auth, `+84${$('[name=username]').val()}`,
+                    window.recaptchaVerifier);
             } else {
                 @this.sendVerify();
             }
-        })
-        @this.on('verifyPhone', (event) => {
-            signInWithPhoneNumber(auth, `+84${$('input[name=username]').val()}`, window
-                    .recaptchaVerifier)
-                .then((confirmationResult) => {
-                    window.confirmationResult = confirmationResult;
-                    sessionInfo = confirmationResult.verificationId
-                    @this.verified = true;
-                }).catch((error) => {
-                    @this.errorMessage = debugErrorMap()[error.code.replace('auth/', '')]
-                });
         })
         $('#forgot-password-form').on('submit', (e) => {
             e.preventDefault()
