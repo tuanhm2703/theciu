@@ -57,6 +57,7 @@ class ForgotPasswordComponent extends Component
 
     public function sendVerify()
     {
+        \Log::info('hlelo');
         $this->validate();
         if (isPhone($this->username)) {
             $this->sendForgetPhoneRequest();

@@ -18,7 +18,7 @@
 
         <div id="recaptcha-forgot-container"></div>
         <div class="form-footer text-right">
-            <button type="button" id="submitBtn" class="btn btn-outline-primary-2">
+            <button type="button" id="submitForgotBtn" class="btn btn-outline-primary-2">
                 <span wire:loading wire:target="sendVerify" class="spinner-border spinner-border-sm mr-3" role="status"
                     aria-hidden="true"></span>
                 <span>{{ trans('labels.next') }}</span>
@@ -34,7 +34,7 @@
             @endif
         </div><!-- End .form-group -->
         <div class="form-footer text-right">
-            <button type="button" id="verifyOtpBtn" class="btn btn-outline-primary-2">
+            <button type="button" id="verifyForgotPasswordOtpBtn" class="btn btn-outline-primary-2">
                 <span wire:loading wire:target="verifyOtp, sendVerify" class="spinner-border spinner-border-sm mr-3"
                     role="status" aria-hidden="true"></span>
                 <span>{{ trans('labels.next') }}</span>
@@ -82,6 +82,7 @@
         let sessionInfo;
         let confirmation;
         let apiKey;
+
         function isValidEmail(email) {
             var emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
             return emailRegex.test(email);
@@ -89,6 +90,7 @@
         window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-forgot-container', {
             'size': 'invisible',
             'callback': (response) => {
+                console.log(response);
                 const appVerifier = window.recaptchaVerifier;
                 @this.apiKey = appVerifier.auth.config.apiKey
                 @this.recaptchaToken = response
@@ -97,16 +99,17 @@
             },
         }, auth);
         recaptchaVerifier.render().then((widgetId) => {
-                window.recaptchaWidgetId = widgetId;
-            });
-        $('body').on('click', '#verifyOtpBtn', (e) => {
+            window.recaptchaWidgetId = widgetId;
+        });
+        $('body').on('click', '#verifyForgotPasswordOtpBtn', (e) => {
             @this.verifyOtp($('input[name=otp]').val(), apiKey, sessionInfo)
         })
 
-        $('#submitBtn').on('click', async (e) => {
+        $('#submitForgotBtn').on('click', async (e) => {
             e.preventDefault();
             if (!isValidEmail($('[name=username]').val())) {
-                const response = await signInWithPhoneNumber(auth, `+84${$('[name=username]').val()}`,
+                const response = await signInWithPhoneNumber(auth,
+                    `+84${$('[name=username]').val()}`,
                     window.recaptchaVerifier);
             } else {
                 @this.sendVerify();
@@ -114,7 +117,7 @@
         })
         $('#forgot-password-form').on('submit', (e) => {
             e.preventDefault()
-            $('#submitBtn').click();
+            $('#submitForgotBtn').click();
         });
     })
 </script>
