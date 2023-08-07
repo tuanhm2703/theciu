@@ -96,7 +96,7 @@
 @endsection
 @push('js')
     <script>
-        $('body').on('click', function (){
+        $('body').on('click', '.banner-href-img', function (){
             window.location.href = $(this).attr('data-href')
         })
     </script>
