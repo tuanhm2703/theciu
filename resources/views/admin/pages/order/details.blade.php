@@ -128,6 +128,7 @@
                 </div>
                 <div class="card-body pt-1">
                     <i>{{ $order->note }}</i>
+                    <div class="text-danger"><i>{{ $order->bonus_note }}</i></div>
                 </div>
                 <div class="card-header py-0">
                     <h6>
