@@ -83,24 +83,21 @@
                 let sessionInfo;
                 let confirmation;
                 let apiKey;
+                window.recaptchaVerifier = new RecaptchaVerifier(
+                    'recaptcha-phone-container', {
+                        'size': 'invisible',
+                        'callback': (response) => {
+                            @this.apiKey = window.recaptchaVerifier.auth
+                                .config
+                                .apiKey
+                            @this.recaptchaToken = response
+                            @this.errorMessage = ''
+                            @this.sendVerify();
+                            window.recaptchaVerifier?.recaptcha?.reset()
+                        },
+                    }, auth);
                 $('body').on('click', '#sendOtpBtn', async (e) => {
                     e.preventDefault();
-                    if (window.recaptchaVerifier) {
-                        window.recaptchaVerifier?.recaptcha?.reset()
-                    } else {
-                        window.recaptchaVerifier = new RecaptchaVerifier(
-                            'recaptcha-phone-container', {
-                                'size': 'invisible',
-                                'callback': (response) => {
-                                    @this.apiKey = window.recaptchaVerifier.auth
-                                        .config
-                                        .apiKey
-                                    @this.recaptchaToken = response
-                                    @this.errorMessage = ''
-                                    @this.sendVerify();
-                                },
-                            }, auth);
-                    }
                     window.recaptchaVerifier.render().then((widgetId) => {
                         window.recaptchaWidgetId = widgetId;
                         window.recaptchaVerifier.verify()
