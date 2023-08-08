@@ -152,13 +152,7 @@
                 let sessionInfo;
                 let confirmation;
                 let apiKey;
-
-                $('body').on('click', '#sendRegisterOtpBtn', async (e) => {
-                    e.preventDefault();
-                    if (window.recaptchaVerifier) {
-                        window.recaptchaVerifier?.recaptcha?.reset()
-                    } else {
-                        window.recaptchaVerifier = new RecaptchaVerifier(
+                window.recaptchaVerifier = new RecaptchaVerifier(
                             'recaptcha-container', {
                                 'size': 'invisible',
                                 'callback': (response) => {
@@ -168,9 +162,11 @@
                                     @this.recaptchaToken = response
                                     @this.errorMessage = ''
                                     @this.sendVerify();
+                                    window.recaptchaVerifier?.recaptcha?.reset()
                                 },
                             }, auth);
-                    }
+                $('body').on('click', '#sendRegisterOtpBtn', async (e) => {
+                    e.preventDefault();
                     window.recaptchaVerifier.render().then((widgetId) => {
                         window.recaptchaWidgetId = widgetId;
                         window.recaptchaVerifier.verify()
