@@ -203,11 +203,7 @@ input[type=number] {
     scale: 1.1;
 }
 
-.radio-container>input[type="radio"]+.inventory-picker:hover {
-    box-shadow: 0 0 10px lightgray;
-    color: #c96;
-    border-color: #c96;
-}
+
 
 .product-detail-label {
     color: rgba(0, 0, 0, 0.4);
@@ -1895,7 +1891,13 @@ input[type=number] {
 .review-form .rating .js-wc-rating-value {
     display: none !important;
 }
-
+@media (min-width: 768px) {
+    .radio-container>input[type="radio"]+.inventory-picker:hover {
+        box-shadow: 0 0 10px lightgray;
+        color: #c96;
+        border-color: #c96;
+    }
+}
 @media screen and (max-width: 768px) {
     .deal-products .product.product-7 .product-media a.product-image {
         height: 100% !important;
