@@ -13,7 +13,9 @@ class SpinnerWheel extends Component
     public $showGift = false;
 
     public $order;
+    public $active;
     public function mount() {
+        $this->active = now()->between('2023-08-25 00:00:00', '2023-09-05 00:00:00') || (env('APP_ENV') != 'prod');
         $step_deg = 36;
         $deg = 360 - ($step_deg / 2);
         for ($i=0; $i < 10; $i++) {
