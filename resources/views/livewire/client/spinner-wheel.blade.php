@@ -43,16 +43,12 @@
         }
 
         #spinner-btn {
-            width: 80px;
+            width: 60px;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
-        }
-
-        #spinner-btn:hover {
-            animation: circleScale 1s infinite;
         }
 
         .spinner-description {
@@ -75,9 +71,15 @@
             }
         }
 
+        @media (min-width: 768px) {
+
+            #spinner-btn:hover {
+                animation: circleScale 1s infinite;
+            }
+        }
+
         @media (max-width: 576px) {
             #spinner-btn {
-                width: 60px;
                 top: 48.5%;
             }
 
