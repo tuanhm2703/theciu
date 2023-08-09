@@ -33,15 +33,14 @@ class ForgotPasswordComponent extends Component
         $key = $this->apiKey;
         $url = "https://identitytoolkit.googleapis.com/v1/accounts:sendVerificationCode?key=$key";
         try {
+            \Log::info('ello');
             $response = $client->post($url, [
                 'body' => json_encode([
                     'phoneNumber' => "+84" . $this->username,
                     'recaptchaToken' => $this->recaptchaToken
                 ])
             ]);
-            if ($response->getStatusCode() == 200) {
-                $this->verified = true;
-            }
+            $this->verified = true;
             $this->sessionInfo = json_decode($response->getBody()->getContents())->sessionInfo;
         } catch (\GuzzleHttp\Exception\ClientException $th) {
             \Log::error($th->getMessage());
@@ -59,6 +58,7 @@ class ForgotPasswordComponent extends Component
 
     public function sendVerify()
     {
+        \Log::info('hlelo');
         $this->validate();
         if (isPhone($this->username)) {
             $this->sendForgetPhoneRequest();

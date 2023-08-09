@@ -19,7 +19,15 @@ return [
     |
     */
     'name' => env('APP_NAME', 'Laravel'),
-
+    'firebase' => [
+        'apiKey' => "AIzaSyBMrFJ4yh4CUJqyylnnVmIZ7G-fSdM-7Lg",
+        'authDomain' => "the-ciu-prod.firebaseapp.com",
+        'projectId' => "the-ciu-prod",
+        'storageBucket' => "the-ciu-prod.appspot.com",
+        'messagingSenderId' => "423611546117",
+        'appId' => "1:423611546117:web:2a9c76f840ff66731bba6c",
+        'measurementId' => "G-M04ZY09WB4"
+    ],
     /*
     |--------------------------------------------------------------------------
     | Application Environment

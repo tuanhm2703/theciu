@@ -95,7 +95,7 @@
         })
 
         const initEditFormFunc = (banner) => {
-            const imgSource = banner.image?.path_with_original_size
+            const imgSource = banner.desktop_image?.path_with_original_size
             const imgPhoneSource = banner.phone_image?.path_with_original_size
             const file = FilePond.create(document.querySelector('input[name=image]'), {
                 imagePreviewHeight: 170,

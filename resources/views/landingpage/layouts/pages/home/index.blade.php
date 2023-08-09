@@ -95,4 +95,9 @@
     <livewire:client.voucher-popup-component />
 @endsection
 @push('js')
+    <script>
+        $('body').on('click', '.banner-href-img', function (){
+            window.location.href = $(this).attr('data-href')
+        })
+    </script>
 @endpush

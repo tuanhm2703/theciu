@@ -14,7 +14,6 @@
     </div><!-- End .form-group -->
     <input type="hidden" wire:model="token">
     <input type="hidden" wire:model="username">
-    <div id="recaptcha-container"></div>
     <div class="form-footer text-right">
         <button type="submit" id="submitBtn" class="btn btn-outline-primary-2" wire:click.prevent="updatePassword">
             <span class="spinner-border spinner-border-sm pr-3" role="status" aria-hidden="true" wire:loading wire:target="updatePassword"></span>

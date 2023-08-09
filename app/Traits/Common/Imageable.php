@@ -27,10 +27,10 @@ trait Imageable {
     }
 
     public function phoneImage() {
-        return $this->hasOne(Image::class, 'imageable_id', 'id')->where('type', MediaType::PHONE);
+        return $this->morphOne(Image::class, 'imageable')->where('type', MediaType::PHONE);
     }
     public function desktopImage() {
-        return $this->hasOne(Image::class, 'imageable_id', 'id')->where('type', null);
+        return $this->morphOne(Image::class, 'imageable')->where('type', null);
     }
 
     public function createImages($images, $type = null, $folder = 'images') {
