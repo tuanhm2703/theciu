@@ -77,7 +77,8 @@
 
         @media (max-width: 576px) {
             #spinner-btn {
-                width: 55px;
+                width: 60px;
+                top: 48.5%;
             }
 
         }
