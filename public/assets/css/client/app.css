@@ -196,7 +196,8 @@ input[type=number] {
 .radio-container>input[type="radio"]:checked+.inventory-picker,
 .radio-container>input[type="radio"]:checked+.inventory-picker a {
     border-color: #c96;
-    color: #c96;
+    color: #fff;
+    background-color: black;
 }
 
 .radio-container>input[type="radio"]:checked+.inventory-picker.img-contain-label {
