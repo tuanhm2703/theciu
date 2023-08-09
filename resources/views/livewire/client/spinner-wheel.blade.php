@@ -208,7 +208,7 @@
                     await @this.getDeg()
                     setTimeout(() => {
                         @this.updateGift()
-                    }, 6500);
+                    }, 7000);
                 }
                 // //add 1 every click
                 // clicks++;
