@@ -68,5 +68,6 @@ class SpinnerWheel extends Component
     public function updateGift() {
         $this->showGift = true;
         $this->order->bonus_note = $this->gift['name'];
+        $this->order->save();
     }
 }
