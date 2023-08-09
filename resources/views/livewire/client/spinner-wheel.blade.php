@@ -57,7 +57,8 @@
             bottom: 10px;
             max-width: 80%;
             color: #2b3c68;
-            font-size: 2.3rem;;
+            font-size: 2rem;
+            font-weight: bold;
         }
         .spinner-description p {
             color: #ec4c6e;
