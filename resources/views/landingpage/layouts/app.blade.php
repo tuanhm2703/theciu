@@ -85,6 +85,7 @@
 
 
     <!-- Sign in / Register Modal -->
+    @if (@if (!isNavActive('client.auth.profile.phone')))
     <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -92,7 +93,6 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="icon-close"></i></span>
                     </button>
-
                     <div class="form-box">
                         <div class="form-tab">
                             <ul class="nav nav-pills nav-fill" role="tablist">
@@ -116,6 +116,7 @@
             </div><!-- End .modal-content -->
         </div><!-- End .modal-dialog -->
     </div><!-- End .modal -->
+    @endif
     <x-dynamic-modal></x-dynamic-modal>
     <!-- Plugins JS File -->
     <script src="{{ getAssetUrl('assets/landingpage/js/bootstrap.bundle.min.js') }}"></script>
