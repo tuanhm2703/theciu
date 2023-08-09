@@ -89,7 +89,7 @@
             height: 300px;
             position: absolute;
             width: 300px;
-            top: 50%;
+            top: 48%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
@@ -129,7 +129,7 @@
             <img src="{{ asset('img/event-logo.png') }}" id="event-logo" alt="">
         </div>
         @if ($showGift == false)
-            <img src="{{ asset('img/spinner.png') }}" class="spinner-img" alt=""
+            <img src="{{ asset('img/spinner.png') }}" class="spinner-img mb-2" alt=""
                 style="transform: rotate({{ $deg }}deg)">
             <img id="spinner-btn" src="{{ asset('img/spinner-btn.png') }}" alt="">
             <div class="spinner-description text-center pb-3">Xoay để nhận được quà ưng ý nhé!</div>
