@@ -75,7 +75,6 @@
             }
 
             #spinner-btn {
-                top: 48%;
                 width: 55px;
             }
 
