@@ -55,7 +55,7 @@ class SpinnerWheel extends Component
 
     public function getDeg() {
         $ran = rand(0, 360);
-        if($ran % 36 == 0) {
+        if($ran % 18 == 0) {
             $ran -= 10;
         }
         if($ran > $this->gift_arr[0]['min']) {
