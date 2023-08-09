@@ -73,7 +73,9 @@
             .spinner-description {
                 font-size: 16px;
             }
+        }
 
+        @media (max-width: 576px) {
             #spinner-btn {
                 width: 55px;
             }
