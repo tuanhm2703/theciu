@@ -1,13 +1,16 @@
 @push('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Mulish:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         @font-face {
             font-family: "super-comic";
             src: url("{{ asset('assets/fonts/Pony.ttf') }}") format("truetype");
         }
+
         @font-face {
             font-family: "pfbeau-sans-pro-bbook";
             src: url("{{ asset('assets/fonts/PFBeauSansPro-Bbook.ttf') }}") format("truetype");
@@ -60,16 +63,24 @@
             font-size: 2rem;
             font-weight: bold;
         }
+
         .spinner-description p {
             color: #ec4c6e;
         }
+
         @media (max-width: 768px) {
-            #spinner-btn {
-                width: 65px;
-            }
+
             .spinner-description {
-                font-size: 18px;
+                font-size: 16px;
             }
+        }
+
+        @media (max-width: 576px) {
+            #spinner-btn {
+                width: 60px;
+                top: 48.5%;
+            }
+
         }
 
         @keyframes circleScale {
@@ -101,24 +112,31 @@
             width: 100%;
             justify-content: space-between;
         }
+
         .event-header-wrapper {
             padding: 0 2rem;
         }
+
         .event-header-wrapper #slogan-img {
             width: 100px !important;
         }
+
         .event-header-wrapper #event-logo {
             width: 57px !important;
         }
+
         .congrat-text {
             font-family: 'Montserrat', sans-serif;
             font-weight: bold;
             color: #041c53 !important;
         }
-        .congrat-text .gift-note{
+
+        .congrat-text .gift-note {
             font-family: 'pfbeau-sans-pro-bbook';
         }
-        .congrat-text .gift-note,.congrat-text #gift-name {
+
+        .congrat-text .gift-note,
+        .congrat-text #gift-name {
             color: #ef4b6e !important;
         }
     </style>
@@ -138,7 +156,8 @@
             <img width="50%" class="animate__animated animate__tada" src="{{ $gift['img'] }}" alt="">
             <div class="spinner-description text-center congrat-text">
                 Chúc mừng bạn đã nhận được <br><span id="gift-name">"{{ $gift['name'] }}"</span>
-                <p class="gift-note mt-3">Phần quà sẽ được gửi cùng đơn hàng của bạn, chụp lại khoảnh khắc này và khoe với bạn bè nhé!</p>
+                <p class="gift-note mt-3">Phần quà sẽ được gửi cùng đơn hàng của bạn, chụp lại khoảnh khắc này và khoe
+                    với bạn bè nhé!</p>
             </div>
         @endif
         {{-- <div class="firework-container"></div> --}}
