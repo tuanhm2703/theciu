@@ -53,7 +53,7 @@
         }
 
         .spinner-description {
-            font-family: 'super-comic';
+            font-family: 'Montserrat', sans-serif;
             bottom: 10px;
             max-width: 80%;
             color: #2b3c68;
