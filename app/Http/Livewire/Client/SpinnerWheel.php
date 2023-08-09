@@ -27,7 +27,7 @@ class SpinnerWheel extends Component
             } else if($i % 4 == 0) {
                 $key = 'bag';
                 $image = asset('img/bag.png');
-                $name = 'Túi "ba gang" THE C.I.U';
+                $name = 'Túi ba gang THE C.I.U';
             } else if($i % 2 == 0){
                 $key = 'mirror';
                 $image = asset('img/mirror.png');
@@ -35,7 +35,7 @@ class SpinnerWheel extends Component
             } else {
                 $key  = 'notebook';
                 $image = asset('img/note-book.png');
-                $name = 'Lưu bút THE C.I.U';
+                $name = 'Sổ tay THE C.I.U';
             }
             $max = $deg + $step_deg >= 360 ? $deg + $step_deg - 360 : $deg + $step_deg;
             $this->gift_arr[] = [
@@ -47,7 +47,6 @@ class SpinnerWheel extends Component
             ];
             $deg = $max;
         }
-        \Log::info(json_encode($this->gift_arr));
     }
     public function render()
     {

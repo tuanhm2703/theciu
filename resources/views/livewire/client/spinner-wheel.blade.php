@@ -66,6 +66,9 @@
             #spinner-btn {
                 width: 65px;
             }
+            .spinner-description {
+                font-size: 18px;
+            }
         }
 
         @keyframes circleScale {
@@ -121,7 +124,7 @@
 @endpush
 <div class="voucher-popup container newsletter-popup-container" id="spinner-wheel">
     <div id="wrapper">
-        <div class="event-header-wrapper">
+        <div class="event-header-wrapper pt-3">
             <img src="{{ asset('img/slogan-img.png') }}" id="slogan-img" alt="">
             <img src="{{ asset('img/event-logo.png') }}" id="event-logo" alt="">
         </div>
@@ -129,7 +132,7 @@
             <img src="{{ asset('img/spinner.png') }}" class="spinner-img" alt=""
                 style="transform: rotate({{ $deg }}deg)">
             <img id="spinner-btn" src="{{ asset('img/spinner-btn.png') }}" alt="">
-            <div class="spinner-description text-center">Xoay để nhận được quà ưng ý nhé!</div>
+            <div class="spinner-description text-center pb-3">Xoay để nhận được quà ưng ý nhé!</div>
         @else
             <img width="50%" class="animate__animated animate__tada" src="{{ $gift['img'] }}" alt="">
             <div class="spinner-description text-center congrat-text">
