@@ -17,7 +17,7 @@ class AIORequest {
 
     protected string $vnp_TxnRef; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
     protected string $vnp_OrderInfo;
-    protected string $vnp_OrderTyp;
+    protected string $vnp_OrderType;
     protected string $vnp_Amount;
     protected string $vnp_Locale;
     protected string $vnp_BankCod;
@@ -42,6 +42,7 @@ class AIORequest {
         foreach (get_object_vars($this) as $key => $value) {
             $ucFirst = ucfirst(\Str::camel($key));
             $getter = 'get' . $ucFirst;
+
             if (property_exists($this, $key) && method_exists($this, $getter)) {
                 if(!in_array($key, [
                     Param::URL,
@@ -209,20 +210,19 @@ class AIORequest {
     }
 
     /**
-     * Get the value of vnp_OrderTyp
+     * Get the value of vnp_OrderType
      */
-    public function getVnpOrderTyp() {
-        return $this->vnp_OrderTyp;
+    public function getVnpOrderType() {
+        return $this->vnp_OrderType;
     }
 
     /**
-     * Set the value of vnp_OrderTyp
+     * Set the value of vnp_OrderType
      *
      * @return  self
      */
-    public function setVnpOrderTyp(int $vnp_OrderTyp) {
-        $this->vnp_OrderTyp = $vnp_OrderTyp;
-
+    public function setVnpOrderType(int $vnp_OrderType) {
+        $this->vnp_OrderType = $vnp_OrderType;
         return $this;
     }
 
