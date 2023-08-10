@@ -21,5 +21,10 @@
                 <i style="white-space: normal;">Chú thích: {{ $order->note }}</i>
             </div>
         @endif
+        @if ($order->bonus_note)
+            <div class="mx-1 mt-1 w-100">
+                <i style="white-space: normal;" class="text-dangers">Chú thích phần quà: {{ $order->bonus_note }}</i>
+            </div>
+        @endif
     </div>
 </div>

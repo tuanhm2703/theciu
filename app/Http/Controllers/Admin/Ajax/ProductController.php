@@ -11,11 +11,9 @@ use App\Models\Inventory;
 use App\Models\Product;
 use App\Responses\Admin\BaseResponse;
 use App\Services\BatchService;
-use Faker\Provider\Base;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
