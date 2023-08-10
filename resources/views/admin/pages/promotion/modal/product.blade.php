@@ -42,13 +42,23 @@
                                 <p>Đăng tải danh sách sản phẩm của bạn bằng cách sử dụng bảng Excel mẫu.</p>
                             </div>
                             <div class="col-md-3">
-                                <a href="#" class="btn btn-primary">
+                                <a href="{{ route('admin.ajax.product.batch_action.file', ['type' => App\Services\BatchService::UPDATE_PRODUCT_SALE_PRICE]) }}"
+                                    class="btn btn-primary">
                                     <i class="fas fa-download"></i> Tải về bản mẫu
                                 </a>
                             </div>
                         </div>
                         <div>
+                            {!! Form::open([
+                                'url' => route('admin.ajax.product.batch_action.update'),
+                                'method' => 'POST',
+                                'id' => 'batch-update-sale-form',
+                            ]) !!}
                             <input type="file" name="product-id-list-file" class="filePond">
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                            </div>
+                            {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
@@ -127,6 +137,32 @@
             productIds = Array.from(new Set(productIds))
             renderPromotionSetting()
             $('.modal').modal('hide')
+        })
+        $('#batch-update-sale-form').on('submit', (event) => {
+            event.preventDefault()
+            console.log(pond.getFile().file);
+            const form = $('#batch-update-sale-form')
+            let formData = new FormData(form[0])
+            formData.append('file', pond.getFile().file)
+            $("#batch-update-sale-form button[type=submit]").loading()
+            $.ajax({
+                url: form.attr('action'),
+                method: form.attr('method'),
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: (res) => {
+                    // toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                    $("#batch-update-sale-form button[type=submit]").loading(false)
+                    products = res.data.product_ids
+                    renderPromotionSettingForm()
+                    pond.removeFiles()
+                },
+                error: (err) => {
+                    $("#batch-update-sale-form button[type=submit]").loading(false)
+                }
+            })
         })
     })()
 </script>

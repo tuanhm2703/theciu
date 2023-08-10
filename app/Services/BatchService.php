@@ -6,6 +6,7 @@ use App\Exports\ProductGeneralMassExport;
 use App\Exports\ProductImageMassExport;
 use App\Exports\ProductSaleMassExport;
 use App\Exports\ProductShipmentMassExport;
+use App\Exports\UpdateProductSalePriceExport;
 use App\Imports\BatchUpdateImport;
 use App\Models\Inventory;
 use App\Models\Product;
@@ -17,6 +18,7 @@ class BatchService {
     const SALE_BATCH_UPDATE_TYPE = 'sale_update';
     const IMAGE_BATCH_UPDATE_TYPE = 'image_update';
     const SHIPMENT_BATCH_UPDATE_TYPE = 'shipment_update';
+    const UPDATE_PRODUCT_SALE_PRICE = 'sale_price';
     public function updateGeneralInfo($data) {
     }
 
@@ -31,16 +33,14 @@ class BatchService {
         switch ($type) {
             case self::GENERAL_BATCH_UPDATE_TYPE:
                 return $this->getGeneralInfoMassFile();
-                break;
             case self::SALE_BATCH_UPDATE_TYPE:
                 return $this->getSaleInfoMassFile();
-                break;
             case self::IMAGE_BATCH_UPDATE_TYPE:
                 return $this->getImageInfoMassFile();
-                break;
             case self::SHIPMENT_BATCH_UPDATE_TYPE:
                 return $this->getShipmentInfoMassFile();
-                break;
+            case self::UPDATE_PRODUCT_SALE_PRICE:
+                return $this->getPromotionPriceMassFile();
             default:
                 # code...
                 break;
@@ -53,15 +53,50 @@ class BatchService {
         switch ($type) {
             case self::IMAGE_BATCH_UPDATE_TYPE:
                 return $this->updateBatchImage($collection);
-                break;
             case self::GENERAL_BATCH_UPDATE_TYPE:
                 return $this->updateBatchGeneral($collection);
             case self::SALE_BATCH_UPDATE_TYPE:
                 return $this->updateBatchSale($collection);
             case self::SHIPMENT_BATCH_UPDATE_TYPE:
                 return $this->updateBatchShipment($collection);
-                break;
+            case self::UPDATE_PRODUCT_SALE_PRICE:
+                return $this->setInventoriesSalePrice($collection);
         }
+    }
+    public function setInventoriesSalePrice($collection) {
+        unset($collection[1]);
+        unset($collection[0]);
+        $inventory_ids = [];
+        foreach ($collection as $c) {
+            $sku = $c[0];
+            $promotion_price = $c[1];
+            $sale_percent = $c[2];
+            $inventory = Inventory::dontHavePromotion()->whereSku($sku)->first();
+            if ($inventory) {
+                $promotion_price = $promotion_price ? $promotion_price : $inventory->price * (100 - $sale_percent) / 100;
+                $inventory->update([
+                    'promotion_price' => $promotion_price,
+                    'promotion_status' => 1
+                ]);
+                $inventory_ids[] = $inventory->id;
+            }
+        }
+        $products = Product::whereHas('inventories', function ($q) use ($inventory_ids) {
+            $q->whereIn('inventories.id', $inventory_ids);
+        })->with(['inventories' => function ($q) use ($inventory_ids) {
+            $q->whereIn('inventories.id', $inventory_ids)->with('product:id,name');
+        }, 'image'])->get();
+        foreach($products as $product) {
+            $product->inventories->each(function ($inventory) {
+                $inventory->append(['title']);
+            });
+        }
+        return $products;
+    }
+
+    public function getInventoriesSalePrice($file) {
+        $collection = Excel::toCollection(new BatchUpdateImport, $file)[0];
+        unset($collection[0]);
     }
 
     public function updateBatchGeneral($collection) {
@@ -162,5 +197,9 @@ class BatchService {
 
     public function getShipmentInfoMassFile() {
         return Excel::download(new ProductShipmentMassExport, 'mass_update_shipment_' . now()->timestamp . '.xlsx');
+    }
+
+    public function getPromotionPriceMassFile() {
+        return Excel::download(new UpdateProductSalePriceExport, 'product-sale-price.xlsx');
     }
 }
