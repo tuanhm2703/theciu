@@ -6,7 +6,7 @@
                 $attribute = (object) $attribute;
             @endphp
             <div class="radio-container mt-1">
-                <input @disabled($attribute->out_of_stock) wire:change="changeFirstAttributeId({{ $attribute->id }})"
+                <input @disabled($attribute->out_of_stock) wire:change="changeFirstAttributeId({{ $attribute->id }})" wire:key="{{ $attribute->id }}->attribute"
                     name="first_attribute_value" id="first-attribute-{{ $attribute->value }}" type="radio"
                     class="square-radio-input" wire:model="first_attribute_value" value="{{ $attribute->value }}">
                 <label @disabled($attribute->out_of_stock) for="first-attribute-{{ $attribute->value }}"
