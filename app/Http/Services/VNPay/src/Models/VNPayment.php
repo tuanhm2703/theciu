@@ -35,7 +35,8 @@ class VNPayment {
             Param::CREATE_DATE => $this->createDate,
             Param::TXN_REF => $this->txnRef,
             Param::ORDER_INFO => $this->orderInfo,
-            Param::RETURN_URL => $this->returnUrl
+            Param::RETURN_URL => $this->returnUrl,
+            Param::ORDER_TYPE => OrderType::THOI_TRANG,
         ]);
         $this->createPaymentRequest->generateRequestData();
     }
