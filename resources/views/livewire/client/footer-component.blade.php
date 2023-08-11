@@ -97,7 +97,7 @@
                         <ul class="widget-list">
                             @foreach ($payment_methods as $method)
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ route('client.page.details', 'phuong-thuc-thanh-toan') }}">
                                         <img class="payment-logo d-inline" src="{{ $method->image->path_with_domain }}"
                                             alt="THE CIU PAYMENT METHOD - {{ $method->name }}">
                                         {{ trans('labels.payment_methods.' . $method->code) }}
