@@ -25,7 +25,7 @@ class PageController extends Controller {
     }
 
     public function create(CreatePageRequest $request) {
-        return view('admin.pages.page.components.create');
+        return view('admin.pages.page.create');
     }
 
     public function store(StorePageRequest $request) {
@@ -33,9 +33,8 @@ class PageController extends Controller {
         if($request->has('meta')) {
             $page->syncMetaTag($request->meta);
         }
-        return BaseResponse::success([
-            'message' => 'Tạo trang thành công'
-        ]);
+        session()->flash('success', 'Tạo trang thành công');
+        return redirect()->route('admin.page.index');
     }
 
     public function edit(EditPageRequest $request, Page $page) {
@@ -43,7 +42,7 @@ class PageController extends Controller {
         if($meta_tag) {
             $page->meta = $meta_tag->payload;
         }
-        return view('admin.pages.page.components.edit', compact('page'));
+        return view('admin.pages.page.edit', compact('page'));
     }
 
     public function update(Page $page, UpdatePageRequest $request) {
@@ -51,9 +50,8 @@ class PageController extends Controller {
         if($request->has('meta')) {
             $page->syncMetaTag($request->meta);
         }
-        return BaseResponse::success([
-            'message' => 'Cập nhật trang thành công'
-        ]);
+        session()->flash('success', 'Cập nhật trang thành công');
+        return back();
     }
 
     public function destroy(Page $page, DeletePageRequest $request) {

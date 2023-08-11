@@ -13,8 +13,8 @@
             <div class="card-header pb-0">
                 <div class="d-flex justify-content-between">
                     <h6>{{ trans('labels.page_list') }}</h6>
-                    <a class="ajax-modal-btn btn btn-primary" data-callback="iniPageFormCallback()"
-                        data-link="{{ route('admin.page.create') }}">{{ trans('labels.create_page') }}</a>
+                    <a class="btn btn-primary"
+                        href="{{ route('admin.page.create') }}">{{ trans('labels.create_page') }}</a>
                 </div>
             </div>
             <div class="card-body px-0 pt-0 pb-2">
