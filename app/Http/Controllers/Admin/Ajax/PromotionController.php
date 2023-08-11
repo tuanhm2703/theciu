@@ -68,4 +68,7 @@ class PromotionController extends Controller {
             'message' => 'Cập nhật trạng thái voucher thành công!'
         ]);
     }
+    public function getBatchSaleInventories(Request $request) {
+
+    }
 }

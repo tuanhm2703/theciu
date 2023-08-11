@@ -206,6 +206,10 @@ class ProductController extends Controller
         ]);
     }
 
+    public function batchUpdatePromotionPriceFile(Request $request) {
+
+    }
+
     public function downloadBatchUpdateFile(Request $request)
     {
         $type  = $request->type;
