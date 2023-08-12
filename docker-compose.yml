@@ -53,6 +53,25 @@ services:
       - ./supervisor/beta-supervisord.conf:/etc/supervisor/supervisord.conf
     networks:
       - theciu-db
+  minio:
+    image: 'bitnami/minio:latest'
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    environment:
+      - MINIO_ROOT_USER=${AWS_ACCESS_KEY_ID}
+      - MINIO_ROOT_PASSWORD=${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - /home/beta.theciu.vn/s3:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2' # Set the CPU limit to 30%
+          memory: 500M # Set the memory limit to 500MB
+
+    networks:
+      - theciu-db
+    restart: always
 networks:
   theciu-db:
     driver: bridge
