@@ -11,6 +11,7 @@ class StorageService extends Storage {
 
     public static function exists($path)
     {
+        return true;
         if(env('APP_ENV') == 'local') return true;
         return parent::exists($path);
     }
