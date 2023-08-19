@@ -13,7 +13,7 @@ class BannerSliderComponent extends Component
 
     public function mount() {
         $this->banners = Cache::remember('banners', env('CACHE_EXPIRE', 600), function() {
-            return Banner::active()->with('image', 'phoneImage')->orderBy('order')->orderBy('updated_at', 'desc')->get();
+            return Banner::active()->with('desktopImage', 'phoneImage')->orderBy('order')->orderBy('updated_at', 'desc')->get();
         });
     }
     public function render()
