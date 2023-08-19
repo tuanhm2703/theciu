@@ -168,6 +168,9 @@
         <div class="border-top pt-2">
             <h6 class="mb-1">Chú thích đơn hàng</h6>
             <p><i>{{ $order->note }}</i></p>
+            @if (!empty($order->bonus_note))
+                <p class="text-danger"><i>{{ $order->bonus_note }}</i></p>
+            @endif
         </div>
         <div class="order-turnover-info text-right border-top pt-2" style="font-size: 14px;">
             <h6>{{ trans('labels.payment_info') }}</h6>
