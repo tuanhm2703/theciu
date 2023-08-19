@@ -250,6 +250,9 @@
                 `{{ trans('toast.action_failed') }}`
             toast[type](label, e.detail.message);
         });
+        window.addEventListener('closeModal', (e) => {
+            $('.modal.show').modal('hide')
+        });
         window.addEventListener("initQuantityInput", (e) => {
             quantityInputs()
         });
