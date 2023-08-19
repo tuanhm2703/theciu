@@ -70,6 +70,9 @@
                 .spinner-description {
                     font-size: 16px;
                 }
+                #wrapper .spinner-img {
+                    max-height: 350px;
+                }
             }
 
             @media (min-width: 768px) {
