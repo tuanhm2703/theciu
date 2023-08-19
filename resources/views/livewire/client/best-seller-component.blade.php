@@ -1,5 +1,5 @@
 <div class="container mt-5 heading" wire:init="loadContent">
-    @if ($readyToLoad)
+    {{-- @if ($readyToLoad) --}}
         <h2 class="title text-center mb-4">Best Seller</h2><!-- End .title text-center -->
 
         <div class="products">
@@ -24,7 +24,7 @@
             @else
             @endif
         </div><!-- End .more-container -->
-    @else
+    {{-- @else
         <div class="row justify-content-center">
             <div class="col-6 col-md-4 col-lg-3">
                 <x-loading-card-component/>
@@ -39,5 +39,5 @@
                 <x-loading-card-component/>
             </div>
         </div>
-    @endif
+    @endif --}}
 </div><!-- End .container -->
