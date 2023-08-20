@@ -28,9 +28,9 @@ jQuery(document).ready(function($) {
 	});
 
 	$('.mobile-menu-overlay, .mobile-menu-close').on('click', function (e) {
+		e.preventDefault();
 		$('body').removeClass('mmenu-active');
 		$('.menu-toggler').removeClass('active');
-		e.preventDefault();
 	});
 
 	$('.goto-demos').on('click', function(e) {
