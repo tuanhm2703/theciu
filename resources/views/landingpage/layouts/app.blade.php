@@ -66,17 +66,15 @@
 </head>
 
 <body>
-    <div class="body">
-        <div class="page-wrapper">
+    <div class="page-wrapper">
 
-            @include('landingpage.layouts.components.header')
+        @include('landingpage.layouts.components.header')
 
-            <main class="main">
-                @yield('content')
-            </main>
-            <livewire:client.footer-component />
-        </div><!-- End .page-wrapper -->
-    </div>
+        <main class="main">
+            @yield('content')
+        </main>
+        <livewire:client.footer-component />
+    </div><!-- End .page-wrapper -->
     <div class="mobile-menu-overlay">
     </div><!-- End .mobil-menu-overlay -->
     @include('landingpage.layouts.components.header-bottom-phone')

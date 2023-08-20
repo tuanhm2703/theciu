@@ -145,7 +145,7 @@ $(document).ready(function () {
     // Header Search Toggle
 
     var $searchWrapper = $(".header-search-wrapper"),
-        $body = $(".body"),
+        $body = $("body"),
         $searchToggle = $(".search-toggle");
 
     $searchToggle.on("click", function (e) {
@@ -217,16 +217,16 @@ $(document).ready(function () {
 
     // Mobile Menu Toggle - Show & Hide
     $(".mobile-menu-toggler").on("click", function (e) {
-        e.preventDefault();
         $body.toggleClass("mmenu-active");
         $(this).toggleClass("active");
+        e.preventDefault();
     });
 
     $(".mobile-menu-overlay, .mobile-menu-close").on("click", function (e) {
-        e.preventDefault();
         e.stopPropagation();
         $body.removeClass("mmenu-active");
         $(".menu-toggler").removeClass("active");
+        e.preventDefault();
     });
 
     // Add Mobile menu icon arrows to items with children
