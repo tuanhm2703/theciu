@@ -145,7 +145,7 @@ $(document).ready(function () {
     // Header Search Toggle
 
     var $searchWrapper = $(".header-search-wrapper"),
-        $body = $("body"),
+        $body = $(".body"),
         $searchToggle = $(".search-toggle");
 
     $searchToggle.on("click", function (e) {
