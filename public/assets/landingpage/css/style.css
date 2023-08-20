@@ -411,7 +411,7 @@ blockquote.text-white cite span {
     transition: transform 0.4s ease;
 }
 
-.mmenu-active .page-wrapper {
+.mmenu-active .page-wrapper,.menu-active .page-wrapper {
     transform: translateX(200px);
 }
 
@@ -2764,7 +2764,7 @@ blockquote.text-white cite span {
     transition: all 0.4s ease;
 }
 
-.mmenu-active .mobile-menu-container {
+.mmenu-active .mobile-menu-container,.menu-active .mobile-menu-container {
     visibility: visible;
     transform: translateX(280px);
 }
@@ -2835,7 +2835,7 @@ blockquote.text-white cite span {
     opacity: 0;
 }
 
-.mmenu-active .mobile-menu-overlay {
+.mmenu-active .mobile-menu-overlay,.menu-active .mobile-menu-overlay {
     visibility: visible;
     opacity: 1;
 }
