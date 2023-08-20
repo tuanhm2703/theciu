@@ -218,8 +218,7 @@ $(document).ready(function () {
     // Mobile Menu Toggle - Show & Hide
     $(".mobile-menu-toggler").on("click", function (e) {
         e.preventDefault();
-        // $body.toggleClass("mmenu-active");
-        $body.toggleClass("menu-active");
+        $body.toggleClass("mmenu-active");
         $(this).toggleClass("active");
     });
 
@@ -227,7 +226,6 @@ $(document).ready(function () {
         e.preventDefault();
         e.stopPropagation();
         $body.removeClass("mmenu-active");
-        $body.removeClass("menu-active");
         $(".menu-toggler").removeClass("active");
     });
 
