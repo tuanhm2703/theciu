@@ -171,7 +171,7 @@ class Product extends Model {
     public function getPromotionPriceAttribute() {
         $price = INF;
         foreach ($this->inventories as $inventory) {
-            if ($inventory->has_promotion) {
+            if ($inventory->has_promotion && $inventory->stock_quantity > 0) {
                 $price = $price > $inventory->sale_price ? $inventory->sale_price : $price;
             }
         }
