@@ -217,8 +217,8 @@ $(document).ready(function () {
 
     // Mobile Menu Toggle - Show & Hide
     $(".mobile-menu-toggler").on("click", function (e) {
-        $body.toggleClass("mmenu-active");
         e.preventDefault();
+        $body.toggleClass("mmenu-active");
         $(this).toggleClass("active");
     });
 
