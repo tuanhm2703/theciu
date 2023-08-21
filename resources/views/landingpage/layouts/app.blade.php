@@ -74,6 +74,11 @@
             top: -30px;
             right: -30px;
         }
+        @media (max-width: 768px) {
+            .popup-banner-item {
+                width: 80% !important;
+            }
+        }
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles
