@@ -80,6 +80,9 @@
                 width: 80% !important;
             }
         }
+        .mfp-bg {
+            background: #949494 !important;
+        }
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles
