@@ -43,8 +43,9 @@ class PromotionController extends Controller {
 
     public function updateStatus(Promotion $promotion, Request $request) {
         $status = $request->status;
-        $promotion->status = $status;
-        $promotion->save();
+        $promotion->update([
+            'status' => $status
+        ]);
         if($promotion->status == StatusType::INACTIVE) {
             Inventory::whereIn('id', $promotion->products()->pluck('id')->toArray())->update([
                 'promotion_to' => now()->yesterday(),
