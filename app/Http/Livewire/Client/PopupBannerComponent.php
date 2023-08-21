@@ -23,6 +23,7 @@ class PopupBannerComponent extends Component
         $this->emit('initPlugin', [
             'popups' => $this->popups
         ]);
+        $this->readyToLoad = true;
     }
     public function render()
     {
