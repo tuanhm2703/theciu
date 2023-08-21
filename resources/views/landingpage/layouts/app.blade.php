@@ -74,6 +74,15 @@
             top: -30px;
             right: -30px;
         }
+        @media (max-width: 768px) {
+            .popup-banner-item {
+                max-width: 80% !important;
+                width: 80% !important;
+            }
+        }
+        .mfp-bg {
+            background: #bbb !important;
+        }
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles
