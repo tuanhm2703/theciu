@@ -76,7 +76,7 @@
         }
         @media (max-width: 768px) {
             .popup-banner-item {
-                width: 80% !important;
+                max-width: 80% !important;
             }
         }
     </style>
