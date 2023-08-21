@@ -75,7 +75,7 @@ class ProductPickItemComponent extends Component
 
     public function addToCart()
     {
-        $this->emit('cart:itemAdded', $this->inventory->id, $this->quantity);
+        $this->emit('cart:itemAdded', $this->inventory?->id, $this->quantity);
     }
 
     public function changeSecondAttributeId($id)

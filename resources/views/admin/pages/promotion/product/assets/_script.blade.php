@@ -167,10 +167,7 @@
                             inventories: product.inventories.map(function(inventory) {
                                 return {
                                     id: inventory.id,
-                                    product_id: inventory.product_id,
                                     promotion_price: inventory.promotion_price,
-                                    promotion_from: inventory.promotion_from,
-                                    promotion_to: inventory.promotion_to,
                                     promotion_status: inventory.promotion_status,
                                 }
                             })

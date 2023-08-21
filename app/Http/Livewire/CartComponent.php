@@ -188,6 +188,7 @@ class CartComponent extends Component {
             return redirect()->to($redirectUrl);
         } catch (\Throwable $th) {
             $this->error = $th->getMessage();
+            $this->dispatchBrowserEvent('closeModal');
         }
     }
 

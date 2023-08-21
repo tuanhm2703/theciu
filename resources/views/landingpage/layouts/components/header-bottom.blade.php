@@ -4,7 +4,7 @@
             <nav class="main-nav">
                 <ul class="menu sf-arrows">
                     <li class="megamenu-container {{ isNavActive('client.home') ? 'active' : '' }}">
-                        <a href="/">Trang chủ</a>
+                        <a href="{{ isNavActive('client.home') ? 'javascript:void(0);' : route('client.home') }}">Trang chủ</a>
                     </li>
                     @include('landingpage.layouts.components.navs.shop-category')
                     @include('landingpage.layouts.components.navs.product-category')

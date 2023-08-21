@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
 		effect_speed: 400,
 		appearEffect: '',
 		appear: function(elements_left, settings) {
-			
+
 		},
 		load: function(elements_left, settings) {
 			$(this).removeClass('molla-lz').css('padding-top', '');
