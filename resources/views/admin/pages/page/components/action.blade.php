@@ -5,8 +5,7 @@
     </button>
     <ul class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
         <li>
-            <a data-callback="iniPageFormCallback()" data-link="{{ route('admin.page.edit', $page->id) }}" data-modal-size="modal-xl"
-                class="ajax-modal-btn"><span class="badge badge-warning d-block text-warning"><i
+            <a href="{{ route('admin.page.edit', $page->id) }}"><span class="badge badge-warning d-block text-warning"><i
                         class="far fa-edit p-1"></i>{{ trans('labels.edit') }}</span></a>
         </li>
         <li>

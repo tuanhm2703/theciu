@@ -7,6 +7,7 @@ use App\Jobs\MigrateThumbnail;
 use App\Jobs\ResizeImageJob;
 use App\Models\Image;
 use App\Models\Inventory;
+use App\Models\Product;
 use App\Services\StorageService;
 
 class ImageObserver {

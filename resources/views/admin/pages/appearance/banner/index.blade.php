@@ -109,14 +109,29 @@
                 files: imgPhoneSource ? [imgPhoneSource] : [],
                 labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
             })
-
+            const filePopup = FilePond.create(document.querySelector('input[name=image-popup]'), {
+                imagePreviewHeight: 170,
+                storeAsFile: true,
+                files: imgPhoneSource ? [imgPhoneSource] : [],
+                labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
+            })
+            if ($('select[name=type]').val() == @json(App\Enums\BannerType::BANNER)) {
+                $('input[name=image]').parent().parent().show()
+                $('input[name=phoneImage]').parent().parent().show()
+                $('input[name=image-popup]').parent().parent().hide()
+            } else {
+                $('input[name=image]').parent().parent().hide()
+                $('input[name=phoneImage]').parent().parent().hide()
+                $('input[name=image-popup]').parent().parent().show()
+            }
             $('form').ajaxForm({
                 beforeSend: () => {
                     $('.submit-btn').loading()
                 },
                 data: {
                     image: file.getFile(1),
-                    phoneImage: filePhone.getFile(1)
+                    phoneImage: filePhone.getFile(1),
+                    imagePopup: filePopup.getFile(1)
                 },
                 dataType: 'json',
                 success: (res) => {
@@ -138,14 +153,19 @@
                 storeAsFile: true,
                 labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
             })
-
+            const filePopup = FilePond.create(document.querySelector('input[name=image-popup]'), {
+                imagePreviewHeight: 170,
+                storeAsFile: true,
+                labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
+            })
             $('form').ajaxForm({
                 beforeSend: () => {
                     $('.submit-btn').loading()
                 },
                 data: {
                     image: file.getFile(1),
-                    phoneImage: filePhone.getFile(1)
+                    phoneImage: filePhone.getFile(1),
+                    imagePopup: filePopup.getFile(1)
                 },
                 dataType: 'json',
                 success: (res) => {

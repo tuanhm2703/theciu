@@ -86,6 +86,9 @@ class ProductPickItemComponent extends Component
 
     public function updated($name, $value)
     {
+        if($name === 'first_attribute_value') {
+            $this->reloadProductInfo();
+        }
         $this->getInventory();
     }
 
