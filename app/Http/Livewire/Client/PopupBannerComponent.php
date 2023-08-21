@@ -20,6 +20,9 @@ class PopupBannerComponent extends Component
         } else {
             $this->popups = [];
         }
+        $this->emit('initPlugin', [
+            'popups' => $this->popups
+        ]);
     }
     public function render()
     {

@@ -19,8 +19,8 @@
 @push('js')
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            @this.on('initPlugin', function() {
-                const popups = @json($popups);
+            @this.on('initPlugin', function(e) {
+                const popups = @json(e.popups);
                 popups.forEach(popup => {
                     $.magnificPopup.open({
                         items: {
