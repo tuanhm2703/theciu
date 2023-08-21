@@ -20,7 +20,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             @this.on('initPlugin', function(e) {
-                const popups = @json(e.popups);
+                const popups = e.popups;
                 popups.forEach(popup => {
                     $.magnificPopup.open({
                         items: {
