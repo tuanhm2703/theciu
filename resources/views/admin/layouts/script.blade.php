@@ -203,8 +203,6 @@
                         $(`#${modalId}`).modal('show');
                         $('.modal-body input:text:visible:first').focus();
                         //Initialize application plugins after ajax load the content
-                        console.log($(ajaxElement).attr(
-                            'data-init-app') == null);
                         if (typeof initAppPlugins == 'function' && $(ajaxElement).attr(
                                 'data-init-app') == null) {
                             $(ajaxElement).attr('data-init-app') == null

@@ -168,7 +168,6 @@
         </div>
     </div>
     @push('js')
-        <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
         <script src="https://unpkg.com/fireworks-js@2.x/dist/index.umd.js"></script>
 
         <script>

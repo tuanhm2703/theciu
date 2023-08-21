@@ -60,6 +60,20 @@
             height: 100vh;
             overflow-y: hidden;
         }
+        .popup-banner-item {
+            opacity: 0;
+            text-align: center;
+            width: 50%;
+            position: relative;
+        }
+        .popup-banner-item .mfp-close {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #f3f3f3;
+            top: -30px;
+            right: -30px;
+        }
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles
