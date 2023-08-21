@@ -17,13 +17,13 @@ class PopupBannerComponent extends Component
                 return Banner::popup()->active()->with('image')->orderBy('order')->orderBy('updated_at', 'desc')->get();
             });
             session()->put('popup-banner-show', true);
+            $this->emit('initPlugin', [
+                'popups' => $this->popups
+            ]);
+            $this->readyToLoad = true;
         } else {
             $this->popups = [];
         }
-        $this->emit('initPlugin', [
-            'popups' => $this->popups
-        ]);
-        $this->readyToLoad = true;
     }
     public function render()
     {
