@@ -81,7 +81,7 @@
             }
         }
         .mfp-bg {
-            background: #949494 !important;
+            background: #bbb !important;
         }
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
