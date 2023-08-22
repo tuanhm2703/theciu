@@ -14,7 +14,7 @@
         @foreach ($banners as $banner)
 
             <div class="intro-slide">
-                <img data-href="{{ $banner->url }}" class="banner-href-img" alt="THE C.I.U BANNER - {{ $banner->title }}" src="{{ $banner->desktopImage->path_with_domain }}">
+                <img data-href="{{ $banner->url }}" class="banner-href-img" alt="THE C.I.U BANNER - {{ $banner->title }}" src="{{ $banner->desktopImage?->path_with_domain }}">
                 {{-- <div class="container intro-content text-center">
                     <h3 class="intro-subtitle text-white">{{ $banner->title }}</h3><!-- End .h3 intro-subtitle -->
                     <h1 class="intro-title text-white">{{ $banner->title }}</h1><!-- End .intro-title -->
