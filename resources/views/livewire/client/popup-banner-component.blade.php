@@ -19,8 +19,8 @@
 @push('js')
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            @this.on('initPlugin', function() {
-                const popups = @json($popups);
+            @this.on('initPlugin', function(e) {
+                const popups = e.popups;
                 popups.forEach(popup => {
                     $.magnificPopup.open({
                         items: {
@@ -42,6 +42,7 @@
                             close: function() {
                                 $("body").css("overflow-x", "hidden");
                                 $(".sticky-header.fixed").css("padding-right", "0");
+                                @this.preventReload();
                             },
                         },
                     });
