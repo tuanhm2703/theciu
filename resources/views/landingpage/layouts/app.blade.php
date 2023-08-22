@@ -71,18 +71,18 @@
             height: 30px;
             border-radius: 50%;
             background: #f3f3f3;
-            top: -30px;
-            right: -30px;
+            top: 0px;
+            right: 0px;
         }
         @media (max-width: 768px) {
             .popup-banner-item {
-                max-width: 80% !important;
-                width: 80% !important;
+                max-width: 95% !important;
+                width: 95% !important;
             }
         }
-        .mfp-bg {
+        /* .mfp-bg {
             background: #bbb !important;
-        }
+        } */
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles
