@@ -17,7 +17,7 @@ class PopupBannerComponent extends Component
     public function loadPopups() {
         if(!session()->has('popup-banner-show')) {
             $this->popups = Cache::remember('popups', env('CACHE_EXPIRE', 600), function() {
-                return Banner::popup()->active()->with('image')->orderBy('order')->orderBy('updated_at', 'desc')->get();
+                return Banner::popup()->active()->with('desktopImage', 'phoneImage')->orderBy('order')->orderBy('updated_at', 'desc')->get();
             });
             session()->save();
             $this->emit('initPlugin', [
