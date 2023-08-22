@@ -16,6 +16,7 @@
                             <li>Người ĐDPL: Nguyễn Đức Huy</li>
                             <li>Ngày hoạt động: 16/09/2022</li>
                             <li>Giấy phép kinh doanh: 0317478388</li>
+                            <li><a href='http://online.gov.vn/Home/WebDetails/106122'><img width="150px" alt='Chứng nhận đã khai báo với Bộ Công Thương' title='Chứng nhận đã khai báo với Bộ Công Thương' src='http://online.gov.vn/Content/EndUser/LogoCCDVSaleNoti/logoSaleNoti.png'/></a></li>
                         </ul>
                     </div>
                 </div>
