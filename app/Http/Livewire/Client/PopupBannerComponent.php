@@ -11,12 +11,15 @@ class PopupBannerComponent extends Component
 {
     use LazyloadLivewire;
     public $popups;
+    public function preventReload() {
+        session()->put('popup-banner-show', true);
+    }
     public function loadPopups() {
         if(!session()->has('popup-banner-show')) {
             $this->popups = Cache::remember('popups', env('CACHE_EXPIRE', 600), function() {
                 return Banner::popup()->active()->with('image')->orderBy('order')->orderBy('updated_at', 'desc')->get();
             });
-            session()->put('popup-banner-show', true);
+            session()->save();
             $this->emit('initPlugin', [
                 'popups' => $this->popups
             ]);
@@ -24,6 +27,7 @@ class PopupBannerComponent extends Component
         } else {
             $this->popups = [];
         }
+        return;
     }
     public function render()
     {
