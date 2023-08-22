@@ -31,9 +31,6 @@ class BannerController extends Controller {
         if ($request->hasFile('phoneImage')) {
             $banner->createImages([$request->file('phoneImage')], MediaType::PHONE);
         }
-        if ($request->hasFile('image-popup')) {
-            $banner->createImages([$request->file('image-popup')], MediaType::PHONE);
-        }
         return BaseResponse::success([
             'message' => 'Tạo banner thành công'
         ]);
@@ -52,10 +49,6 @@ class BannerController extends Controller {
         if ($request->hasFile('phoneImage')) {
             $banner->phoneImage()->delete();
             $banner->createImages([$request->file('phoneImage')], MediaType::PHONE);
-        }
-        if ($request->hasFile('image-popup')) {
-            $banner->image()->delete();
-            $banner->createImages([$request->file('image-popup')], MediaType::PHONE);
         }
         return BaseResponse::success([
             'message' => 'Cập nhật banner thành công'

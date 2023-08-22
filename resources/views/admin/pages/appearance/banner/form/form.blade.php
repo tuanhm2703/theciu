@@ -55,27 +55,5 @@
         {!! Form::file('phoneImage', ['class' => 'form-control']) !!}
     </div>
 </div>
-<div class="col-12" id="popup-img">
-    {!! Form::label('image-popup', trans('labels.image'), ['class' => 'custom-label-control']) !!}
-    {!! Form::file('image-popup', ['class' => 'form-control']) !!}
-</div>
 <script>
-    $(document).ready(function() {
-        if ($('select[name=type]').val() == @json(App\Enums\BannerType::BANNER)) {
-            $('#banner-img').show()
-            $('#popup-img').hide()
-        } else {
-            $('#banner-img').hide()
-            $('#popup-img').show()
-        }
-        $('select[name=type]').on('change', function() {
-            if ($('select[name=type]').val() == @json(App\Enums\BannerType::BANNER)) {
-                $('#banner-img').show()
-                $('#popup-img').hide()
-            } else {
-                $('#banner-img').hide()
-                $('#popup-img').show()
-            }
-        })
-    })
 </script>
