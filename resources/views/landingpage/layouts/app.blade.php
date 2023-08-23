@@ -60,6 +60,29 @@
             height: 100vh;
             overflow-y: hidden;
         }
+        .popup-banner-item {
+            opacity: 0;
+            text-align: center;
+            width: 50%;
+            position: relative;
+        }
+        .popup-banner-item .mfp-close {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #f3f3f3;
+            top: 0px;
+            right: 0px;
+        }
+        @media (max-width: 768px) {
+            .popup-banner-item {
+                max-width: 95% !important;
+                width: 95% !important;
+            }
+        }
+        /* .mfp-bg {
+            background: #bbb !important;
+        } */
     </style>
     {!! App::get('WebsiteSetting')->data['header_code'] !!}
     @livewireStyles

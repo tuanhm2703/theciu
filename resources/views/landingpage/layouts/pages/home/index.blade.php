@@ -93,6 +93,7 @@
         </div>
     </main><!-- End .main -->
     <livewire:client.voucher-popup-component />
+    <livewire:client.popup-banner-component />
 @endsection
 @push('js')
     <script>

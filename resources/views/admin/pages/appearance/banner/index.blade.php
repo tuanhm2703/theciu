@@ -109,14 +109,13 @@
                 files: imgPhoneSource ? [imgPhoneSource] : [],
                 labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
             })
-
             $('form').ajaxForm({
                 beforeSend: () => {
                     $('.submit-btn').loading()
                 },
                 data: {
                     image: file.getFile(1),
-                    phoneImage: filePhone.getFile(1)
+                    phoneImage: filePhone.getFile(1),
                 },
                 dataType: 'json',
                 success: (res) => {
@@ -138,14 +137,13 @@
                 storeAsFile: true,
                 labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
             })
-
             $('form').ajaxForm({
                 beforeSend: () => {
                     $('.submit-btn').loading()
                 },
                 data: {
                     image: file.getFile(1),
-                    phoneImage: filePhone.getFile(1)
+                    phoneImage: filePhone.getFile(1),
                 },
                 dataType: 'json',
                 success: (res) => {

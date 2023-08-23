@@ -28,6 +28,12 @@
         {!! Form::text('url', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required']) !!}
     </div>
 </div>
+<div class="mt-3">
+    {!! Form::label('type', trans('labels.type') . ':', ['class' => 'custom-label-control m-0']) !!}
+    {!! Form::select('type', App\Enums\BannerType::getOptions(), isset($banner) ? $banner->type : null, [
+        'class' => 'form-control',
+    ]) !!}
+</div>
 <div class="row mt-3">
     <div class="col-md-12">
         {!! Form::label('description', trans('labels.description') . ': ', ['class' => 'custom-label-control m-0']) !!}
@@ -39,13 +45,15 @@
         ]) !!}
     </div>
 </div>
-<div class="row mt-3">
+<div class="row mt-3" id="banner-img">
     <div class="col-md-6">
         {!! Form::label('image', trans('labels.image') . ' (Desktop screen): ', ['class' => 'custom-label-control']) !!}
-        {!! Form::file('image', ['class' => 'form-control', 'required']) !!}
+        {!! Form::file('image', ['class' => 'form-control']) !!}
     </div>
     <div class="col-md-6">
         {!! Form::label('phoneImage', trans('labels.image') . ' (Phone screen): ', ['class' => 'custom-label-control']) !!}
-        {!! Form::file('phoneImage', ['class' => 'form-control', 'required']) !!}
+        {!! Form::file('phoneImage', ['class' => 'form-control']) !!}
     </div>
 </div>
+<script>
+</script>

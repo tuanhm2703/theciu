@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BannerType;
 use App\Traits\Common\Imageable;
 use App\Traits\Scopes\CustomScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +16,8 @@ class Banner extends Model {
         'description',
         'url',
         'order',
-        'status'
+        'status',
+        'type'
     ];
     public function getImageSizesAttribute() {
         return [
@@ -23,4 +25,11 @@ class Banner extends Model {
         ];
     }
     const DEFAULT_IMAGE_SIZE = 1600;
+
+    public function scopeBanner($q) {
+        return $q->where('type', BannerType::BANNER);
+    }
+    public function scopePopup($q) {
+        return $q->where('type', BannerType::POPUP);
+    }
 }
