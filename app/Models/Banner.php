@@ -21,10 +21,10 @@ class Banner extends Model {
     ];
     public function getImageSizesAttribute() {
         return [
-            1600
+            2500
         ];
     }
-    const DEFAULT_IMAGE_SIZE = 1600;
+    const DEFAULT_IMAGE_SIZE = 2500;
 
     public function scopeBanner($q) {
         return $q->where('type', BannerType::BANNER);
