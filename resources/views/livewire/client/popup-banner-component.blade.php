@@ -11,8 +11,10 @@
     @if ($readyToLoad)
         @foreach ($popups as $item)
             <div class="popup-banner-item sticky-header container" id="{{ $item->id }}-popup-banner">
-                <img class="phone-banner-slider" src="{{ $item->phoneImage->path_with_domain }}" alt="">
-                <img class="desktop-banner-slider" src="{{ $item->desktopImage->path_with_domain }}" alt="">
+                <a href="{{ $item->url }}">
+                    <img class="phone-banner-slider" src="{{ $item->phoneImage->path_with_domain }}" alt="">
+                    <img class="desktop-banner-slider" src="{{ $item->desktopImage->path_with_domain }}" alt="">
+                </a>
             </div>
         @endforeach
     @endif
