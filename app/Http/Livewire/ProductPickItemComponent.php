@@ -92,6 +92,11 @@ class ProductPickItemComponent extends Component
         $this->getInventory();
     }
 
+    public function changeFirstAttributeValue($value) {
+        $this->first_attribute_value = json_decode($value);
+        $this->reloadProductInfo();
+    }
+
     private function getInventory() {
         $this->inventory = collect($this->inventories)->where('first_attribute.value', $this->first_attribute_value)->where('second_attribute.value', $this->second_attribute_value)->first();
         $this->inventory = $this->inventory ? $this->product->inventories->where('id', $this->inventory['id'])->first() : null;
