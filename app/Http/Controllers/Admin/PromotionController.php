@@ -70,7 +70,7 @@ class PromotionController extends Controller {
         $selectedIds = $request->selectedIds;
         $products = Product::with(['category', 'image', 'inventories' => function ($q) {
             return $q->with('attributes');
-        }])->dontHavePromotion()->select('id', 'name');
+        }])->dontHavePromotion()->dontHaveCombo()->select('id', 'name');
         if ($selectedIds) {
             $selectedIds = implode(', ', $selectedIds);
             $products->orderByRaw("field(id, $selectedIds) desc");

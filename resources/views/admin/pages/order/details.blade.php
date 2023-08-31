@@ -240,7 +240,8 @@
                             </div>
                             <div class="col-2">
                                 @if ($order->freeship_voucher)
-                                    <span class="text-decoration-line-through">{{ format_currency_with_label($order->shipping_fee) }}</span>
+                                    <span
+                                        class="text-decoration-line-through">{{ format_currency_with_label($order->shipping_fee) }}</span>
                                     <span>{{ format_currency_with_label($order->customer_shipping_fee_amount) }}</span>
                                 @else
                                     <span>{{ format_currency_with_label($order->customer_shipping_fee_amount) }}</span>
@@ -258,6 +259,11 @@
                             <div class="col-2">
                                 <span> - {{ format_currency_with_label($order->rank_discount_value) }}</span>
                             </div>
+                            @if ($order->combo_discount)
+                                <div class="col-2">
+                                    <span> - {{ format_currency_with_label($order->combo_discount) }}</span>
+                                </div>
+                            @endif
                             <div class="col-10 turnover-label">
                                 <b>Doanh thu đơn hàng</b>
                             </div>
@@ -321,6 +327,13 @@
                                 - {{ format_currency_with_label($order->rank_discount_value) }}
                             </span>
                         </div>
+                        @if ($order->combo_discount)
+                            <div class="col-2">
+                                <span>
+                                    - {{ format_currency_with_label($order->combo_discount) }}
+                                </span>
+                            </div>
+                        @endif
                         <div class="col-10 payment-info-label">
                             <span>Tổng tiền Thanh toán</span>
                         </div>

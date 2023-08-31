@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
+@extends('admin.layouts.app', ['class' => 'g-sidenav-show'])
 
 @section('content')
     @include('admin.layouts.navbars.auth.topnav', ['title' => 'Tables'])

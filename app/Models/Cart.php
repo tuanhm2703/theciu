@@ -18,6 +18,46 @@ class Cart extends Model {
         return $this->belongsToMany(Inventory::class, 'cart_items')->whereHas('product')->withPivot('quantity');
     }
 
+    public function calculateComboDiscount($item_selected) {
+        if(count($item_selected) == 0) return 0;
+        // inventory that selected in cart
+        $inventories = $this->inventories()->whereIn('inventories.id', $item_selected)->get();
+        // product that selected in cart
+        $product_ids = array_unique($inventories->pluck('product_id')->toArray());
+        /* The code is querying the `Combo` model to retrieve combos that do not have certain products. */
+        $combos = Combo::whereDoesntHave('products', function($q) use ($product_ids) {
+            $q->whereNotIn('products.id', $product_ids);
+        })->with('products')->available()->get();
+        $discounted_combos = [];
+        foreach($combos as $combo) {
+            $total = 0;
+            $c = [
+                'discount_amount' => 0,
+                'total_combo' => 0
+            ];
+            do {
+                foreach($combo->products as $product) {
+                    $inventory = $inventories->where('product_id', $product->id)->first();
+                    if($inventory->pivot->quantity > 0) {
+                        $total += $inventory->price - $inventory->promotion_price;
+                        $inventory->pivot->quantity--;
+                    } else {
+                        $total = 0;
+                        break;
+                    }
+                }
+                if($total > 0) {
+                    $c['discount_amount'] += $total;
+                    $c['total_combo'] += 1;
+                }
+            } while ($total > 0);
+            if($c['discount_amount'] > 0) {
+                $c['combo'] = $combo;
+                $discounted_combos[] = $c;
+            }
+        }
+        return collect($discounted_combos);
+    }
     public function getTotalWithSelectedItems($item_selected, $voucher = null) {
         if(count($item_selected) == 0) return 0;
         $total = 0;

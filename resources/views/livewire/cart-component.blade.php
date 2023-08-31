@@ -184,6 +184,12 @@
                             <td><span>{{ format_currency_with_label($shipping_fee) }}</span></td>
                         @endif
                     </tr>
+                    @if ($combo_discount > 0)
+                        <tr class="order-payment-info">
+                            <td><span>{{ trans('labels.combo_discount') }}</span></td>
+                            <td><span>- {{ format_currency_with_label($combo_discount) }}</span></td>
+                        </tr>
+                    @endif
                     <tr class="summary-total">
                         <td>{{ trans('labels.total') }}:</td>
                         <td>{{ format_currency_with_label($total - $order_voucher_discount + $shipping_fee - $freeship_voucher_discount) }}
@@ -195,8 +201,8 @@
                 <label for="note" class="form-label">Chú thích đơn hàng</label>
                 <textarea name="note" class="form-control w-100" wire:model.lazy="note" cols="30" rows="5"></textarea>
             </div>
-            <button wire:click="checkOrder" href="#" id="checkout-btn" wire:loading.attr="disabled" wire:target="checkOrder"
-                class="btn btn-outline-primary-2 btn-order btn-block">
+            <button wire:click="checkOrder" href="#" id="checkout-btn" wire:loading.attr="disabled"
+                wire:target="checkOrder" class="btn btn-outline-primary-2 btn-order btn-block">
                 <span wire:loading.remove wire:target="checkOrder">{{ trans('labels.checkout') }}</span>
                 <span wire:loading wire:target="checkOrder">Đang tiến hành thanh toán..</span>
             </button>
@@ -347,7 +353,18 @@
                                             {{ format_currency_with_label($shipping_fee) }}
                                         </span>
                                     @endif
-
+                                </div>
+                            </div>
+                            <div class="row mb-1">
+                                <div class="col-7">
+                                    <span class="confirm-label">
+                                        {{ trans('combo_discount') }}
+                                    </span>
+                                </div>
+                                <div class="col-5 text-right">
+                                    <span class="confirm-info">
+                                        - {{ format_currency_with_label($combo_discount) }}
+                                    </span>
                                 </div>
                             </div>
                             <div class="row mb-1">
@@ -361,7 +378,8 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <button class="btn btn-primary mr-2" wire:click="checkout" wire:loading.attr="disabled" wire:target="checkout">
+                        <button class="btn btn-primary mr-2" wire:click="checkout" wire:loading.attr="disabled"
+                            wire:target="checkout">
                             <span class="text-white" wire:loading.remove
                                 wire:target="checkout">{{ trans('labels.confirm') }}</span>
                             <span class="text-white" wire:loading wire:target="checkout">Đang tiến hành thanh

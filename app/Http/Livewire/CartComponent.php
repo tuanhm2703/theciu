@@ -39,6 +39,7 @@ class CartComponent extends Component {
     public $payment_method_id;
     public $item_selected = [];
     public $rank_discount_amount = 0;
+    public $combo_discount = 0;
     public $total;
 
     public $voucher_code;
@@ -181,7 +182,7 @@ class CartComponent extends Component {
             'item_selected' => $this->item_selected,
             'order_voucher_id' => $this->order_voucher_id,
             'freeship_voucher_id' => $this->freeship_voucher_id,
-            'note' => $this->note
+            'note' => $this->note,
         ]);
         try {
             $redirectUrl = CheckoutService::checkout($checkoutModel);
@@ -264,7 +265,8 @@ class CartComponent extends Component {
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
         $this->rank_discount_amount = customer()->calculateRankDiscountAmount($this->cart->getTotalWithSelectedItems($this->item_selected));
-        $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount;
+        $this->combo_discount = $this->cart->calculateComboDiscount($this->item_selected)->sum('discount_amount');
+        $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount - $this->combo_discount;
         $this->updateVoucherDisableStatus();
         $this->order_voucher_discount = $this->order_voucher ? $this->order_voucher->getDiscountAmount($this->total) : 0;
         $this->freeship_voucher_discount = $this->freeship_voucher ? $this->freeship_voucher->getDiscountAmount($this->shipping_fee) : 0;

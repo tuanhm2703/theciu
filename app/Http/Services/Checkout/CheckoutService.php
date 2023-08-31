@@ -70,11 +70,21 @@ class CheckoutService
             }
             $order_total = $order->inventories()->sum('order_items.total');
             $rank_discount = $customer->calculateRankDiscountAmount($order_total);
+            $discounted_combos = $checkoutModel->getCart()->calculateComboDiscount($checkoutModel->getItemSelected());
+            $combo_discount = $discounted_combos->sum('discount_amount');
             $attach_vouchers = [];
             $order_discount_amount = 0;
             $freeship_discount_amount = 0;
+            if($discounted_combos->count() > 0) {
+                foreach($discounted_combos as $c) {
+                    $order->combos()->attach($c['combo']->id, [
+                        'total_discount' => $c['discount_amount'],
+                        'number_of_combos' => $c['total_combo']
+                    ]);
+                }
+            }
             if ($checkoutModel->getOrderVoucher()) {
-                $order_discount_amount = $checkoutModel->getOrderVoucher()->getDiscountAmount($order_total - $rank_discount);
+                $order_discount_amount = $checkoutModel->getOrderVoucher()->getDiscountAmount($order_total - $rank_discount - $combo_discount);
                 $order_total = $order_total - $order_discount_amount;
                 $orderVoucher = $checkoutModel->getOrderVoucher();
                 $attach_vouchers[$checkoutModel->getOrderVoucherId()] = [
@@ -85,7 +95,7 @@ class CheckoutService
             }
             if ($checkoutModel->getFreeshipVoucher()) {
                 $freeship_discount_amount = $checkoutModel->getFreeshipVoucher()->getDiscountAmount($checkoutModel->getShippingFee());
-                $order_total = $order_total - $freeship_discount_amount;
+                $order_total = $order_total - $freeship_discount_amount - $combo_discount;
                 $freeshipVoucher = $checkoutModel->getFreeshipVoucher();
                 $attach_vouchers[$checkoutModel->getFreeshipVoucherId()] = [
                     'type' => $freeshipVoucher->voucher_type->code,
@@ -96,10 +106,11 @@ class CheckoutService
                 $order->vouchers()->attach($attach_vouchers);
             $subtotal = $order->inventories()->sum('order_items.total');
             $order->update([
-                'total' => $order_total + $order->shipping_fee - $rank_discount,
+                'total' => $order_total + $order->shipping_fee - $rank_discount - $combo_discount,
                 'subtotal' => $subtotal,
                 'origin_subtotal' => $order->inventories()->sum(DB::raw('order_items.origin_price * order_items.quantity')),
-                'rank_discount_value' => $rank_discount
+                'rank_discount_value' => $rank_discount,
+                'combo_discount' => $combo_discount
             ]);
             $order->shipping_order()->create([
                 'shipping_service_id' => $checkoutModel->getShippingServiceId(),

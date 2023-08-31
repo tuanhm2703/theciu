@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['class' => 'g-sidenav-show bg-gray-100', 'headTitle' => trans('labels.update_product')])
+@extends('admin.layouts.app', ['class' => 'g-sidenav-show', 'headTitle' => trans('labels.update_product')])
 @push('style')
     @include('admin.pages.product.form.assets._style')
 @endpush

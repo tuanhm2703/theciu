@@ -19,6 +19,13 @@ trait ProductScope {
             });
         });
     }
+    public function scopeDontHaveCombo($q) {
+        return $q->whereDoesntHave('combos', function($q) {
+            $q->whereNotNull('combos.begin')->whereNotNull('combos.end')->where(function ($q) {
+                $q->whereRaw("now() between combos.begin and combos.end")->orWhere('combos.begin', '>=', now());
+            });
+        });
+    }
 
     public function scopeNewArrival($q) {
         return $q->orderBy('created_at', 'desc');
@@ -40,6 +47,11 @@ trait ProductScope {
 
     public function scopeHasAvailablePromotions($q) {
         return $q->whereHas('promotions', function ($q) {
+            $q->available();
+        });
+    }
+    public function scopeHasAvailableCombos($q) {
+        return $q->whereHas('combos', function ($q) {
             $q->available();
         });
     }

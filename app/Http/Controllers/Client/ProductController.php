@@ -33,7 +33,15 @@ class ProductController extends Controller {
                 return $q->where('inventories.product_id', $product->id);
             });
         })->exists();
-        return view('landingpage.layouts.pages.product.detail.index', compact('product', 'other_products', 'has_review'));
+        $combo_products = [];
+        if($product->available_combo) {
+            $combo_products = $product->available_combo->products()->where('products.id', '!=', $product->id)->with(['category', 'inventories' => function ($q) {
+                return $q->available()->with(['image', 'attributes' => function ($q) {
+                    $q->orderBy('attribute_inventory.created_at', 'desc');
+                }]);
+            }])->available()->get();
+        }
+        return view('landingpage.layouts.pages.product.detail.index', compact('product', 'other_products', 'has_review', 'combo_products'));
     }
 
     public function index(Request $request) {

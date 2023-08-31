@@ -21,7 +21,7 @@
 
                 <div class="row">
                     <div class="col-md-4">
-                        {!! Form::label('begin', 'Thời gian khuyến mãi:', ['class' => 'custom-control-label m-0']) !!}
+                        {!! Form::label('begin', 'Tên chương trình khuyến mãi:', ['class' => 'custom-control-label m-0']) !!}
                     </div>
                     <div class="col-md-8">
                         {!! Form::hidden('id', null, []) !!}
@@ -90,18 +90,6 @@
                     </span>
                 </div>
             </div>
-            {{-- <div class="col-2">
-                <label for="">
-                    Số lượng sản phẩm khuyến mãi
-                  </label>
-                <input type="text" class="form-control">
-            </div> --}}
-            {{-- <div class="col-2">
-                <label for="">
-                    Giới hạn mua tối đa của mỗi khách hàng
-                  </label>
-                <input type="text" class="form-control">
-            </div> --}}
             <div class="offset-4 col-2 d-flex justify-content-center align-items-center">
                 <button class="btn btn-default common-info-update-btn">Cập nhật hàng loạt</button>
             </div>

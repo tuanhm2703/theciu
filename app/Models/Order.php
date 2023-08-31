@@ -40,7 +40,8 @@ class Order extends Model
         'payment_status',
         'rank_discount_value',
         'note',
-        'bonus_note'
+        'bonus_note',
+        'combo_discount'
     ];
 
     public function customer()
@@ -82,6 +83,10 @@ class Order extends Model
             'name',
             'is_reorder'
         ]);
+    }
+
+    public function combos() {
+        return $this->belongsToMany(Combo::class, 'order_combo');
     }
 
     public function review() {

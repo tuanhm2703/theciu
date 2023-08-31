@@ -252,4 +252,9 @@ return [
     'reply' => 'Trả lời',
     'review_star' => 'Sao đánh giá',
     'detail_review' => 'Chi tiết đánh giá',
+    'create_combo' => 'Tạo combo',
+    'add_product' => 'Thêm sản phẩm',
+    'combo_name' => 'Tên combo',
+    'edit_combo' => 'Cập nhật combo',
+    'combo_discount' => 'Giảm giá combo'
 ];

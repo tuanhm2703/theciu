@@ -157,7 +157,6 @@ class Inventory extends Model {
     }
 
     public function syncKiotWarehouseLocal() {
-        $productSource = new ProductResource(App::make(Client::class));
         $kiotSetting = App::get('KiotConfig');
         if ($kiotSetting->data['branchId']) {
             try {
