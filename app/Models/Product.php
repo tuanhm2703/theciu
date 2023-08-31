@@ -128,9 +128,19 @@ class Product extends Model {
     public function promotions() {
         return $this->belongsToMany(Promotion::class, 'promotion_product');
     }
+    public function combos() {
+        return $this->belongsToMany(Combo::class, 'combo_product');
+    }
 
     public function available_promotions() {
         return $this->belongsToMany(Promotion::class, 'promotion_product')->available();
+    }
+
+    public function available_combos() {
+        return $this->belongsToMany(Combo::class, 'combo_product')->available();
+    }
+    public function available_combo() {
+        return $this->hasOneThrough(Combo::class, ComboProduct::class, 'product_id', 'id', 'id', 'combo_id')->available()->latest();
     }
 
     public function flash_sales() {

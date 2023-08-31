@@ -897,12 +897,12 @@
                         Type in your terminal: <code class="language-html">composer require laravel/ui</code>.
                       </li>
                       <li>
-                        Install this preset via 
+                        Install this preset via
                           <code class="language-html">composer require laravel-frontend-presets/argon</code>. No need to register the service provider. Laravel 9.x & up can auto detect the package.
                       </li>
                       <li>
                           Run
-                          <code class="language-html">php artisan ui argon</code> command to install the Argon preset. This will install all the necessary assets and also the custom auth views, it will also add the auth route in 
+                          <code class="language-html">php artisan ui argon</code> command to install the Argon preset. This will install all the necessary assets and also the custom auth views, it will also add the auth route in
                           <code class="language-html">routes/web.php</code> (NOTE: If you run this command several times, be sure to clean up the duplicate Auth entries in routes/web.php)
                       </li>
                       <li>
@@ -910,7 +910,7 @@
                           <code class="language-html">composer dump-autoload</code>
                       </li>
                       <li>
-                          Add your DB info in 
+                          Add your DB info in
                           <code class="language-html">.env</code>
                       </li>
                       <li>
@@ -920,7 +920,7 @@
                           to create basic users table
                       </li>
                     </ol>
-    
+
                     <h3>By using the archive</h3>
                     <ol>
                       <li>In your application's root create a <b>presets</b> folder</li>
@@ -928,11 +928,11 @@
                       <li>Copy and paste the downloaded folder in presets (created in step 2) and rename it to argon</li>
                       <li>Open <code class="language-html">composer.json</code></li>
                       <li>
-                        Add <code class="language-html">"LaravelFrontendPresets\\ArgonPreset\\": "presets/argon/src"</code> to 
+                        Add <code class="language-html">"LaravelFrontendPresets\\ArgonPreset\\": "presets/argon/src"</code> to
                         <code class="language-html">autoload/psr-4</code> and to <code class="language-html">autoload-dev/psr-4</code>.
                       </li>
                       <li>
-                        Add <code class="language-html">LaravelFrontendPresets\ArgonPreset\ArgonPresetServiceProvider::class</code> to 
+                        Add <code class="language-html">LaravelFrontendPresets\ArgonPreset\ArgonPresetServiceProvider::class</code> to
                         <code class="language-html">config/app.php</code>.
                       </li>
                       <li>
@@ -944,11 +944,11 @@
                       </li>
                       <li>
                           Run
-                          <code class="language-html">php artisan ui argon</code> command to install the Argon preset. This will install all the necessary assets and also the custom auth views, it will also add the auth route in 
+                          <code class="language-html">php artisan ui argon</code> command to install the Argon preset. This will install all the necessary assets and also the custom auth views, it will also add the auth route in
                           <code class="language-html">routes/web.php</code> (NOTE: If you run this command several times, be sure to clean up the duplicate Auth entries in routes/web.php)
                       </li>
                       <li>
-                          Add your DB info in 
+                          Add your DB info in
                           <code class="language-html">.env</code>
                       </li>
                       <li>
@@ -1084,7 +1084,7 @@
   <span class="nt">&lt;link</span> <span class="na">id=</span><span class="s">"pagestyle"</span> <span class="na">href=</span><span class="s">"../assets/css/argon-dashboard.css"</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/head&gt;</span>
 
-<span class="nt">&lt;body</span> <span class="na">class=</span><span class="s">"g-sidenav-show bg-gray-100"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">class=</span><span class="s">"g-sidenav-show"</span><span class="nt">&gt;</span>
 
   <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
 

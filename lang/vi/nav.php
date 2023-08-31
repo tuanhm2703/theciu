@@ -30,4 +30,5 @@ return [
     'branch_management' => 'Quản lý chi nhánh',
     'review_manager' => 'Quản lý review',
     'review_list' => 'Danh sách review',
+    'combo_list' => 'Danh sách combo'
 ];

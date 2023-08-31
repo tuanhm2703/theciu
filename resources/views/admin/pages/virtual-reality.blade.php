@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['class' => 'g-sidenav-show bg-gray-100 virtual-reality'])
+@extends('admin.layouts.app', ['class' => 'g-sidenav-show virtual-reality'])
 
 @section('content')
     @include('admin.layouts.navbars.auth.topnav', ['title' => 'Virtual Reality'])

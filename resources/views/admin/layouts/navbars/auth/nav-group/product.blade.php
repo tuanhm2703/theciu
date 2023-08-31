@@ -7,7 +7,7 @@
                 data-bs-placement="top" title='{{ trans('nav.product_manager') }}'>
                 {{ trans('nav.product_manager') }} </h6>
         </div>
-        <div class="collapse {{ isNavActive('admin.product') ? 'show' : 'hide' }}" id="product-collapse">
+        <div class="collapse {{ isNavActive('admin.product') || isNavActive('admin.combo')  ? 'show' : 'hide' }}" id="product-collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 @can('create product')
                     <a class="nav-link {{ isNavActive('admin.product.create') ? 'active' : '' }}"
@@ -27,6 +27,13 @@
                         <span class="nav-link-text ms-1">{{ trans('nav.product_list') }}</span>
                     </a>
                 @endcan
+                <a class="nav-link {{ isNavActive('admin.combo.index') ? 'active' : '' }}"
+                        href="{{ route('admin.combo.index') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">{{ trans('nav.combo_list') }}</span>
+                    </a>
             </ul>
         </div>
     </li>

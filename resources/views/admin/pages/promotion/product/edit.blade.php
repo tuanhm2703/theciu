@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['class' => 'g-sidenav-show bg-gray-100', 'headTitle' => trans('nav.create_promotion')])
+@extends('admin.layouts.app', ['class' => 'g-sidenav-show', 'headTitle' => trans('nav.create_promotion')])
 @push('style')
     @include('admin.pages.promotion.product.assets._style')
 @endpush
