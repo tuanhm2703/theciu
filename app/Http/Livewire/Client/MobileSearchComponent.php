@@ -16,7 +16,7 @@ class MobileSearchComponent extends Component
         return view('livewire.client.mobile-search-component');
     }
     public function searchProducts() {
-        $this->search_products = Product::available()->search('name', $this->keyword)->limit(15)->get();
+        $this->search_products = Product::available()->search('name', str_replace('\\', '', $this->keyword))->limit(15)->get();
     }
 
     public function updated($name, $value)

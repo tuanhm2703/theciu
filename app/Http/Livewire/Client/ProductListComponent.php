@@ -119,7 +119,7 @@ class ProductListComponent extends Component
             });
         }
         if (!empty($this->keyword)) {
-            $products->search('products.name', $this->keyword);
+            $products->search('products.name', str_replace('\\', '', $this->keyword));
         }
         $products = $products
             ->withNeededProductCardData()->orderBy('created_at', 'desc');
