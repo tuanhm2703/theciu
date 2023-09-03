@@ -90,7 +90,6 @@ class ProductListComponent extends Component
 
     public function searchProduct($page = null)
     {
-        $this->keyword = preg_replace('/[^A-Za-z0-9 \/]/', '', $this->keyword);
         $products = Product::query();
         if ($this->category) {
             $category = Category::whereSlug($this->category)->with('categories.categories')->firstOrFail();

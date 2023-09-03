@@ -24,7 +24,6 @@ class HeaderSearchComponent extends Component
     public function updated($name, $value)
     {
         if ($name == 'keyword') {
-            $this->keyword = preg_replace('/[^A-Za-z0-9 \/]/', '', $this->keyword);
             $this->searchProducts();
         }
     }
