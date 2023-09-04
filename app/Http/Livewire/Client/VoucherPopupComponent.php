@@ -25,7 +25,7 @@ class VoucherPopupComponent extends Component
     public function loadVouchers() {
         if(customer()) {
             $this->vouchers = Voucher::public()->notExpired()->where('quantity', '>', 0)->with('voucher_type')->saveable()->get();
-            $saved_vouchers = customer()->saved_vouchers()->get();
+            $saved_vouchers = customer()->saved_vouchers()->notExpired()->get();
             $this->vouchers->each(function($voucher) use ($saved_vouchers) {
                 $voucher->saved = in_array($voucher->id, $saved_vouchers->pluck('id')->toArray());
                 $voucher->used = $saved_vouchers->where('id', $voucher->id)->where('pivot.is_used', 1)->first() ? true : false;
