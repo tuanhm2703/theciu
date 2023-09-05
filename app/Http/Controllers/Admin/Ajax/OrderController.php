@@ -14,6 +14,14 @@ class OrderController extends Controller {
         $orders = Order::query()->with(['inventories' => function($q) {
             $q->withTrashed();
         }]);
+        if($request->from) {
+            $from = carbon($request->from)->format('Y-m-d H:i:s');
+            $orders->where('created_at', '>', $from);
+        }
+        if($request->to) {
+            $to = carbon($request->to)->format('Y-m-d H:i:s');
+            $orders->where('created_at', '<', $to);
+        }
         if($order_status != OrderStatus::ALL) $orders->where('order_status', $order_status);
         if($request->has('order_sub_status')) $orders->where('sub_status', $request->order_sub_status);
         $order_counts = Order::selectRaw('count(id) as order_count, order_status')->groupBy('order_status')->get();
