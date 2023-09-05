@@ -169,7 +169,7 @@
                 success: (res) => {
                     toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                     setTimeout(() => {
-                        window.location.href = `{{ route('admin.promotion.index') }}`
+                        window.location.href = `{{ route('admin.combo.index') }}`
                     }, 1000);
                 },
                 error: (err) => {

@@ -36,9 +36,10 @@ class Cart extends Model {
                 'total_combo' => 0
             ];
             do {
+                $total = 0;
                 foreach($combo->products as $product) {
                     $inventory = $inventories->where('product_id', $product->id)->first();
-                    if($inventory->pivot->quantity > 0) {
+                    if($inventory && $inventory->pivot->quantity > 0) {
                         $total += $inventory->price - $inventory->promotion_price;
                         $inventory->pivot->quantity--;
                     } else {
