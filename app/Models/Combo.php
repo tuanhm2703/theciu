@@ -55,4 +55,14 @@ class Combo extends Model
                 return "Đã kết thúc";
         }
     }
+
+    public function getComboDescriptionInProductDetails($productId) {
+        $product_count = $this->products()->count();
+        $inventory = $this->products->where('id', $productId)->first()?->inventories?->first();
+        if($inventory) {
+            $discount_percent = intval(($inventory->price - $inventory->promotion_price) / $inventory->price * 100);
+            return "Mua $product_count giảm $discount_percent%";
+        }
+        return '';
+    }
 }

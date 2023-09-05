@@ -112,7 +112,7 @@ class KiotService
     public static function createKiotInvoice(Order $localOrder)
     {
         try {
-            $discount = $localOrder->order_voucher ? $localOrder->order_voucher->pivot->amount : 0;
+            $discount = $localOrder->order_voucher ? $localOrder->order_voucher->pivot->amount + $localOrder->combo_discount : $localOrder->combo_discount;
             $kiotCustomer = new ModelCustomer([
                 'name' => $localOrder->shipping_address->fullname,
                 'gender' => false,
