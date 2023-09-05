@@ -8,10 +8,10 @@ trait CustomScope {
     public function scopeSearch($query, $column, $value, $mode = '') {
         if ($value == null || $value == '') return $query;
         return $query->where(function ($q) use ($column, $value, $mode) {
-            $q->whereRaw("lower($column) like $mode '$value'")
-                ->orWhereRaw("lower($column) like $mode '$value%'")
-                ->orWhereRaw("lower($column) like $mode '%$value%'")
-                ->orWhereRaw("lower($column) like $mode '%$value'");
+            $q->whereRaw("lower($column) like $mode ".'"'.$value.'"')
+                ->orWhereRaw("lower($column) like $mode ".'"'.$value.'%"')
+                ->orWhereRaw("lower($column) like $mode ".'"%'.$value.'%"')
+                ->orWhereRaw("lower($column) like $mode ".'"%'.$value.'"');
         });
     }
 

@@ -17,7 +17,7 @@ class PopupVoucherComponent extends Component
         if(!auth('customer')->check()) {
             $this->dispatchBrowserEvent('openLoginForm');
         } else {
-            if(Voucher::active()->notExpired()->where('quantity', '>', 0)->where('id', $this->voucher->id)->exists()) {
+            if(Voucher::active()->available()->where('quantity', '>', 0)->where('id', $this->voucher->id)->exists()) {
                 customer()->saved_vouchers()->sync([
                     $this->voucher->id => [
                         'is_used' => false,
