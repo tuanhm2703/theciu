@@ -78,6 +78,23 @@
                             data-get-data-function="getOrderId()"
                             data-link="{{ route('admin.order.batch.finish_packaging') }}">Đóng gói hàng loạt</button>
                     </div>
+                    <div>
+                        <div class="card">
+                            <div class="card-header pb-0">
+                                <h6>Bộ lọc đơn hàng:</h6>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="row">
+                                    <div class="col-4 col-md-3">
+                                        {!! Form::datetime('begin', null, ['class' => 'form-control datetimepicker', 'placeholder' => 'Từ ngày']) !!}
+                                    </div>
+                                    <div class="col-4 col-md-3">
+                                        {!! Form::datetime('end', null, ['class' => 'form-control datetimepicker', 'placeholder' => 'Đến ngày']) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table order-table w-100">
                             <thead>
@@ -89,18 +106,32 @@
                                                 class="editor-active form-check-input mass-checkbox-btn">
                                         </div>
                                     </th>
-                                    <th>Sản phẩm</th>
+                                    <th class="searchable">Sản phẩm</th>
                                     <th>Doanh thu đơn hàng</th>
-                                    <th>Trạng thái</th>
+                                    <th class="searchable">Trạng thái</th>
                                     <th>Đơn vị vận chuyển</th>
-                                    <th>Thời gian tạo</th>
+                                    <th class="searchable">Thời gian tạo</th>
                                     <th class="d-none"></th>
-                                    <th>Ngày giao hàng</th>
+                                    <th class="searchable">Ngày giao hàng</th>
                                     <th>Thao tác</th>
                                     <th class="d-none"></th>
                                     <th></th>
                                 </tr>
                             </thead>
+                            <tfoot>
+                                <th class="d-none"></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class="d-none"></th>
+                                <th></th>
+                                <th></th>
+                                <th class="d-none"></th>
+                                <th></th>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -149,7 +180,7 @@
                 "processing": true,
                 "serverSide": true,
                 "destroy": true,
-                "ajax": `{{ route('admin.ajax.order.paginate') }}?order_status=${order_status}${order_sub_status ? `&order_sub_status=${order_sub_status}` : ''}`,
+                "ajax": `{{ route('admin.ajax.order.paginate') }}?from=${$('[name=begin]').val()}&to=${$('[name=end]').val()}&order_status=${order_status}${order_sub_status ? `&order_sub_status=${order_sub_status}` : ''}`,
                 "columns": [{
                         data: "header",
                         className: 'order-header-column',
@@ -285,6 +316,9 @@
                     }
                 })
             });
+        })
+        $('[name=begin],[name=end]').on('change', function() {
+            initOrderTable($('#order-status-tab .nav-link.active').attr('data-order-status'))
         })
     </script>
 @endpush
