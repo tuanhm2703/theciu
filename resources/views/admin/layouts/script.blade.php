@@ -95,6 +95,10 @@
             time_24hr: true,
             minDate: `{{ now()->format('Y-m-d') }}`,
         })
+        $('.datetimepicker-unlimit').flatpickr({
+            enableTime: true,
+            time_24hr: true,
+        })
         $('.hourPicker').flatpickr({
             enableTime: true,
             noCalendar: true,

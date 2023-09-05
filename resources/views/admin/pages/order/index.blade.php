@@ -86,10 +86,10 @@
                             <div class="card-body pt-0">
                                 <div class="row">
                                     <div class="col-4 col-md-3">
-                                        {!! Form::datetime('begin', null, ['class' => 'form-control datetimepicker', 'placeholder' => 'Từ ngày']) !!}
+                                        {!! Form::datetime('begin', null, ['class' => 'form-control datetimepicker-unlimit', 'placeholder' => 'Từ ngày']) !!}
                                     </div>
                                     <div class="col-4 col-md-3">
-                                        {!! Form::datetime('end', null, ['class' => 'form-control datetimepicker', 'placeholder' => 'Đến ngày']) !!}
+                                        {!! Form::datetime('end', null, ['class' => 'form-control datetimepicker-unlimit', 'placeholder' => 'Đến ngày']) !!}
                                     </div>
                                 </div>
                             </div>
