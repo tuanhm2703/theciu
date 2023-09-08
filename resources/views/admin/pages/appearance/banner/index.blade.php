@@ -95,6 +95,11 @@
         })
 
         const initEditFormFunc = (banner) => {
+            $('.datetimepicker').flatpickr({
+                enableTime: true,
+                time_24hr: true,
+                minDate: `{{ now()->format('Y-m-d') }}`,
+            })
             const imgSource = banner.desktop_image?.path_with_original_size
             const imgPhoneSource = banner.phone_image?.path_with_original_size
             const file = FilePond.create(document.querySelector('input[name=image]'), {
@@ -126,6 +131,11 @@
             })
         }
         const initCreateFormFunc = () => {
+            $('.datetimepicker').flatpickr({
+                enableTime: true,
+                time_24hr: true,
+                minDate: `{{ now()->format('Y-m-d') }}`,
+            })
             const file = FilePond.create(document.querySelector('input[name=image]'), {
                 imagePreviewHeight: 170,
                 storeAsFile: true,
