@@ -17,7 +17,14 @@ class Banner extends Model {
         'url',
         'order',
         'status',
-        'type'
+        'type',
+        'begin',
+        'end'
+    ];
+
+    protected $casts = [
+        'begin',
+        'end'
     ];
     public function getImageSizesAttribute() {
         return [
@@ -31,5 +38,17 @@ class Banner extends Model {
     }
     public function scopePopup($q) {
         return $q->where('type', BannerType::POPUP);
+    }
+
+    public function scopeAvailable($q) {
+        return $q->active()->where(function($q) {
+            $q->whereRaw('now() between begin and end')->orWhere(function($q) {
+                $q->whereNull('begin')->WhereNull('end');
+            })->orWhere(function($q) {
+                $q->whereNull('begin')->whereRaw('now() < end');
+            })->orWhere(function($q) {
+                $q->whereNull('end')->whereRaw('now() > begin');
+            });
+        });
     }
 }
