@@ -134,6 +134,7 @@ class AuthController extends Controller {
 
     public function forgotPassword() {
         Meta::set('title', 'The C.I.U - Quên mật khẩu');
+        Meta::set('description', 'Trang quên mật khẩu giúp người dùng khôi phục lại mật khẩu của họ khi đã bị quên. Tại đây, bạn có thể nhập địa chỉ email đã đăng ký và chúng tôi sẽ gửi liên kết để bạn thiết lập mật khẩu mới.');
         return view('landingpage.layouts.pages.auth.forgot_password');
     }
 
