@@ -9,6 +9,7 @@ use App\Http\Requests\Client\LoginRequest;
 use App\Http\Requests\Client\RegisterRequest;
 use App\Models\Customer;
 use App\Responses\Admin\BaseResponse;
+use Meta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -132,6 +133,7 @@ class AuthController extends Controller {
     }
 
     public function forgotPassword() {
+        Meta::set('title', 'The C.I.U - Quên mật khẩu');
         return view('landingpage.layouts.pages.auth.forgot_password');
     }
 
