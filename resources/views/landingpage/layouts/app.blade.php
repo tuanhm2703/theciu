@@ -238,7 +238,7 @@
                 },
             });
             try {
-                $('.quickView-content .owl-carousel').owlCarousel('destroy')
+                $('.mfp-content .quickView-content .owl-carousel').owlCarousel('destroy')
             } catch (error) {}
             owlCarousels($('.quickView-content'), {
                 onTranslate: function(e) {
