@@ -129,7 +129,7 @@ class CartComponent extends Component {
                 $voucher->disable_reason = "Vui lòng chọn sản phẩm để áp dụng voucher";
             } else if($voucher->voucher_type?->code == VoucherType::ORDER && $this->promotion_applied) {
                 $voucher->disabled = true;
-                $voucher->disable_reason = "Bạn không thể áp dụng voucher khi đang sử dụng các khuyến mãi khác!";
+                $voucher->disable_reason = "Bạn không thể áp dụng voucher đơn hàng khi đang sử dụng các khuyến mãi khác!";
             } else if ($voucher->total_can_use <= $validate_voucher_data->where('id', $voucher->id)->first()->orders_count) {
                 $voucher->disabled = true;
                 $voucher->disable_reason = "Voucher đã hết lượt sử dụng";

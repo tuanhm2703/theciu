@@ -54,6 +54,11 @@
                             </label>
                         </div><!-- End .custom-control -->
                     @endforeach
+                    @if ($promotion_applied)
+                        <div class="text-center">
+                            <p class="text-danger"><i>Không thể áp dụng voucher khi đang sử dụng các khuyến mãi khác!</i></p>
+                        </div>
+                    @endif
                     <div class="row mt-3" style="justify-content: right">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">
                             <span class="text-white" wire:loading
