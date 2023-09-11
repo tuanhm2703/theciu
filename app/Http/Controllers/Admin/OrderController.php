@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\OrderStatus;
 use App\Enums\OrderSubStatus;
+use App\Exports\ExportOrder;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateOrderRequest;
 use App\Http\Requests\Admin\ViewOrderRequest;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller {
     public function index(ViewOrderRequest $request) {
@@ -115,5 +117,8 @@ class OrderController extends Controller {
             $order->action_url = route('admin.order.accept', $order->id);
         });
         return view('admin.pages.order.components.batch.finish_packaging', compact('orders'));
+    }
+    public function exportOrder(Request $request) {
+        return Excel::download(new ExportOrder($request->begin, $request->end, $request->order_status), 'export_order' . now()->timestamp . '.xlsx');
     }
 }

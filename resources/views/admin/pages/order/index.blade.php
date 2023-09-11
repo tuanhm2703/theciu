@@ -91,6 +91,9 @@
                                     <div class="col-4 col-md-3">
                                         {!! Form::datetime('end', null, ['class' => 'form-control datetimepicker-unlimit', 'placeholder' => 'Đến ngày']) !!}
                                     </div>
+                                    <div class="col-2">
+                                        <a href="#" class="btn btn-primary" id="export-order-btn">Xuất đơn hàng</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -319,6 +322,13 @@
         })
         $('[name=begin],[name=end]').on('change', function() {
             initOrderTable($('#order-status-tab .nav-link.active').attr('data-order-status'))
+        })
+        $('#export-order-btn').on('click', function(e) {
+            e.preventDefault();
+            const begin = $('[name=begin]').val()
+            const end = $('[name=end]').val()
+            const order_status = $('#order-status-tab .nav-link.active').attr('data-order-status')
+            window.location.href = `{{ route('admin.order.export') }}?begin=${begin}&end=${end}&order_status=${order_status}`
         })
     </script>
 @endpush
