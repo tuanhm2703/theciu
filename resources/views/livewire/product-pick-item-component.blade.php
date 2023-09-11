@@ -1,4 +1,4 @@
-<div>
+<div class="{{ $parentId }}">
     <h1 class="product-title">{{ $product->name }}</h1><!-- End .product-title -->
     @include('components.product-price-label')
     <div class="product-content">
@@ -6,9 +6,9 @@
     </div><!-- End .product-content -->
     @if ($product->available_combo)
         <div class="details-filter-row details-row-size">
-            <label style="width: 50px" class="mt-1 text-danger">Combo:</label>
-            <div>
-                <span class="text-white bg-danger p-3 font-weight-bold text-uppercase">{{ $product->available_combo->getComboDescriptionInProductDetails($product->id) }}</span>
+            <label style="width: 50px" class="mt-1">Combo:</label>
+            <div class="mt-1">
+                <a href="#combo-sale-wrapper" class="text-white bg-danger p-3 font-weight-bold text-uppercase">{{ $product->available_combo->getComboDescriptionInProductDetails($product->id) }}</a>
             </div><!-- End .product-nav -->
         </div><!-- End .details-filter-row -->
     @endif

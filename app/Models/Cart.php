@@ -59,6 +59,18 @@ class Cart extends Model {
         }
         return collect($discounted_combos);
     }
+    public function getTotalWithBasePriceItems($item_selected) {
+        if(count($item_selected) == 0) return 0;
+        $total = 0;
+        foreach ($this->inventories as $i) {
+            /* Checking if the item is selected or not. If it is selected, it will add the price to the
+            total. */
+            if (in_array($i->id, $item_selected)) {
+                $total += $i->price * $i->pivot->quantity;
+            }
+        }
+        return $total;
+    }
     public function getTotalWithSelectedItems($item_selected, $voucher = null) {
         if(count($item_selected) == 0) return 0;
         $total = 0;

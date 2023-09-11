@@ -22,7 +22,7 @@
         </div><!-- End .product-action-vertical -->
 
         <div class="product-action">
-            <a href="#" class="btn-product btn-cart add-to-cart-btn" wire:click="addToCart()"
+            <a href="#" class="btn-product btn-cart add-to-cart-btn" wire:click.prevent="addToCart()"
                 data-product-id="{{ $product->id }}">
                 <div class="spinner-grow" role="status" wire:loading wire:target="addToCart">
                     <span class="sr-only">Loading...</span>

@@ -6,12 +6,18 @@ use App\Enums\StatusType;
 use App\Models\Product;
 use Livewire\Component;
 
-class ProductDetailInfoComponent extends Component {
+class PopupProductDetailComponent extends Component
+{
+
     public $product;
 
     public $inventory_images;
 
+    public $componentId;
+
+    protected $listeners = ['changeProduct' => 'changeProduct'];
     public function mount() {
+        $this->componentId = uniqid();
         if ($this->product) {
             $this->inventory_images = collect();
             foreach ($this->product->inventories->where('status', StatusType::ACTIVE)->where('stock_quantity', '>', 0) as $inventory) {
@@ -24,7 +30,7 @@ class ProductDetailInfoComponent extends Component {
     }
 
     public function render() {
-        return view('livewire.client.product-detail-info-component');
+        return view('livewire.client.popup-product-detail-component');
     }
 
     public function changeProduct($id) {
@@ -41,7 +47,7 @@ class ProductDetailInfoComponent extends Component {
                 }
             }
             $this->inventory_images->unique('name');
-            $this->emit('product-pick:changeProduct', $this->product);
+            $this->dispatchBrowserEvent('openQuickPreview');
         } else {
             $this->dispatchBrowserEvent('openLoginForm');
         }
