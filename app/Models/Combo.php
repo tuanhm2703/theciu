@@ -57,12 +57,15 @@ class Combo extends Model
     }
 
     public function getComboDescriptionInProductDetails($productId) {
-        $product_count = $this->products()->count();
         $inventory = $this->products->where('id', $productId)->first()?->inventories?->first();
+        $total = 0;
         if($inventory) {
-            $discount_percent = intval(($inventory->price - $inventory->promotion_price) / $inventory->price * 100);
-            return "Mua $product_count giảm $discount_percent%";
+            $total = $inventory->promotion_price;
+            foreach($this->products->where('id', '!=', $inventory->product_id) as $product) {
+                $total += $product->inventories->first()->promotion_price;
+            }
         }
-        return '';
+        $total_format = thousandsCurrencyFormat($total);
+        return "Combo $this->name giá $total_format";
     }
 }

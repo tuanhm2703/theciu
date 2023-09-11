@@ -39,6 +39,6 @@ class ProductCardComponent extends Component {
     }
 
     public function addToCart() {
-        $this->emit('changeProduct', $this->product->id);
+        $this->emitTo('client.popup-product-detail-component', 'changeProduct', $this->product->id);
     }
 }

@@ -238,18 +238,17 @@
                 },
             });
             try {
-                $('.quickView-content .owl-carousel').owlCarousel('destroy')
+                $('.mfp-content .quickView-content .owl-carousel').owlCarousel('destroy')
             } catch (error) {}
-            owlCarousels($('.quickView-content'), {
+            owlCarousels($('.mfp-content .quickView-content'), {
                 onTranslate: function(e) {
                     var $this = $(e.target),
-                        currentIndex = ($this.data('owl.carousel').current() + e.item
-                            .count - Math.ceil(e.item.count / 2)) % e.item.count;
-                    $('.quickView-content .carousel-dot').eq(currentIndex).addClass(
+                        currentIndex = ($this.data('owl.carousel').current() + e.item.count - Math.ceil(e.item.count / 2)) % e.item.count;
+                    $('.mfp-content .quickView-content .carousel-dot').eq(currentIndex).addClass(
                         'active').siblings().removeClass('active');
                 }
             });
-            var swiper = new Swiper(".mySwiper", {
+            var swiper = new Swiper(".mfp-content .mySwiper", {
                 direction: "vertical",
                 slidesPerView: 4,
                 spaceBetween: 0,
@@ -296,7 +295,7 @@
         <livewire:client.sticky-voucher-icon-component />
         <livewire:client.list-saved-voucher-component />
         <div id="test-popup" class="white-popup mfp-hide">
-            <livewire:client.product-detail-info-component />
+            <livewire:client.popup-product-detail-component/>
         </div>
     @endif
 

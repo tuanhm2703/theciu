@@ -18,8 +18,8 @@ class ProductPickItemComponent extends Component
     public $inventory = null;
     public $inventories = null;
     public $quantity = 1;
+    public $parentId;
 
-    protected $listeners = ['product-pick:changeProduct' => 'changeProduct'];
 
     public function mount()
     {
@@ -112,13 +112,22 @@ class ProductPickItemComponent extends Component
         }
     }
 
-    public function changeProduct(Product $product)
+    public function changeProduct(Product $product, $id = null)
     {
-        $this->product = $product;
-        $this->first_attribute_id = null;
-        $this->first_attribute_value = null;
-        $this->quantity = 1;
-        $this->reloadProductInfo();
-        $this->dispatchBrowserEvent('openQuickPreview');
+        if($id != null && $id == $this->parentId) {
+            $this->product = $product;
+            $this->first_attribute_id = null;
+            $this->first_attribute_value = null;
+            $this->quantity = 1;
+            $this->reloadProductInfo();
+            $this->dispatchBrowserEvent('openQuickPreview');
+        }
+    }
+
+    protected function listeners() {
+        return [
+            'product-pick:changeProduct' => 'changeProduct',
+            "product-pick-$this->parentId" => 'changeProduct'
+        ];
     }
 }

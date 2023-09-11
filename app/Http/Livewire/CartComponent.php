@@ -55,6 +55,7 @@ class CartComponent extends Component {
     public $vouchers;
     public $note;
     public $save_voucher_ids = [];
+    public $promotion_applied = false;
 
     protected $rules = [
         'service_id' => 'required',
@@ -114,6 +115,10 @@ class CartComponent extends Component {
         $this->updateVoucherDisableStatus();
     }
 
+    /**
+     * The function "updateVoucherDisableStatus" updates the disable status and disable reason of
+     * vouchers based on various conditions.
+     */
     private function updateVoucherDisableStatus() {
         $validate_voucher_data = Voucher::whereIn('id', $this->vouchers->pluck('id')->toArray())->withCount(['orders' => function($q) {
             $q->where('orders.order_status', '!=', OrderStatus::CANCELED);
@@ -122,6 +127,9 @@ class CartComponent extends Component {
             if (count($this->item_selected) == 0) {
                 $voucher->disabled = true;
                 $voucher->disable_reason = "Vui lòng chọn sản phẩm để áp dụng voucher";
+            } else if($voucher->voucher_type?->code == VoucherType::ORDER && $this->promotion_applied) {
+                $voucher->disabled = true;
+                $voucher->disable_reason = "Bạn không thể áp dụng voucher khi đang sử dụng các khuyến mãi khác!";
             } else if ($voucher->total_can_use <= $validate_voucher_data->where('id', $voucher->id)->first()->orders_count) {
                 $voucher->disabled = true;
                 $voucher->disable_reason = "Voucher đã hết lượt sử dụng";
@@ -264,8 +272,12 @@ class CartComponent extends Component {
             $this->service_id = $this->shipping_service_types[0]->service_id;
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
-        $this->rank_discount_amount = customer()->calculateRankDiscountAmount($this->cart->getTotalWithSelectedItems($this->item_selected));
+        $base_total = $this->cart->getTotalWithBasePriceItems($this->item_selected);
+        $sub_total = $this->cart->getTotalWithSelectedItems($this->item_selected);
+        $this->promotion_applied = $base_total > $sub_total;
+        $this->rank_discount_amount = customer()->calculateRankDiscountAmount($sub_total);
         $this->combo_discount = $this->cart->calculateComboDiscount($this->item_selected)->sum('discount_amount');
+        $this->promotion_applied = $this->promotion_applied == false && $this->combo_discount > 0;
         $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount - $this->combo_discount;
         $this->updateVoucherDisableStatus();
         $this->order_voucher_discount = $this->order_voucher ? $this->order_voucher->getDiscountAmount($this->total) : 0;
@@ -275,11 +287,11 @@ class CartComponent extends Component {
     public function updated($name, $value) {
         if ($name == 'order_voucher_id') {
             $this->order_voucher = Voucher::active()->find($value);
-            $this->updateOrderInfo($this->address);
+            $this->updateOrderInfo();
         }
         if ($name == 'freeship_voucher_id') {
             $this->freeship_voucher = Voucher::active()->find($value);
-            $this->updateOrderInfo($this->address);
+            $this->updateOrderInfo();
         }
     }
 
