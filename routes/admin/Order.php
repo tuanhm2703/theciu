@@ -12,6 +12,7 @@ Route::group(['prefix' => 'order', 'as' => 'order.'], function() {
     Route::get('{order}/shipping-order', [OrderController::class, 'getShippingInfo'])->name('shipping_order');
     Route::get('{order}/shipping-order/print', [OrderController::class, 'printShippingOrderInfo'])->name('shipping_order.print');
     Route::get('batch/finish-packaging', [OrderController::class, 'batchFinishPackaging'])->name('batch.finish_packaging');
+    Route::get('export', [OrderController::class, 'exportOrder'])->name('export');
 });
 
 Route::resource('order', OrderController::class);
