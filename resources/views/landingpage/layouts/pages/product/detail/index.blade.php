@@ -97,7 +97,7 @@
 
             @if ($product->available_combo)
                 <div class="bg-light p-5 mb-3" id="combo-sale-wrapper">
-                    <h6 class="mb-3">{{ $product->available_combo?->getComboDiscriptionLabelInProductDetails() }}</h6>
+                    <h6 class="mb-3">{{ $product->available_combo?->getComboDiscriptionLabelInProductDetails($product->id) }}</h6>
                     <div class="product-detail-info-wrapper">
                         <div class="row">
                             @foreach ($combo_products as $product)
