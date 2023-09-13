@@ -66,6 +66,18 @@ class Combo extends Model
             }
         }
         $total_format = thousandsCurrencyFormat($total);
-        return "Combo $this->name giá $total_format";
+        return "$this->name giá $total_format";
+    }
+    public function getComboDiscriptionLabelInProductDetails($productId) {
+        $inventory = $this->products->where('id', $productId)->first()?->inventories?->first();
+        $total = 0;
+        if($inventory) {
+            $total = $inventory->promotion_price;
+            foreach($this->products->where('id', '!=', $inventory->product_id) as $product) {
+                $total += $product->inventories->first()->promotion_price;
+            }
+        }
+        $total_format = thousandsCurrencyFormat($total);
+        return "Mua $this->name chỉ với giá $total_format";
     }
 }
