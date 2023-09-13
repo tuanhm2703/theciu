@@ -76,17 +76,16 @@
             <h6 class="d-flex align-items-center mb-0 p-3">
                 <ul class="tags">
                     @if ($order_voucher)
-                        <li><a
-                                href="#">-{{ thousandsCurrencyFormat($order_voucher->getDiscountAmount($total)) }}</a>
+                        <li><span>-{{ thousandsCurrencyFormat($order_voucher->getDiscountAmount($total)) }}</span>
                         </li>
                     @endif
                     @if ($freeship_voucher_id)
-                        <li><a href="#">Miễn phí vận chuyển</a></li>
+                        <li><span>Miễn phí vận chuyển</span></li>
                     @endif
                 </ul>
-                <a href="#" class="text-light ml-3">
+                <span class="text-light ml-3">
                     <i class="fas fa-angle-right"></i>
-                </a>
+                </span>
                 {{-- <a data-toggle="modal" data-target="#voucherListModal" class="ml-1"
                     href="#">{{ trans('labels.pick_voucher') }}</a> --}}
             </h6>
@@ -206,7 +205,7 @@
                 <label for="note" class="form-label">Chú thích đơn hàng</label>
                 <textarea name="note" class="form-control w-100" wire:model.lazy="note" cols="30" rows="5"></textarea>
             </div>
-            <button wire:click="checkOrder" href="#" id="checkout-btn" wire:loading.attr="disabled"
+            <button wire:click.prevent="checkOrder" id="checkout-btn" wire:loading.attr="disabled"
                 wire:target="checkOrder" class="btn btn-outline-primary-2 btn-order btn-block">
                 <span wire:loading.remove wire:target="checkOrder">{{ trans('labels.checkout') }}</span>
                 <span wire:loading wire:target="checkOrder">Đang tiến hành thanh toán..</span>
