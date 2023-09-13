@@ -35,7 +35,7 @@ class ProductController extends Controller {
         })->exists();
         $combo_products = [];
         if($product->available_combo) {
-            $combo_products = $product->available_combo->products()->where('products.id', '!=', $product->id)->with(['category', 'inventories' => function ($q) {
+            $combo_products = $product->available_combo->products()->with(['category', 'inventories' => function ($q) {
                 return $q->available()->with(['image', 'attributes' => function ($q) {
                     $q->orderBy('attribute_inventory.created_at', 'desc');
                 }]);
