@@ -97,19 +97,38 @@
 
             @if ($product->available_combo)
                 <div class="bg-light p-5 mb-3" id="combo-sale-wrapper">
-                    <h6 class="mb-3 text-uppercase">{{ $product->available_combo?->getComboDiscriptionLabelInProductDetails($product->id) }}</h6>
+                    <h6 class="mb-3 text-uppercase">
+                        {{ $product->available_combo?->getComboDiscriptionLabelInProductDetails($product->id) }}</h6>
                     <div class="product-detail-info-wrapper">
-                        <div class="row">
+                        <div class="owl-carousel owl-simple" data-toggle="owl"
+                            data-owl-options='{
+                        "nav": true,
+                        "dots": false,
+                        "margin": 30,
+                        "autoplay": true,
+                        "autoplayTimeout": 3000,
+                        "loop": false,
+                        "items": 2,
+                        "responsive": {
+                            "1208": {
+                                "nav": true,
+                                "items": 4
+                            },
+                            "992": {
+                                "nav": true,
+                                "items": 3
+                            },
+                            "576": {
+                                "items": 2
+                            }
+                        }
+                    }'>
                             @foreach ($combo_products as $product)
-                                <div class="col-12 col-md-3">
-                                    <livewire:client.product-card-component wire:ignore
-                                        wire:key="product-{{ $product->id . time() }}" :product="$product">
-                                    </livewire:client.product-card-component>
-                                </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                                <livewire:client.product-card-component wire:ignore
+                                    wire:key="product-{{ $product->id . time() }}" :product="$product">
+                                </livewire:client.product-card-component>
                             @endforeach
                         </div>
-                    </div>
-                </div>
             @endif
             <div class="bg-light p-5 mb-3">
                 <h6 class="mb-3">CHI TIẾT SẢN PHẨM</h6>
