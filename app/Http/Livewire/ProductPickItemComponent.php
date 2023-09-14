@@ -4,10 +4,10 @@ namespace App\Http\Livewire;
 
 use App\Models\Inventory;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
-class ProductPickItemComponent extends Component
-{
+class ProductPickItemComponent extends Component {
     public Product $product;
     public $first_attribute_value = null;
     public $second_attribute_value;
@@ -21,13 +21,11 @@ class ProductPickItemComponent extends Component
     public $parentId;
 
 
-    public function mount()
-    {
+    public function mount() {
         $this->reloadProductInfo();
     }
 
-    private function reloadProductInfo()
-    {
+    private function reloadProductInfo() {
         $this->product->inventories = $this->product->inventories()
             ->with(['attributes', 'firstAttribute' => function ($q) {
                 $q->addSelect('*', 'attribute_inventory.value');
@@ -63,30 +61,25 @@ class ProductPickItemComponent extends Component
         $this->getInventory();
     }
 
-    public function render()
-    {
+    public function render() {
         return view('livewire.product-pick-item-component');
     }
-    public function changeFirstAttributeId($attribute_id)
-    {
+    public function changeFirstAttributeId($attribute_id) {
         $this->first_attribute_id = $attribute_id;
         $this->reloadProductInfo();
     }
 
-    public function addToCart()
-    {
+    public function addToCart() {
         $this->emit('cart:itemAdded', $this->inventory?->id, $this->quantity);
     }
 
-    public function changeSecondAttributeId($id)
-    {
+    public function changeSecondAttributeId($id) {
         $this->second_attribute_id = $id;
         $this->quantity = 1;
     }
 
-    public function updated($name, $value)
-    {
-        if($name === 'first_attribute_value') {
+    public function updated($name, $value) {
+        if ($name === 'first_attribute_value') {
             $this->reloadProductInfo();
         }
         $this->getInventory();
@@ -102,8 +95,7 @@ class ProductPickItemComponent extends Component
         $this->inventory = $this->inventory ? $this->product->inventories->where('id', $this->inventory['id'])->first() : null;
     }
 
-    public function addToWishlist()
-    {
+    public function addToWishlist() {
         if (!auth('customer')->check()) {
             $this->dispatchBrowserEvent('openLoginForm');
         } else {
@@ -117,9 +109,8 @@ class ProductPickItemComponent extends Component
         }
     }
 
-    public function changeProduct(Product $product, $id = null)
-    {
-        if($id != null && $id == $this->parentId) {
+    public function changeProduct(Product $product, $id = null) {
+        if ($id != null && $id == $this->parentId) {
             $this->product = $product;
             $this->first_attribute_id = null;
             $this->first_attribute_value = null;
@@ -136,6 +127,12 @@ class ProductPickItemComponent extends Component
         ];
     }
     public function buyNow() {
+        $customer = auth('customer')->user();
+        if ($this->cart->inventories()->where('inventories.id', $this->inventory->id)->exists()) {
+            $this->cart->inventories()->sync([$this->inventory->id => ['quantity' => DB::raw("cart_items.quantity + 1")]], false);
+        } else {
+            $this->cart->inventories()->sync([$this->inventory->id => ['quantity' => 1, 'customer_id' => $customer->id]], false);
+        }
         return redirect()->route('client.auth.cart.index', [
             'item_selected' => [$this->inventory?->id]
         ]);
