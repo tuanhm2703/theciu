@@ -37,13 +37,24 @@
                 </button>
             </div>
         </div>
-        <div class="col-12 col-lg-6 d-flex justify-content-center add-to-wishlist-wrapper">
+        {{-- <div class="col-12 col-lg-6 d-flex justify-content-center add-to-wishlist-wrapper">
             <div class="details-action-wrapper m-0">
                 <a href="#" class="btn-product btn-wishlist" wire:click.prevent="addToWishlist"
                     wire:loading.attr="disabled" title="Wishlist">
                     <span wire:loading.remove
                         wire:target="addToWishlist">{{ $product->is_on_customer_wishlist ? trans('labels.remove_from_wishlist') : trans('labels.add_to_wishlist') }}</span>
                     <span wire:loading wire:target="addToWishlist" class="spinner-border spinner-border-sm"
+                        role="status" aria-hidden="true"></span>
+                </a>
+            </div><!-- End .details-action-wrapper -->
+        </div> --}}
+        <div class="col-12 col-lg-6 d-flex justify-content-center add-to-wishlist-wrapper">
+            <div class="details-action-wrapper m-0 w-100">
+                <a href="#" class="text-uppercase btn btn-primary w-100" wire:click.prevent="buyNow()" style="padding: 1.2rem 1.5rem;    align-self: stretch;"
+                    wire:loading.attr="disabled" title="Buynow">
+                    <span wire:loading.remove
+                        wire:target="buyNow">{{ trans('labels.buy_now') }}</span>
+                    <span wire:loading wire:target="buyNow" class="spinner-border spinner-border-sm"
                         role="status" aria-hidden="true"></span>
                 </a>
             </div><!-- End .details-action-wrapper -->

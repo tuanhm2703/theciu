@@ -135,4 +135,9 @@ class ProductPickItemComponent extends Component
             "product-pick-$this->parentId" => 'changeProduct'
         ];
     }
+    public function buyNow() {
+        return redirect()->route('client.auth.cart.index', [
+            'item_selected' => [$this->inventory?->id]
+        ]);
+    }
 }

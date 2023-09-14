@@ -97,7 +97,7 @@
 
             @if ($product->available_combo)
                 <div class="bg-light p-5 mb-3" id="combo-sale-wrapper">
-                    <h6 class="mb-3 text-uppercase">
+                    <h6 class="mb-3 text-uppercase font-weight-bold">
                         {{ $product->available_combo?->getComboDiscriptionLabelInProductDetails($product->id) }}</h6>
                     <div class="product-detail-info-wrapper">
                         <div class="owl-carousel owl-simple" data-toggle="owl"
@@ -131,7 +131,7 @@
                         </div>
             @endif
             <div class="bg-light p-5 mb-3">
-                <h6 class="mb-3">CHI TIẾT SẢN PHẨM</h6>
+                <h6 class="mb-3 font-weight-bold">CHI TIẾT SẢN PHẨM</h6>
                 <div class="product-detail-info-wrapper">
                     @php
                         $category = $product->category;
@@ -183,19 +183,19 @@
                 </div>
             </div>
             <div class="bg-light p-5 mb-3">
-                <h6 class="text-uppercase mb-3">{{ trans('labels.additional_information') }}</h6>
+                <h6 class="text-uppercase mb-3 font-weight-bold">{{ trans('labels.additional_information') }}</h6>
                 <div>
                     {!! $product->additional_information !!}
                 </div>
             </div>
             <div class="bg-light p-5 mb-3">
-                <h6 class="text-uppercase mb-3">{{ trans('labels.shipping_and_return') }}</h6>
+                <h6 class="text-uppercase mb-3 font-weight-bold">{{ trans('labels.shipping_and_return') }}</h6>
                 <div>
                     {!! $product->shipping_and_return !!}
                 </div>
             </div>
             @if ($has_review)
-                <div class="bg-light p-5 mb-3" id="review-wrapper">
+                <div class="bg-light p-5 mb-3 font-weight-bold" id="review-wrapper">
                     <h6 class="text-uppercase mb-3">{{ trans('labels.product_review') }}</h6>
                     <div class="reviews">
                     </div><!-- End .reviews -->
