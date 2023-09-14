@@ -47,7 +47,7 @@ class PopupProductDetailComponent extends Component
                 }
             }
             $this->inventory_images->unique('name');
-            $this->dispatchBrowserEvent('openQuickPreview');
+            $this->emit('product-pick:changeProduct', $this->product);
         } else {
             $this->dispatchBrowserEvent('openLoginForm');
         }
