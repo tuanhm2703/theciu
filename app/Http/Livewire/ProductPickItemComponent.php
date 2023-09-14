@@ -130,7 +130,7 @@ class ProductPickItemComponent extends Component {
     }
     public function buyNow() {
         $customer = auth('customer')->user();
-        if (!$customer) $this->dispatchBrowserEvent('openLoginModal');
+        if ($customer == null) $this->dispatchBrowserEvent('openLoginModal');
         if ($this->inventory) {
             $cart = Cart::with(['inventories' => function ($q) {
                 return $q->with('image:path,imageable_id', 'product:id,slug,name');
