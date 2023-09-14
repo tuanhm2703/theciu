@@ -1350,6 +1350,7 @@ input[type=number] {
 
 .add-to-wishlist-wrapper {
     margin-top: 2rem;
+    padding: 0;
 }
 
 #customer-rank-icon {
