@@ -129,6 +129,7 @@ class ProductPickItemComponent extends Component {
     }
     public function buyNow() {
         $customer = auth('customer')->user();
+        if(!$customer) $this->dispatchBrowserEvent('openLoginModal');
         $cart = Cart::with(['inventories' => function ($q) {
             return $q->with('image:path,imageable_id', 'product:id,slug,name');
         }])->firstOrCreate([
