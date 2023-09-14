@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Cart;
 use App\Models\Inventory;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
@@ -128,10 +129,15 @@ class ProductPickItemComponent extends Component {
     }
     public function buyNow() {
         $customer = auth('customer')->user();
-        if ($this->cart->inventories()->where('inventories.id', $this->inventory->id)->exists()) {
-            $this->cart->inventories()->sync([$this->inventory->id => ['quantity' => DB::raw("cart_items.quantity + 1")]], false);
+        $cart = Cart::with(['inventories' => function ($q) {
+            return $q->with('image:path,imageable_id', 'product:id,slug,name');
+        }])->firstOrCreate([
+            'customer_id' => auth('customer')->user()->id
+        ]);
+        if ($cart->inventories()->where('inventories.id', $this->inventory->id)->exists()) {
+            $cart->inventories()->sync([$this->inventory->id => ['quantity' => DB::raw("cart_items.quantity + 1")]], false);
         } else {
-            $this->cart->inventories()->sync([$this->inventory->id => ['quantity' => 1, 'customer_id' => $customer->id]], false);
+            $cart->inventories()->sync([$this->inventory->id => ['quantity' => 1, 'customer_id' => $customer->id]], false);
         }
         return redirect()->route('client.auth.cart.index', [
             'item_selected' => [$this->inventory?->id]
