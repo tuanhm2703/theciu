@@ -256,5 +256,6 @@ return [
     'add_product' => 'Thêm sản phẩm',
     'combo_name' => 'Tên combo',
     'edit_combo' => 'Cập nhật combo',
-    'combo_discount' => 'Giảm giá combo'
+    'combo_discount' => 'Giảm giá combo',
+    'buy_now' => 'Mua ngay'
 ];

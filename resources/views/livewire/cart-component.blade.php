@@ -36,6 +36,10 @@
                             </div>
 
                             <div>
+                                @if ($inventory->product?->available_combo)
+                                    <span style="width: fit-content; font-size: 12px; margin-bot: 3px"
+                                        class="d-inline text-white bg-danger p-1 font-weight-bold text-uppercase">{{ $inventory->product?->available_combo?->name }}</span>
+                                @endif
                                 <h3 class="product-title">
                                     <a href="{{ route('client.product.details', $inventory->product->slug) }}"
                                         class="product-cart-title {{ $inventory->pivot->quantity > $inventory->stock_quantity ? 'text-danger' : '' }}">{{ $inventory->name }}</a>

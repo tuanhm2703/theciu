@@ -27,6 +27,7 @@ class CartComponent extends Component {
         'cart:itemAdded' => 'updateOrderInfo',
         'cart:reloadVoucher' => 'reloadVoucher',
     ];
+    protected $queryString = ['item_selected'];
     public $address;
     public $estimateDeliveryFee = 0;
     public $shipping_service_types = [];
