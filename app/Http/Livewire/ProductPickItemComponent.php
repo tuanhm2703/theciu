@@ -20,8 +20,8 @@ class ProductPickItemComponent extends Component {
     public $inventories = null;
     public $quantity = 1;
     public $parentId;
-
-
+    public $popup = true;
+    protected $listeners = ['product-pick:changeProduct' => 'changeProduct'];
     public function mount() {
         $this->reloadProductInfo();
     }
@@ -111,8 +111,8 @@ class ProductPickItemComponent extends Component {
     }
 
     public function changeProduct(Product $product, $id = null) {
-        $this->inventory = null;
-        if ($id != null && $id == $this->parentId) {
+        if ($this->popup) {
+            $this->inventory = null;
             $this->product = $product;
             $this->first_attribute_id = null;
             $this->first_attribute_value = null;
@@ -120,13 +120,6 @@ class ProductPickItemComponent extends Component {
             $this->reloadProductInfo();
             $this->dispatchBrowserEvent('openQuickPreview');
         }
-    }
-
-    protected function listeners() {
-        return [
-            'product-pick:changeProduct' => 'changeProduct',
-            "product-pick-$this->parentId" => 'changeProduct'
-        ];
     }
     public function buyNow() {
         $customer = auth('customer')->user();

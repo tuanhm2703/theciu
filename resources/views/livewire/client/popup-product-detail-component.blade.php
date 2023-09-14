@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5 col-md-6">
-                    <livewire:product-pick-item-component :parentId="$componentId" :product="$product"></livewire:product-pick-item-component>
+                    <livewire:product-pick-item-component :popup="true" :product="$product"></livewire:product-pick-item-component>
 
                     <div class="product-details-footer">
                         <div class="product-cat">

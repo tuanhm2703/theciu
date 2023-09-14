@@ -361,7 +361,7 @@
                             <div class="row mb-1">
                                 <div class="col-7">
                                     <span class="confirm-label">
-                                        {{ trans('combo_discount') }}
+                                        {{ trans('labels.combo_discount') }}
                                     </span>
                                 </div>
                                 <div class="col-5 text-right">
