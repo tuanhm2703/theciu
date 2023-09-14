@@ -45,6 +45,16 @@
         ]) !!}
     </div>
 </div>
+<div class="row mt-3">
+    <div class="col-md-6">
+        {!! Form::label('begin', trans('labels.from_date'), ['class' => 'custom-label-control']) !!}
+        {!! Form::text('begin', null, ['class' => 'form-control datetimepicker']) !!}
+    </div>
+    <div class="col-md-6">
+        {!! Form::label('end', trans('labels.to_date'), ['class' => 'custom-label-control']) !!}
+        {!! Form::text('end', null, ['class' => 'form-control datetimepicker']) !!}
+    </div>
+</div>
 <div class="row mt-3" id="banner-img">
     <div class="col-md-6">
         {!! Form::label('image', trans('labels.image') . ' (Desktop screen): ', ['class' => 'custom-label-control']) !!}

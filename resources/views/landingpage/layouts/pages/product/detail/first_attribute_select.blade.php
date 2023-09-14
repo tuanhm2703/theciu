@@ -8,7 +8,7 @@
             <div class="radio-container mt-1">
                 <input @disabled($attribute->out_of_stock) wire:key="{{ $attribute->id }}->attribute"
                     name="first_attribute_value" id="first-attribute-{{ $attribute->value }}" type="radio"
-                    class="square-radio-input" wire:model="first_attribute_value" value="{{ $attribute->value }}">
+                    class="square-radio-input" wire:change="changeFirstAttributeValue('{{ json_encode($attribute->value) }}')" value="{{ $attribute->value }}">
                 <label @disabled($attribute->out_of_stock) for="first-attribute-{{ $attribute->value }}"
                     class="radio check-product-thumb-image inventory-picker" data-bs-toggle="tooltip" data-bs-placement="top"
                     title="<div><img width='70px' src='{{ $attribute->path }}'/><div class='text-center py-2'>{{ $attribute->value }}</div></div>"
