@@ -111,6 +111,7 @@ class ProductPickItemComponent extends Component {
     }
 
     public function changeProduct(Product $product, $id = null) {
+        $this->inventory = null;
         if ($id != null && $id == $this->parentId) {
             $this->product = $product;
             $this->first_attribute_id = null;
