@@ -152,7 +152,7 @@ class ProductPickItemComponent extends Component {
                 ]);
             }
         } else {
-            $this->dispatchBrowserEvent('openLoginModal');
+            $this->dispatchBrowserEvent('openLoginForm');
         }
     }
 }
