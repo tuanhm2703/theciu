@@ -212,6 +212,16 @@
                     - {{ format_currency_with_label($order->rank_discount_value) }}
                 </div>
             </div>
+            @if ($order->combo_discount > 0)
+                <div class="row">
+                    <div class="col-8 border-right">
+                        {{ trans('labels.discount_for_member') }}
+                    </div>
+                    <div class="col-4 text-right">
+                        - {{ format_currency_with_label($order->combo_discount) }}
+                    </div>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-8 border-right">
                     {{ trans('labels.total') }}
