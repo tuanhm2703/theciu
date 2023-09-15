@@ -2,7 +2,7 @@
 @section('content')
     <main class="main">
         <div>
-            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-0">
                 <div class="container">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">{{ trans('labels.dashboard') }}</a></li>
