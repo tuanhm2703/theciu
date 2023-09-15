@@ -27,7 +27,7 @@
         }'>
                         @foreach ($combo_banners as $banner)
                             <div>
-                                <img src="{{ $banner->image->path_with_domain }}" class="w-100" alt="">
+                                <img src="{{ $banner->desktopImage->path_with_domain }}" class="w-100" alt="">
                             </div>
                         @endforeach
                     </div>
