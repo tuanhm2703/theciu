@@ -60,7 +60,11 @@ class RegisterComponent extends Component {
             if($this->verifyOtp()) {
                 DB::commit();
                 auth('customer')->login($customer);
-                return redirect()->intended();
+                $intendedUrl = session()->get('url.intended');
+                if($intendedUrl) {
+                    return redirect()->intended();
+                }
+                $this->dispatchBrowserEvent('refreshPage');
             }
         } catch (\Throwable $th) {
             Log::error($th);
