@@ -195,7 +195,7 @@
                     @endif
                     <tr class="summary-total">
                         <td>{{ trans('labels.total') }}:</td>
-                        <td>{{ format_currency_with_label($total - $order_voucher_discount + $shipping_fee - $freeship_voucher_discount) }}
+                        <td>{{ format_currency_with_label($total) }}
                         </td>
                     </tr><!-- End .summary-total -->
                 </tbody>
