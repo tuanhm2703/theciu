@@ -6,7 +6,7 @@
                 <div class="container">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">{{ trans('labels.dashboard') }}</a></li>
-                        <li class="breadcrumb-item"><a href="/">Sale Off</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('client.product.sale_off') }}">Sale Off</a></li>
                         <li class="breadcrumb-item active"><a href="#">Combo khuyến mãi</a></li>
                     </ol>
                 </div><!-- End .container -->
