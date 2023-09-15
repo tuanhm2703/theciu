@@ -11,6 +11,7 @@ class LoginComponent extends Component
 
     public $password;
     public $remember = false;
+    public $currentRoute;
     protected $rules = [
         'username' => 'required|username_exists',
         'password' => 'required|correct_password',
@@ -29,6 +30,9 @@ class LoginComponent extends Component
         $customer = Customer::findByUserName($this->username);
         $intendedUrl = session()->get('url.intended');
         auth('customer')->login($customer, $this->remember);
-        return $intendedUrl ? redirect()->intended() : redirect()->back();
+        if($intendedUrl) {
+            return redirect()->intended();
+        }
+        $this->dispatchBrowserEvent('refreshPage');
     }
 }

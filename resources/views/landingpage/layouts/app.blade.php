@@ -230,6 +230,9 @@
         window.addEventListener('openLoginForm', (e) => {
             openLoginModal()
         });
+        window.addEventListener('refreshPage', (e) => {
+            window.location.reload();
+        });
         window.addEventListener('openQuickPreview', (e) => {
             $.magnificPopup.open({
                 items: {

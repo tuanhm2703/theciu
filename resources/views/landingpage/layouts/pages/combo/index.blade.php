@@ -15,9 +15,9 @@
                     <div class="row">
                         <div class="col-12">
                             @foreach ($combos as $combo)
-                                <h3 class="text-center text-secondary">
+                                <h5 class="font-weight-bold text-uppercase">
                                     {{ $combo->name }}
-                                </h3>
+                                </h5>
                                 <div class="row">
                                     @foreach ($combo->products as $product)
                                         <div class="col-6 col-md-3">
