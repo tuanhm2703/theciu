@@ -7,15 +7,25 @@
             <div class="col-12">
                 <div class="menu-col">
                     <ul>
-                        @foreach ($promotions as $p)
+                        @if ($available_combos->count() > 0)
                             <li>
                                 <a
-                                    href="{{ route('client.product.sale_off', $p->slug) }}">
+                                    href="{{ route('client.combo.index') }}">
+                                    Combo khuyến mãi
+                                    <span><span class="tip tip-hot" style="width: max-content">New</span></span>
+                                </a>
+                            </li>
+                        @endif
+                        @foreach ($promotions as $p)
+                            <li>
+                                <a href="{{ route('client.product.sale_off', $p->slug) }}">
                                     {{ $p->name }}
                                     @if (now()->isBefore($p->from))
-                                        <span><span class="tip tip-new" style="width: max-content">{{ __('labels.comming_soon') }}</span></span>
+                                        <span><span class="tip tip-new"
+                                                style="width: max-content">{{ __('labels.comming_soon') }}</span></span>
                                     @else
-                                        <span><span class="tip tip-hot" style="width: max-content">{{ __('labels.happenning') }}</span></span>
+                                        <span><span class="tip tip-hot"
+                                                style="width: max-content">{{ __('labels.happenning') }}</span></span>
                                     @endif
                                 </a>
                             </li>

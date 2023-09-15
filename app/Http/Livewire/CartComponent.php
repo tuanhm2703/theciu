@@ -282,6 +282,7 @@ class CartComponent extends Component {
         $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount - $this->combo_discount;
         $this->updateVoucherDisableStatus();
         $this->order_voucher_discount = $this->order_voucher ? $this->order_voucher->getDiscountAmount($this->total) : 0;
+        $this->total -= $this->order_voucher_discount;
         $this->freeship_voucher_discount = $this->freeship_voucher ? $this->freeship_voucher->getDiscountAmount($this->shipping_fee) : 0;
     }
 

@@ -27,7 +27,8 @@ class LoginComponent extends Component
             'password' => 'required|correct_password:customers,'.$this->username,
         ]);
         $customer = Customer::findByUserName($this->username);
+        $intendedUrl = session()->get('url.intended');
         auth('customer')->login($customer, $this->remember);
-        return redirect()->intended();
+        return $intendedUrl ? redirect()->intended() : redirect()->back();
     }
 }

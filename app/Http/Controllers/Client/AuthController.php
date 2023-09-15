@@ -27,6 +27,7 @@ class AuthController extends Controller {
         } else {
             $customer = Customer::wherePhone($credentials['username'])->whereNull('provider')->first();
         }
+        auth('customer')->login($customer);
         if (Hash::check($credentials['password'], $customer->password)) {
             auth('customer')->login($customer);
             return redirect()->back();
@@ -124,11 +125,10 @@ class AuthController extends Controller {
         $customer->update([
             'socialite_account_id' => $user->id
         ]);
-
         if (!$customer->avatar) {
             $customer->createImagesFromUrls([$user->picture], MediaType::AVATAR);
         }
-        auth('customer')->login($customer);
+
         return redirect()->intended();
     }
 

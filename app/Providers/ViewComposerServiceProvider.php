@@ -8,6 +8,7 @@ use App\Models\Banner;
 use App\Models\Blog;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Combo;
 use App\Models\Page;
 use App\Models\PaymentMethod;
 use App\Models\Product;
@@ -63,9 +64,11 @@ class ViewComposerServiceProvider extends ServiceProvider {
                 $promotions = Promotion::haveNotEnded()->whereHas('products')->with(['products' => function ($q) {
                     $q->withNeededProductCardData();
                 }])->get();
+                $available_combos = Combo::available()->get();
                 $best_seller_categories = Category::with("image:imageable_id,path")->whereType(CategoryType::BEST_SELLER)->whereHas('products')->get();
                 $blog_categories = Category::allActiveBlogCategories();
                 $view->with([
+                    'available_combos' => $available_combos,
                     'product_categories' => $product_categories,
                     'new_arrival_categories' => $new_arrival_categories,
                     'promotions' => $promotions,
