@@ -19,7 +19,7 @@ class Cart extends Model {
     }
 
     public function calculateComboDiscount($item_selected) {
-        if(count($item_selected) == 0) return [];
+        if(count($item_selected) == 0) return collect([]);
         // inventory that selected in cart
         $inventories = $this->inventories()->whereIn('inventories.id', $item_selected)->get();
         // product that selected in cart
