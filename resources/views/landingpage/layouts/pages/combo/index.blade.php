@@ -13,7 +13,7 @@
             </nav><!-- End .breadcrumb-nav -->
             <div class="page-content">
                 @if ($combo_banners->count() > 0)
-                    <div class="owl-carousel owl-theme owl-nav-inside owl-light mb-3" data-toggle="owl"
+                    <div class="owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
                         data-owl-options='{
             "dots": false,
             "nav": false,
@@ -32,7 +32,7 @@
                         @endforeach
                     </div>
                 @endif
-                <div class="container">
+                <div class="container mt-5">
                     <div class="row">
                         <div class="col-12">
                             @foreach ($combos as $combo)
