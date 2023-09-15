@@ -328,6 +328,9 @@
                             </span>
                         </div>
                         @if ($order->combo_discount)
+                            <div class="col-10 payment-info-label">
+                                <span>{{ trans('labels.combo_discount') }}</span>
+                            </div>
                             <div class="col-2">
                                 <span>
                                     - {{ format_currency_with_label($order->combo_discount) }}
