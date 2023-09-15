@@ -95,7 +95,7 @@ class CheckoutService
             }
             if ($checkoutModel->getFreeshipVoucher()) {
                 $freeship_discount_amount = $checkoutModel->getFreeshipVoucher()->getDiscountAmount($checkoutModel->getShippingFee());
-                $order_total = $order_total - $freeship_discount_amount - $combo_discount;
+                $order_total = $order_total - $freeship_discount_amount;
                 $freeshipVoucher = $checkoutModel->getFreeshipVoucher();
                 $attach_vouchers[$checkoutModel->getFreeshipVoucherId()] = [
                     'type' => $freeshipVoucher->voucher_type->code,
