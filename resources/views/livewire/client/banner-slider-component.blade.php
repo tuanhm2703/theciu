@@ -45,7 +45,7 @@
         @foreach ($banners->where('phoneImage.id', '!=', null) as $banner)
 
             <div class="intro-slide">
-                <img alt="the ciu banner" src="{{ $banner->phoneImage->path_with_domain }}">
+                <img data-href="{{ $banner->url }}" class="banner-href-img" alt="the ciu banner" src="{{ $banner->phoneImage->path_with_domain }}">
                 {{-- <div class="container intro-content text-center">
                     <h3 class="intro-subtitle text-white">{{ $banner->title }}</h3><!-- End .h3 intro-subtitle -->
                     <h1 class="intro-title text-white">{{ $banner->title }}</h1><!-- End .intro-title -->
