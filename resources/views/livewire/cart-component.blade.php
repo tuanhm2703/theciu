@@ -375,7 +375,7 @@
                                     <span>{{ trans('labels.total') }}</span>
                                 </div>
                                 <div class="col-5 text-right">
-                                    <span>{{ format_currency_with_label($total + $shipping_fee - $order_voucher_discount - $freeship_voucher_discount) }}</span>
+                                    <span>{{ format_currency_with_label($total) }}</span>
                                 </div>
                             </div>
                         </div>
