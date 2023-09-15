@@ -11,7 +11,7 @@ class ComboController extends Controller
 {
     public function index() {
         $combos = Combo::available()->get();
-        $combo_banners = Banner::available()->orderBy('order')->combo()->get();
+        $combo_banners = Banner::available()->with('desktopImage')->orderBy('order')->combo()->get();
         return view('landingpage.layouts.pages.combo.index', compact('combos', 'combo_banners'));
     }
 }
