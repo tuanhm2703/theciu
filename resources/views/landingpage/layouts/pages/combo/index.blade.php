@@ -6,12 +6,32 @@
                 <div class="container">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">{{ trans('labels.dashboard') }}</a></li>
-                        <li class="breadcrumb-item"><a href="/">Sale Off</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('client.product.sale_off') }}">Sale Off</a></li>
                         <li class="breadcrumb-item active"><a href="#">Combo khuyến mãi</a></li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
             <div class="page-content">
+                @if ($combo_banners->count() > 0)
+                    <div class="owl-carousel owl-theme owl-nav-inside owl-light mb-3" data-toggle="owl"
+                        data-owl-options='{
+            "dots": false,
+            "nav": false,
+            "autoplay": true,
+            "autoplayTimeout": 3000,
+            "responsive": {
+                "992": {
+                    "nav": true
+                }
+            }
+        }'>
+                        @foreach ($combo_banners as $banner)
+                            <div>
+                                <img src="{{ $banner->image->path_with_domain }}" class="w-100" alt="">
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
                 <div class="container">
                     <div class="row">
                         <div class="col-12">

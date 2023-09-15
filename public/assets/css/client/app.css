@@ -1392,6 +1392,7 @@ input[type=number] {
 
     .add-to-wishlist-wrapper {
         margin-top: 0;
+        padding-left: 1rem;
     }
 
     .desktop-cart-table {
