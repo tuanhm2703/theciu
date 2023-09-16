@@ -58,7 +58,7 @@
                                 }
                             }
                         }'>
-                            @foreach ($banners->where('phoneImage.id', '!=', null) as $banner)
+                            @foreach ($banners as $banner)
                                 <div class="intro-slide">
                                     <img data-href="{{ $banner->url }}" class="banner-href-img" alt="the ciu banner"
                                         src="{{ $banner->phoneImage->path_with_domain }}">
