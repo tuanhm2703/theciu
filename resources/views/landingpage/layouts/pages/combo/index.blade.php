@@ -13,9 +13,8 @@
             </nav><!-- End .breadcrumb-nav -->
             <div class="page-content">
                 @if ($combo_banners->count() > 0)
-                    <div class="intro-slider-container desktop-banner-slider">
-                        <div class="wl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
-                            data-owl-options='{
+                    <div class="desktop-banner-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
+                        data-owl-options='{
                             "dots": false,
                             "nav": false,
                             "autoplay": true,
@@ -26,16 +25,14 @@
                                 }
                             }
                         }'>
-                            @foreach ($combo_banners as $banner)
-                                <div>
-                                    <img src="{{ $banner->desktopImage->path_with_domain }}" class="w-100" alt="">
-                                </div>
-                            @endforeach
-                        </div>
+                        @foreach ($combo_banners as $banner)
+                            <div>
+                                <img src="{{ $banner->desktopImage->path_with_domain }}" class="w-100" alt="">
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="intro-slider-container phone-banner-slider">
-                        <div class="owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
-                            data-owl-options='{
+                    <div class="phone-banner-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
+                        data-owl-options='{
                             "dots": false,
                             "nav": false,
                             "autoplay": true,
@@ -46,12 +43,11 @@
                                 }
                             }
                         }'>
-                            @foreach ($combo_banners as $banner)
-                                <div>
-                                    <img src="{{ $banner->phoneImage->path_with_domain }}" class="w-100" alt="">
-                                </div>
-                            @endforeach
-                        </div>
+                        @foreach ($combo_banners as $banner)
+                            <div>
+                                <img src="{{ $banner->phoneImage->path_with_domain }}" class="w-100" alt="">
+                            </div>
+                        @endforeach
                     </div>
                 @endif
                 <div class="container mt-5">
