@@ -21,6 +21,8 @@
                             <tr>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder">
                                     {{ trans('labels.title') }}</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">
+                                        {{ trans('labels.type') }}</th>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder">
                                     {{ trans('labels.url') }}</th>
                                 <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">
@@ -50,6 +52,9 @@
             "ajax": "{{ route('admin.ajax.appearance.banner.paginate') }}",
             "columns": [{
                     data: "title"
+                },
+                {
+                    data: 'type',
                 },
                 {
                     data: "url",

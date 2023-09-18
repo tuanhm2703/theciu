@@ -35,6 +35,9 @@ class Category extends Model
     public function products() {
         return $this->morphedByMany(Product::class, 'categorizable');
     }
+    public function available_products() {
+        return $this->morphedByMany(Product::class, 'categorizable')->available();
+    }
 
     public function blogs() {
         return $this->morphedByMany(Blog::class, 'categorizable');

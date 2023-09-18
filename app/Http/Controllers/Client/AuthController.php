@@ -125,10 +125,11 @@ class AuthController extends Controller {
         $customer->update([
             'socialite_account_id' => $user->id
         ]);
+
         if (!$customer->avatar) {
             $customer->createImagesFromUrls([$user->picture], MediaType::AVATAR);
         }
-
+        auth('customer')->login($customer);
         return redirect()->intended();
     }
 
