@@ -1,7 +1,7 @@
 @extends('landingpage.layouts.app')
 @section('content')
     <main class="main">
-        @if ($banners->count() > 0)
+        @if (isset($banners) && $banners->count() > 0)
             <div class="intro-slider-container desktop-banner-slider">
                 <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
                     data-owl-options='{
