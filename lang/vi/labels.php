@@ -199,6 +199,7 @@ return [
     'payment' => 'Thanh toán',
     'shipment' => 'Vận chuyển',
     'return_and_refund' => 'Trả hàng và hoàn tiền',
+    'collection' => 'Collection',
     'category_types' => [
         'product' => 'Danh mục sản phẩm',
         'shop' => 'Danh mục cửa hàng',
