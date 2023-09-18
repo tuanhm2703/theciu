@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\CategoryType;
+use App\Models\Category;
 use App\Models\Config;
 use App\Models\Customer;
 use App\Models\Image;
@@ -79,6 +81,15 @@ function renderCategory($category) {
             $output .= "</ul>";
         }
         $output .= "</li>";
+    }
+    return $output;
+}
+function renderCollectionCategory() {
+    $output = '';
+    $categories = Category::whereType(CategoryType::COLLECTION)->whereHas('available_products')->get();
+    foreach ($categories as $category) {
+        $route = route('client.product_category.index', ['category' => $category->slug]);
+        $output .= "<li><a href='$route'>$category->name</a></li>";
     }
     return $output;
 }

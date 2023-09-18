@@ -5,5 +5,6 @@
         @foreach ($product_categories as $c)
             {!! renderCategory($c) !!}
         @endforeach
+        {!! renderCollectionCategory() !!}
     </ul>
 </li>

@@ -207,6 +207,7 @@ return [
         'blog' => 'Danh mục bài viết',
         'featured' => 'Danh mục nổi bật',
         'best-seller' => 'Best seller',
+        'collection' => 'Collection',
     ],
     'contact' => 'Liên hệ',
     'voucher_details' => 'Chi tiết voucher',
