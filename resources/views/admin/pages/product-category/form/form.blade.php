@@ -25,7 +25,7 @@
                 toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
                 categoryTable.ajax.reload()
                 initTreeview()
-                $('.category-form').parents('.modal').modal('hide')
+                $('.modal.show').modal('hide')
             },
             error: (err) => {
                 $('.submit-btn').loading(false)
