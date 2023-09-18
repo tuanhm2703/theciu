@@ -76,7 +76,7 @@
                 <span class="slider-loader"></span><!-- End .slider-loader -->
             </div><!-- End .intro-slider-container -->
         @endif
-        <div class="container">
+        <div class="container my-3">
             <div class="row">
                 <div class="col-12">
                     <div class="products mb-3">
