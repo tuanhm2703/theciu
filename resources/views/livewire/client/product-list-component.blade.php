@@ -1,5 +1,5 @@
 <div>
-    <nav aria-label="breadcrumb" class="breadcrumb-nav {{ isset($banners) && $banners->count() > 0 ? 'mb-0' : 'mb-2' }}">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav {{ isset($banners) && countcount(($banners)) > 0 ? 'mb-0' : 'mb-2' }}">
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">{{ trans('labels.dashboard') }}</a></li>
@@ -11,7 +11,7 @@
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
     <div class="page-content">
-        @if (isset($banners) && $banners->count() > 0)
+        @if (isset($banners) && count($banners) > 0)
             <div class="intro-slider-container desktop-banner-slider">
                 <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
                     data-owl-options='{
