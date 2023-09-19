@@ -13,7 +13,7 @@
             </nav><!-- End .breadcrumb-nav -->
             <div class="page-content">
                 @if ($banners->count() > 0)
-                    <div class="intro-slider-container desktop-banner-slider container" wire:ignore>
+                    <div class="intro-slider-container desktop-banner-slider container p-0" wire:ignore>
                         <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
                             data-owl-options='{
                             "dots": false,
