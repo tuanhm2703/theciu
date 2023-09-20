@@ -22,7 +22,6 @@ class HeaderCartComponent extends Component {
 
     public function loadContent() {
         if (auth('customer')->check()) {
-            $this->syncSessionCart();
             $this->cart = Cart::with(['inventories' => function ($q) {
                 return $q->with('image:path,imageable_id', 'product:id,slug,name');
             }])->firstOrCreate([
@@ -102,24 +101,5 @@ class HeaderCartComponent extends Component {
     public function goToCart() {
         if (customer()) return route('client.auth.cart.index');
         $this->dispatchBrowserEvent('openLoginForm');
-    }
-    private function syncSessionCart() {
-        $customer = customer();
-        if (session()->has('cart')) {
-            $cart = unserialize(session()->get('cart'));
-            foreach ($cart->inventories as $inventory) {
-                $customer->cart = Cart::with(['inventories' => function ($q) {
-                    return $q->with('image:path,imageable_id', 'product:id,slug,name');
-                }])->firstOrCreate([
-                    'customer_id' => auth('customer')->user()->id
-                ]);
-                if ($customer->cart->inventories()->where('inventories.id', $inventory->id)->exists()) {
-                    $customer->cart->inventories()->sync([$inventory->id => ['quantity' => $inventory->order_item->quantity ? $inventory->order_item->quantity : DB::raw("cart_items.quantity + 1")]], false);
-                } else {
-                    $customer->cart->inventories()->sync([$inventory->id => ['quantity' => $inventory->order_item->quantity ? $inventory->order_item->quantity : 1, 'customer_id' => $customer->id]], false);
-                }
-            }
-            session()->forget('cart');
-        }
     }
 }
