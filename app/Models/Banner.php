@@ -42,6 +42,9 @@ class Banner extends Model {
     public function scopeCombo($q) {
         return $q->where('type', BannerType::COMBO);
     }
+    public function scopeCollection($q) {
+        return $q->where('type', BannerType::COLLECTION);
+    }
 
     public function scopeAvailable($q) {
         return $q->active()->where(function($q) {

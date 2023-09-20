@@ -59,6 +59,13 @@ class Inventory extends Model {
         return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
         ->where('attribute_inventory.order', 2)->groupBy('laravel_through_key');
     }
+    public function order_items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+    public function order_item() {
+        return $this->hasOne(OrderItem::class);
+    }
 
     public function product() {
         return $this->belongsTo(Product::class)->withTrashed();

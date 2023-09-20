@@ -1,7 +1,7 @@
 <div class="dropdown cart-dropdown" wire:init="loadContent">
     @if ($readyToLoad)
-        <a href="{{ route('client.auth.cart.index') }}" id="cart-btn" class="dropdown-toggle" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false" data-display="static">
+        <a href="{{ route('client.auth.cart.index') }}" id="cart-btn" class="dropdown-toggle" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
             <i class="icon-shopping-cart"></i>
             <span class="cart-count">{{ $cart ? $cart->inventories->count() : 0 }}</span>
         </a>
@@ -17,7 +17,11 @@
                                 </h4>
 
                                 <span class="cart-product-info">
-                                    <span class="cart-product-qty">{{ $inventory->pivot->quantity }}</span>
+                                    @if ($inventory->pivot)
+                                        <span class="cart-product-qty">{{ $inventory->pivot->quantity }}</span>
+                                    @else
+                                        <span class="cart-product-qty">{{ $inventory->order_item->quantity }}</span>
+                                    @endif
                                     x {{ $inventory->formatted_sale_price }}
                                 </span>
                             </div><!-- End .product-cart-details -->

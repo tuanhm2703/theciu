@@ -16,7 +16,7 @@ class ProductListComponent extends Component
     use KeywordCount, WithPagination;
 
     public $title;
-
+    public $banners = [];
     public $hasNext;
 
     public $categories = [];

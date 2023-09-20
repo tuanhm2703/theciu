@@ -1,6 +1,7 @@
 @extends('landingpage.layouts.app')
 @section('content')
     <main class="main">
-        <livewire:client.product-list-component :category="$category ?? null" :haspromotion="isset($haspromotion)" :type="isset($type) ? $type : null" :title="isset($title) ? $title : null" :promotion="isset($promotion) ? $promotion : null" />
+        <livewire:client.product-list-component :banners="isset($banners) ? $banners : []" :category="$category ?? null" :haspromotion="isset($haspromotion)" :type="isset($type) ? $type : null" :title="isset($title) ? $title : null"
+            :promotion="isset($promotion) ? $promotion : null" />
     </main><!-- End .main -->
 @endsection

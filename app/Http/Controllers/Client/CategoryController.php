@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers\Client;
 
+use App\Enums\CategoryType;
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Meta;
@@ -20,7 +22,11 @@ class CategoryController extends Controller
             Meta::remove('image');
             Meta::set('image', $category->image?->path_with_domain);
         };
+        $banners = [];
+        if($category->type == CategoryType::COLLECTION) {
+            $banners = Banner::collection()->with('desktopImage', 'phoneImage')->available()->get();
+        }
         $category = $category->slug;
-        return view('landingpage.layouts.pages.product.index', compact('category'));
+        return view('landingpage.layouts.pages.product.index', compact('category', 'banners'));
     }
 }

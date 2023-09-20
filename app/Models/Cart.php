@@ -90,7 +90,7 @@ class Cart extends Model {
     public function total() {
         $total = 0;
         foreach ($this->inventories as $i) {
-            $total += $i->sale_price * $i->pivot->quantity;
+            $total += $i->sale_price * (customer() ? $i->pivot->quantity : $i->order_item->quantity);
         }
         return $total;
     }
