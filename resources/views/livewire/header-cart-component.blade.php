@@ -1,6 +1,6 @@
 <div class="dropdown cart-dropdown" wire:init="loadContent">
     @if ($readyToLoad)
-        <a wire:click.prevent="redirectToCart()" id="cart-btn" class="dropdown-toggle" role="button"
+        <a wire:click.prevent="redirectToCart()" href="#" id="cart-btn" class="dropdown-toggle" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
             <i class="icon-shopping-cart"></i>
             <span class="cart-count">{{ $cart ? $cart->inventories->count() : 0 }}</span>
@@ -52,7 +52,7 @@
             </div><!-- End .dropdown-menu -->
         @endif
     @else
-        <a wire:click.prevent="redirectToCart()" class="dropdown-toggle" role="button" data-toggle="dropdown"
+        <a wire:click.prevent="redirectToCart()" href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" data-display="static">
             <i class="icon-shopping-cart"></i>
             <span class="cart-count">{{ 0 }}</span>
