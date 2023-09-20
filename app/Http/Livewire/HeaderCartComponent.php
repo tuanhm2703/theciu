@@ -97,6 +97,12 @@ class HeaderCartComponent extends Component {
     public function render() {
         return view('livewire.header-cart-component');
     }
+    public function redirectToCart() {
+        if(customer()) {
+            return redirect()->route('client.auth.cart.index');
+        }
+        $this->dispatchBrowserEvent('openLoginForm');
+    }
 
     public function goToCart() {
         if (customer()) return route('client.auth.cart.index');
