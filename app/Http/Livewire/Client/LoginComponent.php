@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\Customer;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class LoginComponent extends Component

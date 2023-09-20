@@ -6,8 +6,7 @@ use App\Enums\StatusType;
 use App\Models\Product;
 use Livewire\Component;
 
-class PopupProductDetailComponent extends Component
-{
+class PopupProductDetailComponent extends Component {
 
     public $product;
 
@@ -34,22 +33,18 @@ class PopupProductDetailComponent extends Component
     }
 
     public function changeProduct($id) {
-        if (auth('customer')->check()) {
-            $this->inventory_images = $this->inventory_images ?? collect();
-            $this->product = Product::with(['category', 'inventories' => function ($q) {
-                return $q->available()->with(['image', 'attributes' => function ($q) {
-                    $q->orderBy('attribute_inventory.created_at', 'desc');
-                }]);
-            }])->find($id);
-            foreach ($this->product->inventories->where('status', StatusType::ACTIVE)->where('stock_quantity', '>', 0) as $inventory) {
-                if ($inventory->image) {
-                    $this->inventory_images->push($inventory->image);
-                }
+        $this->inventory_images = $this->inventory_images ?? collect();
+        $this->product = Product::with(['category', 'inventories' => function ($q) {
+            return $q->available()->with(['image', 'attributes' => function ($q) {
+                $q->orderBy('attribute_inventory.created_at', 'desc');
+            }]);
+        }])->find($id);
+        foreach ($this->product->inventories->where('status', StatusType::ACTIVE)->where('stock_quantity', '>', 0) as $inventory) {
+            if ($inventory->image) {
+                $this->inventory_images->push($inventory->image);
             }
-            $this->inventory_images->unique('name');
-            $this->emit('product-pick:changeProduct', $this->product);
-        } else {
-            $this->dispatchBrowserEvent('openLoginForm');
         }
+        $this->inventory_images->unique('name');
+        $this->emit('product-pick:changeProduct', $this->product);
     }
 }
