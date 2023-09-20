@@ -101,6 +101,11 @@ class HeaderCartComponent extends Component {
         if(customer()) {
             return redirect()->route('client.auth.cart.index');
         }
+        if (session()->has('cart')) {
+            $this->cart = unserialize(session()->get('cart'));
+        } else {
+            $this->cart = new Cart();
+        }
         $this->dispatchBrowserEvent('openLoginForm');
     }
 
