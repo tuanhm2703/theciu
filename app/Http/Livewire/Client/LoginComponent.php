@@ -39,7 +39,8 @@ class LoginComponent extends Component
         $this->dispatchBrowserEvent('refreshPage');
     }
     private function syncSessionCart() {
-        $customer = customer();
+        try {
+            $customer = customer();
         if (session()->has('cart')) {
             $cart = unserialize(session()->get('cart'));
             foreach ($cart->inventories as $inventory) {
@@ -55,6 +56,9 @@ class LoginComponent extends Component
                 }
             }
             session()->forget('cart');
+        }
+        } catch (\Throwable $th) {
+            \Log::error($th);
         }
     }
 }
