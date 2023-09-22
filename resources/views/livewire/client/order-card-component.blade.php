@@ -50,7 +50,7 @@
         <div class="action-button-wrapper">
             <div>
                 Thành tiền: <span
-                    class="font-weight-bold text-danger">{{ format_currency_with_label($order->total) }}</span>
+                    class="font-weight-bold text-danger">{{ format_currency_with_label($order->getCustomerPayment()) }}</span>
             </div>
             <div class="mb-3 d-flex" style="justify-content: right">
                 @switch($order->order_status)
