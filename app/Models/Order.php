@@ -359,19 +359,10 @@ class Order extends Model
     {
         $actualShip = $this->getActualShippingFee();
         $revenue = $this->total - ($actualShip - $this->shipping_order->total_fee) - $this->rank_discount_value;
-        if($this->freeship_voucher) {
-            $revenue -= $actualShip;
-        }
-        return $revenue;
-    }
-    public function getCustomerPaymennt()
-    {
-        $actualShip = $this->getActualShippingFee();
-        $revenue = $this->total - ($actualShip - $this->shipping_order->total_fee) - $this->rank_discount_value;
         if(!$this->freeship_voucher) {
             $revenue -= $actualShip;
         }
-        return $revenue;
+        return $this->order_voucher ? $revenue - $this->order_voucher->pivot->amount : $revenue;
     }
 
     public function generateKiotInvoiceDetailCollection()

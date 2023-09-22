@@ -344,7 +344,7 @@
                             <span>Tổng tiền Thanh toán</span>
                         </div>
                         <div class="col-2">
-                            <h5>{{ format_currency_with_label($order->getCustomerPaymennt()) }}</h5>
+                            <h5>{{ format_currency_with_label($order->total) }}</h5>
                         </div>
                     </div>
                 </div>
