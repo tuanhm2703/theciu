@@ -54,10 +54,10 @@ class RegisterComponent extends Component {
                 'phone' => $this->phone,
                 'first_name' => $this->first_name,
                 'last_name' => $this->last_name,
-                'phone_verified' => 1
+                'phone_verified' => 0
             ];
             $customer = Customer::create($input);
-            if($this->verifyOtp()) {
+            // if($this->verifyOtp()) {
                 DB::commit();
                 auth('customer')->login($customer);
                 $intendedUrl = session()->get('url.intended');
@@ -65,7 +65,7 @@ class RegisterComponent extends Component {
                     return redirect()->intended();
                 }
                 $this->dispatchBrowserEvent('refreshPage');
-            }
+            // }
         } catch (\Throwable $th) {
             Log::error($th);
             DB::rollBack();

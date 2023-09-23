@@ -72,7 +72,7 @@
         ]) !!}
         <div id="recaptcha-container" wire:ignore></div>
     </div><!-- End .form-group -->
-    <div class="form-group">
+    {{-- <div class="form-group">
         {!! Form::label('register_otp', 'Mã xác nhận' . '*', []) !!}
         <div class="position-relative mb-1">
             {!! Form::text('register_otp', null, ['class' => 'form-control mb-0', 'wire:model.lazy' => 'otp']) !!}
@@ -97,7 +97,7 @@
                 <span class="text-danger">{{ $this->errorMessage }}</span>
             </div>
         @endif
-    </div>
+    </div> --}}
     <div class="form-footer border-bottom-0">
         <button type="button" wire:click.prevent="register" class="btn btn-outline-primary-2">
             <span wire:loading wire:target="register" class="spinner-border spinner-border-sm mr-3" role="status"
