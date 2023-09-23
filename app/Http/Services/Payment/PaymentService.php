@@ -26,7 +26,7 @@ class PaymentService {
             case PaymentServiceType::COD:
                 return route('client.auth.profile.order.details', $order->id);
             case PaymentServiceType::VNPAY:
-                return VNPayment::process($order->order_number, (int) $order->total * 100, $order->getCheckoutDescription(), route('client.auth.profile.order.details', $order->id));
+                return VNPayment::process($order->order_number, (int) $order->getCustomerPayment() * 100, $order->getCheckoutDescription(), route('client.auth.profile.order.details', $order->id));
             default:
                 throw new Exception('Dịch vụ thanh toán không hợp lệ.');
         }
