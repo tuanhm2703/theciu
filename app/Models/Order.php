@@ -408,7 +408,7 @@ class Order extends Model
     }
 
     public function getCustomerPaymentAmountAttribute() {
-        return $this->total;
+        return $this->getCustomerPayment();
     }
 
     public static function cancelNotPaidOrder() {
