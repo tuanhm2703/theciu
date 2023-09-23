@@ -17,12 +17,12 @@ class CheckCustomerPhoneVerifyStatus
      */
     public function handle(Request $request, Closure $next)
     {
-        if(FacadesRequest::route()->getName() == 'client.auth.profile.phone') return $next($request);
-        if (auth('customer')->check()) {
-            if (customer()->phone_verified)
-                return $next($request);
-            else return redirect()->route('client.auth.profile.phone', ['update' => false]);
-        }
+        // if(FacadesRequest::route()->getName() == 'client.auth.profile.phone') return $next($request);
+        // if (auth('customer')->check()) {
+        //     if (customer()->phone_verified)
+        //         return $next($request);
+        //     else return redirect()->route('client.auth.profile.phone', ['update' => false]);
+        // }
         return $next($request);
     }
 }

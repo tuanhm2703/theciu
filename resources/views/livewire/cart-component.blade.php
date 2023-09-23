@@ -75,11 +75,11 @@
             <h6 class="d-flex align-items-center mb-0 p-3">
                 <ul class="tags">
                     @if ($order_voucher)
-                        <li><span>-{{ thousandsCurrencyFormat($order_voucher->getDiscountAmount($total)) }}</span>
+                    <li><a class="text-white">-{{ thousandsCurrencyFormat($order_voucher->getDiscountAmount($total)) }}</a>
                         </li>
                     @endif
                     @if ($freeship_voucher_id)
-                        <li><span>Miễn phí vận chuyển</span></li>
+                        <li><a class="text-white">Miễn phí vận chuyển</a></li>
                     @endif
                 </ul>
                 <span class="text-light ml-3">

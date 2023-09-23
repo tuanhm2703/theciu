@@ -228,7 +228,7 @@
                 </div>
                 <div class="col-4 text-right">
                     <h5 class="text-danger">
-                        {{ format_currency_with_label($order->total) }}
+                        {{ format_currency_with_label($order->getCustomerPayment()) }}
                     </h5>
                 </div>
             </div>
