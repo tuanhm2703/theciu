@@ -93,10 +93,8 @@ class CartComponent extends Component {
         }
     }
     public function mount() {
-        // removeSessionCart();
         $this->customer = customer() ?? new Customer();
         $this->getCart();
-        $this->address = $this->customer->shipping_address;
         $this->shipping_service_id = $this->shipping_service->shipping_service->id;
         if ($this->address) {
             $this->shipping_service_types = $this->shipping_service->getShipServices($this->address);
@@ -230,7 +228,7 @@ class CartComponent extends Component {
     }
     private function getAddressFromSession($id = null) {
         $addresses = getSessionAddresses();
-        if($id) {
+        if($id && $addresses->where('id', $id)->first()) {
             $this->address = $addresses->where('id', $id)->first();
             if ($this->address) $this->address->load('province', 'district', 'ward');
         } else {
