@@ -226,12 +226,17 @@ class CartComponent extends Component {
     private function getAddress() {
         if (!customer()) {
             if (session()->has('cart_address_id')) $this->getAddressFromSession(session()->has('cart_address_id'));
+            else
         }
     }
-    private function getAddressFromSession($id) {
+    private function getAddressFromSession($id = null) {
         $addresses = getSessionAddresses();
-        $this->address = $addresses->where('id', $id)->first();
-        if ($this->address) $this->address->load('province', 'district', 'ward');
+        if($id) {
+            $this->address = $addresses->where('id', $id)->first();
+            if ($this->address) $this->address->load('province', 'district', 'ward');
+        } else {
+            $this->address = $addresses->where('featured', 1)->first();
+        }
     }
     public function updatedServiceId($value) {
         foreach ($this->shipping_service_types as $shipping_service_type) {
