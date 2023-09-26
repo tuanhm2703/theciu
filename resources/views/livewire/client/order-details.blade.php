@@ -37,7 +37,7 @@
                     <span></span>
                     <div class="d-flex" style="justify-content: right">
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
-                            data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">
+                            data-link="{{ $order->getCancelLink() }}">
                             {{ trans('labels.cancel_order') }}
                         </button>
                         @if (!$order->isPaid() && $order->payment_method->code != 'cod')
@@ -52,7 +52,8 @@
                 @case(App\Enums\OrderStatus::WAITING_TO_PICK)
                     <div class="d-flex" style="justify-content: right">
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
-                            data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">{{ trans('labels.cancel_order') }}</button>
+                            data-link="{{ $order->getShowCancelLink() }}">
+                            {{ trans('labels.cancel_order') }}</button>
                     </div>
                 @break
 

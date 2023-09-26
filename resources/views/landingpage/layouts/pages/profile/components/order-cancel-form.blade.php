@@ -1,7 +1,7 @@
 <div class="px-5 my-5">
     <h5>Lý do huỷ</h5>
     {!! Form::model($order, [
-        'url' => route('client.auth.profile.order.cancel', ['order' => $order->id]),
+        'url' => $order->getCancelLink(),
         'method' => 'PUT',
         'id' => 'cancelOrderForm',
     ]) !!}

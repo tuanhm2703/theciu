@@ -74,6 +74,10 @@ class Inventory extends Model {
     public function getFormattedPriceAttribute() {
         return number_format($this->price, 0, ',', '.');
     }
+    public function getCartStockAttribute() {
+        if($this->pivot) return $this->pivot->quantity;
+        return $this->order_item?->quantity;
+    }
 
     public function promotions() {
         return $this->belongsToMany(Promotion::class, 'promotion_product', 'product_id', null, 'product_id')->orderBy('created_at', 'desc');
@@ -192,5 +196,4 @@ class Inventory extends Model {
             }
         }
     }
-
 }

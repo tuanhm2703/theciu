@@ -366,9 +366,9 @@ class Order extends Model
     }
     public function getCustomerPayment() {
         $revenue = $this->total - $this->rank_discount_value;
-        if($this->freeship_voucher) {
-            $revenue -= $this->shipping_order->total_fee;
-        }
+        // if($this->freeship_voucher) {
+        //     $revenue -= $this->shipping_order->total_fee;
+        // }
         return $revenue;
     }
 
@@ -418,5 +418,12 @@ class Order extends Model
             $order->order_status = OrderStatus::CANCELED;
             $order->save();
         }
+    }
+
+    public function getCancelLink() {
+        return customer() ? route('client.auth.profile.order.cancel', ['order' => $this->id]) : route('client.order.cancel', ['order' => $this->id]);
+    }
+    public function getShowCancelLink() {
+        return customer() ? route('client.auth.profile.order.cancel.show', ['order' => $this->id]) : route('client.order.cancel.show', ['order' => $this->id]);
     }
 }

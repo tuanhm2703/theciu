@@ -3,6 +3,8 @@
 namespace App\Http\Services\Checkout;
 
 use App\Models\Address;
+use App\Models\Customer;
+use App\Models\Inventory;
 use App\Models\Voucher;
 
 class CheckoutModel
@@ -19,6 +21,7 @@ class CheckoutModel
     private $freeship_voucher;
     private $service_id;
     private $note;
+    private Customer $customer;
 
     public function __construct($properties)
     {
@@ -42,6 +45,10 @@ class CheckoutModel
     public function getAddress()
     {
         return $this->address;
+    }
+
+    public function createAddress() {
+        if(!Address::whereId($this->address->id)->exists()) $this->address->save();
     }
 
     /**
@@ -138,7 +145,12 @@ class CheckoutModel
 
     public function getInventories()
     {
-        return $this->cart->inventories()->whereIn('inventories.id', $this->item_selected)->with('product')->get();
+        if(customer()) {
+            return Inventory::whereIn('id', $this->item_selected)->with('product')->get();
+        } else {
+            return $this->cart->inventories;
+        }
+
     }
 
     /**
@@ -259,6 +271,26 @@ class CheckoutModel
     public function setNote($note)
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of customer
+     */
+    public function getCustomer(): Customer
+    {
+        return $this->customer;
+    }
+
+    /**
+     * Set the value of customer
+     *
+     * @return  self
+     */
+    public function setCustomer(Customer $customer)
+    {
+        $this->customer = $customer;
 
         return $this;
     }

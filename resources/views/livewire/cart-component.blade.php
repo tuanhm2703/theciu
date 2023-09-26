@@ -42,8 +42,8 @@
                                 @endif
                                 <h3 class="product-title">
                                     <a href="{{ route('client.product.details', $inventory->product->slug) }}"
-                                        class="product-cart-title {{ $inventory->pivot->quantity > $inventory->stock_quantity ? 'text-danger' : '' }}">{{ $inventory->name }}</a>
-                                    @if ($inventory->pivot->quantity > $inventory->stock_quantity && $inventory->product->is_reorder == 0)
+                                        class="product-cart-title {{ $inventory->cart_stock > $inventory->stock_quantity ? 'text-danger' : '' }}">{{ $inventory->name }}</a>
+                                    @if ($inventory->cart_stock > $inventory->stock_quantity && $inventory->product->is_reorder == 0)
                                         <br>
                                         <small><i
                                                 class="text-danger">{{ trans('errors.cart.dont_have_enough_stock') }}</i></small>
@@ -56,8 +56,8 @@
                                     <input type="number" class="form-control" min="1" max="10"
                                         step="1" data-decimals="0"
                                         wire:change="itemAdded({{ $inventory->id }}, $event.target.value)"
-                                        data-inventory-id="{{ $inventory->id }}"
-                                        value="{{ $inventory->pivot->quantity }}" required>
+                                        data-inventory-id="{{ $inventory->id }}" value="{{ $inventory->cart_stock }}"
+                                        required>
                                 </div><!-- End .cart-product-quantity -->
                             </div>
                         </div><!-- End .product -->
@@ -75,7 +75,8 @@
             <h6 class="d-flex align-items-center mb-0 p-3">
                 <ul class="tags">
                     @if ($order_voucher)
-                    <li><a class="text-white">-{{ thousandsCurrencyFormat($order_voucher->getDiscountAmount($total)) }}</a>
+                        <li><a
+                                class="text-white">-{{ thousandsCurrencyFormat($order_voucher->getDiscountAmount($total)) }}</a>
                         </li>
                     @endif
                     @if ($freeship_voucher_id)
@@ -136,7 +137,7 @@
                             <span>{{ optional($address)->full_address }}</span>
                             <br>
                             <a class="ajax-modal-btn" data-modal-size="modal-md" data-callback="initChangeModal()"
-                                data-link="{{ route('client.auth.profile.address.view.change', ['selected_address_id' => $address ? $address->id : null]) }}">
+                                data-link="{{ customer() ? route('client.auth.profile.address.view.change', ['selected_address_id' => $address ? $address->id : null]) : route('client.address.view.change', ['selected_address_id' => $address ? $address->id : null]) }}">
                                 <span>{{ $address ? trans('labels.change_address') : trans('labels.pick_address') }}</span></a>
                         </td>
                     </tr><!-- End .summary-shipping-estimate -->
@@ -210,6 +211,7 @@
                 <span wire:loading wire:target="checkOrder">Đang tiến hành thanh toán..</span>
             </button>
             <div class="d-flex flex-column mt-1">
+                <span class="text-danger">{{ $error }}</span>
                 @error('payment_method_id')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -283,7 +285,7 @@
                                         <div class="d-flex flex-column">
                                             <span>{{ $inventory->name }}</span>
                                             <span class="confirm-label">{{ trans('labels.quantity') }}:
-                                                {{ $inventory->pivot->quantity }}</span>
+                                                {{ $inventory->cart_stock }}</span>
                                         </div>
                                     </div>
                                     <div class="col-2 text-right">

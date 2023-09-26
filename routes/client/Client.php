@@ -8,5 +8,7 @@ Route::group(['as' => 'client.'], function() {
     include('auth/Auth.php');
     include('page/Page.php');
     include('combo/Combo.php');
+    include('Address.php');
+    include('Order.php');
 });
 
