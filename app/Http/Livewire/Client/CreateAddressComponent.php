@@ -93,6 +93,7 @@ class CreateAddressComponent extends Component {
     private function addAddressToSession() {
         $addresses = getSessionAddresses();
         $this->address->id = uniqid();
+        $this->address->full_address = $this->address->details . ", " . $this->address->ward->path_with_type;
         $addresses->push($this->address);
         session()->put('addresses', serialize($addresses));
     }
