@@ -18,7 +18,7 @@
                                 </a>
                                 <br>
                                 {!! Form::open([
-                                    'url' => route('client.auth.profile.address.destroy', $address->id),
+                                    'url' => $address->getDeleteLink(),
                                     'class' => 'delete-address-form',
                                     'method' => 'DELETE'
                                 ]) !!}
