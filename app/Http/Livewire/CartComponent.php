@@ -226,7 +226,6 @@ class CartComponent extends Component {
     private function getAddress() {
         if (!customer()) {
             if (session()->has('cart_address_id')) $this->getAddressFromSession(session()->has('cart_address_id'));
-            else
         }
     }
     private function getAddressFromSession($id = null) {
