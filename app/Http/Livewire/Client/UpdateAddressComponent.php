@@ -96,15 +96,32 @@ class UpdateAddressComponent extends Component {
     public function updateAddress() {
         $this->validate();
         $this->address->featured = $this->address->featured ? 1 : 0;
-        if($this->address->featured) {
-            customer()->addresses()->where('addresses.id', '!=', $this->address->id)->update([
-                'featured' => 0
-            ]);
+        if(customer()) {
+            if($this->address->featured) {
+                customer()->addresses()->where('addresses.id', '!=', $this->address->id)->update([
+                    'featured' => 0
+                ]);
+            }
+            $this->address->save();
+        } else {
+            $this->updateSessionAddress();
         }
-        $this->address->save();
         $this->emitTo('profile-address-info', 'refresh');
         $this->dispatchBrowserEvent('addressUpdated', [
             'message' => 'Cập nhật địa chỉ thành công'
         ]);
+    }
+    private function updateSessionAddress() {
+        $addresses = getSessionAddresses();
+        if($this->address->featured) {
+            foreach ($addresses as $address) {
+                $address->featured = 0;
+            }
+        }
+        $addresses = $addresses->filter(function($add) use ($address) {
+            return $address->id != $add->id;
+        });
+        $addresses->push($this->address);
+        session()->put('addresses', serialize($addresses));
     }
 }

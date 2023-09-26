@@ -419,4 +419,11 @@ class Order extends Model
             $order->save();
         }
     }
+
+    public function getCancelLink() {
+        return customer() ? route('client.auth.profile.order.cancel', ['order' => $this->id]) : route('client.order.cancel', ['order' => $this->id]);
+    }
+    public function getShowCancelLink() {
+        return customer() ? route('client.auth.profile.order.cancel.show', ['order' => $this->id]) : route('client.order.cancel.show', ['order' => $this->id]);
+    }
 }

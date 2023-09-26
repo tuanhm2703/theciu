@@ -15,6 +15,7 @@ use App\Models\Config;
 use App\Models\PaymentMethod;
 use App\Models\VoucherType;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -23,8 +24,10 @@ class CheckoutService
     public static function checkout(CheckoutModel $checkoutModel)
     {
         DB::beginTransaction();
-        $customer = auth('customer')->user();
+        $customer = $checkoutModel->getCustomer();
         try {
+            if(!$customer->id) $customer->save();
+            $checkoutModel->createAddress();
             $payment_method = PaymentMethod::find($checkoutModel->getPaymentMethodId());
             $order = $customer->orders()->create([
                 'total' => 0,
@@ -54,17 +57,17 @@ class CheckoutService
                 $order->inventories()->attach([
                     $inventory->id => [
                         'product_id' => $inventory->product_id,
-                        'quantity' => $inventory->pivot->quantity,
+                        'quantity' => $inventory->cart_stock,
                         'origin_price' => $inventory->price,
                         'promotion_price' => $inventory->sale_price,
-                        'total' => $inventory->sale_price * $inventory->pivot->quantity,
+                        'total' => $inventory->sale_price * $inventory->cart_stock,
                         'title' => $inventory->title,
                         'name' => $inventory->name,
-                        'is_reorder' => $inventory->product->is_reorder && $inventory->stock_quantity  - $inventory->pivot->quantity < 0
+                        'is_reorder' => $inventory->product->is_reorder && $inventory->stock_quantity  - $inventory->cart_stock < 0
                     ]
                 ]);
-                if ($inventory->stock_quantity  - $inventory->pivot->quantity < 0 && $inventory->product->is_reorder == 0)
-                    throw new InventoryOutOfStockException("Sản phẩm $inventory->name không đủ số lượng", 409);
+                if ($inventory->stock_quantity - $inventory->cart_stock < 0 && $inventory->product->is_reorder == 0)
+                    throw new Exception("Sản phẩm $inventory->name không đủ số lượng", 409);
                 /* If product is not reorderable or product is reorderable and stock quantity is less
                 than 0, then update stock quantity. */
             }
@@ -131,9 +134,11 @@ class CheckoutService
             ]);
             $checkoutModel->getCart()->inventories()->detach($checkoutModel->getInventories()->pluck('id')->toArray());
             $redirectUrl = PaymentService::checkout($order);
+            self::saveOrderToSession($order);
             DB::commit();
             event(new OrderCreatedEvent($order));
             event(new KiotOrderCreatedEvent($order));
+            removeSessionCart();
             return $redirectUrl;
         } catch (\Throwable $th) {
             Log::error($th);
@@ -146,5 +151,11 @@ class CheckoutService
             }
             throw new Exception($error);
         }
+    }
+
+    public static function saveOrderToSession($order) {
+        $orders = session()->has('orders') ? unserialize(session()->get('orders')) : new Collection();
+        $orders->push($order);
+        session()->put('orders', serialize($orders));
     }
 }

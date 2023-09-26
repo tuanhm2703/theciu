@@ -5,8 +5,10 @@ use App\Models\Category;
 use App\Models\Config;
 use App\Models\Customer;
 use App\Models\Image;
+use App\Models\Order;
 use App\Services\StorageService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -516,4 +518,21 @@ function getPathWithSize($size, $path) {
 
 function carbon($time) {
     return new Carbon($time);
+}
+function getSessionAddresses() {
+    return session()->has('addresses') ? unserialize(session()->get('addresses')) : new Collection();
+}
+function getSessionOrders() {
+    return session()->has('orders') ? unserialize(session()->get('orders')) : new Collection();
+}
+function removeSessionCart() {
+    return session()->forget('cart');
+}
+function updateSessionOrder(Order $order) {
+    $orders = getSessionOrders();
+    $orders = $orders->filter(function($o) use ($order) {
+        return $order->id != $o->id;
+    });
+    $orders->push($order);
+    return session()->put('orders', serialize($order));
 }

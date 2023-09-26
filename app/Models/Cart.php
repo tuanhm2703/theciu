@@ -66,7 +66,7 @@ class Cart extends Model {
             /* Checking if the item is selected or not. If it is selected, it will add the price to the
             total. */
             if (in_array($i->id, $item_selected)) {
-                $total += $i->price * $i->pivot->quantity;
+                $total += $i->price * $i->cart_stock;
             }
         }
         return $total;
@@ -78,7 +78,7 @@ class Cart extends Model {
             /* Checking if the item is selected or not. If it is selected, it will add the price to the
             total. */
             if (in_array($i->id, $item_selected)) {
-                $total += $i->sale_price * $i->pivot->quantity;
+                $total += $i->sale_price * $i->cart_stock;
             }
         }
         if($voucher) {
@@ -123,8 +123,8 @@ class Cart extends Model {
         $package_info = new PackageInfo(0, 0, 0, 0);
         foreach ($this->inventories as $inventory) {
             if (in_array($inventory->id, $ids)) {
-                $package_info->height += $inventory->package_info->height * $inventory->pivot->quantity;
-                $package_info->weight += $inventory->package_info->weight * $inventory->pivot->quantity;
+                $package_info->height += $inventory->package_info->height * $inventory->cart_stock;
+                $package_info->weight += $inventory->package_info->weight * $inventory->cart_stock;
                 $package_info->length = $inventory->package_info->length;
                 $package_info->width = $inventory->package_info->width;
             }

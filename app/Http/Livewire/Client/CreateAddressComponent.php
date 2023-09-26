@@ -7,6 +7,7 @@ use App\Models\Address;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Ward;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
@@ -80,11 +81,19 @@ class CreateAddressComponent extends Component {
         $this->address->type = AddressType::SHIPPING;
         $this->validate();
         $this->address->featured = $this->address->featured ? 1 : 0;
-        auth('customer')->user()->addresses()->create($this->address->toArray());
+        if(customer()) {
+            customer()->addresses()->create($this->address->toArray());
+        } else {
+            $this->addAddressToSession();
+        }
         $this->dispatchBrowserEvent('addressUpdated', [
             'message' => 'Tạo địa chỉ thành công'
         ]);
     }
-
-
+    private function addAddressToSession() {
+        $addresses = getSessionAddresses();
+        $this->address->id = uniqid();
+        $addresses->push($this->address);
+        session()->put('addresses', serialize($addresses));
+    }
 }
