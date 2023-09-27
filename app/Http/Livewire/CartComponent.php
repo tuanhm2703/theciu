@@ -177,7 +177,15 @@ class CartComponent extends Component {
     }
 
     public function deleteInventory(Inventory $inventory) {
-        $this->cart->inventories()->detach($inventory->id);
+        if(customer()) {
+            $this->cart->inventories()->detach($inventory->id);
+        } else {
+            $this->getCart();
+            $this->cart->inventories = $this->cart->inventories->filter(function($i) use ($inventory) {
+                return $i->id != $inventory->id;
+            });
+            session()->put('cart', serialize($this->cart));
+        }
     }
 
     public function refresh() {
@@ -205,12 +213,12 @@ class CartComponent extends Component {
             'note' => $this->note,
             'customer' => $this->customer
         ]);
-        try {
-            $redirectUrl = CheckoutService::checkout($checkoutModel);
-            return redirect()->to($redirectUrl);
-        } catch (\Throwable $th) {
-            $this->error = $th->getMessage();
+        $result = CheckoutService::checkout($checkoutModel);
+        if($result['error']) {
+            $this->error = $result['message'];
             $this->dispatchBrowserEvent('closeModal');
+        } else {
+            return redirect()->to($result['redirectUrl']);
         }
     }
 
