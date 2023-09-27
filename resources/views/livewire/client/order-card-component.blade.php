@@ -1,5 +1,5 @@
 <div class="order-card px-3 pt-3 mb-3 show-detail-order"
-    data-order-link="{{ route('client.auth.profile.order.details', $order->id) }}">
+    data-order-link="{{ $order->getOrderDetailLink() }}">
     <div class="text-right border-bottom">
         <h6 class="text-uppercase text-danger">{{ $order->getCurrentStatusLabel() }} | {{ $order->order_number }}</h6>
     </div>
@@ -59,7 +59,7 @@
 
                     @case(App\Enums\OrderStatus::WAIT_TO_ACCEPT)
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
-                            data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">
+                            data-link="{{ $order->getShowCancelLink() }}">
                             Huỷ đơn hàng
                         </button>
                         @if (!$order->isPaid())
@@ -72,14 +72,15 @@
 
                     @case(App\Enums\OrderStatus::WAITING_TO_PICK)
                         <button type="button" class="d-block btn btn-light ajax-modal-btn"
-                            data-link="{{ route('client.auth.profile.order.cancel.show', ['order' => $order->id]) }}">Huỷ đơn
+                            data-link="{{ $order->getShowCancelLink() }}">Huỷ đơn
                             hàng</button>
                     @break
 
                     @case(App\Enums\OrderStatus::DELIVERED)
                         @if ($order->review_count === 0)
-                            <button data-review-order-id="{{ $order->id }}" type="button" class="d-block btn btn-primary ajax-modal-btn" data-modal-size="modal-lg"
-                                data-link="{{ route('client.auth.profile.order.review', ['order' => $order->id]) }}">
+                            <button data-review-order-id="{{ $order->id }}" type="button"
+                                class="d-block btn btn-primary ajax-modal-btn" data-modal-size="modal-lg"
+                                data-link="{{ $order->getReviewOrderLink() }}">
                                 Đánh giá
                             </button>
                         @endif
@@ -89,7 +90,7 @@
 
                     @endswitch
                     <a class="btn btn-light ml-2 d-none d-md-block"
-                        href="{{ route('client.auth.profile.order.details', $order->id) }}">{{ trans('labels.view_order_details') }}</a>
+                        href="{{ $order->getOrderDetailLink() }}">{{ trans('labels.view_order_details') }}</a>
                 </div>
             </div>
         </div>

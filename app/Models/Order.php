@@ -426,4 +426,13 @@ class Order extends Model
     public function getShowCancelLink() {
         return customer() ? route('client.auth.profile.order.cancel.show', ['order' => $this->id]) : route('client.order.cancel.show', ['order' => $this->id]);
     }
+    public static function getOrderListLink() {
+        return customer() ? route('client.auth.profile.order.index') : route('client.order.index');
+    }
+    public function getReviewOrderLink() {
+        return customer() ? route('client.auth.profile.order.review', $this->id) : route('client.order.review', $this->id);
+    }
+    public function getOrderDetailLink() {
+        return customer() ? route('client.auth.profile.order.details', $this->id) : route('client.order.details', $this->id);
+    }
 }

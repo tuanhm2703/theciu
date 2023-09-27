@@ -139,17 +139,23 @@ class CheckoutService
             event(new OrderCreatedEvent($order));
             event(new KiotOrderCreatedEvent($order));
             removeSessionCart();
-            return $redirectUrl;
+            return [
+                'error' => false,
+                'redirectUrl' => $redirectUrl
+            ];
         } catch (\Throwable $th) {
             Log::error($th);
             DB::rollBack();
             $error =  "";
-            if ($th->getCode() !== 500) {
+            if ($th->getCode() !== 500 || !$th->getCode()) {
                 $error = $th->getMessage();
             } else {
                 $error = 'Đã có lỗi xảy ra, vui lòng liên hệ bộ phận chăm sóc khách hàng để nhận hỗ trợ.';
             }
-            throw new Exception($error);
+            return [
+                'error' => true,
+                'message' => $error
+            ];
         }
     }
 

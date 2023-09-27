@@ -23,8 +23,8 @@
                     <aside class="col-md-3 col-lg-2">
                         <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link {{ Route::currentRouteName() == 'client.auth.profile.order.index' ? 'active' : '' }}"
-                                    id="content-tab" href="{{ route('client.auth.profile.order.index') }}" role="tab"
+                                <a class="nav-link {{ Route::currentRouteName() == 'client.auth.profile.order.index' || Route::currentRouteName() == 'client.order.index'  ? 'active' : '' }}"
+                                    id="content-tab" href="{{ App\Models\Order::getOrderListLink() }}" role="tab"
                                     aria-controls="tab-orders" aria-selected="false"><i
                                         class="fas fa-shopping-cart text-light"></i>
                                     {{ trans('labels.order_list') }}</a>
