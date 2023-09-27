@@ -90,6 +90,12 @@ class CartComponent extends Component {
         $this->getAddress();
         if (!auth('customer')->check()) {
             $this->cart = session()->has('cart') ? unserialize(session()->get('cart')) : new Cart();
+        } else {
+            $this->cart = Cart::with(['inventories' => function ($q) {
+                return $q->with('image:path,imageable_id', 'product:id,slug,name');
+            }])->firstOrCreate([
+                'customer_id' => $this->customer->id
+            ]);
         }
     }
     public function mount() {
@@ -175,11 +181,7 @@ class CartComponent extends Component {
     }
 
     public function refresh() {
-        $this->cart = Cart::with(['inventories' => function ($q) {
-            return $q->with('image:path,imageable_id', 'product:id,slug,name');
-        }])->firstOrCreate([
-            'customer_id' => $this->customer->id
-        ]);
+        $this->getCart();
     }
     public function checkOrder() {
         $this->getCart();
