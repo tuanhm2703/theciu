@@ -227,7 +227,7 @@ class Order extends Model
         }
         if (auth('customer')->check()) {
             $order_history->executable_type = Customer::class;
-            $order_history->executable_id = auth()->user()->id;
+            $order_history->executable_id = customer()->id;
             if ($this->order_status == OrderStatus::CANCELED) {
                 $this->canceled_by = OrderCanceler::CUSTOMER;
             }
