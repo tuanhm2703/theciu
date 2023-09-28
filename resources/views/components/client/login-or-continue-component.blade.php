@@ -10,7 +10,7 @@
                     <a href="#signin-modal" data-toggle="modal" class="btn btn-primary">
                         Đăng nhập
                     </a>
-                    <button class="btn btn-default">
+                    <button class="btn btn-default" data-dismiss="modal">
                         Tiếp tục mua hàng
                     </button>
                 </div>
