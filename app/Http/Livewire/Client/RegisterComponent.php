@@ -61,7 +61,7 @@ class RegisterComponent extends Component {
             // if($this->verifyOtp()) {
                 DB::commit();
                 auth('customer')->login($customer);
-                $this->syncSessionCart();
+                syncSessionCart();
                 $intendedUrl = session()->get('url.intended');
                 if($intendedUrl) {
                     return redirect()->intended();
@@ -129,29 +129,6 @@ class RegisterComponent extends Component {
             Log::error($th->getMessage());
             $code = json_decode($th->getResponse()->getBody()->getContents())->error->message;
             $this->errorMessage = FirebaseErrorCode::getErrorMessageFromCode($code);
-        }
-    }
-    private function syncSessionCart() {
-        try {
-            $customer = customer();
-            if (session()->has('cart')) {
-                $cart = unserialize(session()->get('cart'));
-                foreach ($cart->inventories as $inventory) {
-                    $customer->cart = Cart::with(['inventories' => function ($q) {
-                        return $q->with('image:path,imageable_id', 'product:id,slug,name');
-                    }])->firstOrCreate([
-                        'customer_id' => auth('customer')->user()->id
-                    ]);
-                    if ($customer->cart->inventories()->where('inventories.id', $inventory->id)->exists()) {
-                        $customer->cart->inventories()->sync([$inventory->id => ['quantity' => $inventory->order_item->quantity ? $inventory->order_item->quantity : DB::raw("cart_items.quantity + 1")]], false);
-                    } else {
-                        $customer->cart->inventories()->sync([$inventory->id => ['quantity' => $inventory->order_item->quantity ? $inventory->order_item->quantity : 1, 'customer_id' => $customer->id]], false);
-                    }
-                }
-                session()->forget('cart');
-            }
-        } catch (\Throwable $th) {
-            \Log::error($th);
         }
     }
 }
