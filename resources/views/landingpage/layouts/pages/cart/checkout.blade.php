@@ -24,6 +24,7 @@
             </div><!-- End .cart -->
         </div><!-- End .page-content -->
         @include('landingpage.layouts.pages.profile.address.create')
+        <x-client.login-or-continue-component/>
     </main><!-- End .main -->
 @endsection
 @push('js')
@@ -61,4 +62,9 @@
             })
         }
     </script>
+    @if (!customer())
+        <script>
+            $('#login-or-continue-modal').modal('show')
+        </script>
+    @endif
 @endpush
