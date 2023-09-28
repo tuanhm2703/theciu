@@ -135,8 +135,8 @@ class CheckoutService
             $checkoutModel->getCart()->inventories()->detach($checkoutModel->getInventories()->pluck('id')->toArray());
             $redirectUrl = PaymentService::checkout($order);
             self::saveOrderToSession($order);
-            DB::commit();
             event(new OrderCreatedEvent($order));
+            DB::commit();
             event(new KiotOrderCreatedEvent($order));
             removeSessionCart();
             return [

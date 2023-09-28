@@ -5836,7 +5836,7 @@ p {
     width: 5rem;
     height: 5rem;
     position: fixed;
-    right: 50px;
+    left: 50px;
     bottom: 128px;
     z-index: 999;
     color: #cccccc;
