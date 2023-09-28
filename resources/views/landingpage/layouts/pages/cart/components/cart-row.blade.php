@@ -17,8 +17,8 @@
                         class="d-inline text-white bg-danger p-1 font-weight-bold text-uppercase">{{ $inventory->product?->available_combo?->name }}</span>
                 @endif
                 <a href="{{ route('client.product.details', $inventory->product->slug) }}"
-                    class="{{ $inventory->pivot->quantity > $inventory->stock_quantity ? 'text-danger' : '' }}">{{ $inventory->name }}</a>
-                @if ($inventory->pivot->quantity > $inventory->stock_quantity && $inventory->product->is_reorder == 0)
+                    class="{{ $inventory->cart_stock > $inventory->stock_quantity ? 'text-danger' : '' }}">{{ $inventory->name }}</a>
+                @if ($inventory->cart_stock > $inventory->stock_quantity && $inventory->product->is_reorder == 0)
                     <br>
                     <small><i class="text-danger">{{ trans('errors.cart.dont_have_enough_stock') }}</i></small>
                 @endif
@@ -30,10 +30,10 @@
         <div class="cart-product-quantity">
             <input type="number" class="form-control" min="1" max="10" step="1" data-decimals="0"
                 wire:change="itemAdded({{ $inventory->id }}, $event.target.value)"
-                data-inventory-id="{{ $inventory->id }}" value="{{ $inventory->pivot->quantity }}" required>
+                data-inventory-id="{{ $inventory->id }}" value="{{ $inventory->cart_stock }}" required>
         </div><!-- End .cart-product-quantity -->
     </td>
-    <td class="total-col">{{ format_currency_with_label($inventory->sale_price * $inventory->pivot->quantity) }}</td>
+    <td class="total-col">{{ format_currency_with_label($inventory->sale_price * $inventory->cart_stock) }}</td>
     <td class="remove-col" wire:click="$emit('cart:itemDeleted', {{ $inventory->id }})"><button class="btn-remove"><i
                 class="icon-close"></i></button></td>
 </tr>

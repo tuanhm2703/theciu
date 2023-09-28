@@ -24,7 +24,12 @@ class PaymentService {
             case PaymentServiceType::EBANK:
                 return MomoService::checkout($order, RequestType::PAY_WITH_ATM);
             case PaymentServiceType::COD:
-                return route('client.auth.profile.order.details', $order->id);
+                if(auth('customer')->check()) {
+                    $redirectUrl = route('client.auth.profile.order.details', $order->id);
+                } else {
+                    $redirectUrl = route('client.order.details', $order->id);
+                }
+                return $redirectUrl ;
             case PaymentServiceType::VNPAY:
                 return VNPayment::process($order->order_number, (int) $order->total * 100, $order->getCheckoutDescription(), route('client.auth.profile.order.details', $order->id));
             default:

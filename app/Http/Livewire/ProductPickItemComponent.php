@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\Cart;
 use App\Models\Inventory;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -137,30 +138,55 @@ class ProductPickItemComponent extends Component {
         }
     }
     public function buyNow() {
-        $customer = auth('customer')->user();
-        if ($customer) {
-            if ($this->inventory) {
-                $cart = Cart::with(['inventories' => function ($q) {
-                    return $q->with('image:path,imageable_id', 'product:id,slug,name');
-                }])->firstOrCreate([
-                    'customer_id' => auth('customer')->user()->id
-                ]);
-                if ($cart->inventories()->where('inventories.id', $this->inventory->id)->exists()) {
-                    $cart->inventories()->sync([$this->inventory->id => ['quantity' => DB::raw("cart_items.quantity + 1")]], false);
-                } else {
-                    $cart->inventories()->sync([$this->inventory->id => ['quantity' => 1, 'customer_id' => $customer->id]], false);
-                }
-                return redirect()->route('client.auth.cart.index', [
-                    'item_selected' => [$this->inventory?->id]
-                ]);
-            } else {
-                $this->dispatchBrowserEvent('openToast', [
-                    'type' => 'error',
-                    'message' => 'Vui lòng chọn thuộc tính sản phẩm'
-                ]);
-            }
+        if ($this->inventory) {
+            $this->addInventory($this->inventory);
+            return redirect()->route('client.auth.cart.index', [
+                'item_selected' => [$this->inventory?->id]
+            ]);
         } else {
-            $this->dispatchBrowserEvent('openLoginForm');
+            $this->dispatchBrowserEvent('openToast', [
+                'type' => 'error',
+                'message' => 'Vui lòng chọn thuộc tính sản phẩm'
+            ]);
         }
+    }
+    private function addInventory(Inventory $inventory, $quantity = null) {
+        $customer = customer();
+        if (!$customer) {
+            $this->addInventorySession($inventory, $quantity ?? 1);
+        } else {
+            $cart = Cart::with(['inventories' => function ($q) {
+                return $q->with('image:path,imageable_id', 'product:id,slug,name');
+            }])->firstOrCreate([
+                'customer_id' => auth('customer')->user()->id
+            ]);
+            if ($cart->inventories()->where('inventories.id', $inventory->id)->exists()) {
+                $cart->inventories()->sync([$inventory->id => ['quantity' => $quantity ? $quantity : DB::raw("cart_items.quantity + 1")]], false);
+            } else {
+                $cart->inventories()->sync([$inventory->id => ['quantity' => $quantity ? $quantity : 1, 'customer_id' => $customer->id]], false);
+            }
+        }
+    }
+    private function addInventorySession(Inventory $inventory, $quantity) {
+        if (session()->has('cart')) {
+            $cart = unserialize(session()->get('cart'));
+        } else {
+            $cart = new Cart();
+        }
+        $i = $cart->inventories->where('id', $inventory->id)->first();
+        if ($i) {
+            $i->order_item->quantity += $quantity;
+            $cart->inventories = $cart->inventories->filter(function (Inventory $inven) use ($i) {
+                return $inven->id != $i->id;
+            });
+            $cart->inventories->put($inventory->id, $i);
+        } else {
+            $i = $inventory;
+            $i->order_item = new OrderItem([
+                'quantity' => $quantity,
+            ]);
+            $cart->inventories->push($i);
+        }
+        session()->put('cart', serialize($cart));
     }
 }

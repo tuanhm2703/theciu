@@ -227,7 +227,7 @@ class Order extends Model
         }
         if (auth('customer')->check()) {
             $order_history->executable_type = Customer::class;
-            $order_history->executable_id = auth()->user()->id;
+            $order_history->executable_id = customer()->id;
             if ($this->order_status == OrderStatus::CANCELED) {
                 $this->canceled_by = OrderCanceler::CUSTOMER;
             }
@@ -418,5 +418,21 @@ class Order extends Model
             $order->order_status = OrderStatus::CANCELED;
             $order->save();
         }
+    }
+
+    public function getCancelLink() {
+        return customer() ? route('client.auth.profile.order.cancel', ['order' => $this->id]) : route('client.order.cancel', ['order' => $this->id]);
+    }
+    public function getShowCancelLink() {
+        return customer() ? route('client.auth.profile.order.cancel.show', ['order' => $this->id]) : route('client.order.cancel.show', ['order' => $this->id]);
+    }
+    public static function getOrderListLink() {
+        return customer() ? route('client.auth.profile.order.index') : route('client.order.index');
+    }
+    public function getReviewOrderLink() {
+        return customer() ? route('client.auth.profile.order.review', $this->id) : route('client.order.review', $this->id);
+    }
+    public function getOrderDetailLink() {
+        return customer() ? route('client.auth.profile.order.details', $this->id) : route('client.order.details', $this->id);
     }
 }

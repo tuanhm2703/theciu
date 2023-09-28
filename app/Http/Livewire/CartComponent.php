@@ -9,7 +9,9 @@ use App\Http\Services\Shipping\GHTKService;
 use App\Http\Services\Shipping\Models\DeliveryData;
 use App\Models\Address;
 use App\Models\Cart;
+use App\Models\Customer;
 use App\Models\Inventory;
+use App\Models\OrderItem;
 use App\Models\PaymentMethod;
 use App\Models\Voucher;
 use App\Models\VoucherType;
@@ -27,7 +29,7 @@ class CartComponent extends Component {
         'cart:itemAdded' => 'updateOrderInfo',
         'cart:reloadVoucher' => 'reloadVoucher',
     ];
-    protected $queryString = ['item_selected'];
+    protected $queryString = ['item_selected', 'shipping_service_id', 'payment_method_id'];
     public $address;
     public $estimateDeliveryFee = 0;
     public $shipping_service_types = [];
@@ -57,7 +59,7 @@ class CartComponent extends Component {
     public $note;
     public $save_voucher_ids = [];
     public $promotion_applied = false;
-
+    public Customer $customer;
     protected $rules = [
         'service_id' => 'required',
         'payment_method_id' => 'required',
@@ -84,14 +86,21 @@ class CartComponent extends Component {
     public function boot(GHTKService $shipping_service) {
         $this->shipping_service = $shipping_service;
     }
-
+    private function getCart(): void {
+        $this->getAddress();
+        if (!auth('customer')->check()) {
+            $this->cart = session()->has('cart') ? unserialize(session()->get('cart')) : new Cart();
+        } else {
+            $this->cart = Cart::with(['inventories' => function ($q) {
+                return $q->with('image:path,imageable_id', 'product:id,slug,name');
+            }])->firstOrCreate([
+                'customer_id' => $this->customer->id
+            ]);
+        }
+    }
     public function mount() {
-        $this->cart =  Cart::with(['inventories' => function ($q) {
-            return $q->with('image:path,imageable_id', 'product:id,slug,name')->whereHas('product');
-        }])->firstOrCreate([
-            'customer_id' => auth('customer')->user()->id
-        ]);
-        $this->address = auth('customer')->user()->shipping_address;
+        $this->customer = customer() ?? new Customer();
+        $this->getCart();
         $this->shipping_service_id = $this->shipping_service->shipping_service->id;
         if ($this->address) {
             $this->shipping_service_types = $this->shipping_service->getShipServices($this->address);
@@ -99,20 +108,24 @@ class CartComponent extends Component {
                 $data = $this->calculateShippingInfo($shipping_service_type);
                 $shipping_service_type->fee = $data['fee'];
                 $shipping_service_type->delivery_date = now()->diffInDays($data['default_format_date']) <= 1 ? now()->addDays(2 - now()->diffInDays($data['default_format_date'])) : $data['default_format_date'];
-                $shipping_service_type->delivery_date = $shipping_service_type->delivery_date->clone()->format('d/m'). " - " . $shipping_service_type->delivery_date->clone()->addDays(2)->format('d/m');
+                $shipping_service_type->delivery_date = $shipping_service_type->delivery_date->clone()->format('d/m') . " - " . $shipping_service_type->delivery_date->clone()->addDays(2)->format('d/m');
             }
             $this->service_id = $this->shipping_service_types[0]->service_id;
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
         }
         $this->payment_methods = PaymentMethod::active()->with('image:imageable_id,path')->get();
-        $this->save_voucher_ids = customer()->saved_vouchers()->active()->public()->notExpired()->haveNotUsed()->pluck('id')->toArray();
-        $this->vouchers = Voucher::voucherForCart(customer())->get();
-        $this->updateVoucherDisableStatus();
+        $this->save_voucher_ids = $this->customer->saved_vouchers()->active()->public()->notExpired()->haveNotUsed()->pluck('id')->toArray();
+        $this->vouchers = Voucher::voucherForCart($this->customer)->get();
+        if (count($this->item_selected) > 0) {
+            $this->updateOrderInfo();
+        } else {
+            $this->updateVoucherDisableStatus();
+        }
     }
 
     public function reloadVoucher() {
-        $this->save_voucher_ids = customer()->saved_vouchers()->public()->notExpired()->haveNotUsed()->pluck('id')->toArray();
-        $this->vouchers = Voucher::voucherForCart(customer())->get();
+        $this->save_voucher_ids = $this->customer->saved_vouchers()->public()->notExpired()->haveNotUsed()->pluck('id')->toArray();
+        $this->vouchers = Voucher::voucherForCart($this->customer)->get();
         $this->updateVoucherDisableStatus();
     }
 
@@ -121,14 +134,14 @@ class CartComponent extends Component {
      * vouchers based on various conditions.
      */
     private function updateVoucherDisableStatus() {
-        $validate_voucher_data = Voucher::whereIn('id', $this->vouchers->pluck('id')->toArray())->withCount(['orders' => function($q) {
+        $validate_voucher_data = Voucher::whereIn('id', $this->vouchers->pluck('id')->toArray())->withCount(['orders' => function ($q) {
             $q->where('orders.order_status', '!=', OrderStatus::CANCELED);
         }])->get();
         foreach ($this->vouchers as $voucher) {
             if (count($this->item_selected) == 0) {
                 $voucher->disabled = true;
                 $voucher->disable_reason = "Vui lòng chọn sản phẩm để áp dụng voucher";
-            } else if($voucher->voucher_type?->code == VoucherType::ORDER && $this->promotion_applied) {
+            } else if ($voucher->voucher_type?->code == VoucherType::ORDER && $this->promotion_applied) {
                 $voucher->disabled = true;
                 $voucher->disable_reason = "Bạn không thể áp dụng voucher đơn hàng khi đang sử dụng các khuyến mãi khác!";
             } else if ($voucher->total_can_use <= $validate_voucher_data->where('id', $voucher->id)->first()->orders_count) {
@@ -142,7 +155,7 @@ class CartComponent extends Component {
                 $voucher->disable_reason = "Đơn hàng chưa đạt giá trị tối thiểu (" . format_currency_with_label($voucher->min_order_value) . ")";
             } else if (in_array($voucher->id, $this->save_voucher_ids)) {
                 $voucher->disabled = false;
-            } else if ($voucher->canApplyForCustomer(customer()->id)) {
+            } else if ($voucher->canApplyForCustomer($this->customer->id)) {
                 $voucher->disabled = false;
             } else {
                 $voucher->disabled = true;
@@ -164,21 +177,27 @@ class CartComponent extends Component {
     }
 
     public function deleteInventory(Inventory $inventory) {
-        $this->cart->inventories()->detach($inventory->id);
+        if(customer()) {
+            $this->cart->inventories()->detach($inventory->id);
+        } else {
+            $this->getCart();
+            $this->cart->inventories = $this->cart->inventories->filter(function($i) use ($inventory) {
+                return $i->id != $inventory->id;
+            });
+            session()->put('cart', serialize($this->cart));
+        }
     }
 
     public function refresh() {
-        $this->cart = Cart::with(['inventories' => function ($q) {
-            return $q->with('image:path,imageable_id', 'product:id,slug,name');
-        }])->firstOrCreate([
-            'customer_id' => auth('customer')->user()->id
-        ]);
+        $this->getCart();
     }
     public function checkOrder() {
+        $this->getCart();
         $this->validate();
         $this->emit('open-confirm-order');
     }
     public function checkout() {
+        $this->getCart();
         $this->validate();
         $this->error = '';
         $checkoutModel = new CheckoutModel([
@@ -192,21 +211,40 @@ class CartComponent extends Component {
             'order_voucher_id' => $this->order_voucher_id,
             'freeship_voucher_id' => $this->freeship_voucher_id,
             'note' => $this->note,
+            'customer' => $this->customer
         ]);
-        try {
-            $redirectUrl = CheckoutService::checkout($checkoutModel);
-            return redirect()->to($redirectUrl);
-        } catch (\Throwable $th) {
-            $this->error = $th->getMessage();
+        $result = CheckoutService::checkout($checkoutModel);
+        if($result['error']) {
+            $this->error = $result['message'];
             $this->dispatchBrowserEvent('closeModal');
+        } else {
+            return redirect()->to($result['redirectUrl']);
         }
     }
 
-    public function changeAddress(Address $address) {
-        $this->address = $address;
-        $this->updateOrderInfo($address);
+    public function changeAddress($id) {
+        if (customer()) {
+            $this->address = Address::find($id);
+        } else {
+            session()->put('cart_address_id', $id);
+            $this->getAddressFromSession($id);
+        }
+        $this->updateOrderInfo();
     }
-
+    private function getAddress() {
+        if (!customer()) {
+            if (session()->has('cart_address_id')) $this->getAddressFromSession(session()->has('cart_address_id'));
+        }
+    }
+    private function getAddressFromSession($id = null) {
+        $addresses = getSessionAddresses();
+        if($id && $addresses->where('id', $id)->first()) {
+            $this->address = $addresses->where('id', $id)->first();
+            if ($this->address) $this->address->load('province', 'district', 'ward');
+        } else {
+            $this->address = $addresses->where('featured', 1)->first();
+        }
+    }
     public function updatedServiceId($value) {
         foreach ($this->shipping_service_types as $shipping_service_type) {
             if (((object) $shipping_service_type)->service_id == $value) {
@@ -242,32 +280,60 @@ class CartComponent extends Component {
 
 
     public function itemAdded(Inventory $inventory, $quantity) {
-        if ($this->cart->inventories()->where('inventories.id', $inventory->id)->exists()) {
-            $this->cart->inventories()->sync([$inventory->id => [
-                'quantity' => $quantity ? $quantity : DB::raw("cart_items.quantity + 1")
-            ]], false);
+        $this->getCart();
+        if (!customer()) {
+            $this->addInventorySession($inventory, $quantity);
         } else {
-            $this->cart->inventories()->sync([$inventory->id => [
-                'quantity' => $quantity ? $quantity : 1, 'customer_id' => $this->cart->id
-            ]], false);
+            if ($this->cart->inventories()->where('inventories.id', $inventory->id)->exists()) {
+                $this->cart->inventories()->sync([$inventory->id => [
+                    'quantity' => $quantity ? $quantity : DB::raw("cart_items.quantity + 1")
+                ]], false);
+            } else {
+                $this->cart->inventories()->sync([$inventory->id => [
+                    'quantity' => $quantity ? $quantity : 1, 'customer_id' => $this->cart->id
+                ]], false);
+            }
+            $this->cart =  Cart::with(['inventories' => function ($q) {
+                return $q->with('image:path,imageable_id', 'product:id,slug,name');
+            }])->firstOrCreate([
+                'customer_id' => $this->customer->id
+            ]);
         }
-        $this->cart =  Cart::with(['inventories' => function ($q) {
-            return $q->with('image:path,imageable_id', 'product:id,slug,name');
-        }])->firstOrCreate([
-            'customer_id' => auth('customer')->user()->id
-        ]);
         $this->updateOrderInfo();
         $this->emitTo('header-cart-component', 'cart:refresh');
     }
+    private function addInventorySession(Inventory $inventory, $quantity) {
+        if (session()->has('cart')) {
+            $this->cart = unserialize(session()->get('cart'));
+        } else {
+            $this->cart = new Cart();
+        }
+        $i = $this->cart->inventories->where('id', $inventory->id)->first();
+        if ($i) {
+            $i->order_item->quantity = $quantity;
+            $this->cart->inventories = $this->cart->inventories->filter(function (Inventory $inven) use ($i) {
+                return $inven->id != $i->id;
+            });
+            $this->cart->inventories->put($inventory->id, $i);
+        } else {
+            $i = $inventory;
+            $i->order_item = new OrderItem([
+                'quantity' => $quantity,
+            ]);
+            $this->cart->inventories->push($i);
+        }
+        session()->put('cart', serialize($this->cart));
+    }
 
     public function updateOrderInfo() {
+        $this->getCart();
         $this->shipping_service_types = $this->address ? App::make(GHTKService::class)->getShipServices($this->address) : [];
         foreach ($this->shipping_service_types as $shipping_service_type) {
             $data = $this->calculateShippingInfo($shipping_service_type);
             $shipping_service_type->fee = $data['fee'];
             $shipping_service_type->delivery_date = $data['date'];
             $shipping_service_type->delivery_date = now()->diffInDays($data['default_format_date']) <= 1 ? now()->addDays(2 - now()->diffInDays($data['default_format_date'])) : $data['default_format_date'];
-            $shipping_service_type->delivery_date = $shipping_service_type->delivery_date->clone()->format('d/m'). " - " . $shipping_service_type->delivery_date->clone()->addDays(2)->format('d/m');
+            $shipping_service_type->delivery_date = $shipping_service_type->delivery_date->clone()->format('d/m') . " - " . $shipping_service_type->delivery_date->clone()->addDays(2)->format('d/m');
         }
         if (count($this->shipping_service_types) > 0) {
             $this->service_id = $this->shipping_service_types[0]->service_id;
@@ -276,7 +342,7 @@ class CartComponent extends Component {
         $base_total = $this->cart->getTotalWithBasePriceItems($this->item_selected);
         $sub_total = $this->cart->getTotalWithSelectedItems($this->item_selected);
         $this->promotion_applied = $base_total > $sub_total;
-        $this->rank_discount_amount = customer()->calculateRankDiscountAmount($sub_total);
+        $this->rank_discount_amount = $this->customer->calculateRankDiscountAmount($sub_total);
         $this->combo_discount = $this->cart->calculateComboDiscount($this->item_selected)->sum('discount_amount');
         $this->promotion_applied = $this->promotion_applied == false && $this->combo_discount > 0;
         $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount - $this->combo_discount;
@@ -287,6 +353,7 @@ class CartComponent extends Component {
     }
 
     public function updated($name, $value) {
+        $this->getCart();
         if ($name == 'order_voucher_id') {
             $this->order_voucher = Voucher::active()->find($value);
             $this->updateOrderInfo();
@@ -307,7 +374,7 @@ class CartComponent extends Component {
                 'type' => 'error'
             ]);
         } else {
-            if($voucher->isPrivate() && !$this->vouchers->where('id', $voucher->id)->first()) {
+            if ($voucher->isPrivate() && !$this->vouchers->where('id', $voucher->id)->first()) {
                 $this->vouchers->push($voucher);
             }
             $this->updateVoucherDisableStatus();

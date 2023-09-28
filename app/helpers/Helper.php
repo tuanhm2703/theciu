@@ -1,12 +1,15 @@
 <?php
 
 use App\Enums\CategoryType;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Config;
 use App\Models\Customer;
 use App\Models\Image;
+use App\Models\Order;
 use App\Services\StorageService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
@@ -516,4 +519,44 @@ function getPathWithSize($size, $path) {
 
 function carbon($time) {
     return new Carbon($time);
+}
+function getSessionAddresses() {
+    return session()->has('addresses') ? unserialize(session()->get('addresses')) : new Collection();
+}
+function getSessionOrders() {
+    return session()->has('orders') ? unserialize(session()->get('orders')) : new Collection();
+}
+function removeSessionCart() {
+    return session()->forget('cart');
+}
+function updateSessionOrder(Order $order) {
+    $orders = getSessionOrders();
+    $orders = $orders->filter(function($o) use ($order) {
+        return $order->id != $o->id;
+    });
+    $orders->push($order);
+    return session()->put('orders', serialize($order));
+}
+function syncSessionCart() {
+    try {
+        $customer = customer();
+        if (session()->has('cart')) {
+            $cart = unserialize(session()->get('cart'));
+            foreach ($cart->inventories as $inventory) {
+                $customer->cart = Cart::with(['inventories' => function ($q) {
+                    return $q->with('image:path,imageable_id', 'product:id,slug,name');
+                }])->firstOrCreate([
+                    'customer_id' => auth('customer')->user()->id
+                ]);
+                if ($customer->cart->inventories()->where('inventories.id', $inventory->id)->exists()) {
+                    $customer->cart->inventories()->sync([$inventory->id => ['quantity' => $inventory->order_item->quantity ? $inventory->order_item->quantity : DB::raw("cart_items.quantity + 1")]], false);
+                } else {
+                    $customer->cart->inventories()->sync([$inventory->id => ['quantity' => $inventory->order_item->quantity ? $inventory->order_item->quantity : 1, 'customer_id' => $customer->id]], false);
+                }
+            }
+            session()->forget('cart');
+        }
+    } catch (\Throwable $th) {
+        \Log::error($th);
+    }
 }

@@ -44,7 +44,11 @@ class MomoService
         $env = MomoService::selectEnv(env('APP_ENV', 'dev'));
         $requestId = time() + 60;
         $orderId = time();
-        $redirectUrl = route('client.auth.profile.order.details', $order->id);
+        if(auth('customer')->check()) {
+            $redirectUrl = route('client.profile.order.details', $order->id);
+        } else {
+            $redirectUrl = route('client.auth.profile.order.details', $order->id);
+        }
         switch ($requestType) {
             case RequestType::CAPTURE_MOMO_WALLET:
                 return CaptureMoMo::process($env, $orderId, $order->getCheckoutDescription(), (int)  $order->customer_payment_amount, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();

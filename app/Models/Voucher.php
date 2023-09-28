@@ -10,8 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class Voucher extends Model
-{
+class Voucher extends Model {
     use HasFactory, VoucherScope, CustomScope;
 
 
@@ -42,34 +41,31 @@ class Voucher extends Model
         'end'
     ];
 
-    public function orders()
-    {
+    public function orders() {
         return $this->belongsToMany(Order::class, 'order_vouchers')->withPivot('type')->withTimestamps();
     }
 
-    public function customers()
-    {
+    public function customers() {
         return $this->belongsToMany(Customer::class, 'customer_vouchers')->withPivot('type', 'is_used')->withTimestamps();
     }
 
-    public function canApplyForCustomer($customer_id)
-    {
+    public function canApplyForCustomer($customer_id) {
         $customer = Customer::find($customer_id);
-        $voucher_used = $customer->getVoucherUsed();
-        $data = $voucher_used->where('id', $this->id)->first();
-        if($data) {
-            return $data->used_quantity < $this->customer_limit && $this->quantity > 0;
+        if ($customer) {
+            $voucher_used = $customer->getVoucherUsed();
+            $data = $voucher_used->where('id', $this->id)->first();
+            if ($data) {
+                return $data->used_quantity < $this->customer_limit && $this->quantity > 0;
+            }
         }
         return true;
     }
 
-    public function voucher_type()
-    {
+    public function voucher_type() {
         return $this->belongsTo(VoucherType::class);
     }
 
-    public function getDiscountAmount($total)
-    {
+    public function getDiscountAmount($total) {
         if ($this->discount_type == VoucherDiscountType::PERCENT) {
             $amount = $total * $this->value / 100;
         } else {
@@ -81,8 +77,7 @@ class Voucher extends Model
         return (int) $amount;
     }
 
-    public function decreaseQuantity(Customer $customer)
-    {
+    public function decreaseQuantity(Customer $customer) {
         if ($this->saveable) {
             $customer->saved_vouchers()->sync([
                 $this->id => [
@@ -94,8 +89,7 @@ class Voucher extends Model
         }
     }
 
-    public function increaseQuantity(Customer $customer)
-    {
+    public function increaseQuantity(Customer $customer) {
         if ($this->saveable) {
             $customer->saved_vouchers()->sync([
                 $this->id => [
@@ -107,8 +101,7 @@ class Voucher extends Model
         }
     }
 
-    public function getDiscountLabelAttribute()
-    {
+    public function getDiscountLabelAttribute() {
         if ($this->discount_type == VoucherDiscountType::AMOUNT) {
             return "Giảm " . thousandsCurrencyFormat($this->value);
         } else {
@@ -116,8 +109,7 @@ class Voucher extends Model
             return "Giảm " . $this->value . "%";
         }
     }
-    public function getDiscountDescriptionAttribute()
-    {
+    public function getDiscountDescriptionAttribute() {
         if (!$this->max_discount_amount) {
             return trans('labels.voucher_unlimit_discount');
         } else {
@@ -125,18 +117,16 @@ class Voucher extends Model
         }
     }
 
-    public function getDetailInfoAttribute()
-    {
+    public function getDetailInfoAttribute() {
         return "$this->discount_description Áp dụng đến " . $this->end->format('d/m/Y H:i') . ". Mỗi tài khoản được sử dụng $this->customer_limit lần.";
     }
-    public function isValidTime()
-    {
+    public function isValidTime() {
         return now()->between($this->begin, $this->end);
     }
     public function isPrivate() {
         return $this->display === DisplayType::PRIVATE;
     }
     public function isSystem() {
-        return $this->display === DisplayType:: SYSTEM;
+        return $this->display === DisplayType::SYSTEM;
     }
 }

@@ -31,4 +31,11 @@ class Address extends Model {
     public function district() {
         return $this->belongsTo(District::class);
     }
+    public function getDeleteLink() {
+        if(customer()) {
+            return route('client.auth.profile.address.destroy', $this->id);
+        } else {
+            return route('client.address.destroy', $this->id);
+        }
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Client;
 
+use App\Models\Cart;
 use App\Models\Customer;
 use App\Services\Models\FirebaseErrorCode;
 use GuzzleHttp\Client;
@@ -60,6 +61,7 @@ class RegisterComponent extends Component {
             // if($this->verifyOtp()) {
                 DB::commit();
                 auth('customer')->login($customer);
+                syncSessionCart();
                 $intendedUrl = session()->get('url.intended');
                 if($intendedUrl) {
                     return redirect()->intended();
