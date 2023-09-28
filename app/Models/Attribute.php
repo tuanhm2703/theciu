@@ -13,8 +13,14 @@ class Attribute extends Model {
     protected $fillable = [
         'name'
     ];
+    protected $appends = [
+        'encode_value'
+    ];
 
     public function inventories() {
         return $this->belongsToMany(Inventory::class);
     }
+    public function getEncodeValueAttribute() {
+        return stripVN($this->value);
+}
 }
