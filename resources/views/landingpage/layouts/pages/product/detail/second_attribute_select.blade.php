@@ -7,10 +7,9 @@
                     $attribute = (object) $attribute;
                 @endphp
                 <div class="radio-container">
-                    <input wire:change="changeSecondAttributeId({{ $attribute->id }})" name="second_attribute_value"
-                        id="second-attribute-{{ $attribute->value }}" type="radio" class="square-radio-input"
-                        wire:model="second_attribute_value" value="{{ $attribute->value }}">
-                    <label @disabled($attribute->out_of_stock) for="second-attribute-{{ $attribute->value }}" class="radio inventory-picker">{{ $attribute->value }}</label>
+                    <input wire:change="changeSecondAttributeValue('{{ $attribute->value }}')" name="second_attribute_value"
+                        id="second-attribute-{{ $attribute->value }}" type="radio" class="square-radio-input" value="{{ $attribute->value }}">
+                    <label @disabled($attribute->out_of_stock) for="second-attribute-{{ $attribute->value }}" class="radio inventory-picker">{{ json_decode($attribute->origin_value) }}</label>
                 </div>
             @endforeach
         </div><!-- End .select-custom -->
