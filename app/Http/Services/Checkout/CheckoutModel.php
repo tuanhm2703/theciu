@@ -280,6 +280,9 @@ class CheckoutModel
      */
     public function getCustomer(): Customer
     {
+        if(!$this->customer->id) {
+            $this->customer->first_name = $this->address->fullname;
+        }
         return $this->customer;
     }
 
