@@ -57,7 +57,7 @@ class CheckoutService
                 $order->inventories()->attach([
                     $inventory->id => [
                         'product_id' => $inventory->product_id,
-                        'quantity' => $inventory->cart_stock,
+                        'quantity' => $inventory->cart_stock ?? 1,
                         'origin_price' => $inventory->price,
                         'promotion_price' => $inventory->sale_price,
                         'total' => $inventory->sale_price * $inventory->cart_stock,
