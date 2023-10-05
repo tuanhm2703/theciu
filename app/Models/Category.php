@@ -21,7 +21,8 @@ class Category extends Model
         'status',
         'type',
         'slug',
-        'updated_at'
+        'updated_at',
+        'content'
     ];
 
     public function categories() {
