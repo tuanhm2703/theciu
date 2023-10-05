@@ -32,7 +32,9 @@ trait Metable
         $meta_tag = $this->metaTag;
         if ($meta_tag) {
             foreach ($meta_tag->payload as $key => $content) {
-                Meta::set($key, $content);
+                if($content) {
+                    Meta::set($key, $content);
+                }
             }
         }
     }
