@@ -16,5 +16,5 @@ Route::group(['prefix' => 'category', 'as' => 'category.'], function () {
     Route::get('/{type}', [CategoryController::class, 'viewCategoryTypeProduct'])->name('index')->middleware('cacheResponse:300');
 });
 Route::group(['prefix' => 'product-category', 'as' => 'product_category.'], function () {
-    Route::get('/{category}', [CategoryController::class, 'viewProductCategory'])->name('index');
+    Route::get('/{category}', [CategoryController::class, 'viewProductCategory'])->name('index')->middleware('cacheResponse:300');
 });
