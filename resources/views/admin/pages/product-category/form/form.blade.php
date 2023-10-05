@@ -15,7 +15,6 @@
         {!! Form::label('content', trans('labels.content'), ['class' => 'form-label']) !!}
         {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
     </div>
-    {!! Form::hidden('parent_id', null, []) !!}
     {!! Form::hidden('type', App\Enums\CategoryType::PRODUCT, []) !!}
 </div>
 <script>
