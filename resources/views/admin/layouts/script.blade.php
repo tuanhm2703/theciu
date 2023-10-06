@@ -190,8 +190,8 @@
             const modalSize = $(this).attr('data-modal-size') ?? 'modal-lg'
             const modalId = $(this).data().modalId ?? 'myDynamicModal'
             $(this).loading()
-            var url = $(this).data('link');
-            const callback = $(this).data('callback')
+            var url = $(this).attr('data-link');
+            const callback = $(this).attr('data-callback')
             const getDataFunc = $(this).attr('data-get-data-function');
             let payload = null;
             if (getDataFunc) {
