@@ -27,7 +27,7 @@
                             <div class="d-flex category-wrapper d-none">
                                 <h5 class="mb-0 d-flex align-items-center">Danh mục:&nbsp;<span id="category-title"></span>
                                 </h5>
-                                <a data-init-app="false" class="ms-3 ajax-modal-btn update-category-btn"
+                                <a class="ms-3 ajax-modal-btn update-category-btn"
                                     href="javascript:;"><i class="fas fa-edit"></i></a>
                             </div>
                             <a class="btn btn-primary btn-sm ms-auto ajax-modal-btn" href="javascript:;"
