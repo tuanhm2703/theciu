@@ -19,14 +19,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class CheckoutService
-{
-    public static function checkout(CheckoutModel $checkoutModel)
-    {
+class CheckoutService {
+    public static function checkout(CheckoutModel $checkoutModel) {
         DB::beginTransaction();
         $customer = $checkoutModel->getCustomer();
         try {
-            if(!$customer->id) $customer->save();
+            if (!$customer->id) $customer->save();
             $checkoutModel->createAddress();
             $payment_method = PaymentMethod::find($checkoutModel->getPaymentMethodId());
             $order = $customer->orders()->create([
@@ -50,14 +48,14 @@ class CheckoutService
                 'phone' => $checkoutModel->getAddress()->phone,
                 'featured' => 1
             ]);
-            if($checkoutModel->getInventories()->count() <= 0) {
-                throw new Exception('Đã có lỗi xảy ra, vui lòng thử lại');
+            if ($checkoutModel->getInventories()->count() <= 0) {
+                throw new Exception('Đã có lỗi xảy ra, vui lòng thử lại', 409);
             }
             foreach ($checkoutModel->getInventories() as $inventory) {
                 $order->inventories()->attach([
                     $inventory->id => [
                         'product_id' => $inventory->product_id,
-                        'quantity' => $inventory->cart_stock,
+                        'quantity' => $inventory->cart_stock ?? 1,
                         'origin_price' => $inventory->price,
                         'promotion_price' => $inventory->sale_price,
                         'total' => $inventory->sale_price * $inventory->cart_stock,
@@ -67,7 +65,7 @@ class CheckoutService
                     ]
                 ]);
                 if ($inventory->stock_quantity - $inventory->cart_stock < 0 && $inventory->product->is_reorder == 0)
-                    throw new Exception("Sản phẩm $inventory->name không đủ số lượng", 409);
+                    throw new InventoryOutOfStockException("Sản phẩm $inventory->name không đủ số lượng", 409);
                 /* If product is not reorderable or product is reorderable and stock quantity is less
                 than 0, then update stock quantity. */
             }
@@ -78,8 +76,8 @@ class CheckoutService
             $attach_vouchers = [];
             $order_discount_amount = 0;
             $freeship_discount_amount = 0;
-            if($discounted_combos->count() > 0) {
-                foreach($discounted_combos as $c) {
+            if ($discounted_combos->count() > 0) {
+                foreach ($discounted_combos as $c) {
                     $order->combos()->attach($c['combo']->id, [
                         'total_discount' => $c['discount_amount'],
                         'number_of_combos' => $c['total_combo']
@@ -106,7 +104,7 @@ class CheckoutService
                     'customer_id' => $customer->id
                 ];
             }
-                $order->vouchers()->attach($attach_vouchers);
+            $order->vouchers()->attach($attach_vouchers);
             $subtotal = $order->inventories()->sum('order_items.total');
             $order->update([
                 'total' => $order_total + $order->shipping_fee - $rank_discount - $combo_discount,
@@ -147,7 +145,7 @@ class CheckoutService
             Log::error($th);
             DB::rollBack();
             $error =  "";
-            if ($th->getCode() !== 500 || !$th->getCode()) {
+            if ($th->getCode() == 409) {
                 $error = $th->getMessage();
             } else {
                 $error = 'Đã có lỗi xảy ra, vui lòng liên hệ bộ phận chăm sóc khách hàng để nhận hỗ trợ.';

@@ -5,13 +5,16 @@
     </div>
     <div class="form-group">
         {!! Form::label('meta[description]', 'Meta-description', ['class' => 'form-label']) !!}
-        {!! Form::textarea('meta[description]', null, ['class' => 'form-control', 'required']) !!}
+        {!! Form::textarea('meta[description]', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group">
         {!! Form::label('meta[title]', 'Meta-title', ['class' => 'form-label']) !!}
         {!! Form::text('meta[title]', null, ['class' => 'form-control']) !!}
     </div>
-    {!! Form::hidden('parent_id', null, []) !!}
+    <div class="form-group">
+        {!! Form::label('content', trans('labels.content'), ['class' => 'form-label']) !!}
+        {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
+    </div>
     {!! Form::hidden('type', App\Enums\CategoryType::PRODUCT, []) !!}
 </div>
 <script>
