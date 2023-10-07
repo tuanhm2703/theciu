@@ -435,8 +435,8 @@ div.dataTables_processing>div:last-child>div {
     font-size: 14px !important;
 }
 a[href="https://www.froala.com/wysiwyg-editor?k=u"] {
-    display: none !important;
+    opacity: 0 !important;
 }
 p:has(a[href="https://www.froala.com/wysiwyg-editor?pb=1"]) {
-    display: none !important;
+    opacity: 0 !important;
 }
