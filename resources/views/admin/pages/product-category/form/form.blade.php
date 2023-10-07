@@ -4,6 +4,10 @@
         {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào']) !!}
     </div>
     <div class="form-group">
+        {!! Form::label('meta[keywords]', 'Meta-description', ['class' => 'form-label']) !!}
+        {!! Form::text('meta[keywords]', null, ['class' => 'form-control']) !!}
+    </div>
+    <div class="form-group">
         {!! Form::label('meta[description]', 'Meta-description', ['class' => 'form-label']) !!}
         {!! Form::textarea('meta[description]', null, ['class' => 'form-control']) !!}
     </div>
@@ -13,7 +17,7 @@
     </div>
     <div class="form-group">
         {!! Form::label('content', trans('labels.content'), ['class' => 'form-label']) !!}
-        {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
+        {!! Form::textarea('content', null, ['class' => 'form-control summernote']) !!}
     </div>
     {!! Form::hidden('type', App\Enums\CategoryType::PRODUCT, []) !!}
 </div>
