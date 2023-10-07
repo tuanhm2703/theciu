@@ -76,7 +76,7 @@ class Inventory extends Model {
     }
     public function getCartStockAttribute() {
         if($this->pivot) return $this->pivot->quantity;
-        return $this->order_item?->quantity;
+        return $this->order_item?->quantity ?? 1;
     }
 
     public function promotions() {
