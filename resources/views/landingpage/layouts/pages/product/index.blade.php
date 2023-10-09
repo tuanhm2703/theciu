@@ -4,6 +4,10 @@
         .page-content img {
             width: 100% !important;
         }
+        .page-content span {
+            width: fit-content;
+            height: fit-content;
+        }
     </style>
 @endpush
 @section('content')
