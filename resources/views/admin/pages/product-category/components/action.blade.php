@@ -5,7 +5,7 @@
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <li>
-            <a class="btn btn-link text-dark px-3 mb-0 ajax-modal-btn" href="javascript:;" data-init-app="false" data-modal-size="modal-md"
+            <a class="btn btn-link text-dark px-3 mb-0 ajax-modal-btn" href="javascript:;" data-modal-size="modal-md"
             data-link="{{ route('admin.category.product.edit', $category->id) }}">Chỉnh sửa</a>
         </li>
         <li>
