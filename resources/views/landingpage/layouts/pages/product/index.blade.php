@@ -1,9 +1,6 @@
 @extends('landingpage.layouts.app')
 @push('css')
     <style>
-        .page-content img {
-            width: 100% !important;
-        }
         .page-content span {
             width: fit-content !important;
             height: fit-content !important;
