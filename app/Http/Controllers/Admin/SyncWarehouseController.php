@@ -64,6 +64,7 @@ class SyncWarehouseController extends Controller {
     }
 
     public function downloadKiotData() {
+        KiotProduct::whereNotNull('id')->delete();
         $productResource = new ProductResource(App::make(Client::class));
         $data = $productResource->list(['pageSize' => '1']);
         $total = $data->getTotal();
