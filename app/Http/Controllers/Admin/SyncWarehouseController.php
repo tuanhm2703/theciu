@@ -53,6 +53,7 @@ class SyncWarehouseController extends Controller {
                     $webhookResource->remove($webhook['id']);
                 }
                 $webhookResource->registerWebhook(WebhookType::STOCK_UPDATE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật tồn kho');
+                $webhookResource->registerWebhook(WebhookType::PRODUCT_DELETE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật tồn kho');
             }
         } catch (\Throwable $th) {
             Log::error($th);
