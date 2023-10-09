@@ -5,8 +5,8 @@
             width: 100% !important;
         }
         .page-content span {
-            width: fit-content;
-            height: fit-content;
+            width: fit-content !important;
+            height: fit-content !important;
         }
     </style>
 @endpush
