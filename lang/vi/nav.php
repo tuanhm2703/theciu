@@ -30,5 +30,9 @@ return [
     'branch_management' => 'Quản lý chi nhánh',
     'review_manager' => 'Quản lý review',
     'review_list' => 'Danh sách review',
-    'combo_list' => 'Danh sách combo'
+    'combo_list' => 'Danh sách combo',
+    'jd_list' => 'Danh sách JD',
+    'resume_list' => 'Danh sách resume',
+    'recruitment_manager' => 'Quản lý tuyển dụng',
+    'create_jd' => 'Tạo JD'
 ];
