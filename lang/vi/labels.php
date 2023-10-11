@@ -259,5 +259,15 @@ return [
     'combo_name' => 'Tên combo',
     'edit_combo' => 'Cập nhật combo',
     'combo_discount' => 'Giảm giá combo',
-    'buy_now' => 'Mua ngay'
+    'buy_now' => 'Mua ngay',
+    'department_group' => 'Nhóm văn phòng',
+    'job_type' => 'Loại công việc',
+    'number_of_resumes' => 'Số lượng hồ sơ',
+    'create_jd' => 'Tạo JD',
+    'short_description' => 'Mô tả ngắn',
+    'job_requirement' => 'Yêu cầu công việc',
+    'benefit' => 'Phúc lợi',
+    'job_name' => 'Vị trí công việc',
+    'apply_date' => 'Ngày gửi',
+    'resume_list' => 'Danh sách ứng viên'
 ];
