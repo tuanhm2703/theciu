@@ -24,6 +24,12 @@ class JdController extends Controller
         return BaseResponse::success($jds);
     }
 
+    public function detail(Jd $jd) {
+        return BaseResponse::success([
+            'data' => $jd
+        ]);
+    }
+
     public function postResume(PostResumeRequest $request, Jd $jd) {
         $resume = $jd->resumes()->create($request->all());
         if($request->hasFile('file')) {
