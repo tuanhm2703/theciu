@@ -40,33 +40,25 @@
     <div class="card-body pt-0">
         <div class="row">
             <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-4">
-                        {!! Form::label('category_ids[]', trans('labels.category') . ': ', [
-                            'class' => 'custom-control-label',
-                        ]) !!}
-                    </div>
-                    <div class="col-md-8 position-relative">
-                        {!! Form::select('category_ids[]', isset($selected) ? $selected : [], isset($blog) ? $blog->category_ids : [], [
-                            'class' => 'select2-ajax',
-                            'multiple' => 'multiple',
-                            'required',
-                            'data-select2-url' => route('admin.ajax.category.search', ['type' => App\Enums\CategoryType::BLOG]),
-                        ]) !!}
-                    </div>
+                {!! Form::label('category_ids[]', trans('labels.category') . ': ', [
+                    'class' => 'custom-control-label',
+                ]) !!}
+                {!! Form::select('category_ids[]', isset($selected) ? $selected : [], isset($blog) ? $blog->category_ids : [], [
+                    'class' => 'select2-ajax',
+                    'multiple' => 'multiple',
+                    'required',
+                    'data-select2-url' => route('admin.ajax.category.search', ['type' => App\Enums\CategoryType::BLOG]),
+                ]) !!}
+            </div>
+            <div class="col-md-3">
+                {!! Form::label('status', trans('labels.status') . ': ', ['class' => 'custom-control-label']) !!}
+                <div class="form-check form-switch">
+                    {!! Form::checkbox('status', null, null, ['class' => 'form-check-input']) !!}
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-4">
-                        {!! Form::label('status', trans('labels.status') . ': ', ['class' => 'custom-control-label']) !!}
-                    </div>
-                    <div class="col-md-8 vertical-align-center">
-                        <div class="form-check form-switch">
-                            {!! Form::checkbox('status', null, null, ['class' => 'form-check-input']) !!}
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-3">
+                {!! Form::label('type', trans('labels.blog_type') . ': ', ['class' => 'custom-control-label']) !!}
+                {!! Form::select('type', App\Enums\BlogType::getBlogTypeOptions(), null, ['class' => 'form-control']) !!}
             </div>
         </div>
         <div class="row">

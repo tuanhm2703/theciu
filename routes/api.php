@@ -26,3 +26,4 @@ Route::group(['prefix' => 'seo'], function() {
 Route::group(['prefix' => 'recruitment'], function() {
     include('api/JD.php');
 });
+include('api/Blog.php');
