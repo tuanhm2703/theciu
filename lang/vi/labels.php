@@ -269,5 +269,10 @@ return [
     'benefit' => 'Phúc lợi',
     'job_name' => 'Vị trí công việc',
     'apply_date' => 'Ngày gửi',
-    'resume_list' => 'Danh sách ứng viên'
+    'resume_list' => 'Danh sách ứng viên',
+    'blogType' => [
+        'web' => 'Website',
+        'career' => 'Tuyển dụng'
+    ],
+    'blog_type' => 'Loại bài viết'
 ];
