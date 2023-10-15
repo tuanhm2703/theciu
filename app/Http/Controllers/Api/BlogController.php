@@ -13,7 +13,7 @@ class BlogController extends Controller
     public function index(Request $request) {
         $type = $request->type ?? BlogType::WEB;
         $pageSize = $request->pageSize ?? 9;
-        $blogs = Blog::with('image')->select('title', 'description', 'publish_date', 'slug', 'type')->whereType($type)->paginate($pageSize);
+        $blogs = Blog::with('image')->select('id', 'title', 'description', 'publish_date', 'slug', 'type')->whereType($type)->paginate($pageSize);
         return BaseResponse::success($blogs);
     }
 
