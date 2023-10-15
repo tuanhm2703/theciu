@@ -28,7 +28,9 @@ class JDController extends Controller {
     }
 
     public function store(Request $request) {
-        $jd = Jd::create($request->all());
+        $input = $request->all();
+        $input['featured'] = $request->featured == 'on';
+        $jd = Jd::create($input);
         session()->flash('success', 'Tạo JD thành công');
         return view('admin.pages.recruitment.jd.index');
     }
@@ -40,7 +42,9 @@ class JDController extends Controller {
     }
 
     public function update(Jd $jd, Request $request) {
-        $jd->update($request->all());
+        $input = $request->all();
+        $input['featured'] = $request->featured == 'on';
+        $jd->update($input);
         session()->flash('success', 'Cập nhật thành công');
         return view('admin.pages.recruitment.jd.index');
     }

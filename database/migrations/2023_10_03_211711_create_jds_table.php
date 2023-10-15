@@ -25,6 +25,7 @@ return new class extends Migration
             $table->longText('description');
             $table->longText('requirement');
             $table->longText('benefit');
+            $table->boolean('featured')->default(false);
             $table->timestamps();
         });
     }

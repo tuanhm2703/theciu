@@ -274,5 +274,6 @@ return [
         'web' => 'Website',
         'career' => 'Tuyển dụng'
     ],
-    'blog_type' => 'Loại bài viết'
+    'blog_type' => 'Loại bài viết',
+    'hot_job' => 'Công việc HOT'
 ];
