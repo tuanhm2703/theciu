@@ -7,9 +7,12 @@ use Illuminate\Support\Str;
 
 class BlogObserver {
     public function creating(Blog $blog) {
-        do {
+        $blog->slug = stripVN($blog->title);
+        while (Blog::whereSlug($blog->slug)->exists()) {
             $blog->slug = stripVN($blog->title);
-        } while (Blog::whereSlug($blog->slug)->exists());
+            $code = uniqid();
+            $blog->slug = $blog->slug . "-" . $code;
+        }
     }
 
     public function updating(Blog $blog) {
