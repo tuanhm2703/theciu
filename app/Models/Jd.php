@@ -22,6 +22,7 @@ class Jd extends Model
         'description',
         'requirement',
         'benefit',
+        'featured'
     ];
     protected $appends = [
         'time'

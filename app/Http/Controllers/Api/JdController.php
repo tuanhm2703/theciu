@@ -20,6 +20,9 @@ class JdController extends Controller
         if($request->keyword) {
             $jds->search('name', $request->keyword);
         }
+        if($request->has('featured')) {
+            $jds->where('featured', $request->featured);
+        }
         $jds = $jds->paginate($pageSize);
         return BaseResponse::success($jds);
     }

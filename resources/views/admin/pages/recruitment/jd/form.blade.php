@@ -92,6 +92,14 @@
                 ]) !!}
             </div>
         </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                {!! Form::label('featured', trans('labels.hot_job') . ': ', ['class' => 'custom-control-label']) !!}
+                <div class="form-check form-switch">
+                    {!! Form::checkbox('featured', null, null, ['class' => 'form-check-input']) !!}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @push('js')
