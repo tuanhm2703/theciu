@@ -25,7 +25,9 @@ class Jd extends Model
         'featured'
     ];
     protected $appends = [
-        'time'
+        'time',
+        'is_new',
+        'is_expired'
     ];
     protected $casts = [
         'from_date' => 'datetime',
@@ -38,5 +40,24 @@ class Jd extends Model
 
     public function resumes() {
         return $this->hasMany(Resume::class);
+    }
+    public function scopeAvailable($q) {
+        return $q->whereRaw('from_date <= NOW() AND to_date >= NOW()');
+    }
+    public function getIsNewAttribute() {
+        return $this->from_date->diffInDays(now(), false) > 3;
+    }
+    public function getIsExpiredAttribute() {
+        return now()->isAfter($this->to_date);
+    }
+
+    public function generateSlug() {
+        $this->slug = stripVN($this->name);
+        while (Jd::whereSlug($this->slug)->exists()) {
+            $this->slug = stripVN($this->name);
+            $code = uniqid();
+            $this->slug = $this->slug . "-" . $code;
+        }
+        $this->save();
     }
 }
