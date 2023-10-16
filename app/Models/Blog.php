@@ -23,7 +23,7 @@ class Blog extends Model {
         'status',
         'created_by',
         'updated_by',
-        'deletd_by',
+        'deleted_by',
         'slug',
         'type'
     ];

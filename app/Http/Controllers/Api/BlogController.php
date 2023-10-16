@@ -21,5 +21,13 @@ class BlogController extends Controller
         $blog = Blog::whereSlug($slug)->with('image')->firstOrFail();
         return BaseResponse::success($blog);
     }
-
+    public function relatedBlog($slug, Request $request) {
+        $limit = $request->limit ?? 3;
+        $blog = Blog::whereSlug($slug)->firstOrFail();
+        $type = $blog->type;
+        $blogs = Blog::active()->where('id', '!=', $blog->id)->whereType($type)->whereHas('categories', function($q) use ($blog) {
+            $q->whereIn('categories.id', $blog->categories()->pluck('categories.id')->toArray());
+        })->with('image')->select('id', 'title', 'description', 'publish_date', 'slug', 'type')->limit($limit)->get();
+        return BaseResponse::success($blogs);
+    }
 }
