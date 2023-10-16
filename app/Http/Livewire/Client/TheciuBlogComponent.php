@@ -16,7 +16,7 @@ class TheciuBlogComponent extends Component
         ->whereHas('meta_attachment')
         ->with('meta_attachment', function($q) {
             return $q->with('meta_attachment');
-        })
+        })->where('post_status', 'published')
         ->orderBy('post_date', 'desc')
         ->limit(5)->get();
         $this->rightBlogs = TheciuBlog::where('post_type', 'post')
@@ -25,6 +25,7 @@ class TheciuBlogComponent extends Component
         ->with('meta_attachment', function($q) {
             return $q->with('meta_attachment');
         })
+        ->where('post_status', 'published')
         ->orderBy('post_date', 'desc')
         ->whereNotIn('ID', $this->leftBlogs->pluck('ID')->toArray())
         ->limit(10)->get();
