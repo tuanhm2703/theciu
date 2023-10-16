@@ -8,7 +8,12 @@ use App\Models\Order;
 
 class VNPayService {
     public static function checkout(Order $order) {
-        return VNPayment::process($order->order_number, (int) $order->customer_payment_amount * 100, $order->getCheckoutDescription(), route('client.auth.profile.order.details', $order->id));
+        if(auth('customer')->check()) {
+            $redirectUrl = route('client.auth.profile.order.details', $order->id);
+        } else {
+            $redirectUrl = route('client.order.details', $order->id);
+        }
+        return VNPayment::process($order->order_number, (int) $order->customer_payment_amount * 100, $order->getCheckoutDescription(), $redirectUrl);
     }
 
     public static function refund(Order $order) {
