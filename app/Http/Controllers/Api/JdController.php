@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class JdController extends Controller {
     public function index(Request $request) {
         $pageSize = $request->pageSize ?? 15;
-        $jds = Jd::active()->orderBy('created_at', 'desc');
+        $jds = Jd::select('from_date', 'to_date', 'short_description', 'status', 'job_type', 'group', 'name', 'slug', 'id', 'created_at')->active()->orderBy('created_at', 'desc');
         if ($request->group) {
             $jds->whereGroup($request->group);
         }
