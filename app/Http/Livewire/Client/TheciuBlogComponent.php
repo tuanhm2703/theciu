@@ -11,12 +11,12 @@ class TheciuBlogComponent extends Component
     public $rightBlogs;
 
     public function mount() {
-        $this->leftBlogs = TheciuBlog::where('post_type', 'post')
-        ->where('ping_status', 'open')
+        $this->leftBlogs = TheciuBlog::where('post_type', 'post')->where('ping_status', 'open')
         ->whereHas('meta_attachment')
         ->with('meta_attachment', function($q) {
             return $q->with('meta_attachment');
-        })->where('post_status', 'published')
+        })
+        ->where('post_status', 'publish')
         ->orderBy('post_date', 'desc')
         ->limit(5)->get();
         $this->rightBlogs = TheciuBlog::where('post_type', 'post')
@@ -25,7 +25,7 @@ class TheciuBlogComponent extends Component
         ->with('meta_attachment', function($q) {
             return $q->with('meta_attachment');
         })
-        ->where('post_status', 'published')
+        ->where('post_status', 'publish')
         ->orderBy('post_date', 'desc')
         ->whereNotIn('ID', $this->leftBlogs->pluck('ID')->toArray())
         ->limit(10)->get();
