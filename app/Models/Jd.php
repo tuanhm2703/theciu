@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\Common\Wishlistable;
 use App\Traits\Scopes\CustomScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Jd extends Model
 {
-    use HasFactory, CustomScope;
+    use HasFactory, CustomScope, Wishlistable;
 
     protected $table = 'jds';
     protected $fillable = [
