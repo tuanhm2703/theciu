@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('fullname');
             $table->string('phone');
             $table->string('email');
-            $table->date('birthday');
+            $table->date('birthday')->nullable();
             $table->mediumText('self_introduce');
             $table->mediumText('strength');
             $table->mediumText('question');
