@@ -53,4 +53,9 @@ class JdController extends Controller {
                 ->union(Jd::active()->where('id', '!=', $job->id)->whereJobType($job->job_type)))->orderBy('to_date', 'desc')->limit($limit)->get();
         return BaseResponse::success($jobs);
     }
+
+    public function getDepartmentGroup() {
+        $groups = Jd::select('group')->groupBy('group')->where('group', '!=', '')->get()->pluck('group')->toArray();
+        return BaseResponse::success($groups);
+    }
 }
