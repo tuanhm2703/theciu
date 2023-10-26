@@ -27,7 +27,6 @@ class PostResumeRequest extends FormRequest
             'fullname' => 'required',
             'phone' => 'required',
             'email' => 'email|required',
-            'birthday' => 'date|required',
             'self_introduce' => 'required',
             'strength' => 'required',
             'question' => 'required',
