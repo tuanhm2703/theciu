@@ -20,7 +20,7 @@
                     data: "jd.name",
                 },
                 {
-                    data: "name"
+                    data: "fullname"
                 },
                 {
                     data: "phone"
