@@ -70,7 +70,11 @@ class ProductListComponent extends Component
     public function render()
     {
         $products = $this->searchProduct();
-        $products = $products->paginate(12)->withPath(request()->requestUri)->withQueryString()->onEachSide(3)->appends($this->getParams());
+        try {
+            $products = $products->paginate(12)->withPath(request()->requestUri)->withQueryString()->onEachSide(3)->appends($this->getParams());
+        } catch (\Throwable $th) {
+            \Log::error($th->getMessage());
+        }
         return view('livewire.client.product-list-component', compact('products'));
     }
 
