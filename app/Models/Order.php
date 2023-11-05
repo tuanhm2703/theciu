@@ -359,16 +359,16 @@ class Order extends Model
     {
         $actualShip = $this->getActualShippingFee();
         $revenue = $this->total - ($actualShip - $this->shipping_order->total_fee) - $this->rank_discount_value;
-        if(!$this->freeship_voucher) {
+        if($this->freeship_voucher) {
             $revenue -= $actualShip;
         }
         return $revenue;
     }
     public function getCustomerPayment() {
         $revenue = $this->total - $this->rank_discount_value;
-        if($this->freeship_voucher) {
-            $revenue -= $this->shipping_order->total_fee;
-        }
+        // if($this->freeship_voucher) {
+        //     $revenue -= $this->shipping_order->total_fee;
+        // }
         return $revenue;
     }
 
