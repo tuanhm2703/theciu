@@ -5,7 +5,7 @@
             width: fit-content !important;
             height: fit-content !important;
         }
-        .product-countdown .countdown-show4 span {
+        .product-countdown span {
             width: 100% !important;
         }
     </style>
