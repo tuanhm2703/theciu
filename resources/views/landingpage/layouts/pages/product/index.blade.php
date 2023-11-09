@@ -6,7 +6,7 @@
             height: fit-content !important;
         }
         .product-countdown .countdown-show4 .countdown-section span {
-            width: calc(25% - 10px) !important;
+            width: auto !important;
             height: auto !important;
         }
     </style>
