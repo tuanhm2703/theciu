@@ -5,6 +5,9 @@
             width: fit-content !important;
             height: fit-content !important;
         }
+        .product-countdown .countdown-show4 .countdown-section {
+            width: calc(25% - 10px);
+        }
     </style>
 @endpush
 @section('content')
