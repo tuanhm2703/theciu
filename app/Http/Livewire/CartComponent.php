@@ -345,11 +345,11 @@ class CartComponent extends Component {
         $this->rank_discount_amount = $this->customer->calculateRankDiscountAmount($sub_total);
         $this->combo_discount = $this->cart->calculateComboDiscount($this->item_selected)->sum('discount_amount');
         $this->promotion_applied = $this->promotion_applied == false && $this->combo_discount > 0;
-        $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount - $this->combo_discount;
+        $this->freeship_voucher_discount = $this->freeship_voucher ? $this->freeship_voucher->getDiscountAmount($this->shipping_fee) : 0;
+        $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount - $this->combo_discount + ($this->shipping_fee - $this->freeship_voucher_discount);
         $this->updateVoucherDisableStatus();
         $this->order_voucher_discount = $this->order_voucher ? $this->order_voucher->getDiscountAmount($this->total) : 0;
         $this->total -= $this->order_voucher_discount;
-        $this->freeship_voucher_discount = $this->freeship_voucher ? $this->freeship_voucher->getDiscountAmount($this->shipping_fee) : 0;
     }
 
     public function updated($name, $value) {
