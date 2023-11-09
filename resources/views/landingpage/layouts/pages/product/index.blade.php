@@ -7,7 +7,7 @@
         }
 
         .product-countdown .countdown-show4 .countdown-section span {
-            width: 100$ !important;
+            width: 100% !important;
             height: auto !important;
         }
 
