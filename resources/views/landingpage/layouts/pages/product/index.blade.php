@@ -7,6 +7,7 @@
         }
         .product-countdown .countdown-show4 .countdown-section {
             width: calc(25% - 10px) !important;
+            height: auto !important;
         }
     </style>
 @endpush
