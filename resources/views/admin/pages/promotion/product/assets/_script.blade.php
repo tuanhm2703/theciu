@@ -234,7 +234,7 @@
         $('#batch-delete-btn').on('click', function() {
             const ids = [];
             $('[name="batchUpdateProductIds[]"]:checked').each(function(index, e) {
-                ids = ids.push($(e).val())
+                ids.push($(e).val())
             })
             products = products.filter((product) => {
                 return ids.includes(product.id)
