@@ -94,7 +94,7 @@
                 <button class="btn btn-default common-info-update-btn">Cập nhật hàng loạt</button>
             </div>
             <div class="col-1 d-flex justify-content-center align-items-center">
-                <button type="buttn" id="batch-delete-btn" class="btn btn-default">Xoá</button>
+                <button type="button" id="batch-delete-btn" class="btn btn-default">Xoá</button>
             </div>
         </div>
         <div class="promotion-setting-header row mt-3">
