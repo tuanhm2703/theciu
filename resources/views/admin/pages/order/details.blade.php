@@ -300,7 +300,7 @@
                             <span>Phí vận chuyển</span>
                         </div>
                         <div class="col-2">
-                            <span>{{ format_currency_with_label($order->shipping_order->total_fee) }}</span>
+                            <span>{{ format_currency_with_label($order->shipping_fee) }}</span>
                         </div>
                         @if ($order->order_voucher)
                             <div class="col-10 payment-info-label">
