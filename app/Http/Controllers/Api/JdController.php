@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\MediaType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\PostResumeRequest;
 use App\Models\Jd;
@@ -37,7 +38,7 @@ class JdController extends Controller {
         $jd = Jd::whereSlug($slug)->firstOrFail();
         $resume = $jd->resumes()->create($request->all());
         if ($request->hasFile('file')) {
-            $resume->createImages([$request->file('file')], 'pdf');
+            $resume->createImages([$request->file('file')], MediaType::PDF);
         }
         return BaseResponse::success([
             'data' => null,

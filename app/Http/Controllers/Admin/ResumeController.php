@@ -24,9 +24,16 @@ class ResumeController extends Controller
     public function paginate() {
         $resumes = Resume::query()->with('jd');
         return DataTables::of($resumes)
-        ->addColumn('action', function() {
-            return '';
+        ->addColumn('action', function($resume) {
+            return view('admin.pages.recruitment.resume.components.action', compact('resume'));
+        })
+        ->editColumn('created_at', function($resume) {
+            return $resume->created_at->format('d/m/Y H:i:s');
         })
         ->make(true);
+    }
+
+    public function pdf(Resume $resume) {
+        return redirect()->to($resume->pdf?->path_with_domain);
     }
 }

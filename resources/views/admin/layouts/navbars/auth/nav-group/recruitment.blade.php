@@ -29,6 +29,15 @@
                         <span class="nav-link-text ms-1">{{ trans('nav.resume_list') }}</span>
                     </a>
                 @endcan
+                @can('view blog')
+                    <a class="nav-link {{ isNavActive('admin.recruitment.blog.index') ? 'active' : '' }}"
+                        href="{{ route('admin.recruitment.blog.index') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">{{ trans('nav.blog_list') }}</span>
+                    </a>
+                @endcan
             </ul>
         </div>
     </li>

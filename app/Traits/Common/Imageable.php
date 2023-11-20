@@ -25,7 +25,9 @@ trait Imageable {
             $q->where('type', '!=', MediaType::VIDEO)->orWhere('type', null);
         })->orderBy('order', 'asc')->orderBy('id', 'desc');
     }
-
+    public function pdf() {
+        return $this->morphOne(Image::class, 'imageable')->where('type', MediaType::PDF);
+    }
     public function phoneImage() {
         return $this->morphOne(Image::class, 'imageable')->where('type', MediaType::PHONE);
     }

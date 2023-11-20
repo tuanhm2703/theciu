@@ -65,4 +65,8 @@ class BlogController extends Controller
             'message' => 'Cập nhật bài viết thành công'
         ]);
     }
+
+    public function recruitmentBlog() {
+        return view('admin.pages.recruitment.blog.index');
+    }
 }
