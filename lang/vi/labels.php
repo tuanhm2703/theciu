@@ -275,5 +275,6 @@ return [
         'career' => 'Tuyển dụng'
     ],
     'blog_type' => 'Loại bài viết',
-    'hot_job' => 'Công việc HOT'
+    'hot_job' => 'Công việc HOT',
+    'view_cv' => 'Xem hồ sơ'
 ];

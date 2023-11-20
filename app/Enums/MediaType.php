@@ -10,4 +10,5 @@ class MediaType extends Enum {
     const SIZE_RULE = 'size_rule';
     const AVATAR = 'avatar';
     const PHONE = 'phone';
+    const PDF = 'pdf';
 }

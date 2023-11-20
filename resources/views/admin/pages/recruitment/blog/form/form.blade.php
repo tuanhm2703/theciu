@@ -56,7 +56,7 @@
                     {!! Form::checkbox('status', null, null, ['class' => 'form-check-input']) !!}
                 </div>
             </div>
-            {!! Form::hidden('type', App\Enums\BlogType::WEB, []) !!}
+            {!! Form::hidden('type', App\Enums\BlogType::CAREER, []) !!}
         </div>
         <div class="row">
             <div class="col-md-12">

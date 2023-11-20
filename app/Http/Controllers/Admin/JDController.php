@@ -18,6 +18,9 @@ class JDController extends Controller {
             ->addColumn('action', function ($jd) {
                 return view('admin.pages.recruitment.jd.components.action', compact('jd'));
             })
+            ->editColumn('created_at', function($jd) {
+                return $jd->created_at->format('d/m/Y H:i:s');
+            })
             ->make(true);
     }
 
