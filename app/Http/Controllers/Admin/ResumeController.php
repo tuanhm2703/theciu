@@ -34,6 +34,6 @@ class ResumeController extends Controller
     }
 
     public function pdf(Resume $resume) {
-        return redirect()->to($resume->pdf?->path_with_domain);
+        return redirect()->to($resume->pdf?->path_with_original_size);
     }
 }
