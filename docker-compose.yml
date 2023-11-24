@@ -6,9 +6,21 @@ services:
       - '81:80'
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - .:/var/www/html
     networks:
       - theciu-db
     restart: always
+  theciu-beta:
+    image: tuanhm2703/theciu-laravel:latest
+    environment:
+      - CPU_LIMIT=50
+    volumes:
+      - .:/var/www/html
+      - .env:/var/www/html/.env
+    depends_on:
+      - mariadb
+    networks:
+      - theciu-db
   mariadb:
     image: 'mariadb:10'
     command: --max_allowed_packet=2048M
@@ -29,6 +41,24 @@ services:
       retries: 3
       timeout: 5s
     restart: always
+    networks:
+      - theciu-db
+  mariadb-blog:
+    image: 'mariadb:10.3.38'
+    restart: always
+    volumes:
+      - '/var/lib/mysql/thec_blog:/var/lib/mysql/thec_blog'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      TZ: 'Asia/Ho_Chi_Minh'
+    networks:
+      - theciu-db
+  theciu-nextjs:
+    image: 'tuanhm2703/theciu-nextjs:latest'
     networks:
       - theciu-db
   backup:
