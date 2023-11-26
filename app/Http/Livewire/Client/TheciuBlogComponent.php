@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Client;
 
 use App\Models\TheciuBlog;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
 
 class TheciuBlogComponent extends Component {
@@ -30,8 +31,8 @@ class TheciuBlogComponent extends Component {
                 ->whereNotIn('ID', $this->leftBlogs->pluck('ID')->toArray())
                 ->limit(10)->get();
         } catch (\Throwable $th) {
-            $this->leftBlogs = [];
-            $this->rightBlogs = [];
+            $this->leftBlogs = new Collection();
+            $this->rightBlogs = new Collection();
         }
     }
     public function render() {
