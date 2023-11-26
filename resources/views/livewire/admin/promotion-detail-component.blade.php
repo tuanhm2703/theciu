@@ -98,7 +98,7 @@
                 <button class="btn btn-default">Cập nhật hàng loạt</button>
             </div>
             <div class="col-1 d-flex justify-content-center align-items-center">
-                <button class="btn btn-default">Xoá</button>
+                <button type="button" class="btn btn-default">Xoá</button>
             </div>
         </div>
         <div class="promotion-setting-header row mt-3">

@@ -1,3 +1,4 @@
+@if ($leftBlogs->count() > 0 && $rightBlogs->count() > 0)
 <div class="my-5 container">
     <h2 class="title text-center mb-4">Blog</h2>
     <div class="row justify-content-center">
@@ -69,3 +70,4 @@
         <a href="{{ route('client.blog.index') }}" class="read-more">Xem thêm</a>
     </div>
 </div>
+@endif

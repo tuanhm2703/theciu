@@ -12,8 +12,10 @@
                         <div class="product">
                             <div class="product-cart-details">
                                 <h4 class="product-title">
-                                    <a
-                                        href="{{ route('client.product.details', $inventory->product->slug) }}">{{ $inventory->name }}</a>
+                                    @if ($inventory->product)
+                                        <a
+                                            href="{{ route('client.product.details', $inventory->product->slug) }}">{{ $inventory->name }}</a>
+                                    @endif
                                 </h4>
 
                                 <span class="cart-product-info">
@@ -52,8 +54,8 @@
             </div><!-- End .dropdown-menu -->
         @endif
     @else
-        <a wire:click.prevent="redirectToCart()" href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false" data-display="static">
+        <a wire:click.prevent="redirectToCart()" href="#" class="dropdown-toggle" role="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
             <i class="icon-shopping-cart"></i>
             <span class="cart-count">{{ 0 }}</span>
         </a>

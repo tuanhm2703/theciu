@@ -159,7 +159,7 @@
                         </div>
                     </div><!-- End .load-more-container -->
                     @if ($content = \App\Models\Category::whereSlug($category)->first()?->content)
-                        <p class="text-center">
+                        <p class="text-center page-content">
                             {!! $content !!}
                         </p>
                     @endif
