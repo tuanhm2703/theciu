@@ -25,7 +25,7 @@ class ExportOrder implements FromCollection, WithHeadings {
             $this->begin = Order::first()?->created_at;
         }
         if(!$this->end) {
-            $this->begin = Order::latest()->first()?->created_at;
+            $this->end = Order::latest()->first()?->created_at;
         }
         $orders = Order::leftJoin('order_items', function ($q) {
             $q->on('orders.id', 'order_items.order_id');
