@@ -5,12 +5,13 @@ namespace App\Exports;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class ExportOrder implements FromCollection {
+class ExportOrder implements FromCollection, WithHeadings {
     public $begin;
     public $end;
     public $order_status = 0;
-    public function __construct($begin, $end, $order_status = 0) {
+    public function __construct($begin = null, $end = null, $order_status = 0) {
         $this->begin = $begin;
         $this->end = $end;
         $this->order_status = $order_status;
@@ -20,6 +21,12 @@ class ExportOrder implements FromCollection {
      */
 
     public function collection() {
+        if(!$this->begin) {
+            $this->begin = Order::first()?->created_at;
+        }
+        if(!$this->end) {
+            $this->begin = Order::latest()->first()?->created_at;
+        }
         $orders = Order::leftJoin('order_items', function ($q) {
             $q->on('orders.id', 'order_items.order_id');
         })->leftJoin('inventories', function ($q) {
@@ -42,5 +49,18 @@ class ExportOrder implements FromCollection {
             'bonus_note as "Chú thích phần quà"'
         ])->get();
         return $data;
+    }
+    public function headings(): array
+    {
+        return [
+            'Mã đơn hàng',
+            'Mã sản phẩm',
+            'Số lượng',
+            'Doanh thu',
+            'Thời gian',
+            'Tên khách hàng',
+            'Chú thích đơn hàng',
+            'Chú thích phần quà'
+        ];
     }
 }
