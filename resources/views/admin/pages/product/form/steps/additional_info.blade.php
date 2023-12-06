@@ -17,7 +17,7 @@
             {!! Form::label('shipping_and_return', 'Vận chuyển và trả hàng', ['class' => 'custom-control-label label-required']) !!}
         </div>
         <div class="col-md-10">
-            {!! Form::textarea('shipping_and_return', detailShippingAndReturnInfo(), [
+            {!! Form::textarea('shipping_and_return', isset($product) ? null : detailShippingAndReturnInfo(), [
                 'class' => 'form-control summernote',
                 'required',
                 'placeholder' => 'Hướng dẫn vận chuyển và trả hàng',
@@ -29,7 +29,7 @@
             {!! Form::label('additional_information', 'Thông tin thêm', ['class' => 'custom-control-label label-required']) !!}
         </div>
         <div class="col-md-10">
-            {!! Form::textarea('additional_information', defaultProductAdditionalInformation(), [
+            {!! Form::textarea('additional_information', isset($product) ? null : defaultProductAdditionalInformation(), [
                 'class' => 'form-control summernote',
                 'placeholder' => 'Quy cách chọn số đo, kích cỡ,..',
             ]) !!}
