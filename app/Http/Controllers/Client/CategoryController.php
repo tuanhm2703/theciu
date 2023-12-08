@@ -25,6 +25,7 @@ class CategoryController extends Controller
         $category->loadMeta();
         $banners = [];
         if($category->type == CategoryType::COLLECTION) {
+            $url = convertToHttps(request()->fullUrl());
             $banners = Banner::collection()->with('desktopImage', 'phoneImage')->whereUrl(request()->fullUrl())->available()->get();
         }
         $category = $category->slug;
