@@ -26,7 +26,7 @@ class CategoryController extends Controller
         $banners = [];
         if($category->type == CategoryType::COLLECTION) {
             $url = convertToHttps(request()->fullUrl());
-            $banners = Banner::collection()->with('desktopImage', 'phoneImage')->whereUrl(request()->fullUrl())->available()->get();
+            $banners = Banner::collection()->with('desktopImage', 'phoneImage')->whereUrl($url)->available()->get();
         }
         $category = $category->slug;
         return view('landingpage.layouts.pages.product.index', compact('category', 'banners'));
