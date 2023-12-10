@@ -344,4 +344,12 @@ class Product extends Model {
             $productResource->update($product);
         }
     }
+    public function generateUniqueSlug() {
+        $base_slug = stripVN($this->name);
+        $slug = $base_slug;
+        while(Product::where('slug', $slug)->where('id', '!=', $this->id)->exists()) {
+            $slug = "$base_slug-".now()->timestamp;
+        }
+        return $slug;
+    }
 }
