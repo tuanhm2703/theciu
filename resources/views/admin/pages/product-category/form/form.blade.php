@@ -1,7 +1,17 @@
 <div class="form-group">
     <div class="form-group">
         <label for="example-text-input" class="form-control-label">{{ trans('labels.category_name') }}</label>
-        {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào']) !!}
+        <div class="input-group">
+            <span class="input-group-text">
+                {!! Form::select(
+                    'type',
+                    App\Enums\CategoryType::productCategoryTypeOptions(),
+                    [isset($category) ? $category->type : null],
+                    ['class' => 'form-control'],
+                ) !!}
+            </span>
+            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào']) !!}
+        </div>
     </div>
     <div class="form-group">
         {!! Form::label('meta[keywords]', 'Meta-keywords', ['class' => 'form-label']) !!}

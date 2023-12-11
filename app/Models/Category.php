@@ -22,7 +22,8 @@ class Category extends Model
         'type',
         'slug',
         'updated_at',
-        'content'
+        'content',
+        'order'
     ];
 
     public function categories() {
@@ -61,7 +62,9 @@ class Category extends Model
             $q->withCount('products')->with('categories', function($q) {
                 $q->withCount('products');
             });
-        })->withCount('products')->whereType(CategoryType::PRODUCT)->get();
+        })->withCount('products')->where(function($q) {
+            $q->whereType(CategoryType::PRODUCT)->orWhere('type', CategoryType::COLLECTION);
+        })->orderBy('order')->get();
     }
     public function hasProducts() {
         if($this->products_count == 0) {

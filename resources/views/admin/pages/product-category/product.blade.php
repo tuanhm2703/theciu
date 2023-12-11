@@ -1,5 +1,13 @@
 @extends('admin.layouts.app', ['class' => 'g-sidenav-show', 'headTitle' => trans('labels.product_category')])
 @push('style')
+    <style>
+        .gj-tree-bootstrap-5 ul.gj-list-bootstrap li.active {
+            background-color: #fb6340 !important;
+        }
+        .gj-tree-bootstrap-5 ul.gj-list-bootstrap li.active i {
+            color: #fff;
+        }
+    </style>
 @endpush
 @section('content')
     @include('admin.layouts.navbars.auth.topnav', ['title' => trans('labels.product_category')])
@@ -17,9 +25,11 @@
                         </div>
                         <div class="text-end mx-3 mt-3">
                             <a class="btn btn-primary btn-sm ms-auto ajax-modal-btn" href="javascript:;"
-                                data-callback="setNullParentId()" data-init-app="false" data-modal-size="modal-sm"
-                                data-link="{{ route('admin.category.product.create') }}"><i class="fas fa-plus"></i>
-                                Tạo danh mục gốc</a>
+                                data-callback="setNullParentId()" data-init-app="false" data-modal-size="modal-md"
+                                data-link="{{ route('admin.category.product.create') }}">
+                                <i class="fas fa-plus"></i>
+                                Tạo danh mục gốc
+                            </a>
                         </div>
                     </div>
                     <div class="col-md-8 right-side pe-5">
@@ -27,8 +37,8 @@
                             <div class="d-flex category-wrapper d-none">
                                 <h5 class="mb-0 d-flex align-items-center">Danh mục:&nbsp;<span id="category-title"></span>
                                 </h5>
-                                <a class="ms-3 ajax-modal-btn update-category-btn"
-                                    href="javascript:;"><i class="fas fa-edit"></i></a>
+                                <a class="ms-3 ajax-modal-btn update-category-btn" href="javascript:;"><i
+                                        class="fas fa-edit"></i></a>
                             </div>
                             <a class="btn btn-primary btn-sm ms-auto ajax-modal-btn" href="javascript:;"
                                 data-init-app="false" data-link="{{ route('admin.category.product.create') }}"><i
@@ -67,32 +77,35 @@
         let parentId;
         let categories;
         const initTreeview = () => {
-            $.getJSON(`{{ route('admin.ajax.category.all', ['type' => App\Enums\CategoryType::PRODUCT]) }}`, (data) => {
-                categories = data.data.data;
-                categories.forEach(c1 => {
-                    c1.text = `${c1.name} (${c1.categories.length})`
-                    c1.nodes = c1.categories
-                    c1.nodes.forEach(c2 => {
-                        c2.text = `${c2.name} (${c2.categories.length})`
-                    });
-                });
-                $('.treeview').treeview({
-                    data: categories,
-                    showTags: true,
-                    levels: 3,
-                    expandIcon: 'fas fa-plus opacity-6',
-                    collapseIcon: 'fas fa-minus opacity-6',
-                    onhoverColor: '#F5F5F5',
-                    selectedColor: '#FFFFFF',
-                    selectedBackColor: '#fb6340',
-                    searchResultColor: '#D9534F',
-                    onNodeSelected: function(event, data) {
-                        if (data.categories) {
-                            initChildCategoryTable(data.id)
-                            parentId = data.id
-                        }
-                    }
-                })
+            const tree = $('.treeview').tree({
+                uiLibrary: 'bootstrap5',
+                dataSource: `{{ route('admin.ajax.category.all', ['types' => serialize([App\Enums\CategoryType::PRODUCT, App\Enums\CategoryType::COLLECTION])]) }}`,
+                primaryKey: 'id',
+            })
+            tree.on('select', function (e, node, id) {
+                initChildCategoryTable(id)
+            });
+            $('.treeview').sortable({
+                update: (event, ui) => {
+                    const ids = []
+                    $('.gj-list:first-child > .list-group-item').each(function(i, e) {
+                        ids.push($(e).attr('data-id'))
+                    })
+                    updateOrder(ids)
+                },
+                items: '.gj-list:first-child > .list-group-item'
+            })
+        }
+        const updateOrder = (ids) => {
+            $.ajax({
+                url: `{{ route('admin.ajax.category.order.update') }}`,
+                type: 'PUT',
+                data: {
+                    ids: ids
+                },
+                success: (res) => {
+                    toast.success(@json(trans('toast.action_successful')), res.data.message)
+                }
             })
         }
         const initChildCategoryTable = (parentId) => {

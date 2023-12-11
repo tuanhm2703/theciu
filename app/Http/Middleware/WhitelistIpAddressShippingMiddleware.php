@@ -22,7 +22,7 @@ class WhitelistIpAddressShippingMiddleware {
             $service_ips = explode(',', $ip_address);
             $ips = array_merge($ips, $service_ips);
         }
-        $remote_ips = explode(", ", $request->ip());
+        $remote_ips = explode(", ", $request->header('x-forwarded-for'));
         foreach ($remote_ips as $ip) {
             if (in_array($ip, $ips)) return $next($request);
         }
