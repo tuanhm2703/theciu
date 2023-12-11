@@ -14,8 +14,7 @@ class MomoWebhookRequest extends FormRequest
     public function authorize()
     {
         $ip_whitelist = explode(',', config('services.momo.ip'));
-        \Log::info(request()->ip());
-        return in_array(request()->ip(), $ip_whitelist);
+        return in_array(request()->header('x-forwarded-for'), $ip_whitelist);
     }
 
     /**
