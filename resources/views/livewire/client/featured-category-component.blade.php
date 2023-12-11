@@ -8,7 +8,6 @@
             "dots": false,
             "nav": false,
             "margin": 30,
-            "autoplay": true,
             "autoplayTimeout": 3000,
             "items": 1,
             "loop": true,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Ajax;
 use App\Enums\CategoryType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Ajax\ViewCategoryRequest;
+use App\Http\Resources\Admin\AllCategoryResource;
 use App\Models\Category;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
@@ -14,20 +15,17 @@ class CategoryController extends Controller
 {
     public function getAllCategories(ViewCategoryRequest $request)
     {
-        $type = $request->type;
-        $categories = Category::where('parent_id', null)->with(['categories.categories' => function ($q) use ($type) {
-            if ($type) {
-                $q->where('type', $type);
+        $types = unserialize($request->types);
+        $categories = Category::where('parent_id', null)->with(['categories.categories' => function ($q) use ($types) {
+            if ($types) {
+                $q->whereIn('type', $types);
             }
         }]);
-        if ($type) {
-            $categories = $categories->where('type', $type);
+        if ($types) {
+            $categories = $categories->whereIn('type', $types);
         }
-        $categories = $categories->get();
-        return BaseResponse::success([
-            'message' => 'Thao tác thành công',
-            'data' => $categories
-        ]);
+        $categories = $categories->orderBy('order')->get();
+        return response()->json(AllCategoryResource::collection($categories));
     }
 
     public function ajaxSearch(Request $request)
@@ -53,7 +51,7 @@ class CategoryController extends Controller
         if ($type) {
             $categories = $categories->where('type', $type);
         } else {
-            $categories->whereNotIn('type', [CategoryType::PRODUCT, CategoryType::BLOG]);
+            $categories->whereNotIn('type', [CategoryType::PRODUCT, CategoryType::BLOG, CategoryType::COLLECTION]);
         }
         return DataTables::of($categories)
             ->editColumn('name', function ($category) {
@@ -129,6 +127,17 @@ class CategoryController extends Controller
         $category->products()->attach($request->productIds);
         return BaseResponse::success([
             'message' => 'Thêm sản phẩm vào danh mục thành công'
+        ]);
+    }
+    public function updateOrder(Request $request) {
+        $ids = $request->ids ?? [];
+        foreach($ids as $index => $id) {
+            Category::where('id', $id)->update([
+                'order' => $index
+            ]);
+        }
+        return BaseResponse::success([
+            'message' => 'Cập nhật thành công'
         ]);
     }
 }

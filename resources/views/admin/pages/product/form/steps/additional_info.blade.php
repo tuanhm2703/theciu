@@ -17,7 +17,7 @@
             {!! Form::label('shipping_and_return', 'Vận chuyển và trả hàng', ['class' => 'custom-control-label label-required']) !!}
         </div>
         <div class="col-md-10">
-            {!! Form::textarea('shipping_and_return', isset($product) ? null : detailShippingAndReturnInfo(), [
+            {!! Form::textarea('shipping_and_return', isset ($product) ? null : detailShippingAndReturnInfo(), [
                 'class' => 'form-control summernote',
                 'required',
                 'placeholder' => 'Hướng dẫn vận chuyển và trả hàng',
