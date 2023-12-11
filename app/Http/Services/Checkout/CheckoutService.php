@@ -134,8 +134,8 @@ class CheckoutService {
             $redirectUrl = PaymentService::checkout($order);
             self::saveOrderToSession($order);
             event(new OrderCreatedEvent($order));
-            DB::commit();
             event(new KiotOrderCreatedEvent($order));
+            DB::commit();
             removeSessionCart();
             return [
                 'error' => false,
