@@ -112,6 +112,7 @@ class CategoryController extends Controller
         if ($parentId) {
             $category = Category::find($parentId);
             $category->edit_url = route('admin.category.product.edit', $category->id);
+            $category->delete_url = route('admin.category.destroy', $category->id);
             $result->original['category'] = $category;
         }
         $result->setData($result->original);
