@@ -22,7 +22,7 @@
                 {!! Form::label('from_date', trans('labels.from_date') . ': ', ['class' => 'custom-control-label']) !!}
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon2"><i class="ni ni-calendar-grid-58"></i></span>
-                    {!! Form::text('from_date', \Carbon\Carbon::now(), [
+                    {!! Form::text('from_date', null, [
                         'class' => 'form-control datetimepicker',
                         'placeholder' => 'Nhập vào',
                         'required',
@@ -33,7 +33,7 @@
                 {!! Form::label('to_date', trans('labels.to_date') . ': ', ['class' => 'custom-control-label']) !!}
                 <div class="input-group">
                     <span class="input-group-text" id="basic-addon2"><i class="ni ni-calendar-grid-58"></i></span>
-                    {!! Form::text('to_date', \Carbon\Carbon::now(), [
+                    {!! Form::text('to_date', null, [
                         'class' => 'form-control datetimepicker',
                         'placeholder' => 'Nhập vào',
                         'required',
