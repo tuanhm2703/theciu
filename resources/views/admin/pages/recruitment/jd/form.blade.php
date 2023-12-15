@@ -43,9 +43,9 @@
         </div>
          <div class="row mt-3">
             <div class="col-md-12">
-                {!! Form::label('short_description', trans('labels.short_description') . ': ', ['class' => 'custom-control-label summernote']) !!}
+                {!! Form::label('short_description', trans('labels.short_description') . ': ', ['class' => 'custom-control-label']) !!}
                 {!! Form::textarea('short_description', null, [
-                    'class' => 'form-control',
+                    'class' => 'form-control summernote',
                     'placeholder' => 'Nhập vào',
                     'required',
                     'rows' => '5',
@@ -61,8 +61,19 @@
     <div class="card-body pt-0">
         <div class="row mt-3">
             <div class="col-md-12">
-                {!! Form::label('description', trans('labels.description') . ': ', ['class' => 'custom-control-label summernote']) !!}
+                {!! Form::label('description', trans('labels.description') . ': ', ['class' => 'custom-control-label']) !!}
                 {!! Form::textarea('description', null, [
+                    'class' => 'form-control summernote',
+                    'placeholder' => 'Nhập vào',
+                    'required',
+                    'rows' => '5',
+                ]) !!}
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                {!! Form::label('requirement', trans('labels.job_requirement') . ': ', ['class' => 'custom-control-label']) !!}
+                {!! Form::textarea('requirement summernote', null, [
                     'class' => 'form-control',
                     'placeholder' => 'Nhập vào',
                     'required',
@@ -72,20 +83,9 @@
         </div>
         <div class="row mt-3">
             <div class="col-md-12">
-                {!! Form::label('requirement', trans('labels.job_requirement') . ': ', ['class' => 'custom-control-label summernote']) !!}
-                {!! Form::textarea('requirement', null, [
-                    'class' => 'form-control',
-                    'placeholder' => 'Nhập vào',
-                    'required',
-                    'rows' => '5',
-                ]) !!}
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12">
-                {!! Form::label('benefit', trans('labels.benefit') . ': ', ['class' => 'custom-control-label summernote']) !!}
+                {!! Form::label('benefit', trans('labels.benefit') . ': ', ['class' => 'custom-control-label']) !!}
                 {!! Form::textarea('benefit', null, [
-                    'class' => 'form-control',
+                    'class' => 'form-control summernote',
                     'placeholder' => 'Nhập vào',
                     'required',
                     'rows' => '5',
