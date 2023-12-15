@@ -29,6 +29,18 @@ class BlogController extends Controller {
         if ($request->hasFile('image')) {
             $blog->createImages([$request->file('image')]);
         }
+        $category_ids = [];
+        foreach ($request->category_ids as $id) {
+            $category = Category::firstOrCreate([
+                'id' => $id,
+                'type' => $blog->type
+            ], [
+                'name' => $id,
+                'type' => $blog->type
+            ]);
+            $category_ids[] = $category->id;
+        }
+        $blog->categories()->sync($category_ids);
         return BaseResponse::success([
             'message' => 'Thêm bài viết thành công!'
         ]);
@@ -55,10 +67,10 @@ class BlogController extends Controller {
         foreach ($request->category_ids as $id) {
             $category = Category::firstOrCreate([
                 'id' => $id,
-                'type' => CategoryType::BLOG
+                'type' => $blog->type
             ], [
                 'name' => $id,
-                'type' => CategoryType::BLOG
+                'type' => $blog->type
             ]);
             $category_ids[] = $category->id;
         }

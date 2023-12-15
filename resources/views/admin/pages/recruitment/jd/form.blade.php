@@ -9,12 +9,12 @@
                 {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào', 'required']) !!}
             </div>
             <div class="col-md-3">
-                {!! Form::label('group', trans('labels.department_group') . ': ', ['class' => 'custom-control-label']) !!}
-                {!! Form::select('group', $groups, isset($jd) ? [$jd->group] : null, ['class' => 'form-control']) !!}
-            </div>
-            <div class="col-md-3">
                 {!! Form::label('job_type', trans('labels.job_type') . ': ', ['class' => 'custom-control-label']) !!}
                 {!! Form::select('job_type', $job_types, isset($jd) ? [$jd->job_type] : null, ['class' => 'form-control']) !!}
+            </div>
+            <div class="col-md-3">
+                {!! Form::label('group', trans('labels.department_group') . ': ', ['class' => 'custom-control-label']) !!}
+                {!! Form::select('group', $groups, isset($jd) ? [$jd->group] : null, ['class' => 'form-control']) !!}
             </div>
         </div>
         <div class="row mt-3">
