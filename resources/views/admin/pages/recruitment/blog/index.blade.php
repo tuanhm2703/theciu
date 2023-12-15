@@ -13,7 +13,7 @@
             <div class="card-header d-flex align-items-center justify-content-between">
                 <h6>{{ trans('labels.blog_list') }}</h6>
                 <a class="btn btn-primary ajax-modal-btn" href="javascript:void(0)" data-modal-size="modal-lg"
-                    data-callback="initCreateForm()" data-link="{{ route('admin.appearance.blog.create') }}">
+                    data-callback="initCreateForm()" data-link="{{ route('admin.recruitment.blog.create') }}">
                     {{ trans('labels.create_blog') }}</a>
             </div>
             <div class="card-body">
