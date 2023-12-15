@@ -73,8 +73,8 @@
         <div class="row mt-3">
             <div class="col-md-12">
                 {!! Form::label('requirement', trans('labels.job_requirement') . ': ', ['class' => 'custom-control-label']) !!}
-                {!! Form::textarea('requirement summernote', null, [
-                    'class' => 'form-control',
+                {!! Form::textarea('requirement', null, [
+                    'class' => 'form-control summernote',
                     'placeholder' => 'Nhập vào',
                     'required',
                     'rows' => '5',
