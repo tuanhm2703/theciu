@@ -9,6 +9,10 @@
                     class="badge badge-warning d-block text-warning"><i
                         class="far fa-edit p-1"></i>{{ trans('labels.view_cv') }}</span></a>
         </li>
+        <li>
+            <a data-modal-size="modal-xl" href="#" data-link="{{ route('admin.recruitment.resume.answer', $resume->id) }}" class="dropdown-item ajax-modal-btn"><span
+                class="badge badge-secondary d-block text-secondary">Câu trả lời</span></a>
+        </li>
     </ul>
 </div>
 

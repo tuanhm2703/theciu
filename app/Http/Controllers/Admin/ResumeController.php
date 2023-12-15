@@ -32,7 +32,9 @@ class ResumeController extends Controller
         })
         ->make(true);
     }
-
+    public function showAnswer(Resume $resume) {
+        return view('admin.pages.recruitment.resume.answer', compact('resume'));
+    }
     public function pdf(Resume $resume) {
         return redirect()->to($resume->pdf?->path_with_original_size);
     }
