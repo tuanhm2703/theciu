@@ -22,8 +22,6 @@
                         <tr>
                             <th class="text-uppercase text-secondary text-xs font-weight-bolder">
                                 {{ trans('labels.title') }}</th>
-                            <th class="text-uppercase text-secondary text-xs font-weight-bolder">
-                                {{ trans('labels.description') }}</th>
                             <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">
                                 {{ trans('labels.image') }}</th>
                             <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder">
@@ -46,9 +44,6 @@
             "ajax": "{{ route('admin.ajax.appearance.blog.paginate') }}?type={{ App\Enums\BlogType::CAREER }}",
             "columns": [{
                     data: "title"
-                },
-                {
-                    data: "description",
                 },
                 {
                     data: "image",

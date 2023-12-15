@@ -260,7 +260,7 @@ return [
     'edit_combo' => 'Cập nhật combo',
     'combo_discount' => 'Giảm giá combo',
     'buy_now' => 'Mua ngay',
-    'department_group' => 'Nhóm văn phòng',
+    'department_group' => 'Nhóm công việc',
     'job_type' => 'Loại công việc',
     'number_of_resumes' => 'Số lượng hồ sơ',
     'create_jd' => 'Tạo JD',
