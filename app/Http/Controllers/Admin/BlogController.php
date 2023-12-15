@@ -71,4 +71,7 @@ class BlogController extends Controller {
     public function recruitmentBlog() {
         return view('admin.pages.recruitment.blog.index');
     }
+    public function createRecruitmentBlog() {
+        return view('admin.pages.recruitment.blog.create');
+    }
 }
