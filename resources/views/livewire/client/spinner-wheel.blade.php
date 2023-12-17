@@ -44,9 +44,9 @@
             }
 
             #spinner-btn {
-                width: 75px;
+                width: 50px;
                 position: absolute;
-                top: 50%;
+                top: 47%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 cursor: pointer;
@@ -151,9 +151,9 @@
                 <img src="{{ asset('img/event-logo.png') }}" id="event-logo" alt="">
             </div>
             @if ($showGift == false)
-                <img src="{{ asset('img/spinner.png') }}" class="spinner-img mb-2" alt=""
+                <img src="{{ asset('img/spinner-1.png') }}" class="spinner-img mb-2" alt=""
                     style="transform: rotate({{ $deg }}deg)">
-                <img id="spinner-btn" src="{{ asset('img/spinner-btn.png') }}" alt="">
+                <img id="spinner-btn" src="{{ asset('img/spinner-btn-1.png') }}" alt="">
                 <div class="spinner-description text-center pb-3">Xoay để nhận được quà ưng ý nhé!</div>
             @else
                 <img width="50%" class="animate__animated animate__tada" src="{{ $gift['img'] }}" alt="">
