@@ -18,7 +18,7 @@
     <div class="product-body">
         <div class="product-cat">
             <a
-                href="{{ route('client.product.details', ['slug' => $product->slug]) }}">{{ $product->categories->first()->name }}</a>
+                href="{{ route('client.product.details', ['slug' => $product->slug]) }}">{{ $product->categories->first()?->name }}</a>
         </div><!-- End .product-cat -->
         <h3 class="product-title"><a
                 href="{{ route('client.product.details', ['slug' => $product->slug]) }}">{{ $product->name }}</a></h3>

@@ -29,7 +29,6 @@
         {!! Form::label('content', trans('labels.content'), ['class' => 'form-label']) !!}
         {!! Form::textarea('content', null, ['class' => 'form-control summernote']) !!}
     </div>
-    {!! Form::hidden('type', App\Enums\CategoryType::PRODUCT, []) !!}
 </div>
 <script>
     (() => {

@@ -4,6 +4,7 @@
         .gj-tree-bootstrap-5 ul.gj-list-bootstrap li.active {
             background-color: #fb6340 !important;
         }
+
         .gj-tree-bootstrap-5 ul.gj-list-bootstrap li.active i {
             color: #fff;
         }
@@ -37,8 +38,10 @@
                             <div class="d-flex category-wrapper d-none">
                                 <h5 class="mb-0 d-flex align-items-center">Danh mục:&nbsp;<span id="category-title"></span>
                                 </h5>
-                                <a class="ms-3 ajax-modal-btn update-category-btn" href="javascript:;"><i
+                                <a class="btn btn-link px-3 mb-0 ajax-modal-btn update-category-btn" href="javascript:;"><i
                                         class="fas fa-edit"></i></a>
+                                <a data-link="" class="btn btn-link px-3 mb-0 delete-category-btn ajax-confirm" type="button"
+                                  data-callback=""  href="javascript:;"><i class="fas fa-trash"></i></a>
                             </div>
                             <a class="btn btn-primary btn-sm ms-auto ajax-modal-btn" href="javascript:;"
                                 data-init-app="false" data-link="{{ route('admin.category.product.create') }}"><i
@@ -82,7 +85,7 @@
                 dataSource: `{{ route('admin.ajax.category.all', ['types' => serialize([App\Enums\CategoryType::PRODUCT, App\Enums\CategoryType::COLLECTION])]) }}`,
                 primaryKey: 'id',
             })
-            tree.on('select', function (e, node, id) {
+            tree.on('select', function(e, node, id) {
                 initChildCategoryTable(id)
             });
             $('.treeview').sortable({
@@ -144,8 +147,21 @@
                     $('.category-wrapper').removeClass('d-none');
                     $('#category-title').text(category.name)
                     $('.update-category-btn').attr('data-link', category.edit_url)
+                    $('.delete-category-btn').attr('data-callback', `deleteCategory('${category.delete_url}')`);
                 }
             });
+        }
+        const deleteCategory = (url) => {
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: (res) => {
+                    toast.success(@json(trans('toast.action_failed')), res.data.message)
+                    setTimeout(() => {
+                        window.location.reload()
+                    }, 500);
+                }
+            })
         }
         const setNullParentId = () => {
             parentId = null

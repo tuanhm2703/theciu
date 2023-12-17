@@ -27,6 +27,22 @@ class CategoryController extends Controller
         $categories = $categories->orderBy('order')->get();
         return response()->json(AllCategoryResource::collection($categories));
     }
+    public function getCategoriesByType(Request $request) {
+        $type = $request->type;
+        $categories = Category::where('parent_id', null)->with(['categories.categories' => function ($q) use ($type) {
+            if ($type) {
+                $q->where('type', $type);
+            }
+        }]);
+        if ($type) {
+            $categories = $categories->where('type', $type);
+        }
+        $categories = $categories->get();
+        return BaseResponse::success([
+            'message' => 'Thao tác thành công',
+            'data' => $categories
+        ]);
+    }
 
     public function ajaxSearch(Request $request)
     {
@@ -96,6 +112,7 @@ class CategoryController extends Controller
         if ($parentId) {
             $category = Category::find($parentId);
             $category->edit_url = route('admin.category.product.edit', $category->id);
+            $category->delete_url = route('admin.category.destroy', $category->id);
             $result->original['category'] = $category;
         }
         $result->setData($result->original);
