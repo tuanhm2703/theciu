@@ -19,9 +19,7 @@ class WarehouseWebhookController extends Controller
             if(isset($request->Notifications[0]["Action"]) && (strpos($request->Notifications[0]["Action"], WebhookType::PRODUCT_DELETE) > -1)) {
                 $codes = $request->Notifications[0]['Data'];
                 $skus = KiotProduct::whereIn('kiot_product_id', $codes)->pluck('kiot_code')->toArray();
-                Product::whereHas('inventories', function($q) use ($skus){
-                    $q->whereIn('inventories.sku', $skus);
-                })->delete();
+                Inventory::whereIn('sku', $skus)->delete();
             } else {
                 $sku = $data['ProductCode'];
                 $inventory = Inventory::whereSku($sku)->firstOrFail();
