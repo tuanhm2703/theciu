@@ -170,7 +170,7 @@
             @if ($hideHeader == false)
                 <div class="event-header-wrapper pt-3">
                     <img src="{{ asset('img/slogan-img.png') }}" id="slogan-img" alt="">
-                    <img src="{{ asset('img/event-logo.png') }}" id="event-logo" alt="">
+                    <img src="{{ asset('img/logo-dark.png') }}" id="event-logo" alt="">
                 </div>
             @endif
             @if ($showGift == false)
