@@ -58,7 +58,7 @@
             .spinner-description {
                 font-family: 'Phudu', sans-serif;
                 bottom: 10px;
-                max-width: 80%;
+                /* max-width: 80%; */
                 color: #cd2b26;
                 font-size: 2rem;
                 font-weight: bold;
@@ -74,6 +74,7 @@
                 .spinner-description {
                     font-size: 16px;
                 }
+
                 #wrapper .spinner-img {
                     width: 110%;
                 }
@@ -151,9 +152,11 @@
             .congrat-text #gift-name {
                 color: #fff !important;
             }
+
             .lis-flake--js {
                 z-index: 10000000;
             }
+
             #background-animation {
                 position: absolute;
                 width: 100%;
@@ -163,11 +166,12 @@
     @endpush
     <div class="voucher-popup container newsletter-popup-container" id="spinner-wheel">
         <div id="wrapper" style="background: url({{ $background }}); background-color: transparent">
-            <div class="event-header-wrapper pt-3">
-                <img src="{{ asset('img/slogan-img.png') }}" id="slogan-img" alt="">
-                <img src="{{ asset('img/event-logo.png') }}" id="event-logo" alt="">
-
-            </div>
+            @if ($hideHeader == false)
+                <div class="event-header-wrapper pt-3">
+                    <img src="{{ asset('img/slogan-img.png') }}" id="slogan-img" alt="">
+                    <img src="{{ asset('img/event-logo.png') }}" id="event-logo" alt="">
+                </div>
+            @endif
             @if ($showGift == false)
                 <img src="{{ asset('img/spinner-1.png') }}" class="spinner-img mb-2" alt=""
                     style="transform: rotate({{ $deg }}deg)">
@@ -177,7 +181,7 @@
                 <img width="100%" class="animate__animated animate__tada" src="{{ $gift['img'] }}" alt="">
                 <div class="spinner-description text-center congrat-text">
                     {{-- Chúc mừng bạn đã nhận được <br><span id="gift-name">"{{ $gift['name'] }}"</span> --}}
-                    <p class="gift-note mt-3">Phần quà sẽ được gửi cùng đơn hàng của bạn, chụp lại khoảnh khắc này và
+                    <p class="gift-note mt-3">Phần quà sẽ được gửi cùng đơn hàng của bạn, chụp lại <br>khoảnh khắc này và
                         khoe
                         với bạn bè nhé!</p>
                 </div>
