@@ -28,15 +28,15 @@ class SpinnerWheel extends Component {
             $key = '';
             $image = '';
             $name = '';
-            if ($i == 0) {
+            if (in_array($i, [0, 6])) {
                 $key = 'calendar';
                 $image = "";
                 $name = '';
-            } else if ($i % 4 == 0) {
+            } else if (in_array($i, [3, 8])) {
                 $key = 'candle';
                 $image = "";
                 $name = "";
-            } else if ($i % 2 == 0) {
+            } else if (in_array($i, [1, 4, 7])) {
                 $key = 'crunchies-1';
                 $image = asset('img/crunchies-1.png');
                 $name = 'Crunchies';
@@ -55,6 +55,7 @@ class SpinnerWheel extends Component {
             ];
             $deg = $max;
         }
+        \Log::info(json_encode($this->gift_arr));
     }
     public function render() {
         return view('livewire.client.spinner-wheel');
@@ -70,7 +71,7 @@ class SpinnerWheel extends Component {
             if ($ran > $this->gift_arr[0]['min']) {
                 $gift = $this->gift_arr[0];
             } else {
-                $gift = collect($this->gift_arr)->where('min', '<=', $ran)->where('max', '>=', $ran)->first();
+                $gift = collect($this->gift_arr)->where('min', '<', $ran)->where('max', '>', $ran)->first();
             }
             if($gift) {
                 $this->gift = $gift;
@@ -78,12 +79,13 @@ class SpinnerWheel extends Component {
                 $this->deg = $ran + 3600;
             }
         }
+        \Log::info("Deg: $ran");
     }
 
     public function updateGift() {
         $this->showGift = true;
         $this->order->bonus_note = $this->gift['name'];
-        $this->order->save();
+        // $this->order->save();
         $this->background = '';
         $this->hideHeader = true;
     }
