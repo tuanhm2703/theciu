@@ -151,6 +151,7 @@
             .congrat-text .gift-note,
             .congrat-text #gift-name {
                 color: #fff !important;
+                font-size: 16px;
             }
 
             .lis-flake--js {
