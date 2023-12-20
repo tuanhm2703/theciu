@@ -163,6 +163,9 @@
                 width: 100%;
                 height: 100%;
             }
+            .voucer-popup {
+                overflow: hidden;
+            }
         </style>
     @endpush
     <div class="voucher-popup container newsletter-popup-container" id="spinner-wheel">
