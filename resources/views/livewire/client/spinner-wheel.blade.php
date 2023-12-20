@@ -163,7 +163,7 @@
                 width: 100%;
                 height: 100%;
             }
-            .voucer-popup {
+            .vouhcer-popup {
                 overflow: hidden;
             }
         </style>
