@@ -146,7 +146,7 @@ class CheckoutModel
     public function getInventories()
     {
         if(customer()) {
-            return Inventory::whereIn('id', $this->item_selected)->with('product')->get();
+            return $this->cart->inventories()->get();
         } else {
             return $this->cart->inventories;
         }
