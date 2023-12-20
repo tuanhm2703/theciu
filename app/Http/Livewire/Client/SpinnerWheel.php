@@ -39,11 +39,11 @@ class SpinnerWheel extends Component {
             } else if (in_array($i, [1, 4, 7])) {
                 $key = 'crunchies-1';
                 $image = asset('img/crunchies-1.png');
-                $name = 'Crunchies';
+                $name = 'Crunchies 1';
             } else {
                 $key  = 'crunchies-2';
                 $image = asset('img/crunchies-2.png');
-                $name = 'Crunchies';
+                $name = 'Crunchies 2';
             }
             $max = $deg + $step_deg >= 360 ? $deg + $step_deg - 360 : $deg + $step_deg;
             $this->gift_arr[] = [
