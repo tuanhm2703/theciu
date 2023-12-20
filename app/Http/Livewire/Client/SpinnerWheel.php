@@ -15,7 +15,10 @@ class SpinnerWheel extends Component {
 
     public $order;
     public $active;
+    public $background;
+    public $hideHeader = false;
     public function mount() {
+        $this->background = asset('img/spinner-bg.png');
         $this->active = now()->between('2023-08-25 00:00:00', '2023-12-24 23:59:59') || (env('APP_ENV') != 'prod');
         // $this->active = false;
         // dd($this->active);
@@ -69,9 +72,11 @@ class SpinnerWheel extends Component {
             } else {
                 $gift = collect($this->gift_arr)->where('min', '<=', $ran)->where('max', '>=', $ran)->first();
             }
-            $this->gift = $gift;
-            $key = $this->gift['value'];
-            $this->deg = $ran + 3600;
+            if($gift) {
+                $this->gift = $gift;
+                $key = $this->gift['value'];
+                $this->deg = $ran + 3600;
+            }
         }
     }
 
@@ -79,5 +84,7 @@ class SpinnerWheel extends Component {
         $this->showGift = true;
         $this->order->bonus_note = $this->gift['name'];
         $this->order->save();
+        $this->background = '';
+        $this->hideHeader = true;
     }
 }

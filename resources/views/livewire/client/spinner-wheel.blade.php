@@ -3,6 +3,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Phudu:wght@700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('assets/css/let-it-snow.css') }}">
         <link
             href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Mulish:wght@300;400;500;600;700&display=swap"
             rel="stylesheet">
@@ -26,7 +28,6 @@
             }
 
             #wrapper {
-                background: url("{{ asset('img/spinner-bg.jpg') }}") !important;
                 background-size: cover !important;
                 background-position: center !important;
                 min-height: 60vh;
@@ -41,24 +42,27 @@
                 padding: 0 8%;
                 display: flex;
                 align-items: center;
+                width: 100%;
+                max-width: none;
             }
 
             #spinner-btn {
-                width: 50px;
+                width: 80px;
                 position: absolute;
-                top: 47%;
+                top: 48%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 cursor: pointer;
             }
 
             .spinner-description {
-                font-family: 'Montserrat', sans-serif;
+                font-family: 'Phudu', sans-serif;
                 bottom: 10px;
-                max-width: 80%;
-                color: #2b3c68;
+                /* max-width: 80%; */
+                color: #cd2b26;
                 font-size: 2rem;
                 font-weight: bold;
+                text-transform: uppercase;
             }
 
             .spinner-description p {
@@ -70,8 +74,9 @@
                 .spinner-description {
                     font-size: 16px;
                 }
+
                 #wrapper .spinner-img {
-                    max-height: 350px;
+                    width: 110%;
                 }
             }
 
@@ -84,7 +89,8 @@
 
             @media (max-width: 576px) {
                 #spinner-btn {
-                    top: 48.5%;
+                    top: 48%;
+                    width: 60px;
                 }
 
             }
@@ -138,42 +144,62 @@
             }
 
             .congrat-text .gift-note {
-                font-family: 'pfbeau-sans-pro-bbook';
+                font-family: 'Phudu', sans-serif;
+                font-weight: bold
             }
 
             .congrat-text .gift-note,
             .congrat-text #gift-name {
-                color: #ef4b6e !important;
+                color: #fff !important;
+            }
+
+            .lis-flake--js {
+                z-index: 10000000;
+            }
+
+            #background-animation {
+                position: absolute;
+                width: 100%;
+                height: 100%;
             }
         </style>
     @endpush
     <div class="voucher-popup container newsletter-popup-container" id="spinner-wheel">
-        <div id="wrapper">
-            <div class="event-header-wrapper pt-3">
-                <img src="{{ asset('img/slogan-img.png') }}" id="slogan-img" alt="">
-                <img src="{{ asset('img/event-logo.png') }}" id="event-logo" alt="">
-            </div>
+        <div id="wrapper" style="background: url({{ $background }}); background-color: transparent">
+            @if ($hideHeader == false)
+                <div class="event-header-wrapper pt-3">
+                    <img src="{{ asset('img/slogan-img.png') }}" id="slogan-img" alt="">
+                    <img src="{{ asset('img/event-logo.png') }}" id="event-logo" alt="">
+                </div>
+            @endif
             @if ($showGift == false)
                 <img src="{{ asset('img/spinner-1.png') }}" class="spinner-img mb-2" alt=""
                     style="transform: rotate({{ $deg }}deg)">
                 <img id="spinner-btn" src="{{ asset('img/spinner-btn-1.png') }}" alt="">
-                <div class="spinner-description text-center pb-3">Xoay để nhận được quà ưng ý nhé!</div>
+                <div class="spinner-description text-center py-3">Quay để nhận quà nhé!</div>
             @else
-                <img width="50%" class="animate__animated animate__tada" src="{{ $gift['img'] }}" alt="">
+                <img width="100%" class="animate__animated animate__tada" src="{{ $gift['img'] }}" alt="">
                 <div class="spinner-description text-center congrat-text">
-                    Chúc mừng bạn đã nhận được <br><span id="gift-name">"{{ $gift['name'] }}"</span>
-                    <p class="gift-note mt-3">Phần quà sẽ được gửi cùng đơn hàng của bạn, chụp lại khoảnh khắc này và
+                    {{-- Chúc mừng bạn đã nhận được <br><span id="gift-name">"{{ $gift['name'] }}"</span> --}}
+                    <p class="gift-note mt-3">Phần quà sẽ được gửi cùng đơn hàng của bạn, chụp lại <br>khoảnh khắc này và
                         khoe
                         với bạn bè nhé!</p>
                 </div>
             @endif
             {{-- <div class="firework-container"></div> --}}
         </div>
+        <div id="bg-animation" wire:ignore></div>
     </div>
     @push('js')
-        <script src="https://unpkg.com/fireworks-js@2.x/dist/index.umd.js"></script>
+        <script src="{{ asset('assets/js/let-it-snow.min.js') }}"></script>
 
         <script>
+            $.letItSnow('#bg-animation', {
+                stickyFlakes: 'lis-flake--js',
+                makeFlakes: true,
+                sticky: true
+            });
+
             $.magnificPopup.open({
                 items: {
                     src: "#spinner-wheel",
