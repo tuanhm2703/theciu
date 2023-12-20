@@ -15,7 +15,9 @@ class SpinnerWheel extends Component {
 
     public $order;
     public $active;
+    public $background;
     public function mount() {
+        $this->background = asset('img/spinner-bg.png');
         $this->active = now()->between('2023-08-25 00:00:00', '2023-12-24 23:59:59') || (env('APP_ENV') != 'prod');
         // $this->active = false;
         // dd($this->active);
@@ -79,5 +81,6 @@ class SpinnerWheel extends Component {
         $this->showGift = true;
         $this->order->bonus_note = $this->gift['name'];
         $this->order->save();
+        $this->background = '';
     }
 }
