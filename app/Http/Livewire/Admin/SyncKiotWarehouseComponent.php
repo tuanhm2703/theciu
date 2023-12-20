@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Inventory;
 use App\Models\KiotProduct;
 use App\Models\Product;
 use Illuminate\Support\Facades\App;
@@ -45,6 +46,7 @@ class SyncKiotWarehouseComponent extends Component
     }
     public function downloadKiotData()
     {
+        KiotProduct::whereNotNull('id')->delete();
         $productResource = new ProductResource(App::make(Client::class));
         $data = $productResource->list(['pageSize' => '1']);
         $total = $data->getTotal();
@@ -61,6 +63,8 @@ class SyncKiotWarehouseComponent extends Component
                 ]);
             }
         }
+        $skus = KiotProduct::pluck('kiot_code')->toArray();
+        Inventory::whereNotIn('sku', $skus)->update(['stock_quantity' => 0]);
         $this->dispatchBrowserEvent('startSyncKiot');
     }
 }
