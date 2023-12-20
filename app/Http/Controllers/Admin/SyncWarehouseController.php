@@ -81,6 +81,8 @@ class SyncWarehouseController extends Controller {
                 ]);
             }
         }
+        $skus = KiotProduct::pluck('kiot_code')->toArray();
+        Inventory::whereNotIn('sku', $skus)->update(['stock_quantity' => 0]);
     }
 
     public function syncStock(Request $request) {
