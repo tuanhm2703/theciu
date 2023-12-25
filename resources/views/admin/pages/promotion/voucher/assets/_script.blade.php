@@ -66,7 +66,8 @@
                     data: "name"
                 },
                 {
-                    data: "product_img_list"
+                    data: "product_img_list",
+                    width: "20%",
                 },
                 {
                     data: "promotiom_status_label",
@@ -106,7 +107,8 @@
                     data: "name"
                 },
                 {
-                    data: "product_img_list"
+                    data: "product_img_list",
+                    width: "20%",
                 },
                 {
                     data: "promotiom_status_label",
