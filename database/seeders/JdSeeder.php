@@ -20,10 +20,10 @@ class JdSeeder extends Seeder {
             'from_date' => now(),
             'to_date' => now()->addMonth(1),
             'status' => 1,
-            'short_description' => fake()->sentence(),
-            'description' => fake()->sentence(),
-            'requirement' => fake()->sentence(),
-            'benefit' => fake()->sentence(),
+            'short_description' => fake()->paragraphs(1, true),
+            'description' => fake()->paragraphs(2, true),
+            'requirement' => fake()->paragraphs(5, true),
+            'benefit' => fake()->paragraphs(5, true),
         ]);
     }
 }
