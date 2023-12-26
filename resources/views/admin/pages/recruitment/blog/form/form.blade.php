@@ -47,7 +47,7 @@
                     'class' => 'select2-ajax',
                     'multiple' => 'multiple',
                     'required',
-                    'data-select2-url' => route('admin.ajax.category.search', ['type' => App\Enums\CategoryType::BLOG]),
+                    'data-select2-url' => route('admin.ajax.category.search', ['type' => App\Enums\CategoryType::CAREER]),
                 ]) !!}
             </div>
             <div class="col-md-3">
