@@ -17,7 +17,16 @@ class JdFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->jobTitle(),
+            'group' => fake()->country(),
+            'job_type' => rand(1, 2) == 1 ? 'Parttime' : 'Fullname',
+            'from_date' => now(),
+            'to_date' => now()->addMonth(1),
+            'status' => 1,
+            'short_description' => fake()->paragraphs(1, true),
+            'description' => fake()->paragraphs(2, true),
+            'requirement' => fake()->paragraphs(5, true),
+            'benefit' => fake()->paragraphs(5, true),
         ];
     }
 }
