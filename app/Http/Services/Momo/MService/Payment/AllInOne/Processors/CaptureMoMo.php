@@ -51,7 +51,8 @@ class CaptureMoMo extends Process {
             Parameter::EXTRA_DATA => $extraData,
             Parameter::SIGNATURE => $signature,
             Parameter::LANG => App::getLocale(),
-            Parameter::REQUEST_TYPE => RequestType::CAPTURE_MOMO_WALLET
+            Parameter::REQUEST_TYPE => RequestType::CAPTURE_MOMO_WALLET,
+            Parameter::ORDER_GROUP_ID => intval(env('MOMO_CAPTURE_GROUP_ID'))
         );
 
         return new CaptureMoMoRequest($arr);
