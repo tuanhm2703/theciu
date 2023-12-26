@@ -25,6 +25,9 @@ class BlogController extends Controller {
     }
 
     public function store(StoreBlogRequest $request) {
+        $request->merge([
+            'status' => $request->status == 'on' ? 1 : 0
+        ]);
         $blog = Blog::create($request->all());
         if ($request->hasFile('image')) {
             $blog->createImages([$request->file('image')]);
