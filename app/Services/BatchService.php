@@ -67,6 +67,7 @@ class BatchService {
         unset($collection[1]);
         unset($collection[0]);
         $inventory_ids = [];
+        $product_ids = [];
         foreach ($collection as $c) {
             $sku = $c[0];
             $promotion_price = $c[1];
@@ -79,8 +80,12 @@ class BatchService {
                     'promotion_status' => 1
                 ]);
                 $inventory_ids[] = $inventory->id;
+                $product_ids[] = $inventory->product_id;
             }
         }
+        Inventory::whereIn('product_id', $product_ids)->whereNotIn('id', $inventory_ids)->update([
+            'promotion_status' => false
+        ]);
         $products = Product::whereHas('inventories', function ($q) use ($inventory_ids) {
             $q->whereIn('inventories.id', $inventory_ids);
         })->with(['inventories' => function ($q) use ($inventory_ids) {
