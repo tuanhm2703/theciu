@@ -28,7 +28,9 @@
                         <h4 class="widget-title">Chi nhánh</h4><!-- End .widget-title -->
                         <ul class="widget-list">
                             @foreach ($branches as $branch)
-                                {{ $branch->address?->full_address }} <br>Hotline: {{ $branch->phone }}
+                                <li>
+                                    {{ $branch->address?->full_address }} <br>Hotline: {{ $branch->phone }}
+                                </li>
                             @endforeach
                         </ul>
                     </div><!-- End .widget about-widget -->
