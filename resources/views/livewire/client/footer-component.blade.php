@@ -16,7 +16,10 @@
                             <li>Người ĐDPL: Nguyễn Đức Huy</li>
                             <li>Ngày hoạt động: 16/09/2022</li>
                             <li>Giấy phép kinh doanh: 0317478388</li>
-                            <li><a href='http://online.gov.vn/Home/WebDetails/106122'><img width="150px" alt='Chứng nhận đã khai báo với Bộ Công Thương' title='Chứng nhận đã khai báo với Bộ Công Thương' src='{{ asset('img/logoSaleNoti.png') }}'/></a></li>
+                            <li><a href='http://online.gov.vn/Home/WebDetails/106122'><img width="150px"
+                                        alt='Chứng nhận đã khai báo với Bộ Công Thương'
+                                        title='Chứng nhận đã khai báo với Bộ Công Thương'
+                                        src='{{ asset('img/logoSaleNoti.png') }}' /></a></li>
                         </ul>
                     </div>
                 </div>
@@ -24,18 +27,9 @@
                     <div class="widget widget-about">
                         <h4 class="widget-title">Chi nhánh</h4><!-- End .widget-title -->
                         <ul class="widget-list">
-                            <li>
-                                32 Nguyen Gia Tri, Binh Thanh District, HCM City <br>Hotline: 0901.246.912
-                            </li>
-                            <li>
-                                73 Nguyen Van Bao, Go Vap District, HCM City <br>Hotline: 0707.987.912
-                            </li>
-                            <li>
-                                680 Su Van Hanh, District 10, HCM City <br>Hotline: 0707.358.912
-                            </li>
-                            <li>
-                                50 To Vinh Dien, Linh Chieu, Thu Duc, HCM City <br>Hotline: 0333.707.912
-                            </li>
+                            @foreach ($branches as $branch)
+                                {{ $branch->full_address }} <br>Hotline: {{ $branch->phone }}
+                            @endforeach
                         </ul>
                     </div><!-- End .widget about-widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
@@ -50,7 +44,7 @@
                                 @if ($index == 0)
                                     {{-- <li><a href="{{ route('client.blog.index') }}" target="_blank">Blog</a></li> --}}
                                 @endif
-                                @if($index == $pages->count() - 2 || $pages->count() == 1)
+                                @if ($index == $pages->count() - 2 || $pages->count() == 1)
                                     <li><a href="https://www.facebook.com/HR.THECIU" target="_blank">Tuyển dụng</a></li>
                                 @endif
                             @endforeach
