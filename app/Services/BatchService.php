@@ -88,9 +88,7 @@ class BatchService {
         ]);
         $products = Product::whereHas('inventories', function ($q) use ($inventory_ids) {
             $q->whereIn('inventories.id', $inventory_ids);
-        })->with(['inventories' => function ($q) use ($inventory_ids) {
-            $q->whereIn('inventories.id', $inventory_ids)->with('product:id,name');
-        }, 'image'])->get();
+        })->with('inventories', 'image')->get();
         foreach($products as $product) {
             $product->inventories->each(function ($inventory) {
                 $inventory->append(['title']);
