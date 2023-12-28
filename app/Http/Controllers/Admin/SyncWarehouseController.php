@@ -26,7 +26,8 @@ class SyncWarehouseController extends Controller {
         $branches = collect($branches);
         $saleChannelResource = new SaleChannelResource(App::make(Client::class));
         $sale_channels = $saleChannelResource->list()->toArray();
-        $userResource = new UserResource(App::make(Client::class));
+        $client = App::make(Client::class);
+        $userResource = new UserResource($client);
         $users = collect($userResource->list(['pageSize' => 500])->toArray());
         foreach($sale_channels as $index => $channel) {
             $sale_channels[$index]['name'] = $channel['name']. "|". $channel['otherProperties']['img'];
@@ -34,7 +35,9 @@ class SyncWarehouseController extends Controller {
         $sale_channels = collect($sale_channels);
         $kiotSetting = App::get('KiotConfig');
         $numberOfProductHaveToSync = Inventory::whereNotNull('sku')->count();
-        return view('admin.pages.setting.warehouse.index', compact('branches', 'kiotSetting', 'numberOfProductHaveToSync', 'sale_channels', 'users'));
+        $webhookResource = new WebhookResource($client);
+        $webhooklist = $webhookResource->list()->toArray();
+        return view('admin.pages.setting.warehouse.index', compact('branches', 'kiotSetting', 'numberOfProductHaveToSync', 'sale_channels', 'users', 'webhooklist'));
     }
 
     public function update(Request $request) {

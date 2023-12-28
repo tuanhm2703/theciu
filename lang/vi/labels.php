@@ -259,5 +259,8 @@ return [
     'combo_name' => 'Tên combo',
     'edit_combo' => 'Cập nhật combo',
     'combo_discount' => 'Giảm giá combo',
-    'buy_now' => 'Mua ngay'
+    'buy_now' => 'Mua ngay',
+    'stock.update' => 'Cập nhật tồn kho',
+    'invoice.update' => 'Cập nhật hoá đơn',
+    'product.delete' => 'Xoá sản phẩm'
 ];
