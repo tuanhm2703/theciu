@@ -8,10 +8,11 @@ use App\Traits\Scopes\CustomScope;
 use App\Traits\Scopes\PromotionScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Promotion extends Model {
-    use HasFactory, CustomScope, CommonFunc, PromotionScope;
+    use HasFactory, CustomScope, CommonFunc, PromotionScope, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -20,7 +21,8 @@ class Promotion extends Model {
         'status',
         'type',
         'slug',
-        'updated_at'
+        'updated_at',
+        'min_order_value'
     ];
 
     protected $casts = [

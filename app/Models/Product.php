@@ -126,7 +126,7 @@ class Product extends Model {
     }
 
     public function promotions() {
-        return $this->belongsToMany(Promotion::class, 'promotion_product');
+        return $this->belongsToMany(Promotion::class, 'promotion_product')->whereIn('promotions.type', [PromotionType::DISCOUNT, PromotionType::FLASH_SALE]);
     }
     public function combos() {
         return $this->belongsToMany(Combo::class, 'combo_product');
@@ -134,6 +134,9 @@ class Product extends Model {
 
     public function available_promotions() {
         return $this->belongsToMany(Promotion::class, 'promotion_product')->available();
+    }
+    public function available_promotion() {
+        return $this->hasOneThrough(Promotion::class, PromotionProduct::class, 'product_id', 'id', 'id', 'promotion_id')->available();
     }
 
     public function available_combos() {

@@ -51,6 +51,7 @@ class OrderController extends Controller {
         $order->setRelation('shipping_order', $order->shipping_order()->with(['shipping_order_histories' => function ($q) {
             return $q->orderBy('shipping_order_histories.created_at', 'desc');
         }])->first());
+        $order->setRelation('promotions', $order->promotions);
         return view('landingpage.layouts.pages.order.details', compact('order'));
     }
 

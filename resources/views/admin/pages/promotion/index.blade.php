@@ -109,6 +109,35 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4 mt-3">
+                    <div class="card h-100">
+                        <div class="card-body p-3">
+                            <div class="row h-100">
+                                <div class="col-10">
+                                    <div class="numbers">
+                                        <h5 class="font-weight-bolder">Chương trình quà tặng đi kèm</h5>
+                                        <p class="mb-0">
+                                            Tạo <span class="text-success text-sm font-weight-bolder">chương trình quà tặng đi kèm</span>
+                                            với giá trị đơn hàng tối thiểu
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-2 text-end">
+                                    <div
+                                        class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle text-white">
+                                        <i class="fas fa-gifts" style="opacity: 1"></i>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex flex-row">
+                                    <a href="{{ route('admin.promotion.create', ['type' => App\Enums\PromotionType::ACCOM_GIFT]) }}"
+                                        class="btn btn-primary mb-0 align-self-end mt-3 me-2" style="height: fit-content">
+                                        Tạo ngay!
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card mt-3">
                 <div class="card-header">
@@ -120,14 +149,19 @@
                                     Danh sách chương trình</a>
                             </li>
                             <li class="nav-item">
+                                <a class="text-primary nav-link" id="flashsale-product-tab" data-toggle="tab"
+                                    href="#flashsale-product" role="tab" aria-controls="profile" aria-selected="false">
+                                    Danh sách sản phẩm flashsale</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" id="voucher-list-tab" data-toggle="tab" href="#voucher-list"
                                     role="tab" aria-controls="profile" aria-selected="false">
                                     Danh sách mã khuyến mãi</a>
                             </li>
                             <li class="nav-item">
-                                <a class="text-primary nav-link" id="flashsale-product-tab" data-toggle="tab"
-                                    href="#flashsale-product" role="tab" aria-controls="profile" aria-selected="false">
-                                    Danh sách sản phẩm flashsale</a>
+                                <a class="nav-link" id="accom-gift-tab" data-toggle="tab" href="#accom-gift"
+                                    role="tab" aria-controls="profile" aria-selected="false">
+                                    Danh sách chương trình tặng kèm</a>
                             </li>
                         </ul>
 
@@ -144,7 +178,23 @@
                                             No.
                                         </th>
                                         <th>{{ trans('labels.promotion_name') }}</th>
-                                        {{-- <th class="text-center">{{ trans('labels.product') }}</th> --}}
+                                        <th>Trạng thái</th>
+                                        <th>{{ trans('labels.time') }}</th>
+                                        <th>{{ trans('labels.action') }}</th>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="flashsale-product" role="tabpanel"
+                            aria-labelledby="flashsale-product-tab">
+                            <div class="table-responsive">
+                                <table class="flash-sale-table table w-100">
+                                    <thead>
+                                        <th style="padding-left: 0.5rem">
+                                            No.
+                                        </th>
+                                        <th>{{ trans('labels.promotion_name') }}</th>
                                         <th>Trạng thái</th>
                                         <th>{{ trans('labels.time') }}</th>
                                         <th>{{ trans('labels.action') }}</th>
@@ -156,17 +206,17 @@
                         <div class="tab-pane" id="voucher-list" role="tabpanel" aria-labelledby="voucher-list-tab">
                             @include('admin.pages.promotion.voucher.components.table')
                         </div>
-                        <div class="tab-pane" id="flashsale-product" role="tabpanel"
-                            aria-labelledby="flashsale-product-tab">
+                        <div class="tab-pane" id="accom-gift" role="tabpanel"
+                            aria-labelledby="accom-gift-tab">
                             <div class="table-responsive">
-                                <table class="flash-sale-table table w-100">
+                                <table class="accom-gift-table table w-100">
                                     <thead>
                                         <th style="padding-left: 0.5rem">
                                             No.
                                         </th>
                                         <th>{{ trans('labels.promotion_name') }}</th>
-                                        {{-- <th width="20%" class="text-center">{{ trans('labels.product') }}</th> --}}
                                         <th>Trạng thái</th>
+                                        <th>Giá trị đơn hàng tối thiểu</th>
                                         <th>{{ trans('labels.time') }}</th>
                                         <th>{{ trans('labels.action') }}</th>
                                     </thead>

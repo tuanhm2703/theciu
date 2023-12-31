@@ -32,6 +32,9 @@ class PromotionController extends Controller {
 
     public function create(CreatePromotionRequest $request) {
         $type = $request->type ?? PromotionType::DISCOUNT;
+        if ($type === PromotionType::ACCOM_GIFT) {
+            return view('admin.pages.accom-gift.create');
+        }
         return view('admin.pages.promotion.product.add', compact('type'));
     }
 
@@ -47,6 +50,8 @@ class PromotionController extends Controller {
             });
         });
         $productIds = $products->pluck('id')->toArray();
+        if ($promotion->type === PromotionType::ACCOM_GIFT)
+            return view('admin.pages.accom-gift.edit', compact('promotion', 'type', 'products', 'productIds'));
         return view('admin.pages.promotion.product.add', compact('promotion', 'type', 'products', 'productIds'));
     }
 
@@ -127,6 +132,7 @@ class PromotionController extends Controller {
                 'name' => $request->name,
                 'from' => $request->from,
                 'to' => $request->to,
+                'min_order_value' => $request->min_order_value,
                 'status' => StatusType::ACTIVE
             ]);
             $product_ids = [];
@@ -162,6 +168,11 @@ class PromotionController extends Controller {
         $to = (new Carbon($request->to))->format('Y-m-d H:i:s');
         $old_from = $request->old_from;
         $old_to = $request->old_to;
+        $input = [
+            'from' => $from,
+            'to' => $to
+        ];
+        if($request->min_order_value) $input['min_order_value'] = $request->min_order_value;
         DB::beginTransaction();
         try {
             $product_ids = [];
@@ -175,16 +186,13 @@ class PromotionController extends Controller {
                     $inventory = Inventory::find($i['id']);
                     $inventory->fill($i);
                     $inventory->promotion_from = $from;
-                    $inventory->promotion_to = $to  ;
+                    $inventory->promotion_to = $to;
                     $inventory->save();
                 }
                 $product_ids[] = $p['id'];
             }
             $promotion->products()->sync($product_ids);
-            $promotion->update([
-                'from' => $from,
-                'to' => $to
-            ]);
+            $promotion->update($input);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();

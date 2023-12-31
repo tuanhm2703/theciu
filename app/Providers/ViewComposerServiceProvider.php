@@ -63,7 +63,7 @@ class ViewComposerServiceProvider extends ServiceProvider {
                 $new_arrival_categories = Category::with('image:imageable_id,path')->whereType(CategoryType::TRENDING)->get();
                 $promotions = Promotion::haveNotEnded()->whereHas('products')->with(['products' => function ($q) {
                     $q->withNeededProductCardData();
-                }])->get();
+                }])->where('type', '!=', PromotionType::ACCOM_GIFT)->get();
                 $available_combos = Combo::available()->get();
                 $best_seller_categories = Category::with("image:imageable_id,path")->whereType(CategoryType::BEST_SELLER)->whereHas('products')->get();
                 $blog_categories = Category::allActiveBlogCategories();

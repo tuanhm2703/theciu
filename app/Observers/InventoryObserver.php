@@ -17,5 +17,10 @@ class InventoryObserver
         if ($inventory->isDirty('sku')) {
             dispatch(new SyncKiotVietProductWarehouse($inventory))->onQueue('syncKiotStock');
         }
+        // if($inventory->isDirty('total_promotion_quantity')) {
+        //     if($inventory->getOriginal('total_promotion_quantity') > $inventory->total_promotion_quantity) {
+        //         $inventory->
+        //     }
+        // }
     }
 }

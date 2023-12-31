@@ -13,7 +13,7 @@ class OrderController extends Controller {
         $order_status = $request->order_status ?? OrderStatus::ALL;
         $orders = Order::query()->with(['inventories' => function($q) {
             $q->withTrashed();
-        }]);
+        }, 'promotions']);
         if($request->from) {
             $from = carbon($request->from)->format('Y-m-d H:i:s');
             $orders->where('created_at', '>', $from);

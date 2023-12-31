@@ -69,7 +69,15 @@ class Order extends Model
             'promotion_price',
             'title',
             'name',
-            'is_reorder'
+            'is_reorder',
+            'promotion_id'
+        ]);
+    }
+    public function promotions() {
+        return $this->belongsToMany(Promotion::class, 'order_items')->withTrashed()->withPivot([
+            'inventory_id',
+            'promotion_id',
+            'order_id'
         ]);
     }
     public function products()

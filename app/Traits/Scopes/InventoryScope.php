@@ -11,7 +11,6 @@ trait InventoryScope {
             return $q->whereNotNull('from')->whereNotNull('to')->whereRaw("'$now' between from and to");
         });
     }
-
     public function scopeDontHavePromotion($q) {
         $now = now();
         return $q->whereDoesntHave('promotions', function($q) use ($now) {
