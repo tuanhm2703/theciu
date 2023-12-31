@@ -6,9 +6,9 @@ use App\Models\Address;
 use App\Models\Customer;
 use App\Models\Inventory;
 use App\Models\Voucher;
+use Illuminate\Database\Eloquent\Collection;
 
-class CheckoutModel
-{
+class CheckoutModel {
     private Address $address;
     private $shipping_fee;
     private $payment_method_id;
@@ -22,14 +22,13 @@ class CheckoutModel
     private $service_id;
     private $note;
     private Customer $customer;
+    private $accom_inventories;
 
-    public function __construct($properties)
-    {
+    public function __construct($properties) {
         $this->mapProperties($properties);
     }
 
-    protected function mapProperties(array $properties = []): void
-    {
+    protected function mapProperties(array $properties = []): void {
         foreach ($properties as $key => $val) {
             $ucFirst = ucfirst(\Str::camel($key));
             $setter = 'set' . $ucFirst;
@@ -42,13 +41,12 @@ class CheckoutModel
     /**
      * Get the value of address
      */
-    public function getAddress()
-    {
+    public function getAddress() {
         return $this->address;
     }
 
     public function createAddress() {
-        if(!Address::whereId($this->address->id)->exists()) $this->address->save();
+        if (!Address::whereId($this->address->id)->exists()) $this->address->save();
     }
 
     /**
@@ -56,8 +54,7 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setAddress($address)
-    {
+    public function setAddress($address) {
         $this->address = $address;
 
         return $this;
@@ -66,8 +63,7 @@ class CheckoutModel
     /**
      * Get the value of shipping_fee
      */
-    public function getShippingFee()
-    {
+    public function getShippingFee() {
         return $this->shipping_fee;
     }
 
@@ -76,8 +72,7 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setShippingFee($shipping_fee)
-    {
+    public function setShippingFee($shipping_fee) {
         $this->shipping_fee = $shipping_fee;
 
         return $this;
@@ -86,8 +81,7 @@ class CheckoutModel
     /**
      * Get the value of payment_method_id
      */
-    public function getPaymentMethodId()
-    {
+    public function getPaymentMethodId() {
         return $this->payment_method_id;
     }
 
@@ -96,8 +90,7 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setPaymentMethodId($payment_method_id)
-    {
+    public function setPaymentMethodId($payment_method_id) {
         $this->payment_method_id = $payment_method_id;
 
         return $this;
@@ -106,8 +99,7 @@ class CheckoutModel
     /**
      * Get the value of shipping_service_id
      */
-    public function getShippingServiceId()
-    {
+    public function getShippingServiceId() {
         return $this->shipping_service_id;
     }
 
@@ -116,8 +108,7 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setShippingServiceId($shipping_service_id)
-    {
+    public function setShippingServiceId($shipping_service_id) {
         $this->shipping_service_id = $shipping_service_id;
 
         return $this;
@@ -126,8 +117,7 @@ class CheckoutModel
     /**
      * Get the value of cart
      */
-    public function getCart()
-    {
+    public function getCart() {
         return $this->cart;
     }
 
@@ -136,28 +126,24 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setCart($cart)
-    {
+    public function setCart($cart) {
         $this->cart = $cart;
 
         return $this;
     }
 
-    public function getInventories()
-    {
-        if(customer()) {
+    public function getInventories() {
+        if (customer()) {
             return $this->cart->inventories()->whereIn('inventories.id', $this->item_selected)->get();
         } else {
             return $this->cart->inventories;
         }
-
     }
 
     /**
      * Get the value of item_selected
      */
-    public function getItemSelected()
-    {
+    public function getItemSelected() {
         return $this->item_selected;
     }
 
@@ -166,8 +152,7 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setItemSelected($item_selected)
-    {
+    public function setItemSelected($item_selected) {
         $this->item_selected = $item_selected;
 
         return $this;
@@ -176,8 +161,7 @@ class CheckoutModel
     /**
      * Get the value of order_voucher_id
      */
-    public function getOrderVoucherId()
-    {
+    public function getOrderVoucherId() {
         return $this->order_voucher_id;
     }
 
@@ -186,8 +170,7 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setOrderVoucherId($order_voucher_id)
-    {
+    public function setOrderVoucherId($order_voucher_id) {
         $this->order_voucher_id = $order_voucher_id;
 
         return $this;
@@ -196,8 +179,7 @@ class CheckoutModel
     /**
      * Get the value of order_voucher
      */
-    public function getOrderVoucher()
-    {
+    public function getOrderVoucher() {
         if ($this->order_voucher) return $this->order_voucher;
         if (!$this->order_voucher_id) return $this->order_voucher;
         $this->order_voucher = Voucher::find($this->order_voucher_id);
@@ -207,8 +189,7 @@ class CheckoutModel
     /**
      * Get the value of freeship_voucher_id
      */
-    public function getFreeshipVoucherId()
-    {
+    public function getFreeshipVoucherId() {
         return $this->freeship_voucher_id;
     }
 
@@ -217,8 +198,7 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setFreeshipVoucherId($freeship_voucher_id)
-    {
+    public function setFreeshipVoucherId($freeship_voucher_id) {
         $this->freeship_voucher_id = $freeship_voucher_id;
 
         return $this;
@@ -227,8 +207,7 @@ class CheckoutModel
     /**
      * Get the value of order_voucher
      */
-    public function getFreeshipVoucher()
-    {
+    public function getFreeshipVoucher() {
         if ($this->freeship_voucher) return $this->freeship_voucher;
         if (!$this->freeship_voucher_id) return $this->freeship_voucher;
         $this->freeship_voucher = Voucher::find($this->freeship_voucher_id);
@@ -238,8 +217,7 @@ class CheckoutModel
     /**
      * Get the value of service_id
      */
-    public function getServiceId()
-    {
+    public function getServiceId() {
         return $this->service_id;
     }
 
@@ -248,8 +226,7 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setServiceId($service_id)
-    {
+    public function setServiceId($service_id) {
         $this->service_id = $service_id;
 
         return $this;
@@ -258,8 +235,7 @@ class CheckoutModel
     /**
      * Get the value of note
      */
-    public function getNote()
-    {
+    public function getNote() {
         return $this->note;
     }
 
@@ -268,8 +244,7 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setNote($note)
-    {
+    public function setNote($note) {
         $this->note = $note;
 
         return $this;
@@ -278,9 +253,8 @@ class CheckoutModel
     /**
      * Get the value of customer
      */
-    public function getCustomer(): Customer
-    {
-        if(!$this->customer->id) {
+    public function getCustomer(): Customer {
+        if (!$this->customer->id) {
             $this->customer->first_name = $this->address->fullname;
         }
         return $this->customer;
@@ -291,10 +265,16 @@ class CheckoutModel
      *
      * @return  self
      */
-    public function setCustomer(Customer $customer)
-    {
+    public function setCustomer(Customer $customer) {
         $this->customer = $customer;
 
+        return $this;
+    }
+    public function getAccomInventories() {
+        return $this->accom_inventories;
+    }
+    public function setAccomInventories(Collection $accom_inventories) {
+        $this->accom_inventories = $accom_inventories;
         return $this;
     }
 }

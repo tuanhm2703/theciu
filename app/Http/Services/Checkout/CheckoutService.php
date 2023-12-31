@@ -61,13 +61,31 @@ class CheckoutService {
                         'total' => $inventory->sale_price * $inventory->cart_stock,
                         'title' => $inventory->title,
                         'name' => $inventory->name,
-                        'is_reorder' => $inventory->product->is_reorder && $inventory->stock_quantity  - $inventory->cart_stock < 0
+                        'is_reorder' => $inventory->product->is_reorder && $inventory->stock_quantity  - $inventory->cart_stock < 0,
+                        'promotion_id' => $inventory->product?->available_promotion?->id
                     ]
                 ]);
                 if ($inventory->stock_quantity - $inventory->cart_stock < 0 && $inventory->product->is_reorder == 0)
                     throw new InventoryOutOfStockException("Sản phẩm $inventory->name không đủ số lượng", 409);
                 /* If product is not reorderable or product is reorderable and stock quantity is less
                 than 0, then update stock quantity. */
+            }
+            foreach ($checkoutModel->getAccomInventories() as $inventory) {
+                $order->inventories()->attach([
+                    $inventory->id => [
+                        'product_id' => $inventory->product_id,
+                        'quantity' => $inventory->quantity_each_order,
+                        'origin_price' => $inventory->price,
+                        'promotion_price' => 0,
+                        'total' => 0,
+                        'title' => $inventory->title,
+                        'name' => $inventory->name,
+                        'is_reorder' => 0,
+                        'promotion_id' => $inventory->product?->available_promotion?->id
+                    ]
+                ]);
+                if ($inventory->stock_quantity - $inventory->quantity_each_order < 0)
+                    throw new InventoryOutOfStockException("Sản phẩm $inventory->name không đủ số lượng", 409);
             }
             $order_total = $order->inventories()->sum('order_items.total');
             $rank_discount = $customer->calculateRankDiscountAmount($order_total);

@@ -167,9 +167,8 @@
                 <div class="card-header pb-0">
                     <h6>
                         <svg width="20px" style="fill: #f5365c !important" version="1.1" id="Layer_1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
-                            y="0px" viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;"
-                            xml:space="preserve">
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 32 32" style="enable-background:new 0 0 32 32;" xml:space="preserve">
                             <path
                                 d="M27.8,27.1H8.5c-1,0-1.8-0.8-1.8-1.8v-1.8h1.8v0.9c0,0.5,0.4,0.9,0.9,0.9h17.6c0.5,0,0.9-0.4,0.9-0.9V12.2 c0-0.5-0.4-0.9-0.9-0.9H26v-0.9c0-0.5-0.4-0.9-0.9-0.9h2.6c1,0,1.8,0.8,1.8,1.8v14C29.6,26.3,28.8,27.1,27.8,27.1z M22.5,21.9H3.2 c-1,0-1.8-0.8-1.8-1.8v-14c0-1,0.8-1.8,1.8-1.8h19.3c1,0,1.8,0.8,1.8,1.8v14C24.3,21.1,23.5,21.9,22.5,21.9z M22.5,6.9 c0-0.5-0.4-0.9-0.9-0.9H4.1c-0.5,0-0.9,0.4-0.9,0.9v12.3c0,0.5,0.4,0.9,0.9,0.9h17.6c0.5,0,0.9-0.4,0.9-0.9V6.9z M15.5,14.9 c0,1.1-0.8,2.2-2.1,2.4v1.1h-1v-1.1c-1.4-0.2-2.2-1.1-2.2-1.1l0.8-1.1c0,0,0.9,0.9,1.9,0.9c0.6,0,1.1-0.4,1.1-1 c0-1.4-3.7-1.2-3.7-3.7c0-1.2,0.9-2.1,2.1-2.3V7.8h1v1.1c1.3,0.1,1.9,0.9,1.9,0.9L14.8,11c0,0-0.8-0.7-1.8-0.7c-0.7,0-1.1,0.4-1.1,1 C11.8,12.6,15.5,12.4,15.5,14.9z">
                             </path>
@@ -205,13 +204,21 @@
                                 </div>
                             </div>
                             <div class="col-2">
-                                {{ format_currency_with_label($item->pivot->promotion_price) }}
+                                @if ($order->promotions->where('id', $item->pivot->promotion_id)->where('pivot.inventory_id', $item->id)->first()?->type === App\Enums\PromotionType::ACCOM_GIFT)
+                                    ------
+                                @else
+                                    {{ format_currency_with_label($item->pivot->promotion_price) }}
+                                @endif
                             </div>
                             <div class="col-2">
                                 {{ $item->pivot->quantity }}
                             </div>
                             <div class="col-2">
-                                {{ format_currency_with_label($item->pivot->total) }}
+                                @if ($order->promotions->where('id', $item->pivot->promotion_id)->where('pivot.inventory_id', $item->id)->first()?->type === App\Enums\PromotionType::ACCOM_GIFT)
+                                    <p class="text-primary font-weight-bold">Quà đi kèm</p>
+                                @else
+                                    {{ format_currency_with_label($item->pivot->total) }}
+                                @endif
                             </div>
                         @endforeach
                         <div class="row text-end order-turnover-info">

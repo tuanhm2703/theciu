@@ -32,6 +32,9 @@ class PromotionController extends Controller {
             ->addColumn('product_img_list', function ($promotion) {
                 return view('admin.pages.promotion.components.product_img_list', compact('promotion'));
             })
+            ->editColumn('min_order_value', function($promotion) {
+                return format_currency_with_label($promotion->min_order_value);
+            })
             ->addColumn('time', function ($promotion) {
                 return view('admin.pages.promotion.components.time', compact('promotion'));
             })

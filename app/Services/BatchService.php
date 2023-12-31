@@ -72,7 +72,7 @@ class BatchService {
             $sku = $c[0];
             $promotion_price = $c[1];
             $sale_percent = $c[2];
-            $inventory = Inventory::dontHavePromotion()->whereSku($sku)->first();
+            $inventory = Inventory::dontHavePromotion()->dontHaveCombo()->whereSku($sku)->first();
             if ($inventory) {
                 $promotion_price = $promotion_price ? $promotion_price : $inventory->price * (100 - $sale_percent) / 100;
                 $inventory->update([

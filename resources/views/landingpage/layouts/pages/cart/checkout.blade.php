@@ -1,4 +1,13 @@
 @extends('landingpage.layouts.app')
+@push('css')
+<style>
+    .table td {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+</style>
+@endpush
 @section('content')
     <main class="main">
         <div class="page-header text-center" style="background-image: url('/assets/images/page-header-bg.jpg')">
