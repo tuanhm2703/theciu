@@ -144,7 +144,7 @@
                                             No.
                                         </th>
                                         <th>{{ trans('labels.promotion_name') }}</th>
-                                        <th class="text-center">{{ trans('labels.product') }}</th>
+                                        {{-- <th class="text-center">{{ trans('labels.product') }}</th> --}}
                                         <th>Trạng thái</th>
                                         <th>{{ trans('labels.time') }}</th>
                                         <th>{{ trans('labels.action') }}</th>
@@ -165,7 +165,7 @@
                                             No.
                                         </th>
                                         <th>{{ trans('labels.promotion_name') }}</th>
-                                        <th class="text-center">{{ trans('labels.product') }}</th>
+                                        {{-- <th width="20%" class="text-center">{{ trans('labels.product') }}</th> --}}
                                         <th>Trạng thái</th>
                                         <th>{{ trans('labels.time') }}</th>
                                         <th>{{ trans('labels.action') }}</th>

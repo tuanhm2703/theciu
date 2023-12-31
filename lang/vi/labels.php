@@ -276,5 +276,8 @@ return [
     ],
     'blog_type' => 'Loại bài viết',
     'hot_job' => 'Công việc HOT',
-    'view_cv' => 'Xem hồ sơ'
+    'view_cv' => 'Xem hồ sơ',
+    'stock.update' => 'Cập nhật tồn kho',
+    'invoice.update' => 'Cập nhật hoá đơn',
+    'product.delete' => 'Xoá sản phẩm'
 ];

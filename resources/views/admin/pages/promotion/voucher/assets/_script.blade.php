@@ -66,9 +66,6 @@
                     data: "name"
                 },
                 {
-                    data: "product_img_list"
-                },
-                {
                     data: "promotiom_status_label",
                 },
                 {
@@ -104,9 +101,6 @@
 
                 {
                     data: "name"
-                },
-                {
-                    data: "product_img_list"
                 },
                 {
                     data: "promotiom_status_label",

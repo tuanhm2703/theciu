@@ -19,7 +19,7 @@ class SpinnerWheel extends Component {
     public $hideHeader = false;
     public function mount() {
         $this->background = asset('img/spinner-bg.png');
-        $this->active = now()->between('2023-08-25 00:00:00', '2023-12-24 23:59:59') || (env('APP_ENV') != 'prod');
+        $this->active = now()->between('2023-12-22 00:00:00', '2023-12-31 23:59:59') || (env('APP_ENV') != 'prod');
         // $this->active = false;
         // dd($this->active);
         $step_deg = 36;

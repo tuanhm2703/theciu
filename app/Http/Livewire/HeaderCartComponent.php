@@ -47,8 +47,12 @@ class HeaderCartComponent extends Component {
             } else {
                 $this->cart->inventories()->sync([$inventory->id => ['quantity' => $quantity ? $quantity : 1, 'customer_id' => $customer->id]], false);
             }
+            $this->cart = Cart::with(['inventories' => function ($q) {
+                return $q->with('image:path,imageable_id', 'product:id,slug,name');
+            }])->firstOrCreate([
+                'customer_id' => auth('customer')->user()->id
+            ]);
         }
-        // $this->emit('cart:refresh');
         $this->dispatchBrowserEvent('openToast', [
             'message' => 'Thêm vào giỏ hàng thành công',
             'type' => 'success'

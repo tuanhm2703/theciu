@@ -89,6 +89,17 @@
                             ) !!}
                         </div>
                     </div>
+                    <h6 class="text-center text-uppercase my-3">Danh sách webhook</h6>
+                    @foreach($webhooklist as $webhook)
+                         <div class="row mt-3">
+                        <div class="col-6">
+                            <label class="form-label">{{ trans('labels.'.$webhook['otherProperties']['type']) }}: </label>
+                        </div>
+                        <div class="col-6 text-center font-weight-bold">
+                            <span class="{{ $webhook['otherProperties']['isActive'] ? 'text-success' : 'text-error' }}">{{ $webhook['otherProperties']['isActive'] ? 'Kích hoạt' : 'Chưa kích hoạt' }}</span>
+                        </div>
+                    </div>
+                    @endforeach
                     <livewire:admin.sync-kiot-warehouse-component></livewire:admin.sync-kiot-warehouse-component>
                     <div class="text-center d-flex mt-3 justify-content-between">
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
