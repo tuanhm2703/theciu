@@ -54,7 +54,8 @@ class Product extends Model {
         'shipping_and_return',
         'code',
         'reorder_days',
-        'status'
+        'status',
+        'visible'
     ];
 
     public function getImageSizesAttribute() {

@@ -25,6 +25,9 @@ class CategoryController extends Controller {
     }
 
     public function store(StoreCategoryRequest $request) {
+        $request->merge([
+            'visible' => $request->visible == 'off' ? false : true
+        ]);
         $category = Category::create($request->all());
         if ($request->hasFile('image')) {
             $category->createImages([$request->file('image')]);
@@ -47,6 +50,9 @@ class CategoryController extends Controller {
     }
 
     public function update(Category $category, UpdateCategoryRequest $request) {
+        $request->merge([
+            'visible' => $request->visible == 'off' ? false : true
+        ]);
         $category->update($request->all());
         if ($request->hasFile('image')) {
             optional($category->image)->delete();

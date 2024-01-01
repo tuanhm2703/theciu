@@ -13,6 +13,12 @@
             {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào']) !!}
         </div>
     </div>
+    <div>
+        <label for="visible" class="form-control-label">Hiển thị</label>
+        <div class="form-check form-switch">
+            {!! Form::checkbox('visible', null, isset($category) ? $category->visible : true, ['class' => 'form-check-input']) !!}
+        </div>
+    </div>
     <div class="form-group">
         {!! Form::label('meta[keywords]', 'Meta-keywords', ['class' => 'form-label']) !!}
         {!! Form::text('meta[keywords]', null, ['class' => 'form-control']) !!}
@@ -39,9 +45,9 @@
             },
             success: (res) => {
                 toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
-                categoryTable.ajax.reload()
-                initTreeview()
-                $('.modal.show').modal('hide')
+                setTimeout(() => {
+                    window.location.reload()
+                }, 1000);
             },
             error: (err) => {
                 $('.submit-btn').loading(false)
