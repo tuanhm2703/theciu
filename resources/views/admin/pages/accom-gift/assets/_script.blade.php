@@ -166,6 +166,7 @@
                             })
                         }
                     }),
+                    type: `{{ App\Enums\PromotionType::ACCOM_GIFT }}`
                     from: $('input[name=from]').val(),
                     to: $('input[name=to]').val(),
                     min_order_value: $('input[name=min_order_value]').val(),
