@@ -403,7 +403,7 @@ class Order extends Model
                 'productCode' => $inventory->sku,
                 'quantity' => $inventory->pivot->quantity,
                 'price' => $inventory->pivot->origin_price,
-                'discountRatio' => 100 - ($inventory->pivot->promotion_price / $inventory->pivot->origin_price) * 100,
+                'discountRatio' => $inventory->pivot->origin_price === 0 ? 0 : 100 - ($inventory->pivot->promotion_price / $inventory->pivot->origin_price) * 100,
                 'discount' => $inventory->pivot->origin_price - $inventory->pivot->promotion_price,
             ]);
         }
