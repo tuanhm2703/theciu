@@ -37,6 +37,19 @@
     </div>
     <div class="row mt-3">
         <div class="col-md-2">
+            {!! Form::label('visible', 'Hiển thị:', ['class' => 'custom-control-label']) !!}
+        </div>
+        <div class="col-lg-2 col-sm-5">
+            {!! Form::select(
+                'visible',
+                ['1' => 'Hiện', '0' => 'Ẩn'],
+                [isset($product) ? $product->visible : 1],
+                ['class' => 'form-control select2', 'required'],
+            ) !!}
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-2">
             {!! Form::label('sku', 'SKU sản phẩm:', ['class' => 'custom-control-label']) !!}
         </div>
         <div class="col-md-2">

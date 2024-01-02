@@ -26,7 +26,7 @@
                         </div>
                         <div class="text-end mx-3 mt-3">
                             <a class="btn btn-primary btn-sm ms-auto ajax-modal-btn" href="javascript:;"
-                                data-callback="setNullParentId()" data-init-app="false" data-modal-size="modal-md"
+                                data-callback="setNullParentId()" data-modal-size="modal-lg"
                                 data-link="{{ route('admin.category.product.create') }}">
                                 <i class="fas fa-plus"></i>
                                 Tạo danh mục gốc

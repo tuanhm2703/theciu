@@ -149,16 +149,22 @@
                         <div class="row">
                             <div class="col-12 col-md-10" style="line-height: 2rem">
                                 <div class="font-weight-bold">{{ $inventory->pivot->name }}</div>
-                                <div class="confirm-label">x{{ $inventory->pivot->quantity }}</div>
+                                <div class="confirm-label">
+                                    {{ format_currency_with_label($inventory->pivot->total / $inventory->pivot->quantity) }}
+                                    x {{ $inventory->pivot->quantity }}</div>
                             </div>
                             <div class="col-12 col-md-2 text-right">
-                                @if ($inventory->pivot->promotion_price < $inventory->pivot->origin_price)
-                                    <span
-                                        class="old-price">{{ format_currency_with_label($inventory->pivot->origin_price) }}</span>
-                                    <span
-                                        class="new-price ml-1">{{ format_currency_with_label($inventory->pivot->promotion_price) }}</span>
+                                @if ($order->promotions->where('pivot.inventory_id', $inventory->id)->where('id', $inventory->pivot->promotion_id)->first()?->type === App\Enums\PromotionType::ACCOM_GIFT)
+                                    <p class="text-danger font-weight-bold">Quà đi kèm</p>
                                 @else
-                                    {{ format_currency_with_label($inventory->pivot->origin_price) }}
+                                    @if ($inventory->pivot->promotion_price < $inventory->pivot->origin_price)
+                                        <span
+                                            class="old-price">{{ format_currency_with_label($inventory->pivot->origin_price * $inventory->pivot->quantity) }}</span>
+                                        <span
+                                            class="new-price ml-1">{{ format_currency_with_label($inventory->pivot->promotion_price * $inventory->pivot->quantity) }}</span>
+                                    @else
+                                        {{ format_currency_with_label($inventory->pivot->origin_price * $inventory->pivot->quantity) }}
+                                    @endif
                                 @endif
                             </div>
                         </div>

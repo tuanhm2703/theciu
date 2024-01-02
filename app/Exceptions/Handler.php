@@ -46,13 +46,4 @@ class Handler extends ExceptionHandler {
         });
     }
 
-    public function render($request, Throwable $e) {
-        if($e instanceof NotFoundHttpException)
-        {
-            if(!$request->wantsJson()) {
-                return response()->view('errors.404');
-            }
-        }
-        return parent::render($request, $e);
-    }
 }

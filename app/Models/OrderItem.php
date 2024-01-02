@@ -11,4 +11,8 @@ class OrderItem extends Model
     protected $fillable = [
         'quantity'
     ];
+
+    public function promotion() {
+        return $this->belongsTo(Promotion::class);
+    }
 }

@@ -43,7 +43,6 @@
                                 }, 500);
                             },
                             close: function() {
-                                $('.popup-banner-item').hide();
                                 $("body").css("overflow-x", "hidden");
                                 $(".sticky-header.fixed").css("padding-right", "0");
                                 @this.preventReload();
