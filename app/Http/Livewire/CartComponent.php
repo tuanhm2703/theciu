@@ -362,7 +362,7 @@ class CartComponent extends Component {
         $accom_promotion = Promotion::where('type', PromotionType::ACCOM_GIFT)->with(['products' => function($q) {
             return $q->select('name', 'id', 'slug')->with('inventories', function($q) {
                 $q->where('promotion_status', 1)->where('stock_quantity', '>=', 'quantity_each_order');
-            })->available();
+            });
         }])->available()->where('min_order_value', '<=', $this->total)->orderBy('min_order_value', 'desc')->first();
         if($accom_promotion == null) {
             $this->accom_gift_promotion = $accom_promotion;
