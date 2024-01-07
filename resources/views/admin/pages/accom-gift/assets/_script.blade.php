@@ -159,7 +159,7 @@
                             inventories: product.inventories.map(function(inventory) {
                                 return {
                                     id: inventory.id,
-                                    promotion_price: inventory.promotion_price,
+                                    promotion_price: inventory.price,
                                     promotion_status: inventory.promotion_status,
                                     quantity_each_order: inventory.quantity_each_order
                                 }
