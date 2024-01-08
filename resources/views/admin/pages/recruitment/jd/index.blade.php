@@ -68,6 +68,7 @@
                 },
                 {
                     data: "time",
+                    name: 'created_at'
                 },
                 {
                     data: "resumes_count",
