@@ -193,6 +193,7 @@ class CartComponent extends Component {
             });
             session()->put('cart', serialize($this->cart));
         }
+        $this->updateOrderInfo();
     }
 
     public function refresh() {
