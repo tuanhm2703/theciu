@@ -371,6 +371,7 @@ class CartComponent extends Component {
             $this->accom_inventory_ids = [];
         } else if($accom_promotion->id != $this->accom_gift_promotion?->id) {
             $this->accom_gift_promotion = $accom_promotion;
+            $this->accom_inventory_ids = [];
             foreach($this->accom_gift_promotion->products as $product) {
                 $this->accom_inventory_ids[] = $product->inventory->id;
             }
