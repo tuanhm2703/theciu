@@ -93,6 +93,6 @@ class Blog extends Model {
         return $q->whereType(BlogType::CAREER);
     }
     public function creator() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'created_by');
     }
 }
