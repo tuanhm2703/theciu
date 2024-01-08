@@ -72,9 +72,12 @@
                 },
                 {
                     data: "resumes_count",
+                    searchable: false
                 },
                 {
                     data: "action",
+                    searchable: false,
+                    sortable: false
                 },
             ],
             order: [
