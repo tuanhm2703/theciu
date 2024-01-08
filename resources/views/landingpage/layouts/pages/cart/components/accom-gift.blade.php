@@ -16,7 +16,7 @@
     <td class="price-col" colspan="3">
         <select class="form-control border-0 p-0 mb-0 font-weight-bold" name="accom_inventory_id" id="" wire:model="accom_inventory_ids.{{ $index }}">
             @foreach ($product->inventories as $inventory)
-                <option @checked($inventory->id == $accom_inventory_ids[$index]) value="{{ $inventory->id }}">{{ $inventory->title }} (x {{ $inventory->quantity_each_order }})</option>
+                <option value="{{ $inventory->id }}">{{ $inventory->title }} (x {{ $inventory->quantity_each_order }})</option>
             @endforeach
         </select>
     </td>
