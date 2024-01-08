@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\BlogType;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\BlogResource;
 use App\Models\Blog;
 use App\Responses\Api\BaseResponse;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class BlogController extends Controller
 
     public function detail($slug) {
         $blog = Blog::whereSlug($slug)->with('image')->firstOrFail();
-        return BaseResponse::success($blog);
+        return BaseResponse::success(new BlogResource($blog));
     }
     public function relatedBlog($slug, Request $request) {
         $limit = $request->limit ?? 3;

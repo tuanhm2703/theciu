@@ -92,4 +92,7 @@ class Blog extends Model {
     public function scopeCareer($q) {
         return $q->whereType(BlogType::CAREER);
     }
+    public function creator() {
+        return $this->belongsTo(User::class);
+    }
 }
