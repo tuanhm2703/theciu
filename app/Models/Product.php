@@ -127,7 +127,11 @@ class Product extends Model {
     }
 
     public function promotions() {
-        return $this->belongsToMany(Promotion::class, 'promotion_product')->whereIn('promotions.type', [PromotionType::DISCOUNT, PromotionType::FLASH_SALE]);
+        return $this->belongsToMany(Promotion::class, 'promotion_product')->withPivot([
+            'promotion_id',
+            'product_id',
+            'featured'
+        ]);
     }
     public function combos() {
         return $this->belongsToMany(Combo::class, 'combo_product');

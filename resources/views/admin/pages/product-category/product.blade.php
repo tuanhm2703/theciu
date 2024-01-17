@@ -130,7 +130,9 @@
                         data: "name"
                     },
                     {
-                        data: "products_count"
+                        data: "products_count",
+                        searchable: false,
+                        sortable: false
                     },
                     {
                         data: "status"

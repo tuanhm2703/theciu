@@ -280,5 +280,6 @@ return [
     'stock.update' => 'Cập nhật tồn kho',
     'invoice.update' => 'Cập nhật hoá đơn',
     'product.delete' => 'Xoá sản phẩm',
-    'career' => 'Tuyển dụng'
+    'career' => 'Tuyển dụng',
+    'edit_promotion' => 'Cập nhật chương trình khuyến mãi'
 ];

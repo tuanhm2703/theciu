@@ -85,6 +85,7 @@
             }
         })
     }
+
     const initPromotionProductTable = () => {
         return $('.promotion-table').DataTable({
             serverSide: true,
@@ -158,10 +159,47 @@
             }
         })
     }
+    const initAccomProductTable = () => {
+        return $('.accom-product-table').DataTable({
+            serverSide: true,
+            processing: true,
+            destroy: true,
+            ajax: `{{ route('admin.ajax.promotion.paginate') }}?type={{ App\Enums\PromotionType::ACCOM_PRODUCT }}`,
+            columns: [{
+                    data: 'name',
+                    render: function(data, type, full, meta) {
+                        const info = accomProductTable.page.info()
+                        const rowNumber = meta.row + 1;
+                        return (info.page) * info.length + rowNumber
+
+                    }
+                },
+
+                {
+                    data: "name"
+                },
+                {
+                    data: "promotiom_status_label",
+                },
+                {
+                    data: "time",
+                },
+                {
+                    data: 'action'
+                }
+            ],
+            initComplete: function(settings, json) {
+                $('.magnifig-img').magnificPopup({
+                    type: "image",
+                });
+            }
+        })
+    }
 
     let promotionProductTable = initPromotionProductTable()
     let flashSaleTable = initFlashSaleTable()
     let accomGiftTable = initAccomGift()
+    let accomProductTable = initAccomProductTable()
     $('.voucher-table').on('change', '.voucher-status', (e) => {
         const status = $(e.target).is(':checked') ? 1 : 0
         const url = $(e.target).attr('data-submit-url')

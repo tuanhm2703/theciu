@@ -204,7 +204,10 @@
                                 </div>
                             </div>
                             <div class="col-2">
-                                @if ($order->promotions->where('id', $item->pivot->promotion_id)->where('pivot.inventory_id', $item->id)->first()?->type === App\Enums\PromotionType::ACCOM_GIFT)
+                                @php
+                                    $promotion = $order->promotions->where('pivot.inventory_id', $item->id)->where('id', $item->pivot->promotion_id)->first();
+                                @endphp
+                                @if (in_array($promotion?->type, [App\Enums\PromotionType::ACCOM_GIFT, App\Enums\PromotionType::ACCOM_PRODUCT]) && $item->pivot?->promotion_price == 0)
                                     ------
                                 @else
                                     {{ format_currency_with_label($item->pivot->promotion_price) }}
@@ -214,7 +217,7 @@
                                 {{ $item->pivot->quantity }}
                             </div>
                             <div class="col-2">
-                                @if ($order->promotions->where('id', $item->pivot->promotion_id)->where('pivot.inventory_id', $item->id)->first()?->type === App\Enums\PromotionType::ACCOM_GIFT)
+                                @if (in_array($promotion?->type, [App\Enums\PromotionType::ACCOM_GIFT, App\Enums\PromotionType::ACCOM_PRODUCT]) && $item->pivot?->promotion_price == 0)
                                     <p class="text-primary font-weight-bold">Quà đi kèm</p>
                                 @else
                                     {{ format_currency_with_label($item->pivot->total) }}
