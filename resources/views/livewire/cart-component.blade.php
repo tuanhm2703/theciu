@@ -30,6 +30,28 @@
                         @endcomponent
                     @endforeach
                 @endif
+                @if ($accom_product_promotions)
+                    @php
+                        $index = 0;
+                    @endphp
+                    @foreach ($accom_product_promotions as $promotion)
+                        <tr>
+                            <td></td>
+                            <td colspan="4" class="py-4">
+                                <h6 class="text-center text-primary mb-0 text-uppercase font-weight-bold">Quà tặng khi
+                                    mua {{ $promotion->products->where('pivot.featured', 1)->first()?->name }}</h6>
+                            </td>
+                        </tr>
+                        @foreach ($promotion->products->where('pivot.featured', 0) as $product)
+                            @component('landingpage.layouts.pages.cart.components.accom-product', compact('product', 'index'))
+                            @endcomponent
+                            @php
+                                $index += 1;
+                            @endphp
+                        @endforeach
+                    @endforeach
+                    {{ json_encode($this->accom_product_inventory_ids) }}
+                @endif
             </tbody>
         </table><!-- End .table table-wishlist -->
         <div class="mobile-cart-table">
@@ -38,11 +60,28 @@
                 @endcomponent
             @endforeach
             @if ($accom_gift_promotion)
-            <h6 class="text-center text-primary mb-3 mt-5 py-3 border-bottom text-uppercase font-weight-bold">Quà tặng đi
-                kèm đơn hàng > {{ format_currency_with_label($accom_gift_promotion->min_order_value) }}</h6>
+                <h6 class="text-center text-primary mb-3 mt-5 py-3 border-bottom text-uppercase font-weight-bold">Quà
+                    tặng đi
+                    kèm đơn hàng > {{ format_currency_with_label($accom_gift_promotion->min_order_value) }}</h6>
                 @foreach ($accom_gift_promotion->products as $index => $product)
                     @component('landingpage.layouts.pages.cart.components.accom-gift-mobile', compact('product', 'index'))
                     @endcomponent
+                @endforeach
+            @endif
+            @if ($accom_product_promotions)
+                @php
+                    $index = 0;
+                @endphp
+                @foreach ($accom_product_promotions as $promotion)
+                    <h6 class="text-center text-primary mb-0 mt-3 text-uppercase font-weight-bold">Quà tặng khi mua
+                        {{ $promotion->products->where('pivot.featured', 1)->first()?->name }}</h6>
+                    @foreach ($promotion->products->where('pivot.featured', 0) as $product)
+                        @component('landingpage.layouts.pages.cart.components.accom-product-mobile', compact('product', 'index'))
+                        @endcomponent
+                        @php
+                            $index += 1;
+                        @endphp
+                    @endforeach
                 @endforeach
             @endif
 
@@ -278,7 +317,9 @@
                         @endforeach
                         @foreach ($accom_inventories as $index => $inventory)
                             @if ($index == 0)
-                                <h6 class="text-center text-primary mb-0 pt-2 text-uppercase font-weight-bold border-top">Quà tặng đi
+                                <h6
+                                    class="text-center text-primary mb-0 pt-2 text-uppercase font-weight-bold border-top">
+                                    Quà tặng đi
                                     kèm đơn
                                     hàng > {{ format_currency_with_label($accom_gift_promotion->min_order_value) }}
                                 </h6>
@@ -299,6 +340,34 @@
                                     <span class="text-danger font-weight-bold">Quà đi kèm</span>
                                 </div>
                             </div>
+                        @endforeach
+                        @foreach ($this->accom_product_promotions as $promotion)
+                            <h6 class="text-center text-primary mb-0 pt-2 text-uppercase font-weight-bold border-top">
+                                Quà tặng khi mua
+                                {{ $promotion->products->where('pivot.featured', 1)->first()?->name }}
+                            </h6>
+                            @foreach ($promotion->products->where('pivot.featured', 0) as $index => $product)
+                                @php
+                                    $inventory = $product->inventories->whereIn('id', $accom_product_inventory_ids)->first();
+                                @endphp
+                                <div
+                                    class="row mb-2 pt-2">
+                                    <div class="col-2">
+                                        <img class="rounded" width="100%"
+                                            src="{{ $inventory->image?->path_with_domain }}" alt="">
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="d-flex flex-column">
+                                            <span>{{ $inventory?->name }}</span>
+                                            <span class="confirm-label">{{ trans('labels.quantity') }}:
+                                                {{ $inventory?->quantity_each_order }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 text-right">
+                                        <span class="text-danger font-weight-bold">Quà đi kèm</span>
+                                    </div>
+                                </div>
+                            @endforeach
                         @endforeach
                     </div>
                     <div class="border-top py-3">

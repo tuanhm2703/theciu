@@ -15,7 +15,7 @@
                 </h3><!-- End .product-title -->
                 <div class="form-group mb-1">
                     <label class="mb-0" for="inventory_id">Thuộc tính</label>
-                    <select name="inventory_id" class="p-0 mb-0 w-75 form-control" id="">
+                    <select name="inventory_id" class="p-0 mb-0 w-75 form-control" id="" wire:model="accom_product_inventory_ids.{{ $index }}">
                         @foreach ($product->inventories as $inventory)
                             <option value="{{ $inventory->id }}">{{ $inventory->title }} (x {{ $inventory->quantity_each_order }})</option>
                         @endforeach

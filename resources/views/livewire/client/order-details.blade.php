@@ -154,7 +154,10 @@
                                     x {{ $inventory->pivot->quantity }}</div>
                             </div>
                             <div class="col-12 col-md-2 text-right">
-                                @if ($order->promotions->where('pivot.inventory_id', $inventory->id)->where('id', $inventory->pivot->promotion_id)->first()?->type === App\Enums\PromotionType::ACCOM_GIFT)
+                                @php
+                                    $promotion = $order->promotions->where('pivot.inventory_id', $inventory->id)->where('id', $inventory->pivot->promotion_id)->first();
+                                @endphp
+                                @if (in_array($promotion?->type, [App\Enums\PromotionType::ACCOM_GIFT, App\Enums\PromotionType::ACCOM_PRODUCT]) && $inventory->pivot?->promotion_price == 0)
                                     <p class="text-danger font-weight-bold">Quà đi kèm</p>
                                 @else
                                     @if ($inventory->pivot->promotion_price < $inventory->pivot->origin_price)

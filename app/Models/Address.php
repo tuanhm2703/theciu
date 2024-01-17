@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Address extends Model {
     use HasFactory, SoftDeletes;
     protected $fillable = [
-        'id',
         'addressable_type',
         'addressable_id',
         'type',

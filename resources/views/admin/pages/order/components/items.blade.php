@@ -10,7 +10,10 @@
                     <p data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $inventory->pivot->name }}"
                         class="cut-text text-bold">{{ $inventory->pivot->name }}</p>
                     <span>{{ $inventory->pivot->title }}</span>
-                    @if ($order->promotions->where('id', $inventory->pivot->promotion_id)->where('pivot.inventory_id', $inventory->id)->first()?->type === App\Enums\PromotionType::ACCOM_GIFT)
+                    @php
+                        $promotion = $order->promotions->where('id', $inventory->pivot->promotion_id)->where('pivot.inventory_id', $inventory->id)->first();
+                    @endphp
+                    @if (in_array($promotion?->type, [App\Enums\PromotionType::ACCOM_GIFT, App\Enums\PromotionType::ACCOM_PRODUCT]) && $inventory->pivot?->promotion_price == 0)
                         <p class="text-primary mt-3"><i>Quà đi kèm</i></p>
                     @endif
                 </div>
