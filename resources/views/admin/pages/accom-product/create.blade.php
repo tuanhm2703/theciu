@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['class' => 'g-sidenav-show', 'headTitle' => trans('labels.create_combo')])
+@extends('admin.layouts.app', ['class' => 'g-sidenav-show', 'headTitle' => 'Tạo chương trình tặng sản phẩm khi mua 1 sản phẩm'])
 @push('style')
 @endpush
 @section('content')
