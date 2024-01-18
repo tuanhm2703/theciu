@@ -1,4 +1,4 @@
-@extends('admin.layouts.app', ['class' => 'g-sidenav-show', 'headTitle' => trans('labels.edit_promotion')])
+@extends('admin.layouts.app', ['class' => 'g-sidenav-show', 'headTitle' => 'Cập nhật chương trình tặng sản phẩm khi mua 1 sản phẩm'])
 @push('style')
 @endpush
 @section('content')
