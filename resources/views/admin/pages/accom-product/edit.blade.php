@@ -2,7 +2,7 @@
 @push('style')
 @endpush
 @section('content')
-    @include('admin.layouts.navbars.auth.topnav', ['title' => trans('labels.edit_promotion')])
+    @include('admin.layouts.navbars.auth.topnav', ['title' => 'Cập nhật chương trình tặng sản phẩm khi mua 1 sản phẩm'])
     <div class="container-fluid">
         {!! Form::model($promotion, [
             'url' => route('admin.promotion.update', $promotion->id),

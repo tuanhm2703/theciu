@@ -143,10 +143,13 @@
             $('input[name="main-product"]').prop('checked', false)
             $(element).prop('checked', true)
             main_product_id = productId
+            $(`input[name="batchUpdateProductIds[]"]`).show()
+            $(`input[name="batchUpdateProductIds[]"][value=${main_product_id}]`).hide()
             $(`.quantity-each-order`).attr('disabled', false)
             $('.promotion-status-check').css('display', 'block')
             $(`.quantity-each-order[data-product-id=${productId}]`).attr('disabled', true)
             $(`.promotion-status-check[data-product-id=${productId}]`).css('display', 'none')
+            $('#numberOfCheckedProducts').text($(`[name="batchUpdateProductIds[]"]:checked:not([value=${main_product_id}])`).length)
         }
     }
     const updateInventoryQuantityEachOrder = (element) => {
@@ -205,7 +208,8 @@
                     from: $('input[name=from]').val(),
                     to: $('input[name=to]').val(),
                     name: $('input[name=name]').val(),
-                    main_product_id: main_product_id
+                    main_product_id: main_product_id,
+                    num_of_products: $('input[name=num_of_products]').val()
                 },
                 success: (res) => {
                     toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
@@ -229,27 +233,25 @@
                 main_product_id = null;
                 $('input[name="main-product"]').prop('checked', false);
             }
+            $('#numberOfCheckedProducts').text($(`[name="batchUpdateProductIds[]"]:checked:not([value=${main_product_id}])`).length)
         })
         $('#checkAllProduct').on('click', function(e) {
             $('[name="batchUpdateProductIds[]"]').prop('checked', $(this).is(':checked'))
-            $('#numberOfCheckedProducts').text($('[name="batchUpdateProductIds[]"]:checked').length)
+            $('#numberOfCheckedProducts').text($(`[name="batchUpdateProductIds[]"]:checked:not([value=${main_product_id}])`).length)
+
         })
         $('body').on('click', '[name="batchUpdateProductIds[]"]', function(e) {
-            $('#numberOfCheckedProducts').text($('[name="batchUpdateProductIds[]"]:checked').length)
+            $('#numberOfCheckedProducts').text($(`[name="batchUpdateProductIds[]"]:checked:not([value=${main_product_id}])`).length)
         })
         $('.common-info-update-btn').on('click', (e) => {
             e.preventDefault()
             $('[name="batchUpdateProductIds[]"]:checked').each(function(index, e) {
                 const productId = $(e).val();
-                let inputElement;
-                if ($('[name=discountType]').val() === 'percent') {
-                    inputElement = `.promotion-percent-input[data-product-id="${productId}"]`;
-                } else {
-                    inputElement = `.promotion-price-input[data-product-id="${productId}"]`;
-                }
+                let inputElement = `.quantity-each-order:not([data-product-id=${main_product_id}])`;
                 $(inputElement).each(function() {
-                    $(this).val($('input[name=general-discount-percent]').val())
-                    fillPromotionPrice(this, $('[name=discountType]').val())
+                    $(this).val($('input[name=general-quantity-each-order]').val())
+                    console.log('hello');
+                    updateInventoryQuantityEachOrder(this)
                 })
             })
         })

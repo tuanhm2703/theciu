@@ -69,6 +69,7 @@ class CartComponent extends Component {
     public $accom_product_promotions;
     public $accom_product_inventory_ids;
     public $accom_product_inventories;
+    public $accom_product_selected = [];
     protected $rules = [
         'service_id' => 'required',
         'payment_method_id' => 'required',
@@ -230,7 +231,7 @@ class CartComponent extends Component {
             'note' => $this->note,
             'customer' => $this->customer,
             'accom_inventories' => $this->accom_inventories,
-            'accom_product_inventories' => $this->accom_product_inventories
+            'accom_product_inventories' => $this->accom_product_inventories->whereIn('product_id', $this->accom_product_selected)
         ]);
         $result = CheckoutService::checkout($checkoutModel);
         if ($result['error']) {
@@ -390,7 +391,7 @@ class CartComponent extends Component {
                 $q->where('promotion_status', 1)->where('stock_quantity', '>=', 'quantity_each_order');
             });
         })->whereHas('products', function ($q) {
-            $q->whereHas('inventories', function ($q) {
+            $q->where('promotion_product.featured', 1)->whereHas('inventories', function ($q) {
                 $q->whereIn('inventories.id', $this->item_selected);
             });
         })->available()->get();
@@ -408,6 +409,7 @@ class CartComponent extends Component {
         if ($this->accom_product_promotions) {
             $this->accom_product_inventory_ids = [];
             $this->accom_product_inventories = new Collection();
+            $this->accom_product_selected = [];
             foreach ($this->accom_product_promotions as $promotion) {
                 foreach ($promotion->products->where('pivot.featured', 0) as $product) {
                     $this->accom_product_inventory_ids[] = $product->inventories->first()?->id;
@@ -417,6 +419,7 @@ class CartComponent extends Component {
         } else {
             $this->accom_product_inventory_ids = [];
             $this->accom_product_inventories = new Collection();
+            $this->accom_product_selected = [];
         }
     }
     public function updated($name, $value) {
