@@ -22,7 +22,8 @@ class Promotion extends Model {
         'type',
         'slug',
         'updated_at',
-        'min_order_value'
+        'min_order_value',
+        'num_of_products'
     ];
 
     protected $casts = [

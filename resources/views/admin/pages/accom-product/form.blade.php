@@ -51,6 +51,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        {!! Form::label('num_of_products', 'Số lượng sản phẩm được tặng:', ['class' => 'lh-base     custom-control-label m-0']) !!}
+                    </div>
+                    <div class="col-md-8">
+                        {!! Form::number('num_of_products', isset($promotion) ?  $promotion->num_of_products : null, ['class' => 'form-control', 'placeholder' => 'Số lượng sản phẩm được tặng', 'required', 'data-v-min' => 1]) !!}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -62,8 +70,27 @@
             data-link="{{ route('admin.combo.modal.product') }}">Thêm sản phẩm</a>
     </div>
     <div class="card-body pt-0">
+        <div class="promotion-setting-header row">
+            <div class="col-3">
+                <h6>Thiết lập hàng loạt</h6>
+                <div><strong id="numberOfCheckedProducts">0</strong> Sản phẩm đã chọn</div>
+            </div>
+            <div class="col-2">
+                <label for="">Số lương sản phẩm tặng mỗi đơn hàng</label>
+                <div class="input-group height-fit-content">
+                    <input min="1" max="100" type="number" class="form-control"
+                        name="general-quantity-each-order" onfocus="focused(this)" onfocusout="defocused(this)">
+                </div>
+            </div>
+            <div class="offset-4 col-2 d-flex justify-content-center align-items-center">
+                <button class="btn btn-default common-info-update-btn">Cập nhật hàng loạt</button>
+            </div>
+            <div class="col-1 d-flex justify-content-center align-items-center">
+                <button type="button" id="batch-delete-btn" class="btn btn-default">Xoá</button>
+            </div>
+        </div>
         <div class="promotion-setting-header row mt-3">
-                @include('admin.pages.accom-product.components.promotion-table-header')
+            @include('admin.pages.accom-product.components.promotion-table-header')
         </div>
         <div class="promotion-setting-wrapper">
         </div>

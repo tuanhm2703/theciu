@@ -2,7 +2,7 @@
 @push('style')
 @endpush
 @section('content')
-    @include('admin.layouts.navbars.auth.topnav', ['title' => trans('labels.create_combo')])
+    @include('admin.layouts.navbars.auth.topnav', ['title' => 'Tạo chương trình tặng sản phẩm khi mua 1 sản phẩm'])
     <div class="container-fluid">
         {!! Form::open([
             'url' => route('admin.promotion.store'),

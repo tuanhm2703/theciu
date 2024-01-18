@@ -140,7 +140,8 @@ class PromotionController extends Controller {
                 'from' => $request->from,
                 'to' => $request->to,
                 'min_order_value' => $request->min_order_value,
-                'status' => StatusType::ACTIVE
+                'status' => StatusType::ACTIVE,
+                'num_of_products' => $request->num_of_products
             ]);
             $product_ids = [];
             Inventory::where('promotion_from', $old_from)->where('promotion_to', $old_to)->update([
@@ -184,7 +185,8 @@ class PromotionController extends Controller {
         $old_to = $request->old_to;
         $input = [
             'from' => $from,
-            'to' => $to
+            'to' => $to,
+            'num_of_products' => $request->num_of_products
         ];
         if ($request->min_order_value) $input['min_order_value'] = $request->min_order_value;
         DB::beginTransaction();
@@ -213,6 +215,7 @@ class PromotionController extends Controller {
                     ]
                 ], false);
             }
+            // dd($input);
             $promotion->update($input);
             DB::commit();
         } catch (\Throwable $th) {

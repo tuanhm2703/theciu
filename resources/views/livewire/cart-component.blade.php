@@ -38,19 +38,19 @@
                         <tr>
                             <td></td>
                             <td colspan="4" class="py-4">
-                                <h6 class="text-center text-primary mb-0 text-uppercase font-weight-bold">Quà tặng khi
+                                <h6 class="lh-base text-center text-primary mb-0 text-uppercase font-weight-bold">Quà tặng khi
                                     mua {{ $promotion->products->where('pivot.featured', 1)->first()?->name }}</h6>
+                                <p class="text-center">Bạn có thể chọn <strong>{{ $promotion->num_of_products }}</strong> sản phẩm</p>
                             </td>
                         </tr>
                         @foreach ($promotion->products->where('pivot.featured', 0) as $product)
-                            @component('landingpage.layouts.pages.cart.components.accom-product', compact('product', 'index'))
+                            @component('landingpage.layouts.pages.cart.components.accom-product', compact('product', 'index', 'accom_product_selected', 'promotion'))
                             @endcomponent
                             @php
                                 $index += 1;
                             @endphp
                         @endforeach
                     @endforeach
-                    {{ json_encode($this->accom_product_inventory_ids) }}
                 @endif
             </tbody>
         </table><!-- End .table table-wishlist -->
@@ -75,8 +75,10 @@
                 @foreach ($accom_product_promotions as $promotion)
                     <h6 class="text-center text-primary mb-0 mt-3 text-uppercase font-weight-bold">Quà tặng khi mua
                         {{ $promotion->products->where('pivot.featured', 1)->first()?->name }}</h6>
+                    <p class="text-center">Bạn có thể chọn <strong>{{ $promotion->num_of_products }}</strong> sản phẩm</p>
+
                     @foreach ($promotion->products->where('pivot.featured', 0) as $product)
-                        @component('landingpage.layouts.pages.cart.components.accom-product-mobile', compact('product', 'index'))
+                        @component('landingpage.layouts.pages.cart.components.accom-product-mobile', compact('product', 'index', 'accom_product_selected', 'promotion'))
                         @endcomponent
                         @php
                             $index += 1;
@@ -346,7 +348,7 @@
                                 Quà tặng khi mua
                                 {{ $promotion->products->where('pivot.featured', 1)->first()?->name }}
                             </h6>
-                            @foreach ($promotion->products->where('pivot.featured', 0) as $index => $product)
+                            @foreach ($promotion->products->whereIn('id', $accom_product_selected)->where('pivot.featured', 0) as $index => $product)
                                 @php
                                     $inventory = $product->inventories->whereIn('id', $accom_product_inventory_ids)->first();
                                 @endphp

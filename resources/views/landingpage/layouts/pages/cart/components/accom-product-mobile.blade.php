@@ -1,5 +1,9 @@
 <div class="row mt-2">
     <div class="col-2 col-md-1">
+        <input wire:change="updateOrderInfo" type="checkbox"
+        @disabled(count($accom_product_selected) >= $promotion->num_of_products && !in_array($product->id, $accom_product_selected))
+        class="form-control custom-checkbox m-auto check-cart-item p-1" value="{{ $product->id }}"
+        wire:model="accom_product_selected">
     </div>
     <div class="col-9 col-md-10">
         <div class="product-col">
