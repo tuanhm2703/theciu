@@ -10,6 +10,7 @@ use App\Models\Rank;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use VienThuong\KiotVietClient\Client;
+use VienThuong\KiotVietClient\Exception\KiotVietException;
 use VienThuong\KiotVietClient\Model\Customer as ModelCustomer;
 use VienThuong\KiotVietClient\Model\Invoice;
 use VienThuong\KiotVietClient\Model\Order as ModelOrder;
@@ -120,7 +121,12 @@ class KiotService
                 'address' => $localOrder->shipping_address->full_address
             ]);
             if (!$localOrder->kiot_order) {
-                $order = static::createKiotOrder($localOrder);
+                try {
+                    $order = static::createKiotOrder($localOrder);
+                } catch (\Throwable $th) {
+                    Log::channel('kiot')->error($th);
+                    $order = false;
+                }
             } else {
                 $order = static::getOrderById($localOrder->kiot_order->kiot_order_id);
             }
@@ -208,9 +214,8 @@ class KiotService
                 'data' => $kiotOrder->getModelData()
             ]);
             return $kiotOrder;
-        } catch (\Throwable $th) {
-            Log::channel('kiot')->error($th);
-            return false;
+        } catch (KiotVietException $th) {
+            throw $th;
         }
     }
 }

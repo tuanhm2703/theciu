@@ -49,7 +49,7 @@ class CheckoutService {
                 'featured' => 1
             ]);
             if ($checkoutModel->getInventories()->count() <= 0) {
-                throw new Exception('Đã có lỗi xảy ra, vui lòng thử lại', 409);
+                throw new Exception('Vui lòng chọn ít nhất 1 sản phẩm', 409);
             }
             foreach ($checkoutModel->getInventories() as $inventory) {
                 $order->inventories()->attach([
