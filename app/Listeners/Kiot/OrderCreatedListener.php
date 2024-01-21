@@ -7,6 +7,8 @@ use App\Services\KiotService;
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Throwable;
+use VienThuong\KiotVietClient\Exception\KiotVietException;
 
 class OrderCreatedListener
 {
@@ -29,8 +31,11 @@ class OrderCreatedListener
     public function handle(OrderCreatedEvent $event)
     {
         $order = $event->order;
-        $result = KiotService::createKiotOrder($order);
-        if($result == false) {
+        try {
+            $result = KiotService::createKiotOrder($order);
+        } catch (KiotVietException $th) {
+            throw new Exception($th->getMessage(), 422);
+        } catch (Throwable $th) {
             throw new Exception('Đã có lỗi xảy ra, vui lòng liên hệ bộ phận chăm sóc khách hàng để nhận hỗ trợ.', 422);
         }
     }
