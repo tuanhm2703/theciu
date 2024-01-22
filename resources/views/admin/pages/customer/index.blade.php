@@ -73,6 +73,7 @@
                 },
                 {
                     data: "total_revenue",
+                    searchable: false
                 },
             ],
             order: [
