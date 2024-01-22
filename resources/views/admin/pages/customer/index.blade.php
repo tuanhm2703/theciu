@@ -70,7 +70,6 @@
                 {
                     data: "orders_count",
                     searchable: false,
-                    sortable: false
                 },
                 {
                     data: "total_revenue",
