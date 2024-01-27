@@ -67,7 +67,7 @@ class CartComponent extends Component {
     public $accom_inventory_ids = [];
     public $accom_inventories;
     public $accom_product_promotions;
-    public $accom_product_inventory_ids;
+    public $accom_product_inventory_ids = [];
     public $accom_product_inventories;
     public $accom_product_selected = [];
     protected $rules = [
