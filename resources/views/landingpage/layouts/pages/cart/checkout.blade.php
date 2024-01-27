@@ -27,7 +27,8 @@
         <div class="page-content">
             <div class="cart">
                 <div class="container">
-                    <livewire:cart-component></livewire:cart-component>
+                    <livewire:cart-component />
+                    <livewire:client.lucky-shake wire:key="lucky-shake" />
                     @include('landingpage.layouts.pages.profile.address.update')
                 </div><!-- End .container -->
             </div><!-- End .cart -->

@@ -31,6 +31,7 @@ class CartComponent extends Component {
         'cart:changeAddress' => 'changeAddress',
         'cart:itemAdded' => 'updateOrderInfo',
         'cart:reloadVoucher' => 'reloadVoucher',
+        'checkOrder'
     ];
     protected $queryString = ['item_selected', 'shipping_service_id', 'payment_method_id'];
     public $address;
@@ -66,6 +67,8 @@ class CartComponent extends Component {
     public $accom_gift_promotion = null;
     public $accom_inventory_ids = [];
     public $accom_inventories;
+    public $additional_discount = 0;
+
     protected $rules = [
         'service_id' => 'required',
         'payment_method_id' => 'required',
@@ -203,7 +206,15 @@ class CartComponent extends Component {
         $this->accom_inventories = Inventory::whereIn('id', $this->accom_inventory_ids)->get();
         $this->getCart();
         $this->validate();
-        $this->emit('open-confirm-order');
+        if($this->additional_discount == 0 && session()->has('lucky_discount_amount')) {
+            $this->updateOrderInfo();
+        }
+        $this->dispatchBrowserEvent('open-confirm-order', [
+            'show_lucky_shake' => !session()->has('lucky-shake-show') && $this->total >= 500000
+        ]);
+        // $this->emit('open-confirm-order', [
+        //     'show_lucky_shake' => true
+        // ]);
     }
     public function checkout() {
         $this->getCart();
@@ -221,13 +232,16 @@ class CartComponent extends Component {
             'freeship_voucher_id' => $this->freeship_voucher_id,
             'note' => $this->note,
             'customer' => $this->customer,
-            'accom_inventories' => $this->accom_inventories
+            'accom_inventories' => $this->accom_inventories,
+            'additional_discount' => $this->additional_discount
         ]);
         $result = CheckoutService::checkout($checkoutModel);
         if($result['error']) {
             $this->error = $result['message'];
             $this->dispatchBrowserEvent('closeModal');
         } else {
+            session()->forget('lucky-shake-show');
+            session()->forget('lucky_discount_amount');
             return redirect()->to($result['redirectUrl']);
         }
     }
@@ -375,6 +389,12 @@ class CartComponent extends Component {
             foreach($this->accom_gift_promotion->products as $product) {
                 $this->accom_inventory_ids[] = $product->inventory->id;
             }
+        }
+        if($this->total >= 500000 && session()->has('lucky_discount_amount')) {
+            $this->additional_discount = session()->get('lucky_discount_amount');
+            $this->total -= $this->additional_discount;
+        } else {
+            $this->additional_discount = 0;
         }
     }
 

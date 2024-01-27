@@ -23,6 +23,7 @@ class CheckoutModel {
     private $note;
     private Customer $customer;
     private $accom_inventories;
+    private $additional_discount;
 
     public function __construct($properties) {
         $this->mapProperties($properties);
@@ -275,6 +276,13 @@ class CheckoutModel {
     }
     public function setAccomInventories(Collection $accom_inventories) {
         $this->accom_inventories = $accom_inventories;
+        return $this;
+    }
+    public function getAdditionalDiscount() {
+        return $this->additional_discount;
+    }
+    public function setAdditionalDiscount($additional_discount) {
+        $this->additional_discount = $additional_discount;
         return $this;
     }
 }

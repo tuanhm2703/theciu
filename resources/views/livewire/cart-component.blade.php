@@ -38,8 +38,9 @@
                 @endcomponent
             @endforeach
             @if ($accom_gift_promotion)
-            <h6 class="text-center text-primary mb-3 mt-5 py-3 border-bottom text-uppercase font-weight-bold">Quà tặng đi
-                kèm đơn hàng > {{ format_currency_with_label($accom_gift_promotion->min_order_value) }}</h6>
+                <h6 class="text-center text-primary mb-3 mt-5 py-3 border-bottom text-uppercase font-weight-bold">Quà
+                    tặng đi
+                    kèm đơn hàng > {{ format_currency_with_label($accom_gift_promotion->min_order_value) }}</h6>
                 @foreach ($accom_gift_promotion->products as $index => $product)
                     @component('landingpage.layouts.pages.cart.components.accom-gift-mobile', compact('product', 'index'))
                     @endcomponent
@@ -174,6 +175,12 @@
                             <td><span>- {{ format_currency_with_label($combo_discount) }}</span></td>
                         </tr>
                     @endif
+                    @if ($additional_discount > 0)
+                    <tr class="order-payment-info">
+                        <td><span>Giảm giá chương trình</span></td>
+                        <td><span>- {{ format_currency_with_label($additional_discount) }}</span></td>
+                    </tr>
+                @endif
                     <tr class="summary-total">
                         <td>{{ trans('labels.total') }}:</td>
                         <td>{{ format_currency_with_label($total) }}
@@ -278,7 +285,9 @@
                         @endforeach
                         @foreach ($accom_inventories as $index => $inventory)
                             @if ($index == 0)
-                                <h6 class="text-center text-primary mb-0 pt-2 text-uppercase font-weight-bold border-top">Quà tặng đi
+                                <h6
+                                    class="text-center text-primary mb-0 pt-2 text-uppercase font-weight-bold border-top">
+                                    Quà tặng đi
                                     kèm đơn
                                     hàng > {{ format_currency_with_label($accom_gift_promotion->min_order_value) }}
                                 </h6>
@@ -327,6 +336,20 @@
                                     <div class="col-5 text-right">
                                         <span class="confirm-info">
                                             - {{ format_currency_with_label($rank_discount_amount) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($additional_discount > 0)
+                                <div class="row mb-1">
+                                    <div class="col-7">
+                                        <span class="confirm-label">
+                                            Giảm giá chương trình
+                                        </span>
+                                    </div>
+                                    <div class="col-5 text-right">
+                                        <span class="confirm-info">
+                                            - {{ format_currency_with_label($additional_discount) }}
                                         </span>
                                     </div>
                                 </div>
@@ -404,14 +427,71 @@
             </div>
         </div>
     </div>
-
 </div>
 @push('js')
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            @this.on('open-confirm-order', (e) => {
+        window.addEventListener('open-confirm-order', (e) => {
+            console.log(e.detail.show_lucky_shake);
+            if (e.detail.show_lucky_shake) {
+                $.magnificPopup.open({
+                    items: {
+                        src: "#lucky-shake",
+                    },
+                    type: "inline",
+                    removalDelay: 350,
+                    callbacks: {
+                        open: function() {
+                            $("body").css("overflow-x", "visible");
+                            $(".sticky-header.fixed").css(
+                                "padding-right",
+                                "1.7rem"
+                            );
+                            setTimeout(() => {
+                                $('.voucher-popup').removeClass('d-none')
+                            }, 500);
+                        },
+                        close: function() {
+                            $("body").css("overflow-x", "hidden");
+                            $(".sticky-header.fixed").css("padding-right", "0");
+                        },
+                    },
+                });
+            } else {
+                $.magnificPopup.close()
                 $('#confirmOrderModal').modal('show')
-            })
+            }
+        });
+        document.addEventListener("DOMContentLoaded", () => {
+            // @this.on('open-confirm-order', (e) => {
+            //     console.log(e);
+            //     if (e.show_lucky_shake) {
+            //         $.magnificPopup.open({
+            //             items: {
+            //                 src: "#lucky-shake",
+            //             },
+            //             type: "inline",
+            //             removalDelay: 350,
+            //             callbacks: {
+            //                 open: function() {
+            //                     $("body").css("overflow-x", "visible");
+            //                     $(".sticky-header.fixed").css(
+            //                         "padding-right",
+            //                         "1.7rem"
+            //                     );
+            //                     setTimeout(() => {
+            //                         $('.voucher-popup').removeClass('d-none')
+            //                     }, 500);
+            //                 },
+            //                 close: function() {
+            //                     $("body").css("overflow-x", "hidden");
+            //                     $(".sticky-header.fixed").css("padding-right", "0");
+            //                 },
+            //             },
+            //         });
+            //     } else {
+            //         $('#confirmOrderModal').modal('show')
+            //     }
+            // })
             quantityInputs()
             Livewire.hook('message.processed', (message, component) => {
                 if (component.fingerprint.name == 'cart-component') {
