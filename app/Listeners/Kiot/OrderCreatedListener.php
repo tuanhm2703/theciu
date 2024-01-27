@@ -34,7 +34,7 @@ class OrderCreatedListener
         try {
             $result = KiotService::createKiotOrder($order);
         } catch (KiotVietException $th) {
-            throw new Exception($th->getMessage(), 422);
+            throw new Exception($th->getMessage(), 409);
         } catch (Throwable $th) {
             throw new Exception('Đã có lỗi xảy ra, vui lòng liên hệ bộ phận chăm sóc khách hàng để nhận hỗ trợ.', 422);
         }

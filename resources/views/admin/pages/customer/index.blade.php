@@ -69,9 +69,11 @@
                 },
                 {
                     data: "orders_count",
+                    searchable: false,
                 },
                 {
                     data: "total_revenue",
+                    searchable: false
                 },
             ],
             order: [

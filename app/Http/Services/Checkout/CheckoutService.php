@@ -35,7 +35,8 @@ class CheckoutService {
                 'order_status' => $payment_method->type == PaymentMethodType::COD ? OrderStatus::WAITING_TO_PICK : OrderStatus::WAIT_TO_ACCEPT,
                 'sub_status' => $payment_method->type == PaymentMethodType::COD ? OrderSubStatus::PREPARING : null,
                 'payment_method_id' => $checkoutModel->getPaymentMethodId(),
-                'note' => $checkoutModel->getNote()
+                'note' => $checkoutModel->getNote(),
+                'additional_discount' => $checkoutModel->getAdditionalDiscount()
             ]);
             $order->addresses()->create([
                 'type' => AddressType::SHIPPING,
@@ -142,7 +143,7 @@ class CheckoutService {
             $order->vouchers()->attach($attach_vouchers);
             $subtotal = $order->inventories()->sum('order_items.total');
             $order->update([
-                'total' => $order_total + $order->shipping_fee - $rank_discount - $combo_discount,
+                'total' => $order_total + $order->shipping_fee - $rank_discount - $combo_discount - $checkoutModel->getAdditionalDiscount(),
                 'subtotal' => $subtotal,
                 'origin_subtotal' => $order->inventories()->sum(DB::raw('order_items.origin_price * order_items.quantity')),
                 'rank_discount_value' => $rank_discount,

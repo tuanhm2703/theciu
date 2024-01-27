@@ -24,6 +24,8 @@ class CheckoutModel {
     private Customer $customer;
     private $accom_inventories;
     private $accom_product_inventories;
+    private $additional_discount;
+
     public function __construct($properties) {
         $this->mapProperties($properties);
     }
@@ -281,8 +283,7 @@ class CheckoutModel {
     /**
      * Get the value of accom_product_inventories
      */
-    public function getAccomProductInventories()
-    {
+    public function getAccomProductInventories() {
         return $this->accom_product_inventories;
     }
 
@@ -291,10 +292,15 @@ class CheckoutModel {
      *
      * @return  self
      */
-    public function setAccomProductInventories($accom_product_inventories)
-    {
+    public function setAccomProductInventories($accom_product_inventories) {
         $this->accom_product_inventories = $accom_product_inventories;
-
+        return $this;
+    }
+    public function getAdditionalDiscount() {
+        return $this->additional_discount;
+    }
+    public function setAdditionalDiscount($additional_discount) {
+        $this->additional_discount = $additional_discount;
         return $this;
     }
 }

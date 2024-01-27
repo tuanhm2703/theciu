@@ -232,6 +232,16 @@
                     </div>
                 </div>
             @endif
+            @if ($order->additional_discount > 0)
+                <div class="row">
+                    <div class="col-8 border-right">
+                        Giảm giá chương trình
+                    </div>
+                    <div class="col-4 text-right">
+                        - {{ format_currency_with_label($order->additional_discount) }}
+                    </div>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-8 border-right">
                     {{ trans('labels.total') }}
