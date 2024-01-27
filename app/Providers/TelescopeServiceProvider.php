@@ -36,6 +36,10 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider {
                     }
                     return ['shipping_webhook', "shipping_webhook:$order_number", "shipping_webhook:$shipping_order_number"];
                 }
+                if (preg_match('/webhook\/([a-z])/', $url) && preg_match('/([a-z])\/payment/', $url)) {
+                    $order_number = isset($payload['orderId']) ? $payload['orderId'] : null;
+                    return ['payment_webhook', "payment_webhook:$order_number"];
+                }
             }
 
             return [];
