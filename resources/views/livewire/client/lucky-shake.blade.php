@@ -23,11 +23,14 @@
             opacity: 1;
             transition: all 0.1s ease-in;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1500px;
         }
         @media only screen and (max-width: 768px) {
             #shake-img {
                 max-width: 100% !important;
+            }
+            .shaking-btn {
+                font-size: 1rem;
             }
         }
     </style>
