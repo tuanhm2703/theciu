@@ -24,6 +24,8 @@
             transition: all 0.1s ease-in;
             width: 100%;
             max-width: 1500px;
+            position: relative;
+            margin-top: -150px;
         }
         @media only screen and (max-width: 768px) {
             #shake-img {
