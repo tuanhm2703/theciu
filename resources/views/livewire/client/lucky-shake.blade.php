@@ -46,7 +46,9 @@
             await @this.shake();
             $(this).hide();
             $('#shake-img').attr('src', `{{ asset('img/shake-motion.gif') }}`)
-            setTimeout(() => {
+            $('#shake-img').on('load', function() {
+                console.log('loaded');
+                setTimeout(() => {
                 $('#shake-img').css('opacity', '0');
                 setTimeout(() => {
                     $('#shake-img').css('width', '0');
@@ -54,9 +56,11 @@
                     $('#lucky-result-img').css('width', '80%');
                     $('#lucky-result-img').css('opacity', '1');
                     $('#order-continue-btn').show()
-                    $('.shaking-btn').css('padding: 1.1rem')
+                    $('.shaking-btn').css('padding', '1.1rem')
                 }, 100)
             }, 2600)
+            })
+
         })
     </script>
 @endpush
