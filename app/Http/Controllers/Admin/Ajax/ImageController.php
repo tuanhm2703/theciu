@@ -10,12 +10,14 @@ use Illuminate\Http\Request;
 
 class ImageController extends Controller {
     public function upload(Request $request) {
-        $image = $request->file('image');
+        $image = $request->file('upload');
         $path = StorageService::put('/images', $image);
         resize_image($path, 1000);
         $path = "1000/$path";
         return BaseResponse::successWithRawData([
-            'link' => StorageService::url($path)
+            'url' => StorageService::url($path),
+            'fileName' => $image->getClientOriginalName(),
+            'uploaded' => 1
         ]);
     }
 

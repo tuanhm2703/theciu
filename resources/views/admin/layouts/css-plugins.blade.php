@@ -34,3 +34,11 @@
 <link href="{{ asset('assets/css/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
 @livewireStyles
+<style>
+    .invisible {
+        display: block !important;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+</style>
