@@ -5,79 +5,52 @@
         language: DataTable.languages[`{{ App::getLocale() }}`]
     });
 
-    const initSummernote = (element) => {
-        const correctSummernote = () => {
-            $("button[data-toggle='dropdown']").each(function(index) {
-                $(this).removeAttr("data-toggle").attr("data-bs-toggle", "dropdown");
-            });
-            var styleEle = $("style#fixed");
-            if (styleEle.length == 0)
-                $(
-                    "<style id=\"fixed\">.note-editor .dropdown-toggle::after { all: unset; } .note-editor .note-dropdown-menu { box-sizing: content-box; } .note-editor .note-modal-footer { box-sizing: content-box; }</style>"
-                )
-                .prependTo("body");
-            else
-                styleEle.remove();
-        }
-        new FroalaEditor(element, {
-            imageUploadParam: "image",
-
-            // Set the image upload URL.
-            imageUploadURL: `{{ route('admin.ajax.image.upload') }}`,
-
-            // Additional upload params.
-            imageUploadParams: {
-                id: "my_editor"
-            },
-            imageDefaultWidth: "100%",
-            // Set request type.
-            imageUploadMethod: "POST",
-
-            // Set max image size to 5MB.
-            imageMaxSize: 5 * 1024 * 1024,
-
-            // Allow to upload PNG and JPG.
-            imageAllowedTypes: ["jpeg", "jpg", "png"],
-            events: {
-                "image.error": function(error, response) {
-                    console.log(error);
-                }
-            }
+    const initSummernote = async (element) => {
+        $('.summernote').each((i, e) => {
+            ClassicEditor
+                .create(e, {
+                    simpleUpload: {
+                                uploadUrl: `{{ route('admin.ajax.image.upload') }}`,
+                        },
+                        fontFamily: {
+                                options: [
+                                        'Poppins, sans-serif', // Added Poppins
+                                        'Arial, Helvetica, sans-serif',
+                                        'Courier New, Courier, monospace',
+                                        'Georgia, serif',
+                                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                                        'Tahoma, Geneva, sans-serif',
+                                        'Times New Roman, Times, serif',
+                                        'Verdana, Geneva, sans-serif'
+                                ]
+                        },
+                })
         })
-        // element.summernote({
-        //     toolbar: [
-        //         ['style', ['style']],
-        //         ['font', ['bold', 'underline', 'clear']],
-        //         ['fontname', ['fontname']],
-        //         ['color', ['color']],
-        //         ['para', ['ul', 'ol', 'paragraph']],
-        //         ['table', ['table']],
-        //         ['insert', ['link', 'picture', 'video']],
-        //         ['view', ['fullscreen', 'codeview', 'help']],
-        //         ['fontsize', ['fontsize']],
-        //     ],
-        //     callbacks: {
-        //         onImageUpload: function(files, editor, welEditable) {
-        //             const formData = new FormData()
-        //             for (let index = 0; index < files.length; index++) {
-        //                 const element = files[index];
-        //                 formData.append('images[]', element)
-        //             }
-        //             var data = uploadSummernoteImage(formData, this)
-        //         },
-        //         onChange: function(contents, $editable) {
-        //             $($editable).parents('.note-editor').prev().trigger('input')
-        //         },
-        //         onInit: function() {
-        //             correctSummernote()
-        //         }
-        //     },
-        //     lang: `{{ App::getLocale() }}-{{ getLocaleWithCountryCode()[App::getLocale()] }}`
-        // });
     }
     const initSimpleSummernote = (element) => {
-        new FroalaEditor(element, {
-            toolbarButtons: ['emoticons']
+        $('.summernote-simple').addClass('invisible')
+        $('.summernote-simple').each((i, e) => {
+            ClassicEditor.create(e, {
+                toolbar: {
+                    items: [
+                        'alignment',
+                        'heading',
+                        '|',
+                        'bold',
+                        'italic',
+                        'link',
+                        'bulletedList',
+                        'numberedList',
+                        '|',
+                        'outdent',
+                        'indent',
+                        '|',
+                        'blockQuote',
+                        'undo',
+                        'redo'
+                    ]
+                }
+            })
         })
     }
     const initAppPlugins = () => {
@@ -111,7 +84,7 @@
             minDate: `{{ now()->format('Y-m-d') }}`,
         })
         initSummernote('body .summernote')
-        initSimpleSummernote('body .summernote-simple')
+        initSimpleSummernote()
         if ($("[data-bs-toggle=tooltip]").length) {
             $("[data-bs-toggle=tooltip]").tooltip({
                 html: true
