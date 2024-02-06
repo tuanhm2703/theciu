@@ -27,7 +27,7 @@
             <div class="cart">
                 <div class="container">
                     <livewire:cart-component />
-                    @if (now()->between('2024-02-11', '2024-02-25'))
+                    @if (now()->between('2024-02-13', '2024-02-25'))
                         <livewire:client.lucky-shake wire:key="lucky-shake" />
                     @endif
                     @include('landingpage.layouts.pages.profile.address.update')
