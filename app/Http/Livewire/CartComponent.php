@@ -210,7 +210,7 @@ class CartComponent extends Component {
             $this->updateOrderInfo();
         }
         $this->dispatchBrowserEvent('open-confirm-order', [
-            'show_lucky_shake' => !session()->has('lucky-shake-show') && $this->total >= 500000
+            'show_lucky_shake' => !session()->has('lucky-shake-show') && $this->total >= 599000 && now()->between('2024-02-11', '2024-02-25')
         ]);
         // $this->emit('open-confirm-order', [
         //     'show_lucky_shake' => true
