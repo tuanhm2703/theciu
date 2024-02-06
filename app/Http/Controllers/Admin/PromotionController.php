@@ -35,6 +35,9 @@ class PromotionController extends Controller {
         if ($type === PromotionType::ACCOM_GIFT) {
             return view('admin.pages.accom-gift.create');
         }
+        if ($type === PromotionType::ACCOM_PRODUCT) {
+            return view('admin.pages.accom-product.create');
+        }
         return view('admin.pages.promotion.product.add', compact('type'));
     }
 
@@ -52,6 +55,10 @@ class PromotionController extends Controller {
         $productIds = $products->pluck('id')->toArray();
         if ($promotion->type === PromotionType::ACCOM_GIFT)
             return view('admin.pages.accom-gift.edit', compact('promotion', 'type', 'products', 'productIds'));
+        if ($promotion->type === PromotionType::ACCOM_PRODUCT) {
+            $main_product_id = $products->where('pivot.featured', 1)->first()?->id;
+            return view('admin.pages.accom-product.edit', compact('promotion', 'type', 'products', 'productIds', 'main_product_id'));
+        }
         return view('admin.pages.promotion.product.add', compact('promotion', 'type', 'products', 'productIds'));
     }
 
@@ -133,7 +140,8 @@ class PromotionController extends Controller {
                 'from' => $request->from,
                 'to' => $request->to,
                 'min_order_value' => $request->min_order_value,
-                'status' => StatusType::ACTIVE
+                'status' => StatusType::ACTIVE,
+                'num_of_products' => $request->num_of_products
             ]);
             $product_ids = [];
             Inventory::where('promotion_from', $old_from)->where('promotion_to', $old_to)->update([
@@ -152,6 +160,13 @@ class PromotionController extends Controller {
                 $product_ids[] = $p['id'];
             }
             $promotion->products()->sync($product_ids);
+            if ($request->main_product_id) {
+                $promotion->products()->sync([
+                    $request->main_product_id => [
+                        'featured' => 1
+                    ]
+                ], false);
+            }
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
@@ -170,9 +185,10 @@ class PromotionController extends Controller {
         $old_to = $request->old_to;
         $input = [
             'from' => $from,
-            'to' => $to
+            'to' => $to,
+            'num_of_products' => $request->num_of_products
         ];
-        if($request->min_order_value) $input['min_order_value'] = $request->min_order_value;
+        if ($request->min_order_value) $input['min_order_value'] = $request->min_order_value;
         DB::beginTransaction();
         try {
             $product_ids = [];
@@ -192,6 +208,14 @@ class PromotionController extends Controller {
                 $product_ids[] = $p['id'];
             }
             $promotion->products()->sync($product_ids);
+            if ($request->main_product_id) {
+                $promotion->products()->sync([
+                    $request->main_product_id => [
+                        'featured' => 1
+                    ]
+                ], false);
+            }
+            // dd($input);
             $promotion->update($input);
             DB::commit();
         } catch (\Throwable $th) {

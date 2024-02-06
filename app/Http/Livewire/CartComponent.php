@@ -66,6 +66,10 @@ class CartComponent extends Component {
     public $accom_gift_promotion = null;
     public $accom_inventory_ids = [];
     public $accom_inventories;
+    public $accom_product_promotions;
+    public $accom_product_inventory_ids = [];
+    public $accom_product_inventories;
+    public $accom_product_selected = [];
     protected $rules = [
         'service_id' => 'required',
         'payment_method_id' => 'required',
@@ -105,6 +109,7 @@ class CartComponent extends Component {
         }
     }
     public function mount() {
+        $this->accom_product_promotions = new Collection();
         $this->accom_inventories = new Collection();
         $this->customer = customer() ?? new Customer();
         $this->getCart();
@@ -119,12 +124,15 @@ class CartComponent extends Component {
             }
             $this->service_id = $this->shipping_service_types[0]->service_id;
             $this->shipping_fee = $this->shipping_service_types[0]->fee;
+        } else {
+            $this->address = $this->customer->address;
         }
         $this->payment_methods = PaymentMethod::active()->with('image:imageable_id,path')->get();
         $this->save_voucher_ids = $this->customer->saved_vouchers()->active()->public()->notExpired()->haveNotUsed()->pluck('id')->toArray();
         $this->vouchers = Voucher::voucherForCart($this->customer)->get();
         if (count($this->item_selected) > 0) {
             $this->updateOrderInfo();
+            $this->updateAccomProductPromotionInfo();
         } else {
             $this->updateVoucherDisableStatus();
         }
@@ -184,11 +192,11 @@ class CartComponent extends Component {
     }
 
     public function deleteInventory(Inventory $inventory) {
-        if(customer()) {
+        if (customer()) {
             $this->cart->inventories()->detach($inventory->id);
         } else {
             $this->getCart();
-            $this->cart->inventories = $this->cart->inventories->filter(function($i) use ($inventory) {
+            $this->cart->inventories = $this->cart->inventories->filter(function ($i) use ($inventory) {
                 return $i->id != $inventory->id;
             });
             session()->put('cart', serialize($this->cart));
@@ -201,6 +209,7 @@ class CartComponent extends Component {
     }
     public function checkOrder() {
         $this->accom_inventories = Inventory::whereIn('id', $this->accom_inventory_ids)->get();
+        $this->accom_product_inventories = Inventory::whereIn('id', $this->accom_product_inventory_ids)->get();
         $this->getCart();
         $this->validate();
         $this->emit('open-confirm-order');
@@ -221,10 +230,11 @@ class CartComponent extends Component {
             'freeship_voucher_id' => $this->freeship_voucher_id,
             'note' => $this->note,
             'customer' => $this->customer,
-            'accom_inventories' => $this->accom_inventories
+            'accom_inventories' => $this->accom_inventories,
+            'accom_product_inventories' => $this->accom_product_inventories->whereIn('product_id', $this->accom_product_selected)
         ]);
         $result = CheckoutService::checkout($checkoutModel);
-        if($result['error']) {
+        if ($result['error']) {
             $this->error = $result['message'];
             $this->dispatchBrowserEvent('closeModal');
         } else {
@@ -248,7 +258,7 @@ class CartComponent extends Component {
     }
     private function getAddressFromSession($id = null) {
         $addresses = getSessionAddresses();
-        if($id && $addresses->where('id', $id)->first()) {
+        if ($id && $addresses->where('id', $id)->first()) {
             $this->address = $addresses->where('id', $id)->first();
             if ($this->address) $this->address->load('province', 'district', 'ward');
         } else {
@@ -360,24 +370,58 @@ class CartComponent extends Component {
         $this->order_voucher_discount = $this->order_voucher ? $this->order_voucher->getDiscountAmount($this->total) : 0;
         $this->total -= $this->order_voucher_discount;
         $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount - $this->combo_discount + ($this->shipping_fee - $this->freeship_voucher_discount);
-        $accom_promotion = Promotion::where('type', PromotionType::ACCOM_GIFT)->with(['products' => function($q) {
-            return $q->select('name', 'id', 'slug')->with('inventories', function($q) {
+        $accom_promotion = Promotion::where('type', PromotionType::ACCOM_GIFT)->with(['products' => function ($q) {
+            return $q->select('name', 'id', 'slug')->with('inventories', function ($q) {
                 $q->where('promotion_status', 1)->where('stock_quantity', '>=', 'quantity_each_order');
             })->availableCannotView();
         }])->available()->where('min_order_value', '<=', $this->total)->orderBy('min_order_value', 'desc')->first();
-        if($accom_promotion == null) {
+        if ($accom_promotion == null) {
             $this->accom_gift_promotion = $accom_promotion;
             $this->accom_inventories = new Collection();
             $this->accom_inventory_ids = [];
-        } else if($accom_promotion->id != $this->accom_gift_promotion?->id) {
+        } else if ($accom_promotion->id != $this->accom_gift_promotion?->id) {
             $this->accom_gift_promotion = $accom_promotion;
             $this->accom_inventory_ids = [];
-            foreach($this->accom_gift_promotion->products as $product) {
+            foreach ($this->accom_gift_promotion->products as $product) {
                 $this->accom_inventory_ids[] = $product->inventory->id;
             }
         }
+        $accom_product_promotions = Promotion::where('type', PromotionType::ACCOM_PRODUCT)->with('products', function ($q) {
+            $q->select('name', 'id', 'slug')->with('inventories', function ($q) {
+                $q->where('promotion_status', 1)->where('stock_quantity', '>=', 'quantity_each_order');
+            });
+        })->whereHas('products', function ($q) {
+            $q->where('promotion_product.featured', 1)->whereHas('inventories', function ($q) {
+                $q->whereIn('inventories.id', $this->item_selected);
+            });
+        })->available()->get();
+        if($this->isAccomProductUpdated(($accom_product_promotions))) {
+            $this->accom_product_promotions = $accom_product_promotions;
+            $this->updateAccomProductPromotionInfo();
+        }
     }
-
+    private function isAccomProductUpdated($accom_product_promotions) {
+        $collectA = collect($this->accom_product_promotions->pluck('id')->toArray());
+        $collectB = collect($accom_product_promotions->pluck('id')->toArray());
+        return !$collectA->diff($collectB)->isEmpty() || !$collectB->diff($collectA)->isEmpty();
+    }
+    private function updateAccomProductPromotionInfo() {
+        if ($this->accom_product_promotions) {
+            $this->accom_product_inventory_ids = [];
+            $this->accom_product_inventories = new Collection();
+            $this->accom_product_selected = [];
+            foreach ($this->accom_product_promotions as $promotion) {
+                foreach ($promotion->products->where('pivot.featured', 0) as $product) {
+                    $this->accom_product_inventory_ids[] = $product->inventories->first()?->id;
+                    $this->accom_product_inventories->push($product->inventories->first());
+                }
+            }
+        } else {
+            $this->accom_product_inventory_ids = [];
+            $this->accom_product_inventories = new Collection();
+            $this->accom_product_selected = [];
+        }
+    }
     public function updated($name, $value) {
         $this->getCart();
         if ($name == 'order_voucher_id') {
@@ -388,9 +432,9 @@ class CartComponent extends Component {
             $this->freeship_voucher = Voucher::active()->find($value);
             $this->updateOrderInfo();
         }
-        if($name == 'accom_inventory_id') {
-            $this->accom_gift_promotion = Promotion::where('type', PromotionType::ACCOM_GIFT)->with(['products' => function($q) {
-                return $q->select('name', 'id', 'slug')->with('inventories', function($q) {
+        if ($name == 'accom_inventory_id') {
+            $this->accom_gift_promotion = Promotion::where('type', PromotionType::ACCOM_GIFT)->with(['products' => function ($q) {
+                return $q->select('name', 'id', 'slug')->with('inventories', function ($q) {
                     $q->where('promotion_status', 1)->where('stock_quantity', '>=', 'quantity_each_order');
                 })->available();
             }])->available()->where('min_order_value', '<=', $this->total)->orderBy('min_order_value', 'desc')->first();
@@ -436,5 +480,4 @@ class CartComponent extends Component {
     public function changeAccomInventory(Inventory $inventory) {
         $this->accom_inventory = $inventory;
     }
-
 }

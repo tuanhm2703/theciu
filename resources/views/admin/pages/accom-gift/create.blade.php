@@ -1,8 +1,8 @@
-@extends('admin.layouts.app', ['class' => 'g-sidenav-show', 'headTitle' => trans('labels.create_combo')])
+@extends('admin.layouts.app', ['class' => 'g-sidenav-show', 'headTitle' => 'Tạo chương trình tặng sản phẩm khi mua đơn hàng tối thiểu'])
 @push('style')
 @endpush
 @section('content')
-    @include('admin.layouts.navbars.auth.topnav', ['title' => trans('labels.create_combo')])
+    @include('admin.layouts.navbars.auth.topnav', ['title' => 'Tạo chương trình tặng sản phẩm khi mua đơn hàng tối thiểu'])
     <div class="container-fluid">
         {!! Form::open([
             'url' => route('admin.promotion.store'),

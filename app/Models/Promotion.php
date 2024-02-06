@@ -22,7 +22,8 @@ class Promotion extends Model {
         'type',
         'slug',
         'updated_at',
-        'min_order_value'
+        'min_order_value',
+        'num_of_products'
     ];
 
     protected $casts = [
@@ -31,14 +32,18 @@ class Promotion extends Model {
     ];
 
     public function products() {
-        return $this->belongsToMany(Product::class, 'promotion_product');
+        return $this->belongsToMany(Product::class, 'promotion_product')->withPivot([
+            'promotion_id',
+            'product_id',
+            'featured'
+        ]);
     }
 
     public function generateUniqueSlug() {
         $base_slug = stripVN($this->name);
         $slug = $base_slug;
-        while(Category::where('slug', $slug)->where('id', '!=', $this->id)->exists()) {
-            $slug = "$base_slug-".now()->timestamp;
+        while (Category::where('slug', $slug)->where('id', '!=', $this->id)->exists()) {
+            $slug = "$base_slug-" . now()->timestamp;
         }
         return $slug;
     }
