@@ -114,6 +114,7 @@ class KiotService
     {
         try {
             $discount = $localOrder->order_voucher ? $localOrder->order_voucher->pivot->amount + $localOrder->combo_discount : $localOrder->combo_discount;
+            $discount -= $localOrder->additional_discount;
             $kiotCustomer = new ModelCustomer([
                 'name' => $localOrder->shipping_address->fullname,
                 'gender' => false,

@@ -277,6 +277,14 @@
                                     <span> - {{ format_currency_with_label($order->combo_discount) }}</span>
                                 </div>
                             @endif
+                            @if ($order->additional_discount)
+                                <div class="col-10 turnover-label">
+                                    <span>{{ trans('labels.combo_discount') }}</span>
+                                </div>
+                                <div class="col-2">
+                                    <span> - {{ format_currency_with_label($order->additional_discount) }}</span>
+                                </div>
+                            @endif
                             <div class="col-10 turnover-label">
                                 <b>Doanh thu đơn hàng</b>
                             </div>

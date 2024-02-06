@@ -41,7 +41,8 @@ class Order extends Model
         'rank_discount_value',
         'note',
         'bonus_note',
-        'combo_discount'
+        'combo_discount',
+        'additional_discount'
     ];
 
     public function customer()

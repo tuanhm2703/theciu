@@ -31,6 +31,7 @@ class CartComponent extends Component {
         'cart:changeAddress' => 'changeAddress',
         'cart:itemAdded' => 'updateOrderInfo',
         'cart:reloadVoucher' => 'reloadVoucher',
+        'checkOrder'
     ];
     protected $queryString = ['item_selected', 'shipping_service_id', 'payment_method_id'];
     public $address;
@@ -70,6 +71,8 @@ class CartComponent extends Component {
     public $accom_product_inventory_ids = [];
     public $accom_product_inventories;
     public $accom_product_selected = [];
+    public $additional_discount = 0;
+
     protected $rules = [
         'service_id' => 'required',
         'payment_method_id' => 'required',
@@ -212,7 +215,15 @@ class CartComponent extends Component {
         $this->accom_product_inventories = Inventory::whereIn('id', $this->accom_product_inventory_ids)->get();
         $this->getCart();
         $this->validate();
-        $this->emit('open-confirm-order');
+        if($this->additional_discount == 0 && session()->has('lucky_discount_amount')) {
+            $this->updateOrderInfo();
+        }
+        $this->dispatchBrowserEvent('open-confirm-order', [
+            'show_lucky_shake' => !session()->has('lucky-shake-show') && $this->total >= 500000
+        ]);
+        // $this->emit('open-confirm-order', [
+        //     'show_lucky_shake' => true
+        // ]);
     }
     public function checkout() {
         $this->getCart();
@@ -231,13 +242,16 @@ class CartComponent extends Component {
             'note' => $this->note,
             'customer' => $this->customer,
             'accom_inventories' => $this->accom_inventories,
-            'accom_product_inventories' => $this->accom_product_inventories->whereIn('product_id', $this->accom_product_selected)
+            'accom_product_inventories' => $this->accom_product_inventories->whereIn('product_id', $this->accom_product_selected),
+            'additional_discount' => $this->additional_discount
         ]);
         $result = CheckoutService::checkout($checkoutModel);
         if ($result['error']) {
             $this->error = $result['message'];
             $this->dispatchBrowserEvent('closeModal');
         } else {
+            session()->forget('lucky-shake-show');
+            session()->forget('lucky_discount_amount');
             return redirect()->to($result['redirectUrl']);
         }
     }
@@ -253,7 +267,7 @@ class CartComponent extends Component {
     }
     private function getAddress() {
         if (!customer()) {
-            if (session()->has('cart_address_id')) $this->getAddressFromSession(session()->has('cart_address_id'));
+            $this->getAddressFromSession(session()->get('cart_address_id'));
         }
     }
     private function getAddressFromSession($id = null) {
@@ -398,6 +412,12 @@ class CartComponent extends Component {
         if($this->isAccomProductUpdated(($accom_product_promotions))) {
             $this->accom_product_promotions = $accom_product_promotions;
             $this->updateAccomProductPromotionInfo();
+        }
+        if($this->total >= 500000 && session()->has('lucky_discount_amount')) {
+            $this->additional_discount = session()->get('lucky_discount_amount');
+            $this->total -= $this->additional_discount;
+        } else {
+            $this->additional_discount = 0;
         }
     }
     private function isAccomProductUpdated($accom_product_promotions) {

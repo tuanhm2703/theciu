@@ -1,12 +1,11 @@
 @extends('landingpage.layouts.app')
 @push('css')
-<style>
-    .table td {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-}
-
-</style>
+    <style>
+        .table td {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+    </style>
 @endpush
 @section('content')
     <main class="main">
@@ -27,13 +26,16 @@
         <div class="page-content">
             <div class="cart">
                 <div class="container">
-                    <livewire:cart-component></livewire:cart-component>
+                    <livewire:cart-component />
+                    @if (now()->between('2024-02-11', '2024-02-25'))
+                        <livewire:client.lucky-shake wire:key="lucky-shake" />
+                    @endif
                     @include('landingpage.layouts.pages.profile.address.update')
                 </div><!-- End .container -->
             </div><!-- End .cart -->
         </div><!-- End .page-content -->
         @include('landingpage.layouts.pages.profile.address.create')
-        <x-client.login-or-continue-component/>
+        <x-client.login-or-continue-component />
     </main><!-- End .main -->
 @endsection
 @push('js')
