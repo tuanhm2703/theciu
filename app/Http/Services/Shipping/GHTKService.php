@@ -244,9 +244,6 @@ class GHTKService extends ShippingServiceAbstract {
     private function getOrderPickMoney(Order $order) {
         if ($order->isPaid()) return 0;
         $total = $order->total;
-        if($order->freeship_voucher) {
-            return $total + $order->freeship_voucher->amount;
-        }
         return $total;
     }
 
