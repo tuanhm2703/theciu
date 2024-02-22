@@ -114,7 +114,7 @@ class KiotService
     {
         try {
             $discount = $localOrder->order_voucher ? $localOrder->order_voucher->pivot->amount + $localOrder->combo_discount : $localOrder->combo_discount;
-            $discount -= $localOrder->additional_discount;
+            $discount += $localOrder->additional_discount;
             $kiotCustomer = new ModelCustomer([
                 'name' => $localOrder->shipping_address->fullname,
                 'gender' => false,
@@ -191,9 +191,11 @@ class KiotService
             "contactNumber" => $localOrder->shipping_address->phone,
             'address' => $localOrder->shipping_address->full_address
         ]);
+        $discount = $localOrder->order_voucher ? $localOrder->order_voucher->pivot->amount + $localOrder->combo_discount : $localOrder->combo_discount;
+        $discount += $localOrder->additional_discount;
         $order->setIsApplyVoucher($localOrder->order_voucher ? true : false);
         $order->setBranchId($kiotSetting->data['branchId']);
-        $order->setDiscount($localOrder->order_voucher ? $localOrder->order_voucher->amount : 0);
+        $order->setDiscount($discount);
         $order->setDescription("The C.I.U Order: $localOrder->order_number");
         $order->setMethod(PaymentMethodType::getKiotMethodType($localOrder->payment_method->type));
         $order->setSoldById($kiotSetting->data['salerId']);
