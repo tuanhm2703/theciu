@@ -279,7 +279,7 @@
                             @endif
                             @if ($order->additional_discount)
                                 <div class="col-10 turnover-label">
-                                    <span>{{ trans('labels.combo_discount') }}</span>
+                                    <span>Giảm giá chương trình</span>
                                 </div>
                                 <div class="col-2">
                                     <span> - {{ format_currency_with_label($order->additional_discount) }}</span>
