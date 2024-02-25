@@ -22,7 +22,6 @@
                 {!! Form::close() !!}
             </x-admin.card>
 
-            @include('admin.layouts.footers.auth.footer')
         </div>
         @include('admin.layouts.footers.auth.footer')
     </div>
