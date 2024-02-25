@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Request;
 use App\Enums\PaymentMethodType;
 use App\Models\Customer;
+use App\Models\Inventory;
 use App\Models\KiotInvoice;
+use App\Models\KiotProduct;
 use App\Models\Order;
 use App\Models\Rank;
 use Illuminate\Support\Facades\App;
@@ -17,6 +20,7 @@ use VienThuong\KiotVietClient\Model\Order as ModelOrder;
 use VienThuong\KiotVietClient\Resource\CustomerResource;
 use VienThuong\KiotVietClient\Resource\InvoiceResource;
 use VienThuong\KiotVietClient\Resource\OrderResource;
+use VienThuong\KiotVietClient\WebhookType;
 
 class KiotService
 {
@@ -141,38 +145,6 @@ class KiotService
             } else {
                 return false;
             }
-            // $invoice = new Invoice([
-            //     'branchId' => $order->getBranchId(),
-            //     'purchaseDate' => (string) now(),
-            //     'customerId' => $order->getCustomerId(),
-            //     'customerName' => $localOrder->shipping_address->fullname,
-            //     'description' => $localOrder->note,
-            //     'method' => PaymentMethodType::getKiotMethodType($localOrder->payment_method->type),
-            //     'discount' => $order->getDiscount(),
-            //     'totalPayment' => $order->getTotalPayment(),
-            //     'saleChannelId' => $order->getSaleChannelId(),
-            //     'soldById' => $kiotSetting->data['salerId'],
-            //     'method' => 'test',
-            //     'usingCod' => false,
-            //     'soldById' => $kiotSetting->data['salerId'],
-            //     'discount' => $discount,
-            //     'orderId' => $order->getId(),
-            //     'invoiceDetails' => $localOrder->generateKiotInvoiceDetailCollection(),
-            //     'status' => 3
-            // ]);
-            // $customer = $localOrder->customer;
-            // if($customer && $customer->kiot_customer) {
-            //     $invoice->setCustomerId($customer->kiot_customer->kiot_customer_id);
-            // }
-            // $invoiceResource = new InvoiceResource(App::make(Client::class));
-            // $kiotInvoice = $invoiceResource->create($invoice);
-            // KiotInvoice::create([
-            //     'kiot_invoice_id' => $kiotInvoice->getId(),
-            //     'kiot_code' => $kiotInvoice->getCode(),
-            //     'data' => $kiotInvoice->getModelData(),
-            //     'kiot_order_code' => $order->getCode(),
-            //     'order_id' => $localOrder->id
-            // ]);
             return true;
         } catch (\Throwable $th) {
             Log::channel('kiot')->error($th);
@@ -219,6 +191,25 @@ class KiotService
             return $kiotOrder;
         } catch (KiotVietException $th) {
             throw $th;
+        }
+    }
+
+    public function syncWarehouseThroughWebhook(Request $request) {
+        $data = $request->Notifications[0]['Data'][0];
+        if(isset($request->Notifications[0]["Action"]) && (strpos($request->Notifications[0]["Action"], WebhookType::PRODUCT_DELETE) > -1)) {
+            $codes = $request->Notifications[0]['Data'];
+            $skus = KiotProduct::whereIn('kiot_product_id', $codes)->pluck('kiot_code')->toArray();
+            Inventory::whereIn('sku', $skus)->delete();
+        } else {
+            $sku = $data['ProductCode'];
+            $inventory = Inventory::whereSku($sku)->firstOrFail();
+            $kiotConfig = App::get('KiotConfig');
+            if ($inventory->sku == $sku && $kiotConfig->data['branchId'] == $data['BranchId']) {
+                $inventory->stock_quantity = $data['OnHand'] - $data['Reserved'];
+                $inventory->stock_quantity = $inventory->stock_quantity < 0 ? 0 : $inventory->stock_quantity;
+                $inventory->status = $data['isActive'];
+                $inventory->save();
+            }
         }
     }
 }
