@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('kiot_customers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('kiot_customer_id');
-            $table->bigInteger('customer_id')->unsigned();
+            $table->bigInteger('customer_id')->unsigned()->nullable();
             $table->string('code');
             $table->double('total_point')->nullable();
             $table->double('reward_point')->nullable();

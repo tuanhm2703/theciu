@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Jobs\Kiot\SyncKiotCustomerJob;
 use Illuminate\Http\Request;
 use App\Enums\PaymentMethodType;
 use App\Models\Customer;
 use App\Models\Inventory;
+use App\Models\KiotCustomer;
 use App\Models\KiotInvoice;
 use App\Models\KiotProduct;
 use App\Models\Order;
@@ -21,16 +23,14 @@ use VienThuong\KiotVietClient\Resource\CustomerResource;
 use VienThuong\KiotVietClient\Resource\InvoiceResource;
 use VienThuong\KiotVietClient\Resource\OrderResource;
 use VienThuong\KiotVietClient\WebhookType;
+use VienThuong\KiotVietClient\Model\Customer as KiotCus;
 
-class KiotService
-{
-    public static function updateCustomerRank(Customer $customer)
-    {
+class KiotService {
+    public static function updateCustomerRank(Customer $customer) {
         // if($customer->available_rank && $customer->kiot_customer)
     }
 
-    public static function syncKiotInfo(Customer $customer)
-    {
+    public static function syncKiotInfo(Customer $customer) {
         $customerResource = new CustomerResource(App::make(Client::class));
         if ($customer->phone) {
             try {
@@ -43,6 +43,7 @@ class KiotService
                     ], [
                         'total_point' => $info['totalPoint'],
                         'reward_point' => $info['rewardPoint'],
+                        'data' => json_encode($info)
                     ]);
                     $rank_names = explode('|', $info['groups']);
                     $rank = Rank::whereIn('name', $rank_names)->orderBy('min_value', 'desc')->first();
@@ -69,8 +70,57 @@ class KiotService
         return false;
     }
 
-    public static function cancelKiotInvoice(Order $order)
-    {
+    public function saveKiotCustomerByIdId($id) {
+        try {
+            $customerResource = new CustomerResource(App::make(Client::class));
+            $kiotCustomer = $customerResource->getById($id);
+            $customer = Customer::wherePhone($kiotCustomer->getContactNumber())->first();
+            $this->saveKiotCustomerToLocal($customer, $kiotCustomer);
+            return true;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        return false;
+    }
+
+    public function saveKiotCustomerToLocal(Customer $customer = null, KiotCus $kiotCustomer) {
+        return KiotCustomer::updateOrCreate([
+            'code' => $kiotCustomer->getCode()
+        ], [
+            'customer_id' => $customer?->id,
+            'kiot_customer_id' => $kiotCustomer->getId(),
+            'total_point' => $kiotCustomer->getTotalPoint(),
+            'reward_point' => $kiotCustomer->getRewardPoint(),
+            'data' => json_encode($kiotCustomer->getModelData())
+        ]);
+    }
+
+    public function syncKiotCustomerLocally(Customer $customer, KiotCustomer $kiotCustomer) {
+        $info = $kiotCustomer->data;
+        $customer->kiot_customer()->updateOrCreate([
+            'code' => $info['code'],
+            'kiot_customer_id' => $info['id']
+        ], [
+            'total_point' => $info['totalPoint'],
+            'reward_point' => $info['rewardPoint'],
+        ]);
+        $rank_names = explode('|', $info['groups']);
+        $rank = Rank::whereIn('name', $rank_names)->orderBy('min_value', 'desc')->first();
+        if ($rank) {
+            if ($customer->available_rank && $customer->available_rank->min_value < $rank->min_value) {
+                $customer->ranks()->sync($rank->id);
+            } else if (!$customer->available_rank) {
+                $customer->ranks()->sync($rank->id);
+            }
+        } else {
+            if ($customer->available_rank && $customer->available_rank->pivot->value == 0) {
+                $customer->available_ranks()->where('customer_ranks.value', 0)->detach();
+            }
+            $customer->kiot_customer()->delete();
+        }
+    }
+
+    public static function cancelKiotInvoice(Order $order) {
         if ($order->kiot_invoice) {
             $order->kiot_invoice->removeKiotInvoice();
             return true;
@@ -78,8 +128,7 @@ class KiotService
         return false;
     }
 
-    public static function cancelKiotOrder(Order $order, $cancelInvoice = true)
-    {
+    public static function cancelKiotOrder(Order $order, $cancelInvoice = true) {
 
         $kiot_order = $order->kiot_order;
         if ($kiot_order) {
@@ -103,8 +152,7 @@ class KiotService
         return false;
     }
 
-    public static function getOrderById($id)
-    {
+    public static function getOrderById($id) {
         $orderResource = new OrderResource(App::make(Client::class));
         try {
             return $orderResource->getById($id);
@@ -114,8 +162,7 @@ class KiotService
         }
     }
 
-    public static function createKiotInvoice(Order $localOrder)
-    {
+    public static function createKiotInvoice(Order $localOrder) {
         try {
             $discount = $localOrder->order_voucher ? $localOrder->order_voucher->pivot->amount + $localOrder->combo_discount : $localOrder->combo_discount;
             $discount += $localOrder->additional_discount;
@@ -152,8 +199,7 @@ class KiotService
         return false;
     }
 
-    public static function createKiotOrder(Order $localOrder)
-    {
+    public static function createKiotOrder(Order $localOrder) {
         $orderResource = new OrderResource(App::make(Client::class));
         $kiotSetting = App::get('KiotConfig');
         $order = new ModelOrder();
@@ -196,7 +242,7 @@ class KiotService
 
     public function syncWarehouseThroughWebhook(Request $request) {
         $data = $request->Notifications[0]['Data'][0];
-        if(isset($request->Notifications[0]["Action"]) && (strpos($request->Notifications[0]["Action"], WebhookType::PRODUCT_DELETE) > -1)) {
+        if (isset($request->Notifications[0]["Action"]) && (strpos($request->Notifications[0]["Action"], WebhookType::PRODUCT_DELETE) > -1)) {
             $codes = $request->Notifications[0]['Data'];
             $skus = KiotProduct::whereIn('kiot_product_id', $codes)->pluck('kiot_code')->toArray();
             Inventory::whereIn('sku', $skus)->delete();
@@ -209,6 +255,32 @@ class KiotService
                 $inventory->stock_quantity = $inventory->stock_quantity < 0 ? 0 : $inventory->stock_quantity;
                 $inventory->status = $data['isActive'];
                 $inventory->save();
+            }
+        }
+    }
+
+    public function migrateSyncCustomers() {
+        $customerResource = new CustomerResource(App::make(Client::class));
+        $pageSize = 100;
+        $total = $customerResource->list(['pageSize' => 1])->getTotal();
+        $numberOfPages = $total % $pageSize === 0 ? $total / $pageSize : floor(($total / $pageSize)) + 1;
+        $currentItem = 0;
+        for ($i = 0; $i < $numberOfPages; $i++) {
+            dispatch(new SyncKiotCustomerJob($currentItem, $pageSize));
+            $currentItem += $pageSize;
+        }
+    }
+
+    public function syncAllLocalCustomerWithKiot() {
+        $customers = Customer::all();
+        foreach ($customers as $customer) {
+            try {
+                $kiotCustomer = KiotCustomer::where('data->contactNumber', $customer->phone)->first();
+                if ($kiotCustomer) {
+                    $this->syncKiotCustomerLocally($customer, $kiotCustomer);
+                }
+            } catch (\Throwable $th) {
+                continue;
             }
         }
     }

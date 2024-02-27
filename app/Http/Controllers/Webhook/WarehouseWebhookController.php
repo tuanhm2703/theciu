@@ -23,6 +23,9 @@ class WarehouseWebhookController extends Controller
             $type = $data['Action'];
             if(str_contains($type, WebhookType::STOCK_UPDATE) || str_contains($type, WebhookType::PRODUCT_DELETE)) {
                 $this->kiotService->syncWarehouseThroughWebhook($request);
+            } else if(str_contains($type, WebhookType::CUSTOMER_UPDATE)) {
+                $id = $data['Data'][0]['Id'];
+                $this->kiotService->saveKiotCustomerByIdId($id);
             }
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
