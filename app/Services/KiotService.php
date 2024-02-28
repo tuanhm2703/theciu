@@ -101,6 +101,7 @@ class KiotService {
         $kiotCustomer->update([
             'total_point' => $kiotCustomer->total_point,
             'reward_point' => $kiotCustomer->reward_point,
+            'customer_id' => $customer->id
         ]);
         if ($info['groups'] != null) {
             $rank_names = explode('|', $info['groups']);
@@ -280,10 +281,10 @@ class KiotService {
             try {
                 $kiotCustomer = $customer->kiot_customer_by_phone;
                 if ($kiotCustomer) {
-                    $this->syncKiotCustomerLocally($customer, $kiotCustomer);
+                    (new KiotService)->syncKiotCustomerLocally($customer, $kiotCustomer);
                 }
             } catch (\Throwable $th) {
-                continue;
+                \Log::error($th);
             }
         }
     }
