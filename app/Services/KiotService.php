@@ -119,7 +119,7 @@ class KiotService {
                 $customer->kiot_customer()->delete();
             }
         } else {
-            $customer->ranks()->delete();
+            $customer->ranks()->sync([]);
         }
     }
 
