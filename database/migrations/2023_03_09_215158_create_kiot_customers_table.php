@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('kiot_customer_id');
             $table->bigInteger('customer_id')->unsigned()->nullable();
-            $table->string('code');
+            $table->string('code')->index();
+            $table->string('contact_number')->nullable()->index();
             $table->double('total_point')->nullable();
             $table->double('reward_point')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers');

@@ -91,6 +91,7 @@ class KiotService {
             'kiot_customer_id' => $kiotCustomer->getId(),
             'total_point' => $kiotCustomer->getTotalPoint(),
             'reward_point' => $kiotCustomer->getRewardPoint(),
+            'contact_number' => $kiotCustomer->getContactNumber(),
             'data' => $kiotCustomer->getModelData()
         ]);
     }
@@ -103,6 +104,7 @@ class KiotService {
         ], [
             'total_point' => $info['totalPoint'],
             'reward_point' => $info['rewardPoint'],
+            'contact_number' => $info['contactNumber']
         ]);
         if ($info['groups'] != null) {
             $rank_names = explode('|', $info['groups']);
