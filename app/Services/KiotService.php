@@ -98,13 +98,9 @@ class KiotService {
 
     public function syncKiotCustomerLocally(Customer $customer, KiotCustomer $kiotCustomer) {
         $info = $kiotCustomer->data;
-        $customer->kiot_customer()->updateOrCreate([
-            'code' => $info['code'],
-            'kiot_customer_id' => $info['id']
-        ], [
-            'total_point' => $info['totalPoint'],
-            'reward_point' => $info['rewardPoint'],
-            'contact_number' => $info['contactNumber']
+        $kiotCustomer->update([
+            'total_point' => $kiotCustomer->total_point,
+            'reward_point' => $kiotCustomer->reward_point,
         ]);
         if ($info['groups'] != null) {
             $rank_names = explode('|', $info['groups']);
@@ -282,7 +278,7 @@ class KiotService {
         $customers = Customer::all();
         foreach ($customers as $customer) {
             try {
-                $kiotCustomer = KiotCustomer::where('data->contactNumber', $customer->phone)->first();
+                $kiotCustomer = KiotCustomer::where('contact_number', $customer->phone)->first();
                 if ($kiotCustomer) {
                     $this->syncKiotCustomerLocally($customer, $kiotCustomer);
                 }
