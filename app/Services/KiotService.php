@@ -95,7 +95,7 @@ class KiotService {
         ]);
     }
 
-public function syncKiotCustomerLocally(Customer $customer, KiotCustomer $kiotCustomer) {
+    public function syncKiotCustomerLocally(Customer $customer, KiotCustomer $kiotCustomer) {
         $info = $kiotCustomer->data;
         $customer->kiot_customer()->updateOrCreate([
             'code' => $info['code'],
@@ -104,19 +104,23 @@ public function syncKiotCustomerLocally(Customer $customer, KiotCustomer $kiotCu
             'total_point' => $info['totalPoint'],
             'reward_point' => $info['rewardPoint'],
         ]);
-        $rank_names = explode('|', $info['groups']);
-        $rank = Rank::whereIn('name', $rank_names)->orderBy('min_value', 'desc')->first();
-        if ($rank) {
-            if ($customer->available_rank && $customer->available_rank->min_value < $rank->min_value) {
-                $customer->ranks()->sync($rank->id);
-            } else if (!$customer->available_rank) {
-                $customer->ranks()->sync($rank->id);
+        if ($info['group'] != null) {
+            $rank_names = explode('|', $info['groups']);
+            $rank = Rank::whereIn('name', $rank_names)->orderBy('min_value', 'desc')->first();
+            if ($rank) {
+                if ($customer->available_rank && $customer->available_rank->min_value < $rank->min_value) {
+                    $customer->ranks()->sync($rank->id);
+                } else if (!$customer->available_rank) {
+                    $customer->ranks()->sync($rank->id);
+                }
+            } else {
+                if ($customer->available_rank && $customer->available_rank->pivot->value == 0) {
+                    $customer->available_ranks()->where('customer_ranks.value', 0)->detach();
+                }
+                $customer->kiot_customer()->delete();
             }
         } else {
-            if ($customer->available_rank && $customer->available_rank->pivot->value == 0) {
-                $customer->available_ranks()->where('customer_ranks.value', 0)->detach();
-            }
-            $customer->kiot_customer()->delete();
+            $customer->ranks()->delete();
         }
     }
 
