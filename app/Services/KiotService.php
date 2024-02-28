@@ -275,10 +275,10 @@ class KiotService {
     }
 
     public function syncAllLocalCustomerWithKiot() {
-        $customers = Customer::all();
+        $customers = Customer::with(['kiot_customer_by_phone'])->all();
         foreach ($customers as $customer) {
             try {
-                $kiotCustomer = KiotCustomer::where('contact_number', $customer->phone)->first();
+                $kiotCustomer = $customer->kiot_customer_by_phone;
                 if ($kiotCustomer) {
                     $this->syncKiotCustomerLocally($customer, $kiotCustomer);
                 }
