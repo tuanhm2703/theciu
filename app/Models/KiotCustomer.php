@@ -15,7 +15,8 @@ class KiotCustomer extends Model
         'reward_point',
         'kiot_customer_id',
         'data',
-        'contact_number'
+        'contact_number',
+        'customer_id'
     ];
 
     protected $casts = [
