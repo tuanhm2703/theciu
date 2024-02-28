@@ -116,7 +116,6 @@ class KiotService {
                 if ($customer->available_rank && $customer->available_rank->pivot->value == 0) {
                     $customer->available_ranks()->where('customer_ranks.value', 0)->detach();
                 }
-                $customer->kiot_customer()->delete();
             }
         } else {
             $customer->ranks()->sync([]);
