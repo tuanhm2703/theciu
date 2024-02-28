@@ -104,7 +104,7 @@ class KiotService {
             'total_point' => $info['totalPoint'],
             'reward_point' => $info['rewardPoint'],
         ]);
-        if ($info['group'] != null) {
+        if ($info['groups'] != null) {
             $rank_names = explode('|', $info['groups']);
             $rank = Rank::whereIn('name', $rank_names)->orderBy('min_value', 'desc')->first();
             if ($rank) {
