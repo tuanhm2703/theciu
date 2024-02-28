@@ -91,11 +91,11 @@ class KiotService {
             'kiot_customer_id' => $kiotCustomer->getId(),
             'total_point' => $kiotCustomer->getTotalPoint(),
             'reward_point' => $kiotCustomer->getRewardPoint(),
-            'data' => json_encode($kiotCustomer->getModelData())
+            'data' => $kiotCustomer->getModelData()
         ]);
     }
 
-    public function syncKiotCustomerLocally(Customer $customer, KiotCustomer $kiotCustomer) {
+public function syncKiotCustomerLocally(Customer $customer, KiotCustomer $kiotCustomer) {
         $info = $kiotCustomer->data;
         $customer->kiot_customer()->updateOrCreate([
             'code' => $info['code'],
@@ -265,6 +265,7 @@ class KiotService {
         $total = $customerResource->list(['pageSize' => 1])->getTotal();
         $numberOfPages = $total % $pageSize === 0 ? $total / $pageSize : floor(($total / $pageSize)) + 1;
         $currentItem = 0;
+        $pageSize += 1;
         for ($i = 0; $i < $numberOfPages; $i++) {
             dispatch(new SyncKiotCustomerJob($currentItem, $pageSize));
             $currentItem += $pageSize;
