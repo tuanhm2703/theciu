@@ -86,6 +86,7 @@ class KiotService {
             'reward_point' => $kiotCustomer->reward_point,
             'customer_id' => $customer->id
         ]);
+        $customer->update(['reward_point' => $kiotCustomer->reward_point]);
         if ($info['groups'] != null) {
             $rank_names = explode('|', $info['groups']);
             $rank = Rank::whereIn('name', $rank_names)->orderBy('min_value', 'desc')->first();
