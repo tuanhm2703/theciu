@@ -23,3 +23,7 @@ Route::get('branches', [BranchController::class, 'ajaxGetBranches']);
 Route::group(['prefix' => 'seo'], function() {
     Route::get('product-xlsx', [SeoController::class, 'getProductExcelFile']);
 });
+Route::group(['prefix' => 'recruitment'], function() {
+    include('api/JD.php');
+});
+include('api/Blog.php');

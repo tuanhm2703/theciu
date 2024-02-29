@@ -264,5 +264,22 @@ return [
     'invoice.update' => 'Cập nhật hoá đơn',
     'product.delete' => 'Xoá sản phẩm',
     'career' => 'Tuyển dụng',
-    'edit_promotion' => 'Cập nhật chương trình khuyến mãi'
+    'edit_promotion' => 'Cập nhật chương trình khuyến mãi',
+    'department_group' => 'Nhóm công việc',
+    'job_type' => 'Loại công việc',
+    'number_of_resumes' => 'Số lượng hồ sơ',
+    'create_jd' => 'Tạo JD',
+    'short_description' => 'Mô tả ngắn',
+    'job_requirement' => 'Yêu cầu công việc',
+    'benefit' => 'Phúc lợi',
+    'job_name' => 'Vị trí công việc',
+    'apply_date' => 'Ngày gửi',
+    'resume_list' => 'Danh sách ứng viên',
+    'blogType' => [
+        'web' => 'Website',
+        'career' => 'Tuyển dụng'
+    ],
+    'blog_type' => 'Loại bài viết',
+    'hot_job' => 'Công việc HOT',
+    'view_cv' => 'Xem hồ sơ'
 ];

@@ -12,6 +12,7 @@ class CategoryType extends Enum {
     const FEATURED = 'featured';
     const BEST_SELLER = 'best-seller';
     const COLLECTION = 'collection';
+    const CAREER = 'career';
 
     public static function categoryTypeOptions() {
         return [

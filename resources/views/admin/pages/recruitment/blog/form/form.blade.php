@@ -47,7 +47,7 @@
                     'class' => 'select2-ajax',
                     'multiple' => 'multiple',
                     'required',
-                    'data-select2-url' => route('admin.ajax.category.search', ['type' => App\Enums\CategoryType::BLOG]),
+                    'data-select2-url' => route('admin.ajax.category.search', ['type' => App\Enums\CategoryType::CAREER]),
                 ]) !!}
             </div>
             <div class="col-md-3">
@@ -56,7 +56,7 @@
                     {!! Form::checkbox('status', null, null, ['class' => 'form-check-input']) !!}
                 </div>
             </div>
-            {!! Form::hidden('type', App\Enums\BlogType::WEB, []) !!}
+            {!! Form::hidden('type', App\Enums\BlogType::CAREER, []) !!}
         </div>
         <div class="row">
             <div class="col-md-12">

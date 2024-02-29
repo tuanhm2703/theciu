@@ -22,6 +22,7 @@
             @include('admin.layouts.navbars.auth.nav-group.customer')
             @include('admin.layouts.navbars.auth.nav-group.page')
             @include('admin.layouts.navbars.auth.nav-group.branch')
+            @include('admin.layouts.navbars.auth.nav-group.recruitment')
         </ul>
     </div>
 </aside>

@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\BlogType;
 use App\Traits\Common\Categorizable;
 use App\Traits\Common\EditedBy;
 use App\Traits\Common\Imageable;
+use App\Traits\Common\Wishlistable;
 use App\Traits\Scopes\BlogScope;
 use App\Traits\Scopes\CustomScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Blog extends Model {
-    use HasFactory, SoftDeletes, Imageable, Categorizable, BlogScope, CustomScope, EditedBy;
+    use HasFactory, SoftDeletes, Imageable, Categorizable, BlogScope, CustomScope, EditedBy, Wishlistable;
     protected $fillable = [
         'title',
         'description',
@@ -21,8 +23,9 @@ class Blog extends Model {
         'status',
         'created_by',
         'updated_by',
-        'deletd_by',
-        'slug'
+        'deleted_by',
+        'slug',
+        'type'
     ];
     protected $casts = [
         'publish_date' => 'datetime'
@@ -84,5 +87,12 @@ class Blog extends Model {
             $output .= "<meta " . implode(" ", $content) . ">";
         }
         return $output;
+    }
+
+    public function scopeCareer($q) {
+        return $q->whereType(BlogType::CAREER);
+    }
+    public function creator() {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

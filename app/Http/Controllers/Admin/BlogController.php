@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\BlogType;
 use App\Enums\CategoryType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CreateBlogRequest;
@@ -14,8 +15,7 @@ use App\Models\Category;
 use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
 
-class BlogController extends Controller
-{
+class BlogController extends Controller {
     public function index(ViewBlogRequest $request) {
         return view('admin.pages.appearance.blog.index');
     }
@@ -25,10 +25,25 @@ class BlogController extends Controller
     }
 
     public function store(StoreBlogRequest $request) {
+        $request->merge([
+            'status' => $request->status == 'on' ? 1 : 0
+        ]);
         $blog = Blog::create($request->all());
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $blog->createImages([$request->file('image')]);
         }
+        $category_ids = [];
+        foreach ($request->category_ids as $id) {
+            $category = Category::firstOrCreate([
+                'id' => $id,
+                'type' => $blog->type
+            ], [
+                'name' => $id,
+                'type' => $blog->type
+            ]);
+            $category_ids[] = $category->id;
+        }
+        $blog->categories()->sync($category_ids);
         return BaseResponse::success([
             'message' => 'Thêm bài viết thành công!'
         ]);
@@ -37,7 +52,9 @@ class BlogController extends Controller
     public function edit(EditBlogRequest $request, Blog $blog) {
         $blog->category_ids = $blog->categories()->pluck('categories.id')->toArray();
         $selected = $blog->categories()->select('categories.id as id', 'categories.name as text')->pluck('text', 'id');
-        return view('admin.pages.appearance.blog.edit', compact('blog', 'selected'));
+        if ($blog->type === BlogType::WEB)
+            return view('admin.pages.appearance.blog.edit', compact('blog', 'selected'));
+        return view('admin.pages.recruitment.blog.edit', compact('blog', 'selected'));
     }
 
     public function update(Blog $blog, UpdateBlogRequest $request) {
@@ -45,18 +62,18 @@ class BlogController extends Controller
             'status' => $request->status == 'on' ? 1 : 0
         ]);
         $blog->update($request->all());
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             optional($blog->image)->delete();
             $blog->createImages([$request->file('image')]);
         }
         $category_ids = [];
-        foreach($request->category_ids as $id) {
+        foreach ($request->category_ids as $id) {
             $category = Category::firstOrCreate([
                 'id' => $id,
-                'type' => CategoryType::BLOG
+                'type' => $blog->type
             ], [
                 'name' => $id,
-                'type' => CategoryType::BLOG
+                'type' => $blog->type
             ]);
             $category_ids[] = $category->id;
         }
@@ -64,5 +81,12 @@ class BlogController extends Controller
         return BaseResponse::success([
             'message' => 'Cập nhật bài viết thành công'
         ]);
+    }
+
+    public function recruitmentBlog() {
+        return view('admin.pages.recruitment.blog.index');
+    }
+    public function createRecruitmentBlog() {
+        return view('admin.pages.recruitment.blog.create');
     }
 }
