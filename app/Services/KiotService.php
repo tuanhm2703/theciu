@@ -30,38 +30,19 @@ class KiotService {
         // if($customer->available_rank && $customer->kiot_customer)
     }
 
-    public static function syncKiotInfo(Customer $customer) {
+    public function syncKiotInfo(Customer $customer) {
         $customerResource = new CustomerResource(App::make(Client::class));
         if ($customer->phone) {
             try {
-                $info = $customerResource->list(['contactNumber' => $customer->phone, 'includeCustomerGroup' => true])->toArray();
-                if (count($info) > 0) {
-                    $info = $info[0];
-                    $customer->kiot_customer()->updateOrCreate([
-                        'code' => $info['code'],
-                        'kiot_customer_id' => $info['id']
-                    ], [
-                        'total_point' => $info['totalPoint'],
-                        'reward_point' => $info['rewardPoint'],
-                        'data' => json_encode($info)
-                    ]);
-                    $rank_names = explode('|', $info['groups']);
-                    $rank = Rank::whereIn('name', $rank_names)->orderBy('min_value', 'desc')->first();
-                    if ($rank) {
-                        if ($customer->available_rank && $customer->available_rank->min_value < $rank->min_value) {
-                            $customer->ranks()->sync($rank->id);
-                        } else if (!$customer->available_rank) {
-                            $customer->ranks()->sync($rank->id);
-                        }
-                    } else {
-                        if ($customer->available_rank && $customer->available_rank->pivot->value == 0) {
-                            $customer->available_ranks()->where('customer_ranks.value', 0)->detach();
-                        }
-                        $customer->kiot_customer()->delete();
-                    }
+                $info = $customerResource->list(['contactNumber' => $customer->phone, 'includeCustomerGroup' => true])->getItems();
+                if(count($info) > 0) {
+                    $kiotCustomer = $info[0];
+                    $this->saveKiotCustomerToLocal($customer, $kiotCustomer);
+                    $kc = $customer->kiot_customer;
+                    $this->syncKiotCustomerLocally($customer, $kc);
                     return true;
                 } else {
-                    $customer->available_ranks()->where('customer_ranks.value', 0)->detach();
+                    $customer->kiot_customer()->sync([]);
                 }
             } catch (\Throwable $th) {
                 Log::channel('kiot')->error($th);
