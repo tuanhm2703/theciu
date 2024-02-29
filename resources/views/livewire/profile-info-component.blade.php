@@ -63,6 +63,18 @@
                 </div>
             </div>
         @endif
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="d-flex">
+                    {!! Form::label('reward_point', 'Điểm thưởng còn lại:', []) !!}
+                    <div class="position-relative ml-3">
+                        <strong>
+                            <p>{{ $user->reward_point }}</p>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
         <button type="submit" wire:click.prevent="update" class="btn btn-outline-primary-2">
             <span wire:loading.remove wire:target="update">{{ trans('labels.update') }} <i
                     class="icon-long-arrow-right"></i></span>
