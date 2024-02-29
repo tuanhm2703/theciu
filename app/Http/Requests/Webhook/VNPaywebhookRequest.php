@@ -14,7 +14,7 @@ class VNPaywebhookRequest extends FormRequest
     public function authorize()
     {
         $ip_whitelist = explode(',', config('services.vnpay.ip'));
-        return in_array(request()->header('x-forwarded-for'), $ip_whitelist);
+        return in_array(request()->header('cf-connecting-ip'), $ip_whitelist);
     }
 
     /**

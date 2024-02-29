@@ -4,17 +4,15 @@ namespace App\Http\Requests\Webhook;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MomoWebhookRequest extends FormRequest
-{
+class MomoWebhookRequest extends FormRequest {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
-    {
+    public function authorize() {
         $ip_whitelist = explode(',', config('services.momo.ip'));
-        return in_array(request()->header('x-forwarded-for'), $ip_whitelist);
+        return in_array(request()->header('cf-connecting-ip'), $ip_whitelist);
     }
 
     /**
@@ -22,8 +20,7 @@ class MomoWebhookRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             //
         ];

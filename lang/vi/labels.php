@@ -260,6 +260,11 @@ return [
     'edit_combo' => 'Cập nhật combo',
     'combo_discount' => 'Giảm giá combo',
     'buy_now' => 'Mua ngay',
+    'stock.update' => 'Cập nhật tồn kho',
+    'invoice.update' => 'Cập nhật hoá đơn',
+    'product.delete' => 'Xoá sản phẩm',
+    'career' => 'Tuyển dụng',
+    'edit_promotion' => 'Cập nhật chương trình khuyến mãi',
     'department_group' => 'Nhóm công việc',
     'job_type' => 'Loại công việc',
     'number_of_resumes' => 'Số lượng hồ sơ',
@@ -281,5 +286,6 @@ return [
     'invoice.update' => 'Cập nhật hoá đơn',
     'product.delete' => 'Xoá sản phẩm',
     'career' => 'Tuyển dụng',
-    'edit_promotion' => 'Cập nhật chương trình khuyến mãi'
+    'edit_promotion' => 'Cập nhật chương trình khuyến mãi',
+    'view_cv' => 'Xem hồ sơ'
 ];

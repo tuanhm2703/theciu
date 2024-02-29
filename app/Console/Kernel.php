@@ -34,6 +34,7 @@ class Kernel extends ConsoleKernel {
                         }
                         $webhookResource->registerWebhook(WebhookType::STOCK_UPDATE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật tồn kho');
                         $webhookResource->registerWebhook(WebhookType::PRODUCT_DELETE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật tồn kho');
+                        $webhookResource->registerWebhook(WebhookType::CUSTOMER_UPDATE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật khách hàng');
                     } catch (\Throwable $th) {
                         continue;
                     }

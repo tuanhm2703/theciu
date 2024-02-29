@@ -27,3 +27,15 @@ Route::group(['prefix' => 'recruitment'], function() {
     include('api/JD.php');
 });
 include('api/Blog.php');
+
+Route::group(['as' => 'api.'], function() {
+    Route::group(['prefix' => 'products', 'as' => 'product.'], function() {
+        include('api/Product.php');
+    });
+    Route::group(['prefix' => 'banners', 'as' => 'banner.'], function() {
+        include('api/Banner.php');
+    });
+    Route::group(['prefix' => 'vouchers', 'as' => 'voucher.'], function() {
+        include('api/Voucher.php');
+    });
+});
