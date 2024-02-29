@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Enums\BlogType;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\BlogResource;
+use App\Http\Resources\Api\WebBlogResource;
 use App\Models\Blog;
+use App\Models\TheciuBlog;
 use App\Responses\Api\BaseResponse;
 use Illuminate\Http\Request;
 
@@ -14,6 +16,18 @@ class BlogController extends Controller
     public function index(Request $request) {
         $type = $request->type ?? BlogType::WEB;
         $pageSize = $request->pageSize ?? 9;
+        if($type === BlogType::WEB) {
+            $blogs = TheciuBlog::where('post_type', 'post')->where('ping_status', 'open')
+            ->whereHas('meta_attachment')
+            ->with('meta_attachment', function ($q) {
+                return $q->with('meta_attachment');
+            })
+            ->where('post_status', 'publish')
+            ->orderBy('post_date', 'desc')
+            ->select('post_title', 'post_excerpt', 'post_status', 'ID', 'post_date', 'post_type')
+            ->paginate($pageSize);
+            return BaseResponse::success(WebBlogResource::collection($blogs));
+        }
         $blogs = Blog::with('image')->select('id', 'title', 'description', 'publish_date', 'slug', 'type')->whereType($type)->paginate($pageSize);
         return BaseResponse::success($blogs);
     }
