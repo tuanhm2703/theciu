@@ -70,12 +70,14 @@ class KiotService {
         return false;
     }
 
-    public function saveKiotCustomerByIdId($id) {
+    public function saveKiotCustomerById($id) {
         try {
             $customerResource = new CustomerResource(App::make(Client::class));
             $kiotCustomer = $customerResource->getById($id);
             $customer = Customer::wherePhone($kiotCustomer->getContactNumber())->first();
             $this->saveKiotCustomerToLocal($customer, $kiotCustomer);
+            $kc = $customer->kiot_customer;
+            $this->syncKiotCustomerLocally($customer, $kc);
             return true;
         } catch (\Throwable $th) {
             //throw $th;
