@@ -374,7 +374,7 @@ class Order extends Model
         return $revenue;
     }
     public function getCustomerPayment() {
-        $revenue = $this->total - $this->rank_discount_value;
+        $revenue = $this->total;
         // if($this->freeship_voucher) {
         //     $revenue -= $this->shipping_order->total_fee;
         // }
