@@ -24,4 +24,10 @@ class CategoryType extends Enum {
             self::COLLECTION => trans("labels.category_types." . self::COLLECTION)
         ];
     }
+    public static function productCategoryTypeOptions() {
+        return [
+            self::PRODUCT => trans("labels.category_types." . self::PRODUCT),
+            self::COLLECTION => trans("labels.category_types." . self::COLLECTION)
+        ];
+    }
 }

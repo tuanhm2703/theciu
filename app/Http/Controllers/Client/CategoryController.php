@@ -22,9 +22,11 @@ class CategoryController extends Controller
             Meta::remove('image');
             Meta::set('image', $category->image?->path_with_domain);
         };
+        $category->loadMeta();
         $banners = [];
         if($category->type == CategoryType::COLLECTION) {
-            $banners = Banner::collection()->with('desktopImage', 'phoneImage')->available()->get();
+            $url = convertToHttps(request()->fullUrl());
+            $banners = Banner::collection()->with('desktopImage', 'phoneImage')->whereUrl($url)->available()->get();
         }
         $category = $category->slug;
         return view('landingpage.layouts.pages.product.index', compact('category', 'banners'));

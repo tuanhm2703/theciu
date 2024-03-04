@@ -19,14 +19,12 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class CheckoutService
-{
-    public static function checkout(CheckoutModel $checkoutModel)
-    {
+class CheckoutService {
+    public static function checkout(CheckoutModel $checkoutModel) {
         DB::beginTransaction();
         $customer = $checkoutModel->getCustomer();
         try {
-            if(!$customer->id) $customer->save();
+            if (!$customer->id) $customer->save();
             $checkoutModel->createAddress();
             $payment_method = PaymentMethod::find($checkoutModel->getPaymentMethodId());
             $order = $customer->orders()->create([
@@ -37,7 +35,8 @@ class CheckoutService
                 'order_status' => $payment_method->type == PaymentMethodType::COD ? OrderStatus::WAITING_TO_PICK : OrderStatus::WAIT_TO_ACCEPT,
                 'sub_status' => $payment_method->type == PaymentMethodType::COD ? OrderSubStatus::PREPARING : null,
                 'payment_method_id' => $checkoutModel->getPaymentMethodId(),
-                'note' => $checkoutModel->getNote()
+                'note' => $checkoutModel->getNote(),
+                'additional_discount' => $checkoutModel->getAdditionalDiscount()
             ]);
             $order->addresses()->create([
                 'type' => AddressType::SHIPPING,
@@ -50,8 +49,8 @@ class CheckoutService
                 'phone' => $checkoutModel->getAddress()->phone,
                 'featured' => 1
             ]);
-            if($checkoutModel->getInventories()->count() <= 0) {
-                throw new Exception('Đã có lỗi xảy ra, vui lòng thử lại');
+            if ($checkoutModel->getInventories()->count() <= 0) {
+                throw new Exception('Vui lòng chọn ít nhất 1 sản phẩm', 409);
             }
             foreach ($checkoutModel->getInventories() as $inventory) {
                 $order->inventories()->attach([
@@ -63,13 +62,48 @@ class CheckoutService
                         'total' => $inventory->sale_price * $inventory->cart_stock,
                         'title' => $inventory->title,
                         'name' => $inventory->name,
-                        'is_reorder' => $inventory->product->is_reorder && $inventory->stock_quantity  - $inventory->cart_stock < 0
+                        'is_reorder' => $inventory->product->is_reorder && $inventory->stock_quantity  - $inventory->cart_stock < 0,
+                        'promotion_id' => $inventory->product?->available_promotion?->id
                     ]
                 ]);
                 if ($inventory->stock_quantity - $inventory->cart_stock < 0 && $inventory->product->is_reorder == 0)
-                    throw new Exception("Sản phẩm $inventory->name không đủ số lượng", 409);
+                    throw new InventoryOutOfStockException("Sản phẩm $inventory->name không đủ số lượng", 409);
                 /* If product is not reorderable or product is reorderable and stock quantity is less
                 than 0, then update stock quantity. */
+            }
+            foreach ($checkoutModel->getAccomInventories() as $inventory) {
+                $order->inventories()->attach([
+                    $inventory->id => [
+                        'product_id' => $inventory->product_id,
+                        'quantity' => $inventory->quantity_each_order,
+                        'origin_price' => $inventory->price,
+                        'promotion_price' => 0,
+                        'total' => 0,
+                        'title' => $inventory->title,
+                        'name' => $inventory->name,
+                        'is_reorder' => 0,
+                        'promotion_id' => $inventory->product?->available_promotion?->id
+                    ]
+                ]);
+                if ($inventory->stock_quantity - $inventory->quantity_each_order < 0)
+                    throw new InventoryOutOfStockException("Sản phẩm $inventory->name không đủ số lượng", 409);
+            }
+            foreach ($checkoutModel->getAccomProductInventories() as $inventory) {
+                $order->inventories()->attach([
+                    $inventory->id => [
+                        'product_id' => $inventory->product_id,
+                        'quantity' => $inventory->quantity_each_order,
+                        'origin_price' => $inventory->price,
+                        'promotion_price' => 0,
+                        'total' => 0,
+                        'title' => $inventory->title,
+                        'name' => $inventory->name,
+                        'is_reorder' => 0,
+                        'promotion_id' => $inventory->product?->available_promotion?->id
+                    ]
+                ]);
+                if ($inventory->stock_quantity - $inventory->quantity_each_order < 0)
+                    throw new InventoryOutOfStockException("Sản phẩm $inventory->name không đủ số lượng", 409);
             }
             $order_total = $order->inventories()->sum('order_items.total');
             $rank_discount = $customer->calculateRankDiscountAmount($order_total);
@@ -78,8 +112,8 @@ class CheckoutService
             $attach_vouchers = [];
             $order_discount_amount = 0;
             $freeship_discount_amount = 0;
-            if($discounted_combos->count() > 0) {
-                foreach($discounted_combos as $c) {
+            if ($discounted_combos->count() > 0) {
+                foreach ($discounted_combos as $c) {
                     $order->combos()->attach($c['combo']->id, [
                         'total_discount' => $c['discount_amount'],
                         'number_of_combos' => $c['total_combo']
@@ -106,10 +140,10 @@ class CheckoutService
                     'customer_id' => $customer->id
                 ];
             }
-                $order->vouchers()->attach($attach_vouchers);
+            $order->vouchers()->attach($attach_vouchers);
             $subtotal = $order->inventories()->sum('order_items.total');
             $order->update([
-                'total' => $order_total + $order->shipping_fee - $rank_discount - $combo_discount,
+                'total' => $order_total + $order->shipping_fee - $rank_discount - $combo_discount - $checkoutModel->getAdditionalDiscount(),
                 'subtotal' => $subtotal,
                 'origin_subtotal' => $order->inventories()->sum(DB::raw('order_items.origin_price * order_items.quantity')),
                 'rank_discount_value' => $rank_discount,
@@ -136,8 +170,8 @@ class CheckoutService
             $redirectUrl = PaymentService::checkout($order);
             self::saveOrderToSession($order);
             event(new OrderCreatedEvent($order));
-            DB::commit();
             event(new KiotOrderCreatedEvent($order));
+            DB::commit();
             removeSessionCart();
             return [
                 'error' => false,
@@ -147,7 +181,7 @@ class CheckoutService
             Log::error($th);
             DB::rollBack();
             $error =  "";
-            if ($th->getCode() !== 500 || !$th->getCode()) {
+            if ($th->getCode() == 409) {
                 $error = $th->getMessage();
             } else {
                 $error = 'Đã có lỗi xảy ra, vui lòng liên hệ bộ phận chăm sóc khách hàng để nhận hỗ trợ.';

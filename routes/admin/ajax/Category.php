@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\Ajax\CategoryController;
 
 Route::group(['prefix' => 'category', 'as' => 'category.'], function() {
     Route::get('/', [CategoryController::class, 'getAllCategories'])->name('all');
+    Route::get('/get-by-type', [CategoryController::class, 'getCategoriesByType'])->name('getByType');
+    Route::put('/update-order', [CategoryController::class, 'updateOrder'])->name('order.update');
     Route::put('/{category}', [CategoryController::class, 'update'])->name('update');
     Route::get('/{category}/views/product', [CategoryController::class, 'viewAddProduct'])->name('view.add_product');
     Route::post('/{category}/product', [CategoryController::class, 'addProduct'])->name('product.add');

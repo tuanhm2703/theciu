@@ -63,6 +63,7 @@ class PayATM extends Process
             Parameter::REQUEST_ID => $requestId,
             Parameter::EXTRA_DATA => $extraData,
             Parameter::SIGNATURE => $signature,
+            Parameter::ORDER_GROUP_ID => env('MOMO_ATM_GROUP_ID')
         );
 
         return new PayATMRequest($arr);

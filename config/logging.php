@@ -61,20 +61,27 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
             'level' => env('LOG_LEVEL', 'debug'),
+            'username' => 'www-data',
         ],
         'momo' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/momo/momo.log')
+            'path' => storage_path('logs/momo/momo.log'),
+            'days' => 14,
+            'username' => 'www-data',
+            'permission' => 755,
         ],
         'kiot' => [
             'driver' => 'daily',
             'path' => storage_path('logs/kiot/kiot.log'),
             'days' => 14,
+            'username' => 'www-data',
+            'permission' => 755,
         ],
         'vnpay' => [
             'driver' => 'daily',
             'path' => storage_path('logs/vnpay/vnpay.log'),
             'days' => 14,
+            'permission' => 755,
         ],
         'daily' => [
             'driver' => 'daily',

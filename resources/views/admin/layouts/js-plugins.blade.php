@@ -28,10 +28,12 @@
 <script src="{{ asset('assets/js/bootstrap-treeview.min.js') }}"></script>
 <script src="{{ asset('assets/js/summernote-map-plugin.js') }}"></script>
 <script src="{{ getAssetUrl('assets/js/notyf.min.js') }}"></script>
+<script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
 <script src="https://cdn.jsdelivr.net/npm/simple-notify@0.5.5/dist/simple-notify.min.js"></script>
 <script
     src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/lang/summernote-{{ App::getLocale() }}-{{ getLocaleWithCountryCode()[App::getLocale()] }}.min.js">
 </script>
+<script src="{{ asset('assets/js/plugins/ckeditor.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/froala_editor.pkgd.min.js') }}"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/4.0.19/css/froala_editor.pkgd.css"></script> --}}
 <script src="{{ asset('assets/js/argon-dashboard.js') }}"></script>

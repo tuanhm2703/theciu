@@ -9524,7 +9524,7 @@ p {
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: rgba(51, 51, 51, 0.25);
+    background-color: rgb(98 92 92 / 25%);
     z-index: 1;
     opacity: 0;
     visibility: hidden;

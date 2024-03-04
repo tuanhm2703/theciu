@@ -26,7 +26,8 @@ class SyncWarehouseController extends Controller {
         $branches = collect($branches);
         $saleChannelResource = new SaleChannelResource(App::make(Client::class));
         $sale_channels = $saleChannelResource->list()->toArray();
-        $userResource = new UserResource(App::make(Client::class));
+        $client = App::make(Client::class);
+        $userResource = new UserResource($client);
         $users = collect($userResource->list(['pageSize' => 500])->toArray());
         foreach($sale_channels as $index => $channel) {
             $sale_channels[$index]['name'] = $channel['name']. "|". $channel['otherProperties']['img'];
@@ -34,7 +35,9 @@ class SyncWarehouseController extends Controller {
         $sale_channels = collect($sale_channels);
         $kiotSetting = App::get('KiotConfig');
         $numberOfProductHaveToSync = Inventory::whereNotNull('sku')->count();
-        return view('admin.pages.setting.warehouse.index', compact('branches', 'kiotSetting', 'numberOfProductHaveToSync', 'sale_channels', 'users'));
+        $webhookResource = new WebhookResource($client);
+        $webhooklist = $webhookResource->list()->toArray();
+        return view('admin.pages.setting.warehouse.index', compact('branches', 'kiotSetting', 'numberOfProductHaveToSync', 'sale_channels', 'users', 'webhooklist'));
     }
 
     public function update(Request $request) {
@@ -53,6 +56,8 @@ class SyncWarehouseController extends Controller {
                     $webhookResource->remove($webhook['id']);
                 }
                 $webhookResource->registerWebhook(WebhookType::STOCK_UPDATE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật tồn kho');
+                $webhookResource->registerWebhook(WebhookType::PRODUCT_DELETE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật tồn kho');
+                $webhookResource->registerWebhook(WebhookType::CUSTOMER_UPDATE, route('webhook.warehouse.kiotviet'), true, 'The CIU cập nhật tồn kho');
             }
         } catch (\Throwable $th) {
             Log::error($th);
@@ -63,6 +68,7 @@ class SyncWarehouseController extends Controller {
     }
 
     public function downloadKiotData() {
+        KiotProduct::whereNotNull('id')->delete();
         $productResource = new ProductResource(App::make(Client::class));
         $data = $productResource->list(['pageSize' => '1']);
         $total = $data->getTotal();

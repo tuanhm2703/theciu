@@ -45,9 +45,9 @@ class MomoService
         $requestId = time() + 60;
         $orderId = time();
         if(auth('customer')->check()) {
-            $redirectUrl = route('client.profile.order.details', $order->id);
-        } else {
             $redirectUrl = route('client.auth.profile.order.details', $order->id);
+        } else {
+            $redirectUrl = route('client.order.details', $order->id);
         }
         switch ($requestType) {
             case RequestType::CAPTURE_MOMO_WALLET:

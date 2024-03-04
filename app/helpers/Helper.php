@@ -560,3 +560,16 @@ function syncSessionCart() {
         \Log::error($th);
     }
 }
+function detailShippingAndReturnInfo() {
+    return '<p><img src="https://minio-api.theciu.vn/theciu-beta/1000/images/C0iikhhUn9qEknQHJFQ1hQq5v7J5kVkrl4cXN7HA.jpg" style="width: 100%px;" class="fr-fic fr-dib"><img src="https://minio-api.theciu.vn/theciu-beta/1000/images/rcrWntNRvqaZKvbWg7ob3RQUO0dJZbkMh2lftksM.jpg" style="width: 100%px;" class="fr-fic fr-dib"><img src="https://minio-api.theciu.vn/theciu-beta/1000/images/sIynKKTIwc5t0qptZjeWAR5oOrikpPBnqm1GGtiX.jpg" style="width: 100%px;" class="fr-fic fr-dib"></p><p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>';
+}
+function defaultProductAdditionalInformation() {
+    return '<p><img src="https://minio-api.theciu.vn/theciu-beta/1000/images/skQxbHb8RaoX9QeD28S7r4iAUMZOaNLTIBQ79op7.jpg" style="width: 100%px;" class="fr-fic fr-dib"><img src="https://minio-api.theciu.vn/theciu-beta/1000/images/dELsvpo4PUHQc0R4ejdveaujJhpzvZey2hokveYQ.jpg" style="width: 100%px;" class="fr-fic fr-dib"><img src="https://minio-api.theciu.vn/theciu-beta/1000/images/1gRsM6pRUZ7fO4iU7WpDZB6O5Bs5fpQhrOmOZACl.jpg" style="width: 100%px;" class="fr-fic fr-dib"></p><p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;">Powered by <a href="https://www.froala.com/wysiwyg-editor?pb=1" title="Froala Editor">Froala Editor</a></p>';
+}
+function convertToHttps($request_url) {
+    $url = parse_url($request_url);
+    if($url['scheme'] === 'https') {
+        return $request_url;
+    }
+    return str_replace("http", "https", $request_url);
+}

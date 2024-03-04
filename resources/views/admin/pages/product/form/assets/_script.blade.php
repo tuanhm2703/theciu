@@ -111,7 +111,7 @@
 
     const getListCategories = () => {
         $.ajax({
-            url: '{{ route('admin.ajax.category.all') }}?type=product',
+            url: '{{ route('admin.ajax.category.getByType') }}?type=product',
             type: 'GET',
             success: (res) => {
                 listCategories = res.data.data

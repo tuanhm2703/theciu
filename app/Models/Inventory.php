@@ -25,7 +25,10 @@ class Inventory extends Model {
         'promotion_from',
         'promotion_to',
         'promotion_status',
-        'status'
+        'status',
+        'total_promotion_quantity',
+        'promotion_quantity',
+        'quantity_each_order',
     ];
 
     protected $casts = [
@@ -53,14 +56,13 @@ class Inventory extends Model {
 
     public function firstAttribute() {
         return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
-        ->where('attribute_inventory.order', 1)->groupBy('laravel_through_key');
+            ->where('attribute_inventory.order', 1)->groupBy('laravel_through_key');
     }
     public function secondAttribute() {
         return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
-        ->where('attribute_inventory.order', 2)->groupBy('laravel_through_key');
+            ->where('attribute_inventory.order', 2)->groupBy('laravel_through_key');
     }
-    public function order_items()
-    {
+    public function order_items() {
         return $this->hasMany(OrderItem::class);
     }
     public function order_item() {
@@ -75,8 +77,8 @@ class Inventory extends Model {
         return number_format($this->price, 0, ',', '.');
     }
     public function getCartStockAttribute() {
-        if($this->pivot) return $this->pivot->quantity;
-        return $this->order_item?->quantity;
+        if ($this->pivot) return $this->pivot->quantity;
+        return $this->order_item?->quantity ?? 1;
     }
 
     public function promotions() {
@@ -172,7 +174,7 @@ class Inventory extends Model {
         if ($kiotSetting->data['branchId']) {
             try {
                 $kiotProduct = KiotProduct::where('kiot_code', $this->sku)->first();
-                if($kiotProduct) {
+                if ($kiotProduct) {
                     $inventories = $kiotProduct->data['inventories'];
                     foreach ($inventories as $inventory) {
                         if ($inventory['branchId'] == $kiotSetting->data['branchId']) {

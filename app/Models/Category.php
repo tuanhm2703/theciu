@@ -21,7 +21,10 @@ class Category extends Model
         'status',
         'type',
         'slug',
-        'updated_at'
+        'updated_at',
+        'content',
+        'order',
+        'visible'
     ];
 
     public function categories() {
@@ -60,7 +63,9 @@ class Category extends Model
             $q->withCount('products')->with('categories', function($q) {
                 $q->withCount('products');
             });
-        })->withCount('products')->whereType(CategoryType::PRODUCT)->get();
+        })->withCount('products')->where(function($q) {
+            $q->whereType(CategoryType::PRODUCT)->orWhere('type', CategoryType::COLLECTION);
+        })->where('visible', 1)->orderBy('order')->get();
     }
     public function hasProducts() {
         if($this->products_count == 0) {

@@ -46,6 +46,9 @@
                                 $("body").css("overflow-x", "hidden");
                                 $(".sticky-header.fixed").css("padding-right", "0");
                                 @this.preventReload();
+                                setTimeout(() => {
+                                    $('.popup-banner-item').css('display', 'none')
+                                }, 500);
                             },
                         },
                     });

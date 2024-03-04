@@ -16,12 +16,20 @@
     <input type="file" name="image">
 </div>
 <div class="form-group">
+    {!! Form::label('meta[keywords]', 'Meta-keywords', ['class' => 'form-label']) !!}
+    {!! Form::text('meta[keywords]', null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group">
     {!! Form::label('meta[description]', 'Meta-description', ['class' => 'form-label']) !!}
-    {!! Form::textarea('meta[description]', null, ['class' => 'form-control', 'required']) !!}
+    {!! Form::textarea('meta[description]', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group">
     {!! Form::label('meta[title]', 'Meta-title', ['class' => 'form-label']) !!}
     {!! Form::text('meta[title]', null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group">
+    {!! Form::label('content', trans('labels.content'), ['class' => 'form-label']) !!}
+    {!! Form::textarea('content', null, ['class' => 'form-control']) !!}
 </div>
 <script>
     $('.category-form').ajaxForm({

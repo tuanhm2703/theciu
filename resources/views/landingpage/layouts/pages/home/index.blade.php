@@ -13,7 +13,7 @@
 
         <div class="mb-5"></div><!-- End .mb-5 -->
 
-        <livewire:client.deal-of-day-component />
+        {{-- <livewire:client.deal-of-day-component /> --}}
 
         <div class="pt-4 pb-3" style="background-color: #222;">
             <div class="container">

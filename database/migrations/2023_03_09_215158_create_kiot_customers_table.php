@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('kiot_customers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('kiot_customer_id');
-            $table->bigInteger('customer_id')->unsigned();
-            $table->string('code');
+            $table->bigInteger('customer_id')->unsigned()->nullable();
+            $table->string('code')->index();
+            $table->string('contact_number')->nullable()->index();
             $table->double('total_point')->nullable();
             $table->double('reward_point')->nullable();
             $table->foreign('customer_id')->references('id')->on('customers');

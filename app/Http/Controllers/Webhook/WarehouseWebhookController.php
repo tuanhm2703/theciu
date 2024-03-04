@@ -6,26 +6,29 @@ use App\Http\Controllers\Controller;
 use App\Models\Inventory;
 use App\Models\KiotProduct;
 use App\Models\Product;
+use App\Services\KiotService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
+use VienThuong\KiotVietClient\WebhookType;
 
 class WarehouseWebhookController extends Controller
 {
+    public function __construct(private KiotService $kiotService) {
+    }
     public function updateKiotProduct(Request $request)
     {
         try {
-            $data = $request->Notifications[0]['Data'][0];
-            $sku = $data['ProductCode'];
-            $inventory = Inventory::whereSku($sku)->firstOrFail();
-            $kiotConfig = App::get('KiotConfig');
-            if ($inventory->sku == $sku && $kiotConfig->data['branchId'] == $data['BranchId']) {
-                $inventory->stock_quantity = $data['OnHand'] - $data['Reserved'];
-                $inventory->stock_quantity = $inventory->stock_quantity < 0 ? 0 : $inventory->stock_quantity;
-                $inventory->status = $data['isActive'];
-                $inventory->save();
+            $data = $request->Notifications[0];
+            $type = $data['Action'];
+            if(str_contains($type, WebhookType::STOCK_UPDATE) || str_contains($type, WebhookType::PRODUCT_DELETE)) {
+                $this->kiotService->syncWarehouseThroughWebhook($request);
+            } else if(str_contains($type, WebhookType::CUSTOMER_UPDATE)) {
+                $id = $data['Data'][0]['Id'];
+                $this->kiotService->saveKiotCustomerById($id);
             }
         } catch (\Throwable $th) {
-            \Log::error($th->getMessage());
+            Log::error($th->getMessage());
         }
         return response()->json([
             'message' => 'Success'

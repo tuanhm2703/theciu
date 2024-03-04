@@ -1,4 +1,4 @@
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaJXP838pFvEowdo9LEbF7CQBQZbQzQp0&libraries=places">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDU6AKAXtutXqOJMwvJD1rrDZZ4zrIfJc&libraries=places">
 </script>
 <script>
     const imgSource = `{{ isset($branch) ? $branch->image?->path_with_original_size : null }}`
@@ -113,5 +113,5 @@
     })
 </script>
 <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaJXP838pFvEowdo9LEbF7CQBQZbQzQp0&libraries=places&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDU6AKAXtutXqOJMwvJD1rrDZZ4zrIfJc&libraries=places&callback=initMap">
 </script>

@@ -42,9 +42,15 @@ trait ProductScope {
             $q->whereHas('inventories', function ($q) {
                 $q->where('stock_quantity', '>', 0)->where('inventories.status', 1);
             })->orWhere('products.is_reorder', 1);
+        })->whereHas('categories')->whereHas('images')->where('visible', 1);
+    }
+    public function scopeAvailableCannotView($q) {
+        return $q->where(function ($q) {
+            $q->whereHas('inventories', function ($q) {
+                $q->where('stock_quantity', '>', 0)->where('inventories.status', 1);
+            })->orWhere('products.is_reorder', 1);
         })->whereHas('images');
     }
-
     public function scopeHasAvailablePromotions($q) {
         return $q->whereHas('promotions', function ($q) {
             $q->available();

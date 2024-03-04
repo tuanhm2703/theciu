@@ -41,7 +41,8 @@ class Order extends Model
         'rank_discount_value',
         'note',
         'bonus_note',
-        'combo_discount'
+        'combo_discount',
+        'additional_discount'
     ];
 
     public function customer()
@@ -69,7 +70,15 @@ class Order extends Model
             'promotion_price',
             'title',
             'name',
-            'is_reorder'
+            'is_reorder',
+            'promotion_id'
+        ]);
+    }
+    public function promotions() {
+        return $this->belongsToMany(Promotion::class, 'order_items')->withTrashed()->withPivot([
+            'inventory_id',
+            'promotion_id',
+            'order_id'
         ]);
     }
     public function products()
@@ -358,14 +367,14 @@ class Order extends Model
     public function getFinalRevenue()
     {
         $actualShip = $this->getActualShippingFee();
-        $revenue = $this->total - ($actualShip - $this->shipping_order->total_fee) - $this->rank_discount_value;
+        $revenue = $this->total - ($actualShip - $this->shipping_order->total_fee);
         if(!$this->freeship_voucher) {
             $revenue -= $actualShip;
         }
         return $revenue;
     }
     public function getCustomerPayment() {
-        $revenue = $this->total - $this->rank_discount_value;
+        $revenue = $this->total;
         // if($this->freeship_voucher) {
         //     $revenue -= $this->shipping_order->total_fee;
         // }
@@ -380,7 +389,7 @@ class Order extends Model
                 'productCode' => $inventory->sku,
                 'quantity' => $inventory->pivot->quantity,
                 'price' => $inventory->pivot->total,
-                'discountRatio' => 100 - ($inventory->pivot->promotion_price / $inventory->pivot->origin_price) * 100,
+                'discountRatio' => $inventory->pivot->origin_price === 0 ? 0 : 100 - ($inventory->pivot->promotion_price / $inventory->pivot->origin_price) * 100,
                 'discount' => $inventory->pivot->origin_price - $inventory->pivot->promotion_price,
             ]);
         }
@@ -395,7 +404,7 @@ class Order extends Model
                 'productCode' => $inventory->sku,
                 'quantity' => $inventory->pivot->quantity,
                 'price' => $inventory->pivot->origin_price,
-                'discountRatio' => 100 - ($inventory->pivot->promotion_price / $inventory->pivot->origin_price) * 100,
+                'discountRatio' => $inventory->pivot->origin_price == 0 ? 0 : 100 - ($inventory->pivot->promotion_price / $inventory->pivot->origin_price) * 100,
                 'discount' => $inventory->pivot->origin_price - $inventory->pivot->promotion_price,
             ]);
         }

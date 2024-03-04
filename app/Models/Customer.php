@@ -168,4 +168,8 @@ class Customer extends User {
         }
         return null;
     }
+
+    public function kiot_customer_by_phone() {
+        return $this->hasOne(KiotCustomer::class, 'contact_number', 'phone');
+    }
 }

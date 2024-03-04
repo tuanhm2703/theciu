@@ -24,13 +24,21 @@
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('assets/landingpage/css/plugins/magnific-popup/magnific-popup.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-treeview.min.css') }}">
-<link rel="stylesheet" href="{{asset('assets/landingpage/css/floating-labels.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/landingpage/css/floating-labels.css') }}">
 <link rel="stylesheet" href="{{ getAssetUrl('assets/css/notyf.min.css') }}">
 <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.3.0/video-js.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.3.0/video.min.js"></script>
-
-  <!-- Include editor styles. -->
-  <link href="{{ asset('assets/css/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
-  <link href="{{ asset('assets/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+<!-- Include editor styles. -->
+<link href="{{ asset('assets/css/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('assets/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
 @livewireStyles
+<style>
+    .invisible {
+        display: block !important;
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+</style>

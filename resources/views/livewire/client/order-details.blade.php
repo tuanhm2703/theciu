@@ -149,16 +149,25 @@
                         <div class="row">
                             <div class="col-12 col-md-10" style="line-height: 2rem">
                                 <div class="font-weight-bold">{{ $inventory->pivot->name }}</div>
-                                <div class="confirm-label">x{{ $inventory->pivot->quantity }}</div>
+                                <div class="confirm-label">
+                                    {{ format_currency_with_label($inventory->pivot->total / $inventory->pivot->quantity) }}
+                                    x {{ $inventory->pivot->quantity }}</div>
                             </div>
                             <div class="col-12 col-md-2 text-right">
-                                @if ($inventory->pivot->promotion_price < $inventory->pivot->origin_price)
-                                    <span
-                                        class="old-price">{{ format_currency_with_label($inventory->pivot->origin_price) }}</span>
-                                    <span
-                                        class="new-price ml-1">{{ format_currency_with_label($inventory->pivot->promotion_price) }}</span>
+                                @php
+                                    $promotion = $order->promotions->where('pivot.inventory_id', $inventory->id)->where('id', $inventory->pivot->promotion_id)->first();
+                                @endphp
+                                @if (in_array($promotion?->type, [App\Enums\PromotionType::ACCOM_GIFT, App\Enums\PromotionType::ACCOM_PRODUCT]) && $inventory->pivot?->promotion_price == 0)
+                                    <p class="text-danger font-weight-bold">Quà đi kèm</p>
                                 @else
-                                    {{ format_currency_with_label($inventory->pivot->origin_price) }}
+                                    @if ($inventory->pivot->promotion_price < $inventory->pivot->origin_price)
+                                        <span
+                                            class="old-price">{{ format_currency_with_label($inventory->pivot->origin_price * $inventory->pivot->quantity) }}</span>
+                                        <span
+                                            class="new-price ml-1">{{ format_currency_with_label($inventory->pivot->promotion_price * $inventory->pivot->quantity) }}</span>
+                                    @else
+                                        {{ format_currency_with_label($inventory->pivot->origin_price * $inventory->pivot->quantity) }}
+                                    @endif
                                 @endif
                             </div>
                         </div>
@@ -170,7 +179,7 @@
             <h6 class="mb-1">Chú thích đơn hàng</h6>
             <p><i>{{ $order->note }}</i></p>
             @if (!empty($order->bonus_note))
-                <p class="text-danger"><i>{{ $order->bonus_note }}</i></p>
+                <p class="text-danger"><i>Quà tặng đi kèm: {{ $order->bonus_note }}</i></p>
             @endif
         </div>
         <div class="order-turnover-info text-right border-top pt-2" style="font-size: 14px;">
@@ -220,6 +229,16 @@
                     </div>
                     <div class="col-4 text-right">
                         - {{ format_currency_with_label($order->combo_discount) }}
+                    </div>
+                </div>
+            @endif
+            @if ($order->additional_discount > 0)
+                <div class="row">
+                    <div class="col-8 border-right">
+                        Giảm giá chương trình
+                    </div>
+                    <div class="col-4 text-right">
+                        - {{ format_currency_with_label($order->additional_discount) }}
                     </div>
                 </div>
             @endif

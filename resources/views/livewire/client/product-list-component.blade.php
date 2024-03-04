@@ -1,5 +1,5 @@
 <div>
-    <nav aria-label="breadcrumb" class="breadcrumb-nav {{ isset($banners) && count(($banners)) > 0 ? 'mb-0' : 'mb-2' }}">
+    <nav aria-label="breadcrumb" class="breadcrumb-nav {{ isset($banners) && count($banners) > 0 ? 'mb-0' : 'mb-2' }}">
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">{{ trans('labels.dashboard') }}</a></li>
@@ -158,6 +158,11 @@
                             @endif
                         </div>
                     </div><!-- End .load-more-container -->
+                    @if ($content = \App\Models\Category::whereSlug($category)->first()?->content)
+                        <p class="text-center page-content">
+                            {!! $content !!}
+                        </p>
+                    @endif
                 </div><!-- End .col-lg-9 -->
             </div><!-- End .row -->
         </div><!-- End .container -->

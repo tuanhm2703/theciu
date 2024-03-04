@@ -54,7 +54,8 @@ class Product extends Model {
         'shipping_and_return',
         'code',
         'reorder_days',
-        'status'
+        'status',
+        'visible'
     ];
 
     public function getImageSizesAttribute() {
@@ -126,7 +127,11 @@ class Product extends Model {
     }
 
     public function promotions() {
-        return $this->belongsToMany(Promotion::class, 'promotion_product');
+        return $this->belongsToMany(Promotion::class, 'promotion_product')->withPivot([
+            'promotion_id',
+            'product_id',
+            'featured'
+        ]);
     }
     public function combos() {
         return $this->belongsToMany(Combo::class, 'combo_product');
@@ -134,6 +139,9 @@ class Product extends Model {
 
     public function available_promotions() {
         return $this->belongsToMany(Promotion::class, 'promotion_product')->available();
+    }
+    public function available_promotion() {
+        return $this->hasOneThrough(Promotion::class, PromotionProduct::class, 'product_id', 'id', 'id', 'promotion_id')->available();
     }
 
     public function available_combos() {
@@ -343,5 +351,13 @@ class Product extends Model {
             $product->setInventories(new InventoryCollection($inventories));
             $productResource->update($product);
         }
+    }
+    public function generateUniqueSlug() {
+        $base_slug = stripVN($this->name);
+        $slug = $base_slug;
+        while(Product::withTrashed()->where('slug', $slug)->where('id', '!=', $this->id)->exists()) {
+            $slug = "$base_slug-".now()->timestamp;
+        }
+        return $slug;
     }
 }

@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->string('cancel_reason');
             $table->integer('canceled_by');
             $table->bigInteger('payment_method_id')->unsigned();
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->timestamps();
         });
     }
