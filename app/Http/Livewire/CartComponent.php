@@ -419,6 +419,10 @@ class CartComponent extends Component {
         } else {
             $this->additional_discount = 0;
         }
+        if(now()->between('2024-03-04', '2024-03-10')) {
+            $this->additional_discount = round($this->total / 100 * 10, 0);
+            $this->total -= $this->additional_discount;
+        }
     }
     private function isAccomProductUpdated($accom_product_promotions) {
         $collectA = collect($this->accom_product_promotions->pluck('id')->toArray());
