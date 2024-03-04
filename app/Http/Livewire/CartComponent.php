@@ -420,7 +420,8 @@ class CartComponent extends Component {
             $this->additional_discount = 0;
         }
         if(now()->between('2024-03-04', '2024-03-10')) {
-            $this->additional_discount = round($this->total / 100 * 10, 0);
+            $additional_discount = round($this->total / 100 * 10, 0);
+            $this->additional_discount = $additional_discount >= 83000 ? 83000 : $additional_discount;
             $this->total -= $this->additional_discount;
         }
     }
