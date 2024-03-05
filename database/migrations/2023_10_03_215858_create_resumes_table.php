@@ -25,6 +25,7 @@ return new class extends Migration
             $table->float('expected_salary', 20);
             $table->bigInteger('jd_id')->unsigned();
             $table->foreign('jd_id')->references('id')->on('jds');
+            $table->boolean('viewed')->default(0);
             $table->timestamps();
         });
     }

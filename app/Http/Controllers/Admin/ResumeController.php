@@ -24,11 +24,20 @@ class ResumeController extends Controller
     public function paginate() {
         $resumes = Resume::query()->with('jd');
         return DataTables::of($resumes)
+        ->addColumn('candidate', function($resume) {
+            return view('admin.pages.recruitment.resume.components.candidate', compact('resume'));
+        })
         ->addColumn('action', function($resume) {
             return view('admin.pages.recruitment.resume.components.action', compact('resume'));
         })
         ->editColumn('created_at', function($resume) {
             return $resume->created_at->format('d/m/Y H:i:s');
+        })
+        ->addColumn('contact_info', function($resume) {
+            return view('admin.pages.recruitment.resume.components.contact_info', compact('resume'));
+        })
+        ->addColumn('insign', function($resume) {
+            return view('admin.pages.recruitment.resume.components.insign', compact('resume'));
         })
         ->make(true);
     }
@@ -36,6 +45,8 @@ class ResumeController extends Controller
         return view('admin.pages.recruitment.resume.answer', compact('resume'));
     }
     public function pdf(Resume $resume) {
+        $resume->viewed = true;
+        $resume->save();
         return redirect()->to($resume->pdf?->path_with_original_size);
     }
 }

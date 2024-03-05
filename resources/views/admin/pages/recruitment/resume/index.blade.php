@@ -4,6 +4,17 @@
         .footer-widgets.footer.footer-2 * {
             max-width: 100%;
         }
+        .table.align-items-center td {
+            vertical-align: text-top;
+        }
+        .table *:not(.badge) {
+            font-size: 14px !important;
+        }
+        .info-description p>i{
+            display: inline-block;
+            width: 20px;
+            text-align: center
+        }
     </style>
 @endpush
 @section('content')
@@ -43,19 +54,16 @@
                     }
                 },
                 {
+                    data: "candidate"
+                },
+                {
                     data: "jd.name",
                 },
                 {
-                    data: "fullname"
+                    data: "contact_info",
                 },
                 {
-                    data: "phone"
-                },
-                {
-                    data: "email",
-                },
-                {
-                    data: "created_at",
+                    data: "insign",
                 },
                 {
                     data: "action",

@@ -4,6 +4,9 @@
         .footer-widgets.footer.footer-2 * {
             max-width: 100%;
         }
+        .table *:not(.badge) {
+            font-size: 14px !important;
+        }
     </style>
 @endpush
 @section('content')
@@ -18,7 +21,7 @@
             </div>
             <div class="card-body px-0 pt-0 pb-2">
 
-                <div class="p-3">
+                <div class="p-3 table-responsive">
                     <table class="table align-items-center mb-0 jd-table">
                         <thead>
                             <tr>
@@ -27,7 +30,6 @@
                                     {{ trans('labels.job_name') }}</th>
                                 <th>{{ trans('labels.department_group') }}</th>
                                 <th>{{ trans('labels.job_type') }}</th>
-                                <th>{{ trans('labels.time') }}</th>
                                 <th>{{ trans('labels.number_of_resumes') }}</th>
                                 <th>{{ trans('labels.action') }}</th>
                             </tr>
@@ -65,10 +67,6 @@
                 },
                 {
                     data: "job_type"
-                },
-                {
-                    data: "time",
-                    name: 'created_at'
                 },
                 {
                     data: "resumes_count",

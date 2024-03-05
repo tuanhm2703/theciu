@@ -19616,7 +19616,7 @@ textarea.form-control-lg {
   padding: 1.5rem;
 }
 .card .card-body {
-  font-family: Helvetica Neue,Helvetica,MontserratRegular,Droid Sans,Arial,sans-serif;
+    font-family: "Inter",sans-serif;
   padding: 1.5rem;
 }
 .card.card-plain {
