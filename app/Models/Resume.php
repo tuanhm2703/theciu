@@ -18,7 +18,8 @@ class Resume extends Model {
         'self_introduce',
         'strength',
         'question',
-        'expected_salary'
+        'expected_salary',
+        'viewed'
     ];
 
     public function jd() {

@@ -3,11 +3,12 @@
 </div>
 <script>
     (() => {
-        $('.resume-table').DataTable({
+        const table = $('.resume-table').DataTable({
             "processing": true,
             "serverSide": true,
             "ajax": "{{ route('admin.recruitment.resume.paginate') }}",
-            "columns": [{
+            "columns": [
+                {
                     data: 'id',
                     render: function(data, type, full, meta) {
                         const info = table.page.info()
@@ -17,19 +18,16 @@
                     }
                 },
                 {
+                    data: "candidate"
+                },
+                {
                     data: "jd.name",
                 },
                 {
-                    data: "fullname"
+                    data: "contact_info",
                 },
                 {
-                    data: "phone"
-                },
-                {
-                    data: "email",
-                },
-                {
-                    data: "created_at",
+                    data: "insign",
                 },
                 {
                     data: "action",

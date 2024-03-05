@@ -33,6 +33,9 @@
 <!-- Include editor styles. -->
 <link href="{{ asset('assets/css/froala_editor.pkgd.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('assets/css/froala_style.min.css') }}" rel="stylesheet" type="text/css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 @livewireStyles
 <style>
     .invisible {

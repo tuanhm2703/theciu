@@ -7,8 +7,7 @@ use App\Traits\Scopes\CustomScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Jd extends Model
-{
+class Jd extends Model {
     use HasFactory, CustomScope, Wishlistable;
 
     protected $table = 'jds';
@@ -42,7 +41,7 @@ class Jd extends Model
     ];
 
     public function getTimeAttribute() {
-        return "$this->from_date - $this->to_date";
+        return $this->from_date->format('d/m/Y H:i') . " - " . $this->to_date->format('d/m/Y H:i');
     }
 
     public function resumes() {
