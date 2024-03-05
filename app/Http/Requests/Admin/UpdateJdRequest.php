@@ -42,6 +42,7 @@ class UpdateJdRequest extends FormRequest
                 'requirement' => 'required',
                 'benefit' => 'required',
                 'position' => 'required',
+                'quantity' => 'required|numeric'
             ];
         }
         return [
@@ -65,6 +66,7 @@ class UpdateJdRequest extends FormRequest
             'requirement' => 'required',
             'benefit' => 'required',
             'position' => 'required',
+            'quantity' => 'required|numeric'
         ];
     }
 
@@ -85,7 +87,8 @@ class UpdateJdRequest extends FormRequest
             'benefit' => 'phúc lợi',
             'from_date' => 'ngày bắt đầu',
             'to_date' => 'ngày kết thúc',
-            'position' => 'vị trí tuyển dụng'
+            'position' => 'vị trí tuyển dụng',
+            'quantity' => 'số lượng tuyển dụng'
         ];
     }
 }
