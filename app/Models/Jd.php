@@ -23,7 +23,11 @@ class Jd extends Model
         'description',
         'requirement',
         'benefit',
-        'featured'
+        'featured',
+        'general_requirement',
+        'position',
+        'quantity',
+        'working_time'
     ];
     protected $appends = [
         'time',
@@ -32,7 +36,9 @@ class Jd extends Model
     ];
     protected $casts = [
         'from_date' => 'datetime',
-        'to_date' => 'datetime'
+        'to_date' => 'datetime',
+        'general_requirement' => 'json',
+        'working_time' => 'json'
     ];
 
     public function getTimeAttribute() {

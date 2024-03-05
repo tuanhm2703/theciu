@@ -78,7 +78,7 @@
             dateFormat: "H:i",
             minTime: "00:00",
             maxTime: "23:30",
-            time_24hr: true
+            time_24hr: true,
         })
         $('.datepicker').flatpickr({
             minDate: `{{ now()->format('Y-m-d') }}`,
@@ -106,6 +106,9 @@
                     }
                 }
             })
+        })
+        $('.select2-taggable').select2({
+            tags: true,
         })
         $('.magnifig-img').magnificPopup({
             type: "image",
