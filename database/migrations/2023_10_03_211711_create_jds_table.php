@@ -28,6 +28,9 @@ return new class extends Migration
             $table->longText('requirement');
             $table->longText('benefit');
             $table->boolean('featured')->default(false);
+            $table->json('general_requirement')->nullable();
+            $table->string('position');
+            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
     }

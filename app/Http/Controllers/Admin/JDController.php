@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CreateJdRequest;
+use App\Http\Requests\Admin\UpdateJdRequest;
 use App\Models\Jd;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -30,8 +32,8 @@ class JDController extends Controller {
         return view('admin.pages.recruitment.jd.create', compact('job_types', 'groups'));
     }
 
-    public function store(Request $request) {
-        $input = $request->all();
+public function store(CreateJdRequest $request) {
+        $input = $request->validated();
         $input['featured'] = $request->featured == 'on';
         $jd = Jd::create($input);
         session()->flash('success', 'Tạo JD thành công');
@@ -44,8 +46,8 @@ class JDController extends Controller {
         return view('admin.pages.recruitment.jd.edit', compact('job_types', 'groups', 'jd'));
     }
 
-    public function update(Jd $jd, Request $request) {
-        $input = $request->all();
+    public function update(Jd $jd, UpdateJdRequest $request) {
+        $input = $request->validated();
         $input['featured'] = $request->featured == 'on';
         $jd->update($input);
         session()->flash('success', 'Cập nhật thành công');

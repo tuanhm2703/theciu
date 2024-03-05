@@ -4,6 +4,9 @@
         .footer-widgets.footer.footer-2 * {
             max-width: 100%;
         }
+        .select2-container {
+            width: 100% !important;
+        }
     </style>
 @endpush
 @section('content')

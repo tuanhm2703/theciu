@@ -287,5 +287,6 @@ return [
     'product.delete' => 'Xoá sản phẩm',
     'career' => 'Tuyển dụng',
     'edit_promotion' => 'Cập nhật chương trình khuyến mãi',
-    'view_cv' => 'Xem hồ sơ'
+    'view_cv' => 'Xem hồ sơ',
+    'edit_promotion' => 'Cập nhật chương trình khuyến mãi'
 ];
