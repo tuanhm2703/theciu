@@ -41,7 +41,8 @@ class JdFactory extends Factory {
                 "gender" => "Nữ",
                 "required_skills" => "Photoshop"
             ],
-            "position" => fake()->jobTitle()
+            "position" => fake()->jobTitle(),
+            'quantity' => fake()->numberBetween(1, 10)
         ];
     }
 }

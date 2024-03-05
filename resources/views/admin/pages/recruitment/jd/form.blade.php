@@ -13,13 +13,18 @@
             </div>
             <div class="col-md-3">
                 {!! Form::label('position', 'Vị trí tuyển dụng: ', ['class' => 'custom-control-label']) !!}
-                {!! Form::select('position', [
-                    'Chuyên viên kinh doanh' => 'Chuyên viên kinh doanh',
-                    'Tư vấn bán hàng' => 'Tư vấn bán hàng',
-                    'Nhân viên marketing' => 'Nhân viên marketing',
-                    'Trưởng phòng nhân sự' => 'Trưởng phòng nhân sự'
-                ], isset($jd) ? [$jd->position] : null, ['class' => 'form-control select2-taggable']) !!}
-                @error('group')
+                {!! Form::select(
+                    'position',
+                    [
+                        'Chuyên viên kinh doanh' => 'Chuyên viên kinh doanh',
+                        'Tư vấn bán hàng' => 'Tư vấn bán hàng',
+                        'Nhân viên marketing' => 'Nhân viên marketing',
+                        'Trưởng phòng nhân sự' => 'Trưởng phòng nhân sự',
+                    ],
+                    isset($jd) ? [$jd->position] : null,
+                    ['class' => 'form-control select2-taggable'],
+                ) !!}
+                @error('position')
                     <p class="text-danger text-xs pt-1"> {{ $message }}</p>
                 @enderror
             </div>
@@ -164,70 +169,68 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="row">
-                    {!! Form::label('general_requirement[work_from]', 'Thời gian làm việc:', ['class' => 'custom-control-label']) !!}
-                    <div class="col-md-4">
-                        {!! Form::select(
-                            'general_requirement[work_from][from_day]',
-                            [
-                                'Thứ 2' => 'Thứ 2',
-                                'Thứ 3' => 'Thứ 3',
-                                'Thứ 4' => 'Thứ 4',
-                                'Thứ 5' => 'Thứ 5',
-                                'Thứ 6' => 'Thứ 6',
-                                'Thứ 7' => 'Thứ 7',
-                                'Chủ nhật' => 'Chủ nhật',
-                            ],
-                            isset($jd->general_requirement['work_from']['from_day']) ? $jd->general_requirement['work_from']['from_day'] : null,
-                            ['class' => 'select2'],
-                        ) !!}
-                        @error('general_requirement[work_from][from_day]')
-                            <p class="text-danger text-xs pt-1"> {{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="col-md-4">
-                        {!! Form::select(
-                            'general_requirement[work_from][to_day]',
-                            [
-                                'Thứ 2' => 'Thứ 2',
-                                'Thứ 3' => 'Thứ 3',
-                                'Thứ 4' => 'Thứ 4',
-                                'Thứ 5' => 'Thứ 5',
-                                'Thứ 6' => 'Thứ 6',
-                                'Thứ 7' => 'Thứ 7',
-                                'Chủ nhật' => 'Chủ nhật',
-                            ],
-                            isset($jd->general_requirement['work_from']['to_day']) ? $jd->general_requirement['work_from']['to_day'] : null,
-                            ['class' => 'select2'],
-                        ) !!}
-                        @error('general_requirement.work_from.to_day')
-                            <p class="text-danger text-xs pt-1"> {{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="col-md-2">
-                        {{-- <i class="far fa-clock"></i> --}}
-                        {!! Form::text('general_requirement[work_from][from_hour]', null, [
-                            'class' => 'form-control hourPicker',
-                            'placeholder' => '08:00',
-                        ]) !!}
-                        @error('general_requirement.work_from.from_hour')
-                            <p class="text-danger text-xs pt-1"> {{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div class="col-md-2">
-                        {!! Form::text('general_requirement[work_from][to_hour]', null, [
-                            'class' => 'form-control hourPicker',
-                            'placeholder' => '17:00',
-                        ]) !!}
-                        @error('general_requirement.work_from.to_hour')
-                            <p class="text-danger text-xs pt-1"> {{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
+        <div class="row mt-3">
+            {!! Form::label('general_requirement[work_from]', 'Thời gian làm việc:', ['class' => 'custom-control-label']) !!}
+            <div class="col-md-4">
+                {!! Form::select(
+                    'general_requirement[work_from][from_day]',
+                    [
+                        'Thứ 2' => 'Thứ 2',
+                        'Thứ 3' => 'Thứ 3',
+                        'Thứ 4' => 'Thứ 4',
+                        'Thứ 5' => 'Thứ 5',
+                        'Thứ 6' => 'Thứ 6',
+                        'Thứ 7' => 'Thứ 7',
+                        'Chủ nhật' => 'Chủ nhật',
+                    ],
+                    isset($jd->general_requirement['work_from']['from_day']) ? $jd->general_requirement['work_from']['from_day'] : null,
+                    ['class' => 'select2'],
+                ) !!}
+                @error('general_requirement[work_from][from_day]')
+                    <p class="text-danger text-xs pt-1"> {{ $message }}</p>
+                @enderror
             </div>
             <div class="col-md-4">
+                {!! Form::select(
+                    'general_requirement[work_from][to_day]',
+                    [
+                        'Thứ 2' => 'Thứ 2',
+                        'Thứ 3' => 'Thứ 3',
+                        'Thứ 4' => 'Thứ 4',
+                        'Thứ 5' => 'Thứ 5',
+                        'Thứ 6' => 'Thứ 6',
+                        'Thứ 7' => 'Thứ 7',
+                        'Chủ nhật' => 'Chủ nhật',
+                    ],
+                    isset($jd->general_requirement['work_from']['to_day']) ? $jd->general_requirement['work_from']['to_day'] : null,
+                    ['class' => 'select2'],
+                ) !!}
+                @error('general_requirement.work_from.to_day')
+                    <p class="text-danger text-xs pt-1"> {{ $message }}</p>
+                @enderror
+            </div>
+            <div class="col-md-2">
+                {{-- <i class="far fa-clock"></i> --}}
+                {!! Form::text('general_requirement[work_from][from_hour]', null, [
+                    'class' => 'form-control hourPicker',
+                    'placeholder' => '08:00',
+                ]) !!}
+                @error('general_requirement.work_from.from_hour')
+                    <p class="text-danger text-xs pt-1"> {{ $message }}</p>
+                @enderror
+            </div>
+            <div class="col-md-2">
+                {!! Form::text('general_requirement[work_from][to_hour]', null, [
+                    'class' => 'form-control hourPicker',
+                    'placeholder' => '17:00',
+                ]) !!}
+                @error('general_requirement.work_from.to_hour')
+                    <p class="text-danger text-xs pt-1"> {{ $message }}</p>
+                @enderror
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
                 {!! Form::label('general_requirement[gender]', 'Giới tính:', ['class' => 'custom-control-label']) !!}
                 {!! Form::select(
                     'general_requirement[gender]',
@@ -243,8 +246,15 @@
                     <p class="text-danger text-xs pt-1"> {{ $message }}</p>
                 @enderror
             </div>
+            <div class="col-md-6">
+                {!! Form::label('quantity', 'Số lượng tuyển dụng:', ['class' => 'custom-control-label']) !!}
+                {!! Form::number('quantity', null, ['class' => 'form-control', 'placeholder' => 1]) !!}
+                @error('quantity')
+                    <p class="text-danger text-xs pt-1"> {{ $message }}</p>
+                @enderror
+            </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-6">
                 {!! Form::label('general_requirement[required_skills]', 'Kĩ năng cần có:', ['class' => 'custom-control-label']) !!}
                 {!! Form::select(
