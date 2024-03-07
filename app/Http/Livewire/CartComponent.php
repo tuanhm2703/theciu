@@ -384,6 +384,11 @@ class CartComponent extends Component {
         $this->order_voucher_discount = $this->order_voucher ? $this->order_voucher->getDiscountAmount($this->total) : 0;
         $this->total -= $this->order_voucher_discount;
         $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount - $this->combo_discount + ($this->shipping_fee - $this->freeship_voucher_discount);
+        if(now()->between('2024-03-04', '2024-03-10')) {
+            $additional_discount = round(($this->total - ($this->shipping_fee - $this->freeship_voucher_discount)) / 100 * 10, 0);
+            $this->additional_discount = $additional_discount >= 83000 ? 83000 : $additional_discount;
+            $this->total -= $this->additional_discount;
+        }
         $accom_promotion = Promotion::where('type', PromotionType::ACCOM_GIFT)->with(['products' => function ($q) {
             return $q->select('name', 'id', 'slug')->with('inventories', function ($q) {
                 $q->where('promotion_status', 1)->where('stock_quantity', '>=', 'quantity_each_order');
@@ -413,17 +418,12 @@ class CartComponent extends Component {
             $this->accom_product_promotions = $accom_product_promotions;
             $this->updateAccomProductPromotionInfo();
         }
-        if($this->total >= 500000 && session()->has('lucky_discount_amount')) {
-            $this->additional_discount = session()->get('lucky_discount_amount');
-            $this->total -= $this->additional_discount;
-        } else {
-            $this->additional_discount = 0;
-        }
-        if(now()->between('2024-03-05 00:00:00', '2024-03-10 23:59:59')) {
-            $additional_discount = round($this->total / 100 * 10, 0);
-            $this->additional_discount = $additional_discount >= 83000 ? 83000 : $additional_discount;
-            $this->total -= $this->additional_discount;
-        }
+        // if($this->total >= 500000 && session()->has('lucky_discount_amount')) {
+        //     $this->additional_discount = session()->get('lucky_discount_amount');
+        //     $this->total -= $this->additional_discount;
+        // } else {
+        //     $this->additional_discount = 0;
+        // }
     }
     private function isAccomProductUpdated($accom_product_promotions) {
         $collectA = collect($this->accom_product_promotions->pluck('id')->toArray());
