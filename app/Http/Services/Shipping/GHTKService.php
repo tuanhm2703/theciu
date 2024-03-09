@@ -210,7 +210,7 @@ class GHTKService extends ShippingServiceAbstract {
                 /* A required field. */
                 "hamlet" => $order->shipping_address->details,
                 /* The order is free shipping. */
-                "is_freeship" => $this->isOrderFreeship($order),
+                "is_freeship" => true,
                 /* Pickup date. */
                 // "pick_date" => "2016-09-30",
                 /* The money that the receiver will pay to the sender. */
@@ -243,11 +243,7 @@ class GHTKService extends ShippingServiceAbstract {
      */
     private function getOrderPickMoney(Order $order) {
         if ($order->isPaid()) return 0;
-        $total = $order->total;
-        if(!$order->freeship_voucher) {
-            return $order->total - $order->shipping_fee;
-        }
-        return $total;
+        return $order->total;
     }
 
     /**
