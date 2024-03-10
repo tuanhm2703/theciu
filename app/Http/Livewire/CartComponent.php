@@ -384,7 +384,7 @@ class CartComponent extends Component {
         $this->order_voucher_discount = $this->order_voucher ? $this->order_voucher->getDiscountAmount($this->total) : 0;
         $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount - $this->combo_discount + ($this->shipping_fee - $this->freeship_voucher_discount);
         $this->total -= $this->order_voucher_discount;
-        if(now()->between('2024-03-04', '2024-03-10')) {
+        if(now()->between('2024-03-04', '2024-03-11')) {
             $additional_discount = round(($this->total - ($this->shipping_fee - $this->freeship_voucher_discount)) / 100 * 10, 0);
             $this->additional_discount = $additional_discount >= 83000 ? 83000 : $additional_discount;
             $this->total -= $this->additional_discount;
