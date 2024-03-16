@@ -23,7 +23,7 @@ class BlogController extends Controller {
                 })
                 ->where('post_status', 'publish')
                 ->orderBy('post_date', 'desc')
-                ->select('post_title', 'post_excerpt', 'post_status', 'ID', 'post_date', 'post_type')
+                ->select('post_title', 'post_excerpt', 'post_status', 'ID', 'post_date', 'post_type', 'post_name')
                 ->paginate($pageSize);
             $paginateData = $blogs->toArray();
             return BaseResponse::success([
