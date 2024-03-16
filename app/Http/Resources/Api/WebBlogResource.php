@@ -22,7 +22,7 @@ class WebBlogResource extends JsonResource
             'post_date' => $this->post_date,
             'post_type' => $this->post_type,
             'image' => isset($this->meta_attachment->meta_attachment->meta_value) ?  'https://theciu.vn/blog/wp-content/uploads' . $this->meta_attachment->meta_attachment->meta_value : null,
-            'slug' => $this->meta_attachment->meta_attachment->meta_value
+            'slug' => $this->post_name
         ];
     }
 }
