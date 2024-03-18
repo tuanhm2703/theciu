@@ -31,7 +31,8 @@ class Voucher extends Model {
         'saveable',
         'featured',
         'display',
-        'total_can_use'
+        'total_can_use',
+        'for_new_customer'
     ];
 
     protected $dates = [

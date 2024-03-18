@@ -171,6 +171,9 @@ class CartComponent extends Component {
             } else if ($this->total < $voucher->min_order_value) {
                 $voucher->disabled = true;
                 $voucher->disable_reason = "Đơn hàng chưa đạt giá trị tối thiểu (" . format_currency_with_label($voucher->min_order_value) . ")";
+            } else if ($voucher->for_new_customer && !$this->canApplyNewCustomerVoucher()) {
+                $voucher->disabled = true;
+                $voucher->disable_reason = "Voucher chỉ áp dụng cho khách hàng chưa mua đơn hàng tại web";
             } else if (in_array($voucher->id, $this->save_voucher_ids)) {
                 $voucher->disabled = false;
             } else if ($voucher->canApplyForCustomer($this->customer->id)) {
@@ -188,6 +191,10 @@ class CartComponent extends Component {
                 $this->freeship_voucher = null;
             }
         }
+    }
+
+    private function canApplyNewCustomerVoucher() {
+        return customer() && customer()->orders()->whereIn('orders.order_status', OrderStatus::processingStatus())->exists();
     }
 
     public function render() {
@@ -215,7 +222,7 @@ class CartComponent extends Component {
         $this->accom_product_inventories = Inventory::whereIn('id', $this->accom_product_inventory_ids)->get();
         $this->getCart();
         $this->validate();
-        if($this->additional_discount == 0 && session()->has('lucky_discount_amount')) {
+        if ($this->additional_discount == 0 && session()->has('lucky_discount_amount')) {
             $this->updateOrderInfo();
         }
         $this->dispatchBrowserEvent('open-confirm-order', [
@@ -384,7 +391,7 @@ class CartComponent extends Component {
         $this->order_voucher_discount = $this->order_voucher ? $this->order_voucher->getDiscountAmount($this->total) : 0;
         $this->total = $this->cart->getTotalWithSelectedItems($this->item_selected) - $this->rank_discount_amount - $this->combo_discount + ($this->shipping_fee - $this->freeship_voucher_discount);
         $this->total -= $this->order_voucher_discount;
-        if(now()->between('2024-03-04', '2024-03-11')) {
+        if (now()->between('2024-03-04', '2024-03-11')) {
             $additional_discount = round(($this->total - ($this->shipping_fee - $this->freeship_voucher_discount)) / 100 * 10, 0);
             $this->additional_discount = $additional_discount >= 83000 ? 83000 : $additional_discount;
             $this->total -= $this->additional_discount;
@@ -414,7 +421,7 @@ class CartComponent extends Component {
                 $q->whereIn('inventories.id', $this->item_selected);
             });
         })->available()->get();
-        if($this->isAccomProductUpdated(($accom_product_promotions))) {
+        if ($this->isAccomProductUpdated(($accom_product_promotions))) {
             $this->accom_product_promotions = $accom_product_promotions;
             $this->updateAccomProductPromotionInfo();
         }

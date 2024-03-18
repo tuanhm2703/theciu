@@ -30,6 +30,7 @@ class VoucherController extends Controller {
         $input['saveable'] = $request->saveable ? $request->saveable == 'on' : false;
         $input['featured'] = $request->featured ? $request->featured == 'on' : false;
         $input['status'] = $request->status ? $request->status == 'on' : false;
+        $input['for_new_customer'] = $request->for_new_customer ? $request->for_new_customer == 'on' : false;
         if ($request->has('batch-create') && $input['batch-create'] === 'on' && $request->display === DisplayType::PRIVATE) {
             $input['total_quantity'] = 1;
             $input['total_can_use'] = 1;
@@ -56,6 +57,7 @@ class VoucherController extends Controller {
         $input['saveable'] = $request->saveable ? $request->saveable == 'on' : false;
         $input['featured'] = $request->featured ? $request->featured == 'on' : false;
         $input['status'] = $request->status ? $request->status == 'on' : false;
+        $input['for_new_customer'] = $request->for_new_customer ? $request->for_new_customer == 'on' : false;
         $input['quantity'] = $voucher->total_quantity < $request->total_quantity ? $voucher->quantity + ($request->total_quantity - $voucher->total_quantity) : $voucher->quantity - ($voucher->total_quantity - $request->total_quantity);
         $input['quantity'] = $input['quantity'] > 0 ? $input['quantity'] : 0;
         if (!isset($input['max_discount_amount'])) {
