@@ -194,7 +194,7 @@ class CartComponent extends Component {
     }
 
     private function canApplyNewCustomerVoucher() {
-        return customer() && customer()->orders()->whereIn('orders.order_status', OrderStatus::processingStatus())->exists();
+        return customer() && !customer()->orders()->whereIn('orders.order_status', OrderStatus::processingStatus())->exists();
     }
 
     public function render() {
