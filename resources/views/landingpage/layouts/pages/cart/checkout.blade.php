@@ -55,10 +55,10 @@
                     $('.modal.show').modal('hide')
                 }
             })
-            $('.update-address-btn').on('click', (e) => {
+            $('.update-address-btn').on('click', async (e) => {
                 e.preventDefault()
-                Livewire.emit('address:change', $(e.currentTarget).attr('data-address-id'))
                 $(e.currentTarget).parents('.modal').modal('hide')
+                await Livewire.emit('address:change', $(e.currentTarget).attr('data-address-id'))
                 $('#updateAddressModal').modal('show')
             })
 

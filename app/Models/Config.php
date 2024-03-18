@@ -55,6 +55,9 @@ class Config extends Model {
                     return $schemas;
                 });
             } catch (\Throwable $th) {
+                app()->bind('organization_schema', function() {
+                    return [];
+                });
                 \Log::error($th->getMessage());
             }
             foreach ($meta_tag->payload as $key => $content) {

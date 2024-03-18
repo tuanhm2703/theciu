@@ -118,8 +118,8 @@ class UpdateAddressComponent extends Component {
                 $address->featured = 0;
             }
         }
-        $addresses = $addresses->filter(function($add) use ($address) {
-            return $address->id != $add->id;
+        $addresses = $addresses->filter(function($add) {
+            return $this->address->id != $add->id;
         });
         $addresses->push($this->address);
         session()->put('addresses', serialize($addresses));

@@ -142,8 +142,10 @@ class CheckoutService {
             }
             $order->vouchers()->attach($attach_vouchers);
             $subtotal = $order->inventories()->sum('order_items.total');
+            $order_total = $order_total + $order->shipping_fee - $rank_discount - $combo_discount - $checkoutModel->getAdditionalDiscount();
+            $order_total = $order_total < 0 ? 0 : $order_total;
             $order->update([
-                'total' => $order_total + $order->shipping_fee - $rank_discount - $combo_discount - $checkoutModel->getAdditionalDiscount(),
+                'total' => $order_total,
                 'subtotal' => $subtotal,
                 'origin_subtotal' => $order->inventories()->sum(DB::raw('order_items.origin_price * order_items.quantity')),
                 'rank_discount_value' => $rank_discount,
