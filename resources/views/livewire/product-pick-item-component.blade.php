@@ -50,7 +50,7 @@
         </div> --}}
         <div class="col-12 col-lg-6 d-flex justify-content-center add-to-wishlist-wrapper">
             <div class="details-action-wrapper m-0 w-100">
-                <button @disabled($product->inventories->where('stock', '>', 0)->count() === 0) class="text-uppercase btn btn-primary w-100" wire:click.prevent="buyNow()" style="padding: 1.2rem 1.5rem;    align-self: stretch;"
+                <button class="text-uppercase btn btn-primary w-100" wire:click.prevent="buyNow()" style="padding: 1.2rem 1.5rem;    align-self: stretch;"
                     wire:loading.attr="disabled" title="Buynow">
                     <span wire:loading.remove
                         wire:target="buyNow">{{ trans('labels.buy_now') }}</span>
