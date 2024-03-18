@@ -25,4 +25,13 @@ class OrderStatus extends Enum {
             self::CANCELED => __('order.order_status.canceled'),
         ];
     }
+
+    public static function processingStatus() {
+        return [
+            self::WAITING_TO_PICK,
+            self::WAIT_TO_ACCEPT,
+            self::PICKING,
+            self::DELIVERING
+        ];
+    }
 }

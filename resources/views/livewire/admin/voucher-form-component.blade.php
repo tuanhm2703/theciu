@@ -168,6 +168,24 @@
                     ]) !!}
                 </div>
             </div>
+            <div class="row mt-3">
+                <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
+                    {!! Form::label('for_new_customer', 'Dành cho khách hàng mới', [
+                        'class' => 'custom-control-label m-0 text-end pe-1',
+                    ]) !!}
+                    <i data-bs-toggle="tooltip" data-bs-placement="top" class="fas fa-question-circle"
+                        title="Chỉ dành cho khách hàng chưa có đơn hàng thành công!">
+                    </i>
+                </div>
+                <div class="col-8 col-lg-4">
+                    <div class="form-check form-switch">
+                        {!! Form::checkbox('for_new_customer', null, $voucher->for_new_customer == 1, [
+                            'class' => 'form-check-input',
+                            'id' => 'for_new_customer',
+                        ]) !!}
+                    </div>
+                </div>
+            </div>
             <div class="row mt-3 private-hidden">
                 <div class="col-4 col-lg-2 vertical-align-center justify-content-end">
                     {!! Form::label('saveable', trans('labels.saveable'), [
