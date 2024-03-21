@@ -1,4 +1,4 @@
-@if ($product->inventories->first()->attributes->count() > 1)
+@if ($product->inventories->first()?->attributes->count() > 1)
     <div class="details-filter-row details-row-size">
         <label for="size">{{ $product->inventories->first()?->attributes->last()->name }}:</label>
         <div>
