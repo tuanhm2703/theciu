@@ -18,7 +18,7 @@ class VoucherResource extends JsonResource
             'name' => $this->name,
             'code' => $this->code,
             'saveable' => (boolean) $this->saveable,
-            'voucher_type' => $this->voucher_type->name,
+            'voucher_type' => $this->voucher_type->code,
             'quantity_left' => $this->quantity,
             'min_order_value' => $this->min_order_value,
             'discount_type' => $this->discount_type,
@@ -27,7 +27,8 @@ class VoucherResource extends JsonResource
             'begin' => $this->begin,
             'end' => $this->end,
             'num_of_days_left' => $this->end->diffInDays($this->begin),
-            'saved' => false
+            'saved' => false,
+            'discount_value' => $this->value
         ];
     }
 }
