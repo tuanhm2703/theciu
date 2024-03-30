@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\ProductType;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\ProductDetailResource;
 use App\Http\Resources\Api\ProductResource;
 use App\Models\Product;
 use App\Responses\Api\BaseResponse;
@@ -83,6 +84,11 @@ class ProductController extends Controller {
             'next_page' => $paginateData['next_page_url'],
             'prev_page' => $paginateData['prev_page_url'],
         ]);
+    }
+
+    public function details(string $slug) {
+        $product = Product::with('inventories.image')->whereSlug($slug)->firstOrFail();
+        return new ProductDetailResource($product);
     }
 
 }
