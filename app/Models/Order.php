@@ -21,8 +21,7 @@ use VienThuong\KiotVietClient\Collection\OrderDetailCollection;
 use VienThuong\KiotVietClient\Model\InvoiceDetail;
 use VienThuong\KiotVietClient\Model\OrderDetail;
 
-class Order extends Model
-{
+class Order extends Model {
     use HasFactory, Addressable;
 
     protected $fillable = [
@@ -45,13 +44,11 @@ class Order extends Model
         'additional_discount'
     ];
 
-    public function customer()
-    {
+    public function customer() {
         return $this->belongsTo(Customer::class);
     }
 
-    public function pickup_address()
-    {
+    public function pickup_address() {
         return $this->morphOne(Address::class, 'addressable')->where('type', AddressType::PICKUP)->withTrashed();
     }
     public function kiot_order() {
@@ -61,8 +58,7 @@ class Order extends Model
     public function kiot_invoice() {
         return $this->hasOne(KiotInvoice::class);
     }
-    public function inventories()
-    {
+    public function inventories() {
         return $this->belongsToMany(Inventory::class, 'order_items')->withTrashed()->withPivot([
             'total',
             'quantity',
@@ -81,8 +77,7 @@ class Order extends Model
             'order_id'
         ]);
     }
-    public function products()
-    {
+    public function products() {
         return $this->belongsToMany(Product::class, 'order_items')->withTrashed()->withPivot([
             'total',
             'quantity',
@@ -102,33 +97,27 @@ class Order extends Model
         return $this->hasOne(Review::class);
     }
 
-    public function payment()
-    {
+    public function payment() {
         return $this->hasOne(Payment::class);
     }
 
-    public function order_histories()
-    {
+    public function order_histories() {
         return $this->hasMany(OrderHistory::class)->orderBy('created_at', 'desc');
     }
 
-    public function shipping_order()
-    {
+    public function shipping_order() {
         return $this->hasOne(ShippingOrder::class);
     }
 
-    public function shipping_service()
-    {
+    public function shipping_service() {
         return $this->hasOneThrough(ShippingService::class, ShippingOrder::class, 'order_id', 'id', null, 'shipping_service_id');
     }
 
-    public function payment_method()
-    {
+    public function payment_method() {
         return $this->belongsTo(PaymentMethod::class);
     }
 
-    public function getOrderVoucherAttribute()
-    {
+    public function getOrderVoucherAttribute() {
         return $this->vouchers()->whereHas('voucher_type', function ($q) {
             $q->where('voucher_types.code', VoucherType::ORDER);
         })->first();
@@ -142,35 +131,32 @@ class Order extends Model
      * it exists, otherwise it returns the original shipping fee amount.
      */
     public function getCustomerShippingFeeAmountAttribute() {
-        if($this->freeship_voucher) {
+        if ($this->freeship_voucher) {
             return $this->shipping_fee - $this->freeship_voucher->pivot->amount;
         }
         return $this->shipping_fee;
     }
 
     public function getFreeshipVoucherAttribute() {
-        if($this->relationLoaded('vouchers')) {
+        if ($this->relationLoaded('vouchers')) {
             return $this->vouchers->where('pivot.type', VoucherType::FREESHIP)->first();
         }
         return $this->vouchers()->where('order_vouchers.type', VoucherType::FREESHIP)->first();
     }
 
-    public function vouchers()
-    {
+    public function vouchers() {
         return $this->belongsToMany(Voucher::class, 'order_vouchers')->withPivot([
             'amount',
             'type'
         ]);
     }
 
-    public function pushShippingOrder()
-    {
+    public function pushShippingOrder() {
         $shipping_service = App::make(GHTKService::class);
         return $shipping_service->pushShippingOrder($this);
     }
 
-    public function getCurrentStatusLabel()
-    {
+    public function getCurrentStatusLabel() {
         switch ($this->order_status) {
             case OrderStatus::WAIT_TO_ACCEPT:
                 return trans('order.order_status.wait_to_accept');
@@ -188,8 +174,7 @@ class Order extends Model
                 return trans('order.order_status.return');
         }
     }
-    public function createOrderHistory()
-    {
+    public function createOrderHistory() {
         if ($this->order_status == OrderStatus::CANCELED && ($this->cancel_order_request != null && $this->cancel_order_request->status == CancelOrderRequestStatus::ACCEPTED)) {
             return;
         }
@@ -265,8 +250,7 @@ class Order extends Model
         $order_history->save();
     }
 
-    public function createPaymentOrderHistory()
-    {
+    public function createPaymentOrderHistory() {
         $action = Action::firstOrCreate(
             array('name' => 'Thanh toán'),
             array('description' => 'Thanh toán đơn hàng', 'icon' => ActionIcon::ORDER_PAID)
@@ -281,18 +265,15 @@ class Order extends Model
         $order_history->order_id = $this->id;
         $order_history->save();
     }
-    public function isPaid()
-    {
+    public function isPaid() {
         return $this->payment && $this->payment->payment_status == PaymentStatus::PAID;
     }
 
-    public function getCancelerLabel()
-    {
+    public function getCancelerLabel() {
         return OrderCanceler::getCancelerLabel($this->canceled_by);
     }
 
-    public function refund()
-    {
+    public function refund() {
         try {
             return PaymentService::refund($this);
         } catch (\Throwable $th) {
@@ -300,27 +281,24 @@ class Order extends Model
         }
     }
 
-    public function getRefundDescription()
-    {
+    public function getRefundDescription() {
         $app_name = getAppName();
         return trans('order.description.refund_description', ['appName' => $app_name, 'orderNumber' => $this->order_number]);
     }
 
-    public function getCheckoutDescription()
-    {
+    public function getCheckoutDescription() {
         $app_name = getAppName();
         return trans('order.description.checkout_description', ['appName' => $app_name, 'orderNumber' => $this->order_number]);
     }
 
     public function migrateOrderNumber() {
-        $this->order_number = (time() + (10 * 24 * 60 * 60) + rand(0, 10))."" ;
-        while(Order::where('order_number', $this->order_number)->exists()) {
-            $this->order_number = (time() + (10 * 24 * 60 * 60) + rand(0, 10))."";
+        $this->order_number = (time() + (10 * 24 * 60 * 60) + rand(0, 10)) . "";
+        while (Order::where('order_number', $this->order_number)->exists()) {
+            $this->order_number = (time() + (10 * 24 * 60 * 60) + rand(0, 10)) . "";
         }
     }
 
-    public function restock()
-    {
+    public function restock() {
         $inventories = $this->inventories()->with('product')->get();
         foreach ($inventories as $inventory) {
             if ($inventory->pivot->is_reorder == 0) {
@@ -332,8 +310,7 @@ class Order extends Model
         }
     }
 
-    public function removeStock()
-    {
+    public function removeStock() {
         $inventories = $this->inventories()->with('product')->get();
         foreach ($inventories as $inventory) {
             if ($inventory->product->is_reorder == 0 || ($inventory->product->is_reorder == 1 && $inventory->stock_quantity  - $inventory->pivot->quantity < 0)) {
@@ -345,8 +322,7 @@ class Order extends Model
         }
     }
 
-    public function cancelShippingOrder()
-    {
+    public function cancelShippingOrder() {
         if ($this->shipping_order && $this->shipping_order->code) {
             App::make(GHTKService::class)->cancelOrder($this->shipping_order->code);
             return true;
@@ -354,8 +330,7 @@ class Order extends Model
         return false;
     }
 
-    public function getActualShippingFee()
-    {
+    public function getActualShippingFee() {
         return $this->shipping_order->shipping_order_histories->count() > 0 ? $this->shipping_order->shipping_order_histories->last()->fee : $this->shipping_fee;
     }
 
@@ -364,11 +339,10 @@ class Order extends Model
      *
      * @return float final revenue of the order.
      */
-    public function getFinalRevenue()
-    {
+    public function getFinalRevenue() {
         $actualShip = $this->getActualShippingFee();
         $revenue = $this->total - ($actualShip - $this->shipping_order->total_fee);
-        if(!$this->freeship_voucher) {
+        if (!$this->freeship_voucher) {
             $revenue -= $actualShip;
         }
         return $revenue;
@@ -381,8 +355,7 @@ class Order extends Model
         return $revenue;
     }
 
-    public function generateKiotInvoiceDetailCollection()
-    {
+    public function generateKiotInvoiceDetailCollection() {
         $arr = [];
         foreach ($this->inventories as $inventory) {
             $arr[] = new InvoiceDetail([
@@ -396,8 +369,7 @@ class Order extends Model
         return $arr;
     }
 
-    public function generateKiotOrderDetailCollection()
-    {
+    public function generateKiotOrderDetailCollection() {
         $arr = [];
         foreach ($this->inventories as $inventory) {
             $arr[] = new OrderDetail([
@@ -412,7 +384,7 @@ class Order extends Model
     }
 
     public function canAction() {
-        if($this->payment_method->code == 'cod') return true;
+        if ($this->payment_method->code == 'cod') return true;
         return $this->isPaid();
     }
 
@@ -443,5 +415,14 @@ class Order extends Model
     }
     public function getOrderDetailLink() {
         return customer() ? route('client.auth.profile.order.details', $this->id) : route('client.order.details', $this->id);
+    }
+
+    public function updateProductsSales() {
+        $inventories = $this->inventories;
+        foreach ($inventories as $inventory) {
+            $inventory->product->update([
+                'sales' => DB::raw('sales + ' . $inventory->pivot->quantity)
+            ]);
+        }
     }
 }
