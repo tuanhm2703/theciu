@@ -102,13 +102,22 @@ trait ProductScope {
                 ->whereNull('promotion_inventories.deleted_at');
         })->addSelect(DB::raw('case when promotions.id is null then min(inventories.price) else min(promotion_inventories.promotion_price) end as sale_price'))->groupBy('products.id');
     }
-
-    public function scopeAddSales() {
-
-    }
     public function scopeFilterByPriceRange($q, $min, $max) {
         $min = $min ? $min : 0;
         $max = $max ? $max : 10000000000;
         return $q->addSalePrice()->having('sale_price', '>=', $min)->having('sale_price', '<=', $max);
+    }
+    public function scopeFilterByProductChildCategory($q, array $categories) {
+        return $q->whereHas('category', function($q) use ($categories) {
+            $q->whereIn('categories.id', $categories);
+        });
+    }
+
+    public function scopeFilterByProductParentCategory($q, int $category) {
+        return $q->whereHas('categories', function($q) use ($category) {
+            $q->whereHas('category', function($q) use ($category) {
+                $q->where('laravel_reserved_0.id', $category);
+            });
+        });
     }
 }

@@ -35,6 +35,13 @@ class ProductController extends Controller {
         if($sortBy && in_array($sortBy, $sortable_fields)) {
             $products->orderBy($sortBy, $direction);
         }
+        if($request->categories || $request->category) {
+            if($request->categories) {
+                $products->filterByProductChildCategory($request->categories);
+            } else {
+                $products->filterByProductParentCategory($request->category);
+            }
+        }
         $products = $products->paginate($pageSize);
         $paginateData = $products->toArray();
         return BaseResponse::success([
