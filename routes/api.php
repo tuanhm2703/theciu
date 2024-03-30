@@ -38,4 +38,7 @@ Route::group(['as' => 'api.'], function() {
     Route::group(['prefix' => 'vouchers', 'as' => 'voucher.'], function() {
         include('api/Voucher.php');
     });
+    Route::group(['prefix' => 'categories', 'as' => 'category.'], function() {
+        include('api/Category.php');
+    });
 });

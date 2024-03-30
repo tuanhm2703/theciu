@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
             'promotion_price' => $this->promotion_price,
             'sale_price' => $this->sale_price,
             'liked' => false,
+            'discount_percent' => $this->discount_percent,
             'images' => $this->getInventoryImages(),
             'is_new' => now()->diffInDays($this->created_at, true) <= 3,
             'slug' => $this->slug

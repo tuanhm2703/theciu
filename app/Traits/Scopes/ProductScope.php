@@ -102,6 +102,10 @@ trait ProductScope {
                 ->whereNull('promotion_inventories.deleted_at');
         })->addSelect(DB::raw('case when promotions.id is null then min(inventories.price) else min(promotion_inventories.promotion_price) end as sale_price'))->groupBy('products.id');
     }
+
+    public function scopeAddSales() {
+
+    }
     public function scopeFilterByPriceRange($q, $min, $max) {
         $min = $min ? $min : 0;
         $max = $max ? $max : 10000000000;
