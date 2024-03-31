@@ -28,13 +28,13 @@ trait ProductScope {
     }
 
     public function scopeNewArrival($q) {
-        return $q->orderBy('created_at', 'desc');
+        return $q->orderBy('products.created_at', 'desc');
     }
 
     public function scopeBestSeller($q) {
         return $q->whereHas('other_categories', function ($q) {
             $q->where('categories.type', CategoryType::BEST_SELLER);
-        })->orderBy('created_at', 'desc');
+        })->orderBy('products.created_at', 'desc');
     }
 
     public function scopeAvailable($q) {
