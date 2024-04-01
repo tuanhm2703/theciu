@@ -36,6 +36,6 @@ class ProductResource extends JsonResource
         foreach($this->inventories as $inventory) {
             $arr[] = $inventory->image?->product_lazy_load_path;
         }
-        return $arr;
+        return array_unique($arr);
     }
 }
