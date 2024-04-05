@@ -222,6 +222,7 @@ class Product extends Model {
     }
 
     public function getDiscountPercentAttribute() {
+        if($this->original_price == 0) return 0;
         return (int) ($this->sale_price - $this->original_price) / $this->original_price * 100;
     }
 
