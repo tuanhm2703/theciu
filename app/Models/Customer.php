@@ -18,9 +18,10 @@ use VienThuong\KiotVietClient\Resource\CustomerResource;
 use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Laravel\Sanctum\HasApiTokens;
 
 class Customer extends User {
-    use HasFactory, Addressable, Imageable, SoftDeletes, CanResetPassword, Notifiable;
+    use HasFactory, Addressable, Imageable, SoftDeletes, CanResetPassword, Notifiable, HasApiTokens;
     protected $fillable = [
         'first_name',
         'last_name',

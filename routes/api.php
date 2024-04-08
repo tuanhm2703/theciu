@@ -41,4 +41,5 @@ Route::group(['as' => 'api.'], function() {
     Route::group(['prefix' => 'categories', 'as' => 'category.'], function() {
         include('api/Category.php');
     });
+    include('api/auth.php');
 });
