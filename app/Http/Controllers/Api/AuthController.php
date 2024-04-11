@@ -6,9 +6,13 @@ use App\Enums\MediaType;
 use App\Enums\SocialProviderType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginRequest;
+use App\Http\Requests\Api\RegisterRequest;
+use App\Http\Resources\Api\CustomerResource;
 use App\Models\Customer;
 use App\Responses\Api\BaseResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -23,7 +27,8 @@ class AuthController extends Controller {
             $user = auth('api')->user();
             $accessToken = $user->createToken('personal-access-token')->plainTextToken;
             return BaseResponse::success([
-                'access_token' => $accessToken
+                'access_token' => $accessToken,
+                'user' => new CustomerResource($user)
             ]);
         } else {
             return BaseResponse::error([
@@ -71,7 +76,8 @@ class AuthController extends Controller {
         auth('api')->login($customer);
         $accessToken = $user->createToken('personal-access-token')->plainTextToken;
         return BaseResponse::success([
-            'access_token' => $accessToken
+            'access_token' => $accessToken,
+            'user' => new CustomerResource($user)
         ]);
     }
 
@@ -112,7 +118,34 @@ class AuthController extends Controller {
         auth('api')->login($user);
         $accessToken = $user->createToken('personal-access-token')->plainTextToken;
         return BaseResponse::success([
-            'access_token' => $accessToken
+            'access_token' => $accessToken,
+            'user' => new CustomerResource($user)
         ]);
+    }
+
+    public function register(RegisterRequest $request) {
+        DB::beginTransaction();
+        $data = $request->validated();
+        try {
+            $input = [
+                'password' => Hash::make($data['password']),
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'phone_verified' => 0
+            ];
+            $customer = Customer::create($input);
+            DB::commit();
+            auth('api')->login($customer);
+            $accessToken = auth('api')->user()->createToken('personal-access-token')->plainTextToken;
+            return BaseResponse::success([
+                'access_token' => $accessToken,
+                'user' => new CustomerResource(auth('api')->user())
+            ]);
+        } catch (\Throwable $th) {
+            Log::error($th);
+            DB::rollBack();
+        }
     }
 }
