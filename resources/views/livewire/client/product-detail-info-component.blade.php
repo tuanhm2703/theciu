@@ -109,7 +109,7 @@
                                 $category = $product->category;
                                 $arr = [];
                                 while ($category) {
-                                    $route = route('client.product.index', ['category' => $category->slug]);
+                                    $route = route('client.product_category.index', ['category' => $category->slug]);
                                     $arr[] = "<a href='$route'>$category->name</a>";
                                     $category = $category->category;
                                 }
