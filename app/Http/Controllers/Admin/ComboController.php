@@ -10,6 +10,7 @@ use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
+use App\Http\Requests\Admin\DeleteComboRequest;
 
 class ComboController extends Controller {
     public function index() {
@@ -73,6 +74,14 @@ class ComboController extends Controller {
             'message' => 'Cật nhật combo thành công'
         ]);
     }
+
+    public function destroy(Combo $combo, DeleteComboRequest $request) {
+        $combo->delete();
+        return BaseResponse::success([
+            'message' => 'Xoá combo thành công'
+        ]);
+    }
+
     public function paginate() {
         $combos = Combo::query()->with('products.image');
         return DataTables::of($combos)
