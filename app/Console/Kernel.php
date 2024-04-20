@@ -7,6 +7,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
+use Spatie\Sitemap\SitemapGenerator;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Resource\WebhookResource;
 use VienThuong\KiotVietClient\WebhookType;
@@ -43,6 +44,9 @@ class Kernel extends ConsoleKernel {
                 Log::error($th);
             }
         })->hourly()->name("Update kiot warehouse webhook");
+        $schedule->call(function() {
+            SitemapGenerator::create('https://theciu.vn')->writeToFile(public_path('sitemap.xml'));
+        })->twiceDaily();
     }
 
     /**
