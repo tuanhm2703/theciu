@@ -87,7 +87,7 @@ class ProductController extends Controller {
     }
 
     public function details(string $slug) {
-        $product = Product::with('inventories.image')->whereSlug($slug)->firstOrFail();
+        $product = Product::with('inventories.image', 'inventories.attributes')->whereSlug($slug)->firstOrFail();
         return new ProductDetailResource($product);
     }
 

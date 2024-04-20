@@ -4,7 +4,7 @@ namespace App\Http\Resources\Api;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class InventoryResource extends JsonResource
+class InventoryAttributeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,8 @@ class InventoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'image' => $this->image?->path_with_domain,
-            'stock_quantity' => $this->stock_quantity,
-            'attributes' => InventoryAttributeResource::collection($this->attributes)
+            'value' => $this->pivot->value,
+            'name' => $this->name,
         ];
     }
 }
