@@ -67,7 +67,7 @@
         </div>
     </div>
     <div class="text-center">
-        <a href="{{ route('client.blog.index') }}" class="read-more">Xem thêm</a>
+        <a href="{{ route('client.blog.index') }}/" class="read-more">Xem thêm</a>
     </div>
 </div>
 @endif
