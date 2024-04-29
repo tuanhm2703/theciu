@@ -10,6 +10,7 @@
         "doctrine/dbal": "^3.6",
         "eusonlito/laravel-meta": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
+        "haistar/shopee-php-sdk": "^3.1",
         "kreait/firebase-php": "^6.9",
         "laravel-frontend-presets/argon": "^2.0",
         "laravel/framework": "^9.19",

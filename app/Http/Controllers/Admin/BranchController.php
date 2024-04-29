@@ -8,8 +8,7 @@ use App\Responses\Admin\BaseResponse;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
-class BranchController extends Controller
-{
+class BranchController extends Controller {
     public function index() {
         return view('admin.pages.branch.index');
     }
@@ -56,19 +55,22 @@ class BranchController extends Controller
         ]);
     }
 
-    public function destroy() {
-
+    public function destroy(Branch $branch) {
+        $branch->delete();
+        return BaseResponse::success([
+            'message' => 'Cập nhật thông tin chi nhánh thành công'
+        ]);
     }
 
     public function paginate() {
         $branches = Branch::query()->with('address');
         return DataTables::of($branches)
-        ->editColumn('name', function($branch) {
-            return view('admin.pages.branch.components.name', compact('branch'));
-        })
-        ->addColumn('action', function($branch) {
-            return view('admin.pages.branch.components.action', compact('branch'));
-        })
-        ->make(true);
+            ->editColumn('name', function ($branch) {
+                return view('admin.pages.branch.components.name', compact('branch'));
+            })
+            ->addColumn('action', function ($branch) {
+                return view('admin.pages.branch.components.action', compact('branch'));
+            })
+            ->make(true);
     }
 }

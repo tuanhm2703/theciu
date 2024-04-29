@@ -3,6 +3,7 @@
 use App\Providers\ClientServiceProvider;
 use App\Providers\KiotServiceProvider;
 use App\Providers\SettingServiceProvider;
+use App\Providers\ShopeeServiceProvider;
 use Eusonlito\LaravelMeta\MetaServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
@@ -220,7 +221,8 @@ return [
         KiotServiceProvider::class,
         SettingServiceProvider::class,
         MetaServiceProvider::class,
-        ClientServiceProvider::class
+        ClientServiceProvider::class,
+        ShopeeServiceProvider::class
     ],
 
     /*

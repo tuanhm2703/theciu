@@ -1,5 +1,5 @@
 <div class="details-filter-row details-row-size">
-    <label class="mt-1">{{ $product->inventories->first()->attributes->first()->name }}:</label>
+    <label class="mt-1">{{ $product->inventories->first()?->attributes->first()->name }}:</label>
     <div>
         @foreach ($first_attributes as $attribute)
             @php

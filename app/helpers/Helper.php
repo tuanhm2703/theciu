@@ -573,3 +573,15 @@ function convertToHttps($request_url) {
     }
     return str_replace("http", "https", $request_url);
 }
+
+function compareArray($wordArray, $correctArray) {
+    $result = [];
+    foreach($wordArray as $index => $word) {
+        $result[] = $word == $correctArray[$index];
+    }
+    return $result;
+}
+
+function getDefaultAvatar() {
+    return asset('assets/images/default-avatar.png');
+}
