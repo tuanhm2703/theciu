@@ -34,7 +34,7 @@ class ProductResource extends JsonResource
     private function getInventoryImages() {
         $arr = [];
         foreach($this->inventories as $inventory) {
-            $arr[] = $inventory->image?->product_lazy_load_path;
+            $arr[] = $inventory->image?->getPathWithSize(100);
         }
         return array_unique($arr);
     }
