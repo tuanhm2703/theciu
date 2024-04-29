@@ -52,7 +52,7 @@ class ProductDetailResource extends JsonResource {
                 'value' => $value->value,
                 'name' => $attribute->name,
                 'image' => $this->inventories->where('id', $value->inventory_id)->first()?->image?->path_with_domain,
-                'small_image' => $this->inventories->where('id', $value->inventory_id)->first()?->image?->getPathWithSize(60),
+                'small_image' => $this->inventories->where('id', $value->inventory_id)->first()?->image?->getPathWithSize(100),
                 'stock_quantity' => $this->calculateStock($this->inventories, $attribute->id, $value->value),
                 'children' => $this->getChildrenAttributes($attribute, $value->value)
             ];
