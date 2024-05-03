@@ -10,6 +10,9 @@ use App\Http\Requests\Api\RegisterRequest;
 use App\Http\Resources\Api\CustomerResource;
 use App\Models\Customer;
 use App\Responses\Api\BaseResponse;
+use App\Services\Models\FirebaseErrorCode;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -147,5 +150,104 @@ class AuthController extends Controller {
             Log::error($th);
             DB::rollBack();
         }
+    }
+
+    public function sendVerifyOtp(Request $request) {
+        $phone = $request->username;
+        $recaptchaToken = $request->recaptcha_token;
+        $apiKey = $request->api_key;
+        $client = new Client();
+        $url = "https://identitytoolkit.googleapis.com/v1/accounts:sendVerificationCode?key=$apiKey";
+        try {
+            $response = $client->post($url, [
+                'body' => json_encode([
+                    'phoneNumber' => "+84" . $phone,
+                    'recaptchaToken' => $recaptchaToken
+                ])
+            ]);
+            return BaseResponse::success([
+                'message' => 'Mã xác nhận đã được gửi đến số điện thoại',
+                'session_info' => json_decode($response->getBody()->getContents())->sessionInfo
+            ]);
+        } catch (\GuzzleHttp\Exception\ClientException $th) {
+            Log::error($th->getMessage());
+            $code = json_decode($th->getResponse()->getBody()->getContents())->error->message;
+            $message = FirebaseErrorCode::getErrorMessageFromCode($code);
+            return BaseResponse::error([
+                'message' => $message
+            ], 400);
+        }
+    }
+
+    public function forgotPassword(Request $request) {
+        if (isPhone($request->username)) {
+            return $this->sendVerifyOtp($request);
+        } else {
+            $customer = Customer::findByUserName($request->username);
+            if ($customer) {
+                $token = app('auth.password.broker')->createToken($customer);
+                $customer->sendPasswordResetNotification($token);
+                return BaseResponse::success([
+                    'message' => 'Mã xác nhận đã được gửi đến email'
+                ]);
+            } else {
+                return BaseResponse::error([
+                    'message' => 'Email không tồn tại'
+                ], 400);
+            }
+        }
+    }
+
+    public function resetPassword(Request $request) {
+        $customer = Customer::findByUsername($request->username);
+        if (!$customer) return BaseResponse::error([
+            'message' => 'Tài khoản không tồn tại'
+        ]);
+        if (isPhone($request->username)) {
+            try {
+                $this->verifyOtp($request);
+            } catch (ClientException $th) {
+                Log::error($th->getMessage());
+                $code = json_decode($th->getResponse()->getBody()->getContents())->error->message;
+                switch ($code) {
+                    case 'SESSION_EXPIRED':
+                        $message = 'Mã xác nhận đã hết hạn';
+                        break;
+                    default:
+                        $message = 'Đã có lỗi xảy ra, vui lòng thử lại sau.';
+                        break;
+                }
+                return BaseResponse::error([
+                    'message' => $message
+                ], 400);
+            }
+        } else {
+            if (!app('auth.password.broker')->tokenExists($customer, $request->token)) {
+                return BaseResponse::error([
+                    'message' => 'Token không hợp lệ'
+                ]);
+            }
+        }
+        $customer->password = Hash::make($request->new_password);
+        $customer->save();
+        $accessToken = auth('api')->user()->createToken('personal-access-token')->plainTextToken;
+        return BaseResponse::success([
+            'access_token' => $accessToken,
+            'user' => new CustomerResource(auth('api')->user())
+        ]);
+    }
+
+    private function verifyOtp(Request $request) {
+        $key = $request->api_key;
+        $url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPhoneNumber?key=$key";
+        $client = new Client();
+        $client->post($url, [
+            'body' => json_encode(
+                [
+                    'code' => $request->otp,
+                    'sessionInfo' => $request->session_info
+                ],
+            )
+        ]);
     }
 }

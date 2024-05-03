@@ -33,7 +33,6 @@ class ForgotPasswordComponent extends Component
         $key = $this->apiKey;
         $url = "https://identitytoolkit.googleapis.com/v1/accounts:sendVerificationCode?key=$key";
         try {
-            \Log::info('ello');
             $response = $client->post($url, [
                 'body' => json_encode([
                     'phoneNumber' => "+84" . $this->username,
