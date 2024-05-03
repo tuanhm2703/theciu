@@ -2,7 +2,9 @@
 
 namespace App\Http\Services\ShopeeService;
 
+use App\Models\Product;
 use App\Models\Setting;
+use App\Models\ShopeeProduct;
 use Haistar\ShopeePhpSdk\client\ShopeeApiConfig;
 use Haistar\ShopeePhpSdk\request\shop\ShopApiClient;
 
@@ -32,7 +34,6 @@ class ShopeeService {
         $path = ShopeeEndPoint::GET_TOKEN;
         $path = "/api/v2/auth/token/get";
         $timest = time();
-        $code = '41745a6b4f7544614750426b67637161';
         $mainAccountId = intval($mainAccountId);
         $partnerId = $this->partnerId;
         $partnerKey = $this->partnerKey;
@@ -66,7 +67,6 @@ class ShopeeService {
         $baseString = sprintf("%s%s%s", $this->partnerId, $path, $timest);
         $sign = hash_hmac('sha256', $baseString, $this->partnerKey);
         $url = sprintf("%s%s?partner_id=%s&timestamp=%s&sign=%s", $host, $path, $this->partnerId, $timest, $sign);
-
 
         $c = curl_init($url);
         curl_setopt($c, CURLOPT_POST, 1);
@@ -104,5 +104,68 @@ class ShopeeService {
                 'data' => $refresh_access_token
             ]
         );
+    }
+
+    public function getItemList($offset = 0, $pageSize = 50, $status = 'NORMAL') {
+        $baseUrl = ShopeeEndPoint::BASE_ENDPOINT;
+        $apiPath = ShopeeEndPoint::GET_ITEM_LIST;
+
+        $params = [
+            'offset' => $offset,
+            'page_size' => $pageSize,
+            'item_status' => $status
+        ];
+        $productList = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+        return $productList;
+    }
+
+    public function syncShopeeProduct() {
+        $baseUrl = ShopeeEndPoint::BASE_ENDPOINT;
+        $apiPath = ShopeeEndPoint::GET_ITEM_LIST;
+
+        $params = [
+            'offset' => 0,
+            'page_size' => 50,
+            'item_status' => "NORMAL"
+        ];
+        $productList = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+        while ($productList->response->has_next_page) {
+            $ids = collect($productList->response->item)->pluck('item_id')->toArray();
+            $apiPath = ShopeeEndPoint::GET_ITEM_BASE_INFO;
+            $params1 = [
+                'item_id_list' => implode(",", $ids),
+            ];
+            $baseInfo = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params1, $this->apiConfig);
+            foreach ($baseInfo->response->item_list as $item) {
+                ShopeeProduct::updateOrCreate([
+                    'shopee_product_id' => $item->item_id
+                ], [
+                    'name' => $item->item_name,
+                    'data' => $item,
+                    'product_id' => Product::whereName($item->item_name)->first()?->id
+                ]);
+            }
+            $params['offset'] += 50;
+            $apiPath = "/api/v2/product/get_item_list";
+            $productList = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+        }
+    }
+
+    public function syncShopeeProductByIds(array $ids) {
+        $baseUrl = ShopeeEndPoint::BASE_ENDPOINT;
+        $apiPath = ShopeeEndPoint::GET_ITEM_BASE_INFO;
+        $params1 = [
+            'item_id_list' => implode(",", $ids),
+        ];
+        $baseInfo = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params1, $this->apiConfig);
+        foreach ($baseInfo->response->item_list as $item) {
+            ShopeeProduct::updateOrCreate([
+                'shopee_product_id' => $item->item_id
+            ], [
+                'name' => $item->item_name,
+                'data' => $item,
+                'product_id' => Product::whereName($item->item_name)->first()?->id
+            ]);
+        }
     }
 }
