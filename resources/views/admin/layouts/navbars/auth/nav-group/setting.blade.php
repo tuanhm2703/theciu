@@ -51,6 +51,15 @@
                         <span class="nav-link-text ms-1">{{ trans('nav.staff_management') }}</span>
                     </a>
                 @endcan
+                @can('view setting')
+                    <a class="nav-link {{ isNavActive('admin.setting.shopee.index') ? 'active' : '' }}"
+                        href="{{ route('admin.setting.shopee.index') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">Shopee</span>
+                    </a>
+                @endcan
             </ul>
         </div>
     </li>
