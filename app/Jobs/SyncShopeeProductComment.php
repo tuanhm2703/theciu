@@ -25,7 +25,7 @@ class SyncShopeeProductComment implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(private int $cursor = 0, private int $pageSize = 100)
+    public function __construct(private int $cursor = 0, private int $pageSize = 50)
     {
         $this->shopeeService = new ShopeeService();
     }
@@ -38,6 +38,9 @@ class SyncShopeeProductComment implements ShouldQueue
     public function handle()
     {
         $commentList = $this->shopeeService->getShopeeProductComment($this->cursor, $this->pageSize);
+        $order_id_list = collect($commentList->response->item_comment_list)->pluck('order_sn')->toArray();
+        $order_list_response = $this->shopeeService->getOrderDetailByIds($order_id_list);
+        $order_list = $order_list_response->response->order_list;
         foreach ($commentList->response->item_comment_list as $comment) {
             $item = ShopeeProduct::where('shopee_product_id', $comment->item_id)->whereNotNull('product_id')->first();
             if($item) {
@@ -50,7 +53,9 @@ class SyncShopeeProductComment implements ShouldQueue
                     'product_id' => $item->product_id,
                     'reply' => isset($comment->comment_reply) ? $comment->comment_reply->reply : '',
                     'reply_by' => User::first()->id,
-                    'shopee_comment_id' => $comment->comment_id
+                    'display' => $comment->rating_star >= 4,
+                    'shopee_comment_id' => $comment->comment_id,
+                    'model_name' => collect(collect($order_list)->where('order_sn', $comment->order_sn)->first()->item_list)->where('item_id', $comment->item_id)->first()->model_name
                 ]);
             }
         }
