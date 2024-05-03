@@ -179,4 +179,27 @@ class ShopeeService {
         ];
         return $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
     }
+    public function getListOrder() {
+        $baseUrl = ShopeeEndPoint::BASE_ENDPOINT;
+        $apiPath = ShopeeEndPoint::GET_ORDER_LIST;
+
+        $params = [
+            'time_range_field' => 'create_time',
+            'time_from' => now()->yesterday()->timestamp,
+            'time_to' => now()->timestamp,
+            'page_size' => 100,
+            'order_status' => 'COMPLETED'
+        ];
+        return $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+    }
+    public function getOrderDetailByIds($order_ids) {
+        $baseUrl = ShopeeEndPoint::BASE_ENDPOINT;
+        $apiPath = ShopeeEndPoint::GET_ORDER_DETAILS;
+
+        $params = [
+            'order_sn_list' => implode(',', $order_ids),
+            'response_optional_fields' => 'item_list'
+        ];
+        return $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+    }
 }

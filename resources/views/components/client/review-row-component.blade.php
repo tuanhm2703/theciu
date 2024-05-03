@@ -15,7 +15,7 @@
                 </div><!-- End .ratings -->
             </div><!-- End .rating-container -->
             <span class="review-date">{{ carbon($review->created_at)->format('d-m-y H:i:s') }} |
-                Phân loại hàng: {{ $review->order?->inventories[0]?->title }}</span>
+                Phân loại hàng: {{ $review->order ? $review->order?->inventories[0]?->title : $review->model_name }}</span>
             <p>Đánh giá: <span style="white-space: break-spaces">{{ $review->details }}</span>
             </p>
             <div class="d-flex flex-nowrap py-2" style="overflow-x: auto">
