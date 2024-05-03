@@ -168,4 +168,15 @@ class ShopeeService {
             ]);
         }
     }
+
+    public function getShopeeProductComment($cursor, $pageSize) {
+        $baseUrl = ShopeeEndPoint::BASE_ENDPOINT;
+        $apiPath = ShopeeEndPoint::GET_PRODUCT_COMMENT;
+
+        $params = [
+            'cursor' => $cursor,
+            'page_size' => $pageSize,
+        ];
+        return $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Http\Services\ShopeeService\ShopeeService;
 use App\Models\Review;
 use App\Models\ShopeeProduct;
 use App\Models\User;
@@ -18,6 +19,7 @@ class SyncShopeeProductComment implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private ShopeeService $shopeeService;
     /**
      * Create a new job instance.
      *
@@ -25,7 +27,7 @@ class SyncShopeeProductComment implements ShouldQueue
      */
     public function __construct(private int $cursor = 0, private int $pageSize = 100)
     {
-        //
+        $this->shopeeService = new ShopeeService();
     }
 
     /**
@@ -35,25 +37,7 @@ class SyncShopeeProductComment implements ShouldQueue
      */
     public function handle()
     {
-        $shopeeClient = new ShopApiClient();
-        $apiConfig = new ShopeeApiConfig();
-        $partnerId = 2007636;
-        $partnerKey = '73567773456a5156784945494d496b624871747a766c7844726e70576e45494b';
-        $accessToken = '536e646f63696478506c746867645946';
-        $shopId = 17249146;
-        $apiConfig->setPartnerId($partnerId);
-        $apiConfig->setShopId($shopId);
-        $apiConfig->setAccessToken($accessToken);
-        $apiConfig->setSecretKey($partnerKey);
-
-        $baseUrl = "https://partner.shopeemobile.com";
-        $apiPath = "/api/v2/product/get_comment";
-
-        $params = [
-            'cursor' => $this->cursor,
-            'page_size' => $this->pageSize,
-        ];
-        $commentList = $shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $apiConfig);
+        $commentList = $this->shopeeService->getShopeeProductComment($this->cursor, $this->pageSize);
         foreach ($commentList->response->item_comment_list as $comment) {
             $item = ShopeeProduct::where('shopee_product_id', $comment->item_id)->whereNotNull('product_id')->first();
             if($item) {
@@ -71,7 +55,7 @@ class SyncShopeeProductComment implements ShouldQueue
             }
         }
         if($commentList->response->more) {
-            dispatch(new SyncShopeeProductComment($this->cursor + 100));
+            dispatch(new SyncShopeeProductComment($this->cursor + $this->pageSize));
         }
     }
 }
