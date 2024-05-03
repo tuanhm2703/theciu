@@ -58,7 +58,7 @@
                         <th class="text-center">Sản phẩm</th>
                         <th class="text-center">{{ __('labels.status') }}</th>
                         <th class="text-center">{{ __('labels.detail_review') }}</th>
-                        <th class="text-center">{{ __('labels.reply') }}</th>
+                        <th class="text-center" style="width: 30%">{{ __('labels.reply') }}</th>
                         <th class="text-center">{{ __('labels.action') }}</th>
                         <th></th>
                     </thead>
@@ -108,7 +108,9 @@
                     {
                         data: "reply",
                         sortable: false,
-                        name: 'order.order_number'
+                        searchable: false,
+                        name: 'reply',
+                        width: '30%'
                     },
                     {
                         data: 'action',
@@ -117,8 +119,10 @@
                         width: '5%'
                     },
                     {
-                        data: 'order.order_number',
-                        visible: false
+                        data: null,
+                        visible: false,
+                        searchable: false,
+                        sortable: false
                     }
                 ],
                 order: [

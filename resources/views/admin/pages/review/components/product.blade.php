@@ -1,7 +1,7 @@
 <div class="customer-info-wrapper d-flex">
     <a href="{{ $review->customer?->avatar_path }}" class="profile-avatar border"
-        style="background: url({{ $review->customer->avatar_path }})"></a> <span
-        class="ps-3">{{ $review->customer->fullname }}</span>
+        style="background: url({{ $review->customer?->avatar_path }})"></a> <span
+        class="ps-3">{{ $review->customer?->fullname }}</span>
 </div>
 <div class="review-products">
     @if ($review->order)
