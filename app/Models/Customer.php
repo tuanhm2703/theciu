@@ -133,7 +133,8 @@ class Customer extends User {
     public function sendPasswordResetNotification($token) {
         $mail = $this->email;
         ResetPasswordNotification::createUrlUsing(function ($notification, $token) use ($mail) {
-            return route('client.auth.resetPassword', ['username' => $mail, 'token' => $token]);
+            // return route('client.auth.resetPassword', ['username' => $mail, 'token' => $token]);
+            return env('FRONTEND_URL')."/reset-password?username=$mail&token=$token";
         });
         $this->notify(new ResetPasswordNotification($token));
     }
