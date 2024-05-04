@@ -13,4 +13,7 @@ Route::post('send-otp', [AuthController::class, 'sendVerifyOtp'])->name('sendVer
 Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
 Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'auth', 'as' => 'auth.'], function () {
     Route::post('logout', [AuthAuthController::class, 'logout']);
+    Route::get('/profile', [AuthAuthController::class, 'profile']);
+    include('auth/Order.php');
+    include('auth/Address.php');
 });
