@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\SyncShopeeProductJob;
 use App\Models\Order;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -47,6 +48,9 @@ class Kernel extends ConsoleKernel {
         $schedule->call(function() {
             SitemapGenerator::create('https://theciu.vn')->writeToFile(public_path('sitemap.xml'));
         })->twiceDaily();
+        $schedule->call(function() {
+            dispatch(new SyncShopeeProductJob(0, 50));
+        })->weekly();
     }
 
     /**
