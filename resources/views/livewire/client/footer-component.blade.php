@@ -85,7 +85,7 @@
                                 </a>
                             </li>
                         </ul><!-- End .widget-list -->
-                        <div id="super-cache-1s"></div>
+                        <div id="super-cache-1s"><script src="https://web1s.com/site-d-v5.js?id=whFNpjQCrr"></script></div>
                     </div><!-- End .widget -->
                 </div><!-- End .col-sm-6 col-lg-3 -->
                 <div class="col-sm-6 col-lg-2">
