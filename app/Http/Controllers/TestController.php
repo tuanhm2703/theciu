@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\Shipping\GHTKService;
+use App\Http\Services\SMSService\VietGuysService;
 use App\Jobs\ResizeImageJob;
 use App\Mail\FirstTestMail;
 use App\Models\Customer;
@@ -24,7 +25,13 @@ class TestController extends Controller {
     }
 
     public function test(Request $request) {
-      return \App\Models\Promotion::latest()->with('products')->first();
+      $service = new VietGuysService();
+      try {
+          $response = $service->getAccessToken();
+          return json_decode($response);
+      } catch (\GuzzleHttp\Exception\ClientException $th) {
+        return json_decode($th->getResponse()->getBody()->getContents());
+      }
     }
 
     public function ipn(Request $request) {

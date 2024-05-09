@@ -75,7 +75,9 @@ class Customer extends User {
         return false;
     }
 
-
+    public function otps() {
+        return $this->hasMany(Otp::class);
+    }
 
     public function cart() {
         return $this->hasOne(Cart::class);
@@ -174,4 +176,5 @@ class Customer extends User {
     public function kiot_customer_by_phone() {
         return $this->hasOne(KiotCustomer::class, 'contact_number', 'phone');
     }
+
 }
