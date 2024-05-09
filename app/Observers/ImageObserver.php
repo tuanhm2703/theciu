@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Enums\MediaType;
 use App\Jobs\MigrateThumbnail;
 use App\Jobs\ResizeImageJob;
+use App\Models\Customer;
 use App\Models\Image;
 use App\Models\Inventory;
 use App\Models\Product;
@@ -31,6 +32,14 @@ class ImageObserver {
         }
         if ($image->type === MediaType::VIDEO) {
             dispatch(new MigrateThumbnail($image))->onQueue('resizeImage');
+        }
+    }
+
+    public function deleted(Image $image) {
+        if (get_class($image->imageable) == Customer::class) {
+            foreach($image->imageable->image_sizes as $size) {
+                StorageService::delete("$size/$image->path");
+            }
         }
     }
 }

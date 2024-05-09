@@ -3,11 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enums\MediaType;
+use App\Enums\OtpType;
 use App\Enums\SocialProviderType;
+use App\Exceptions\Api\OtpException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\ForgotPasswordRequest;
 use App\Http\Requests\Api\LoginRequest;
+use App\Http\Requests\Api\LoginWithOtpRequest;
 use App\Http\Requests\Api\RegisterRequest;
+use App\Http\Requests\Api\ResetPasswordRequest;
+use App\Http\Requests\Api\SendLoginOtpRequest;
+use App\Http\Requests\Api\VerifyOtpRequest;
 use App\Http\Resources\Api\CustomerResource;
+use App\Http\Services\OtpService;
 use App\Models\Customer;
 use App\Responses\Api\BaseResponse;
 use App\Services\Models\FirebaseErrorCode;
@@ -20,6 +28,8 @@ use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller {
+    public function __construct(private OtpService $otpService) {
+    }
     public function login(LoginRequest $request) {
         if (isPhone($request->username)) {
             $credentials = ['phone' => $request->username, 'password' => $request->password];
@@ -37,6 +47,42 @@ class AuthController extends Controller {
             return BaseResponse::error([
                 'message' => 'Unauthenticated'
             ], 401);
+        }
+    }
+
+    public function sendLoginOtp(SendLoginOtpRequest $request) {
+        DB::beginTransaction();
+        try {
+            $customer = Customer::findByUserName($request->username);
+            if (isPhone($request->username)) {
+                $otp = $this->sendVerifyOtp($customer, OtpType::LOGIN);
+            } else {
+                $otp = $this->otpService->createOtp($customer, OtpType::LOGIN);
+                $this->otpService->sendLoginOtpEmail($customer, $otp->code);
+            }
+            DB::commit();
+            return BaseResponse::success([
+                'message' => 'Mã otp đã được gửi thành công',
+                'otp' => $otp->code
+            ]);
+        } catch (OtpException $th) {
+            throw $th;
+        }
+    }
+
+    public function loginWithOtp(LoginWithOtpRequest $request) {
+        DB::beginTransaction();
+        try {
+            $customer = Customer::findByUserName($request->username);
+            $this->otpService->verifyOtp($customer, $request->otp, OtpType::LOGIN);
+            $accessToken = $customer->createToken('personal-access-token')->plainTextToken;
+            DB::commit();
+            return BaseResponse::success([
+                'access_token' => $accessToken,
+                'user' => new CustomerResource($customer)
+            ]);
+        } catch (OtpException $th) {
+            throw $th;
         }
     }
 
@@ -152,102 +198,90 @@ class AuthController extends Controller {
         }
     }
 
-    public function sendVerifyOtp(Request $request) {
-        $phone = $request->username;
-        $recaptchaToken = $request->recaptcha_token;
-        $apiKey = $request->api_key;
-        $client = new Client();
-        $url = "https://identitytoolkit.googleapis.com/v1/accounts:sendVerificationCode?key=$apiKey";
-        try {
-            $response = $client->post($url, [
-                'body' => json_encode([
-                    'phoneNumber' => "+84" . $phone,
-                    'recaptchaToken' => $recaptchaToken
-                ])
-            ]);
-            return BaseResponse::success([
-                'message' => 'Mã xác nhận đã được gửi đến số điện thoại',
-                'session_info' => json_decode($response->getBody()->getContents())->sessionInfo
-            ]);
-        } catch (\GuzzleHttp\Exception\ClientException $th) {
-            Log::error($th->getMessage());
-            $code = json_decode($th->getResponse()->getBody()->getContents())->error->message;
-            $message = FirebaseErrorCode::getErrorMessageFromCode($code);
-            return BaseResponse::error([
-                'message' => $message
-            ], 400);
-        }
+    private function sendVerifyOtp(Customer $customer, string $type) {
+        $otp = $this->otpService->createOtp($customer, $type);
+        $this->otpService->sendOtp($customer->phone, $otp, '');
+        return $otp;
     }
 
-    public function forgotPassword(Request $request) {
-        if (isPhone($request->username)) {
-            return $this->sendVerifyOtp($request);
-        } else {
-            $customer = Customer::findByUserName($request->username);
-            if ($customer) {
-                $token = app('auth.password.broker')->createToken($customer);
-                $customer->sendPasswordResetNotification($token);
+    public function forgotPassword(ForgotPasswordRequest $request) {
+        DB::beginTransaction();
+        try {
+            $customer = Customer::findByUsername($request->username);
+            $otp = $this->sendVerifyOtp($customer, OtpType::RESET_PASSWORD);
+            DB::commit();
+            if (isPhone($request->username)) {
+                return BaseResponse::success([
+                    'message' => 'Mã xác nhận đã được gửi đến số điện thoại',
+                    'otp' => $otp
+                ]);
+            } else {
+                $this->otpService->sendOtpEmailForResetPassword($customer, $otp->code);
                 return BaseResponse::success([
                     'message' => 'Mã xác nhận đã được gửi đến email'
                 ]);
-            } else {
-                return BaseResponse::error([
-                    'message' => 'Email không tồn tại'
-                ], 400);
             }
+        } catch (OtpException $th) {
+            throw $th;
         }
     }
 
-    public function resetPassword(Request $request) {
-        $customer = Customer::findByUsername($request->username);
-        if (!$customer) return BaseResponse::error([
-            'message' => 'Tài khoản không tồn tại'
-        ]);
-        if (isPhone($request->username)) {
-            try {
-                $this->verifyOtp($request);
-            } catch (ClientException $th) {
-                Log::error($th->getMessage());
-                $code = json_decode($th->getResponse()->getBody()->getContents())->error->message;
-                switch ($code) {
-                    case 'SESSION_EXPIRED':
-                        $message = 'Mã xác nhận đã hết hạn';
-                        break;
-                    default:
-                        $message = 'Đã có lỗi xảy ra, vui lòng thử lại sau.';
-                        break;
-                }
-                return BaseResponse::error([
-                    'message' => $message
-                ], 400);
+    public function verifyOtp(VerifyOtpRequest $request) {
+        DB::beginTransaction();
+        try {
+            $customer = Customer::findByUserName($request->username);
+            $this->otpService->verifyOtp($customer, $request->otp, $request->type);
+            $response = null;
+            switch ($request->type) {
+                case OtpType::RESET_PASSWORD:
+                    $repsonse = $this->responseForResetPassword($customer);
+                case OtpType::LOGIN:
+                    $repsonse = $this->responseForLogin($customer);
             }
-        } else {
-            if (!app('auth.password.broker')->tokenExists($customer, $request->token)) {
-                return BaseResponse::error([
-                    'message' => 'Token không hợp lệ'
-                ]);
-            }
+            DB::commit();
+            return $response;
+        } catch (OtpException $th) {
+            throw $th;
         }
-        $customer->password = Hash::make($request->new_password);
-        $customer->save();
-        $accessToken = auth('api')->user()->createToken('personal-access-token')->plainTextToken;
+    }
+
+    private function responseForResetPassword(Customer $customer) {
+        $token = $token = app('auth.password.broker')->createToken($customer);
+        return BaseResponse::success([
+            'token' => $token,
+            'message' => 'Xác nhận otp thành công'
+        ]);
+    }
+
+    private function responseForLogin(Customer $customer) {
+        $accessToken = $customer->createToken('personal-access-token')->plainTextToken;
         return BaseResponse::success([
             'access_token' => $accessToken,
-            'user' => new CustomerResource(auth('api')->user())
+            'user' => new CustomerResource($customer)
         ]);
     }
 
-    private function verifyOtp(Request $request) {
-        $key = $request->api_key;
-        $url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPhoneNumber?key=$key";
-        $client = new Client();
-        $client->post($url, [
-            'body' => json_encode(
-                [
-                    'code' => $request->otp,
-                    'sessionInfo' => $request->session_info
-                ],
-            )
-        ]);
+    public function resetPassword(ResetPasswordRequest $request) {
+        DB::beginTransaction();
+        try {
+            $customer = Customer::findByUsername($request->username);
+            $password_broker = app('auth.password.broker');
+            if (!$password_broker->tokenExists($customer, $request->token)) {
+                return BaseResponse::error([
+                    'message' => 'Token không hợp lệ'
+                ], 400);
+            }
+            $customer->password = Hash::make($request->new_password);
+            $customer->save();
+            $accessToken = $customer->createToken('personal-access-token')->plainTextToken;
+            $password_broker->deleteToken($customer);
+            DB::commit();
+            return BaseResponse::success([
+                'access_token' => $accessToken,
+                'user' => new CustomerResource($customer)
+            ]);
+        } catch (OtpException $th) {
+            throw $th;
+        }
     }
 }

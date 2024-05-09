@@ -695,7 +695,8 @@
 
                         <br>
 <span style="font-size:12px">Kính gửi Quý khách hàng,<br>
-    Chúng tôi nhận được yêu cầu đăng nhập vào tài khoản của bạn trên THE C.I.U.<br></span>
+Chúng tôi rất vui thông báo rằng một yêu cầu xác thực tài khoản đã được tạo ra cho tài khoản của bạn tại THE C.I.U.<br>
+Để hoàn tất quá trình xác thực, vui lòng sử dụng mã OTP (One-Time Password) sau đây:</span>
                     </td>
                 </tr>
             </tbody></table>
@@ -737,11 +738,9 @@
 
                     <td valign="top" class="mcnTextContent" style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #757575;font-family: Helvetica;font-size: 16px;line-height: 150%;text-align: left;">
 
-                        <span style="font-size:12px">Vui lòng nhập mã này vào trang web hoặc ứng dụng của chúng tôi trong vòng {{ $expiredTime }} để hoàn tất quá trình đăng nhập.
-
-                            Nếu Quý khách không thực hiện yêu cầu này, vui lòng liên hệ với chúng tôi ngay lập tức để chúng tôi có thể hỗ trợ.
-
-                            Xin cảm ơn</span>
+                        <span style="font-size:12px">Vui lòng nhập mã này vào trang web hoặc ứng dụng của chúng tôi trong vòng {{ $expiredTime }} giây để hoàn tất quá trình xác thực.<br>
+Nếu Quý khách có bất kỳ câu hỏi hoặc cần hỗ trợ bổ sung, vui lòng liên hệ với chúng tôi qua email này.<br>
+Trân trọng, bộ phận chăm sóc khách hàng THE C.I.U</span>
                     </td>
                 </tr>
             </tbody></table>
