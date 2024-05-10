@@ -172,6 +172,9 @@
 
     $('#promotion-update-btn').on('click', (e) => {
         e.preventDefault();
+        main_product_ids = Array.from($('input[name="main-product[]"]:checked').map((index, e) => e
+                .getAttribute(
+                    'data-product-id')))
         if (validator.checkAll() == 0) {
             if (main_product_ids.length === 0) {
                 toast.error(`{{ __('toast.action_failed') }}`, 'Vui lòng chọn sản phẩm chính cho chương trình')
