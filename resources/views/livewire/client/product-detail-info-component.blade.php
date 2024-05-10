@@ -50,7 +50,7 @@
                         </div>
                         <div class="product-right h-100" id="product-zoom-gallery">
                             @if ($product->inventories->where('stock_quantity', '>', 0)->count() === 0)
-                                <span class="product-label label-sale out-of-stock-label">Hết hàng</span>
+                                <span class="product-label label-sale out-of-stock-label">{{ $product->trashed() ? 'Tạm dừng kinh doanh' : 'Hết hàng'}}</span>
                             @endif
                             <div class="h-100 owl-carousel owl-theme owl-nav-inside owl-light mb-0" data-toggle="owl" style="overflow: hidden"
                             data-owl-options='{
