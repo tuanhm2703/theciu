@@ -287,7 +287,7 @@
             });
         }
     </script>
-    <livewire:scripts />
+    <script src="{{ getAssetUrl('vendor/livewire/livewire.js') }}"></script>
     <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
 

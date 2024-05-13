@@ -52,7 +52,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     @stack('js');
-    <livewire:scripts />
+    <script src="{{ getAssetUrl('vendor/livewire/livewire.js') }}"></script>
 </body>
 
 </html>
