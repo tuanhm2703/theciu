@@ -13,7 +13,7 @@ use Livewire\WithPagination;
 
 class ProductListComponent extends Component
 {
-    use KeywordCount, WithPagination;
+    use KeywordCount;
 
     public $title;
     public $banners = [];
