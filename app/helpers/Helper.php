@@ -585,3 +585,11 @@ function compareArray($wordArray, $correctArray) {
 function getDefaultAvatar() {
     return asset('assets/images/default-avatar.png');
 }
+
+function addTrailingSlash(string $url) {
+    if(substr($url, 1) === '/') {
+        return $url;
+    } else {
+        return "$url/";
+    }
+}

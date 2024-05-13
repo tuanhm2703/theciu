@@ -69,6 +69,6 @@ class Config extends Model {
             });
         }
         Meta::set('image', asset('img/theciu-meta.png'));
-        Meta::set('canonical', url()->current());
+        Meta::set('canonical', addTrailingSlash(url()->current()));
     }
 }
