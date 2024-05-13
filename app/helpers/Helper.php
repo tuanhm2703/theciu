@@ -587,7 +587,7 @@ function getDefaultAvatar() {
 }
 
 function addTrailingSlash(string $url) {
-    if(substr($url, 1) === '/') {
+    if(substr($url, -1) === '/') {
         return $url;
     } else {
         return "$url/";
