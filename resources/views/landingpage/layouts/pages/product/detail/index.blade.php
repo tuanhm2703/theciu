@@ -85,7 +85,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('client.product.index') }}">{{ trans('labels.product') }}</a>
                 </li>
                 <li class="breadcrumb-item"><a
-                        href="{{ route('client.product.index', ['category' => $product->category->slug]) }}">{{ $product->category->name }}</a>
+                        href="{{ route('client.product_category.index', ['category' => $product->category->slug]) }}">{{ $product->category->name }}</a>
                 </li>
             </ol>
         </div><!-- End .container -->
@@ -137,7 +137,7 @@
                         $category = $product->category;
                         $arr = [];
                         while ($category) {
-                            $route = route('client.product.index', ['category' => $category->slug]);
+                            $route = route('client.product_category.index', ['category' => $category->slug]);
                             $arr[] = "<a href='$route'>$category->name</a>";
                             $category = $category->category;
                         }

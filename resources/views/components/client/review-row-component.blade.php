@@ -3,11 +3,11 @@
         <div class="mr-5">
             <div class="text-center">
                 <a class="social-icon" target="_blank" style="overflow: hidden"><img
-                        src="{{ $review->customer->avatar_path }}" alt=""></a>
+                        src="{{ $review->customer ? $review->customer->avatar_path : getDefaultAvatar() }}" alt=""></a>
             </div>
         </div><!-- End .col -->
         <div>
-            <h4 class="mb-0"><a href="#">{{ $review->customer->full_name }}</a></h4>
+            <h4 class="mb-0"><a href="#">{{ $review->customer ? $review->customer->full_name : $review->buyer_username }}</a></h4>
             <div class="ratings-container">
                 <div class="ratings">
                     <div class="ratings-val" style="width: {{ $review->product_score * 20 }}%;">
@@ -15,8 +15,8 @@
                 </div><!-- End .ratings -->
             </div><!-- End .rating-container -->
             <span class="review-date">{{ carbon($review->created_at)->format('d-m-y H:i:s') }} |
-                Phân loại hàng: {{ $review->order->inventories[0]->title }}</span>
-            <p>Đánh giá: <span>{{ $review->details }}</span>
+                Phân loại hàng: {{ $review->order ? $review->order?->inventories[0]?->title : $review->model_name }}</span>
+            <p>Đánh giá: <span style="white-space: break-spaces">{{ $review->details }}</span>
             </p>
             <div class="d-flex flex-nowrap py-2" style="overflow-x: auto">
                 @if ($review->video)

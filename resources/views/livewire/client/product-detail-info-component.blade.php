@@ -49,19 +49,22 @@
                             </div>
                         </div>
                         <div class="product-right h-100" id="product-zoom-gallery">
+                            @if ($product->inventories->where('stock_quantity', '>', 0)->count() === 0)
+                                <span class="product-label label-sale out-of-stock-label">{{ $product->trashed() ? 'Tạm dừng kinh doanh' : 'Hết hàng'}}</span>
+                            @endif
                             <div class="h-100 owl-carousel owl-theme owl-nav-inside owl-light mb-0" data-toggle="owl" style="overflow: hidden"
-                                data-owl-options='{
-                                    "dots": false,
-                                    "nav": false,
-                                    "lazyLoad": true,
-                                    "URLhashListener": true,
-                                    "responsive": {
-                                        "900": {
-                                            "nav": true,
-                                            "dots": true
-                                        }
+                            data-owl-options='{
+                                "dots": false,
+                                "nav": false,
+                                "lazyLoad": true,
+                                "URLhashListener": true,
+                                "responsive": {
+                                    "900": {
+                                        "nav": true,
+                                        "dots": true
                                     }
-                                }'>
+                                }
+                            }'>
                                 @if ($product->video)
                                     <div class="intro-slide" data-hash="{{ $product->video->name }}">
                                         <video controls autoplay width="100%" style="max-height: 600px">
@@ -109,7 +112,7 @@
                                 $category = $product->category;
                                 $arr = [];
                                 while ($category) {
-                                    $route = route('client.product.index', ['category' => $category->slug]);
+                                    $route = route('client.product_category.index', ['category' => $category->slug]);
                                     $arr[] = "<a href='$route'>$category->name</a>";
                                     $category = $category->category;
                                 }

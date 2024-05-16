@@ -107,7 +107,7 @@ class CheckoutService {
             }
             $order_total = $order->inventories()->sum('order_items.total');
             $rank_discount = $customer->calculateRankDiscountAmount($order_total);
-            $discounted_combos = $checkoutModel->getCart()->calculateComboDiscount($checkoutModel->getItemSelected());
+            $discounted_combos = customer() ? $checkoutModel->getCart()->calculateComboDiscount($checkoutModel->getItemSelected()) : $checkoutModel->getCart()->calculateSessionComboDiscount($checkoutModel->getItemSelected());
             $combo_discount = $discounted_combos->sum('discount_amount');
             $attach_vouchers = [];
             $order_discount_amount = 0;
@@ -142,8 +142,10 @@ class CheckoutService {
             }
             $order->vouchers()->attach($attach_vouchers);
             $subtotal = $order->inventories()->sum('order_items.total');
+            $order_total = $order_total + $order->shipping_fee - $rank_discount - $combo_discount - $checkoutModel->getAdditionalDiscount();
+            $order_total = $order_total < 0 ? 0 : $order_total;
             $order->update([
-                'total' => $order_total + $order->shipping_fee - $rank_discount - $combo_discount - $checkoutModel->getAdditionalDiscount(),
+                'total' => $order_total,
                 'subtotal' => $subtotal,
                 'origin_subtotal' => $order->inventories()->sum(DB::raw('order_items.origin_price * order_items.quantity')),
                 'rank_discount_value' => $rank_discount,

@@ -31,7 +31,11 @@ class Review extends Model {
         'details',
         'reply',
         'reply_by',
-        'customer_liked'
+        'customer_liked',
+        'product_id',
+        'buyer_username',
+        'shopee_comment_id',
+        'model_name'
     ];
 
     protected $casts = [

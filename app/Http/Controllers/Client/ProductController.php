@@ -13,11 +13,11 @@ use Meta;
 
 class ProductController extends Controller {
     public function details($slug) {
-        $product = Product::with(['category', 'inventories' => function ($q) {
+        $product = Product::withTrashed()->with(['category', 'inventories' => function ($q) {
             return $q->available()->with(['image', 'attributes' => function ($q) {
                 $q->orderBy('attribute_inventory.created_at', 'desc');
             }]);
-        }])->available()->whereSlug($slug)->firstOrFail();
+        }])->whereSlug($slug)->firstOrFail();
         $product->getMetaTags();
         $other_products = Product::where('id', '!=', $product->id)
             ->with(['category', 'inventories' => function ($q) {
@@ -28,10 +28,12 @@ class ProductController extends Controller {
             ->whereHas('categories', function ($q) use ($product) {
                 $q->whereIn('categories.id', $product->categories->pluck('id')->toArray());
             })->limit(8)->orderBy('created_at', 'desc')->get();
-        $has_review = Review::whereHas('order', function ($q) use ($product) {
-            $q->whereHas('inventories', function ($q) use ($product) {
-                return $q->where('inventories.product_id', $product->id);
-            });
+        $has_review = Review::where(function($q) use ($product) {
+            $q->whereHas('order', function ($q) use ($product) {
+                $q->whereHas('inventories', function ($q) use ($product) {
+                    return $q->where('inventories.product_id', $product->id);
+                });
+            })->orWhere('reviews.product_id', $product->id);
         })->exists();
         $combo_products = [];
         if($product->available_combo) {
@@ -83,10 +85,12 @@ class ProductController extends Controller {
         $product = Product::whereSlug($slug)->firstOrFail();
         $reviews = Review::with(['customer', 'images', 'order.inventories' => function ($q) use ($product) {
             return $q->where('inventories.product_id', $product->id)->with('product:name');
-        }])->whereHas('order', function ($q) use ($product) {
-            $q->whereHas('inventories', function ($q) use ($product) {
-                return $q->where('inventories.product_id', $product->id);
-            });
+        }])->where(function($q) use ($product) {
+            $q->whereHas('order', function ($q) use ($product) {
+                $q->whereHas('inventories', function ($q) use ($product) {
+                    return $q->where('inventories.product_id', $product->id);
+                });
+            })->orWhere('reviews.product_id', $product->id);
         })->active()->orderBy('created_at', 'desc')->paginate(4);
         $items = $reviews->items();
         $results = [];
@@ -98,4 +102,5 @@ class ProductController extends Controller {
             'next' => $reviews->hasMorePages()
         ]);
     }
+
 }

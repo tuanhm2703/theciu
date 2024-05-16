@@ -74,7 +74,7 @@ function stripVN($string, $slug = '-', $extra = null) {
 function renderCategory($category) {
     $output = '';
     if ($category->hasProducts()) {
-        $route = route('client.product_category.index', ['category' => $category->slug]);
+        $route = route('client.product_category.index', $category->slug);
         $output .= "<li><a href='$route'>$category->name</a>";
         if ($category->categories->count() > 0) {
             $output .= "<ul>";
@@ -91,7 +91,7 @@ function renderCollectionCategory() {
     $output = '';
     $categories = Category::whereType(CategoryType::COLLECTION)->whereHas('available_products')->get();
     foreach ($categories as $category) {
-        $route = route('client.product_category.index', ['category' => $category->slug]);
+        $route = route('client.product_category.index', $category->slug);
         $output .= "<li><a href='$route'>$category->name</a></li>";
     }
     return $output;
@@ -572,4 +572,24 @@ function convertToHttps($request_url) {
         return $request_url;
     }
     return str_replace("http", "https", $request_url);
+}
+
+function compareArray($wordArray, $correctArray) {
+    $result = [];
+    foreach($wordArray as $index => $word) {
+        $result[] = $word == $correctArray[$index];
+    }
+    return $result;
+}
+
+function getDefaultAvatar() {
+    return asset('assets/images/default-avatar.png');
+}
+
+function addTrailingSlash(string $url) {
+    if(substr($url, -1) === '/') {
+        return $url;
+    } else {
+        return "$url/";
+    }
 }
