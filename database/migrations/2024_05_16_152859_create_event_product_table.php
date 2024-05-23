@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('event_product', function (Blueprint $table) {
             $table->bigInteger('event_id')->unsigned();
             $table->bigInteger('product_id')->unsigned();
-            $table->foreign('event_id')->references('id')->on('events');
+            $table->foreign('event_id')->references('id')->on('events')->cascadeOnDelete();
             $table->foreign('product_id')->references('id')->on('products');
             $table->timestamps();
         });

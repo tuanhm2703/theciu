@@ -6,6 +6,7 @@ use App\Models\Address;
 use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\Event;
 use App\Models\Image;
 use App\Models\Inventory;
 use App\Models\Jd;
@@ -18,6 +19,7 @@ use App\Observers\AddressObserver;
 use App\Observers\BlogObserver;
 use App\Observers\CategoryObserver;
 use App\Observers\EditByObserver;
+use App\Observers\EventObserver;
 use App\Observers\ImageObserver;
 use App\Observers\InventoryObserver;
 use App\Observers\JdObserver;
@@ -56,5 +58,6 @@ class ObserverServiceProvider extends ServiceProvider {
         Voucher::observe(VoucherObserver::class);
         Image::observe(ImageObserver::class);
         Jd::observe(JdObserver::class);
+        Event::observe(EventObserver::class);
     }
 }

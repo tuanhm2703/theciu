@@ -36,4 +36,5 @@ Route::group(['as' => 'api.'], function () {
     include('api/auth.php');
     include('api/Branch.php');
     include('api/Collection.php');
+    include('api/Event.php');
 });

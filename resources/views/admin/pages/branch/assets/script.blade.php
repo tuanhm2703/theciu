@@ -2,7 +2,6 @@
 </script>
 <script>
     const imgSource = `{{ isset($branch) ? $branch->image?->path_with_original_size : null }}`
-    console.log(imgSource);
     const file = FilePond.create(document.querySelector('input[name=image]'), {
         imagePreviewHeight: 170,
         storeAsFile: true,
