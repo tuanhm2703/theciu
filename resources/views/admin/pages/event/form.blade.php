@@ -6,6 +6,14 @@
     </div>
 </div>
 <div class="row mt-3">
+    <div class="col-md-12">
+        <div class="form-group">
+            {!! Form::label('image', trans('labels.image'), ['class' => 'custom-label-control m-0']) !!}
+            {!! Form::file('image', ['class' => 'form-control', 'required']) !!}
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
     <div class="col-md-6">
         {!! Form::label('from', trans('labels.from_date'), ['class' => 'custom-label-control']) !!}
         {!! Form::text('from', null, ['class' => 'form-control datetimepicker']) !!}
@@ -21,7 +29,6 @@
         {!! Form::textarea('content', null, [
             'class' => 'form-control summernote',
             'placeholder' => 'Nhập vào',
-            'required',
             'rows' => 5,
         ]) !!}
     </div>
@@ -32,7 +39,6 @@
         {!! Form::textarea('image_section', null, [
             'class' => 'form-control summernote',
             'placeholder' => 'Nhập vào',
-            'required',
             'rows' => 5,
         ]) !!}
     </div>
@@ -50,6 +56,6 @@
         </thead>
         <tbody></tbody>
     </table>
-    <div class="text-end mt-3"><button class="btn btn-primary" id="add-product-btn">Thêm sản
+    <div class="text-end mt-3"><button class="btn btn-primary submit-btn" id="add-product-btn">Thêm sản
             phẩm</button></div>
 </div>

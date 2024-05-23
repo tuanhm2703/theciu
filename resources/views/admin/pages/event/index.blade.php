@@ -25,6 +25,8 @@
                                 <th>STT</th>
                                 <th class="">
                                     {{ trans('labels.name') }}</th>
+                                    <th class="">
+                                        {{ trans('labels.image') }}</th>
                                 <th>{{ trans('labels.begin') }}</th>
                                 <th>{{ trans('labels.end') }}</th>
                                 <th>{{ trans('labels.action') }}</th>
@@ -42,7 +44,7 @@
 @push('js')
     <script>
         const initEventTable = () => {
-            return $('.event-table').DataTable({
+            const table = $('.event-table').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "destroy": true,
@@ -51,7 +53,7 @@
                     {
                         data: 'name',
                         render: function(data, type, full, meta) {
-                            const info = promotionProductTable.page.info()
+                            const info = eventTable.page.info()
                             const rowNumber = meta.row + 1;
                             return (info.page) * info.length + rowNumber
 
@@ -61,16 +63,21 @@
                         data: "name"
                     },
                     {
-                        data: "begin"
+                        data: "image"
                     },
                     {
-                        data: "end"
+                        data: "from"
+                    },
+                    {
+                        data: "to"
                     },
                     {
                         data: 'action'
                     }
                 ]
             });
+            return table
         }
+        const eventTable = initEventTable()
     </script>
 @endpush

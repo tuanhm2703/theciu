@@ -4,7 +4,6 @@
         .footer-widgets.footer.footer-2 * {
             max-width: 100%;
         }
-
     </style>
     <style>
         .product-table {
@@ -33,46 +32,77 @@
     </div>
 @endsection
 @push('js')
-<script>
-    (() => {
-        const tempIdList = [];
-        $('.product-table').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                url: "{{ route('admin.ajax.product.paginate') }}",
-                type: "GET",
-                data: (d) => {
-                    d.selectedIds = tempIdList
-                }
-            },
-            "columns": [{
-                    data: "id",
-                    render: function(data, type, row) {
-                        if (type === 'display') {
-                            return `<div class="form-check text-center form-check-info">
+    <script>
+        let tempIdList = [];
+        (() => {
+            $('.product-table').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    url: "{{ route('admin.event.product.paginate') }}",
+                    type: "GET",
+                    data: (d) => {
+                        d.selectedIds = tempIdList
+                    }
+                },
+                "columns": [{
+                        data: "id",
+                        render: function(data, type, row) {
+                            if (type === 'display') {
+                                return `<div class="form-check text-center form-check-info">
                                         <input type="checkbox" data-product-id="${data}" ${tempIdList.indexOf(data) >= 0 ? 'checked' : ''} class="editor-active form-check-input child-checkbox">
                                     </div>`
-                        }
-                        return data;
+                            }
+                            return data;
+                        },
+                        className: "dt-body-center",
+                        orderable: false,
+                        searchable: false
                     },
-                    className: "dt-body-center",
-                    orderable: false,
-                    searchable: false
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "price_info"
+                    },
+                    {
+                        data: "quantity_info"
+                    },
+                ],
+            });
+            $('.product-table').on('change', '.child-checkbox', function() {
+                const productId = parseInt($(this).attr('data-product-id'))
+                if ($(this).is(':checked')) {
+                    tempIdList.push(productId)
+                } else {
+                    tempIdList.splice(tempIdList.indexOf(productId), 1)
+                }
+            })
+            const file = FilePond.create(document.querySelector('input[name=image]'), {
+                imagePreviewHeight: 170,
+                storeAsFile: true,
+                files: [],
+                labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>'
+            })
+            $('form').ajaxForm({
+                beforeSend: () => {
+                    $('.submit-btn').loading()
                 },
-                {
-                    data: "name"
+                data: {
+                    product_ids: tempIdList,
+                    image: file.getFile(1),
                 },
-                {
-                    data: "price_info"
+                dataType: 'json',
+                error: (err) => {
+                    $('.submit-btn').loading(false)
                 },
-                {
-                    data: "quantity_info"
-                },
-            ],
-        });
-    })()
-</script>
-
+                success: (res) => {
+                    toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
+                    setTimeout(() => {
+                        window.location.href = res.data.url
+                    }, 1000);
+                }
+            })
+        })()
+    </script>
 @endpush
-

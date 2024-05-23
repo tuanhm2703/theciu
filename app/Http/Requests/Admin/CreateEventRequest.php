@@ -13,7 +13,7 @@ class CreateEventRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class CreateEventRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required',
+            'from' => 'required',
+            'to' => 'required',
+            'image' => 'required|mimes:png,jpg,jpeg',
+            'content' => 'required',
+            'image_section' => 'required'
         ];
     }
 }
