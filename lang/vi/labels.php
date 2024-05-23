@@ -281,5 +281,10 @@ return [
     ],
     'blog_type' => 'Loại bài viết',
     'hot_job' => 'Công việc HOT',
-    'view_cv' => 'Xem hồ sơ'
+    'view_cv' => 'Xem hồ sơ',
+    'event_list' => 'Danh sách event',
+    'create_event' => 'Tạo event',
+    'begin' => 'Thời gian bắt đầu',
+    'end' => 'Thời gian kết thúc',
+    'image_section' => 'Nội dung hình ảnh',
 ];

@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\TestController;
-use App\Http\Livewire\AddressSelectComponent;
 
 Route::group(['prefix' => 'admintheciu', 'as' => 'admin.'], function() {
     include('admin/Auth.php');
@@ -37,6 +36,7 @@ Route::group(['prefix' => 'admintheciu', 'as' => 'admin.'], function() {
         include('admin/Product.php');
         include('admin/Category.php');
         include('admin/Promotion.php');
+        include('admin/Event.php');
         include('admin/Appearance.php');
         include('admin/Setting.php');
         include('admin/Order.php');

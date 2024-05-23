@@ -2,4 +2,6 @@
 
 use App\Http\Controllers\Api\CategoryController;
 
-Route::get('/getAll', [CategoryController::class, 'getAll']);
+Route::group(['prefix' => 'categories', 'as' => 'category.'], function () {
+    Route::get('/getAll', [CategoryController::class, 'getAll']);
+});

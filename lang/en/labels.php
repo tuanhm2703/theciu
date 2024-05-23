@@ -105,7 +105,6 @@ return [
     'add_to_cart' => 'Add to cart',
     'cancel_order' => 'Cancel order',
     'cancel_reason' => 'Cancel reason',
-    'shipping_info' => 'Shipping info',
     'customer' => 'Customer',
     'material' => 'Material',
     'style' => 'Style',
@@ -246,4 +245,9 @@ return [
     'reply' => 'Reply',
     'review_star' => 'Review Star',
     'detail_review' => 'Detail Review',
+    'event_list' => 'Event List',
+    'create_event' => 'Create event',
+    'begin' => 'Begin',
+    'end' => 'End',
+    'image_section' => 'Image Section',
 ];
