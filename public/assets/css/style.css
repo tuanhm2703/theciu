@@ -7851,6 +7851,22 @@ p {
     background-color: #fff;
 }
 
+.product-label .out-of-stock {
+    position: absolute;
+    z-index: 2;
+    top: 2rem;
+    right: 2rem;
+    font-weight: 400;
+    font-size: 1.3rem;
+    line-height: 1.6rem;
+    letter-spacing: -0.01em;
+    padding: 0.5rem 0.9rem;
+    min-width: 45px;
+    text-align: center;
+    color: #333333;
+    background-color: #fff;
+}
+
 .product-label+.product-label {
     top: 5rem;
 }

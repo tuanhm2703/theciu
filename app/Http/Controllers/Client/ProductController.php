@@ -13,7 +13,7 @@ use Meta;
 
 class ProductController extends Controller {
     public function details($slug) {
-        $product = Product::with(['category', 'inventories' => function ($q) {
+        $product = Product::withTrashed()->with(['category', 'inventories' => function ($q) {
             return $q->available()->with(['image', 'attributes' => function ($q) {
                 $q->orderBy('attribute_inventory.created_at', 'desc');
             }]);

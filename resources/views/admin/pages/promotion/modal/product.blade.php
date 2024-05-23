@@ -140,7 +140,6 @@
         })
         $('#batch-update-sale-form').on('submit', (event) => {
             event.preventDefault()
-            console.log(pond.getFile().file);
             const form = $('#batch-update-sale-form')
             let formData = new FormData(form[0])
             formData.append('file', pond.getFile().file)

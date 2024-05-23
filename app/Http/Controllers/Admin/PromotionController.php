@@ -16,6 +16,7 @@ use App\Models\Category;
 use App\Models\Inventory;
 use App\Models\Product;
 use App\Models\Promotion;
+use App\Models\PromotionProduct;
 use App\Responses\Admin\BaseResponse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -56,8 +57,8 @@ class PromotionController extends Controller {
         if ($promotion->type === PromotionType::ACCOM_GIFT)
             return view('admin.pages.accom-gift.edit', compact('promotion', 'type', 'products', 'productIds'));
         if ($promotion->type === PromotionType::ACCOM_PRODUCT) {
-            $main_product_id = $products->where('pivot.featured', 1)->first()?->id;
-            return view('admin.pages.accom-product.edit', compact('promotion', 'type', 'products', 'productIds', 'main_product_id'));
+            $main_product_ids = $products->where('pivot.featured', 1)->pluck('id')->toArray();
+            return view('admin.pages.accom-product.edit', compact('promotion', 'type', 'products', 'productIds', 'main_product_ids'));
         }
         return view('admin.pages.promotion.product.add', compact('promotion', 'type', 'products', 'productIds'));
     }
@@ -160,12 +161,14 @@ class PromotionController extends Controller {
                 $product_ids[] = $p['id'];
             }
             $promotion->products()->sync($product_ids);
-            if ($request->main_product_id) {
-                $promotion->products()->sync([
-                    $request->main_product_id => [
-                        'featured' => 1
-                    ]
-                ], false);
+            if ($request->main_product_ids) {
+                foreach($request->main_product_ids as $id) {
+                    $promotion->products()->sync([
+                        $id => [
+                            'featured' => 1
+                        ]
+                    ], false);
+                }
             }
             DB::commit();
         } catch (\Throwable $th) {
@@ -208,12 +211,17 @@ class PromotionController extends Controller {
                 $product_ids[] = $p['id'];
             }
             $promotion->products()->sync($product_ids);
-            if ($request->main_product_id) {
-                $promotion->products()->sync([
-                    $request->main_product_id => [
-                        'featured' => 1
-                    ]
-                ], false);
+            if ($request->main_product_ids) {
+                PromotionProduct::where('promotion_id', $promotion->id)->update([
+                    'featured' => 0
+                ]);
+                foreach($request->main_product_ids as $id) {
+                    $promotion->products()->sync([
+                        $id => [
+                            'featured' => 1
+                        ]
+                    ], false);
+                }
             }
             // dd($input);
             $promotion->update($input);

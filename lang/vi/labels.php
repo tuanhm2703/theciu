@@ -282,11 +282,9 @@ return [
     'blog_type' => 'Loại bài viết',
     'hot_job' => 'Công việc HOT',
     'view_cv' => 'Xem hồ sơ',
-    'stock.update' => 'Cập nhật tồn kho',
-    'invoice.update' => 'Cập nhật hoá đơn',
-    'product.delete' => 'Xoá sản phẩm',
-    'career' => 'Tuyển dụng',
-    'edit_promotion' => 'Cập nhật chương trình khuyến mãi',
-    'view_cv' => 'Xem hồ sơ',
-    'edit_promotion' => 'Cập nhật chương trình khuyến mãi'
+    'event_list' => 'Danh sách event',
+    'create_event' => 'Tạo event',
+    'begin' => 'Thời gian bắt đầu',
+    'end' => 'Thời gian kết thúc',
+    'image_section' => 'Nội dung hình ảnh',
 ];

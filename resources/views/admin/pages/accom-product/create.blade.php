@@ -9,7 +9,11 @@
             'method' => 'POST',
             'class' => 'promotion-form'
         ]) !!}
-                @include('admin.pages.accom-product.form')
+                <div class="card">
+                    <div class="card-body">
+                        @include('admin.pages.accom-product.form')
+                    </div>
+                </div>
                 {!! Form::close() !!}
         @include('admin.layouts.footers.auth.footer')
     </div>

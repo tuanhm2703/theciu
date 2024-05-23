@@ -14,7 +14,7 @@
     const validator = $('.promotion-form').initValidator({
         successClass: false,
     })
-    let main_product_id = @json(isset($main_product_id) ? $main_product_id : null);
+    let main_product_ids = @json(isset($main_product_ids) ? $main_product_ids : []);
     const renderPromotionSettingForm = () => {
         $('.promotion-setting-wrapper').html('')
         const renderInventories = (inventories) => {
@@ -33,11 +33,11 @@
                         </div>
                         <div class="col-3 text-center justify-content-center text-sm p-0">
                             <input class="form-control quantity-each-order" data-product-id="${inventory.product_id}"
-                                    data-inventory-id="${inventory.id}" ${inventory.product_id == main_product_id ? 'disabled' : ''} onChange="updateInventoryQuantityEachOrder(this)" value="${inventory.quantity_each_order}">
+                                    data-inventory-id="${inventory.id}" ${main_product_ids.indexOf(inventory.product_id) > -1 ? 'disabled' : ''} onChange="updateInventoryQuantityEachOrder(this)" value="${inventory.quantity_each_order}">
                         </div>
                         <div class="col-1 vertical-align-center justify-content-center p-0">
                             <div class="form-check form-switch">
-                                <input class="form-check-input promotion-status-check ${inventory.product_id == main_product_id ? 'd-none' : ''}" data-product-id="${inventory.product_id}"
+                                <input class="form-check-input promotion-status-check ${main_product_ids.indexOf(inventory.product_id) > -1 ? 'd-none' : ''}" data-product-id="${inventory.product_id}"
                                     data-inventory-id="${inventory.id}" onChange="updateInventoryPromotionStatus(this)" type="checkbox"
                                     ${inventory.promotion_status ? 'checked' : '' }>
                             </div>
@@ -55,7 +55,7 @@
                                                             </div>
                                                             <div class="col-1">
                                                                 <div class="form-check form-switch">
-                                                                    <input class="form-check-input" name="main-product" data-product-id="${product.id}" onchange="updateMainProduct(this)" type="checkbox" ${product.id == main_product_id ? 'checked' : ''}>
+                                                                    <input class="form-check-input" name="main-product[]" data-product-id="${product.id}" onchange="updateMainProduct(this)" type="checkbox" ${main_product_ids.indexOf(product.id) > -1 ? 'checked' : ''}>
                                                                 </div>
                                                             </div>
                                                             <div class="col-3 d-flex">
@@ -132,24 +132,20 @@
     }
     const updateMainProduct = (element) => {
         if ($(element).is(":checked")) {
+            if ($('input[name="main-product[]"]').length === $('input[name="main-product[]"]:checked').length) {
+                $(element).prop('checked', false)
+            }
+        } else {
             const productId = $(element).attr('data-product-id');
-            products.forEach((product) => {
-                if (product.id == productId) {
-                    product.main_product = true;
-                } else {
-                    product.main_product = false;
-                }
-            })
-            $('input[name="main-product"]').prop('checked', false)
-            $(element).prop('checked', true)
-            main_product_id = productId
-            $(`input[name="batchUpdateProductIds[]"]`).show()
-            $(`input[name="batchUpdateProductIds[]"][value=${main_product_id}]`).hide()
-            $(`.quantity-each-order`).attr('disabled', false)
-            $('.promotion-status-check').css('display', 'block')
-            $(`.quantity-each-order[data-product-id=${productId}]`).attr('disabled', true)
-            $(`.promotion-status-check[data-product-id=${productId}]`).css('display', 'none')
-            $('#numberOfCheckedProducts').text($(`[name="batchUpdateProductIds[]"]:checked:not([value=${main_product_id}])`).length)
+            if ($('input[name="main-product[]"]').length !== $('input[name="main-product[]"]:checked').length) {
+                $(`.quantity-each-order[data-product-id=${productId}]`).attr('disabled', $(element).is(":checked"))
+                $(`.promotion-status-check[data-product-id=${productId}]`).css('display', $(element).is(
+                    ":checked") ?
+                    'none' : 'block')
+            }
+            main_product_ids = Array.from($('input[name="main-product[]"]:checked').map((index, e) => e
+                .getAttribute(
+                    'data-product-id')))
         }
     }
     const updateInventoryQuantityEachOrder = (element) => {
@@ -176,12 +172,15 @@
 
     $('#promotion-update-btn').on('click', (e) => {
         e.preventDefault();
+        main_product_ids = Array.from($('input[name="main-product[]"]:checked').map((index, e) => e
+                .getAttribute(
+                    'data-product-id')))
         if (validator.checkAll() == 0) {
-            if (main_product_id == null) {
+            if (main_product_ids.length === 0) {
                 toast.error(`{{ __('toast.action_failed') }}`, 'Vui lòng chọn sản phẩm chính cho chương trình')
                 return;
             }
-            if(products.length < 2) {
+            if (products.length < 2) {
                 toast.error(`{{ __('toast.action_failed') }}`, 'Vui lòng chọn nhiều hơn 2 sản phẩm')
                 return;
             }
@@ -190,6 +189,7 @@
                 url: $('.promotion-form').attr('action'),
                 type: @json(isset($promotion) ? 'PUT' : 'POST'),
                 data: {
+                    main_product_ids: main_product_ids,
                     products: products.map(function(product) {
                         return {
                             id: product.id,
@@ -208,7 +208,7 @@
                     from: $('input[name=from]').val(),
                     to: $('input[name=to]').val(),
                     name: $('input[name=name]').val(),
-                    main_product_id: main_product_id,
+                    main_product_ids: main_product_ids,
                     num_of_products: $('input[name=num_of_products]').val()
                 },
                 success: (res) => {
@@ -229,25 +229,27 @@
             productIds.splice(productIndex, 1)
             products.splice(productIndex, 1)
             $(e.currentTarget).parents('.product-setting-info').remove()
-            if ($(e.currentTarget).attr('data-product-id') == main_product_id) {
-                main_product_id = null;
-                $('input[name="main-product"]').prop('checked', false);
-            }
-            $('#numberOfCheckedProducts').text($(`[name="batchUpdateProductIds[]"]:checked:not([value=${main_product_id}])`).length)
+            main_product_ids = Array.from($('input[name="main-product[]"]:checked').map((index, e) => e
+                .getAttribute('data-product-id')))
         })
         $('#checkAllProduct').on('click', function(e) {
             $('[name="batchUpdateProductIds[]"]').prop('checked', $(this).is(':checked'))
-            $('#numberOfCheckedProducts').text($(`[name="batchUpdateProductIds[]"]:checked:not([value=${main_product_id}])`).length)
+            $('#numberOfCheckedProducts').text($(
+                    `[name="batchUpdateProductIds[]"]:checked:not([value=${main_product_id}])`)
+                .length)
 
         })
         $('body').on('click', '[name="batchUpdateProductIds[]"]', function(e) {
-            $('#numberOfCheckedProducts').text($(`[name="batchUpdateProductIds[]"]:checked:not([value=${main_product_id}])`).length)
+            $('#numberOfCheckedProducts').text($(
+                    `[name="batchUpdateProductIds[]"]:checked:not([value=${main_product_id}])`)
+                .length)
         })
         $('.common-info-update-btn').on('click', (e) => {
             e.preventDefault()
             $('[name="batchUpdateProductIds[]"]:checked').each(function(index, e) {
                 const productId = $(e).val();
-                let inputElement = `.quantity-each-order:not([data-product-id=${main_product_id}])`;
+                let inputElement =
+                    `.quantity-each-order:not([data-product-id=${main_product_id}])`;
                 $(inputElement).each(function() {
                     $(this).val($('input[name=general-quantity-each-order]').val())
                     console.log('hello');

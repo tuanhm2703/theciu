@@ -78,6 +78,9 @@ class Product extends Model {
     public function inventories() {
         return $this->hasMany(Inventory::class);
     }
+    public function events() {
+        return $this->belongsToMany(Event::class, 'event_product');
+    }
     public function orders()
     {
         return $this->belongsToMany(Order::class, 'order_items')->withPivot([

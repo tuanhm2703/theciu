@@ -384,7 +384,7 @@ class CartComponent extends Component {
         $sub_total = $this->cart->getTotalWithSelectedItems($this->item_selected);
         $this->promotion_applied = $base_total > $sub_total;
         $this->rank_discount_amount = $this->customer->calculateRankDiscountAmount($sub_total);
-        $this->combo_discount = $this->cart->calculateComboDiscount($this->item_selected)->sum('discount_amount');
+        $this->combo_discount = customer() ? $this->cart->calculateComboDiscount($this->item_selected)->sum('discount_amount') : $this->cart->calculateSessionComboDiscount($this->item_selected)->sum('discount_amount');
         $this->promotion_applied = $this->promotion_applied == false && $this->combo_discount > 0;
         $this->freeship_voucher_discount = $this->freeship_voucher ? $this->freeship_voucher->getDiscountAmount($this->shipping_fee) : 0;
         $this->updateVoucherDisableStatus();

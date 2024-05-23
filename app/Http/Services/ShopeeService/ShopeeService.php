@@ -82,6 +82,7 @@ class ShopeeService {
     }
 
     private function updateShopId($shopId) {
+        $this->shopId = $shopId;
         Setting::updateOrCreate(
             ['name' => 'shopee_shop_id'],
             [
@@ -90,6 +91,7 @@ class ShopeeService {
         );
     }
     private function updateShopeeAccessToken($access_token) {
+        $this->accessToken = $access_token;
         Setting::updateOrCreate(
             ['name' => 'shopee_access_token'],
             [
@@ -98,6 +100,7 @@ class ShopeeService {
         );
     }
     private function updateShopeeRefreshToken($refresh_access_token) {
+        $this->refreshToken = $refresh_access_token;
         Setting::updateOrCreate(
             ['name' => 'shopee_refresh_token'],
             [
@@ -115,7 +118,7 @@ class ShopeeService {
             'page_size' => $pageSize,
             'item_status' => $status
         ];
-        $productList = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+        $productList = $this->get($baseUrl, $apiPath, $params, $this->apiConfig);
         return $productList;
     }
 
@@ -128,14 +131,14 @@ class ShopeeService {
             'page_size' => 50,
             'item_status' => "NORMAL"
         ];
-        $productList = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+        $productList = $this->get($baseUrl, $apiPath, $params, $this->apiConfig);
         while ($productList->response->has_next_page) {
             $ids = collect($productList->response->item)->pluck('item_id')->toArray();
             $apiPath = ShopeeEndPoint::GET_ITEM_BASE_INFO;
             $params1 = [
                 'item_id_list' => implode(",", $ids),
             ];
-            $baseInfo = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params1, $this->apiConfig);
+            $baseInfo = $this->get($baseUrl, $apiPath, $params1, $this->apiConfig);
             foreach ($baseInfo->response->item_list as $item) {
                 ShopeeProduct::updateOrCreate([
                     'shopee_product_id' => $item->item_id
@@ -147,7 +150,7 @@ class ShopeeService {
             }
             $params['offset'] += 50;
             $apiPath = "/api/v2/product/get_item_list";
-            $productList = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+            $productList = $this->get($baseUrl, $apiPath, $params, $this->apiConfig);
         }
     }
 
@@ -157,7 +160,7 @@ class ShopeeService {
         $params1 = [
             'item_id_list' => implode(",", $ids),
         ];
-        $baseInfo = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params1, $this->apiConfig);
+        $baseInfo = $this->get($baseUrl, $apiPath, $params1, $this->apiConfig);
         foreach ($baseInfo->response->item_list as $item) {
             ShopeeProduct::updateOrCreate([
                 'shopee_product_id' => $item->item_id
@@ -167,5 +170,48 @@ class ShopeeService {
                 'product_id' => Product::whereName($item->item_name)->first()?->id
             ]);
         }
+    }
+
+    public function getShopeeProductComment($cursor, $pageSize) {
+        $baseUrl = ShopeeEndPoint::BASE_ENDPOINT;
+        $apiPath = ShopeeEndPoint::GET_PRODUCT_COMMENT;
+
+        $params = [
+            'cursor' => $cursor,
+            'page_size' => $pageSize,
+        ];
+        return $this->get($baseUrl, $apiPath, $params, $this->apiConfig);
+    }
+    public function getListOrder() {
+        $baseUrl = ShopeeEndPoint::BASE_ENDPOINT;
+        $apiPath = ShopeeEndPoint::GET_ORDER_LIST;
+
+        $params = [
+            'time_range_field' => 'create_time',
+            'time_from' => now()->yesterday()->timestamp,
+            'time_to' => now()->timestamp,
+            'page_size' => 100,
+            'order_status' => 'COMPLETED'
+        ];
+        return $this->get($baseUrl, $apiPath, $params, $this->apiConfig);
+    }
+    public function getOrderDetailByIds($order_ids) {
+        $baseUrl = ShopeeEndPoint::BASE_ENDPOINT;
+        $apiPath = ShopeeEndPoint::GET_ORDER_DETAILS;
+
+        $params = [
+            'order_sn_list' => implode(',', $order_ids),
+            'response_optional_fields' => 'item_list'
+        ];
+        return $this->get($baseUrl, $apiPath, $params, $this->apiConfig);
+    }
+
+    private function get($baseUrl, $apiPath, $params, ShopeeApiConfig $apiConfig) {
+        $response = $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+        if(isset($response->error) && $response->error === 'error_auth') {
+            $this->refreshToken();
+            return $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
+        }
+        return $response;
     }
 }

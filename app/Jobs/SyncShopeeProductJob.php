@@ -37,6 +37,8 @@ class SyncShopeeProductJob implements ShouldQueue
         if($productList->response->has_next_page) {
             $this->offset += $this->pageSize;
             dispatch(new SyncShopeeProductJob($this->offset, $this->pageSize, $this->status));
+        } else {
+            dispatch(new SyncShopeeProductComment(0, 50));
         }
     }
 }

@@ -20,26 +20,20 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('branches', [BranchController::class, 'ajaxGetBranches']);
-Route::group(['prefix' => 'seo'], function() {
+Route::group(['prefix' => 'seo'], function () {
     Route::get('product-xlsx', [SeoController::class, 'getProductExcelFile']);
 });
-Route::group(['prefix' => 'recruitment'], function() {
+Route::group(['prefix' => 'recruitment'], function () {
     include('api/JD.php');
 });
 include('api/Blog.php');
 
-Route::group(['as' => 'api.'], function() {
-    Route::group(['prefix' => 'products', 'as' => 'product.'], function() {
-        include('api/Product.php');
-    });
-    Route::group(['prefix' => 'banners', 'as' => 'banner.'], function() {
-        include('api/Banner.php');
-    });
-    Route::group(['prefix' => 'vouchers', 'as' => 'voucher.'], function() {
-        include('api/Voucher.php');
-    });
-    Route::group(['prefix' => 'categories', 'as' => 'category.'], function() {
-        include('api/Category.php');
-    });
+Route::group(['as' => 'api.'], function () {
+    include('api/Product.php');
+    include('api/Banner.php');
+    include('api/Voucher.php');
+    include('api/Category.php');
     include('api/auth.php');
+    include('api/Branch.php');
+    include('api/Collection.php');
 });

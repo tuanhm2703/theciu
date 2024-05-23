@@ -107,7 +107,7 @@ class CheckoutService {
             }
             $order_total = $order->inventories()->sum('order_items.total');
             $rank_discount = $customer->calculateRankDiscountAmount($order_total);
-            $discounted_combos = $checkoutModel->getCart()->calculateComboDiscount($checkoutModel->getItemSelected());
+            $discounted_combos = customer() ? $checkoutModel->getCart()->calculateComboDiscount($checkoutModel->getItemSelected()) : $checkoutModel->getCart()->calculateSessionComboDiscount($checkoutModel->getItemSelected());
             $combo_discount = $discounted_combos->sum('discount_amount');
             $attach_vouchers = [];
             $order_discount_amount = 0;

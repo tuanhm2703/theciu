@@ -45,5 +45,10 @@ class Handler extends ExceptionHandler {
         $this->reportable(function (Throwable $e) {
         });
     }
-
+    public function render($request, Throwable $e) {
+        if (strpos(request()->url(), '/livewire/message/') !== false) {
+            return;
+        }
+        return parent::render($request, $e);
+    }
 }

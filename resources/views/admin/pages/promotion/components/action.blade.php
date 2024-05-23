@@ -42,8 +42,15 @@
 <script>
     $('.ajax-form').ajaxForm({
         success: (res) => {
-            promotionProductTable.ajax.reload()
-            flashSaleTable.ajax.reload()
+            if(@json($promotion->type === App\Enums\PromotionType::ACCOM_PRODUCT)) {
+                $accomProductTable.ajax.reload();
+            } else if(@json($promotion->type === App\Enums\PromotionType::FLASH_SALE)) {
+                flashSaleTable.ajax.reload()
+            } else if(@json($promotion->type === App\Enums\PromotionType::ACCOM_GIFT)) {
+                accomGiftTable.ajax.reload()
+            } else {
+                promotionProductTable.ajax.reload()
+            }
             toast.success('{{ trans('toast.action_successful') }}', res.data.message)
         }
     })

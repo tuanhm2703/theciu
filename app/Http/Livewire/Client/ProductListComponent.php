@@ -9,11 +9,10 @@ use App\Models\Product;
 use App\Models\Promotion;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class ProductListComponent extends Component
 {
-    use KeywordCount, WithPagination;
+    use KeywordCount;
 
     public $title;
     public $banners = [];
