@@ -45,7 +45,7 @@ class SyncShopeeProductComment implements ShouldQueue
         foreach ($commentList->response->item_comment_list as $comment) {
             $item = ShopeeProduct::where('shopee_product_id', $comment->item_id)->whereNotNull('product_id')->first();
             if($item) {
-                Review::firstOrCreate([
+                Review::updateOrCreate([
                     'shopee_comment_id' => $comment->comment_id
                 ],[
                     'buyer_username' => $comment->buyer_username,
