@@ -22,7 +22,7 @@ class CustomerResource extends JsonResource
             'email' => $this->email,
             'reward_point' => $this->reward_point,
             'avatar' => $this->avatar?->path_with_domain,
-            'product_wishlist' => $this->product_wishlists()->pluck('wishlistable_id')->toArray()
+            'product_wishlist' => customerWishlist()
         ];
     }
 }

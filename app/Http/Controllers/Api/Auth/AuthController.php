@@ -78,4 +78,26 @@ class AuthController extends Controller {
             'prev_page' => $paginateData['prev_page_url'],
         ]);
     }
+
+    public function removeFromWishlist(string $slug, Request $request) {
+        $user = $request->user();
+        $product = Product::whereSlug($slug)->firstOrFail();
+        $product->removeFromCustomerWishlist($user->id);
+        return BaseResponse::success([
+            'product_ids' => customerWishlist(),
+            'message' => 'Xoá sản phẩm khỏi danh sách yêu thích thành công'
+        ]);
+    }
+
+    public function addToWishlist(string $slug, Request $request) {
+        $user = $request->user();
+        $product = Product::whereSlug($slug)->firstOrFail();
+        if(!$user->product_wishlists()->where('wishlistable_id', $product->id)->exists()) {
+            $product->addToWishlist(['customer_id' => $user->id]);
+        }
+        return BaseResponse::success([
+            'product_ids' => customerWishlist(),
+            'message' => 'Thêm sản phẩm yêu thích thành công'
+        ]);
+    }
 }
