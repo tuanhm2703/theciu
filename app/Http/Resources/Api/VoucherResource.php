@@ -15,6 +15,7 @@ class VoucherResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'code' => $this->code,
             'saveable' => (boolean) $this->saveable,
