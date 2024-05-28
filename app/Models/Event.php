@@ -33,10 +33,10 @@ class Event extends Model
     }
 
     public function scopePassed($query) {
-        return $query->whereRaw('to < now()');
+        return $query->whereRaw('`to` < now()');
     }
 
     public function scopeIncomming($query) {
-        return $query->whereRaw('from > now()');
+        return $query->whereRaw('`from` > now()');
     }
 }
