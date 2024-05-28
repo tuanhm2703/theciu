@@ -60,5 +60,8 @@ return [
         'key' => env('PROXY_KEY'),
         'salt' => env('PROXY_SALT'),
         'domain' => env('IMAGE_PROXY_DOMAIN')
+    ],
+    'zns' => [
+        'token' => env('N8N_ZNS_TOKEN')
     ]
 ];
