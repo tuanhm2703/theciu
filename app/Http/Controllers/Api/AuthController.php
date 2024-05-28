@@ -197,7 +197,7 @@ class AuthController extends Controller {
 
     private function sendVerifyOtp(Customer $customer, string $type) {
         $otp = $this->otpService->createOtp($customer, $type);
-        $this->otpService->sendOtp($customer->phone, $otp, '');
+        $this->otpService->sendOtp($customer->phone, $otp->code);
         return $otp;
     }
 
@@ -210,7 +210,7 @@ class AuthController extends Controller {
             if (isPhone($request->username)) {
                 return BaseResponse::success([
                     'message' => 'Mã xác nhận đã được gửi đến số điện thoại',
-                    'otp' => $otp
+                    'otp' => $otp->code
                 ]);
             } else {
                 $this->otpService->sendOtpEmailForResetPassword($customer, $otp->code);

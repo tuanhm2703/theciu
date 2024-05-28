@@ -593,3 +593,10 @@ function addTrailingSlash(string $url) {
         return "$url/";
     }
 }
+
+function addCountryCodeToPhoneNumber(string $phone, string $countryCode = '84') {
+    if (substr($phone, 0, 1) === '0') {
+        $localNumber = substr($phone, 1);
+    }
+    return $countryCode . $localNumber;
+}

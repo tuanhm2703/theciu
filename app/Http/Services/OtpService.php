@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Exceptions\Api\OtpException;
+use App\Http\Services\SMSService\ZaloZNSService;
 use App\Jobs\SendEmailJob;
 use App\Mail\CustomerLoginOtpEmail;
 use App\Mail\CustomerResetPassworOtpEmail;
@@ -10,6 +11,9 @@ use App\Models\Customer;
 use App\Models\Otp;
 
 class OtpService {
+    public function __construct(private ZaloZNSService $znsService) {
+
+    }
     public function createOtp(Customer $customer, string $type) {
         $last_otp = $customer->otps()->where('type', $type)->latest()->first();
         if($last_otp && !$last_otp->isExpired()) {
@@ -35,8 +39,8 @@ class OtpService {
         return $otp;
     }
 
-    public function sendOtp($phone, $otp, $message) {
-
+    public function sendOtp(string $phone, string $otp) {
+        $this->znsService->sendOtp(addCountryCodeToPhoneNumber($phone), $otp);
     }
 
     public function verifyOtp(Customer $customer, $otp, $type) {
