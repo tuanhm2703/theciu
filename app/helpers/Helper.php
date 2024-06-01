@@ -593,3 +593,26 @@ function addTrailingSlash(string $url) {
         return "$url/";
     }
 }
+
+function remove_trailing_slash($url) {
+    // Parse the URL and get its components
+    $parsed_url = parse_url($url);
+
+    // Check if there are query parameters
+    if (isset($parsed_url['query'])) {
+        // Remove trailing slash if it exists
+        $url = rtrim($url, '/');
+    }
+
+    return $url;
+}
+
+function remove_admin_trailing_slash($url) {
+    // Check if the URL contains /admintheciu
+    if (strpos($url, '/admintheciu') !== false) {
+        // Remove trailing slash if it exists
+        $url = rtrim($url, '/');
+    }
+
+    return $url;
+}
