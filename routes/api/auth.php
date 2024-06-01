@@ -21,4 +21,5 @@ Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'auth', 'as' => 'auth.
     include('auth/Order.php');
     include('auth/Address.php');
     include('auth/Voucher.php');
+    include('auth/Cart.php');
 });

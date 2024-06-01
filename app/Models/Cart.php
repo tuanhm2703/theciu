@@ -19,18 +19,18 @@ class Cart extends Model {
     }
 
     public function calculateSessionComboDiscount($item_selected) {
-        if(count($item_selected) == 0) return collect([]);
+        if (count($item_selected) == 0) return collect([]);
         // inventory that selected in cart
         $inventories = $this->inventories->whereIn('id', $item_selected);
         // product that selected in cart
         $product_ids = array_unique($inventories->pluck('product_id')->toArray());
         /* The code is querying the `Combo` model to retrieve combos that do not have certain products. */
-        $combos = Combo::whereDoesntHave('products', function($q) use ($product_ids) {
+        $combos = Combo::whereDoesntHave('products', function ($q) use ($product_ids) {
             $q->whereNotIn('products.id', $product_ids);
         })->with('products')->available()->get();
         $discounted_combos = [];
         $used_inventories = [];
-        foreach($combos as $combo) {
+        foreach ($combos as $combo) {
             $total = 0;
             $c = [
                 'discount_amount' => 0,
@@ -38,9 +38,9 @@ class Cart extends Model {
             ];
             do {
                 $total = 0;
-                foreach($combo->products as $product) {
+                foreach ($combo->products as $product) {
                     $inventory = $inventories->where('product_id', $product->id)->first();
-                    if($inventory && $inventory->order_item->quantity > 0) {
+                    if ($inventory && $inventory->order_item->quantity > 0) {
                         $total += $inventory->price - $inventory->promotion_price;
                         $inventory->order_item->quantity--;
                         $used_inventories[$inventory->id] = isset($used_inventories[$inventory->id]) ? $used_inventories[$inventory->id]++ : 1;
@@ -49,18 +49,18 @@ class Cart extends Model {
                         break;
                     }
                 }
-                if($total > 0) {
+                if ($total > 0) {
                     $c['discount_amount'] += $total;
                     $c['total_combo'] += 1;
                 }
             } while ($total > 0);
-            if($c['discount_amount'] > 0) {
+            if ($c['discount_amount'] > 0) {
                 $c['combo'] = $combo;
                 $discounted_combos[] = $c;
             }
         }
-        foreach($inventories as $inventory) {
-            if(isset($used_inventories[$inventory->id])) {
+        foreach ($inventories as $inventory) {
+            if (isset($used_inventories[$inventory->id])) {
                 $inventory->order_item->quantity += $used_inventories[$inventory->id];
             }
         }
@@ -68,17 +68,17 @@ class Cart extends Model {
     }
 
     public function calculateComboDiscount($item_selected) {
-        if(count($item_selected) == 0) return collect([]);
+        if (count($item_selected) == 0) return collect([]);
         // inventory that selected in cart
         $inventories = $this->inventories()->whereIn('inventories.id', $item_selected)->get();
         // product that selected in cart
         $product_ids = array_unique($inventories->pluck('product_id')->toArray());
         /* The code is querying the `Combo` model to retrieve combos that do not have certain products. */
-        $combos = Combo::whereDoesntHave('products', function($q) use ($product_ids) {
+        $combos = Combo::whereDoesntHave('products', function ($q) use ($product_ids) {
             $q->whereNotIn('products.id', $product_ids);
         })->with('products')->available()->get();
         $discounted_combos = [];
-        foreach($combos as $combo) {
+        foreach ($combos as $combo) {
             $total = 0;
             $c = [
                 'discount_amount' => 0,
@@ -86,9 +86,9 @@ class Cart extends Model {
             ];
             do {
                 $total = 0;
-                foreach($combo->products as $product) {
+                foreach ($combo->products as $product) {
                     $inventory = $inventories->where('product_id', $product->id)->first();
-                    if($inventory && $inventory->pivot?->quantity > 0) {
+                    if ($inventory && $inventory->pivot?->quantity > 0) {
                         $total += $inventory->price - $inventory->promotion_price;
                         $inventory->pivot->quantity--;
                     } else {
@@ -96,12 +96,12 @@ class Cart extends Model {
                         break;
                     }
                 }
-                if($total > 0) {
+                if ($total > 0) {
                     $c['discount_amount'] += $total;
                     $c['total_combo'] += 1;
                 }
             } while ($total > 0);
-            if($c['discount_amount'] > 0) {
+            if ($c['discount_amount'] > 0) {
                 $c['combo'] = $combo;
                 $discounted_combos[] = $c;
             }
@@ -109,7 +109,7 @@ class Cart extends Model {
         return collect($discounted_combos);
     }
     public function getTotalWithBasePriceItems($item_selected) {
-        if(count($item_selected) == 0) return 0;
+        if (count($item_selected) == 0) return 0;
         $total = 0;
         foreach ($this->inventories as $i) {
             /* Checking if the item is selected or not. If it is selected, it will add the price to the
@@ -121,7 +121,7 @@ class Cart extends Model {
         return $total;
     }
     public function getTotalWithSelectedItems($item_selected, $voucher = null) {
-        if(count($item_selected) == 0) return 0;
+        if (count($item_selected) == 0) return 0;
         $total = 0;
         foreach ($this->inventories as $i) {
             /* Checking if the item is selected or not. If it is selected, it will add the price to the
@@ -130,7 +130,7 @@ class Cart extends Model {
                 $total += $i->sale_price * $i->cart_stock;
             }
         }
-        if($voucher) {
+        if ($voucher) {
             $total = $total - $voucher->getDiscountAmount($total);
         }
         return $total;
@@ -139,7 +139,7 @@ class Cart extends Model {
     public function total() {
         $total = 0;
         foreach ($this->inventories as $i) {
-            $total += $i->sale_price * (customer() ? $i->pivot->quantity : $i->order_item->quantity);
+            $total += $i->sale_price * (request()->user() ? $i->pivot->quantity : $i->order_item->quantity);
         }
         return $total;
     }

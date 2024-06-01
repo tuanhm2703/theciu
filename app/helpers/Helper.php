@@ -531,7 +531,7 @@ function removeSessionCart() {
 }
 function updateSessionOrder(Order $order) {
     $orders = getSessionOrders();
-    $orders = $orders->filter(function($o) use ($order) {
+    $orders = $orders->filter(function ($o) use ($order) {
         return $order->id != $o->id;
     });
     $orders->push($order);
@@ -568,7 +568,7 @@ function defaultProductAdditionalInformation() {
 }
 function convertToHttps($request_url) {
     $url = parse_url($request_url);
-    if($url['scheme'] === 'https') {
+    if ($url['scheme'] === 'https') {
         return $request_url;
     }
     return str_replace("http", "https", $request_url);
@@ -576,7 +576,7 @@ function convertToHttps($request_url) {
 
 function compareArray($wordArray, $correctArray) {
     $result = [];
-    foreach($wordArray as $index => $word) {
+    foreach ($wordArray as $index => $word) {
         $result[] = $word == $correctArray[$index];
     }
     return $result;
@@ -587,7 +587,7 @@ function getDefaultAvatar() {
 }
 
 function addTrailingSlash(string $url) {
-    if(substr($url, -1) === '/') {
+    if (substr($url, -1) === '/') {
         return $url;
     } else {
         return "$url/";
@@ -599,4 +599,8 @@ function addCountryCodeToPhoneNumber(string $phone, string $countryCode = '84') 
         $localNumber = substr($phone, 1);
     }
     return $countryCode . $localNumber;
+}
+
+function requestUser() {
+    return request()->user();
 }

@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\DB;
 use VienThuong\KiotVietClient\Client;
 use VienThuong\KiotVietClient\Resource\ProductResource;
 
-class Inventory extends Model {
+class Inventory extends Model
+{
     use HasFactory, SoftDeletes, Imageable, InventoryScope, CustomScope;
     protected $fillable = [
         'product_id',
@@ -41,7 +42,8 @@ class Inventory extends Model {
         'formatted_price'
     ];
 
-    public function getImageSizesAttribute() {
+    public function getImageSizesAttribute()
+    {
         return [
             100,
             30,
@@ -50,38 +52,47 @@ class Inventory extends Model {
     }
     const DEFAULT_IMAGE_SIZE = 1000;
 
-    public function attributes() {
+    public function attributes()
+    {
         return $this->belongsToMany(Attribute::class)->orderBy('attribute_inventory.created_at')->withPivot('value')->withTimestamps();
     }
 
-    public function firstAttribute() {
+    public function firstAttribute()
+    {
         return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
             ->where('attribute_inventory.order', 1)->groupBy('laravel_through_key');
     }
-    public function secondAttribute() {
+    public function secondAttribute()
+    {
         return $this->hasOneThrough(Attribute::class, AttributeInventory::class, 'inventory_id', 'id', null, 'attribute_id')
             ->where('attribute_inventory.order', 2)->groupBy('laravel_through_key');
     }
-    public function order_items() {
+    public function order_items()
+    {
         return $this->hasMany(OrderItem::class);
     }
-    public function order_item() {
+    public function order_item()
+    {
         return $this->hasOne(OrderItem::class);
     }
 
-    public function product() {
+    public function product()
+    {
         return $this->belongsTo(Product::class)->withTrashed();
     }
 
-    public function getFormattedPriceAttribute() {
+    public function getFormattedPriceAttribute()
+    {
         return number_format($this->price, 0, ',', '.');
     }
-    public function getCartStockAttribute() {
+    public function getCartStockAttribute()
+    {
         if ($this->pivot) return $this->pivot->quantity;
         return $this->order_item?->quantity ?? 1;
     }
 
-    public function promotions() {
+    public function promotions()
+    {
         return $this->belongsToMany(Promotion::class, 'promotion_product', 'product_id', null, 'product_id')->orderBy('created_at', 'desc');
     }
 
@@ -90,7 +101,8 @@ class Inventory extends Model {
      *
      * @return A boolean value.
      */
-    public function getHasPromotionAttribute() {
+    public function getHasPromotionAttribute()
+    {
         return now()->isBetween($this->promotion_from, $this->promotion_to);
     }
 
@@ -100,7 +112,8 @@ class Inventory extends Model {
      *
      * @return String A string of the attributes of the product.
      */
-    public function getTitleAttribute(): String {
+    public function getTitleAttribute(): String
+    {
         if (!$this->relationLoaded('attributes')) {
             $this->setRelation('attributes', $this->attributes()->get());
         }
@@ -113,36 +126,43 @@ class Inventory extends Model {
      *
      * @return Float The sale price of the product.
      */
-    public function getSalePriceAttribute() {
+    public function getSalePriceAttribute()
+    {
         if ($this->has_promotion && $this->promotion_status === 1) return $this->promotion_price;
         return $this->price;
     }
 
-    public function getFormattedSalePriceAttribute() {
+    public function getFormattedSalePriceAttribute()
+    {
         return format_currency_with_label($this->sale_price);
     }
 
-    public function getPackageInfoAttribute() {
+    public function getPackageInfoAttribute()
+    {
         return $this->product->package_info;
     }
 
-    public function getNameAttribute() {
+    public function getNameAttribute()
+    {
         return $this->product->name . " - " . $this->title;
     }
 
-    public function decreaseQuantity() {
+    public function decreaseQuantity()
+    {
         $this->update([
             'stock_quantity' => DB::raw('stock_quantity - 1')
         ]);
     }
 
-    public function increaseQuantity() {
+    public function increaseQuantity()
+    {
         $this->update([
             'stock_quantity' => DB::raw('stock_quantity + 1')
         ]);
     }
 
-    public function syncKiotWarehouse() {
+    public function syncKiotWarehouse()
+    {
         $productSource = new ProductResource(App::make(Client::class));
         $kiotSetting = App::get('KiotConfig');
         if ($kiotSetting->data['branchId']) {
@@ -169,7 +189,8 @@ class Inventory extends Model {
         }
     }
 
-    public function syncKiotWarehouseLocal() {
+    public function syncKiotWarehouseLocal()
+    {
         $kiotSetting = App::get('KiotConfig');
         if ($kiotSetting->data['branchId']) {
             try {
@@ -197,5 +218,10 @@ class Inventory extends Model {
                 return;
             }
         }
+    }
+
+    public function isOutOfStock()
+    {
+        return $this->stock_quantity <= 0;
     }
 }
