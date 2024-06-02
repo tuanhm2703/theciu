@@ -20,7 +20,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\TestController;
 
-Route::group(['prefix' => 'admintheciu', 'as' => 'admin.'], function() {
+Route::group(['prefix' => 'admintheciu', 'as' => 'admin.'], function () {
     include('admin/Auth.php');
     Route::get('/', [HomeController::class, 'welcome'])->name('welcome')->middleware('auth');
     Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
@@ -47,8 +47,9 @@ Route::group(['prefix' => 'admintheciu', 'as' => 'admin.'], function() {
         include('admin/Review.php');
         include('admin/Combo.php');
         include('admin/recruitment/Recruitment.php');
+        include('admin/Tag.php');
         Route::get('/{page}', [PageController::class, 'index'])->name('page');
-        Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function() {
+        Route::group(['prefix' => 'ajax', 'as' => 'ajax.'], function () {
             include('admin/ajax/Category.php');
             include('admin/ajax/Attribute.php');
             include('admin/ajax/Product.php');

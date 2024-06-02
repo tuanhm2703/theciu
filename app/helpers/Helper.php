@@ -22,7 +22,7 @@ if (!function_exists('isNavActive')) {
     }
 }
 function customerWishlist() {
-    $customer = auth()->user();
+    $customer = auth('api')->user();
     if ($customer) {
         return cache()->remember("customer_wishlist_$customer->id", 300, function () use ($customer) {
             return $customer->product_wishlists()->pluck('wishlistable_id')->toArray();

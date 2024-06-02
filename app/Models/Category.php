@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\CategoryType;
 use App\Traits\Common\Imageable;
 use App\Traits\Common\Metable;
+use App\Traits\Common\Taggable;
 use App\Traits\Common\Wishlistable;
 use App\Traits\Scopes\CategoryScope;
 use App\Traits\Scopes\CustomScope;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Category extends Model {
-    use HasFactory, SoftDeletes, Imageable, CategoryScope, CustomScope, Metable, Wishlistable;
+    use HasFactory, SoftDeletes, Imageable, CategoryScope, CustomScope, Metable, Wishlistable, Taggable;
     protected $fillable = [
         'name',
         'parent_id',

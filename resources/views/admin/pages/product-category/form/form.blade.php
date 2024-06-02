@@ -13,11 +13,34 @@
             {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nhập vào']) !!}
         </div>
     </div>
-    <div>
-        <label for="visible" class="form-control-label">Hiển thị</label>
-        <div class="form-check form-switch">
-            {!! Form::checkbox('visible', null, isset($category) ? $category->visible : true, ['class' => 'form-check-input']) !!}
+    <div class="row">
+        <div class="col-md-6">
+            <label for="visible" class="form-control-label">Hiển thị</label>
+            <div class="form-check form-switch">
+                {!! Form::checkbox('visible', null, isset($category) ? $category->visible : true, [
+                    'class' => 'form-check-input',
+                ]) !!}
+            </div>
         </div>
+        <div class="col-md-6">
+            <label for="visible" class="form-control-label">Hiển thị</label>
+            <div class="form-control">
+                {!! Form::select(
+                    'tags[]',
+                    isset($category) ? $category->getTagArray() : [],
+                    isset($category) ? $category->tags()->pluck('tags.id')->toArray() : [],
+                    [
+                        'multiple' => 'multiple',
+                        'class' => 'select2-ajax',
+                        'data-select2-url' => route('admin.tags.search'),
+                    ],
+                ) !!}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {!! Form::label('image', trans('labels.image') . ': ', ['class' => 'custom-control-label']) !!}
+        {!! Form::file('image', ['form-control']) !!}
     </div>
     <div class="form-group">
         {!! Form::label('meta[keywords]', 'Meta-keywords', ['class' => 'form-label']) !!}
@@ -51,6 +74,17 @@
             },
             error: (err) => {
                 $('.submit-btn').loading(false)
+            }
+        })
+        const filePond = FilePond.create(document.querySelector('input[name=image]'), {
+            imagePreviewHeight: 170,
+            storeAsFile: true,
+            labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>',
+            files: @json(isset($category) ? [$category->image->path_with_domain] : []),
+            onaddfile: (error, file) => {
+                let container = new DataTransfer();
+                container.items.add(filePond.getFile().file);
+                $('input[name=image]')[0].files = container.files
             }
         })
     })()

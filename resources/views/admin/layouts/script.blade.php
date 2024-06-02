@@ -10,20 +10,20 @@
             ClassicEditor
                 .create(e, {
                     simpleUpload: {
-                                uploadUrl: `{{ route('admin.ajax.image.upload') }}`,
-                        },
-                        fontFamily: {
-                                options: [
-                                        'Poppins, sans-serif', // Added Poppins
-                                        'Arial, Helvetica, sans-serif',
-                                        'Courier New, Courier, monospace',
-                                        'Georgia, serif',
-                                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                                        'Tahoma, Geneva, sans-serif',
-                                        'Times New Roman, Times, serif',
-                                        'Verdana, Geneva, sans-serif'
-                                ]
-                        },
+                        uploadUrl: `{{ route('admin.ajax.image.upload') }}`,
+                    },
+                    fontFamily: {
+                        options: [
+                            'Poppins, sans-serif', // Added Poppins
+                            'Arial, Helvetica, sans-serif',
+                            'Courier New, Courier, monospace',
+                            'Georgia, serif',
+                            'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                            'Tahoma, Geneva, sans-serif',
+                            'Times New Roman, Times, serif',
+                            'Verdana, Geneva, sans-serif'
+                        ]
+                    },
                 })
         })
     }
@@ -96,6 +96,7 @@
                 placeholder: 'Vui lòng chọn',
                 tags: true,
                 closeOnSelect: false,
+                // dropdownParent: '#myDynamicModal',
                 ajax: {
                     url: $(e).data().select2Url,
                     dataType: 'json',
