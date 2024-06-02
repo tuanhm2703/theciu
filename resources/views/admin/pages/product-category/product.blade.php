@@ -8,6 +8,10 @@
         .gj-tree-bootstrap-5 ul.gj-list-bootstrap li.active i {
             color: #fff;
         }
+
+        .select2-container {
+            width: 100% !important;
+        }
     </style>
 @endpush
 @section('content')
@@ -40,8 +44,8 @@
                                 </h5>
                                 <a class="btn btn-link px-3 mb-0 ajax-modal-btn update-category-btn" href="javascript:;"><i
                                         class="fas fa-edit"></i></a>
-                                <a data-link="" class="btn btn-link px-3 mb-0 delete-category-btn ajax-confirm" type="button"
-                                  data-callback=""  href="javascript:;"><i class="fas fa-trash"></i></a>
+                                <a data-link="" class="btn btn-link px-3 mb-0 delete-category-btn ajax-confirm"
+                                    type="button" data-callback="" href="javascript:;"><i class="fas fa-trash"></i></a>
                             </div>
                             <a class="btn btn-primary btn-sm ms-auto ajax-modal-btn" href="javascript:;"
                                 data-init-app="false" data-link="{{ route('admin.category.product.create') }}"><i
@@ -149,7 +153,8 @@
                     $('.category-wrapper').removeClass('d-none');
                     $('#category-title').text(category.name)
                     $('.update-category-btn').attr('data-link', category.edit_url)
-                    $('.delete-category-btn').attr('data-callback', `deleteCategory('${category.delete_url}')`);
+                    $('.delete-category-btn').attr('data-callback',
+                        `deleteCategory('${category.delete_url}')`);
                 }
             });
         }

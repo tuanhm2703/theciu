@@ -109,7 +109,6 @@ class ProductPickItemComponent extends Component {
         $this->inventory = $this->product->inventories->where('firstAttribute.encode_value', $this->first_attribute_value)->where('secondAttribute.encode_value', $this->second_attribute_value)->first();
         // dd($this->product->inventories->pluck('secondAttribute')->toArray());
         $this->inventory = $this->inventory ? $this->product->inventories->where('id', $this->inventory['id'])->first() : null;
-
     }
 
     public function addToWishlist() {
@@ -119,7 +118,7 @@ class ProductPickItemComponent extends Component {
             if ($this->product->is_on_customer_wishlist) {
                 $this->product->removeFromCustomerWishlist(auth('customer')->user()->id);
             } else {
-                $this->product->addToWishlist(['customer_id' => auth('customer')->user()->id]);
+                $this->product->addToWishlist(auth('customer')->id());
             }
             $this->product->is_on_customer_wishlist = !$this->product->is_on_customer_wishlist;
             $this->emitTo('client.header-wishlist-component', 'refresh');

@@ -48,7 +48,7 @@ class AuthController extends Controller {
 
     public function deleteAvatar() {
         $user = request()->user();
-        if($user->avatar) {
+        if ($user->avatar) {
             StorageService::delete($user->avatar?->path);
             $user->avatar?->delete();
         }
@@ -61,43 +61,7 @@ class AuthController extends Controller {
         $user = request()->user();
         $user->delete();
         return BaseResponse::success([
-           'message' => 'Xoá tài khoản thành công'
-        ]);
-    }
-
-    public function getWishlist(Request $request) {
-        $user = request()->user();
-        $product_ids = $user->product_wishlists()->pluck('wishlistable_id')->toArray();
-        $pageSize = $request->pageSize ?? 10;
-        $products = Product::withNeededProductCardData()->addSalePrice()->whereIn('products.id', $product_ids)->paginate($pageSize);
-        $paginateData = $products->toArray();
-        return BaseResponse::success([
-            'items' => ProductResource::collection($products),
-            'total' => $paginateData['total'],
-            'next_page' => $paginateData['next_page_url'],
-            'prev_page' => $paginateData['prev_page_url'],
-        ]);
-    }
-
-    public function removeFromWishlist(string $slug, Request $request) {
-        $user = $request->user();
-        $product = Product::whereSlug($slug)->firstOrFail();
-        $product->removeFromCustomerWishlist($user->id);
-        return BaseResponse::success([
-            'product_ids' => customerWishlist(),
-            'message' => 'Xoá sản phẩm khỏi danh sách yêu thích thành công'
-        ]);
-    }
-
-    public function addToWishlist(string $slug, Request $request) {
-        $user = $request->user();
-        $product = Product::whereSlug($slug)->firstOrFail();
-        if(!$user->product_wishlists()->where('wishlistable_id', $product->id)->exists()) {
-            $product->addToWishlist(['customer_id' => $user->id]);
-        }
-        return BaseResponse::success([
-            'product_ids' => customerWishlist(),
-            'message' => 'Thêm sản phẩm yêu thích thành công'
+            'message' => 'Xoá tài khoản thành công'
         ]);
     }
 }

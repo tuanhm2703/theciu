@@ -8,15 +8,15 @@ trait CustomScope {
     public function scopeSearch($query, $column, $value, $mode = '') {
         if ($value == null || $value == '') return $query;
         return $query->where(function ($q) use ($column, $value, $mode) {
-            $q->whereRaw("lower($column) like $mode ".'"'.$value.'"')
-                ->orWhereRaw("lower($column) like $mode ".'"'.$value.'%"')
-                ->orWhereRaw("lower($column) like $mode ".'"%'.$value.'%"')
-                ->orWhereRaw("lower($column) like $mode ".'"%'.$value.'"');
+            $q->whereRaw("lower($column) like $mode " . '"' . $value . '"')
+                ->orWhereRaw("lower($column) like $mode " . '"' . $value . '%"')
+                ->orWhereRaw("lower($column) like $mode " . '"%' . $value . '%"')
+                ->orWhereRaw("lower($column) like $mode " . '"%' . $value . '"');
         });
     }
 
     public function scopeGetPage($q, $page, $pageSize, $total = false) {
-        if(!$total) {
+        if (!$total) {
             $q->skip(($page - 1) * $pageSize);
         }
         return $q->take($pageSize);
@@ -29,5 +29,11 @@ trait CustomScope {
 
     public function scopeActive($q) {
         return $q->where('status', StatusType::ACTIVE);
+    }
+
+    public function scopeContainTags($q, array $tags) {
+        return $q->whereHas('tags', function ($q) use ($tags) {
+            $q->whereIn('tags.id', $tags);
+        });
     }
 }

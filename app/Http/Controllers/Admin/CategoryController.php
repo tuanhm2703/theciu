@@ -32,7 +32,7 @@ class CategoryController extends Controller {
         if ($request->hasFile('image')) {
             $category->createImages([$request->file('image')]);
         }
-        if($request->has('meta')) {
+        if ($request->has('meta')) {
             $category->syncMetaTag($request->meta);
         }
         return BaseResponse::success([
@@ -43,7 +43,7 @@ class CategoryController extends Controller {
     public function edit(EditCategoryRequest $request, Category $category) {
         $category->image;
         $meta_tag = $category->metaTag;
-        if($meta_tag) {
+        if ($meta_tag) {
             $category->meta = $meta_tag->payload;
         }
         return view('admin.pages.category.form.edit', compact('category'));
@@ -58,8 +58,11 @@ class CategoryController extends Controller {
             optional($category->image)->delete();
             $category->createImages([$request->file('image')]);
         }
-        if($request->has('meta')) {
+        if ($request->has('meta')) {
             $category->syncMetaTag($request->meta);
+        }
+        if ($request->tags) {
+            $category->addTags($request->tags);
         }
         return BaseResponse::success([
             'message' => 'Cập nhật danh mục thành công'
@@ -80,7 +83,7 @@ class CategoryController extends Controller {
     public function editProductCategory(Category $category, EditCategoryRequest $request) {
         $category->image;
         $meta_tag = $category->metaTag;
-        if($meta_tag) {
+        if ($meta_tag) {
             $category->meta = $meta_tag->payload;
         }
         return view('admin.pages.product-category.form.edit', compact('category'));
