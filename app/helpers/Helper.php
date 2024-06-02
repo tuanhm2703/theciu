@@ -7,6 +7,7 @@ use App\Models\Config;
 use App\Models\Customer;
 use App\Models\Image;
 use App\Models\Order;
+use App\Models\Product;
 use App\Services\StorageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
@@ -24,7 +25,8 @@ if (!function_exists('isNavActive')) {
 function customerWishlist() {
     $customer = auth('api')->user();
     if ($customer) {
-        return cache()->remember("customer_wishlist_$customer->id", 300, function () use ($customer) {
+        $product_class = Product::class;
+        return cache()->remember("wishlist:$product_class:$customer->id", 300, function () use ($customer) {
             return $customer->product_wishlists()->pluck('wishlistable_id')->toArray();
         });
     }

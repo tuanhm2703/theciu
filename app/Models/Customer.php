@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\DisplayType;
 use App\Enums\OrderStatus;
 use App\Traits\Common\Addressable;
+use App\Traits\Common\HasWishlist;
 use App\Traits\Common\Imageable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class Customer extends User {
-    use HasFactory, Addressable, Imageable, SoftDeletes, CanResetPassword, Notifiable, HasApiTokens;
+    use HasFactory, Addressable, Imageable, SoftDeletes, CanResetPassword, Notifiable, HasApiTokens, HasWishlist;
     protected $fillable = [
         'first_name',
         'last_name',
@@ -38,10 +39,6 @@ class Customer extends User {
     protected $appends = [
         'full_name'
     ];
-
-    public function product_wishlists() {
-        return $this->hasMany(Wishlist::class)->where('wishlistable_type', (new Product)->getMorphClass());
-    }
 
     public function ranks() {
         return $this->belongsToMany(Rank::class, 'customer_ranks')->orderBy('min_value', 'desc')->withPivot('value')->withTimestamps();
@@ -136,7 +133,7 @@ class Customer extends User {
         $mail = $this->email;
         ResetPasswordNotification::createUrlUsing(function ($notification, $token) use ($mail) {
             // return route('client.auth.resetPassword', ['username' => $mail, 'token' => $token]);
-            return env('FRONTEND_URL')."/reset-password?username=$mail&token=$token";
+            return env('FRONTEND_URL') . "/reset-password?username=$mail&token=$token";
         });
         $this->notify(new ResetPasswordNotification($token));
     }
@@ -176,5 +173,4 @@ class Customer extends User {
     public function kiot_customer_by_phone() {
         return $this->hasOne(KiotCustomer::class, 'contact_number', 'phone');
     }
-
 }
