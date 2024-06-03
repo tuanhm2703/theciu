@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\CollectionController;
+use App\Http\Controllers\Api\Auth\EventController;
 use App\Http\Controllers\Api\Auth\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,5 @@ Route::delete('/wishlist/produt/{slug}/removeFromWishlist', [ProductController::
 Route::get('/wishlist/collection', [CollectionController::class, 'getWishlist']);
 Route::post('/wishlist/collection/{slug}/addToWishlist', [CollectionController::class, 'addToWishlist']);
 Route::delete('/wishlist/collection/{slug}/removeFromWishlist', [CollectionController::class, 'removeFromWishlist']);
+Route::post('events/{slug}/mark', [EventController::class, 'mark']);
+Route::delete('events/{slug}/removeMark', [EventController::class, 'removeMark']);

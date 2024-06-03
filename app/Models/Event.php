@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Traits\Common\Imageable;
+use App\Traits\Common\Wishlistable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
-{
-    use HasFactory, Imageable;
+class Event extends Model {
+    use HasFactory, Imageable, Wishlistable;
 
     protected $fillable = [
         'name',
@@ -26,8 +26,8 @@ class Event extends Model
     public function generateUniqueSlug() {
         $base_slug = stripVN($this->name);
         $slug = $base_slug;
-        while(Event::where('slug', $slug)->where('id', '!=', $this->id)->exists()) {
-            $slug = "$base_slug-".now()->timestamp;
+        while (Event::where('slug', $slug)->where('id', '!=', $this->id)->exists()) {
+            $slug = "$base_slug-" . now()->timestamp;
         }
         return $slug;
     }
@@ -38,5 +38,9 @@ class Event extends Model
 
     public function scopeIncomming($query) {
         return $query->whereRaw('`from` > now()');
+    }
+
+    public function scopeFilterByDate($query, string $date) {
+        return $query->whereRaw("'$date' between events.from and events.to");
     }
 }
