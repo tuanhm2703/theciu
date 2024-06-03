@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api;
 
 use App\Models\Category;
+use App\Models\Event;
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,8 +16,9 @@ class CustomerWishlistResource extends JsonResource {
      */
     public function toArray($request) {
         return [
-            'product_ids' => $this->query_wishlist(Product::class)->pluck('id')->toArray(),
-            'collection_ids' => $this->query_wishlist(Category::class)->pluck('id')->toArray(),
+            'product_ids' => $this->get_wishlist_id_list(Product::class),
+            'collection_ids' => $this->get_wishlist_id_list(Category::class),
+            'event_ids' => $this->get_wishlist_id_list(Event::class),
         ];
     }
 }

@@ -15,7 +15,13 @@ class CollectionController extends Controller {
         $user = request()->user();
         $pageSize = $request->pageSize ?? 10;
         $collection_ids = $user->query_wishlist(Category::class)->pluck('wishlistable_id')->toArray();
-        $collections = Category::active()->whereType(CategoryType::COLLECTION)->with('image')->orderBy('order')->whereIn('categories.id', $collection_ids)->paginate($pageSize);
+        $collections = Category::active()
+            ->whereType(CategoryType::COLLECTION)
+            ->with('image')
+            ->orderBy('order')
+            ->withCount('wishlists')
+            ->whereIn('categories.id', $collection_ids)
+            ->paginate($pageSize);
         $paginateData = $collections->toArray();
         return BaseResponse::success([
             'items' => CollectionResource::collection($collections),

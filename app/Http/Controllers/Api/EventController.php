@@ -11,18 +11,23 @@ use App\Models\Product;
 use App\Responses\Api\BaseResponse;
 use Illuminate\Http\Request;
 
-class EventController extends Controller
-{
+class EventController extends Controller {
     public function paginate(Request $request) {
+        $date = $request->date;
         $pageSize = $request->pageSize ?? 10;
         $status = $request->status;
         $events = Event::with('image');
-        if($status === 'incomming') {
+        if ($status === 'incomming') {
             $events->incomming();
-        } else if($status === 'passed') {
+        } else if ($status === 'passed') {
             $events->passed();
         }
-        $events = $events->orderBy('from', 'desc')->paginate($pageSize);
+        $events = $events->orderBy('from', 'desc');
+        if ($date) {
+            $date = carbon($date)->format('Y-m-d H:i:s');
+            $events->filterByDate($date);
+        }
+        $events = $events->paginate($pageSize);
         $paginateData = $events->toArray();
         return BaseResponse::success([
             'items' => EventListResource::collection($events),
@@ -42,7 +47,7 @@ class EventController extends Controller
     public function getProducts(string $slug, Request $request) {
         $pageSize = $request->pageSize ?? 10;
         $event = Event::whereSlug($slug)->firstOrFail();
-        $products = Product::whereHas('events', function($q) use ($event) {
+        $products = Product::whereHas('events', function ($q) use ($event) {
             $q->where('events.id', $event->id);
         })->withNeededProductCardData()->addSalePrice()->paginate($pageSize);
         $paginateData = $products->toArray();

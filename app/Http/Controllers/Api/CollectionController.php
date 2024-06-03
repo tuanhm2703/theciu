@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class CollectionController extends Controller {
     public function paginate(Request $request) {
         $pageSize = $request->pageSize ?? 10;
-        $collections = Category::active()->whereType(CategoryType::COLLECTION)->with('image')->orderBy('order')->paginate($pageSize);
+        $collections = Category::active()->withCount('wishlists')->whereType(CategoryType::COLLECTION)->with('image')->orderBy('order')->paginate($pageSize);
         $paginateData = $collections->toArray();
         return BaseResponse::success([
             'items' => CollectionResource::collection($collections),
