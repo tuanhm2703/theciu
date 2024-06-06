@@ -232,7 +232,7 @@ return [
     'discount_for_member' => 'Giảm giá khách hàng thân thiết',
     'customer' => 'Khách hàng',
     'revenue' => 'Doanh thu',
-    'number_of_orders'=> 'Số lượng đơn hàng',
+    'number_of_orders' => 'Số lượng đơn hàng',
     'rank' => 'Hạng thành viên',
     'rank_list' => 'Danh sách hạng thành viên',
     'create_rank' => 'Tạo hạng khách hàng',

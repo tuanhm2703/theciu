@@ -55,6 +55,10 @@
         {!! Form::text('meta[title]', null, ['class' => 'form-control']) !!}
     </div>
     <div class="form-group">
+        {!! Form::label('short_description', trans('labels.short_description'), ['class' => 'form-label']) !!}
+        {!! Form::textarea('short_description', null, ['class' => 'form-control summernote']) !!}
+    </div>
+    <div class="form-group">
         {!! Form::label('content', trans('labels.content'), ['class' => 'form-label']) !!}
         {!! Form::textarea('content', null, ['class' => 'form-control summernote']) !!}
     </div>
@@ -80,7 +84,7 @@
             imagePreviewHeight: 170,
             storeAsFile: true,
             labelIdle: 'Kéo thả file hoặc <span class="filepond--label-action"> Chọn </span>',
-            files: @json(isset($category) ? [$category->image->path_with_domain] : []),
+            files: @json(isset($category) && $category->image ? [$category->image->path_with_domain] : []),
             onaddfile: (error, file) => {
                 let container = new DataTransfer();
                 container.items.add(filePond.getFile().file);
