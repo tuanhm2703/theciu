@@ -25,7 +25,8 @@ class Category extends Model {
         'updated_at',
         'content',
         'order',
-        'visible'
+        'visible',
+        'short_description'
     ];
 
     public function categories() {

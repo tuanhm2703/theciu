@@ -20,7 +20,8 @@ class CollectionResource extends JsonResource {
             'content' => $this->content,
             'image' => $this->image?->path_with_domain,
             'created_at' => $this->created_at,
-            'likes' => $this->wishlists_count
+            'likes' => $this->wishlists_count,
+            'short_description' => $this->short_description
         ];
     }
 }

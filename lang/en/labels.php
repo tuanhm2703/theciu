@@ -224,7 +224,7 @@ return [
     '404_error_message' => "We are sorry, the page you've requested is not available.",
     'featured_voucher' => 'Featured Voucher',
     'revenue' => 'Revenue',
-    'number_of_orders'=> 'Number of orders',
+    'number_of_orders' => 'Number of orders',
     'rank_list' => 'Rank list',
     'create_rank' => 'Create rank',
     'update_rank' => 'Update rank',
@@ -250,4 +250,5 @@ return [
     'begin' => 'Begin',
     'end' => 'End',
     'image_section' => 'Image Section',
+    'short_description' => 'Short description',
 ];
