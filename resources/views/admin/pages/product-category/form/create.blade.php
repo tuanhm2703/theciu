@@ -7,6 +7,7 @@
             'url' => route('admin.category.store'),
             'method' => 'POST',
             'class' => 'category-form',
+            'enctype' => 'multipart/form-data',
         ]) !!}
         @include('admin.pages.product-category.form.form')
         <div class="text-end">
@@ -15,4 +16,3 @@
         {!! Form::close() !!}
     </div>
 </div>
-

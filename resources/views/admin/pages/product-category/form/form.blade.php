@@ -64,17 +64,16 @@
     </div>
 </div>
 <script>
-    (() => {
+    $(document).ready(function() {
         $('input[name=parent_id]').val(parentId)
         $('.category-form').ajaxForm({
             beforeSend: () => {
                 $('.submit-btn').loading()
             },
+            dataType: 'json',
             success: (res) => {
                 toast.success(`{{ trans('toast.action_successful') }}`, res.data.message)
-                setTimeout(() => {
-                    window.location.reload()
-                }, 1000);
+                $('#myDynamicModal').modal('hide')
             },
             error: (err) => {
                 $('.submit-btn').loading(false)
@@ -91,5 +90,5 @@
                 $('input[name=image]')[0].files = container.files
             }
         })
-    })()
+    })
 </script>
