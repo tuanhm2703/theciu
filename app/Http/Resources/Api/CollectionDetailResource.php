@@ -19,7 +19,10 @@ class CollectionDetailResource extends JsonResource {
             'slug' => $this->slug,
             'content' => $this->content,
             'image' => $this->image?->path_with_domain,
-            'products' => ProductResource::collection($this->products)
+            'products' => ProductResource::collection($this->products),
+            'likes' => $this->wishlists_count,
+            'short_description' => $this->short_description,
+            'created_at' => $this->created_at
         ];
     }
 }

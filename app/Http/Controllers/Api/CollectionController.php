@@ -26,7 +26,7 @@ class CollectionController extends Controller {
     public function details(string $slug) {
         $collection = Category::whereSlug($slug)->with(['products' => function ($q) {
             $q->withNeededProductCardData()->addSalePrice();
-        }])->active()->first();
+        }])->withCount('wishlists')->active()->first();
         return BaseResponse::success(new CollectionDetailResource($collection));
     }
 
