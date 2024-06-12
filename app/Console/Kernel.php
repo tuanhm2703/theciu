@@ -50,6 +50,7 @@ class Kernel extends ConsoleKernel {
         })->twiceDaily();
         $schedule->call(function() {
             dispatch(new SyncShopeeProductJob(0, 50));
+            return;
         })->weekly();
     }
 
