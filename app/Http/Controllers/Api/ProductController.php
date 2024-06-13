@@ -6,11 +6,15 @@ use App\Enums\ProductType;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\ProductDetailResource;
 use App\Http\Resources\Api\ProductResource;
+use App\Http\Services\Config\ConfigService;
 use App\Models\Product;
 use App\Responses\Api\BaseResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller {
+    public function __construct(private ConfigService $configService)
+    {
+    }
     public function paginate(Request $request) {
         $pageSize = $request->pageSize ?? 8;
         $products = Product::withNeededProductCardData()->addSalePrice();
@@ -78,6 +82,12 @@ class ProductController extends Controller {
         }
         $products = $products->paginate($pageSize);
         $paginateData = $products->toArray();
+        if($paginateData['total'] > 0 && $search) {
+            $this->configService->increateCountKeyword($search);
+            if(auth('api')->check()) {
+                $this->configService->updateCustomerSearchKeywords($request->user(), $search);
+            }
+        }
         return BaseResponse::success([
             'items' => ProductResource::collection($products),
             'total' => $paginateData['total'],

@@ -15,6 +15,7 @@ class ProductDetailResource extends JsonResource {
     public function toArray($request) {
         $this->getMetaTags();
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'lazy_image' => $this->image?->product_lazy_load_path,
             'flash_sales' => $this->available_flash_sales,

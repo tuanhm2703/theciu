@@ -33,7 +33,8 @@ class Customer extends User {
         'status',
         'provider',
         'socialite_account_id',
-        'reward_point'
+        'reward_point',
+        'search_keywords'
     ];
 
     protected $appends = [
@@ -52,6 +53,14 @@ class Customer extends User {
     }
     public function getAvailableRankAttribute() {
         return $this->available_ranks->first();
+    }
+
+    public function getSearchKeywordsAttribute() {
+        return explode(',', $this->search_keywords);
+    }
+
+    public function setSearchKeywordsAttribute() {
+        return implode(',', $this->search_keywords);
     }
 
     public function updateRank($delete = false) {
@@ -94,6 +103,10 @@ class Customer extends User {
 
     public function vouchers() {
         return $this->belongsToMany(Voucher::class, 'order_vouchers');
+    }
+
+    public function extra_data() {
+        return $this->hasMany(CustomerData::class);
     }
 
     public function saved_vouchers() {
