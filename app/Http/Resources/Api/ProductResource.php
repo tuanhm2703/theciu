@@ -17,6 +17,7 @@ class ProductResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'image' => $this->image?->path_with_domain,
             'lazy_image' => $this->image?->product_lazy_load_path,

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Http\Services\Config\ConfigService;
 use App\Jobs\SyncShopeeProductJob;
 use App\Models\Order;
 use Illuminate\Console\Scheduling\Schedule;
@@ -51,6 +52,9 @@ class Kernel extends ConsoleKernel {
         $schedule->call(function() {
             dispatch(new SyncShopeeProductJob(0, 50));
         })->weekly();
+        $schedule->call(function() {
+            (new ConfigService())->updateRedisKeywordsToDatabase();
+        })->everyThreeHours();
     }
 
     /**
