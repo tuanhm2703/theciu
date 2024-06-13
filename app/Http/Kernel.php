@@ -66,6 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'white_list_shipping' => \App\Http\Middleware\WhitelistIpAddressShippingMiddleware::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
-        'phoneVerification' => CheckCustomerPhoneVerifyStatus::class
+        'phoneVerification' => CheckCustomerPhoneVerifyStatus::class,
     ];
 }

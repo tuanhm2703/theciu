@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
     public function index(Request $request) {
-        $user = request()->user();
+        $user = requestUser();
         $pageSize = $request->pageSize ?? 10;
         $orderStatus = $request->orderStatus;
         $orders = $user->orders()->orderBy('created_at', 'desc')->with('inventories.image', 'inventories.attributes');

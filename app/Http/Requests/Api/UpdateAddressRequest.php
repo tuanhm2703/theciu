@@ -13,7 +13,7 @@ class UpdateAddressRequest extends FormRequest
      */
     public function authorize()
     {
-        return request()->user()->addresses()->where('id', $this->address->id)->exists();
+        return request()->user('sanctum')->addresses()->where('id', $this->address->id)->exists();
     }
 
     /**

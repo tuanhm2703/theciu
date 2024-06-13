@@ -15,7 +15,7 @@ class ConfigController extends Controller
     }
 
     public function getGeneralConfig() {
-        $customer_keywords = auth('api')->check() ? requestUser()->search_keywords : [];
+        $customer_keywords = requestUser() ? explode(',', requestUser()->search_keywords) : [];
         return BaseResponse::success([
             'customer_keywords' => $customer_keywords,
             'trending_keywords' => $this->configservice->getTrendingKeywords(),
