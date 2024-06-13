@@ -20,11 +20,15 @@ class ConfigService {
     }
 
     public function updateCustomerSearchKeywords(Customer $customer, string $keyword): void {
-        $keywords = $customer->search_keywords;
-        array_unshift($keywords, $keyword);
-        $customer->update([
-            'search_keywords' => $keywords
-        ]);
+        $keywords = array_unique(explode(',', $customer->search_keywords));
+        if(!in_array($keyword, $keywords)) {
+            array_unshift($keywords, $keyword);
+            if(count($keywords) >= 5) {
+                array_pop($keywords);
+            }
+        }
+        $customer->search_keywords = implode(',', $keywords);
+        $customer->save();
         (new CustomerDataService)->addToCustomerSearchKeywords($customer, $keyword);
     }
 

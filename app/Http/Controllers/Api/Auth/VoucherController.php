@@ -12,13 +12,13 @@ use Illuminate\Support\Facades\DB;
 class VoucherController extends Controller
 {
     public function all(Request $request) {
-        $user = $request->user();
+        $user = requestUser();
         $vouchers = $user->saved_vouchers;
         return BaseResponse::success(VoucherResource::collection($vouchers));
     }
 
     public function saveVoucher(Voucher $voucher, Request $request) {
-        $user = $request->user();
+        $user = requestUser();
         if($voucher->quantity > 0) {
             $user->saved_vouchers()->sync([
                 $voucher->id => [

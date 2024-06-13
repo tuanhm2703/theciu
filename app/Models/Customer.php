@@ -55,14 +55,6 @@ class Customer extends User {
         return $this->available_ranks->first();
     }
 
-    public function getSearchKeywordsAttribute() {
-        return explode(',', $this->search_keywords);
-    }
-
-    public function setSearchKeywordsAttribute() {
-        return implode(',', $this->search_keywords);
-    }
-
     public function updateRank($delete = false) {
         $ranks = Rank::orderBy('min_value', 'desc')->get();
         foreach ($ranks as $rank) {

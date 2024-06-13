@@ -80,12 +80,13 @@ class ProductController extends Controller {
                     break;
             }
         }
-        $products = $products->paginate($pageSize);
+        $products = $products->withNeededProductCardData()->paginate($pageSize);
         $paginateData = $products->toArray();
         if($paginateData['total'] > 0 && $search) {
             $this->configService->increateCountKeyword($search);
-            if(auth('api')->check()) {
-                $this->configService->updateCustomerSearchKeywords($request->user(), $search);
+            $user = requestUser();
+            if($user) {
+                $this->configService->updateCustomerSearchKeywords($user, $search);
             }
         }
         return BaseResponse::success([

@@ -26,8 +26,8 @@ class UpdateProfileRequest extends FormRequest
         return [
             'first_name' => 'string',
             'last_name' => 'string',
-            'email' => 'email|unique:customers,email,'.request()->user()->id,
-            'phone' => 'phone_number|unique:customers,phone,'.request()->user()->id
+            'email' => 'email|unique:customers,email,'.requestUser()->id,
+            'phone' => 'phone_number|unique:customers,phone,'.requestUser()->id
         ];
     }
 }

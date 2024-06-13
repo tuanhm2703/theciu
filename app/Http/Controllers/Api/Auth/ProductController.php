@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller {
     public function getWishlist(Request $request) {
-        $user = request()->user();
+        $user = requestUser();
         $product_ids = $user->query_wishlist(Product::class)->pluck('wishlistable_id')->toArray();
         $pageSize = $request->pageSize ?? 10;
         $products = Product::withNeededProductCardData()->addSalePrice()->whereIn('products.id', $product_ids)->paginate($pageSize);
@@ -24,15 +24,15 @@ class ProductController extends Controller {
         ]);
     }
 
-    public function removeFromWishlist(string $slug, Request $request) {
-        $user = $request->user();
+    public function removeFromWishlist(string $slug) {
+        $user = requestUser();
         $product = Product::whereSlug($slug)->firstOrFail();
         $product->removeFromCustomerWishlist($user->id);
         return BaseResponse::success(new CustomerWishlistResource($user));
     }
 
-    public function addToWishlist(string $slug, Request $request) {
-        $user = $request->user();
+    public function addToWishlist(string $slug) {
+        $user = requestUser();
         $product = Product::whereSlug($slug)->firstOrFail();
         if (!$user->query_wishlist(Product::class)->where('wishlistable_id', $product->id)->exists()) {
             $product->addToWishlist($user->id);

@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class CollectionController extends Controller {
     public function getWishlist(Request $request) {
-        $user = request()->user();
+        $user = requestUser();
         $pageSize = $request->pageSize ?? 10;
         $collection_ids = $user->query_wishlist(Category::class)->pluck('wishlistable_id')->toArray();
         $collections = Category::active()
@@ -32,7 +32,7 @@ class CollectionController extends Controller {
     }
     public function addToWishlist(string $slug, Request $request) {
         $collection = Category::whereSlug($slug)->firstOrFail();
-        $user = $request->user();
+        $user = requestUser();
         if (!$user->query_wishlist(Category::class)->where('wishlistable_id', $collection->id)->exists()) {
             $collection->addToWishlist($user->id);
         }
@@ -41,7 +41,7 @@ class CollectionController extends Controller {
 
     public function removeFromWishlist(string $slug, Request $request) {
         $collection = Category::whereSlug($slug)->firstOrFail();
-        $user = $request->user();
+        $user = requestUser();
         if (!$user->query_wishlist(Category::class)->where('wishlistable_id', $collection->id)->exists()) {
             $collection->removeFromCustomerWishlist($user->id);
         }

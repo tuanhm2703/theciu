@@ -23,7 +23,7 @@ if (!function_exists('isNavActive')) {
     }
 }
 function customerWishlist() {
-    $customer = auth('api')->user();
+    $customer = requestUser();
     if ($customer) {
         $product_class = Product::class;
         return cache()->remember("wishlist:$product_class:$customer->id", 300, function () use ($customer) {
@@ -603,6 +603,6 @@ function addCountryCodeToPhoneNumber(string $phone, string $countryCode = '84') 
     return $countryCode . $localNumber;
 }
 
-function requestUser() {
-    return request()->user();
+function requestUser($guard = 'sanctum') {
+    return request()->user($guard);
 }

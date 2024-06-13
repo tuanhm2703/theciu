@@ -26,17 +26,17 @@ class AddressController extends Controller {
     }
 
     public function addresses() {
-        $user = request()->user();
+        $user = requestUser();
         $addresses = $user->shipping_addresses()->select('id', 'type', 'details', 'province_id', 'ward_id', 'district_id', 'full_address', 'phone', 'featured', 'fullname')->get();
         return BaseResponse::success($addresses);
     }
 
     public function store(CreateAddressRequest $request) {
-        $user = request()->user();
+        $user = requestUser();
         $data = $request->validated();
         $address = $user->addresses()->create($data);
         if($request->featured) {
-            $user = request()->user();
+            $user = requestUser();
             $user->shipping_addresses()->where('addresses.id', '!=', $address->id)->update(['featured' => 0]);
         }
         return BaseResponse::success([
@@ -47,7 +47,7 @@ class AddressController extends Controller {
     public function update(UpdateAddressRequest $request, Address $address) {
         $address->update($request->validated());
         if($request->featured) {
-            $user = request()->user();
+            $user = requestUser();
             $user->shipping_addresses()->where('addresses.id', '!=', $address->id)->update(['featured' => 0]);
         }
         return BaseResponse::success([
