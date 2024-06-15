@@ -60,6 +60,15 @@
                         <span class="nav-link-text ms-1">Shopee</span>
                     </a>
                 @endcan
+                @can('view setting')
+                    <a class="nav-link {{ isNavActive('admin.setting.vietguys.index') ? 'active' : '' }}"
+                        href="{{ route('admin.setting.vietguys.index') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">Vietguys</span>
+                    </a>
+                @endcan
             </ul>
         </div>
     </li>

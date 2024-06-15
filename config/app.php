@@ -4,6 +4,7 @@ use App\Providers\ClientServiceProvider;
 use App\Providers\KiotServiceProvider;
 use App\Providers\SettingServiceProvider;
 use App\Providers\ShopeeServiceProvider;
+use App\Providers\VietGuysServiceProvider;
 use Eusonlito\LaravelMeta\MetaServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
@@ -223,7 +224,8 @@ return [
         SettingServiceProvider::class,
         MetaServiceProvider::class,
         ClientServiceProvider::class,
-        ShopeeServiceProvider::class
+        ShopeeServiceProvider::class,
+        VietGuysServiceProvider::class
     ],
 
     /*

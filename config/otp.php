@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'expired_time' => 60 //seconds
+    'expired_time' => 300 //seconds
 ];
