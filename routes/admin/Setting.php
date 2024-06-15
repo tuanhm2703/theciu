@@ -8,4 +8,5 @@ Route::group(['prefix' => 'setting', 'as' => 'setting.'], function() {
     include('setting/Shop.php');
     include('setting/Website.php');
     include('setting/Shopee.php');
+    include('setting/Vietguys.php');
 });

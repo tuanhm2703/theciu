@@ -75,4 +75,28 @@ class Setting extends Model {
             'data' => ""
         ]);
     }
+    public static function getVietGuysRefreshToken() {
+        $setting = app()->get('VietGuysConfig');
+        return $setting->data['refresh_token'];
+    }
+    public static function getVietGuysAccessToken() {
+        $setting = app()->get('VietGuysConfig');
+        return $setting->data['access_token'];
+    }
+    public static function getVietGuysUsername() {
+        $setting = app()->get('VietGuysConfig');
+        return $setting->data['username'];
+    }
+    public static function getVietGuysBrandName() {
+        $setting = app()->get('VietGuysConfig');
+        return $setting->data['brand_name'];
+    }
+    public static function updateVietGuysAfterRefresh(string $access_token, string $refresh_token) {
+        $setting = app()->get('VietGuysConfig');
+        $data = $setting->data;
+        $data['access_token'] = $access_token;
+        $data['refresh_token'] = $refresh_token;
+        $setting->data = $data;
+        $setting->save();
+    }
 }
