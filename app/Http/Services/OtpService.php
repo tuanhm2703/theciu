@@ -12,6 +12,7 @@ use App\Mail\CustomerResetPassworOtpEmail;
 use App\Models\Customer;
 use App\Models\Otp;
 use Carbon\CarbonInterval;
+use Exception;
 
 class OtpService {
 public function __construct(private ZaloZNSService $znsService, private VietGuysService $smsService) {
@@ -46,7 +47,7 @@ public function __construct(private ZaloZNSService $znsService, private VietGuys
     public function sendOtp(string $phone, string $otp) {
         try {
             $this->znsService->sendOtp(addCountryCodeToPhoneNumber($phone), $otp);
-        } catch (ZNSException $th) {
+        } catch (Exception $th) {
             $time = CarbonInterval::seconds(config('otp.expired_time'))->cascade()->forHumans();
             $this->smsService->sendOtp(addCountryCodeToPhoneNumber($phone), $otp, $time);
         }
