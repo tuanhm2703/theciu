@@ -87,8 +87,8 @@ class AuthController extends Controller {
         return Socialite::driver('facebook')->redirect();
     }
 
-    public function handleProviderCallback() {
-        $user = (object) Socialite::driver('facebook')->stateless()->user()->attributes;
+    public function handleProviderCallback(Request $request) {
+        $user = (object) Socialite::driver('facebook')->userFromToken($request->access_token)->attributes;
         $customer_names = collect(explode(' ', $user->name));
         if ($user->email) {
             $customer = Customer::firstOrCreate([
@@ -120,10 +120,10 @@ class AuthController extends Controller {
             }
         }
         auth('api')->login($customer);
-        $accessToken = $user->createToken('personal-access-token')->plainTextToken;
+        $accessToken = $customer->createToken('personal-access-token')->plainTextToken;
         return BaseResponse::success([
             'access_token' => $accessToken,
-            'user' => new CustomerResource($user)
+            'user' => new CustomerResource($customer)
         ]);
     }
 

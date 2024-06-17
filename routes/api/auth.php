@@ -9,7 +9,7 @@ Route::post('/send-login-otp', [AuthController::class, 'sendLoginOtp']);
 Route::post('/login-with-otp', [AuthController::class, 'loginWithOtp']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::get('facebook', [AuthController::class, 'redirectToProvider'])->name('facebook.login');
-Route::get('facebook/callback', [AuthController::class, 'handleProviderCallback'])->name('facebook.callback');
+Route::post('facebook/callback', [AuthController::class, 'handleProviderCallback'])->name('facebook.callback');
 Route::get('google', [AuthController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('google/callback', [AuthController::class, 'handleGoogleCallback'])->name('google.callback');
 Route::post('send-otp', [AuthController::class, 'sendVerifyOtp'])->name('sendVerifyOtp');
