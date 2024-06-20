@@ -209,7 +209,7 @@ class Product extends Model {
     }
 
     public function getIsHasSaleAttribute() {
-        return $this->promotion_price != null && $this->promotion_price != $this->original_price;
+        return $this->available_promotion && $this->promotion_price != null && $this->promotion_price != $this->original_price;
     }
 
     public function getPromotionAttribute() {
