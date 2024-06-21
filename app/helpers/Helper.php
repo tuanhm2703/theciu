@@ -606,3 +606,20 @@ function addCountryCodeToPhoneNumber(string $phone, string $countryCode = '84') 
 function requestUser($guard = 'sanctum') {
     return request()->user($guard);
 }
+function getFirstName($fullName) {
+    $nameParts = explode(' ', trim($fullName));
+    return array_shift($nameParts);
+}
+function getLastName($fullname) {
+    $nameParts = explode(' ', trim($fullname));
+    return count($nameParts) > 2 ? array_pop($nameParts) : '';
+}
+function getFirstAndMiddleName($fullName) {
+    $nameParts = explode(' ', trim($fullName));
+    if(count($nameParts) > 2) {
+        array_pop($nameParts);
+    } else {
+        return array_shift($nameParts);
+    }
+    return implode(' ', $nameParts);
+}
