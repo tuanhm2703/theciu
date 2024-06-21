@@ -132,15 +132,13 @@ class AuthController extends Controller {
     }
 
     public function handleGoogleCallback(Request $request) {
-        $user = Socialite::driver('google')->stateless()->user()->user;
-        $user = (object) $user;
-
+        $user = (object) Socialite::driver('google')->userFromToken($request->access_token)->attributes;
         if ($user->email) {
             $customer = Customer::firstOrCreate([
                 'email' => $user->email,
             ], [
-                'first_name' => $user->given_name,
-                'last_name' => isset($user->family_name) ? $user->family_name : '',
+                'first_name' => getFirstAndMiddleName($user->name),
+                'last_name' => getLastName($user->name),
                 'provider' => SocialProviderType::GOOGLE,
                 'socialite_account_id' => $user->id
             ]);
@@ -148,8 +146,8 @@ class AuthController extends Controller {
             $customer = Customer::firstOrCreate([
                 'socialite_account_id' => $user->id,
             ], [
-                'first_name' => $user->given_name,
-                'last_name' => $user->family_name,
+                'first_name' => getFirstAndMiddleName($user->name),
+                'last_name' => getLastName($user->name),
                 'provider' => SocialProviderType::GOOGLE
             ]);
         }
@@ -161,11 +159,11 @@ class AuthController extends Controller {
         if (!$customer->avatar) {
             $customer->createImagesFromUrls([$user->picture], MediaType::AVATAR);
         }
-        auth('api')->login($user);
-        $accessToken = $user->createToken('personal-access-token')->plainTextToken;
+        auth('api')->login($customer);
+        $accessToken = $customer->createToken('personal-access-token')->plainTextToken;
         return BaseResponse::success([
             'access_token' => $accessToken,
-            'user' => new CustomerResource($user)
+            'user' => new CustomerResource($customer)
         ]);
     }
 
