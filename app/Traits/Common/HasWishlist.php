@@ -18,7 +18,7 @@ trait HasWishlist {
     }
     public function get_wishlist_id_list(string $wishlisable_type) {
         return cache()->remember("wishlist:$wishlisable_type:$this->id", 300, function () use ($wishlisable_type) {
-            return $this->query_wishlist($wishlisable_type)->pluck('id')->toArray();
+            return $this->query_wishlist($wishlisable_type)->pluck('wishlistable_id')->toArray();
         });
     }
 }
