@@ -203,14 +203,15 @@ class AuthController extends Controller {
         DB::beginTransaction();
         try {
             $customer = Customer::findByUsername($request->username);
-            $otp = $this->sendVerifyOtp($customer, OtpType::RESET_PASSWORD);
-            DB::commit();
             if (isPhone($request->username)) {
+                $otp = $this->sendVerifyOtp($customer, OtpType::RESET_PASSWORD);
+                DB::commit();
                 return BaseResponse::success([
                     'message' => 'Mã xác nhận đã được gửi đến số điện thoại',
                     'otp' => $otp->code
                 ]);
             } else {
+                $otp = $this->otpService->createOtp($customer, OtpType::RESET_PASSWORD);
                 $this->otpService->sendOtpEmailForResetPassword($customer, $otp->code);
                 return BaseResponse::success([
                     'message' => 'Mã xác nhận đã được gửi đến email'

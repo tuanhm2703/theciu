@@ -33,7 +33,8 @@ class ZaloZNSService {
             throw new ZNSException("Gửi Otp không thành công, vui lòng thử lại sau");
         }
         $data = json_decode($response->getBody()->getContents());
-        if($data->error > 0) {
+
+        if($data->error) {
             \Log::error($th);
             throw new ZNSException("Gửi Otp không thành công, vui lòng thử lại sau");
         }

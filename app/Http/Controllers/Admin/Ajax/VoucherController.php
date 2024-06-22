@@ -28,10 +28,10 @@ class VoucherController extends Controller {
             return view('admin.pages.promotion.voucher.components.action', compact('voucher'));
         })
         ->editColumn('begin', function($voucher) {
-            return $voucher->begin->format('d-m-Y H:i');
+            return carbon($voucher->begin)->format('d-m-Y H:i');
         })
         ->editColumn('end', function($voucher) {
-            return $voucher->end->format('d-m-Y H:i');
+            return carbon($voucher->end)->format('d-m-Y H:i');
         })
         ->make(true);
     }
