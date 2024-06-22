@@ -34,9 +34,8 @@ class CartService {
         ]);
     }
 
-    public function addToCart(AddToCartRequest $request): void {
-        $quantity = $request->quantity ?? 1;
-        $inventory = Inventory::find($request->inventory_id);
+    public function addToCart(int $quantity, int $inventory_id): void {
+        $inventory = Inventory::find($inventory_id);
         $cart = $this->getCart();
         if ($inventory->isOutOfStock() || $this->isNotEnoughStock($inventory, $quantity)) {
             throw new InventoryOutOfStockException($inventory);

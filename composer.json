@@ -5,7 +5,7 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.1.2",
         "doctrine/dbal": "^3.6",
         "edsdk/flmngr-server-php": "^1.5",
         "eusonlito/laravel-meta": "^3.2",
@@ -13,10 +13,10 @@
         "haistar/shopee-php-sdk": "^3.1",
         "kreait/firebase-php": "^6.9",
         "laravel-frontend-presets/argon": "^2.0",
-        "laravel/framework": "^9.19",
+        "laravel/framework": "^10.0",
         "laravel/horizon": "^5.24",
         "laravel/sail": "^1.16",
-        "laravel/sanctum": "^3.0",
+        "laravel/sanctum": "^3.2",
         "laravel/socialite": "^5.6",
         "laravel/telescope": "^4.10",
         "laravel/tinker": "^2.7",
@@ -25,11 +25,10 @@
         "league/flysystem-aws-s3-v3": "^3.12",
         "livewire/livewire": "^2.10",
         "maatwebsite/excel": "^3.1",
-        "mservice/payment": "*",
         "php-ffmpeg/php-ffmpeg": "^1.1",
         "phpoffice/phpexcel": "^1.8",
         "phpoffice/phpspreadsheet": "^1.26",
-        "predis/predis": "^2.2",
+        "predis/predis": "*",
         "psr/simple-cache": "^2.0",
         "spatie/laravel-permission": "^5.7",
         "spatie/laravel-responsecache": "^7.4",
@@ -44,7 +43,7 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -93,6 +92,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }

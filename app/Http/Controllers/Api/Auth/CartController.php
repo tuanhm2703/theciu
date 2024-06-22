@@ -8,19 +8,23 @@ use App\Http\Resources\Api\CartGeneralResource;
 use App\Http\Services\Cart\CartService;
 use App\Models\Cart;
 use App\Models\Inventory;
+use App\Models\Product;
 use App\Responses\Api\BaseResponse;
 use Illuminate\Http\Request;
 
 class CartController extends Controller {
     public function __construct(private CartService $cartService) {
     }
-    public function index(Request $request) {
+    public function index() {
         $cart = $this->cartService->setUser(requestUser())->getCartWithInventories();
+        $products = Product::whereIn('id', $cart->inventories()->pluck('inventories.product_id')->toArray())->get();
         return BaseResponse::success(new CartGeneralResource($cart));
     }
 
     public function addToCart(AddToCartRequest $request) {
-        $this->cartService->setUser(requestUser())->addToCart($request);
+        $quantity = $request->quantity ?? 1;
+        $inventory_id = $request->inventory_id;
+        $this->cartService->setUser(requestUser())->addToCart($quantity, $inventory_id);
         $cart = $this->cartService->getCartWithInventories();
         return BaseResponse::success(new CartGeneralResource($cart));
     }

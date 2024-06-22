@@ -37,17 +37,17 @@ class AppServiceProvider extends ServiceProvider {
         Carbon::setLocale(App::getLocale());
         $this->app->singleton(BatchService::class);
         $this->app->singleton(MomoService::class);
-        $this->app->singleton(Client::class, function() {
+        $this->app->singleton(Client::class, function () {
             $client = new Client(config('services.kiotviet.client_id'), config('services.kiotviet.client_secret'), [], config('services.kiotviet.retailer'));
             $client->fetchAccessToken();
             return $client;
         });
-        $this->app->singleton('AppConfig', function() {
+        $this->app->singleton('AppConfig', function () {
             return Cache::remember('app_config', 600, function () {
                 return Config::first();
             });;
         });
-        $this->app->singleton('ProductCategory', function() {
+        $this->app->singleton('ProductCategory', function () {
             return Category::getMenuCategories();
         });
     }

@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'path' => env('HORIZON_PATH', 'horizon'),
+    'path' => env('HORIZON_PATH', 'admintheciu/horizon'),
 
     /*
     |--------------------------------------------------------------------------
@@ -182,11 +182,11 @@ return [
     'defaults' => [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => ['default'],
+            'queue' => ['default','resizeImage','syncKiotStock'],
             'balance' => 'auto',
             'autoScalingStrategy' => 'time',
-            'maxProcesses' => 1,
-            'maxTime' => 0,
+            'maxProcesses' => env('HORIZON_MAX_PROCESSES', 4),
+            'maxTime' => env('HORIZON_MAX_TIME', 60),
             'maxJobs' => 0,
             'memory' => 128,
             'tries' => 1,
