@@ -35,9 +35,9 @@ function customerWishlist() {
 function getAssetUrl($path) {
     return asset($path) . "?v=" . env('ASSET_VERSION', 1);
 }
-function stripVN($string, $slug = '-', $extra = null) {
+function stripVN($string, $slug = '-', $extra = '') {
 
-    if (strpos($string = htmlentities($string, ENT_QUOTES, 'UTF-8'), '&') !== false) {
+    if (strpos($string = htmlentities($string ?? '', ENT_QUOTES, 'UTF-8'), '&') !== false) {
         $string = html_entity_decode(preg_replace('~&([a-z]{1,2})(?:acute|caron|cedil|circ|grave|lig|orn|ring|slash|tilde|uml);~i', '$1', $string), ENT_QUOTES, 'UTF-8');
     }
 

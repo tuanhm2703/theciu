@@ -118,6 +118,9 @@ class Order extends Model {
     }
 
     public function getOrderVoucherAttribute() {
+        if($this->relationLoaded('vouchers')) {
+            return $this->vouchers->where('pivot.type', VoucherType::ORDER)->first();
+        }
         return $this->vouchers()->whereHas('voucher_type', function ($q) {
             $q->where('voucher_types.code', VoucherType::ORDER);
         })->first();
