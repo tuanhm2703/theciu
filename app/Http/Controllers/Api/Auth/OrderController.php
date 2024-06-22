@@ -22,7 +22,7 @@ class OrderController extends Controller
         if($orderStatus) $orders->where('order_status', $orderStatus);
         $orders = $orders->paginate($pageSize);
         $paginateData = $orders->toArray();
-        $order_counts = Order::selectRaw('count(id) as order_count, order_status')->groupBy('order_status')->get();
+        $order_counts = Order::whereCustomerId($user->id)->selectRaw('count(id) as order_count, order_status')->groupBy('order_status')->get();
         return BaseResponse::success([
             'items' => OrderListResource::collection($orders),
             'total' => $paginateData['total'],
