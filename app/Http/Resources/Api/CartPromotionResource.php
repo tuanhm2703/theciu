@@ -18,6 +18,8 @@ class CartPromotionResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'promotion' => $this->promotion,
+            'min_order_value' => $this->min_order_value,
+            'type' => $this->type,
             'products' => CartProductDetailResource::collection($this->products)
         ];
     }
