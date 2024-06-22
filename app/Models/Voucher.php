@@ -35,7 +35,7 @@ class Voucher extends Model {
         'for_new_customer'
     ];
 
-    protected $dates = [
+    protected $casts = [
         'begin' => 'datetime:Y-m-d H:i:s',
         'end' => 'datetime:Y-m-d H:i:s',
     ];
