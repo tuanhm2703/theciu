@@ -12,9 +12,11 @@ class OrderController extends Controller
 {
     public function index(Request $request) {
         $user = requestUser();
+        $from = $request->from ? carbon($request->from)->startOfDay() : Order::min('created_at');
+        $to = $request->to ? carbon($request->to)->endOfDay() : Order::max('created_at');
         $pageSize = $request->pageSize ?? 10;
         $orderStatus = $request->orderStatus;
-        $orders = $user->orders()->orderBy('created_at', 'desc')->with('inventories.image', 'inventories.attributes');
+        $orders = $user->orders()->whereBetween('orders.created_at', [$from, $to])->orderBy('created_at', 'desc')->with('inventories.image', 'inventories.attributes');
         if($orderStatus) $orders->where('order_status', $orderStatus);
         $orders = $orders->paginate($pageSize);
         $paginateData = $orders->toArray();
