@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\DisplayType;
 use App\Http\Services\ShopeeService\ShopeeService;
 use App\Models\Review;
 use App\Models\ShopeeProduct;
@@ -44,7 +45,7 @@ class SyncShopeeProductComment implements ShouldQueue
         foreach ($commentList->response->item_comment_list as $comment) {
             $item = ShopeeProduct::where('shopee_product_id', $comment->item_id)->whereNotNull('product_id')->first();
             if($item) {
-                Review::firstOrCreate([
+                Review::updateOrCreate([
                     'shopee_comment_id' => $comment->comment_id
                 ],[
                     'buyer_username' => $comment->buyer_username,
@@ -53,7 +54,8 @@ class SyncShopeeProductComment implements ShouldQueue
                     'product_id' => $item->product_id,
                     'reply' => isset($comment->comment_reply) ? $comment->comment_reply->reply : '',
                     'reply_by' => User::first()->id,
-                    'display' => $comment->rating_star >= 4,
+                    'status' => $comment->rating_star >= 4,
+                    'display' => DisplayType::PUBLIC,
                     'shopee_comment_id' => $comment->comment_id,
                     'model_name' => collect(collect($order_list)->where('order_sn', $comment->order_sn)->first()->item_list)->where('item_id', $comment->item_id)->first()->model_name
                 ]);

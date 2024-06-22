@@ -3,7 +3,7 @@ function initMap() {
         const initStoreMapData = async () => {
             let currentIndex;
             const getBranches = async () => {
-                const response = await $.get("/api/branches");
+                const response = await $.get("https://theciu.vn/api/branches");
                 return response.data;
             };
             const branches = await getBranches();
@@ -97,11 +97,16 @@ function initMap() {
                     renderStoreList(branches);
                 }
             });
-            $('body').on('keyup', '#wpm-store-name', function() {
-                const search = $(this).val()
-                const temp = branches.filter(branch => branch.name.toLowerCase().indexOf(search.toLowerCase()) !== -1)
+            $("body").on("keyup", "#wpm-store-name", function () {
+                const search = $(this).val();
+                const temp = branches.filter(
+                    (branch) =>
+                        branch.name
+                            .toLowerCase()
+                            .indexOf(search.toLowerCase()) !== -1
+                );
                 renderStoreList(temp);
-            })
+            });
         };
         const renderMap = (branches) => {
             $("#wpm-app").html(`
@@ -209,7 +214,7 @@ function initMap() {
             renderStoreList(branches);
         };
         const renderStoreList = (branches) => {
-            $('.stores-count h3 em').html(branches.length)
+            $(".stores-count h3 em").html(branches.length);
             let storeListHtml = "";
             branches.forEach((branch) => {
                 storeListHtml += ` <li class="wpm-store-li"

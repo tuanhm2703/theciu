@@ -117,13 +117,13 @@
                             {!! implode(', ', array_reverse($arr)) !!}
                         </div><!-- End .product-cat -->
 
-                        <div class="social-icons social-icons-sm">
+                        {{-- <div class="social-icons social-icons-sm">
                             <span class="social-label">Share:</span>
                             <a href="#" class="social-icon" title="Facebook" target="_blank"><i
                                     class="icon-facebook-f"></i></a>
                             <a href="#" class="social-icon" title="Instagram" target="_blank"><i
                                     class="icon-instagram"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
