@@ -28,17 +28,12 @@ class AuthController extends Controller {
     public function __construct(private OtpService $otpService) {
     }
     public function login(LoginRequest $request) {
-        if (isPhone($request->username)) {
-            $credentials = ['phone' => $request->username, 'password' => $request->password];
-        } else {
-            $credentials = ['email' => $request->username, 'password' => $request->password];
-        }
-        if (auth('api')->attempt($credentials, $request->remember)) {
-            $user = auth('api')->user();
-            $accessToken = $user->createToken('personal-access-token')->plainTextToken;
+        $customer = Customer::findByUserName($request->username);
+        if ($customer && Hash::check($request->password, $request->username)) {
+            $accessToken = $customer->createToken('personal-access-token')->plainTextToken;
             return BaseResponse::success([
                 'access_token' => $accessToken,
-                'user' => new CustomerResource($user)
+                'user' => new CustomerResource($customer)
             ]);
         } else {
             return BaseResponse::error([
