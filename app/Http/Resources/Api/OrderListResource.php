@@ -15,22 +15,26 @@ class OrderListResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'inventories' => OrderInventoryListResource::collection($this->inventories),
-            'payment_method' => $this->payment_method->name,
-            'created_at' => $this->created_at->format('d/m/Y'),
+            'order_histories' => OrderHistoryResource::collection($this->order_histories),
             'order_status_label' => $this->getCurrentStatusLabel(),
+            'created_at' => $this->created_at->format('d/m/Y'),
+            'payment_method' => $this->payment_method->name,
             'order_status' => $this->order_status,
-            'total' => $this->total,
             'order_number' => $this->order_number,
-            'freeship_voucher_amount' => (int) $this->freeship_voucher?->pivot->amount,
-            'order_voucher_amount' => (int) $this->order_voucher?->pivot->amount,
-            'combo_discount' => $this->combo_discount,
-            'additional_discount' => $this->additional_discount,
             'note' => $this->note,
             'bonus_note' => $this->bonus_note,
             'payment_status' => $this->payment_status,
-            'order_histories' => OrderHistoryResource::collection($this->order_histories),
-            'shipping_fee' => (int) $this->shipping_order?->shipping_fee
+            'cancel_reason' => $this->cancel_reason,
+            'total' => $this->total,
+            'subtotal' => $this->subtotal,
+            'additional_discount' => $this->additional_discount,
+            'combo_discount' => $this->combo_discount,
+            'rank_discount' => $this->rank_discount_value,
+            'shipping_fee' => (int) $this->shipping_order?->total_fee,
+            'freeship_voucher_amount' => (int) $this->freeship_voucher?->pivot->amount,
+            'order_voucher_amount' => (int) $this->order_voucher?->pivot->amount,
         ];
     }
 }
