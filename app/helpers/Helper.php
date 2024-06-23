@@ -23,7 +23,7 @@ if (!function_exists('isNavActive')) {
     }
 }
 function customerWishlist() {
-    $customer = request()->user();
+    $customer = request()->user('customer');
     if ($customer) {
         return $customer->get_wishlist_id_list(Product::class);
     }
