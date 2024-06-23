@@ -22,14 +22,15 @@ class OrderListResource extends JsonResource
             'order_status' => $this->order_status,
             'total' => $this->total,
             'order_number' => $this->order_number,
-            'freeship_voucher_amount' => $this->freeship_voucher?->pivot->amount,
-            'order_voucher_amount' => $this->order_voucher?->pivot->amount,
+            'freeship_voucher_amount' => (int) $this->freeship_voucher?->pivot->amount,
+            'order_voucher_amount' => (int) $this->order_voucher?->pivot->amount,
             'combo_discount' => $this->combo_discount,
             'additional_discount' => $this->additional_discount,
             'note' => $this->note,
             'bonus_note' => $this->bonus_note,
             'payment_status' => $this->payment_status,
-            'order_histories' => OrderHistoryResource::collection($this->order_histories)
+            'order_histories' => OrderHistoryResource::collection($this->order_histories),
+            'shipping_fee' => (int) $this->shipping_order?->shipping_fee
         ];
     }
 }
