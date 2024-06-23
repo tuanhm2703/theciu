@@ -26,9 +26,7 @@ function customerWishlist() {
     $customer = requestUser();
     if ($customer) {
         $product_class = Product::class;
-        return cache()->remember("wishlist:$product_class:$customer->id", 300, function () use ($customer) {
-            return $customer->product_wishlists()->pluck('wishlistable_id')->toArray();
-        });
+        return $customer->get_wishlist_id_list(Product::class);
     }
     return [];
 }
