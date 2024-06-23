@@ -5,7 +5,7 @@ namespace App\Http\Requests\Api;
 use App\Enums\OtpType;
 use Illuminate\Foundation\Http\FormRequest;
 
-class VerifyOtpRequest extends FormRequest
+class VerifyOtpRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.

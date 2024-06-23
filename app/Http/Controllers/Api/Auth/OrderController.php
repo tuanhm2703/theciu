@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Enums\OrderStatus;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\CancelOrderRequest;
 use App\Http\Resources\Api\OrderListResource;
+use App\Http\Services\Order\OrderService;
 use App\Models\Order;
 use App\Responses\Api\BaseResponse;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function __construct(private OrderService $orderService) {
+
+    }
     public function index(Request $request) {
         $user = requestUser();
         $from = $request->from ? carbon($request->from)->startOfDay() : Order::min('created_at');
@@ -32,6 +38,10 @@ class OrderController extends Controller
         ]);
     }
 
-    public function details(Order $order) {
+    public function cancel(Order $order, CancelOrderRequest $request) {
+        $this->orderService->cancel($order, $request->cancel_reason);
+        return BaseResponse::success([
+            'mesage' => 'Huỷ đơn hàng thành công'
+        ]);
     }
 }

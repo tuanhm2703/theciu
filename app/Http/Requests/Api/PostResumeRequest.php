@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PostResumeRequest extends FormRequest
+class PostResumeRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.

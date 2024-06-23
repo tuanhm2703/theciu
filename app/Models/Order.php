@@ -222,7 +222,7 @@ class Order extends Model {
             default:
                 break;
         }
-        if (auth('customer')->check()) {
+        if (customer()) {
             $order_history->executable_type = Customer::class;
             $order_history->executable_id = customer()->id;
             if ($this->order_status == OrderStatus::CANCELED) {
