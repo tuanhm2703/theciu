@@ -54,7 +54,7 @@ class SyncShopeeProductComment implements ShouldQueue
                     'product_id' => $item->product_id,
                     'reply' => isset($comment->comment_reply) ? $comment->comment_reply->reply : '',
                     'reply_by' => User::first()->id,
-                    'status' => $comment->rating_star >= 4,
+                    'status' => intval($comment->rating_star) >= 4,
                     'display' => DisplayType::PUBLIC,
                     'shopee_comment_id' => $comment->comment_id,
                     'model_name' => collect(collect($order_list)->where('order_sn', $comment->order_sn)->first()->item_list)->where('item_id', $comment->item_id)->first()->model_name

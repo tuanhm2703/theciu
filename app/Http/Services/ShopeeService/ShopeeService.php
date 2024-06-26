@@ -62,6 +62,7 @@ class ShopeeService {
     public function refreshToken() {
         $host = ShopeeEndPoint::BASE_ENDPOINT;
         $path = ShopeeEndPoint::REFRESH_TOKEN;
+        $this->reloadRefreshToken();
         $body = array("partner_id" => $this->partnerId, "shop_id" => $this->shopId, "refresh_token" => $this->refreshToken);
         $timest = time();
         $baseString = sprintf("%s%s%s", $this->partnerId, $path, $timest);
@@ -213,5 +214,9 @@ class ShopeeService {
             return $this->shopeeClient->httpCallGet($baseUrl, $apiPath, $params, $this->apiConfig);
         }
         return $response;
+    }
+
+    private function reloadRefreshToken() {
+        $this->refreshToken = Setting::getShopeeRefreshToken()->data;
     }
 }
