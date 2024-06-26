@@ -10,6 +10,8 @@ class ProfileInfoComponent extends Component {
     public $old_password;
     public $new_password;
     public $new_password_confirmation;
+    public $confirmDeleteAccountPassword;
+    public $errorDeleteAccount;
     public function mount() {
         $this->user = auth('customer')->user();
     }
@@ -38,4 +40,12 @@ class ProfileInfoComponent extends Component {
         session()->flash('message', 'Cập nhật thông tin thành công.');
     }
 
+    public function deleteAccount() {
+        if(Hash::check($this->confirmDeleteAccountPassword, $this->user->password)) {
+            $this->user->delete();
+            return redirect()->route('client.home');
+        } else {
+            $this->errorDeleteAccount = 'Mật khẩu xác nhận không đúng';
+        }
+    }
 }
