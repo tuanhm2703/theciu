@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Api;
 
 use App\Http\Services\Promotion\PromotionService;
+use App\Http\Services\Voucher\VoucherService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class CartGeneralResource extends JsonResource {
@@ -23,7 +24,8 @@ class CartGeneralResource extends JsonResource {
             'total' => $this->total,
             'accom_gift_promotion' => CartPromotionResource::collection($accom_gift_promotions),
             'accom_product' => CartPromotionResource::collection($accom_product_promotions),
-            'combo' => CartComboResource::collection($combos)
+            'combo' => CartComboResource::collection($combos),
+            'vouchers' => (new VoucherService)->getUserCartVoucherResource(requestUser(), $this->inventories->pluck('id')->toArray())
         ];
     }
 

@@ -398,7 +398,7 @@ class GHTKService extends ShippingServiceAbstract {
         $shipping_order_history_data->status_code = $data['status_id'];
         parent::createShippingOrderHistory($shipping_order_history_data);
     }
-    public function getShipServices(Address $shipping_address) {
+    public function getShipServices(?Address $shipping_address = null) {
         // if($shipping_address->ward->support_type != 0) {
         $services = new stdClass();
         $services->data = [
@@ -471,7 +471,7 @@ class GHTKService extends ShippingServiceAbstract {
             "pick_district" => $this->config->pickup_address->district->name_with_type,
             "province" => $data->shipping_address->province->name,
             "district" => $data->shipping_address->district->name_with_type,
-            "address" => $data->shipping_address->address_line_1,
+            "address" => $data->shipping_address->details,
             "weight" => $data->weight,
             "value" => $data->total_value,
             "transport" => $data->service_id
