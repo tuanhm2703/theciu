@@ -38,4 +38,5 @@ Route::group(['as' => 'api.'], function () {
     include('api/Collection.php');
     include('api/Event.php');
     include('api/Config.php');
+    include('api/shipping.php');
 });

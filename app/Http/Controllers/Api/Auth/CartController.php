@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AddToCartRequest;
+use App\Http\Requests\Api\GetShippingInfoRequest;
 use App\Http\Resources\Api\CartGeneralResource;
 use App\Http\Services\Cart\CartService;
+use App\Http\Services\Shipping\Models\DeliveryData;
 use App\Models\Cart;
 use App\Models\Inventory;
 use App\Models\Product;
@@ -17,7 +19,6 @@ class CartController extends Controller {
     }
     public function index() {
         $cart = $this->cartService->setUser(requestUser())->getCartWithInventories();
-        $products = Product::whereIn('id', $cart->inventories()->pluck('inventories.product_id')->toArray())->get();
         return BaseResponse::success(new CartGeneralResource($cart));
     }
 
@@ -35,4 +36,10 @@ class CartController extends Controller {
         $cart = $this->cartService->getCartWithInventories();
         return BaseResponse::success(new CartGeneralResource($cart));
     }
+
+    public function getShippingInfo(GetShippingInfoRequest $request) {
+        $shipping_info = $this->cartService->getShippingInfo($request);
+        return BaseResponse::success($shipping_info);
+    }
+
 }

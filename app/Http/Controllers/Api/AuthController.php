@@ -29,7 +29,7 @@ class AuthController extends Controller {
     }
     public function login(LoginRequest $request) {
         $customer = Customer::findByUserName($request->username);
-        if ($customer && Hash::check($request->password, $request->username)) {
+        if ($customer && Hash::check($request->password, $customer->password)) {
             $accessToken = $customer->createToken('personal-access-token')->plainTextToken;
             return BaseResponse::success([
                 'access_token' => $accessToken,
