@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login-with-device', [AuthController::class, 'loginWithDevice']);
 Route::post('/send-login-otp', [AuthController::class, 'sendLoginOtp']);
 Route::post('/login-with-otp', [AuthController::class, 'loginWithOtp']);
 Route::post('/register', [AuthController::class, 'register']);

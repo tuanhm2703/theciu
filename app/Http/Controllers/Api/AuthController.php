@@ -18,6 +18,7 @@ use App\Http\Resources\Api\CustomerResource;
 use App\Http\Services\OtpService;
 use App\Models\Customer;
 use App\Responses\Api\BaseResponse;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -25,57 +26,18 @@ use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller {
-    public function __construct(private OtpService $otpService) {
+    public function __construct(private OtpService $otpService, private AuthService $authService) {
     }
     public function login(LoginRequest $request) {
-        $customer = Customer::findByUserName($request->username);
-        if ($customer && Hash::check($request->password, $customer->password)) {
-            $accessToken = $customer->createToken('personal-access-token')->plainTextToken;
-            return BaseResponse::success([
-                'access_token' => $accessToken,
-                'user' => new CustomerResource($customer)
-            ]);
-        } else {
-            return BaseResponse::error([
-                'message' => 'Unauthenticated'
-            ], 401);
-        }
+        return $this->authService->login($request->username, $request->password);
     }
 
     public function sendLoginOtp(SendLoginOtpRequest $request) {
-        DB::beginTransaction();
-        try {
-            $customer = Customer::findByUserName($request->username);
-            if (isPhone($request->username)) {
-                $otp = $this->sendVerifyOtp($customer, OtpType::LOGIN);
-            } else {
-                $otp = $this->otpService->createOtp($customer, OtpType::LOGIN);
-                $this->otpService->sendLoginOtpEmail($customer, $otp->code);
-            }
-            DB::commit();
-            return BaseResponse::success([
-                'message' => 'Mã otp đã được gửi thành công',
-                'otp' => $otp->code
-            ]);
-        } catch (OtpException $th) {
-            throw $th;
-        }
+        return $this->authService->sendLoginOtp($request->username);
     }
 
     public function loginWithOtp(LoginWithOtpRequest $request) {
-        DB::beginTransaction();
-        try {
-            $customer = Customer::findByUserName($request->username);
-            $this->otpService->verifyOtp($customer, $request->otp, OtpType::LOGIN);
-            $accessToken = $customer->createToken('personal-access-token')->plainTextToken;
-            DB::commit();
-            return BaseResponse::success([
-                'access_token' => $accessToken,
-                'user' => new CustomerResource($customer)
-            ]);
-        } catch (OtpException $th) {
-            throw $th;
-        }
+       return $this->authService->loginWithOtp($request->username, $request->otp);
     }
 
     public function redirectToProvider() {
@@ -274,5 +236,9 @@ class AuthController extends Controller {
         } catch (OtpException $th) {
             throw $th;
         }
+    }
+
+    public function loginWithDevice(Request $request) {
+        return $this->authService->generateDeviceAuthentication($request->device_token);
     }
 }

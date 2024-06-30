@@ -9,13 +9,9 @@ use App\Traits\Common\HasWishlist;
 use App\Traits\Common\Imageable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\App;
-use VienThuong\KiotVietClient\Client;
-use VienThuong\KiotVietClient\Resource\CustomerResource;
 use Illuminate\Auth\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +30,9 @@ class Customer extends User {
         'provider',
         'socialite_account_id',
         'reward_point',
-        'search_keywords'
+        'search_keywords',
+        'auth_type',
+        'device_token'
     ];
 
     protected $appends = [

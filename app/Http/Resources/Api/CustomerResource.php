@@ -20,7 +20,9 @@ class CustomerResource extends JsonResource {
             'email' => $this->email,
             'reward_point' => $this->reward_point,
             'avatar' => $this->avatar?->path_with_domain,
-            'wishlists' => new CustomerWishlistResource($this)
+            'wishlists' => new CustomerWishlistResource($this),
+            'device_token' => $this->device_token,
+            'auth_type' => $this->auth_type
         ];
     }
 }
