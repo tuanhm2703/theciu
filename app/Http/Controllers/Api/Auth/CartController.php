@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AddToCartRequest;
+use App\Http\Requests\Api\CheckoutRequest;
 use App\Http\Requests\Api\GetShippingInfoRequest;
 use App\Http\Resources\Api\CartGeneralResource;
 use App\Http\Services\Cart\CartService;
@@ -42,4 +43,7 @@ class CartController extends Controller {
         return BaseResponse::success($shipping_info);
     }
 
+    public function checkout(CheckoutRequest $request) {
+
+    }
 }

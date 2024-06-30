@@ -9,6 +9,6 @@ class ApiException extends Exception {
     public function render() {
         return BaseResponse::error([
             'message' => $this->message
-        ], 400);
+        ], $this->code ? $this->code : 400);
     }
 }
