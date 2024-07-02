@@ -30,4 +30,8 @@ trait InventoryScope {
     public function scopeAvailable($q) {
         return $q->active()->where('stock_quantity', '>', 0);
     }
+
+    public function scopeWithProductCheckoutInfo($q) {
+        return $q->with('product:id,name,slug,status', 'product.available_promotion');
+    }
 }

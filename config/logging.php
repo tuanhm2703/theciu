@@ -89,7 +89,13 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 14,
         ],
-
+        'checkout' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/checkout/checkout.log'),
+            'level' => 'debug',
+            'days' => 3,
+            'permission' => 755,
+        ],
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
