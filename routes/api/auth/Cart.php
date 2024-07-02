@@ -6,4 +6,5 @@ Route::group(['prefix' => 'cart'], function () {
     Route::get('/', [CartController::class, 'index']);
     Route::post('/add', [CartController::class, 'addToCart']);
     Route::post('/remove', [CartController::class, 'removeFromCart']);
+    Route::post('checkout', [CartController::class, 'checkout']);
 });

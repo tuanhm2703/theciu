@@ -11,7 +11,7 @@ class CheckoutRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,12 +25,17 @@ class CheckoutRequest extends FormRequest
             'order_voucher_id' => 'nullable|integer|exists:vouchers,id',
             'freeship_voucher_id' => 'nullable|integer|exists:vouchers,id',
             'address_id' => 'nullable|integer|required|exists:addresses,id',
+            'inventory_ids.*' => 'integer|required',
             'accom_gift_promotion' => 'nullable',
-            'accom_gift_promotion.id' => 'integer|required|exists:promotions,id',
+            'accom_gift_promotion.id' => 'nullable|integer|exists:promotions,id',
             'accom_gift_promotion.inventory_ids.*' => 'integer|required',
             'accom_product_promotion' => 'nullable',
-            'accom_product_promotion.id' => 'integer|required|exists:promotions,id',
-            'accom_product_promotion.inventory_ids.*' => 'integer|required'
+            'accom_product_promotion.id' => 'nullable|integer|exists:promotions,id',
+            'accom_product_promotion.inventory_ids.*' => 'integer|required',
+            'shipping_service_id' => 'required|string',
+            'payment_method_id' => 'required|exists:payment_methods,id',
+            'note' => 'nullable|string',
+            'additional_discount' => 'nullable|integer'
         ];
     }
 }

@@ -8,10 +8,13 @@ use App\Http\Requests\Api\CheckoutRequest;
 use App\Http\Requests\Api\GetShippingInfoRequest;
 use App\Http\Resources\Api\CartGeneralResource;
 use App\Http\Services\Cart\CartService;
+use App\Http\Services\Checkout\CheckoutModel;
 use App\Http\Services\Shipping\Models\DeliveryData;
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Inventory;
 use App\Models\Product;
+use App\Models\ShippingService;
 use App\Responses\Api\BaseResponse;
 use Illuminate\Http\Request;
 
@@ -44,6 +47,6 @@ class CartController extends Controller {
     }
 
     public function checkout(CheckoutRequest $request) {
-
+        return $this->cartService->checkout($request);
     }
 }
