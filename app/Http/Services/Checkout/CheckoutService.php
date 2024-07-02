@@ -221,6 +221,9 @@ class CheckoutService {
             'phone' => $checkoutModel->getAddress()->phone,
             'featured' => 1
         ]);
+        if ($checkoutModel->getInventories()->count() <= 0) {
+            throw new Exception('Vui lòng chọn ít nhất 1 sản phẩm', 409);
+        }
         foreach ($checkoutModel->getInventories() as $inventory) {
             $order->inventories()->attach([
                 $inventory->id => [
