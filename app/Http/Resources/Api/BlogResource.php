@@ -15,7 +15,8 @@ class BlogResource extends JsonResource
     public function toArray($request)
     {
         $result = parent::toArray($request);
-        $result['created_by'] = $this->creator?->full_name;
+        $result['created_by'] = $this->author_name ?? $this->creator?->full_name;
+        $result['image'] = $this->thumbnail ? ['path_with_domain' => $this->thumbnail] : $this->image;
         return $result;
     }
 }

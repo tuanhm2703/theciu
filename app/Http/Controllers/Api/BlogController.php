@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\BlogType;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Api\BlogListResource;
 use App\Http\Resources\Api\BlogResource;
 use App\Http\Resources\Api\WebBlogResource;
 use App\Models\Blog;
@@ -15,26 +16,14 @@ class BlogController extends Controller {
     public function index(Request $request) {
         $type = $request->type ?? BlogType::WEB;
         $pageSize = $request->pageSize ?? 9;
-        if ($type === BlogType::WEB) {
-            $blogs = TheciuBlog::where('post_type', 'post')->where('ping_status', 'open')
-                ->whereHas('meta_attachment')
-                ->with('meta_attachment', function ($q) {
-                    return $q->with('meta_attachment');
-                })
-                ->where('post_status', 'publish')
-                ->orderBy('post_date', 'desc')
-                ->select('post_title', 'post_excerpt', 'post_status', 'ID', 'post_date', 'post_type', 'post_name')
-                ->paginate($pageSize);
-            $paginateData = $blogs->toArray();
-            return BaseResponse::success([
-                'items' => WebBlogResource::collection($blogs),
-                'total' => $paginateData['total'],
-                'next_page' => $paginateData['next_page_url'],
-                'prev_page' => $paginateData['prev_page_url']
-            ]);
-        }
-        $blogs = Blog::with('image')->select('id', 'title', 'description', 'publish_date', 'slug', 'type')->whereType($type)->paginate($pageSize);
-        return BaseResponse::success($blogs);
+        $blogs = Blog::with('image')->select('id', 'title', 'description', 'publish_date', 'slug', 'type', 'author_name', 'thumbnail')->with('categories:name,id,slug')->whereType($type)->paginate($pageSize);
+        $paginateData = $blogs->toArray();
+        return BaseResponse::success([
+            'items' => BlogListResource::collection($blogs),
+            'total' => $paginateData['total'],
+            'next_page' => $paginateData['next_page_url'],
+            'prev_page' => $paginateData['prev_page_url'],
+        ]);
     }
 
     public function detail($slug) {
