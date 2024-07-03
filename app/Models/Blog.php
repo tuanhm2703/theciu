@@ -25,7 +25,10 @@ class Blog extends Model {
         'updated_by',
         'deleted_by',
         'slug',
-        'type'
+        'type',
+        'yoast_head',
+        'author_name',
+        'thumbnail'
     ];
     protected $casts = [
         'publish_date' => 'datetime'
