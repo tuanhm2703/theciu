@@ -39,7 +39,6 @@ class BlogService {
                 ]);
                 $category_names = $categories->whereIn('id', $blog->categories)->pluck('name')->toArray();
                 $category_ids = Category::whereIn('name', $category_names)->pluck('id')->toArray();
-                print(json_encode($category_ids) . "\n");
                 $newBlog->categories()->sync($category_ids);
             }
         }
@@ -81,5 +80,36 @@ class BlogService {
             'total' => $response->getHeader('X-WP-Total')[0],
             'items' => json_decode($response->getBody()->getContents())
         ];
+    }
+
+    private function getBlogFromApiById(string|int $id) {
+        $blog = $this->client->get("posts/$id");
+        return json_decode($blog->getBody()->getContents());
+    }
+
+    public function syncByBlogId(string|int $id) {
+        $authors = collect($this->getAuthors());
+        $categories = collect($this->syncBlogCategories());
+        $blog = $this->getBlogFromApiById($id);
+        $newBlog = Blog::updateOrCreate([
+            'slug' => $blog->slug
+        ], [
+            'title' => $blog->title->rendered,
+            'description' => $blog->excerpt->rendered,
+            'content' => $blog->content->rendered,
+            'yoast_head' => $blog->yoast_head,
+            'thumbnail' => $blog->yoast_head_json->og_image[0]->url,
+            'publish_date' => $blog->date,
+            'type' => BlogType::WEB,
+            'author_name' => $authors->where('id', $blog->author)->first()?->name
+        ]);
+        $category_names = $categories->whereIn('id', $blog->categories)->pluck('name')->toArray();
+        $category_ids = Category::whereIn('name', $category_names)->pluck('id')->toArray();
+        $newBlog->categories()->sync($category_ids);
+    }
+
+    public function deleteLocalBlogByApiBlogId(string|int $id) {
+        $blog = $this->getBlogFromApiById($id);
+        Blog::whereSlug($blog->slug)->delete();
     }
 }
