@@ -49,7 +49,7 @@ class ProductPickItemComponent extends Component {
                 'out_of_stock' => $this->product->inventories->where('stock_quantity', '>', '0')->where('firstAttribute.value', $inventory->firstAttribute->value)->first() ? false : true
             ]);
         }
-        $this->first_attributes = $this->first_attributes->unique('path')->unique('value');
+        $this->first_attributes = $this->first_attributes->unique('value');
         $this->first_attribute_id = $this->first_attribute_id ?: $this->first_attributes->where('out_of_stock', false)->first()?->id;
         $this->first_attribute_value = $this->first_attribute_value ?: $this->first_attributes->where('out_of_stock', false)->first()?->value;
         $this->second_attributes = collect();
