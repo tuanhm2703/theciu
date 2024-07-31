@@ -18,8 +18,14 @@
     </div>
     <div class="col-12 col-md-6">
         <div class="form-group">
-            {!! Form::label('name', trans('labels.fullname'), ['class' => 'form-control-label']) !!}
-            {!! Form::text('name', null, ['class' => 'form-control']) !!}
+            {!! Form::label('first_name', trans('labels.first_name'), ['class' => 'form-control-label']) !!}
+            {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
+        </div>
+    </div>
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            {!! Form::label('last_name', trans('labels.last_name'), ['class' => 'form-control-label']) !!}
+            {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
         </div>
     </div>
     <div class="col-12 col-md-6">
