@@ -88,4 +88,10 @@ trait Imageable {
         }
         return asset('assets/images/default-avatar.png');
     }
+
+    public function fixImages() {
+        foreach($this->images as $image) {
+            $image->fix();
+        }
+    }
 }

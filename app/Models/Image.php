@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\MediaType;
+use App\Jobs\ResizeImageJob;
 use App\Services\StorageService;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFMpeg;
@@ -130,4 +131,9 @@ class Image extends Model {
         return asset('img/image-not-available.png');
     }
 
+    public function fix() {
+        foreach($this->imageable->image_sizes as $size) {
+            dispatch(new ResizeImageJob($this, $size))->onQueue('resizeImage');
+        }
+    }
 }
