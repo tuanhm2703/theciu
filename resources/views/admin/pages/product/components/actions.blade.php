@@ -11,6 +11,16 @@
         </li>
         <li>
             {!! Form::open([
+                'url' => route('admin.product.fix', $product->id),
+                'method' => 'POST',
+                'class' => 'ajax-form',
+            ]) !!}
+            <button type="submit" class="dropdown-item ajax-confirm"><span
+                    class="badge badge-warning d-block text-warning"><i class="fas fa-cog p-1"></i>Fix</span></button>
+            {!! Form::close() !!}
+        </li>
+        <li>
+            {!! Form::open([
                 'url' => route('admin.product.destroy', $product->id),
                 'method' => 'DELETE',
                 'class' => 'ajax-form',

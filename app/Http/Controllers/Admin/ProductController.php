@@ -184,4 +184,11 @@ class ProductController extends Controller {
             'message' => 'Sản phẩm đã được xoá thành công'
         ]);
     }
+
+    public function fix(Product $product) {
+        $product->fixImages();
+        return BaseResponse::success([
+            'message' => 'Sản phẩm đã được fix'
+        ]);
+    }
 }
