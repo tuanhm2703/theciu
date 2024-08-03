@@ -76,7 +76,7 @@ class CartService {
         $total = $data['total'] ?? null;
         $ward_id = $data['ward_id'] ?? null;
         $detail_address = $data['detail_address'] ?? null;
-        $inventory_ids = $data['inventory_ids'] ?? null;
+        $inventory_ids = $data['inventory_ids'] ?? [];
         foreach ($shipping_service_types as $shipping_service_type) {
             $data = $this->calculateShippingInfo($shipping_service_type, $inventory_ids, $ward_id, $total, $detail_address);
             $shipping_service_type->fee = $data['fee'];
