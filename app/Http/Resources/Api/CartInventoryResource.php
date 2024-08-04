@@ -20,6 +20,7 @@ class CartInventoryResource extends JsonResource
             'stock_quantity' => $this->stock_quantity,
             'quantity' => $this->pivot->quantity,
             'price' => $this->price,
+            'quantity_each_order' => $this->quantity_each_order,
             'promotion_price' => $this->has_promotion ? $this->promotion_price : 0,
             'attributes' => InventoryAttributeResource::collection($this->attributes)
         ];
