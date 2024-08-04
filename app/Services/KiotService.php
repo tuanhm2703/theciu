@@ -115,7 +115,6 @@ class KiotService {
     }
 
     public static function cancelKiotOrder(Order $order, $cancelInvoice = true) {
-
         $kiot_order = $order->kiot_order;
         if ($kiot_order) {
             try {

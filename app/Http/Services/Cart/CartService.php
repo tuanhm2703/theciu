@@ -15,8 +15,10 @@ use App\Http\Services\Shipping\Models\PackageInfo;
 use App\Http\Services\Voucher\VoucherService;
 use App\Models\Address;
 use App\Models\Cart;
+use App\Models\CartItem;
 use App\Models\Customer;
 use App\Models\Inventory;
+use App\Models\OrderItem;
 use App\Models\Promotion;
 use App\Models\ShippingService;
 use App\Models\Ward;
@@ -34,8 +36,12 @@ class CartService {
         return $this;
     }
 
-    public function getCartWithInventories(): Cart {
-        return Cart::with(['inventories', 'inventories.image', 'inventories.product:id,slug,name'])->firstOrCreate([
+    public function getCartWithInventories($isCheckout = false): Cart {
+        return Cart::with(['inventories' => function($q) use ($isCheckout) {
+            if($isCheckout) {
+                $q->where('cart_items.is_selected', 1);
+            }
+        }, 'inventories.image', 'inventories.product:id,slug,name'])->firstOrCreate([
             'customer_id' => $this->user->id
         ]);
     }
@@ -224,6 +230,47 @@ class CartService {
         } catch(Throwable $e) {
             $this->logger->error($e);
             throw new ApiException('Đã có lỗi xảy ra vui lòng thử lại');
+        }
+    }
+
+    public function changeProductInventory(int $old_inventory_id, int $inventory_id)
+    {
+        DB::beginTransaction();
+        try {
+            CartItem::where('customer_id', $this->user->id)->where(['inventory_id' => $old_inventory_id])->update([
+                'inventory_id' => $inventory_id,
+                'quantity' => 1
+            ]);
+            DB::commit();
+        } catch (\Throwable $e) {
+            $this->logger->error($e);
+            throw new ApiException($e->getMessage());
+        }
+    }
+
+    public function selectItem(int $inventory_id) {
+        DB::beginTransaction();
+        try {
+            CartItem::where('customer_id', $this->user->id)->where(['inventory_id' => $inventory_id])->update([
+                'is_selected' => 1
+            ]);
+            DB::commit();
+        } catch (\Throwable $e) {
+            $this->logger->error($e);
+            throw new ApiException($e->getMessage());
+        }
+    }
+
+    public function unselectItem(int $inventory_id) {
+        DB::beginTransaction();
+        try {
+            CartItem::where('customer_id', $this->user->id)->where(['inventory_id' => $inventory_id])->update([
+                'is_selected' => 1
+            ]);
+            DB::commit();
+        } catch (\Throwable $e) {
+            $this->logger->error($e);
+            throw new ApiException($e->getMessage());
         }
     }
 }

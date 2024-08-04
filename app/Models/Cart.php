@@ -15,7 +15,7 @@ class Cart extends Model {
     ];
 
     public function inventories() {
-        return $this->belongsToMany(Inventory::class, 'cart_items')->whereHas('product')->withPivot('quantity');
+        return $this->belongsToMany(Inventory::class, 'cart_items')->whereHas('product')->withPivot('quantity', 'is_selected');
     }
 
     public function calculateSessionComboDiscount($item_selected) {

@@ -31,7 +31,8 @@ class CartProductDetailResource extends JsonResource
             'slug' => $this->slug,
             'is_main_product' => (boolean) $this->pivot?->featured,
             'selected_inventory_id' => $this->inventory?->id,
-            'selected_quantity' => $this->inventory?->pivot->quantity,
+            'is_selected' => (boolean) $this->inventory?->pivot?->is_selected,
+            'selected_quantity' => $this->inventory?->pivot?->quantity ?? 1,
             'inventories' => InventoryResource::collection($this->inventories),
             'attributes' => $this->getAttributes($this->inventories->first()->attributes->first())
         ];
