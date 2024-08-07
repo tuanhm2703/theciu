@@ -24,12 +24,34 @@ class PaymentService {
             case PaymentServiceType::EBANK:
                 return MomoService::checkout($order, RequestType::PAY_WITH_ATM);
             case PaymentServiceType::COD:
-                if(auth('customer')->check()) {
+                if (auth('customer')->check()) {
                     $redirectUrl = route('client.auth.profile.order.details', $order->id);
                 } else {
                     $redirectUrl = route('client.order.details', $order->id);
                 }
-                return $redirectUrl ;
+                return $redirectUrl;
+            case PaymentServiceType::VNPAY:
+                return VNPayment::process($order->order_number, (int) $order->total * 100, $order->getCheckoutDescription(), route('client.auth.profile.order.details', $order->id));
+            default:
+                throw new Exception('Dịch vụ thanh toán không hợp lệ.');
+        }
+    }
+    public static function checkoutV2($order) {
+        if ($order->isPaid()) {
+            throw new Exception('Đơn hàng đã được thanh toán.');
+        }
+        switch ($order->payment_method->code) {
+            case PaymentServiceType::MOMO:
+                return MomoService::checkout($order, RequestType::CAPTURE_MOMO_WALLET);
+            case PaymentServiceType::EBANK:
+                return MomoService::checkout($order, RequestType::PAY_WITH_ATM);
+            case PaymentServiceType::COD:
+                if (auth('customer')->check()) {
+                    $redirectUrl = env('FRONTEND_URL') . "/profile/order";
+                } else {
+                    $redirectUrl = env('FRONTEND_URL') . "/profile/order";
+                }
+                return $redirectUrl;
             case PaymentServiceType::VNPAY:
                 return VNPayment::process($order->order_number, (int) $order->total * 100, $order->getCheckoutDescription(), route('client.auth.profile.order.details', $order->id));
             default:
@@ -55,7 +77,6 @@ class PaymentService {
                         break;
                 }
                 if (!$result) {
-
                 }
             }
         }

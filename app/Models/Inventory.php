@@ -30,6 +30,7 @@ class Inventory extends Model
         'total_promotion_quantity',
         'promotion_quantity',
         'quantity_each_order',
+        'promotion_type'
     ];
 
     protected $casts = [
@@ -81,6 +82,10 @@ class Inventory extends Model
         return $this->belongsTo(Product::class)->withTrashed();
     }
 
+    public function available_product() {
+        return $this->belongsTo(Product::class, 'product_id', 'id')->available();
+    }
+
     public function getFormattedPriceAttribute()
     {
         return number_format($this->price, 0, ',', '.');
@@ -129,6 +134,12 @@ class Inventory extends Model
     public function getSalePriceAttribute()
     {
         if ($this->has_promotion && $this->promotion_status === 1) return $this->promotion_price;
+        return $this->price;
+    }
+
+    public function getSalePriceNotComboAttribute()
+    {
+        if ($this->has_promotion && $this->promotion_status === 1 && $this->promotion_type !== 'COMBO') return $this->promotion_price;
         return $this->price;
     }
 

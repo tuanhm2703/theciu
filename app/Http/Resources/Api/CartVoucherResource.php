@@ -34,7 +34,7 @@ class CartVoucherResource extends JsonResource {
             'display' => $this->display,
             'begin' => $this->begin,
             'end' => $this->end,
-            'num_of_days_left' => $this->end->diffInDays($this->begin),
+            'num_of_days_left' => $this->end->diffInDays(now()),
             'saved' => false,
             'discount_value' => $this->value,
             'disabled' => $voucherStatus['disabled'],

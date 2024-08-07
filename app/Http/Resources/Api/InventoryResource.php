@@ -19,6 +19,7 @@ class InventoryResource extends JsonResource
             'image' => $this->image?->path_with_domain,
             'stock_quantity' => $this->stock_quantity,
             'price' => $this->price,
+            'product_id' => $this->product_id,
             'quantity_each_order' => $this->quantity_each_order,
             'promotion_price' => $this->has_promotion && $this->promotion_status ? $this->promotion_price : null,
             'attributes' => InventoryAttributeResource::collection($this->attributes),

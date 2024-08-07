@@ -148,7 +148,8 @@ class PromotionController extends Controller {
             Inventory::where('promotion_from', $old_from)->where('promotion_to', $old_to)->update([
                 'promotion_from' => null,
                 'promotion_to' => null,
-                'promotion_price' => null
+                'promotion_price' => null,
+                'promotion_type' => null
             ]);
             foreach ($products as $p) {
                 foreach ($p['inventories'] as $i) {
@@ -156,6 +157,7 @@ class PromotionController extends Controller {
                     $inventory->fill($i);
                     $inventory->promotion_from = $from;
                     $inventory->promotion_to = $to;
+                    $inventory->promotion_type = $promotion->type;
                     $inventory->save();
                 }
                 $product_ids[] = $p['id'];

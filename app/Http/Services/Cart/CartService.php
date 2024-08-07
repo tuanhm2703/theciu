@@ -22,6 +22,7 @@ use App\Models\OrderItem;
 use App\Models\Promotion;
 use App\Models\ShippingService;
 use App\Models\Ward;
+use App\Responses\Api\BaseResponse;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -37,11 +38,11 @@ class CartService {
     }
 
     public function getCartWithInventories($isCheckout = false): Cart {
-        return Cart::with(['inventories' => function($q) use ($isCheckout) {
-            if($isCheckout) {
+        return Cart::with(['inventories' => function ($q) use ($isCheckout) {
+            if ($isCheckout) {
                 $q->where('cart_items.is_selected', 1);
             }
-        }, 'inventories.image', 'inventories.product:id,slug,name'])->firstOrCreate([
+        }, 'inventories.image', 'inventories.product', 'inventories.product.inventories'])->firstOrCreate([
             'customer_id' => $this->user->id
         ]);
     }
@@ -58,12 +59,17 @@ class CartService {
         if ($inventory->isOutOfStock() || $this->isNotEnoughStock($inventory, $quantity)) {
             throw new InventoryOutOfStockException($inventory);
         }
-        $cart->inventories()->sync([
-            $inventory->id => [
-                'quantity' => $quantity,
-                'customer_id' => $this->user->id
-            ]
-        ], false);
+        if ($quantity === 0) {
+            $cart->inventories()->detach([$inventory->id]);
+        } else {
+            $cart->inventories()->sync([
+                $inventory->id => [
+                    'quantity' => $quantity,
+                    'customer_id' => $this->user->id,
+                    'is_selected' => true
+                ]
+            ], false);
+        }
     }
 
     public function removeFromCart(Inventory $inventory): void {
@@ -191,9 +197,13 @@ class CartService {
                 $accom_gift_inventories = Inventory::whereIn('id', $request->accom_gift_promotion['inventory_ids'])->withProductCheckoutInfo()->get();
                 $this->verifyAccomGiftPromotion($request->accom_gift_promotion['id'], $accom_gift_inventories, $total);
             }
-            if ($request->accom_product_promotion) {
-                $accom_product_inventories = Inventory::whereIn('id', $request->accom_product_promotion['inventory_ids'])->withProductCheckoutInfo()->get();
-                $this->verifyAccomProductPromotion($request->accom_product_promotion['id'], $accom_product_inventories, $inventories);
+            $accom_product_inventory_ids = [];
+            if ($request->accom_product_promotions) {
+                foreach ($request->accom_product_promotions as $accom_product_promotion) {
+                    $accom_product_inventories = Inventory::whereIn('id', $accom_product_promotion['inventory_ids'])->withProductCheckoutInfo()->get();
+                    $this->verifyAccomProductPromotion($accom_product_promotion['id'], $accom_product_inventories, $inventories);
+                    $accom_product_inventory_ids = array_merge($accom_product_inventory_ids, $accom_product_promotion['inventory_ids']);
+                }
             }
             if ($request->order_voucher_id && !$this->voucherService->verifyVoucher($request->order_voucher_id, $customer, $total)) {
                 throw new ApiException("Voucher giảm giá đơn hàng không hợp lệ");
@@ -209,32 +219,33 @@ class CartService {
                 'payment_method_id' => $request->payment_method_id,
                 'shipping_service_id' => ShippingService::first()->id,
                 'service_id' => $request->shipping_service_id,
-                'item_selected' => $request->inventory_ids,
+                'item_selected' => $cart->inventories()->where('cart_items.is_selected', 1)->pluck('inventories.id')->toArray(),
                 'order_voucher_id' => $request->order_voucher_id,
                 'freeship_voucher_id' => $request->freeship_voucher_id,
                 'note' => $request->note,
                 'customer' => $customer,
                 'accom_inventories' => $request->accom_gift_promotion ? Inventory::whereIn('id', $request->accom_gift_promotion['inventory_ids'])->get() : new Collection(),
-                'accom_product_inventories' => $request->accom_production_promotion ? Inventory::whereIn('id', $request->accom_product_promotion['inventory_ids'])->get() : new Collection(),
+                'accom_product_inventories' => !empty($accom_product_inventory_ids) ? Inventory::whereIn('id', $accom_product_inventory_ids)->get() : new Collection(),
                 'additional_discount' => $request->additional_discount
             ]);
             $redirectUrl = $this->checkoutService->checkoutV2($checkoutModel);
             DB::commit();
-            return $redirectUrl;
+            return BaseResponse::success([
+                'url' => $redirectUrl
+            ]);
         } catch (ApiException $e) {
             $this->logger->error($e);
             throw $e;
-        } catch(InventoryOutOfStockException $e) {
+        } catch (InventoryOutOfStockException $e) {
             $this->logger->error($e);
             throw $e;
-        } catch(Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error($e);
             throw new ApiException('Đã có lỗi xảy ra vui lòng thử lại');
         }
     }
 
-    public function changeProductInventory(int $old_inventory_id, int $inventory_id)
-    {
+    public function changeProductInventory(int $old_inventory_id, int $inventory_id) {
         DB::beginTransaction();
         try {
             CartItem::where('customer_id', $this->user->id)->where(['inventory_id' => $old_inventory_id])->update([
@@ -265,7 +276,7 @@ class CartService {
         DB::beginTransaction();
         try {
             CartItem::where('customer_id', $this->user->id)->where(['inventory_id' => $inventory_id])->update([
-                'is_selected' => 1
+                'is_selected' => 0
             ]);
             DB::commit();
         } catch (\Throwable $e) {

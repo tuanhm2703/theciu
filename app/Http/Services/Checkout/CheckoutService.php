@@ -339,7 +339,7 @@ class CheckoutService {
             'payment_status' => PaymentStatus::PENDING
         ]);
         $checkoutModel->getCart()->inventories()->detach($checkoutModel->getInventories()->pluck('id')->toArray());
-        $redirectUrl = PaymentService::checkout($order);
+        $redirectUrl = PaymentService::checkoutV2($order);
         event(new OrderCreatedEvent($order));
         event(new KiotOrderCreatedEvent($order));
         return $redirectUrl;

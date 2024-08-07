@@ -136,6 +136,16 @@ class Cart extends Model {
         return $total;
     }
 
+    public function getTotalWithSelectedItemsV2() {
+        $total = 0;
+        foreach ($this->inventories->where('pivot.is_selected', 1) as $i) {
+            /* Checking if the item is selected or not. If it is selected, it will add the price to the
+            total. */
+            $total += $i->sale_price_not_combo * $i->cart_stock;
+        }
+        return $total;
+    }
+
     public function total() {
         $total = 0;
         foreach ($this->inventories as $i) {
