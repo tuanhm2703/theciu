@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AddToCartRequest;
 use App\Http\Requests\Api\ChangeCartProductInventoryRequest;
 use App\Http\Requests\Api\CheckoutRequest;
+use App\Http\Requests\Api\GetCartRequest;
 use App\Http\Requests\Api\GetShippingInfoRequest;
 use App\Http\Requests\Api\SelectCartItemRequest;
 use App\Http\Requests\Api\UnselectCartItemRequest;
@@ -18,8 +19,10 @@ use Illuminate\Http\Request;
 class CartController extends Controller {
     public function __construct(private CartService $cartService) {
     }
-    public function index(Request $request) {
+    public function index(GetCartRequest $request) {
         $cart = $this->cartService->setUser(requestUser())->getCartWithInventories($request->isCheckout ?? false);
+        CartGeneralResource::$order_voucher_id = $request->order_voucher_id;
+        CartGeneralResource::$freeship_voucher_id = $request->freeship_voucher_id;
         return BaseResponse::success(new CartGeneralResource($cart));
     }
 
@@ -28,7 +31,7 @@ class CartController extends Controller {
         $inventory_id = $request->inventory_id;
         $this->cartService->setUser(requestUser())->addToCart($quantity, $inventory_id);
         $cart = $this->cartService->setUser(requestUser())->getCartWithInventories();
-    return BaseResponse::success(new CartGeneralResource($cart));
+        return BaseResponse::success(new CartGeneralResource($cart));
     }
 
     public function removeFromCart(Request $request) {
@@ -39,7 +42,7 @@ class CartController extends Controller {
     }
 
     public function changeProductInventory(ChangeCartProductInventoryRequest $request) {
-        $this->cartService->changeProductInventory(requestUser(), $request->old_inventory_id, $request->inventory_id);
+        $this->cartService->setUser(requestUser())->changeProductInventory($request->old_inventory_id, $request->inventory_id);
         $cart = $this->cartService->setUser(requestUser())->getCartWithInventories();
         return BaseResponse::success(new CartGeneralResource($cart));
     }

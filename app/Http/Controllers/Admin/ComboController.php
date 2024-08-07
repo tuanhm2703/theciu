@@ -66,6 +66,9 @@ class ComboController extends Controller {
         $combo->products()->sync($product_ids);
         foreach ($request->products as $product) {
             foreach ($product['inventories'] as $i) {
+                $i['promotion_from'] = $request->begin;
+                $i['promotion_to'] = $request->end;
+                $i['promotion_type'] = 'COMBO';
                 $inventory = Inventory::find($i['id']);
                 $inventory->update($i);
             }
