@@ -30,7 +30,6 @@ class CreateAddressRequest extends BaseRequest
             'province_id' => 'required|exists:provinces,id',
             'ward_id' => 'required|exists:wards,id',
             'district_id' => 'required|exists:districts,id',
-            'full_address' => 'required',
             'featured' => 'nullable',
             'type' => 'required'
         ];
