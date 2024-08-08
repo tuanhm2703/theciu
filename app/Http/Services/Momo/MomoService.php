@@ -58,6 +58,25 @@ class MomoService
                 break;
         }
     }
+    public static function checkoutV2(Order $order, $requestType = RequestType::PAY_WITH_ATM)
+    {
+        $env = MomoService::selectEnv(env('APP_ENV', 'dev'));
+        $requestId = time() + 60;
+        $orderId = time();
+        if(auth('customer')->check()) {
+            $redirectUrl = env('FRONTEND_URL') . "/profile/order";
+        } else {
+            $redirectUrl = env('FRONTEND_URL') . "/profile/order";
+        }
+        switch ($requestType) {
+            case RequestType::CAPTURE_MOMO_WALLET:
+                return CaptureMoMo::process($env, $orderId, $order->getCheckoutDescription(), (int)  $order->customer_payment_amount, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
+                break;
+            case RequestType::PAY_WITH_ATM:
+                return PayATM::process($env, $orderId, $order->getCheckoutDescription(), (int) $order->customer_payment_amount, base64_encode($order->order_number), $requestId, route('webhook.payment.momo', $order->id), $redirectUrl)->getPayUrl();
+                break;
+        }
+    }
 
     public static function refund($order)
     {

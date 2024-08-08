@@ -42,9 +42,9 @@ class PaymentService {
         }
         switch ($order->payment_method->code) {
             case PaymentServiceType::MOMO:
-                return MomoService::checkout($order, RequestType::CAPTURE_MOMO_WALLET);
+                return MomoService::checkoutV2($order, RequestType::CAPTURE_MOMO_WALLET);
             case PaymentServiceType::EBANK:
-                return MomoService::checkout($order, RequestType::PAY_WITH_ATM);
+                return MomoService::checkoutV2($order, RequestType::PAY_WITH_ATM);
             case PaymentServiceType::COD:
                 if (auth('customer')->check()) {
                     $redirectUrl = env('FRONTEND_URL') . "/profile/order";
@@ -53,7 +53,7 @@ class PaymentService {
                 }
                 return $redirectUrl;
             case PaymentServiceType::VNPAY:
-                return VNPayment::process($order->order_number, (int) $order->total * 100, $order->getCheckoutDescription(), route('client.auth.profile.order.details', $order->id));
+                return VNPayment::process($order->order_number, (int) $order->total * 100, $order->getCheckoutDescription(), env('FRONTEND_URL') . "/profile/order");
             default:
                 throw new Exception('Dịch vụ thanh toán không hợp lệ.');
         }
